@@ -1,0 +1,35 @@
+name: Compile LaTeX to PDF
+
+on:
+  push:
+    paths:
+      - 'inputs/*.tex'
+  workflow_dispatch:
+
+jobs:
+  build_latex:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Compile LaTeX Documents
+        uses: xu-cheng/latex-action@v3
+        with:
+          root_file: "inputs/*.tex"
+          glob_root_file: true
+          latexmk_use_pdflatex: true
+          args: "-interaction=nonstopmode -file-line-error -pdf"
+
+      - name: Move generated PDFs to outputs
+        run: |
+          mkdir -p outputs
+          mv inputs/*.pdf outputs/ || true
+
+      - name: Commit and Push PDFs back to Repo
+        run: |
+          git config --global user.name "LaTeX Bot"
+          git config --global user.email "bot@github.com"
+          git add outputs/*.pdf
+          git commit -m "Auto-compiled PDF: $(date +'%Y-%m-%d %H:%M')" || echo "No changes to commit"
+          git push
