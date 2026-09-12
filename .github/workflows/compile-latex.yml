@@ -20,7 +20,7 @@ jobs:
     steps:
       - name: Install System Utilities
         run: |
-          apt-get update && apt-get install -y curl git ca-certificates bash
+          apt-get update && apt-get install -y curl git ca-certificates bash python3
 
       - name: Checkout Repository
         uses: actions/checkout@v4
@@ -45,12 +45,28 @@ jobs:
             for pdf in outputs/*.pdf; do
               [ -e "$pdf" ] || continue
               filename=$(basename "$pdf")
-              echo "Dang gui $filename ve Google Drive..."
-              base64_data=$(base64 -w 0 "$pdf")
+              echo "Dang chuan bi va gui $filename ve Google Drive..."
+              
+              # Dùng Python tạo file JSON tạm an toàn tuyệt đối, không bị tràn dòng lệnh
+              python3 -c "
+import json, base64, sys
+
+with open('$pdf', 'rb') as f:
+    b64 = base64.b64encode(f.read()).decode('utf-8')
+
+payload = {
+    'file_name': '$filename',
+    'file_base64': b64
+}
+
+with open('payload.json', 'w') as out:
+    json.dump(payload, out)
+"
               response=$(curl -s -L -X POST "$DRIVE_WEBHOOK_URL" \
                 -H "Content-Type: application/json" \
-                -d "{\"file_name\":\"$filename\", \"file_base64\":\"$base64_data\"}")
+                -d @payload.json)
               echo "Phan hoi tu Google Drive: $response"
+              rm -f payload.json
             done
           else
             echo "Chua cau hinh DRIVE_WEBHOOK_URL, bo qua buoc gui Drive."
