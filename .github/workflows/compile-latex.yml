@@ -37,7 +37,7 @@ jobs:
           echo "=== DANH SACH FILE TRONG OUTPUTS ==="
           ls -la outputs/
 
-      - name: Send compiled PDFs back to Google Drive
+    - name: Send compiled PDFs back to Google Drive
         env:
           DRIVE_WEBHOOK_URL: ${{ secrets.DRIVE_WEBHOOK_URL }}
         run: |
@@ -47,9 +47,10 @@ jobs:
               filename=$(basename "$pdf")
               echo "Dang gui $filename ve Google Drive..."
               base64_data=$(base64 -w 0 "$pdf")
-              curl -L -X POST "$DRIVE_WEBHOOK_URL" \
+              response=$(curl -s -L -X POST "$DRIVE_WEBHOOK_URL" \
                 -H "Content-Type: application/json" \
-                -d "{\"file_name\":\"$filename\", \"file_base64\":\"$base64_data\"}"
+                -d "{\"file_name\":\"$filename\", \"file_base64\":\"$base64_data\"}")
+              echo "Phan hoi tu Google Drive: $response"
             done
           else
             echo "Chua cau hinh DRIVE_WEBHOOK_URL, bo qua buoc gui Drive."
