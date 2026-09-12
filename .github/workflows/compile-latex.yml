@@ -6,6 +6,10 @@ on:
       - 'inputs/*.tex'
   workflow_dispatch:
 
+# Cấp quyền Ghi bắt buộc để tránh lỗi Exit code 128 khi git push
+permissions:
+  contents: write
+
 jobs:
   build_latex:
     runs-on: ubuntu-latest
@@ -16,12 +20,11 @@ jobs:
       - name: Compile LaTeX Documents
         uses: xu-cheng/latex-action@v3
         with:
-          root_file: "inputs/*.tex"
-          glob_root_file: true
-          latexmk_use_pdflatex: true
+          root_file: inputs/*.tex
           args: "-interaction=nonstopmode -file-line-error -pdf"
 
       - name: Send compiled PDFs back to Google Drive
+        if: env.DRIVE_WEBHOOK_URL != ''
         env:
           DRIVE_WEBHOOK_URL: ${{ secrets.DRIVE_WEBHOOK_URL }}
         run: |
@@ -44,8 +47,8 @@ jobs:
 
       - name: Commit and Push PDFs to GitHub Repo
         run: |
-          git config --global user.name "LaTeX Bot"
-          git config --global user.email "bot@github.com"
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
           git add outputs/*.pdf
           git commit -m "Auto-compiled and synced PDF: $(date +'%Y-%m-%d %H:%M')" || echo "No changes to commit"
           git push
