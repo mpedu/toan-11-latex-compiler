@@ -1,0 +1,799 @@
+\documentclass[12pt, a4paper]{article}
+% --- 1. Cấu hình Tiếng Việt và Font chữ ---
+\usepackage[utf8]{inputenc}
+\usepackage[vietnamese]{babel} % Hỗ trợ tiếng Việt
+\usepackage{times} % Sử dụng font Times New Roman (phổ biến nhất)
+
+\makeatletter
+\renewcommand{\normalsize}{\@setfontsize\normalsize{13pt}{16pt}}
+\makeatother
+\normalsize
+
+% 2. Gói Toán học & Ký hiệu bổ trợ
+\usepackage{amsmath, amssymb, amsfonts, mathrsfs, amsthm}
+\usepackage{graphicx}
+\usepackage{fontawesome}
+\usepackage{booktabs, tabularx, array, multirow}
+\usepackage{enumitem}
+
+% 3. Đồ họa TikZ, Bảng biến thiên & Hình không gian
+\usepackage{tikz}
+\usetikzlibrary{calc, intersections, angles, quotes, patterns, arrows.meta, 3d}
+\usepackage{pgfplots}
+\pgfplotsset{compat=1.18}
+\usepackage{tkz-euclide}
+\usepackage{tkz-tab}
+
+\renewcommand{\vec}[1]{\overrightarrow{#1}}
+
+% 4. Hộp sư phạm (Tcolorbox)
+\usepackage[many]{tcolorbox}
+\tcbuselibrary{skins, breakable}
+
+% 5. Căn lề chuẩn văn bản giáo án
+\usepackage{geometry}
+\geometry{
+    a4paper,
+    left=25mm,
+    right=15mm,
+    top=20mm,
+    bottom=20mm
+}
+
+% 6. Header / Footer chuẩn hóa (BẮT BUỘC CHÍNH XÁC NỘI DUNG NÀY)
+\usepackage{fancyhdr}
+\usepackage{lastpage}
+\pagestyle{fancy}
+\fancyhf{}
+
+\fancyhead[L]{\small \textit{Kế hoạch bài dạy Toán 11}}
+\fancyhead[R]{\textbf{Trang \thepage/\pageref{LastPage}}}
+\fancyfoot[L]{\small \textit{Tổ Toán - Tin}}
+\fancyfoot[R]{\small \textit{Trường THCS\&THPT Hồng Vân}}
+\renewcommand{\headrulewidth}{0.4pt}
+\renewcommand{\footrulewidth}{0.4pt}
+
+% 7. Giãn dòng & Giãn đoạn theo chuẩn Nghị định 30/2020/NĐ-CP
+\usepackage{setspace}
+\setstretch{1.15}
+\setlength{\parindent}{1.0cm}
+\setlength{\parskip}{5pt}
+
+\begin{document}
+
+\begin{center}
+    {\Large \textbf{KẾ HOẠCH BÀI DẠY MÔN TOÁN LỚP 11}}\\[0.5em]
+    {\Large \textbf{BÀI 1. GIÁ TRỊ LƯỢNG GIÁC CỦA GÓC LƯỢNG GIÁC}}\\[0.5em]
+    \textbf{Môn học: Toán 11 | Thời lượng: 3 tiết (Tiết 1 đến Tiết 3 theo PPCT)}
+\end{center}
+
+\vspace{0.5em}
+
+\section*{I. MỤC TIÊU}
+
+\subsection*{1. Kiến thức, Năng lực}
+
+\begin{itemize}[leftmargin=1.5cm]
+    \item \textbf{Năng lực Toán học đặc thù}:
+    \begin{itemize}[leftmargin=0.8cm]
+        \item \textit{Năng lực tư duy và lập luận toán học}:
+        \begin{itemize}
+            \item Nhận biết được các khái niệm cơ bản về góc lượng giác: khái niệm góc lượng giác, số đo của góc lượng giác (đơn vị độ và radian), hệ thức Chasles cho các góc lượng giác, đường tròn lượng giác.
+            \item Nhận biết được khái niệm giá trị lượng giác của một góc lượng giác ($\sin\alpha$, $\cos\alpha$, $\tan\alpha$, $\cot\alpha$).
+            \item Giải thích được dấu của các giá trị lượng giác dựa trên góc phần tư chứa điểm biểu diễn của góc lượng giác trên đường tròn lượng giác.
+            \item Mô tả và ghi nhớ bảng giá trị lượng giác của một số góc lượng giác thường gặp; thiết lập và vận dụng các hệ thức cơ bản giữa các giá trị lượng giác của một góc lượng giác: $\sin^2\alpha + \cos^2\alpha = 1$, $1 + \tan^2\alpha = \dfrac{1}{\cos^2\alpha}$, $1 + \cot^2\alpha = \dfrac{1}{\sin^2\alpha}$, $\tan\alpha \cdot \cot\alpha = 1$.
+            \item Nhận biết và vận dụng mối quan hệ giữa các giá trị lượng giác của các góc lượng giác có liên quan đặc biệt: đối nhau, bù nhau, phụ nhau, hơn kém nhau $\pi$.
+        \end{itemize}
+        \item \textit{Năng lực mô hình hóa toán học}: Thiết lập mô hình lượng giác để mô tả các hiện tượng chuyển động tròn đều trong thực tiễn (chuyển động của kim đồng hồ, đu quay, ròng rọc cơ học, bánh xe đạp).
+        \item \textit{Năng lực giải quyết vấn đề toán học}: Vận dụng linh hoạt các hệ thức lượng giác cơ bản và công thức góc liên quan đặc biệt để tính giá trị biểu thức, rút gọn biểu thức, chứng minh đẳng thức lượng giác và giải quyết các tình huống thực tế.
+        \item \textit{Năng lực giao tiếp toán học}: Sử dụng chính xác các thuật ngữ, ký hiệu toán học lượng giác; trình bày lời giải rõ ràng, mạch lạc; tích cực trao đổi, phản biện trong hoạt động nhóm.
+        \item \textit{Năng lực sử dụng công cụ, phương tiện học toán}: Sử dụng thành thạo máy tính cầm tay (MTCT Casio fx-580VN X) để chuyển đổi giữa đơn vị độ và radian, tính giá trị lượng giác của một góc và xác định số đo góc khi biết giá trị lượng giác; khai thác phần mềm trực quan GeoGebra để khảo sát đường tròn lượng giác.
+    \end{itemize}
+
+    \item \textbf{Năng lực số (Chuẩn hóa theo Thông tư 02/2025/TT-BGDĐT)}:
+    \begin{itemize}[leftmargin=0.8cm]
+        \item \textit{Mã 5.2NC1b (Giải quyết vấn đề bằng công nghệ số)}: Học sinh áp dụng thành thạo máy tính cầm tay Casio fx-580VN X để chuyển đổi linh hoạt qua lại giữa đơn vị độ ($^\circ$) và radian ($\text{rad}$) thông qua tổ hợp phím \texttt{SHIFT} $\to$ \texttt{MENU} $\to$ \texttt{2} (Angle Unit), tính chính xác các giá trị lượng giác và kiểm tra tính đúng đắn của các biểu thức lượng giác.
+        \item \textit{Sáng tạo nội dung số và mô phỏng}: Tương tác với phần mềm GeoGebra trực tuyến để quan sát điểm chuyển động trên đường tròn lượng giác, nhận diện trực quan sự thay đổi tọa độ $(x, y) = (\cos\alpha, \sin\alpha)$ khi góc $\alpha$ biến thiên liên tục.
+    \end{itemize}
+
+    \item \textbf{Năng lực AI (Theo Quyết định số 2422/QĐ-BGDĐT)}:
+    \begin{itemize}[leftmargin=0.8cm]
+        \item \textit{Mã 11.C3.1 (Kỹ thuật câu lệnh và khai thác trợ lý AI)}: Học sinh bước đầu xác định và thực hành kỹ thuật đặt câu lệnh prompt có cấu trúc (vai trò - bối cảnh - yêu cầu cụ thể) cho trợ lý AI (Gemini, ChatGPT) nhằm giải thích trực quan khái niệm góc lượng giác, so sánh góc hình học và góc lượng giác, cũng như kiểm tra các bước rút gọn biểu thức lượng giác; đồng thời nhận diện được các giới hạn, sai số tiềm ẩn của AI trong suy luận toán học để duy trì tư duy phản biện độc lập.
+    \end{itemize}
+
+    \item \textbf{Năng lực chung}:
+    \begin{itemize}[leftmargin=0.8cm]
+        \item \textit{Năng lực tự chủ và tự học}: Chủ động nghiên cứu tài liệu, hoàn thành các nhiệm vụ học tập cá nhân trên phiếu học tập.
+        \item \textit{Năng lực giao tiếp và hợp tác}: Tích cực thảo luận cặp đôi, phối hợp làm việc nhóm để giải quyết các vấn đề toán học và bài tập ứng dụng.
+    \end{itemize}
+\end{itemize}
+
+\subsection*{2. Phẩm chất}
+
+\begin{itemize}[leftmargin=1.5cm]
+    \item \textbf{Chăm chỉ}: Chủ động hoàn thành các nhiệm vụ học tập, kiên trì giải quyết các bài toán biến đổi lượng giác từ cơ bản đến nâng cao.
+    \item \textbf{Trung thực}: Khách quan trong thảo luận, ghi nhận kết quả và tự đánh giá; trung thực khi sử dụng MTCT và trợ lý AI để đối chiếu lời giải cá nhân.
+    \item \textbf{Trách nhiệm}: Tích cực đóng góp vào công việc nhóm, có ý thức sử dụng công nghệ số và AI một cách an toàn, đúng đắn, có trách nhiệm đạo đức.
+\end{itemize}
+
+\section*{II. THIẾT BỊ DẠY HỌC VÀ HỌC LIỆU}
+
+\begin{itemize}[leftmargin=1.5cm]
+    \item \textbf{Giáo viên}:
+    \begin{itemize}[leftmargin=0.8cm]
+        \item Kế hoạch bài dạy chi tiết, bài giảng điện tử trình chiếu tương tác.
+        \item Tệp mô phỏng trực quan GeoGebra về chuyển động của tia trên đường tròn lượng giác.
+        \item Hệ thống 3 Phiếu học tập phân tầng (PHT 1, PHT 2, PHT 3) có thang giàn giáo hỗ trợ học sinh trung bình - yếu.
+        \item Bảng phụ nhóm, bút lông, phiếu đánh giá tiêu chí (Rubric).
+    \end{itemize}
+    \item \textbf{Học sinh}:
+    \begin{itemize}[leftmargin=0.8cm]
+        \item Sách giáo khoa Toán 11, vở ghi chép, compa, thước kẻ, thước đo góc.
+        \item Máy tính cầm tay Casio fx-580VN X.
+        \item Điện thoại thông minh/máy tính bảng (nếu có, để quét mã QR thực hành tương tác mô phỏng số và câu lệnh AI).
+    \end{itemize}
+\end{itemize}
+
+\section*{III. TIẾN TRÌNH DẠY HỌC (BAO QUÁT TOÀN BỘ 3 TIẾT)}
+
+\begin{center}
+    \begin{tcolorbox}[colback=blue!5!white,colframe=blue!75!black,title=\textbf{\large PHÂN PHỐI NỘI DUNG 3 TIẾT DẠY HỌC THEO PPCT}]
+        \textbf{TIẾT 1 (Tiết 1 theo PPCT):} Khái niệm góc lượng giác, số đo góc lượng giác (đơn vị độ và radian), hệ thức Chasles, đường tròn lượng giác.\\
+        \textbf{TIẾT 2 (Tiết 2 theo PPCT):} Giá trị lượng giác của một góc lượng giác, dấu của các giá trị lượng giác, bảng giá trị lượng giác đặc biệt, sử dụng MTCT Casio fx-580VN X và ứng dụng AI kiểm chứng.\\
+        \textbf{TIẾT 3 (Tiết 3 theo PPCT):} Các hệ thức lượng giác cơ bản, giá trị lượng giác của các góc có liên quan đặc biệt, luyện tập củng cố toàn bài và vận dụng thực tiễn STEM.
+    \end{tcolorbox}
+\end{center}
+
+\vspace{0.5em}
+
+% =========================================================================
+% TIẾT 1
+% =========================================================================
+\noindent\rule{\textwidth}{1.2pt}
+\begin{center}
+    {\large \textbf{TIẾT 1: GÓC LƯỢNG GIÁC VÀ ĐƯỜNG TRÒN LƯỢNG GIÁC}}\\[0.2em]
+    \textit{(Thời lượng: 45 phút - Tiết 1 theo PPCT)}
+\end{center}
+\noindent\rule{\textwidth}{0.5pt}
+
+\subsubsection*{1. Hoạt động 1: Mở đầu (Khởi động - 7 phút)}
+
+\paragraph{a) Mục tiêu:}
+Tạo tình huống có vấn đề xuất phát từ chuyển động quay thực tiễn (chuyển động của kim đồng hồ và vòng quay đu quay), giúp học sinh nhận thấy góc hình học ở lớp 10 (chỉ từ $0^\circ$ đến $180^\circ$) không đủ để mô tả chiều quay và các vòng quay lặp lại nhiều lần, từ đó kích thích nhu cầu mở rộng khái niệm góc lượng giác.
+
+\paragraph{b) Nội dung:}
+Giáo viên chiếu video ngắn hoặc hình ảnh chuyển động của kim phút đồng hồ và bánh xe vòng quay đu quay:
+\begin{itemize}
+    \item \textit{Tình huống 1}: Từ lúc 12 giờ đến 12 giờ 45 phút, kim phút đã quay quanh trục một góc bao nhiêu độ? Nếu kim phút quay tiếp 2 vòng nữa thì tổng số đo góc quay là bao nhiêu? Chiều quay của kim đồng hồ có gì khác biệt so với chiều ngược lại?
+    \item \textit{Tình huống 2}: Một chiếc cabin đu quay quay từ vị trí ban đầu qua 3 vòng rồi dừng lại ở vị trí tạo với vị trí ban đầu góc $45^\circ$. Làm thế nào để phân biệt chiều quay thuận, ngược và tổng góc mà cabin đã quét qua?
+\end{itemize}
+
+\paragraph{c) Sản phẩm:}
+\begin{itemize}
+    \item Học sinh nhận diện: Kim phút từ 12 giờ đến 12 giờ 45 phút quay được một góc hình học $270^\circ$.
+    \item Khi kim phút quay tiếp 2 vòng nữa, góc quay tích lũy thêm $2 \cdot 360^\circ = 720^\circ$, tổng cộng $270^\circ + 720^\circ = 990^\circ$.
+    \item Học sinh phát hiện: Cần có một quy ước về \textbf{chiều quay} (chiều dương, chiều âm) và số đo góc có thể vượt quá $360^\circ$ cũng như có thể mang dấu âm.
+\end{itemize}
+
+\paragraph{d) Tổ chức thực hiện:}
+\begin{itemize}
+    \item \textbf{Bước 1 (Chuyển giao nhiệm vụ)}: GV nêu vấn đề, yêu cầu HS quan sát hình ảnh đồng hồ treo tường và thảo luận cặp đôi trong 2 phút để trả lời hai tình huống trên.
+    \item \textbf{Bước 2 (Thực hiện nhiệm vụ - Có giàn giáo)}:
+    \begin{itemize}
+        \item \textit{Giàn giáo cho HS trung bình - yếu}: GV gợi ý: Một vòng tròn tương ứng bao nhiêu độ? Kim phút đi từ số 12 đến số 9 là mấy phần của vòng tròn? Khi kim tiếp tục quay thì góc quay tăng lên hay bị giới hạn ở $360^\circ$?
+    \end{itemize}
+    \item \textbf{Bước 3 (Báo cáo, thảo luận)}: Đại diện 1 cặp đôi trả lời, các cặp đôi khác nhận xét, bổ sung.
+    \item \textbf{Bước 4 (Kết luận, nhận định)}: GV chốt lại: Trong thực tiễn và kỹ thuật, các chuyển động quay đòi hỏi phải xác định được cả tia đầu, tia cuối, chiều quay và số vòng quay. Đó là lý do ta xây dựng khái niệm \textbf{Góc lượng giác}.
+\end{itemize}
+
+\subsubsection*{2. Hoạt động 2: Hình thành kiến thức (23 phút)}
+
+\paragraph{Nội dung 1: Khái niệm góc lượng giác và số đo của góc lượng giác (10 phút)}
+\begin{itemize}
+    \item \textbf{a) Mục tiêu}: Nhận biết khái niệm góc lượng giác tạo bởi tia đầu $Ou$, tia cuối $Ov$; quy ước chiều quay (chiều dương là ngược chiều kim đồng hồ, chiều âm là cùng chiều kim đồng hồ); kí hiệu $(Ou, Ov)$ và công thức số đo tổng quát của góc lượng giác.
+    \item \textbf{b) Nội dung}: Học sinh đọc SGK, quan sát mô phỏng và thực hiện HĐKP 1:
+    \begin{itemize}
+        \item Trong mặt phẳng, cho hai tia $Ou, Ov$. Xét một tia $Om$ quay quanh điểm $O$ từ tia $Ou$ đến trùng với tia $Ov$.
+        \item Quy ước chiều quay: Chiều ngược chiều kim đồng hồ là chiều dương ($+$), chiều cùng chiều kim đồng hồ là chiều âm ($-$).
+        \item Khi tia $Om$ quay quanh $O$ từ $Ou$ đến $Ov$, nó tạo nên góc lượng giác có tia đầu $Ou$ và tia cuối $Ov$, kí hiệu là $(Ou, Ov)$.
+        \item Số đo của góc lượng giác $(Ou, Ov)$ được xác định bởi: $\text{sđ}(Ou, Ov) = \alpha + k \cdot 360^\circ$ ($k \in \mathbb{Z}$), trong đó $\alpha$ là số đo của một góc lượng giác cụ thể bất kì tạo bởi hai tia đó.
+    \end{itemize}
+    \item \textbf{c) Sản phẩm}:
+    \begin{itemize}
+        \item Định nghĩa hoàn chỉnh trong vở ghi.
+        \item Ví dụ 1: Cho góc hình học $\widehat{uOv} = 60^\circ$. Nếu tia $Om$ quay theo chiều dương từ $Ou$ đến $Ov$ thì số đo là $60^\circ$. Nếu quay tiếp 1 vòng theo chiều dương thì số đo là $60^\circ + 360^\circ = 420^\circ$. Nếu quay theo chiều âm từ $Ou$ đến $Ov$ thì số đo là $-300^\circ$.
+        \item Công thức tổng quát: $\text{sđ}(Ou, Ov) = 60^\circ + k \cdot 360^\circ$ ($k \in \mathbb{Z}$).
+    \end{itemize}
+    \item \textbf{d) Tổ chức thực hiện}:
+    \begin{itemize}
+        \item \textit{Chuyển giao}: GV dùng compa hoặc mô hình cánh quạt để biểu diễn trực quan chuyển động quay. Yêu cầu HS viết số đo góc tương ứng với các chiều quay.
+        \item \textit{Thực hiện có giàn giáo}: Với HS trung bình - yếu, GV nhấn mạnh: Góc hình học chỉ có 1 giá trị duy nhất từ $0^\circ$ đến $180^\circ$, còn góc lượng giác có vô số số đo sai khác nhau một bội nguyên của $360^\circ$.
+        \item \textit{Báo cáo - Nhận định}: Cho 2 HS lên bảng viết biểu thức số đo, GV nhận xét và chuẩn hóa quy ước.
+    \end{itemize}
+\end{itemize}
+
+\paragraph{Nội dung 2: Đơn vị radian và chuyển đổi giữa độ và radian (7 phút)}
+\begin{itemize}
+    \item \textbf{a) Mục tiêu}: Nhận biết đơn vị đo góc radian, định nghĩa góc $1\text{ rad}$, nắm vững mối liên hệ $180^\circ = \pi\text{ rad}$ và thành thạo kỹ năng bấm MTCT Casio fx-580VN X chuyển đổi giữa hai đơn vị đo.
+    \item \textbf{b) Nội dung}:
+    \begin{itemize}
+        \item Trên đường tròn bán kính $R$, cung có độ dài bằng bán kính $R$ gọi là cung có số đo $1\text{ rad}$. Góc ở tâm chắn cung đó có số đo là $1\text{ rad}$.
+        \item Mối liên hệ: $180^\circ = \pi\text{ rad} \implies 1^\circ = \dfrac{\pi}{180}\text{ rad}$ và $1\text{ rad} = \left(\dfrac{180}{\pi}\right)^\circ \approx 57^\circ 17' 45''$.
+        \item Đổi góc $\alpha^\circ$ sang radian: $a = \alpha \cdot \dfrac{\pi}{180}$. Đổi $a\text{ rad}$ sang độ: $\alpha = a \cdot \dfrac{180}{\pi}$.
+        \item Công thức tính độ dài cung tròn bán kính $R$ có số đo $a\text{ rad}$: $l = R \cdot a$.
+        \item Thao tác MTCT Casio fx-580VN X: Thiết lập đơn vị đo góc: \texttt{SHIFT} $\to$ \texttt{MENU} $\to$ \texttt{2} (Angle Unit) $\to$ chọn \texttt{1: Degree} (Độ) hoặc \texttt{2: Radian}.
+    \end{itemize}
+    \item \textbf{c) Sản phẩm}:
+    \begin{itemize}
+        \item Chuyển đổi các góc đặc biệt:
+        $30^\circ = \dfrac{\pi}{6}\text{ rad}$; $45^\circ = \dfrac{\pi}{4}\text{ rad}$; $60^\circ = \dfrac{\pi}{3}\text{ rad}$; $90^\circ = \dfrac{\pi}{2}\text{ rad}$; $180^\circ = \pi\text{ rad}$; $360^\circ = 2\pi\text{ rad}$.
+        \item Số đo tổng quát theo radian: $\text{sđ}(Ou, Ov) = \alpha + k2\pi$ ($k \in \mathbb{Z}$).
+        \item Bài tập nhanh: Tính độ dài cung tròn có bán kính $R = 10\text{ cm}$ và số đo góc ở tâm $\alpha = \dfrac{\pi}{5}$:
+        $$l = R \cdot \alpha = 10 \cdot \dfrac{\pi}{5} = 2\pi \approx 6{,}28\text{ cm}.$$
+    \end{itemize}
+    \item \textbf{d) Tổ chức thực hiện}:
+    \begin{itemize}
+        \item \textit{Chuyển giao}: GV giao nhiệm vụ cá nhân làm bảng chuyển đổi nhanh các góc thông dụng.
+        \item \textit{Thực hiện có giàn giáo}: Hướng dẫn từng bước thao tác phím MTCT cho HS còn lúng túng.
+        \item \textit{Báo cáo - Nhận định}: Kiểm tra chéo kết quả giữa các bàn, GV xác nhận độ chính xác.
+    \end{itemize}
+\end{itemize}
+
+\paragraph{Nội dung 3: Hệ thức Chasles và Đường tròn lượng giác (6 phút)}
+\begin{itemize}
+    \item \textbf{a) Mục tiêu}: Nhận biết hệ thức Chasles cho ba tia tùy ý; định nghĩa đường tròn lượng giác và biết cách xác định điểm biểu diễn của góc lượng giác $\alpha$ trên đường tròn lượng giác.
+    \item \textbf{b) Nội dung}:
+    \begin{itemize}
+        \item \textit{Hệ thức Chasles}: Với ba tia $Ou, Ov, Ow$ bất kì, ta có:
+        $$\text{sđ}(Ou, Ov) + \text{sđ}(Ov, Ow) = \text{sđ}(Ou, Ow) + k2\pi \quad (k \in \mathbb{Z}).$$
+        \item \textit{Đường tròn lượng giác}: Trong mặt phẳng tọa độ $Oxy$, đường tròn lượng giác là đường tròn tâm $O$, bán kính $R = 1$, trên đó chọn chiều ngược chiều kim đồng hồ làm chiều dương và lấy điểm $A(1; 0)$ làm điểm gốc.
+        \item \textit{Điểm biểu diễn góc lượng giác}: Với mỗi góc lượng giác có số đo $\alpha$, có duy nhất một điểm $M$ trên đường tròn lượng giác sao cho $\text{sđ}(OA, OM) = \alpha$. Điểm $M$ đó được gọi là điểm biểu diễn góc lượng giác có số đo $\alpha$.
+    \end{itemize}
+    \item \textbf{c) Sản phẩm}:
+    \begin{itemize}
+        \item Học sinh vẽ chính xác hình đường tròn lượng giác với 4 điểm mốc: $A(1; 0)$, $B(0; 1)$, $A'(-1; 0)$, $B'(0; -1)$.
+        \item Xác định được điểm biểu diễn của các góc: $\alpha_1 = \dfrac{\pi}{2}$ (trùng điểm $B$), $\alpha_2 = \pi$ (trùng điểm $A'$), $\alpha_3 = -\dfrac{\pi}{2}$ (trùng điểm $B'$), $\alpha_4 = \dfrac{5\pi}{4}$ (thuộc góc phần tư thứ III, điểm chính giữa cung $A'B'$).
+    \end{itemize}
+    \item \textbf{d) Tổ chức thực hiện}:
+    \begin{itemize}
+        \item \textit{Chuyển giao}: GV chiếu tệp GeoGebra chuyển động điểm $M$ khi góc $\alpha$ tăng từ $0$ đến $2\pi$ và âm dần.
+        \item \textit{Thực hiện có giàn giáo}: Hướng dẫn HS cách tách góc: $\dfrac{5\pi}{4} = \pi + \dfrac{\pi}{4}$, quay từ $A$ một nửa vòng tròn đến $A'$ rồi quay tiếp một góc $\dfrac{\pi}{4}$.
+        \item \textit{Báo cáo - Nhận định}: GV nhận xét bài vẽ của HS trên bảng, củng cố quy tắc xác định điểm biểu diễn.
+    \end{itemize}
+\end{itemize}
+
+\subsubsection*{3. Hoạt động 3: Luyện tập (10 phút)}
+
+\paragraph{a) Mục tiêu:}
+Củng cố kỹ năng chuyển đổi độ - radian bằng MTCT và kỹ năng xác định điểm biểu diễn của góc lượng giác trên đường tròn lượng giác.
+
+\paragraph{b) Nội dung:}
+Học sinh hoàn thành Phiếu học tập số 1 (gồm 3 bài tập từ nhận biết đến thông hiểu):
+\begin{itemize}
+    \item \textbf{Bài 1}: Đổi các số đo sau sang radian: $75^\circ$; $-210^\circ$; $405^\circ$.
+    \item \textbf{Bài 2}: Đổi các số đo sau sang độ: $\dfrac{3\pi}{8}$; $-\dfrac{7\pi}{6}$; $2{,}5\text{ rad}$.
+    \item \textbf{Bài 3}: Biểu diễn trên đường tròn lượng giác các điểm ngọn của góc lượng giác có số đo:
+    a) $\alpha = \dfrac{2\pi}{3}$; \quad b) $\beta = -\dfrac{3\pi}{4}$; \quad c) $\gamma = \dfrac{9\pi}{4}$.
+\end{itemize}
+
+\paragraph{c) Sản phẩm (Lời giải chi tiết):}
+\begin{itemize}
+    \item \textbf{Bài 1}:
+    \begin{itemize}
+        \item $75^\circ = 75 \cdot \dfrac{\pi}{180} = \dfrac{5\pi}{12}\text{ rad}$.
+        \item $-210^\circ = -210 \cdot \dfrac{\pi}{180} = -\dfrac{7\pi}{6}\text{ rad}$.
+        \item $405^\circ = 405 \cdot \dfrac{\pi}{180} = \dfrac{9\pi}{4}\text{ rad}$.
+    \end{itemize}
+    \item \textbf{Bài 2}:
+    \begin{itemize}
+        \item $\dfrac{3\pi}{8}\text{ rad} = \left(\dfrac{3\pi}{8} \cdot \dfrac{180}{\pi}\right)^\circ = 67{,}5^\circ = 67^\circ 30'$.
+        \item $-\dfrac{7\pi}{6}\text{ rad} = \left(-\dfrac{7\pi}{6} \cdot \dfrac{180}{\pi}\right)^\circ = -210^\circ$.
+        \item $2{,}5\text{ rad} = \left(2{,}5 \cdot \dfrac{180}{\pi}\right)^\circ \approx 143^\circ 14' 22''$.
+    \end{itemize}
+    \item \textbf{Bài 3}:
+    \begin{itemize}
+        \item a) $\dfrac{2\pi}{3} = \pi - \dfrac{\pi}{3}$: Điểm $M_1$ nằm ở góc phần tư thứ II.
+        \item b) $-\dfrac{3\pi}{4}$: Quay theo chiều âm từ $A$ một góc $135^\circ$, điểm $M_2$ nằm ở góc phần tư thứ III.
+        \item c) $\dfrac{9\pi}{4} = 2\pi + \dfrac{\pi}{4}$: Điểm $M_3$ trùng với điểm biểu diễn góc $\dfrac{\pi}{4}$, nằm ở góc phần tư thứ I.
+    \end{itemize}
+\end{itemize}
+
+\paragraph{d) Tổ chức thực hiện:}
+\begin{itemize}
+    \item HS làm việc độc lập 5 phút, sau đó đổi bài kiểm tra chéo bàn.
+    \item GV gọi 3 HS lên bảng giải 3 bài. GV hỗ trợ HS trung bình bằng câu hỏi gợi ý bước tách góc.
+    \item GV chốt đáp án, sửa các lỗi bấm phím MTCT thường gặp.
+\end{itemize}
+
+\subsubsection*{4. Hoạt động 4: Vận dụng (5 phút)}
+
+\paragraph{a) Mục tiêu:}
+Vận dụng công thức độ dài cung $l = R \cdot \alpha$ vào mô hình chuyển động quay của kim đồng hồ và bánh xe.
+
+\paragraph{b) Nội dung:}
+Một chiếc đồng hồ có kim giờ dài $8\text{ cm}$, kim phút dài $12\text{ cm}$. Trong khoảng thời gian từ 8 giờ sáng đến 10 giờ 30 phút cùng ngày:
+\begin{enumerate}
+    \item Tính góc quay lượng giác của kim giờ và kim phút theo đơn vị radian.
+    \item Tính độ dài quãng đường mà đầu mút kim phút và kim giờ đã vạch ra trên mặt đồng hồ.
+\end{enumerate}
+
+\paragraph{c) Sản phẩm:}
+\begin{enumerate}
+    \item Khoảng thời gian từ 8h đến 10h30 là $2{,}5$ giờ.
+    \begin{itemize}
+        \item Kim phút: Trong $2{,}5$ giờ, kim phút quay được $2{,}5$ vòng theo chiều âm (cùng chiều kim đồng hồ).
+        Số đo góc quay: $\alpha_{\text{phút}} = -2{,}5 \cdot 2\pi = -5\pi\text{ rad}$.
+        \item Kim giờ: Trong 12 giờ, kim giờ quay được 1 vòng ($-2\pi\text{ rad}$). Do đó trong $2{,}5$ giờ, góc quay lượng giác của kim giờ là:
+        $\alpha_{\text{giờ}} = -\dfrac{2{,}5}{12} \cdot 2\pi = -\dfrac{5\pi}{12}\text{ rad}$.
+    \end{itemize}
+    \item Quãng đường vạch ra:
+    \begin{itemize}
+        \item Đầu mút kim phút: $s_{\text{phút}} = R_{\text{phút}} \cdot |\alpha_{\text{phút}}| = 12 \cdot 5\pi = 60\pi \approx 188{,}5\text{ cm}$.
+        \item Đầu mút kim giờ: $s_{\text{giờ}} = R_{\text{giờ}} \cdot |\alpha_{\text{giờ}}| = 8 \cdot \dfrac{5\pi}{12} = \dfrac{10\pi}{3} \approx 10{,}47\text{ cm}$.
+    \end{itemize}
+\end{enumerate}
+
+\paragraph{d) Tổ chức thực hiện:}
+GV giao bài toán, hướng dẫn HS về nhà hoàn thiện vào vở học tập và nộp lại đầu tiết sau.
+
+\vspace{0.8em}
+
+% =========================================================================
+% TIẾT 2
+% =========================================================================
+\noindent\rule{\textwidth}{1.2pt}
+\begin{center}
+    {\large \textbf{TIẾT 2: GIÁ TRỊ LƯỢNG GIÁC CỦA GÓC LƯỢNG GIÁC}}\\[0.2em]
+    \textit{(Thời lượng: 45 phút - Tiết 2 theo PPCT)}
+\end{center}
+\noindent\rule{\textwidth}{0.5pt}
+
+\subsubsection*{1. Hoạt động 1: Mở đầu (Khởi động - 6 phút)}
+
+\paragraph{a) Mục tiêu:}
+Tái hiện lại định nghĩa giá trị lượng giác của góc hình học từ $0^\circ$ đến $180^\circ$ (lớp 10), đặt ra câu hỏi đối với các góc vượt quá $180^\circ$ hoặc góc âm thì giá trị lượng giác được xác định như thế nào.
+
+\paragraph{b) Nội dung:}
+\begin{itemize}
+    \item GV nêu câu hỏi: Ở lớp 10, ta đã biết với mỗi góc $\alpha$ ($0^\circ \leq \alpha \leq 180^\circ$), nếu điểm $M(x_0; y_0)$ trên nửa đường tròn đơn vị sao cho $\widehat{xOM} = \alpha$ thì $\cos\alpha = x_0$ và $\sin\alpha = y_0$.
+    \item Nếu bây giờ $\alpha = 240^\circ$ (nằm ở góc phần tư thứ III) hoặc $\alpha = -60^\circ$ thì điểm $M$ sẽ nằm ở đâu trên toàn bộ đường tròn lượng giác? Tọa độ của $M$ có còn dùng để định nghĩa $\sin\alpha, \cos\alpha$ được không?
+\end{itemize}
+
+\paragraph{c) Sản phẩm:}
+Học sinh suy đoán: Hoàn toàn có thể dùng tọa độ $(x; y)$ của điểm $M$ trên toàn bộ đường tròn lượng giác để định nghĩa giá trị lượng giác cho mọi góc lượng giác $\alpha$ bất kì ($x = \cos\alpha, y = \sin\alpha$).
+
+\paragraph{d) Tổ chức thực hiện:}
+GV giao câu hỏi, gọi 1 HS lên bảng vẽ nhanh điểm $M$ ứng với góc $240^\circ$, dẫn dắt vào bài học mới.
+
+\subsubsection*{2. Hoạt động 2: Hình thành kiến thức (24 phút)}
+
+\paragraph{Nội dung 1: Định nghĩa giá trị lượng giác của góc lượng giác và xét dấu (12 phút)}
+\begin{itemize}
+    \item \textbf{a) Mục tiêu}: Nhận biết định nghĩa $\cos\alpha, \sin\alpha, \tan\alpha, \cot\alpha$ của góc lượng giác $\alpha$ thông qua tọa độ điểm $M(x; y)$ trên đường tròn lượng giác; hiểu bản chất trục hoành là trục cosin, trục tung là trục sin; xác định dấu của các giá trị lượng giác ở 4 góc phần tư.
+    \item \textbf{b) Nội dung}:
+    \begin{itemize}
+        \item Lấy điểm $M(x; y)$ trên đường tròn lượng giác sao cho $\text{sđ}(OA, OM) = \alpha$. Khi đó:
+        \begin{itemize}
+            \item Tung độ $y$ của $M$ gọi là sin của $\alpha$, kí hiệu là $\sin\alpha$: $\sin\alpha = y$.
+            \item Hoành độ $x$ của $M$ gọi là cosin của $\alpha$, kí hiệu là $\cos\alpha$: $\cos\alpha = x$.
+            \item Nếu $\cos\alpha \neq 0$ ($x \neq 0$), tỉ số $\dfrac{\sin\alpha}{\cos\alpha} = \dfrac{y}{x}$ gọi là tang của $\alpha$, kí hiệu là $\tan\alpha$.
+            \item Nếu $\sin\alpha \neq 0$ ($y \neq 0$), tỉ số $\dfrac{\cos\alpha}{\sin\alpha} = \dfrac{x}{y}$ gọi là côtang của $\alpha$, kí hiệu là $\cot\alpha$.
+        \end{itemize}
+        \item \textit{Bảng xét dấu giá trị lượng giác}:
+        \begin{center}
+        \begin{tabular}{|c|c|c|c|c|}
+            \hline
+            \textbf{Góc phần tư} & \textbf{I} ($0 < \alpha < \dfrac{\pi}{2}$) & \textbf{II} ($\dfrac{\pi}{2} < \alpha < \pi$) & \textbf{III} ($\pi < \alpha < \dfrac{3\pi}{2}$) & \textbf{IV} ($\dfrac{3\pi}{2} < \alpha < 2\pi$) \\
+            \hline
+            $\cos\alpha$ ($x$) & $+$ & $-$ & $-$ & $+$ \\
+            \hline
+            $\sin\alpha$ ($y$) & $+$ & $+$ & $-$ & $-$ \\
+            \hline
+            $\tan\alpha$ ($y/x$) & $+$ & $-$ & $+$ & $-$ \\
+            \hline
+            $\cot\alpha$ ($x/y$) & $+$ & $-$ & $+$ & $-$ \\
+            \hline
+        \end{tabular}
+        \end{center}
+        \item \textit{Điều kiện xác định và miền giá trị}:
+        $$-1 \leq \sin\alpha \leq 1; \quad -1 \leq \cos\alpha \leq 1 \quad (\forall \alpha \in \mathbb{R}).$$
+        $\tan\alpha$ xác định khi $\alpha \neq \dfrac{\pi}{2} + k\pi$ ($k \in \mathbb{Z}$); $\cot\alpha$ xác định khi $\alpha \neq k\pi$ ($k \in \mathbb{Z}$).
+    \end{itemize}
+    \item \textbf{c) Sản phẩm}:
+    \begin{itemize}
+        \item HS ghi chép định nghĩa đầy đủ và bảng xét dấu.
+        \item Ví dụ 1: Xác định dấu của: $\sin\left(\dfrac{4\pi}{3}\right)$; $\cos(-45^\circ)$; $\tan\left(\dfrac{7\pi}{6}\right)$.
+        \textit{Lời giải}:
+        + Vì $\pi < \dfrac{4\pi}{3} < \dfrac{3\pi}{2}$ (Góc phần tư III) $\implies \sin\left(\dfrac{4\pi}{3}\right) < 0$.
+        + Vì $-45^\circ$ thuộc Góc phần tư IV $\implies \cos(-45^\circ) > 0$.
+        + Vì $\pi < \dfrac{7\pi}{6} < \dfrac{3\pi}{2}$ (Góc phần tư III) $\implies \tan\left(\dfrac{7\pi}{6}\right) > 0$.
+    \end{itemize}
+    \item \textbf{d) Tổ chức thực hiện}:
+    \begin{itemize}
+        \item \textit{Chuyển giao}: GV vẽ hệ trục $Oxy$ gắn đường tròn lượng giác, gọi tên trục $Ox$ là trục $\cos$, trục $Oy$ là trục $\sin$. Yêu cầu học sinh hoạt động cá nhân điền dấu vào bảng.
+        \item \textit{Thực hiện có giàn giáo}: Với HS trung bình - yếu, GV hướng dẫn thần chú trực quan: "Chiếu xuống $Ox$ được $\cos$, chiếu sang $Oy$ được $\sin$; cùng dấu thì $\tan, \cot$ dương, trái dấu thì $\tan, \cot$ âm".
+        \item \textit{Báo cáo - Nhận định}: Gọi đại diện HS trả lời, chuẩn hóa bảng dấu.
+    \end{itemize}
+\end{itemize}
+
+\paragraph{Nội dung 2: Bảng giá trị đặc biệt, MTCT Casio fx-580VN X và Prompt AI (12 phút)}
+\begin{itemize}
+    \item \textbf{a) Mục tiêu}: Thuộc bảng giá trị lượng giác các góc đặc biệt; thành thạo bấm MTCT tính giá trị lượng giác và tìm góc; rèn luyện năng lực AI (Mã 11.C3.1): đặt câu lệnh prompt để AI giải thích hình học và kiểm chứng kết quả.
+    \item \textbf{b) Nội dung}:
+    \begin{itemize}
+        \item Bảng giá trị lượng giác của các góc thường gặp ($0, \dfrac{\pi}{6}, \dfrac{\pi}{4}, \dfrac{\pi}{3}, \dfrac{\pi}{2}, \pi$):
+        \begin{center}
+        \begin{tabular}{|c|c|c|c|c|c|c|}
+            \hline
+            $\alpha$ & $0$ & $\dfrac{\pi}{6}$ ($30^\circ$) & $\dfrac{\pi}{4}$ ($45^\circ$) & $\dfrac{\pi}{3}$ ($60^\circ$) & $\dfrac{\pi}{2}$ ($90^\circ$) & $\pi$ ($180^\circ$) \\
+            \hline
+            $\sin\alpha$ & $0$ & $\dfrac{1}{2}$ & $\dfrac{\sqrt{2}}{2}$ & $\dfrac{\sqrt{3}}{2}$ & $1$ & $0$ \\
+            \hline
+            $\cos\alpha$ & $1$ & $\dfrac{\sqrt{3}}{2}$ & $\dfrac{\sqrt{2}}{2}$ & $\dfrac{1}{2}$ & $0$ & $-1$ \\
+            \hline
+            $\tan\alpha$ & $0$ & $\dfrac{\sqrt{3}}{3}$ & $1$ & $\sqrt{3}$ & Không xác định & $0$ \\
+            \hline
+            $\cot\alpha$ & Không xác định & $\sqrt{3}$ & $1$ & $\dfrac{\sqrt{3}}{3}$ & $0$ & Không xác định \\
+            \hline
+        \end{tabular}
+        \end{center}
+        \item Hướng dẫn MTCT Casio fx-580VN X:
+        \begin{itemize}
+            \item Tính $\sin\left(\dfrac{\pi}{6}\right)$: Chọn Radian (\texttt{SHIFT} $\to$ \texttt{MENU} $\to$ \texttt{2} $\to$ \texttt{2}), bấm \texttt{sin} $\to$ \texttt{fraction} $\to$ $\pi$ trên $6$ $\to$ phím \texttt{=} ra $\dfrac{1}{2}$.
+            \item Tính $\cot\left(\dfrac{\pi}{6}\right)$: Bấm $\dfrac{1}{\tan(\pi/6)}$ ra $\sqrt{3}$.
+            \item Tìm số đo góc $\alpha$ khi biết $\sin\alpha = 0{,}5$: Bấm \texttt{SHIFT} $\to$ \texttt{sin} ($sin^{-1}$) $\to$ $0{,}5$ $\to$ ra $\dfrac{\pi}{6}$ (hoặc $30^\circ$).
+        \end{itemize}
+        \item \textbf{Tích hợp Năng lực AI (QĐ 2422/QĐ-BGDĐT - Mã 11.C3.1)}:
+        GV giới thiệu mẫu Prompt chuẩn để học sinh thực hành trên ứng dụng AI hỗ trợ học tập:
+        \begin{tcolorbox}[colback=gray!10!white,colframe=black!70,title=\textbf{Thực hành kỹ thuật Prompt AI}]
+            \textit{"Đóng vai một giáo viên Toán THPT, hãy giải thích từng bước bằng ngôn ngữ hình học vì sao $\cos(120^\circ) = -0{,}5$ và $\sin(120^\circ) = \dfrac{\sqrt{3}}{2}$ thông qua tọa độ điểm trên đường tròn lượng giác. Sau đó đưa ra 2 bài toán tương tự để tôi tự luyện tập."}
+        \end{tcolorbox}
+        Học sinh quan sát câu trả lời của AI, đối chiếu với định nghĩa và nhận diện: AI suy luận dựa trên tam giác vuông phụ trợ trong góc phần tư thứ II.
+    \end{itemize}
+    \item \textbf{c) Sản phẩm}: Học sinh ghi nhớ bảng giá trị, bấm MTCT chuẩn xác và nắm vững cấu trúc câu lệnh hỏi AI.
+    \item \textbf{d) Tổ chức thực hiện}:
+    \begin{itemize}
+        \item GV hướng dẫn mẫu trên máy chiếu (hoặc phần mềm giả lập MTCT Casio fx-580VN X).
+        \item Cho HS chia cặp đôi thực hành bấm máy và kiểm tra kết quả chéo.
+    \end{itemize}
+\end{itemize}
+
+\subsubsection*{3. Hoạt động 3: Luyện tập (10 phút)}
+
+\paragraph{a) Mục tiêu:}
+Luyện tập tính giá trị lượng giác của các góc bằng định nghĩa, bảng giá trị và MTCT; củng cố kỹ năng xét dấu.
+
+\paragraph{b) Nội dung:}
+Hoàn thành Phiếu học tập số 2:
+\begin{itemize}
+    \item \textbf{Bài 1}: Không dùng máy tính cầm tay, hãy tính giá trị lượng giác ($\sin, \cos, \tan$) của góc $\alpha = \dfrac{3\pi}{4}$ và $\beta = -\dfrac{\pi}{3}$.
+    \item \textbf{Bài 2}: Dùng máy tính cầm tay Casio fx-580VN X:
+    a) Tính gần đúng đến hàng phần nghìn: $\sin(-125^\circ)$, $\cos\left(\dfrac{2\pi}{7}\right)$, $\tan\left(2{,}1\text{ rad}\right)$.
+    b) Tìm số đo góc $\alpha \in [0; \pi]$ biết $\cos\alpha = -0{,}6$.
+\end{itemize}
+
+\paragraph{c) Sản phẩm (Lời giải chi tiết):}
+\begin{itemize}
+    \item \textbf{Bài 1}:
+    \begin{itemize}
+        \item Với $\alpha = \dfrac{3\pi}{4} = \pi - \dfrac{\pi}{4}$: Điểm $M$ thuộc góc phần tư II có tọa độ $\left(-\dfrac{\sqrt{2}}{2}; \dfrac{\sqrt{2}}{2}\right)$.
+        Suy ra: $\cos\left(\dfrac{3\pi}{4}\right) = -\dfrac{\sqrt{2}}{2}$; $\sin\left(\dfrac{3\pi}{4}\right) = \dfrac{\sqrt{2}}{2}$; $\tan\left(\dfrac{3\pi}{4}\right) = -1$.
+        \item Với $\beta = -\dfrac{\pi}{3}$: Điểm $M$ thuộc góc phần tư IV có tọa độ $\left(\dfrac{1}{2}; -\dfrac{\sqrt{3}}{2}\right)$.
+        Suy ra: $\cos\left(-\dfrac{\pi}{3}\right) = \dfrac{1}{2}$; $\sin\left(-\dfrac{\pi}{3}\right) = -\dfrac{\sqrt{3}}{2}$; $\tan\left(-\dfrac{\pi}{3}\right) = -\sqrt{3}$.
+    \end{itemize}
+    \item \textbf{Bài 2}:
+    \begin{itemize}
+        \item a) $\sin(-125^\circ) \approx -0{,}819$; $\cos\left(\dfrac{2\pi}{7}\right) \approx 0{,}623$; $\tan(2{,}1) \approx -1{,}709$.
+        \item b) Bấm \texttt{SHIFT} $\to$ \texttt{cos} $\to$ $-0{,}6$ $\to$ kết quả: $\alpha \approx 2{,}214\text{ rad}$ (hoặc $\approx 126^\circ 52'$).
+    \end{itemize}
+\end{itemize}
+
+\paragraph{d) Tổ chức thực hiện:}
+HS làm bài cá nhân, GV quan sát giúp đỡ các em học sinh có khó khăn về thao tác chuyển đổi Radian/Degree trên MTCT.
+
+\subsubsection*{4. Hoạt động 4: Vận dụng (5 phút)}
+
+\paragraph{a) Mục tiêu:}
+Vận dụng định nghĩa và giá trị lượng giác để giải quyết bài toán tính độ cao của một cabin đu quay theo thời gian.
+
+\paragraph{b) Nội dung:}
+Một vòng đu quay có tâm $O$ ở độ cao $30\text{ m}$ so với mặt đất, bán kính $R = 25\text{ m}$. Đu quay quay đều theo chiều ngược chiều kim đồng hồ với tốc độ $1$ vòng mất $12$ phút. Tại thời điểm ban đầu $t = 0$, cabin ở vị trí thấp nhất (cách mặt đất $5\text{ m}$).
+Viết công thức tính độ cao $h(t)$ (tính bằng mét) của cabin so với mặt đất tại thời điểm $t$ phút ($0 \leq t \leq 12$).
+
+\paragraph{c) Sản phẩm:}
+\begin{itemize}
+    \item Vận tốc góc của đu quay: $\omega = \dfrac{2\pi}{12} = \dfrac{\pi}{6}\text{ rad/phút}$.
+    \item Chọn hệ trục tọa độ $Oxy$ với gốc $O$ tại tâm đu quay, trục $Ox$ nằm ngang, trục $Oy$ hướng thẳng đứng lên trên.
+    \item Tại $t = 0$, cabin ở vị trí thấp nhất, tương ứng góc ban đầu $\varphi_0 = -\dfrac{\pi}{2}$.
+    \item Tại thời điểm $t$, góc lượng giác của tia nối tâm tới cabin là: $\alpha(t) = -\dfrac{\pi}{2} + \dfrac{\pi}{6}t$.
+    \item Tọa độ tung độ của cabin so với tâm $O$ là: $y = R \cdot \sin\alpha(t) = 25 \cdot \sin\left(\dfrac{\pi}{6}t - \dfrac{\pi}{2}\right) = -25\cos\left(\dfrac{\pi}{6}t\right)$.
+    \item Độ cao của cabin so với mặt đất:
+    $$h(t) = 30 + y = 30 - 25\cos\left(\dfrac{\pi}{6}t\right)\text{ (m)}.$$
+\end{itemize}
+
+\paragraph{d) Tổ chức thực hiện:}
+GV giao bài toán, gợi ý cách gắn hệ trục tọa độ vào tâm đu quay và yêu cầu học sinh thảo luận cặp đôi hoàn thiện báo cáo vào đầu tiết 3.
+
+\vspace{0.8em}
+
+% =========================================================================
+% TIẾT 3
+% =========================================================================
+\noindent\rule{\textwidth}{1.2pt}
+\begin{center}
+    {\large \textbf{TIẾT 3: HỆ THỨC CƠ BẢN VÀ CÁC GÓC CÓ LIÊN QUAN ĐẶC BIỆT}}\\[0.2em]
+    \textit{(Thời lượng: 45 phút - Tiết 3 theo PPCT)}
+\end{center}
+\noindent\rule{\textwidth}{0.5pt}
+
+\subsubsection*{1. Hoạt động 1: Mở đầu (Khởi động - 6 phút)}
+
+\paragraph{a) Mục tiêu:}
+Từ định lý Pythagore trong tam giác vuông trên hệ tọa độ $Oxy$ và tính đối xứng của đường tròn lượng giác, khơi gợi nhu cầu tìm kiếm các công thức liên hệ chặt chẽ giữa các giá trị lượng giác.
+
+\paragraph{b) Nội dung:}
+\begin{itemize}
+    \item Điểm $M(x; y)$ nằm trên đường tròn lượng giác $x^2 + y^2 = 1$. Thay $x = \cos\alpha, y = \sin\alpha$ vào phương trình, ta thu được đẳng thức nào?
+    \item Quan sát điểm $M(\cos\alpha; \sin\alpha)$ và điểm $M'$ đối xứng với $M$ qua trục $Ox$, tọa độ của $M'$ liên hệ như thế nào với tọa độ của $M$? Góc lượng giác tương ứng của $M'$ là góc nào?
+\end{itemize}
+
+\paragraph{c) Sản phẩm:}
+\begin{itemize}
+    \item Đẳng thức thu được: $\cos^2\alpha + \sin^2\alpha = 1$.
+    \item Điểm đối xứng qua $Ox$ có tọa độ $(\cos\alpha; -\sin\alpha)$, tương ứng với góc đối $-\alpha$. Từ đó nhận ra mối liên hệ: $\cos(-\alpha) = \cos\alpha$ và $\sin(-\alpha) = -\sin\alpha$.
+\end{itemize}
+
+\paragraph{d) Tổ chức thực hiện:}
+GV đặt câu hỏi gợi mở, hướng dẫn học sinh quan sát hình vẽ trực quan trên bảng, kết nối trực tiếp vào các hệ thức cơ bản.
+
+\subsubsection*{2. Hoạt động 2: Hình thành kiến thức (22 phút)}
+
+\paragraph{Nội dung 1: Các hệ thức lượng giác cơ bản (11 phút)}
+\begin{itemize}
+    \item \textbf{a) Mục tiêu}: Nắm vững và biết cách chứng minh 4 hệ thức lượng giác cơ bản; biết cách tính các giá trị lượng giác còn lại khi biết một giá trị lượng giác và khoảng của góc $\alpha$.
+    \item \textbf{b) Nội dung}:
+    \begin{itemize}
+        \item Bốn hệ thức lượng giác cơ bản:
+        \begin{enumerate}
+            \item $\sin^2\alpha + \cos^2\alpha = 1$ với mọi $\alpha \in \mathbb{R}$.
+            \item $1 + \tan^2\alpha = \dfrac{1}{\cos^2\alpha}$ với $\alpha \neq \dfrac{\pi}{2} + k\pi$ ($k \in \mathbb{Z}$).
+            \item $1 + \cot^2\alpha = \dfrac{1}{\sin^2\alpha}$ với $\alpha \neq k\pi$ ($k \in \mathbb{Z}$).
+            \item $\tan\alpha \cdot \cot\alpha = 1$ với $\alpha \neq k\dfrac{\pi}{2}$ ($k \in \mathbb{Z}$).
+        \end{enumerate}
+        \item \textit{Ví dụ áp dụng}: Cho $\sin\alpha = \dfrac{3}{5}$ với $\dfrac{\pi}{2} < \alpha < \pi$. Tính $\cos\alpha, \tan\alpha, \cot\alpha$.
+        \textit{Lời giải chi tiết}:
+        + Áp dụng $\sin^2\alpha + \cos^2\alpha = 1 \implies \cos^2\alpha = 1 - \sin^2\alpha = 1 - \left(\dfrac{3}{5}\right)^2 = \dfrac{16}{25}$.
+        + Do $\dfrac{\pi}{2} < \alpha < \pi$ (Góc phần tư thứ II) nên $\cos\alpha < 0$. Do đó:
+        $$\cos\alpha = -\sqrt{\dfrac{16}{25}} = -\dfrac{4}{5}.$$
+        + Từ đó suy ra:
+        $$\tan\alpha = \dfrac{\sin\alpha}{\cos\alpha} = \dfrac{3/5}{-4/5} = -\dfrac{3}{4}; \quad \cot\alpha = \dfrac{1}{\tan\alpha} = -\dfrac{4}{3}.$$
+    \end{itemize}
+    \item \textbf{c) Sản phẩm}: Lời giải mẫu hoàn chỉnh của học sinh vào vở ghi.
+    \item \textbf{d) Tổ chức thực hiện}:
+    \begin{itemize}
+        \item GV cho HS tự chứng minh công thức (2) bằng cách chia hai vế của (1) cho $\cos^2\alpha$.
+        \item \textit{Giàn giáo sư phạm}: Nhắc nhở HS yếu luôn phải kiểm tra dấu của góc phần tư trước khi khai căn bậc hai (tránh sai lầm kinh điển: $\cos\alpha = \pm \dfrac{4}{5}$ mà không loại nghiệm).
+    \end{itemize}
+\end{itemize}
+
+\paragraph{Nội dung 2: Giá trị lượng giác của các góc có liên quan đặc biệt (11 phút)}
+\begin{itemize}
+    \item \textbf{a) Mục tiêu}: Hiểu và áp dụng các công thức lượng giác của góc đối nhau, bù nhau, hơn kém nhau $\pi$, phụ nhau (ghi nhớ theo khẩu quyết sư phạm: \textit{"Cos đối, Sin bù, Phụ chéo, Hơn kém pi tan cot"}).
+    \item \textbf{b) Nội dung}:
+    \begin{enumerate}
+        \item \textbf{Góc đối nhau} ($\alpha$ và $-\alpha$):
+        $$\cos(-\alpha) = \cos\alpha; \quad \sin(-\alpha) = -\sin\alpha; \quad \tan(-\alpha) = -\tan\alpha; \quad \cot(-\alpha) = -\cot\alpha.$$
+        \item \textbf{Góc bù nhau} ($\alpha$ và $\pi - \alpha$):
+        $$\sin(\pi - \alpha) = \sin\alpha; \quad \cos(\pi - \alpha) = -\cos\alpha; \quad \tan(\pi - \alpha) = -\tan\alpha; \quad \cot(\pi - \alpha) = -\cot\alpha.$$
+        \item \textbf{Góc hơn kém nhau $\pi$} ($\alpha$ và $\alpha + \pi$):
+        $$\tan(\alpha + \pi) = \tan\alpha; \quad \cot(\alpha + \pi) = \cot\alpha; \quad \sin(\alpha + \pi) = -\sin\alpha; \quad \cos(\alpha + \pi) = -\cos\alpha.$$
+        \item \textbf{Góc phụ nhau} ($\alpha$ và $\dfrac{\pi}{2} - \alpha$):
+        $$\sin\left(\dfrac{\pi}{2} - \alpha\right) = \cos\alpha; \quad \cos\left(\dfrac{\pi}{2} - \alpha\right) = \sin\alpha; \quad \tan\left(\dfrac{\pi}{2} - \alpha\right) = \cot\alpha; \quad \cot\left(\dfrac{\pi}{2} - \alpha\right) = \tan\alpha.$$
+    \end{enumerate}
+    \item \textbf{c) Sản phẩm}:
+    \begin{itemize}
+        \item Rút gọn biểu thức $A = \cos(\pi - \alpha) + \sin\left(\dfrac{\pi}{2} - \alpha\right) - \tan(\pi + \alpha) \cdot \cot(-\alpha)$:
+        $$A = (-\cos\alpha) + (\cos\alpha) - (\tan\alpha) \cdot (-\cot\alpha) = 0 - (-1) = 1.$$
+    \end{itemize}
+    \item \textbf{d) Tổ chức thực hiện}:
+    \begin{itemize}
+        \item GV hướng dẫn học sinh cách dùng tính đối xứng hình học trên đường tròn lượng giác để ghi nhớ công thức.
+        \item Cho HS đọc đồng thanh câu ghi nhớ: \textit{"Cos đối, Sin bù, Phụ chéo, Khác pi Tan"}.
+    \end{itemize}
+\end{itemize}
+
+\subsubsection*{3. Hoạt động 3: Luyện tập củng cố (12 phút)}
+
+\paragraph{a) Mục tiêu:}
+Vận dụng tổng hợp các hệ thức lượng giác cơ bản và công thức góc liên quan đặc biệt để rút gọn biểu thức và tính giá trị biểu thức.
+
+\paragraph{b) Nội dung:}
+Học sinh thực hiện Phiếu học tập số 3 theo nhóm 4 em:
+\begin{itemize}
+    \item \textbf{Bài 1}: Cho $\tan\alpha = -2$. Tính giá trị của biểu thức $P = \dfrac{2\sin\alpha - 3\cos\alpha}{4\sin\alpha + 5\cos\alpha}$.
+    \item \textbf{Bài 2}: Rút gọn biểu thức lượng giác:
+    $$B = \dfrac{\sin(\pi - x) \cdot \cos\left(\dfrac{\pi}{2} - x\right)}{\cos(\pi + x) \cdot \sin\left(\dfrac{\pi}{2} + x\right)} + \tan^2 x.$$
+    \item \textbf{Bài 3}: Chứng minh đẳng thức: $\dfrac{\sin x + \cos x - 1}{\sin x - \cos x + 1} = \dfrac{\cos x}{1 + \sin x}$ (với các điều kiện xác định thỏa mãn).
+\end{itemize}
+
+\paragraph{c) Sản phẩm (Lời giải chi tiết):}
+\begin{itemize}
+    \item \textbf{Bài 1}:
+    Vì $\tan\alpha = -2 \implies \cos\alpha \neq 0$. Chia cả tử và mẫu của $P$ cho $\cos\alpha$:
+    $$P = \dfrac{2\dfrac{\sin\alpha}{\cos\alpha} - 3}{4\dfrac{\sin\alpha}{\cos\alpha} + 5} = \dfrac{2\tan\alpha - 3}{4\tan\alpha + 5} = \dfrac{2(-2) - 3}{4(-2) + 5} = \dfrac{-7}{-3} = \dfrac{7}{3}.$$
+    \item \textbf{Bài 2}:
+    Áp dụng các góc liên quan đặc biệt:
+    + $\sin(\pi - x) = \sin x$;
+    + $\cos\left(\dfrac{\pi}{2} - x\right) = \sin x$;
+    + $\cos(\pi + x) = -\cos x$;
+    + $\sin\left(\dfrac{\pi}{2} + x\right) = \sin\left(\dfrac{\pi}{2} - (-x)\right) = \cos(-x) = \cos x$.
+    Do đó:
+    $$B = \dfrac{\sin x \cdot \sin x}{(-\cos x) \cdot \cos x} + \tan^2 x = -\dfrac{\sin^2 x}{\cos^2 x} + \tan^2 x = -\tan^2 x + \tan^2 x = 0.$$
+    \item \textbf{Bài 3}:
+    Biến đổi vế trái:
+    Ta có: $(\sin x + \cos x - 1)(1 + \sin x) = \sin x + \sin^2 x + \cos x + \sin x \cos x - 1 - \sin x$
+    $$= (\sin^2 x - 1) + \cos x + \sin x \cos x = -\cos^2 x + \cos x + \sin x \cos x = \cos x (1 - \cos x + \sin x).$$
+    Mặt khác, vế phải nhân với mẫu của vế trái:
+    $\cos x (\sin x - \cos x + 1) = \cos x (1 - \cos x + \sin x)$.
+    Vì hai tích chéo bằng nhau nên đẳng thức được chứng minh.
+\end{itemize}
+
+\paragraph{d) Tổ chức thực hiện:}
+\begin{itemize}
+    \item Các nhóm làm việc trong 7 phút, ghi kết quả lên bảng phụ nhóm.
+    \item GV chọn 2 nhóm treo bảng phụ, gọi học sinh nhóm khác nhận xét và đối chiếu lời giải.
+    \item GV tổng kết, đánh giá điểm cộng học tập cho các nhóm hoàn thành tốt.
+\end{itemize}
+
+\subsubsection*{4. Hoạt động 4: Vận dụng và Hướng dẫn tự học (5 phút)}
+
+\paragraph{a) Mục tiêu:}
+Tổng kết toàn bộ kiến thức của Bài 1; vận dụng giải quyết bài toán mô phỏng chuyển động cơ học trong STEM; hướng dẫn tự học và chuẩn bị bài mới.
+
+\paragraph{b) Nội dung:}
+\begin{itemize}
+    \item \textbf{Nhiệm vụ STEM thực tiễn}: Thiết kế mô hình con lắc đơn chuyển động với góc lệch cực đại $\alpha_0 = 30^\circ$. Biết chiều dài dây treo $l = 1\text{ m}$.
+    Viết biểu thức tính độ cao $z(\alpha)$ của vật nặng so với vị trí cân bằng theo góc lệch $\alpha$. Tính $z$ khi $\alpha = 0^\circ, 15^\circ, 30^\circ$.
+    \item \textbf{Nhiệm vụ AI tự học ở nhà}:
+    Học sinh sử dụng trợ lý AI (Gemini/ChatGPT) để tự ôn tập bằng câu lệnh:
+    \textit{"Hãy tạo cho tôi 5 câu hỏi trắc nghiệm khách quan có 4 đáp án về giá trị lượng giác của các góc liên quan đặc biệt kèm lời giải chi tiết và mẹo tránh sai lầm."}
+\end{itemize}
+
+\paragraph{c) Sản phẩm:}
+\begin{itemize}
+    \item Biểu thức độ cao con lắc đơn: $z(\alpha) = l - l\cos\alpha = l(1 - \cos\alpha) = 1 - \cos\alpha\text{ (m)}$.
+    + Khi $\alpha = 0^\circ \implies z(0) = 1 - \cos 0^\circ = 0\text{ m}$ (Vị trí thấp nhất).
+    + Khi $\alpha = 15^\circ \implies z(15^\circ) = 1 - \cos 15^\circ \approx 1 - 0{,}9659 = 0{,}0341\text{ m} = 3{,}41\text{ cm}$.
+    + Khi $\alpha = 30^\circ \implies z(30^\circ) = 1 - \cos 30^\circ = 1 - \dfrac{\sqrt{3}}{2} \approx 0{,}134\text{ m} = 13{,}4\text{ cm}$.
+    \item Ảnh chụp màn hình kết quả câu lệnh hỏi AI và bài làm nộp trên Google Classroom / Zalo nhóm lớp.
+\end{itemize}
+
+\paragraph{d) Tổ chức thực hiện:}
+GV dặn dò học sinh ôn tập các công thức lượng giác cơ bản, hoàn thành bài tập về nhà trong SGK và chuẩn bị bài học tiếp theo: "Bài 2. Công thức lượng giác".
+
+\newpage
+
+% =========================================================================
+% IV. PHỤ LỤC HỌC LIỆU BỔ TRỢ
+% =========================================================================
+\section*{IV. PHỤ LỤC HỌC LIỆU BỔ TRỢ}
+
+\subsection*{1. Hệ thống Phiếu học tập (Worksheet) phân tầng bậc thang}
+
+\begin{tcolorbox}[colback=white,colframe=black!80,title=\textbf{PHIẾU HỌC TẬP SỐ 1: GÓC LƯỢNG GIÁC \& ĐƯỜNG TRÒN LƯỢNG GIÁC (Tiết 1)}]
+\textbf{Họ và tên học sinh:} \dotfill \textbf{Lớp:} 11A\dots \textbf{Ngày:} \dotfill
+
+\textbf{MỨC 1: NHẬN BIẾT (Dành cho mọi học sinh)}
+\begin{enumerate}
+    \item Điền vào chỗ trống: $180^\circ = \dots\dots\text{ rad}$; $1^\circ = \dots\dots\text{ rad}$; $1\text{ rad} = \left(\dots\dots\right)^\circ$.
+    \item Đổi các số đo sau sang radian:
+    \begin{itemize}
+        \item a) $45^\circ = \dots\dots\dots\dots\dots\dots$
+        \item b) $150^\circ = \dots\dots\dots\dots\dots\dots$
+        \item c) $-120^\circ = \dots\dots\dots\dots\dots\dots$
+    \end{itemize}
+\end{enumerate}
+
+\textbf{MỨC 2: THÔNG HIỂU (Có giàn giáo hỗ trợ)}
+\begin{enumerate}[resume]
+    \item \textit{(Giàn giáo: Muốn biểu diễn góc $\alpha$ lớn hơn $2\pi$, hãy tách $\alpha = \alpha_0 + k2\pi$ với $0 \leq \alpha_0 < 2\pi$)}.
+    Xác định điểm biểu diễn của các góc lượng giác sau trên đường tròn lượng giác:
+    \begin{itemize}
+        \item a) $\alpha_1 = \dfrac{5\pi}{6} = \pi - \dots\dots$ $\implies$ Điểm $M_1$ thuộc góc phần tư thứ \dots\dots
+        \item b) $\alpha_2 = -\dfrac{\pi}{4}$ $\implies$ Quay theo chiều (dương/âm) \dots\dots một góc $45^\circ$.
+        \item c) $\alpha_3 = \dfrac{13\pi}{3} = \dots\dots \cdot 2\pi + \dots\dots$ $\implies$ Điểm $M_3$ trùng với điểm biểu diễn góc \dots\dots
+    \end{itemize}
+\end{enumerate}
+
+\textbf{MỨC 3: VẬN DỤNG}
+\begin{enumerate}[resume]
+    \item Bánh xe đạp có đường kính $680\text{ mm}$. Khi người đi xe đạp đi được quãng đường $100\text{ m}$ thì bánh xe đã quay được một góc lượng giác có số đo xấp xỉ bằng bao nhiêu radian và bao nhiêu độ?
+\end{enumerate}
+\end{tcolorbox}
+
+\vspace{0.8em}
+
+\begin{tcolorbox}[colback=white,colframe=black!80,title=\textbf{PHIẾU HỌC TẬP SỐ 2: GIÁ TRỊ LƯỢNG GIÁC \& THAO TÁC MTCT (Tiết 2)}]
+\textbf{MỨC 1: NHẬN BIẾT}
+\begin{enumerate}
+    \item Điền dấu ($+$ hoặc $-$) thích hợp vào bảng:
+    \begin{center}
+    \begin{tabular}{|c|c|c|c|c|}
+        \hline
+        Góc $\alpha$ & $115^\circ$ & $-\dfrac{\pi}{4}$ & $\dfrac{4\pi}{3}$ & $300^\circ$ \\
+        \hline
+        Góc phần tư & \dots\dots & \dots\dots & \dots\dots & \dots\dots \\
+        \hline
+        Dấu của $\sin\alpha$ & & & & \\
+        \hline
+        Dấu của $\cos\alpha$ & & & & \\
+        \hline
+        Dấu của $\tan\alpha$ & & & & \\
+        \hline
+    \end{tabular}
+    \end{center}
+\end{enumerate}
+
+\textbf{MỨC 2: THÔNG HIỂU (Kỹ năng MTCT Casio fx-580VN X)}
+\begin{enumerate}[resume]
+    \item Điền mã phím bấm và kết quả:
+    \begin{itemize}
+        \item a) Để tính $\cos\left(-\dfrac{5\pi}{6}\right)$, ta bấm các phím: \dotfill Kết quả: \dotfill
+        \item b) Để tính $\cot(75^\circ)$, ta bấm các phím: \dotfill Kết quả: \dotfill
+        \item c) Tìm $\alpha \in [0^\circ; 180^\circ]$ biết $\sin\alpha = 0{,}75$: Bấm \dotfill Kết quả: \dotfill
+    \end{itemize}
+\end{enumerate}
+
+\textbf{MỨC 3: VẬN DỤNG \& KỸ THUẬT PROMPT AI}
+\begin{enumerate}[resume]
+    \item Hãy viết một câu lệnh Prompt hoàn chỉnh gửi cho trợ lý AI để giải thích chi tiết tại sao $\tan\left(\dfrac{\pi}{2}\right)$ không xác định trên đường tròn lượng giác.
+\end{enumerate}
+\end{tcolorbox}
+
+\vspace{0.8em}
+
+\begin{tcolorbox}[colback=white,colframe=black!80,title=\textbf{PHIẾU HỌC TẬP SỐ 3: HỆ THỨC LƯỢNG GIÁC CƠ BẢN (Tiết 3)}]
+\textbf{MỨC 1: NHẬN BIẾT}
+\begin{enumerate}
+    \item Viết lại 4 hệ thức lượng giác cơ bản và câu khẩu quyết ghi nhớ góc có liên quan đặc biệt.
+\end{enumerate}
+
+\textbf{MỨC 2: THÔNG HIỂU (Giàn giáo phân bậc từng bước)}
+\begin{enumerate}[resume]
+    \item Cho $\cos\alpha = -\dfrac{5}{13}$ với $\pi < \alpha < \dfrac{3\pi}{2}$.
+    \begin{itemize}
+        \item \textit{Bước 1}: Xác định dấu của $\sin\alpha$ khi $\pi < \alpha < \dfrac{3\pi}{2}$ $\implies \sin\alpha$ mang dấu \dots\dots
+        \item \textit{Bước 2}: Sử dụng công thức $\sin^2\alpha + \cos^2\alpha = 1 \implies \sin^2\alpha = 1 - (\dots\dots)^2 = \dots\dots$
+        \item \textit{Bước 3}: Suy ra $\sin\alpha = \dots\dots\dots\dots$
+        \item \textit{Bước 4}: Tính $\tan\alpha = \dfrac{\sin\alpha}{\cos\alpha} = \dots\dots$; $\cot\alpha = \dfrac{1}{\tan\alpha} = \dots\dots$
+    \end{itemize}
+\end{enumerate}
+
+\textbf{MỨC 3: VẬN DỤNG CAO}
+\begin{enumerate}[resume]
+    \item Cho $\tan\alpha + \cot\alpha = 3$. Tính giá trị của biểu thức:
+    $$A = \tan^2\alpha + \cot^2\alpha; \qquad B = |\tan\alpha - \cot\alpha|.$$
+\end{enumerate}
+\end{tcolorbox}
+
+\newpage
+
+\subsection*{2. Rubric đánh giá năng lực học sinh (4 mức độ chuẩn hóa)}
+
+\begin{center}
+\begin{tabularx}{\textwidth}{|p{3cm}|X|X|X|X|}
+    \hline
+    \textbf{Tiêu chí đánh giá} & \textbf{Mức 1: Chưa đạt} & \textbf{Mức 2: Đạt} & \textbf{Mức 3: Khá} & \textbf{Mức 4: Tốt} \\
+    \hline
+    \textbf{1. Năng lực tư duy \& kiến thức lượng giác} & Chưa nhớ công thức đổi độ - radian; nhầm lẫn dấu giá trị lượng giác giữa các góc phần tư. & Đổi được độ sang radian; nhớ định nghĩa và xét đúng dấu giá trị lượng giác khi có hướng dẫn. & Tự xét đúng dấu; tính toán thành thạo các giá trị lượng giác của góc đặc biệt và hệ thức cơ bản. & Vận dụng linh hoạt các hệ thức và công thức góc liên quan đặc biệt để giải toán và chứng minh đẳng thức. \\
+    \hline
+    \textbf{2. Năng lực số (MTCT \& Phần mềm)} & Chưa biết cách chuyển đổi đơn vị đo độ/rad trên MTCT Casio; không bấm được cotang. & Thao tác bấm được $\sin, \cos$ đơn giản; đổi được đơn vị đo góc trên MTCT khi có bạn hỗ trợ. & Làm chủ hoàn toàn MTCT Casio fx-580VN X trong tính giá trị lượng giác, tìm góc và tính toán góc âm. & Sử dụng thành thạo MTCT và biết khai thác tệp GeoGebra để trực quan hóa góc lượng giác. \\
+    \hline
+    \textbf{3. Năng lực AI (QĐ 2422)} & Chưa biết cách đặt câu hỏi toán học cho AI; phụ thuộc hoàn toàn vào đáp số của AI. & Đặt được câu hỏi đơn giản cho AI nhưng chưa có bối cảnh; biết xem lời giải của AI. & Đặt được câu lệnh prompt có cấu trúc (vai trò, yêu cầu) để AI giải thích hình học và kiểm chứng. & So sánh, phân tích được độ chính xác trong lời giải của AI; nhận diện được sai sót và tự duy phản biện. \\
+    \hline
+    \textbf{4. Phẩm chất \& Hợp tác nhóm} & Thụ động trong giờ học; không tham gia thảo luận nhóm; chưa hoàn thành phiếu học tập. & Tham gia thảo luận khi được nhắc nhở; hoàn thành phần bài tập nhận biết cơ bản. & Chủ động làm việc nhóm; hợp tác tích cực và hoàn thành tốt phiếu học tập được giao. & Gương mẫu, hỗ trợ các bạn học sinh trung bình - yếu trong nhóm; tự tin báo cáo trước lớp. \\
+    \hline
+\end{tabularx}
+\end{center}
+
+\end{document}
