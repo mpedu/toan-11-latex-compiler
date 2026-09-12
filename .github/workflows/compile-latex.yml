@@ -3,7 +3,7 @@ name: Compile LaTeX to PDF
 on:
   push:
     paths:
-      - 'inputs/*.tex'
+      - 'inputs/**'
   workflow_dispatch:
 
 permissions:
@@ -25,13 +25,13 @@ jobs:
       - name: Compile All TeX Files to PDF
         run: |
           mkdir -p outputs
+          shopt -s nullglob
           for tex in inputs/*.tex; do
-            if [ -f "$tex" ]; then
-              echo "--- Đang biên dịch: $tex ---"
-              pdflatex -interaction=nonstopmode -shell-escape -output-directory=outputs "$tex" || true
-              pdflatex -interaction=nonstopmode -shell-escape -output-directory=outputs "$tex" || true
-            fi
+            echo "=== DANG BIEN DICH: $tex ==="
+            pdflatex -interaction=nonstopmode -shell-escape -output-directory=outputs "$tex" || true
+            pdflatex -interaction=nonstopmode -shell-escape -output-directory=outputs "$tex" || true
           done
+          echo "=== DANH SACH FILE TRONG OUTPUTS ==="
           ls -la outputs/
 
       - name: Send compiled PDFs back to Google Drive
@@ -39,29 +39,28 @@ jobs:
           DRIVE_WEBHOOK_URL: ${{ secrets.DRIVE_WEBHOOK_URL }}
         run: |
           if [ -n "$DRIVE_WEBHOOK_URL" ]; then
+            shopt -s nullglob
             for pdf in outputs/*.pdf; do
-              if [ -f "$pdf" ]; then
-                filename=$(basename "$pdf")
-                echo "Đang gửi $filename về Google Drive..."
-                base64_data=$(base64 -w 0 "$pdf")
-                curl -L -X POST "$DRIVE_WEBHOOK_URL" \
-                  -H "Content-Type: application/json" \
-                  -d "{\"file_name\":\"$filename\", \"file_base64\":\"$base64_data\"}"
-              fi
+              filename=$(basename "$pdf")
+              echo "Dang gui $filename ve Google Drive..."
+              base64_data=$(base64 -w 0 "$pdf")
+              curl -L -X POST "$DRIVE_WEBHOOK_URL" \
+                -H "Content-Type: application/json" \
+                -d "{\"file_name\":\"$filename\", \"file_base64\":\"$base64_data\"}"
             done
           else
-            echo "Bỏ qua gửi Drive: Chưa cấu hình Secret DRIVE_WEBHOOK_URL."
+            echo "Chua cau hinh DRIVE_WEBHOOK_URL, bo qua buoc gui Drive."
           fi
 
       - name: Commit and Push PDFs to GitHub Repo
         run: |
-          git config --global --add safe.directory /__w/toan-11-latex-compiler/toan-11-latex-compiler
+          git config --global --add safe.directory "$GITHUB_WORKSPACE"
           git config --global user.name "github-actions[bot]"
           git config --global user.email "github-actions[bot]@users.noreply.github.com"
-          git add outputs/*.pdf
+          git add outputs/
           if git diff --cached --quiet; then
-            echo "Không có file PDF mới để commit."
+            echo "Khong co file PDF moi de commit."
           else
-            git commit -m "Auto-compiled and synced PDF: $(date +'%Y-%m-%d %H:%M')"
+            git commit -m "Auto-compiled PDF: $(date +'%Y-%m-%d %H:%M')"
             git push
           fi
