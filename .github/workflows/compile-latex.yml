@@ -37,7 +37,7 @@ jobs:
           echo "=== DANH SACH FILE TRONG OUTPUTS ==="
           ls -la outputs/
 
-    - name: Send compiled PDFs back to Google Drive
+      - name: Send compiled PDFs back to Google Drive
         env:
           DRIVE_WEBHOOK_URL: ${{ secrets.DRIVE_WEBHOOK_URL }}
         run: |
