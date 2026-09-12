@@ -1,1 +1,59 @@
+name: Compile LaTeX to PDF
 
+on:
+  push:
+    paths:
+      - 'inputs/*.tex'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  build_latex:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Compile LaTeX Documents
+        uses: xu-cheng/latex-action@v3
+        with:
+          root_file: inputs/*.tex
+          args: "-interaction=nonstopmode -file-line-error -pdf"
+
+      - name: Organize PDF Files
+        run: |
+          mkdir -p outputs
+          # Thu thập tất cả các file PDF sinh ra vào outputs
+          find . -maxdepth 2 -name "*.pdf" ! -path "./outputs/*" -exec mv {} outputs/ \; || true
+          ls -la outputs/
+
+      - name: Send compiled PDFs back to Google Drive
+        if: env.DRIVE_WEBHOOK_URL != ''
+        env:
+          DRIVE_WEBHOOK_URL: ${{ secrets.DRIVE_WEBHOOK_URL }}
+        run: |
+          for pdf in outputs/*.pdf; do
+            if [ -f "$pdf" ]; then
+              filename=$(basename "$pdf")
+              echo "Đang gửi $filename về Google Drive..."
+              base64_data=$(base64 -w 0 "$pdf")
+              
+              curl -L -X POST "$DRIVE_WEBHOOK_URL" \
+                -H "Content-Type: application/json" \
+                -d "{\"file_name\":\"$filename\", \"file_base64\":\"$base64_data\"}"
+            fi
+          done
+
+      - name: Commit and Push PDFs to GitHub Repo
+        run: |
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+          git add outputs/
+          if git diff --cached --quiet; then
+            echo "Không có file PDF mới để commit."
+          else
+            git commit -m "Auto-compiled and synced PDF: $(date +'%Y-%m-%d %H:%M')"
+            git push
+          fi
