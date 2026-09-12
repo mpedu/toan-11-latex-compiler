@@ -1,0 +1,462 @@
+\documentclass[12pt, a4paper]{article}
+
+% 1. Cấu hình Tiếng Việt và Font Times New Roman 13pt chuẩn
+\usepackage[utf8]{inputenc}
+\usepackage[T5]{fontenc}
+\usepackage[vietnamese]{babel}
+\usepackage{newtxtext,newtxmath}
+
+\makeatletter
+\renewcommand{\normalsize}{\@setfontsize\normalsize{13pt}{16pt}}
+\makeatother
+\normalsize
+
+% 2. Gói Toán học & Ký hiệu bổ trợ
+\usepackage{amsmath, amssymb, amsfonts, mathrsfs, amsthm}
+\usepackage{graphicx}
+\usepackage{fontawesome}
+\usepackage{booktabs, tabularx, array, multirow}
+\usepackage{enumitem}
+
+% 3. Đồ họa TikZ, Bảng biến thiên & Biểu đồ
+\usepackage{tikz}
+\usetikzlibrary{calc, intersections, angles, quotes, patterns, arrows.meta, 3d}
+\usepackage{pgfplots}
+\pgfplotsset{compat=1.18}
+\usepackage{tkz-euclide}
+\usepackage{tkz-tab}
+
+\renewcommand{\vec}[1]{\overrightarrow{#1}}
+
+% 4. Hộp sư phạm (Tcolorbox)
+\usepackage[many]{tcolorbox}
+\tcbuselibrary{skins, breakable}
+
+\newtcolorbox{pedabox}[1][]{
+    enhanced,
+    colback=blue!5!white,
+    colframe=blue!75!black,
+    fonttitle=\bfseries\sffamily,
+    title=#1,
+    boxrule=0.8pt,
+    arc=2mm,
+    breakable,
+    left=3mm, right=3mm, top=2mm, bottom=2mm
+}
+
+\newtcolorbox{scaffoldbox}[1][]{
+    enhanced,
+    colback=orange!5!white,
+    colframe=orange!85!black,
+    fonttitle=\bfseries\sffamily,
+    title=#1,
+    boxrule=0.8pt,
+    arc=2mm,
+    breakable,
+    left=3mm, right=3mm, top=2mm, bottom=2mm
+}
+
+\newtcolorbox{aibox}[1][]{
+    enhanced,
+    colback=green!5!white,
+    colframe=teal!80!black,
+    fonttitle=\bfseries\sffamily,
+    title=#1,
+    boxrule=0.8pt,
+    arc=2mm,
+    breakable,
+    left=3mm, right=3mm, top=2mm, bottom=2mm
+}
+
+% 5. Căn lề chuẩn văn bản giáo án
+\usepackage{geometry}
+\geometry{
+    a4paper,
+    left=25mm,
+    right=15mm,
+    top=20mm,
+    bottom=20mm
+}
+
+% 6. Header / Footer chuẩn hóa (BẮT BUỘC CHÍNH XÁC NỘI DUNG NÀY)
+\usepackage{fancyhdr}
+\usepackage{lastpage}
+\pagestyle{fancy}
+\fancyhf{}
+
+\fancyhead[L]{\small \textit{Kế hoạch bài dạy Toán 11}}
+\fancyhead[R]{\textbf{Trang \thepage/\pageref{LastPage}}}
+\fancyfoot[L]{\small \textit{Tổ Toán - Tin}}
+\fancyfoot[R]{\small \textit{Trường THCS\&THPT Hồng Vân}}
+\renewcommand{\headrulewidth}{0.4pt}
+\renewcommand{\footrulewidth}{0.4pt}
+
+% 7. Giãn dòng & Giãn đoạn theo chuẩn Nghị định 30/2020/NĐ-CP
+\usepackage{setspace}
+\setstretch{1.15}
+\setlength{\parindent}{1.0cm}
+\setlength{\parskip}{5pt}
+
+\begin{document}
+
+\begin{center}
+    {\Large \textbf{KẾ HOẠCH BÀI DẠY MÔN TOÁN LỚP 11}}\\[0.4em]
+    {\LARGE \textbf{BÀI 9. CÁC SỐ ĐẶC TRƯNG ĐO XU THẾ TRUNG TÂM}}\\[0.3em]
+    {\LARGE \textbf{CỦA MẪU SỐ LIỆU GHÉP NHÓM}}\\[0.5em]
+    \textbf{Môn học:} Toán 11 | \textbf{Thời lượng:} 02 tiết (Tiết 19 và Tiết 20 theo PPCT)
+\end{center}
+
+\vspace{0.5em}
+\hrule
+\vspace{1em}
+
+\section*{I. MỤC TIÊU DẠY HỌC}
+
+\subsection*{1. Kiến thức, Năng lực}
+
+\textbf{a) Năng lực Toán học đặc thù (nguyên văn chuẩn CT GDPT 2018):}
+\begin{itemize}[leftmargin=1.5em]
+    \item \textbf{Năng lực tư duy và lập luận toán học:}
+    \begin{itemize}
+        \item Giải thích được ý nghĩa và sự cần thiết của các số đặc trưng đo xu thế trung tâm đối với mẫu số liệu ghép nhóm: số trung bình cộng ($\overline{x}$), trung vị ($M_e$), tứ phân vị ($Q_1, Q_2, Q_3$), mốt ($M_o$).
+        \item So sánh, phân tích được ưu điểm và nhược điểm của từng số đặc trưng: số trung bình cộng bị ảnh hưởng nhiều bởi các giá trị bất thường (outliers), trong khi trung vị và tứ phân vị phản ánh trung thực trung tâm của các phân phối lệch.
+        \item Rút ra được các nhận xét, kết luận có ý nghĩa thực tiễn từ các số đặc trưng đo xu thế trung tâm của mẫu số liệu trong các tình huống cụ thể.
+    \end{itemize}
+    \item \textbf{Năng lực giải quyết vấn đề toán học:}
+    \begin{itemize}
+        \item Tính được số trung bình cộng của mẫu số liệu ghép nhóm dựa vào giá trị đại diện và tần số của từng nhóm theo công thức $\overline{x} = \dfrac{1}{n} \sum_{i=1}^k m_i c_i$.
+        \item Xác định được nhóm chứa mốt và tính được mốt $M_o$ của mẫu số liệu ghép nhóm.
+        \item Thiết lập được bảng tần số tích lũy, xác định nhóm chứa trung vị, nhóm chứa các tứ phân vị và tính chính xác $M_e, Q_1, Q_3$ cùng khoảng tứ phân vị $\Delta_Q = Q_3 - Q_1$.
+    \end{itemize}
+    \item \textbf{Năng lực mô hình hóa toán học:}
+    \begin{itemize}
+        \item Vận dụng các số đặc trưng đo xu thế trung tâm vào các bài toán thực tiễn: đánh giá thể lực và chỉ số khối cơ thể (BMI) của học sinh, phân tích mức lương của nhân viên doanh nghiệp, đánh giá chất lượng sản phẩm công nghiệp.
+    \end{itemize}
+    \item \textbf{Năng lực giao tiếp toán học:}
+    \begin{itemize}
+        \item Sử dụng chính xác các thuật ngữ toán học: số trung bình cộng, trung vị, tứ phân vị, mốt, tần số tích lũy, nhóm chứa trung vị; trình bày báo cáo phân tích dữ liệu rõ ràng, thuyết phục.
+    \end{itemize}
+    \item \textbf{Năng lực sử dụng công cụ, phương tiện học toán:}
+    \begin{itemize}
+        \item Khai thác máy tính cầm tay (MTCT Casio fx-580VN X) tính toán các biểu thức phân số phức tạp; ứng dụng phần mềm bảng tính Excel trên phòng máy 35 máy tính để tự động hóa quá trình tính các số đặc trưng.
+    \end{itemize}
+\end{itemize}
+
+\textbf{b) Năng lực số (theo Thông tư 02/2025/TT-BGDĐT):}
+\begin{itemize}[leftmargin=1.5em]
+    \item \textbf{Mã 3.1NC1a (Ứng dụng bảng tính số để xử lý dữ liệu):} Học sinh thao tác trên phòng máy vi tính 35 máy, nhập bảng số liệu khảo sát vào phần mềm Excel, thiết lập công thức tính giá trị đại diện $c_i = (a_i + a_{i+1})/2$, tính tích số $m_i \cdot c_i$ và sử dụng hàm \texttt{SUMPRODUCT} kết hợp \texttt{SUM} để tính số trung bình $\overline{x}$; qua đó nâng cao kĩ năng số hóa dữ liệu thống kê.
+\end{itemize}
+
+\textbf{c) Năng lực AI (theo Quyết định 2422/QĐ-BGDĐT):}
+\begin{itemize}[leftmargin=1.5em]
+    \item \textbf{Mã 11.A2.1 (Tác động và ứng dụng tích cực của AI trong y tế và đời sống):} Học sinh nêu được ví dụ thực tiễn về việc các hệ thống trí tuệ nhân tạo (AI) trong y tế học đường ứng dụng trung vị và khoảng tứ phân vị để lọc bỏ các giá trị nhiễu/bất thường (Outlier Detection) khi chẩn đoán dữ liệu đo lường sức khỏe (nhịp tim, huyết áp, chỉ số BMI), đảm bảo đưa ra khuyến nghị dinh dưỡng và rèn luyện thể lực chính xác, tin cậy.
+\end{itemize}
+
+\textbf{d) Năng lực chung \& Phẩm chất:}
+\begin{itemize}[leftmargin=1.5em]
+    \item \textbf{Năng lực chung:} Năng lực tự chủ và tự học (chủ động nghiên cứu công thức nội suy); giao tiếp và hợp tác nhóm khi cùng thu thập và phân tích dữ liệu thực tế.
+    \item \textbf{Phẩm chất:} Trung thực, khách quan trong xử lý số liệu; cẩn thận, chính xác khi thực hiện phép tính; có trách nhiệm với sức khỏe cộng đồng học đường.
+\end{itemize}
+
+\section*{II. THIẾT BỊ DẠY HỌC VÀ HỌC LIỆU}
+\begin{itemize}[leftmargin=1.5em]
+    \item \textbf{Giáo viên:} Kế hoạch bài dạy chuẩn CV 5512; bài giảng điện tử PowerPoint; phòng máy vi tính 35 máy kết nối mạng LAN; tệp dữ liệu Excel mẫu; Phiếu học tập số 1 và số 2.
+    \item \textbf{Học sinh:} Vở ghi, SGK Toán 11; máy tính cầm tay Casio fx-580VN X; số liệu khảo sát thể lực (chiều cao, cân nặng) cá nhân phục vụ hoạt động STEM.
+\end{itemize}
+
+\section*{III. TIẾN TRÌNH DẠY HỌC (TRỌN VẸN 02 TIẾT)}
+
+\begin{center}
+    \framebox[1.0\textwidth]{\parbox{0.96\textwidth}{
+        \textbf{CẤU TRÚC PHÂN PHỐI 02 TIẾT DẠY HỌC (TIẾT 19 \& TIẾT 20 THEO PPCT):}\\[0.3em]
+        $\bullet$ \textbf{Tiết 1 (Tiết 19 PPCT):} Số trung bình cộng ($\overline{x}$) --- Mốt ($M_o$) của mẫu số liệu ghép nhóm --- Năng lực số bảng tính Excel (Mã 3.1NC1a) --- Phiếu học tập 4 cột giàn giáo.\\[0.3em]
+        $\bullet$ \textbf{Tiết 2 (Tiết 20 PPCT):} Trung vị ($M_e$) --- Tứ phân vị ($Q_1, Q_2, Q_3$) --- Khoảng tứ phân vị $\Delta_Q$ --- Năng lực AI trong y tế học đường (Mã 11.A2.1) --- Chủ đề STEM thể lực học sinh.
+    }}
+\end{center}
+
+\vspace{0.8em}
+\hrule
+\vspace{0.8em}
+
+{\large \textbf{TIẾT 1 (TIẾT 19 THEO PHÂN PHỐI CHƯƠNG TRÌNH)}}\\[0.3em]
+\textbf{Nội dung:} Số trung bình cộng ($\overline{x}$) --- Mốt ($M_o$) của mẫu số liệu ghép nhóm --- Năng lực số Excel (Mã 3.1NC1a) --- Luyện tập tính toán phân hóa.
+
+\subsubsection*{1. Hoạt động 1: Mở đầu / Khởi động (05 phút)}
+\textbf{Chủ đề:} \textit{Làm sao tìm được mức thu nhập đại diện cho một công ty?}
+\begin{itemize}
+    \item \textbf{a) Mục tiêu:} Nhận thức được nhu cầu đo lường xu thế trung tâm và sự xuất hiện của các giá trị ngoại lai ảnh hưởng đến bức tranh toàn cảnh của dữ liệu.
+    \item \textbf{b) Nội dung:} Một công ty khởi nghiệp có $20$ nhân viên với mức lương hàng tháng (triệu đồng) được ghép thành các nhóm: $[10; 15)$ có $10$ người, $[15; 20)$ có $6$ người, $[20; 25)$ có $3$ người, $[80; 100]$ có $1$ người (Giám đốc điều hành). Nếu tính số trung bình, mức lương trung bình của công ty là hơn $20$ triệu đồng, nhưng đa số nhân viên chỉ nhận dưới $15$ triệu. Vậy số nào đại diện tốt nhất cho tập thể?
+    \item \textbf{c) Sản phẩm:} Học sinh nhận thấy số trung bình bị kéo lệch bởi mức lương giám đốc (giá trị ngoại lai); nhận biết cần có các số đặc trưng khác như mốt (mức lương phổ biến nhất) và trung vị.
+    \item \textbf{d) Tổ chức thực hiện:} GV nêu bài toán $\to$ HS thảo luận nhanh $\to$ GV dẫn dắt vào bài học tìm hiểu Số trung bình và Mốt của mẫu ghép nhóm.
+\end{itemize}
+
+\subsubsection*{2. Hoạt động 2: Hình thành kiến thức mới (23 phút)}
+
+\paragraph{Mục 1: Số trung bình cộng của mẫu số liệu ghép nhóm (10 phút)}
+\begin{itemize}
+    \item \textbf{Định nghĩa và công thức:} Cho mẫu số liệu ghép nhóm gồm $k$ nhóm $[a_i; a_{i+1})$ với tần số tương ứng là $m_i$ và giá trị đại diện tương ứng là $c_i = \dfrac{a_i + a_{i+1}}{2}$ ($i = 1, \dots, k$). Cỡ mẫu $n = \sum_{i=1}^k m_i$.\\
+    Số trung bình cộng của mẫu số liệu ghép nhóm, kí hiệu là $\overline{x}$, được tính bởi:
+    $$\overline{x} = \dfrac{m_1 c_1 + m_2 c_2 + \dots + m_k c_k}{n} = \dfrac{1}{n} \sum_{i=1}^k m_i c_i$$
+    \item \textbf{Ý nghĩa:} Số trung bình cộng là giá trị xấp xỉ cho số trung bình của mẫu số liệu gốc trước khi ghép nhóm; dùng làm đại diện cho vị trí trung tâm của mẫu số liệu khi dữ liệu phân bố đối xứng và không có giá trị bất thường.
+\end{itemize}
+
+\begin{scaffoldbox}[Giàn giáo sư phạm cho HS TB - Yếu: Quy trình 4 bước tính $\overline{x}$]
+    \textbf{Quy trình lập bảng 4 cột không bao giờ nhầm lẫn:}\\
+    $\bullet$ \textbf{Bước 1:} Lập bảng gồm 4 cột: Cột 1 (Nhóm $[a_i; a_{i+1})$) $\to$ Cột 2 (Tần số $m_i$) $\to$ Cột 3 (Giá trị đại diện $c_i$) $\to$ Cột 4 (Tích số $m_i \cdot c_i$).\\
+    $\bullet$ \textbf{Bước 2:} Tính giá trị đại diện từng dòng: $c_i = (a_i + a_{i+1})/2$.\\
+    $\bullet$ \textbf{Bước 3:} Nhân ngang từng dòng để điền cột 4: $m_i \cdot c_i$.\\
+    $\bullet$ \textbf{Bước 4:} Tính tổng cột 2 được cỡ mẫu $n$; tính tổng cột 4 được $\sum m_i c_i$. Lấy tổng cột 4 chia cho tổng cột 2: $\overline{x} = \dfrac{\sum m_i c_i}{n}$.
+\end{scaffoldbox}
+
+\paragraph{Mục 2: Mốt của mẫu số liệu ghép nhóm (08 phút)}
+\begin{itemize}
+    \item \textbf{Khái niệm nhóm chứa mốt:} Nhóm chứa mốt là nhóm có tần số lớn nhất trong các nhóm của mẫu số liệu ghép nhóm.
+    \item \textbf{Công thức tính mốt $M_o$:} Giả sử nhóm thứ $j$ là $[a_j; a_{j+1})$ có tần số lớn nhất $m_j$. Khi đó, mốt của mẫu số liệu ghép nhóm được tính theo công thức nội suy:
+    $$M_o = a_j + \dfrac{m_j - m_{j-1}}{(m_j - m_{j-1}) + (m_j - m_{j+1})} \cdot h$$
+    Trong đó:
+    \begin{itemize}
+        \item $a_j$ là đầu mút trái của nhóm chứa mốt; $h = a_{j+1} - a_j$ là độ dài của nhóm;
+        \item $m_j$ là tần số của nhóm chứa mốt;
+        \item $m_{j-1}$ là tần số của nhóm đứng liền trước nhóm chứa mốt (quy ước $m_0 = 0$ nếu $j = 1$);
+        \item $m_{j+1}$ là tần số của nhóm đứng liền sau nhóm chứa mốt (quy ước $m_{k+1} = 0$ nếu $j = k$).
+    \end{itemize}
+    \item \textbf{Ý nghĩa:} Mốt đo xu thế trung tâm phản ánh giá trị xuất hiện phổ biến nhất, tập trung đông đảo các quan sát nhất trong mẫu số liệu (ví dụ: kích cỡ giày bán chạy nhất, khung giờ xe buýt đông khách nhất).
+\end{itemize}
+
+\paragraph{Mục 3: Tích hợp Năng lực số (Mã 3.1NC1a) (05 phút)}
+
+\begin{pedabox}[Năng lực số (Mã 3.1NC1a): Tính nhanh số trung bình trên Excel]
+    $\bullet$ \textbf{Thực hành trên phòng máy 35 máy tính:}\\
+    1. Nhập cột C (Giá trị đại diện $c_i$) và cột D (Tần số $m_i$).\\
+    2. Tại ô kết quả, sử dụng công thức mảng kết hợp hàm tích vô hướng:\\
+    \texttt{=SUMPRODUCT(C2:C6, D2:D6) / SUM(D2:D6)}\\
+    3. Thao tác tự động này giúp học sinh xử lý các tập dữ liệu hàng nghìn bản ghi mà không mất công nhân cộng thủ công, tránh tối đa sai sót bấm máy.
+\end{pedabox}
+
+\subsubsection*{3. Hoạt động 3: Luyện tập (12 phút)}
+\begin{itemize}
+    \item \textbf{Bài toán 1:} Thời gian hoàn thành một bài kiểm tra trắc nghiệm môn Toán (tính bằng phút) của $40$ học sinh được ghi lại ở bảng ghép nhóm sau:
+    \begin{center}
+    \begin{tabular}{|c|c|c|c|c|}
+    \hline
+    \textbf{Nhóm thời gian (phút)} & $[20; 25)$ & $[25; 30)$ & $[30; 35)$ & $[35; 40]$ \\
+    \hline
+    \textbf{Số học sinh ($m_i$)} & $6$ & $14$ & $12$ & $8$ \\
+    \hline
+    \end{tabular}
+    \end{center}
+    Hãy tính số trung bình cộng và mốt của mẫu số liệu ghép nhóm trên.
+    \item \textit{Lời giải chi tiết:}\\
+    $\bullet$ \textbf{1. Tính số trung bình cộng $\overline{x}$:}
+    Lập bảng tính toán chi tiết:
+    \begin{center}
+    \begin{tabular}{|c|c|c|c|}
+    \hline
+    \textbf{Nhóm} & \textbf{Tần số ($m_i$)} & \textbf{Giá trị đại diện ($c_i$)} & $m_i \cdot c_i$ \\
+    \hline
+    $[20; 25)$ & $6$ & $22{,}5$ & $135$ \\
+    $[25; 30)$ & $14$ & $27{,}5$ & $385$ \\
+    $[30; 35)$ & $12$ & $32{,}5$ & $390$ \\
+    $[35; 40]$ & $8$ & $37{,}5$ & $300$ \\
+    \hline
+    \textbf{Tổng} & $n = 40$ & --- & $\sum = 1210$ \\
+    \hline
+    \end{tabular}
+    \end{center}
+    Số trung bình cộng là:
+    $$\overline{x} = \dfrac{1210}{40} = 30{,}25\text{ (phút)}$$
+
+    $\bullet$ \textbf{2. Tính mốt $M_o$:}
+    - Nhóm có tần số lớn nhất là nhóm $[25; 30)$ với $m_2 = 14 \implies j = 2$.\\
+    - Các thông số: $a_2 = 25$, độ dài nhóm $h = 30 - 25 = 5$, $m_2 = 14$, $m_1 = 6$, $m_3 = 12$.\\
+    - Áp dụng công thức mốt:
+    $$M_o = 25 + \dfrac{14 - 6}{(14 - 6) + (14 - 12)} \cdot 5 = 25 + \dfrac{8}{8 + 2} \cdot 5 = 25 + \dfrac{8}{10} \cdot 5 = 25 + 4 = 29\text{ (phút)}$$
+    \textit{Ý nghĩa:} Thời gian làm bài phổ biến nhất của học sinh tập trung quanh mốc $29$ phút.
+\end{itemize}
+
+\subsubsection*{4. Hoạt động 4: Vận dụng (05 phút)}
+\textbf{Tình huống sản xuất kinh doanh:}\\
+Một cửa hàng thời trang thống kê doanh số bán quần áo theo các khung giá (nghìn đồng): $[100; 200)$ bán được $50$ chiếc; $[200; 300)$ bán được $120$ chiếc; $[300; 400)$ bán được $80$ chiếc; $[400; 500]$ bán được $30$ chiếc. Chủ cửa hàng nên ưu tiên nhập hàng ở phân khúc giá nào để tối ưu hóa vốn quay vòng?\\
+\textit{Giải thích:} Nhóm giá $[200; 300)$ có tần số bán lớn nhất ($120$ chiếc) và mốt $M_o \approx 255$ nghìn đồng. Do đó, cửa hàng cần ưu tiên nhập các mẫu quần áo phân khúc giá $200 - 300$ nghìn đồng vì đây là nhu cầu chủ đạo của khách hàng.
+
+\newpage
+
+{\large \textbf{TIẾT 2 (TIẾT 20 THEO PHÂN PHỐI CHƯƠNG TRÌNH)}}\\[0.3em]
+\textbf{Nội dung:} Trung vị ($M_e$) --- Tứ phân vị ($Q_1, Q_2, Q_3$) --- Khoảng tứ phân vị $\Delta_Q$ --- Tích hợp Năng lực AI y tế (Mã 11.A2.1) --- Chủ đề STEM khảo sát thể lực học sinh.
+
+\subsubsection*{1. Hoạt động 1: Mở đầu / Khởi động (05 phút)}
+\textbf{Chủ đề:} \textit{Điểm số nào chia lớp học thành hai nửa bằng nhau?}
+\begin{itemize}
+    \item \textbf{a) Mục tiêu:} Khơi gợi ý niệm về trung vị và các điểm phân vị chia mẫu số liệu thành các phần có số lượng quan sát tương đương.
+    \item \textbf{b) Nội dung:} Giáo viên đặt câu hỏi: Khi xếp điểm thi từ thấp đến cao của $40$ học sinh, điểm số của bạn đứng ở vị trí thứ $20$ và $21$ phản ánh điều gì? Làm thế nào để xác định điểm chia $50\%$ học sinh có kết quả cao nhất và $50\%$ học sinh có kết quả thấp nhất khi số liệu đã bị gom nhóm?
+    \item \textbf{c) Sản phẩm:} Học sinh nhận ra đó chính là \textbf{Trung vị} ($M_e$); muốn tính trung vị khi dữ liệu bị ghép nhóm, ta cần biết số lượng tích lũy đến từng nhóm.
+    \item \textbf{d) Tổ chức thực hiện:} GV dẫn dắt khái niệm tần số tích lũy và chuyển tiếp vào công thức tính trung vị và tứ phân vị.
+\end{itemize}
+
+\subsubsection*{2. Hoạt động 2: Hình thành kiến thức mới (22 phút)}
+
+\paragraph{Mục 1: Trung vị của mẫu số liệu ghép nhóm ($M_e$) (08 phút)}
+\begin{itemize}
+    \item \textbf{Bảng tần số tích lũy:} Tần số tích lũy $cf_i$ của nhóm thứ $i$ là tổng tần số của nhóm đó và tất cả các nhóm đứng trước nó:
+    $$cf_i = m_1 + m_2 + \dots + m_i$$
+    \item \textbf{Xác định nhóm chứa trung vị:} Giả sử cỡ mẫu là $n$. Nhóm $[a_p; a_{p+1})$ chứa trung vị là nhóm đầu tiên có tần số tích lũy thỏa mãn:
+    $$cf_p \ge \dfrac{n}{2}$$
+    \item \textbf{Công thức tính trung vị $M_e$:}
+    $$M_e = a_p + \dfrac{\dfrac{n}{2} - cf_{p-1}}{m_p} \cdot h$$
+    Trong đó:
+    \begin{itemize}
+        \item $a_p, h$ lần lượt là đầu mút trái và độ dài của nhóm chứa trung vị;
+        \item $m_p$ là tần số của nhóm chứa trung vị;
+        \item $cf_{p-1}$ là tần số tích lũy của nhóm đứng liền trước nhóm chứa trung vị (quy ước $cf_0 = 0$ nếu $p = 1$).
+    \end{itemize}
+    \item \textbf{Ý nghĩa:} Trung vị chia mẫu số liệu thành hai phần có số lượng quan sát xấp xỉ bằng nhau: $50\%$ số liệu nhỏ hơn hoặc bằng $M_e$ và $50\%$ số liệu lớn hơn hoặc bằng $M_e$.
+\end{itemize}
+
+\paragraph{Mục 2: Tứ phân vị của mẫu số liệu ghép nhóm ($Q_1, Q_2, Q_3$) (08 phút)}
+\begin{itemize}
+    \item Tứ phân vị thứ hai chính là trung vị: $Q_2 = M_e$.
+    \item \textbf{Tứ phân vị thứ nhất ($Q_1$):}
+    \begin{itemize}
+        \item Nhóm chứa $Q_1$ là nhóm đầu tiên có tần số tích lũy $cf_p \ge \dfrac{n}{4}$.
+        \item Công thức tính:
+        $$Q_1 = a_p + \dfrac{\dfrac{n}{4} - cf_{p-1}}{m_p} \cdot h$$
+        Ý nghĩa: Khoảng $25\%$ số liệu nhỏ hơn $Q_1$ và $75\%$ số liệu lớn hơn $Q_1$.
+    \end{itemize}
+    \item \textbf{Tứ phân vị thứ ba ($Q_3$):}
+    \begin{itemize}
+        \item Nhóm chứa $Q_3$ là nhóm đầu tiên có tần số tích lũy $cf_r \ge \dfrac{3n}{4}$.
+        \item Công thức tính:
+        $$Q_3 = a_r + \dfrac{\dfrac{3n}{4} - cf_{r-1}}{m_r} \cdot h$$
+        Ý nghĩa: Khoảng $75\%$ số liệu nhỏ hơn $Q_3$ và $25\%$ số liệu lớn hơn $Q_3$.
+    \end{itemize}
+    \item \textbf{Khoảng tứ phân vị:} $\Delta_Q = Q_3 - Q_1$, phản ánh độ phân tán của $50\%$ số liệu chính giữa của mẫu.
+\end{itemize}
+
+\begin{scaffoldbox}[Giàn giáo sư phạm cho HS TB - Yếu: Mẹo nhớ vị trí phân vị]
+    $\bullet$ Trung vị $M_e = Q_2$: So sánh tần số tích lũy với mốc $\dfrac{n}{2}$ ($50\%$).\\
+    $\bullet$ Tứ phân vị thứ nhất $Q_1$: So sánh tần số tích lũy với mốc $\dfrac{n}{4}$ ($25\%$).\\
+    $\bullet$ Tứ phân vị thứ ba $Q_3$: So sánh tần số tích lũy với mốc $\dfrac{3n}{4}$ ($75\%$).\\
+    $\implies$ Nhóm chứa phân vị luôn là nhóm \textbf{ĐẦU TIÊN} có tần số tích lũy vượt qua hoặc bằng mốc tương ứng!
+\end{scaffoldbox}
+
+\paragraph{Mục 3: Tích hợp Năng lực AI (Mã 11.A2.1) \& Giáo dục STEM (06 phút)}
+
+\begin{aibox}[Tích hợp Năng lực AI (QĐ 2422/QĐ-BGDĐT --- Mã 11.A2.1): AI y tế học đường]
+    $\bullet$ \textbf{Lọc giá trị ngoại lai (Outlier Detection):}\\
+    Trong các hệ thống AI theo dõi sức khỏe học sinh thông minh, dữ liệu cảm biến đo nhịp tim, chỉ số thể lực thường xuyên xuất hiện các giá trị nhiễu do rung lắc hoặc lỗi đo lường. Nếu AI dùng số trung bình cộng $\overline{x}$, kết quả chẩn đoán sẽ bị sai lệch nghiêm trọng.\\
+    $\bullet$ AI ứng dụng trung vị $M_e$ và khoảng tứ phân vị $\Delta_Q$ để xác định ngưỡng dữ liệu hợp lệ $[Q_1 - 1{,}5\Delta_Q; Q_3 + 1{,}5\Delta_Q]$, tự động loại bỏ dữ liệu rác, từ đó đưa ra đánh giá chính xác về mức độ phát triển thể chất của học sinh.
+\end{aibox}
+
+\subsubsection*{3. Hoạt động 3: Luyện tập (12 phút)}
+\begin{itemize}
+    \item \textbf{Bài toán 2:} Khảo sát chiều cao (cm) của $50$ học sinh nam lớp 11 thu được bảng số liệu ghép nhóm sau:
+    \begin{center}
+    \begin{tabular}{|c|c|c|c|c|c|}
+    \hline
+    \textbf{Chiều cao (cm)} & $[160; 165)$ & $[165; 170)$ & $[170; 175)$ & $[175; 180)$ & $[180; 185]$ \\
+    \hline
+    \textbf{Tần số ($m_i$)} & $6$ & $14$ & $18$ & $9$ & $3$ \\
+    \hline
+    \end{tabular}
+    \end{center}
+    Hãy tính trung vị $M_e$ và các tứ phân vị $Q_1, Q_3$ của mẫu số liệu trên.
+    \item \textit{Lời giải chi tiết:}\\
+    Lập bảng tần số tích lũy $cf_i$:
+    \begin{center}
+    \begin{tabular}{|c|c|c|c|c|}
+    \hline
+    \textbf{Nhóm chiều cao} & \textbf{Tần số ($m_i$)} & \textbf{Tần số tích lũy ($cf_i$)} \\
+    \hline
+    $[160; 165)$ & $6$ & $6$ \\
+    $[165; 170)$ & $14$ & $20$ \\
+    $[170; 175)$ & $18$ & $38$ \\
+    $[175; 180)$ & $9$ & $47$ \\
+    $[180; 185]$ & $3$ & $50$ \\
+    \hline
+    \textbf{Tổng} & $n = 50$ & --- \\
+    \hline
+    \end{tabular}
+    \end{center}
+
+    $\bullet$ \textbf{1. Tính trung vị $M_e$:}
+    - Ta có: $\dfrac{n}{2} = \dfrac{50}{2} = 25$.\\
+    - Nhóm đầu tiên có $cf \ge 25$ là nhóm $[170; 175)$ (vì $cf_3 = 38 \ge 25$).\\
+    - Các thông số: $a_3 = 170$, độ dài $h = 5$, $m_3 = 18$, tần số tích lũy đứng trước $cf_2 = 20$.\\
+    - Áp dụng công thức:
+    $$M_e = 170 + \dfrac{25 - 20}{18} \cdot 5 = 170 + \dfrac{5 \cdot 5}{18} = 170 + \dfrac{25}{18} \approx 171{,}39\text{ (cm)}$$
+
+    $\bullet$ \textbf{2. Tính tứ phân vị thứ nhất $Q_1$:}
+    - Ta có: $\dfrac{n}{4} = \dfrac{50}{4} = 12{,}5$.\\
+    - Nhóm đầu tiên có $cf \ge 12{,}5$ là nhóm $[165; 170)$ (vì $cf_2 = 20 \ge 12{,}5$).\\
+    - Các thông số: $a_2 = 165$, $h = 5$, $m_2 = 14$, $cf_1 = 6$.\\
+    - Áp dụng công thức:
+    $$Q_1 = 165 + \dfrac{12{,}5 - 6}{14} \cdot 5 = 165 + \dfrac{6{,}5 \cdot 5}{14} = 165 + \dfrac{32{,}5}{14} \approx 167{,}32\text{ (cm)}$$
+
+    $\bullet$ \textbf{3. Tính tứ phân vị thứ ba $Q_3$:}
+    - Ta có: $\dfrac{3n}{4} = \dfrac{150}{4} = 37{,}5$.\\
+    - Nhóm đầu tiên có $cf \ge 37{,}5$ là nhóm $[170; 175)$ (vì $cf_3 = 38 \ge 37{,}5$).\\
+    - Các thông số: $a_3 = 170$, $h = 5$, $m_3 = 18$, $cf_2 = 20$.\\
+    - Áp dụng công thức:
+    $$Q_3 = 170 + \dfrac{37{,}5 - 20}{18} \cdot 5 = 170 + \dfrac{17{,}5 \cdot 5}{18} = 170 + \dfrac{87{,}5}{18} \approx 174{,}86\text{ (cm)}$$
+    - Khoảng tứ phân vị: $\Delta_Q = Q_3 - Q_1 = 174{,}86 - 167{,}32 = 7{,}54\text{ (cm)}$.
+\end{itemize}
+
+\subsubsection*{4. Hoạt động 4: Vận dụng (06 phút)}
+\textbf{Chủ đề STEM: Khảo sát thể lực học sinh}\\
+Học sinh thực hiện đo chiều cao và cân nặng của các thành viên trong tổ, lập bảng số liệu ghép nhóm tính chỉ số BMI $= \dfrac{\text{Cân nặng (kg)}}{[\text{Chiều cao (m)}]^2}$. Sử dụng trung vị $M_e$ của BMI để đánh giá mức độ cân đối của cả tổ và đề xuất chế độ dinh dưỡng, thể dục giữa giờ phù hợp.
+
+\newpage
+
+\section*{IV. PHỤ LỤC HỌC LIỆU BỔ TRỢ}
+
+\subsection*{Phụ lục 1: Phiếu học tập số 1 (Tiết 19) --- Tính số trung bình và mốt}
+\noindent\textbf{Họ và tên:} .................................................................... \textbf{Lớp:} 11A....... \textbf{Nhóm:} ..........
+
+\begin{pedabox}[Nhiệm vụ 1: Hoàn thành bảng 4 cột và tính số trung bình $\overline{x}$]
+Khảo sát số giờ tự học trong tuần của $30$ học sinh:
+\begin{center}
+\begin{tabularx}{0.95\linewidth}{|c|c|c|X|}
+\hline
+\textbf{Nhóm số giờ} & \textbf{Tần số ($m_i$)} & \textbf{Giá trị đại diện ($c_i$)} & \textbf{Tích ($m_i \cdot c_i$)} \\
+\hline
+$[5; 10)$ & $5$ & & \\
+$[10; 15)$ & $12$ & & \\
+$[15; 20)$ & $8$ & & \\
+$[20; 25]$ & $5$ & & \\
+\hline
+\textbf{Tổng} & $n = 30$ & --- & $\sum = $ .............................. \\
+\hline
+\end{tabularx}
+\end{center}
+$\bullet$ Số trung bình $\overline{x} = $ .........................................................................................................\\[0.3em]
+$\bullet$ Nhóm chứa mốt là nhóm: ........................................... Mốt $M_o = $ ................................
+\end{pedabox}
+
+\subsection*{Phụ lục 2: Phiếu học tập số 2 (Tiết 20) --- Tần số tích lũy \& Trung vị, Tứ phân vị}
+\noindent\textbf{Họ và tên:} .................................................................... \textbf{Lớp:} 11A....... \textbf{Nhóm:} ..........
+
+\begin{pedabox}[Nhiệm vụ 2: Điền khuyết công thức tính phân vị]
+$\bullet$ Công thức tính trung vị: $M_e = a_p + \dfrac{\dots\dots\dots - cf_{p-1}}{m_p} \cdot h$.\\[0.3em]
+$\bullet$ Cho bảng tần số tích lũy: $cf_1 = 4, cf_2 = 15, cf_3 = 28, cf_4 = 40$ với $n = 40$.\\
+- Vị trí trung vị $n/2 = 20 \implies$ Nhóm chứa trung vị là nhóm: .............................................\\
+- Vị trí $Q_1$ là $n/4 = 10 \implies$ Nhóm chứa $Q_1$ là nhóm: .....................................................\\
+- Vị trí $Q_3$ là $3n/4 = 30 \implies$ Nhóm chứa $Q_3$ là nhóm: ...................................................
+\end{pedabox}
+
+\subsection*{Phụ lục 3: Bảng Rubric đánh giá năng lực tích hợp trong Bài 9}
+
+\begin{center}
+\begin{tabularx}{\linewidth}{|p{3.2cm}|X|X|X|X|}
+\hline
+\textbf{Tiêu chí} & \textbf{Mức 1 (Chưa đạt)} & \textbf{Mức 2 (Đạt)} & \textbf{Mức 3 (Khá)} & \textbf{Mức 4 (Tốt)} \\
+\hline
+\textbf{1. Kĩ năng tính toán số đặc trưng} & Nhầm lẫn công thức giữa mốt và trung vị; xác định sai nhóm chứa phân vị. & Tính đúng số trung bình $\overline{x}$ và xác định đúng nhóm chứa $M_e, M_o$. & Áp dụng thành thạo các công thức tính $M_e, M_o, Q_1, Q_3$ ra kết quả chính xác. & Phân tích sâu sắc ý nghĩa thực tiễn của từng số đặc trưng trong bối cảnh phân phối dữ liệu. \\
+\hline
+\textbf{2. Ứng dụng số (Mã 3.1NC1a)} & Nhập sai số liệu trên Excel hoặc lỗi cú pháp công thức. & Nhập đúng bảng dữ liệu trên phòng máy 35 máy tính. & Sử dụng thành thạo hàm \texttt{SUMPRODUCT} tính tự động số trung bình. & Xây dựng bảng tính động tự động cập nhật các số đặc trưng khi thay đổi dữ liệu vào. \\
+\hline
+\textbf{3. Năng lực AI (Mã 11.A2.1)} & Chưa hiểu vai trò của trung vị trong lọc nhiễu dữ liệu. & Nêu được ví dụ AI ứng dụng số đo trung tâm trong y tế học đường. & Giải thích được vì sao AI ưu tiên dùng trung vị khi dữ liệu xuất hiện giá trị ngoại lai. & Đánh giá được tầm quan trọng của độ tin cậy dữ liệu trong các hệ thống AI chẩn đoán sức khỏe. \\
+\hline
+\end{tabularx}
+\end{center}
+
+\end{document}
