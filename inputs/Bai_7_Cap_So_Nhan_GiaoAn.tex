@@ -1,0 +1,491 @@
+\documentclass[12pt, a4paper]{article}
+
+
+% 1. Cấu hình Tiếng Việt và Font Times New Roman 13pt chuẩn
+\usepackage[utf8]{inputenc}
+\usepackage[T5]{fontenc}
+\usepackage[vietnamese]{babel}
+\usepackage{newtxtext,newtxmath}
+
+
+\makeatletter
+\renewcommand{\normalsize}{\@setfontsize\normalsize{13pt}{16pt}}
+\makeatother
+\normalsize
+
+
+% 2. Gói Toán học & Ký hiệu bổ trợ
+\usepackage{amsmath, amssymb, amsfonts, mathrsfs, amsthm}
+\usepackage{graphicx}
+\usepackage{fontawesome}
+\usepackage{booktabs, tabularx, array, multirow}
+\usepackage{enumitem}
+
+
+% 3. Đồ họa TikZ, Bảng biến thiên & Hình không gian
+\usepackage{tikz}
+\usetikzlibrary{calc, intersections, angles, quotes, patterns, arrows.meta, 3d}
+\usepackage{pgfplots}
+\pgfplotsset{compat=1.18}
+\usepackage{tkz-euclide}
+\usepackage{tkz-tab}
+
+
+\renewcommand{\vec}[1]{\overrightarrow{#1}}
+
+
+% 4. Hộp sư phạm (Tcolorbox)
+\usepackage[many]{tcolorbox}
+\tcbuselibrary{skins, breakable}
+
+
+\newtcolorbox{pedabox}[1][]{
+    enhanced,
+    colback=blue!5!white,
+    colframe=blue!75!black,
+    fonttitle=\bfseries\sffamily,
+    title=#1,
+    boxrule=0.8pt,
+    arc=2mm,
+    breakable,
+    left=3mm, right=3mm, top=2mm, bottom=2mm
+}
+
+
+\newtcolorbox{scaffoldbox}[1][]{
+    enhanced,
+    colback=orange!5!white,
+    colframe=orange!85!black,
+    fonttitle=\bfseries\sffamily,
+    title=#1,
+    boxrule=0.8pt,
+    arc=2mm,
+    breakable,
+    left=3mm, right=3mm, top=2mm, bottom=2mm
+}
+
+
+\newtcolorbox{aibox}[1][]{
+    enhanced,
+    colback=green!5!white,
+    colframe=teal!80!black,
+    fonttitle=\bfseries\sffamily,
+    title=#1,
+    boxrule=0.8pt,
+    arc=2mm,
+    breakable,
+    left=3mm, right=3mm, top=2mm, bottom=2mm
+}
+
+
+% 5. Căn lề chuẩn văn bản giáo án
+\usepackage{geometry}
+\geometry{
+    a4paper,
+    left=25mm,
+    right=15mm,
+    top=20mm,
+    bottom=20mm
+}
+
+
+% 6. Header / Footer chuẩn hóa (BẮT BUỘC CHÍNH XÁC NỘI DUNG NÀY)
+\usepackage{fancyhdr}
+\usepackage{lastpage}
+\pagestyle{fancy}
+\fancyhf{}
+
+
+\fancyhead[L]{\small \textit{Kế hoạch bài dạy Toán 11}}
+\fancyhead[R]{\textbf{Trang \thepage/\pageref{LastPage}}}
+\fancyfoot[L]{\small \textit{Tổ Toán - Tin}}
+\fancyfoot[R]{\small \textit{Trường THCS\&THPT Hồng Vân}}
+\renewcommand{\headrulewidth}{0.4pt}
+\renewcommand{\footrulewidth}{0.4pt}
+
+
+% 7. Giãn dòng & Giãn đoạn theo chuẩn Nghị định 30/2020/NĐ-CP
+\usepackage{setspace}
+\setstretch{1.15}
+\setlength{\parindent}{1.0cm}
+\setlength{\parskip}{5pt}
+
+
+\begin{document}
+
+
+\begin{center}
+    {\Large \textbf{KẾ HOẠCH BÀI DẠY MÔN TOÁN LỚP 11}}\\[0.4em]
+    {\LARGE \textbf{BÀI 7. CẤP SỐ NHÂN}}\\[0.5em]
+    \textbf{Môn học:} Toán 11 | \textbf{Thời lượng:} 02 tiết (Tiết 15 và Tiết 16 theo PPCT)
+\end{center}
+
+
+\vspace{0.5em}
+\hrule
+\vspace{1em}
+
+
+\section*{I. MỤC TIÊU DẠY HỌC}
+
+
+\subsection*{1. Kiến thức, Năng lực}
+
+
+\textbf{a) Năng lực Toán học đặc thù (nguyên văn chuẩn CT GDPT 2018):}
+\begin{itemize}[leftmargin=1.5em]
+    \item \textbf{Năng lực tư duy và lập luận toán học:}
+    \begin{itemize}
+        \item Nhận biết được một dãy số là cấp số nhân thông qua định nghĩa: số hạng sau bằng số hạng trước nhân với một hằng số $q$ không đổi (công bội).
+        \item Giải thích được công thức xác định số hạng tổng quát của cấp số nhân $u_n = u_1 \cdot q^{n-1}$ ($n \ge 2$) bằng phương pháp quy nạp hoặc liệt kê nhân liên tiếp.
+        \item Nhận biết và chứng minh được tính chất đặc trưng của cấp số nhân: Mỗi số hạng (trừ số hạng đầu và số hạng cuối) đều có bình phương bằng tích của hai số hạng kề nó: $u_k^2 = u_{k-1} \cdot u_{k+1}$ hay $|u_k| = \sqrt{u_{k-1} \cdot u_{k+1}}$ ($k \ge 2$).
+        \item Giải thích và suy dẫn được công thức tính tổng của $n$ số hạng đầu tiên của cấp số nhân: $S_n = \dfrac{u_1(1 - q^n)}{1 - q}$ ($q \neq 1$).
+    \end{itemize}
+    \item \textbf{Năng lực giải quyết vấn đề toán học:}
+    \begin{itemize}
+        \item Xác định được các yếu tố cơ bản của một cấp số nhân: số hạng đầu $u_1$, công bội $q$, số hạng thứ $n$ ($u_n$), số lượng số hạng $n$ và tổng $S_n$.
+        \item Thiết lập và giải được hệ phương trình tìm $u_1$ và $q$ khi biết các mối liên hệ giữa các số hạng của cấp số nhân.
+        \item Tính được tổng $S_n$ của một cấp số nhân trong các bài toán đại số và các bài toán thực tiễn.
+    \end{itemize}
+    \item \textbf{Năng lực mô hình hóa toán học:}
+    \begin{itemize}
+        \item Vận dụng kiến thức cấp số nhân giải quyết các bài toán thực tiễn: sự nhân đôi của tế bào sinh học, bài toán lãi kép ngân hàng, tốc độ tăng trưởng dân số, sự phân rã thuốc trong cơ thể, bài toán hạt thóc trên bàn cờ vua cổ Ấn Độ.
+    \end{itemize}
+    \item \textbf{Năng lực giao tiếp toán học:}
+    \begin{itemize}
+        \item Sử dụng chính xác các thuật ngữ: cấp số nhân, công bội, số hạng tổng quát, tổng $n$ số hạng đầu; phân biệt rạch ròi giữa cấp số cộng (tăng trưởng theo phép cộng - tuyến tính) và cấp số nhân (tăng trưởng theo phép nhân - hàm mũ).
+    \end{itemize}
+    \item \textbf{Năng lực sử dụng công cụ, phương tiện học toán:}
+    \begin{itemize}
+        \item Sử dụng thành thạo máy tính cầm tay (MTCT Casio fx-580VN X) tính các lũy thừa bậc cao $q^n$, phân số và căn bậc $n$; khai thác bảng tính số vẽ biểu đồ tăng trưởng hàm mũ.
+    \end{itemize}
+\end{itemize}
+
+
+\textbf{b) Năng lực số (theo Thông tư 02/2025/TT-BGDĐT):}
+\begin{itemize}[leftmargin=1.5em]
+    \item \textbf{Mã 1.1NC1a (Tiết 1):} Học sinh sử dụng máy tính cầm tay (35 MTCT Casio fx-580VN X) bấm thành thạo các phím lũy thừa $x^\blacksquare$, phân số và căn bậc hai/bậc ba để tìm chính xác công bội $q$ và số hạng tổng quát $u_n$.
+    \item \textbf{Mã 3.2NC1a (Tiết 2):} Học sinh vẽ biểu đồ tăng trưởng hàm mũ của cấp số nhân trên bảng tính số (Excel / Google Sheets) trên phòng máy 35 máy, so sánh độ dốc tăng vọt của cấp số nhân với sự tăng tuyến tính đều của cấp số cộng.
+\end{itemize}
+
+
+\textbf{c) Năng lực AI (theo Quyết định 2422/QĐ-BGDĐT):}
+\begin{itemize}[leftmargin=1.5em]
+    \item \textbf{Mã 11.C5.1 (Tiết 1):} Học sinh nêu được ứng dụng của hàm số mũ và cấp số nhân trong tốc độ xử lý của mạng nơ-ron nhân tạo; giải thích hiện tượng bùng nổ đạo hàm (Exploding Gradients) hoặc triệt tiêu đạo hàm (Vanishing Gradients) trong quá trình huấn luyện mô hình học sâu (Deep Learning).
+    \item \textbf{Mã 11.A1.2 (Tiết 2):} Học sinh phân tích ví dụ thực tế về việc các hệ thống AI ứng dụng quy luật cấp số nhân để mô phỏng sự lây lan bùng phát dịch bệnh (mô hình dịch tễ SIR) dựa trên hệ số lây nhiễm cơ bản $R_0$.
+\end{itemize}
+
+
+\textbf{d) Năng lực chung \& Phẩm chất:}
+\begin{itemize}[leftmargin=1.5em]
+    \item \textbf{Năng lực chung:} Tự chủ và tự học (tự tìm tòi tốc độ tăng trưởng bùng nổ); giao tiếp và hợp tác nhóm khi cùng thảo luận bài toán thực tế.
+    \item \textbf{Phẩm chất:} Cẩn thận, kiên trì khi tính toán lũy thừa lớn; trung thực và có trách nhiệm trong học tập.
+\end{itemize}
+
+
+\section*{II. THIẾT BỊ DẠY HỌC VÀ HỌC LIỆU}
+\begin{itemize}[leftmargin=1.5em]
+    \item \textbf{Giáo viên:} Kế hoạch bài dạy chuẩn CV 5512; bài giảng PowerPoint; tệp bảng tính mẫu Excel vẽ đồ thị so sánh CSC và CSN; phòng máy vi tính 35 máy; Phiếu học tập số 1 và số 2.
+    \item \textbf{Học sinh:} SGK Toán 11; vở ghi bài; 35 máy tính cầm tay Casio fx-580VN X; một tờ giấy A4 để thực hành bài toán gấp đôi.
+\end{itemize}
+
+
+\section*{III. TIẾN TRÌNH DẠY HỌC (TRỌN VẸN 02 TIẾT)}
+
+
+\begin{center}
+    \framebox[1.0\textwidth]{\parbox{0.96\textwidth}{
+        \textbf{CẤU TRÚC PHÂN PHỐI 02 TIẾT DẠY HỌC:}\\[0.3em]
+        $\bullet$ \textbf{Tiết 1 (Tiết 15 PPCT):} Định nghĩa cấp số nhân --- Công bội $q$ --- Số hạng tổng quát $u_n = u_1 \cdot q^{n-1}$ --- Kĩ năng MTCT (Mã 1.1NC1a) --- Năng lực AI mạng nơ-ron (Mã 11.C5.1).\\[0.3em]
+        $\bullet$ \textbf{Tiết 2 (Tiết 16 PPCT):} Tổng $n$ số hạng đầu tiên $S_n$ --- Vẽ biểu đồ hàm mũ Excel (Mã 3.2NC1a) --- Năng lực AI mô phỏng dịch bệnh (Mã 11.A1.2) --- Vận dụng bài toán lãi kép ngân hàng.
+    }}
+\end{center}
+
+
+\vspace{1em}
+\hrule
+\vspace{0.8em}
+
+
+{\large \textbf{TIẾT 1 (TIẾT 15 THEO PHÂN PHỐI CHƯƠNG TRÌNH)}}\\[0.3em]
+\textbf{Nội dung:} Định nghĩa cấp số nhân --- Công bội $q$ --- Công thức số hạng tổng quát --- Tính chất số hạng --- Năng lực số MTCT (Mã 1.1NC1a) --- Năng lực AI (Mã 11.C5.1).
+
+
+\subsubsection*{1. Hoạt động 1: Mở đầu / Khởi động (05 phút)}
+\textbf{Chủ đề:} \textit{Thực nghiệm gấp đôi tờ giấy và hành trình vươn tới Mặt Trăng.}
+\begin{itemize}
+    \item \textbf{a) Mục tiêu:} Kích thích trí tưởng tượng và tạo ấn tượng trực quan mạnh mẽ về tốc độ tăng trưởng phi thường của phép nhân lũy tiến so với phép cộng thông thường.
+    \item \textbf{b) Nội dung:}
+    \begin{itemize}
+        \item Mỗi học sinh cầm một tờ giấy A4 có độ dày khoảng $0{,}1\text{ mm}$.
+        \item Gấp đôi lần thứ $1$: độ dày là $0{,}2\text{ mm}$ ($2$ lớp giấy).
+        \item Gấp đôi lần thứ $2$: độ dày là $0{,}4\text{ mm}$ ($4$ lớp giấy).
+        \item Hỏi: Nếu ta có thể gấp đôi liên tục $42$ lần, độ dày của xấp giấy thu được sẽ bằng bao nhiêu? Liệu có vượt quá khoảng cách từ Trái Đất lên Mặt Trăng (khoảng $384\,400\text{ km}$) không?
+    \end{itemize}
+    \item \textbf{c) Sản phẩm:} Học sinh tính: Sau $42$ lần gấp, độ dày là:
+    $$d = 0{,}1 \cdot 2^{42}\text{ mm} \approx 439\,804\text{ km} > 384\,400\text{ km}$$
+    Học sinh vô cùng ngạc nhiên khi thấy độ dày vượt xa khoảng cách từ Trái Đất lên Mặt Trăng!
+    \item \textbf{d) Tổ chức thực hiện:} GV nêu bài toán $\to$ HS thực hành gấp $3 - 4$ lần tại chỗ $\to$ GV hướng dẫn bấm máy $2^{42}$ $\to$ GV kết luận và dẫn dắt vào bài Cấp số nhân.
+\end{itemize}
+
+
+\subsubsection*{2. Hoạt động 2: Hình thành kiến thức mới (25 phút)}
+
+
+\paragraph{Mục 1: Định nghĩa cấp số nhân & Công bội (08 phút)}
+\begin{itemize}
+    \item \textbf{Định nghĩa:} Cấp số nhân là một dãy số (hữu hạn hay vô hạn), trong đó kể từ số hạng thứ hai, mỗi số hạng đều bằng tích của số hạng đứng ngay trước nó với một số không đổi $q$.
+    Số $q$ được gọi là \textbf{công bội} của cấp số nhân.
+    \item \textbf{Hệ thức truy hồi:}
+    $$(u_n) \text{ là cấp số nhân} \iff u_{n+1} = u_n \cdot q, \quad \forall n \in \mathbb{N}^*$$
+    \item \textbf{Công thức tính công bội:}
+    $$q = \dfrac{u_{n+1}}{u_n}, \quad \forall n \in \mathbb{N}^* \quad (u_n \neq 0)$$
+    \item \textbf{Các trường hợp đặc biệt:}
+    \begin{itemize}
+        \item Khi $q = 1$: Dãy có dạng $u_1, u_1, u_1, \dots$ (dãy số không đổi).
+        \item Khi $q = 0$: Dãy có dạng $u_1, 0, 0, 0, \dots$
+        \item Khi $u_1 = 0$: Dãy có dạng $0, 0, 0, \dots$ với mọi $q$.
+        \item Khi $q < 0$: Dãy số đan dấu (dương, âm xen kẽ liên tục).
+    \end{itemize}
+\end{itemize}
+
+
+\begin{scaffoldbox}[Giàn giáo sư phạm cho HS TB - Yếu: Mẹo tính đúng công bội $q$]
+    \textbf{Lưu ý tránh nhầm lẫn:}
+    \begin{itemize}
+        \item Công bội $q = \dfrac{u_{n+1}}{u_n} = \dfrac{u_2}{u_1} = \dfrac{u_3}{u_2}$ (Lấy số đứng sau CHIA cho số đứng trước liền kề).
+        \item \textbf{Lỗi thường gặp:} Học sinh hay nhầm lẫn giữa công sai $d$ (phép trừ) của cấp số cộng với công bội $q$ (phép chia) của cấp số nhân.
+        \item Ví dụ: Dãy số $2, -6, 18, -54, \dots$ có công bội $q = \dfrac{-6}{2} = -3$, không phải $d = -8$.
+    \end{itemize}
+\end{scaffoldbox}
+
+
+\paragraph{Mục 2: Số hạng tổng quát của cấp số nhân (10 phút)}
+\begin{itemize}
+    \item \textbf{Định lí 1:} Nếu cấp số nhân $(u_n)$ có số hạng đầu $u_1$ và công bội $q$ thì số hạng tổng quát $u_n$ được xác định bởi công thức:
+    $$u_n = u_1 \cdot q^{n-1}, \quad \forall n \ge 2$$
+    \item \textbf{Giải thích quy luật:}
+    \begin{itemize}
+        \item $u_2 = u_1 \cdot q$
+        \item $u_3 = u_2 \cdot q = (u_1 \cdot q) \cdot q = u_1 \cdot q^2$
+        \item $u_4 = u_3 \cdot q = (u_1 \cdot q^2) \cdot q = u_1 \cdot q^3$
+        \item \dots
+        \item $u_n = u_1 \cdot q^{n-1}$.
+    \end{itemize}
+    \item \textbf{Tính chất các số hạng:} Với cấp số nhân $(u_n)$, mỗi số hạng kể từ số hạng thứ hai đều có bình phương bằng tích của hai số hạng kề nó:
+    $$u_k^2 = u_{k-1} \cdot u_{k+1}, \quad \forall k \ge 2$$
+\end{itemize}
+
+
+\paragraph{Mục 3: Tích hợp Năng lực AI (Mã 11.C5.1) \& Năng lực số (Mã 1.1NC1a) (07 phút)}
+
+
+\begin{pedabox}[Năng lực số (Mã 1.1NC1a): Kĩ năng MTCT Casio fx-580VN X]
+    $\bullet$ Sử dụng phím $x^\blacksquare$ để tính số hạng lớn: Ví dụ với $u_1 = 3, q = 2$, tìm $u_{15} = 3 \cdot 2^{14}$:\\
+    Bấm: \texttt{3} $\times$ \texttt{2} $x^\blacksquare$ \texttt{14} \texttt{=} $\to$ Kết quả hiển thị: $49\,152$.\\[0.3em]
+    $\bullet$ Bấm căn bậc $n$ (\texttt{SHIFT} $x^\blacksquare$) để tìm công bội khi biết khoảng cách số hạng.
+\end{pedabox}
+
+
+\begin{aibox}[Tích hợp Năng lực AI (QĐ 2422/QĐ-BGDĐT --- Mã 11.C5.1): Hàm số mũ trong mạng nơ-ron AI]
+    $\bullet$ \textbf{Cơ chế lan truyền ngược (Backpropagation):}\\
+    Trong mạng nơ-ron sâu (Deep Neural Networks), tín hiệu đạo hàm được nhân liên tiếp qua từng tầng ẩn $L$ theo quy tắc đạo hàm hợp. Nếu các trọng số liên kết lớn hơn $1$ (tương tự $q > 1$), gradient sẽ tăng theo cấp số nhân $q^L$, gây ra hiện tượng \textbf{Bùng nổ đạo hàm (Exploding Gradients)}. Ngược lại, nếu trọng số nhỏ hơn $1$ ($q < 1$), gradient suy giảm nhanh về $0$ theo $q^L$, gây ra \textbf{Triệt tiêu đạo hàm (Vanishing Gradients)} khiến mô hình AI ngừng học.\\
+    $\bullet$ Hiểu bản chất cấp số nhân giúp các kĩ sư AI thiết kế hàm kích hoạt chuẩn hóa (như ReLU) để cân bằng tốc độ học tập.
+\end{aibox}
+
+
+\subsubsection*{3. Hoạt động 3: Luyện tập (10 phút)}
+\begin{itemize}
+    \item \textbf{Bài 1:} Cho cấp số nhân $(u_n)$ có $u_1 = 2$ và công bội $q = 3$.
+    \begin{itemize}
+        \item a) Tìm số hạng thứ $5$ ($u_5$) và số hạng thứ $8$ ($u_8$).\\
+        \textit{Lời giải:}\\
+        Áp dụng công thức $u_n = u_1 \cdot q^{n-1}$:\\
+        $u_5 = 2 \cdot 3^{5-1} = 2 \cdot 3^4 = 2 \cdot 81 = 162$.\\
+        $u_8 = 2 \cdot 3^{8-1} = 2 \cdot 3^7 = 2 \cdot 2187 = 4374$.
+        \item b) Số $486$ có phải là một số hạng của cấp số nhân không? Nếu có là số hạng thứ mấy?\\
+        \textit{Lời giải:}\\
+        Giả sử $u_n = 486 \iff 2 \cdot 3^{n-1} = 486 \iff 3^{n-1} = 243 = 3^5 \iff n - 1 = 5 \iff n = 6$.\\
+        Vậy $486$ là số hạng thứ $6$ của cấp số nhân ($u_6 = 486$).
+    \end{itemize}
+    \item \textbf{Bài 2:} Tìm $u_1$ và công bội $q$ của cấp số nhân $(u_n)$ biết: $\begin{cases} u_4 - u_2 = 54 \\ u_5 - u_3 = 108 \end{cases}$.\\
+    \textit{Lời giải:}\\
+    Biểu diễn các số hạng theo $u_1$ và $q$:
+    $$\begin{cases} u_1 q^3 - u_1 q = 54 \\ u_1 q^4 - u_1 q^2 = 108 \end{cases} \iff \begin{cases} u_1 q(q^2 - 1) = 54 \quad (1) \\ u_1 q^2(q^2 - 1) = 108 \quad (2) \end{cases}$$
+    Lấy $(2)$ chia cho $(1)$ vế theo vế: $q = \dfrac{108}{54} = 2$.\\
+    Thay $q = 2$ vào $(1)$: $u_1 \cdot 2 \cdot (2^2 - 1) = 54 \iff u_1 \cdot 6 = 54 \iff u_1 = 9$.\\
+    Vậy cấp số nhân có $u_1 = 9$ và công bội $q = 2$.
+\end{itemize}
+
+
+\subsubsection*{4. Hoạt động 4: Vận dụng (05 phút)}
+\textbf{Bài toán phân chia tế bào sinh học:}\\
+Một tế bào vi khuẩn trong điều kiện thuận lợi cứ sau $20$ phút lại phân đôi một lần. Giả sử ban đầu có $1$ tế bào vi khuẩn.
+\begin{itemize}
+    \item a) Viết công thức tính số vi khuẩn sau $n$ lần phân chia.
+    \item b) Sau $3$ giờ, số lượng vi khuẩn sinh ra là bao nhiêu?
+\end{itemize}
+\textit{Lời giải:}\\
+a) Số lượng tế bào vi khuẩn qua các lần phân chia lập thành cấp số nhân với $u_1 = 2$ (sau lần phân chia thứ $1$), công bội $q = 2$.\\
+Sau $n$ lần phân chia, số lượng vi khuẩn là: $u_n = u_1 \cdot q^{n-1} = 2 \cdot 2^{n-1} = 2^n$ (tế bào).\\
+b) Đổi $3$ giờ $= 180$ phút. Số lần phân chia là: $n = \dfrac{180}{20} = 9$ lần.\\
+Sau $3$ giờ, số vi khuẩn là: $u_9 = 2^9 = 512$ (tế bào).
+
+
+\newpage
+
+
+{\large \textbf{TIẾT 2 (TIẾT 16 THEO PHÂN PHỐI CHƯƠNG TRÌNH)}}\\[0.3em]
+\textbf{Nội dung:} Tổng $n$ số hạng đầu tiên của cấp số nhân ($S_n$) --- Biểu đồ tăng trưởng hàm mũ Excel (Mã 3.2NC1a) --- Năng lực AI mô phỏng dịch bệnh (Mã 11.A1.2) --- Vận dụng bài toán lãi kép.
+
+
+\subsubsection*{1. Hoạt động 1: Mở đầu / Khởi động (05 phút)}
+\textbf{Chủ đề:} \textit{Bài toán phần thưởng hạt thóc trên bàn cờ vua cổ Ấn Độ.}
+\begin{itemize}
+    \item \textbf{a) Mục tiêu:} Giới thiệu bài toán tính tổng của một cấp số nhân qua một câu chuyện lịch sử kinh điển, dẫn dắt học sinh tới nhu cầu xây dựng công thức tính nhanh $S_n$.
+    \item \textbf{b) Nội dung:} Nhà thông thái Sessa phát minh ra bàn cờ vua $64$ ô. Nhà vua muốn ban thưởng, Sessa chỉ xin: Ô thứ nhất đặt $1$ hạt thóc, ô thứ hai đặt $2$ hạt, ô thứ ba đặt $4$ hạt, cứ thế mỗi ô sau đặt gấp đôi ô trước cho đến hết $64$ ô.
+    Tổng số hạt thóc trên toàn bộ $64$ ô bàn cờ là bao nhiêu? Nhà vua có đủ thóc để thưởng không?
+    \item \textbf{c) Sản phẩm:} Học sinh thiết lập biểu thức tổng: $S_{64} = 1 + 2 + 2^2 + 2^3 + \dots + 2^{63}$ hạt thóc.
+    \item \textbf{d) Tổ chức thực hiện:} GV kể chuyện $\to$ HS nhận xét tổng có $64$ số hạng $\to$ GV gợi ý cách nhân $2$ vào hai vế để rút gọn tổng.
+\end{itemize}
+
+
+\subsubsection*{2. Hoạt động 2: Hình thành kiến thức mới (20 phút)}
+
+
+\paragraph{Mục 1: Công thức tính tổng $n$ số hạng đầu tiên $S_n$ (10 phút)}
+\begin{itemize}
+    \item Cho cấp số nhân $(u_n)$ có số hạng đầu $u_1$ và công bội $q$.
+    Đặt:
+    $$S_n = u_1 + u_2 + \dots + u_n = u_1 + u_1 q + u_1 q^2 + \dots + u_1 q^{n-1}$$
+    \item Nhân cả hai vế với $q$:
+    $$q \cdot S_n = u_1 q + u_1 q^2 + \dots + u_1 q^{n-1} + u_1 q^n$$
+    \item Lấy vế trừ vế:
+    $$S_n - q \cdot S_n = u_1 - u_1 q^n \iff S_n(1 - q) = u_1(1 - q^n)$$
+    \item Với $q \neq 1$, ta suy ra công thức:
+    $$S_n = \dfrac{u_1(1 - q^n)}{1 - q}$$
+    \item \textbf{Trường hợp $q = 1$:} Khi $q = 1$, cấp số nhân là $u_1, u_1, \dots, u_1$ ($n$ số hạng) nên:
+    $$S_n = n \cdot u_1$$
+\end{itemize}
+
+
+\begin{scaffoldbox}[Giàn giáo sư phạm cho HS TB - Yếu: Khắc sâu công thức tính $S_n$]
+    \textbf{Nhận biết bản chất công thức:}
+    \begin{itemize}
+        \item Công thức chuẩn: $S_n = \dfrac{u_1(1 - q^n)}{1 - q} = \dfrac{u_1(q^n - 1)}{q - 1}$.
+        \item \textbf{Điều kiện bắt buộc:} $q \neq 1$.
+        \item Giải quyết bài toán hạt thóc bàn cờ vua: Với $u_1 = 1, q = 2, n = 64$:\\
+        $S_{64} = \dfrac{1 \cdot (2^{64} - 1)}{2 - 1} = 2^{64} - 1 \approx 18{,}4\text{ tỉ tỉ hạt thóc}$ (tương đương khoảng $737$ tỉ tấn thóc, vượt quá toàn bộ sản lượng lúa của cả nhân loại trong hàng thế kỉ!).
+    \end{itemize}
+\end{scaffoldbox}
+
+
+\paragraph{Mục 2: Tích hợp Năng lực số (Mã 3.2NC1a) & Năng lực AI (Mã 11.A1.2) (10 phút)}
+
+
+\begin{pedabox}[Năng lực số (Mã 3.2NC1a): Vẽ biểu đồ tăng trưởng hàm mũ trên Excel]
+    $\bullet$ \textbf{Thực hành trên phòng máy 35 máy:}
+    \begin{itemize}
+        \item Cột A: Các bước thời gian $n$ từ $1$ đến $15$.
+        \item Cột B: Cấp số cộng với $u_1 = 2, d = 3 \implies$ Cột B tăng tuyến tính: $2, 5, 8, 11, \dots$
+        \item Cột C: Cấp số nhân với $v_1 = 2, q = 2 \implies$ Cột C tăng theo hàm mũ: $2, 4, 8, 16, 32, \dots, 32\,768$.
+        \item Chèn biểu đồ đường Line Chart: Học sinh quan sát thấy đường cấp số cộng thoai thoải thẳng hàng, trong khi đường cấp số nhân uốn cong dựng đứng dốc ngược lên trời, thể hiện sự bùng nổ hàm mũ.
+    \end{itemize}
+\end{pedabox}
+
+
+\begin{aibox}[Tích hợp Năng lực AI (QĐ 2422/QĐ-BGDĐT --- Mã 11.A1.2): AI mô phỏng lây lan dịch bệnh]
+    $\bullet$ \textbf{Mô hình dịch tễ học và AI:}\\
+    Trong giai đoạn bùng phát dịch bệnh (như đại dịch cúm hoặc Covid-19), số ca nhiễm mới trong cộng đồng tuân theo quy luật cấp số nhân: $I_n = I_0 \cdot R_0^n$, trong đó $R_0$ là hệ số lây nhiễm cơ bản.\\
+    $\bullet$ Các mô hình học máy AI phân tích dữ liệu di chuyển và tiếp xúc để dự báo thời điểm bùng nổ dịch. Biện pháp giãn cách xã hội và tiêm vắc xin chính là nhằm mục tiêu toán học: kéo hệ số $R_0 < 1$, biến cấp số nhân từ trạng thái tăng bùng nổ sang trạng thái suy giảm dần về $0$.
+\end{aibox}
+
+
+\subsubsection*{3. Hoạt động 3: Luyện tập (12 phút)}
+\begin{itemize}
+    \item \textbf{Bài 1:} Tính tổng của $10$ số hạng đầu tiên của cấp số nhân $(u_n)$ biết:
+    \begin{itemize}
+        \item a) $u_1 = 3$ và $q = 2$.\\
+        \textit{Lời giải:} Áp dụng công thức tính tổng:
+        $$S_{10} = \dfrac{u_1(1 - q^{10})}{1 - q} = \dfrac{3(1 - 2^{10})}{1 - 2} = \dfrac{3(1 - 1024)}{-1} = 3 \cdot 1023 = 3069$$
+        \item b) $u_1 = 5$ và $q = -\dfrac{1}{2}$.\\
+        \textit{Lời giải:}\\
+        $$S_{10} = \dfrac{5\left[1 - \left(-\dfrac{1}{2}\right)^{10}\right]}{1 - \left(-\dfrac{1}{2}\right)} = \dfrac{5\left(1 - \dfrac{1}{1024}\right)}{\dfrac{3}{2}} = \dfrac{5 \cdot \dfrac{1023}{1024}}{\dfrac{3}{2}} = \dfrac{5115}{1024} \cdot \dfrac{2}{3} = \dfrac{1705}{512}$$
+    \end{itemize}
+    \item \textbf{Bài 2:} Cho cấp số nhân $(u_n)$ có $u_1 = 1, q = 3$. Biết tổng $S_n = 364$, hãy tìm $n$.\\
+    \textit{Lời giải:}\\
+    Ta có: $S_n = \dfrac{u_1(q^n - 1)}{q - 1} \iff 364 = \dfrac{1 \cdot (3^n - 1)}{3 - 1} \iff 3^n - 1 = 728 \iff 3^n = 729 = 3^6 \iff n = 6$.\\
+    Vậy số lượng số hạng là $n = 6$.
+\end{itemize}
+
+
+\subsubsection*{4. Hoạt động 4: Vận dụng (05 phút)}
+\textbf{Bài toán thực tiễn Tài chính: Lãi kép ngân hàng.}\\
+Bác An gửi tiết kiệm số tiền $100$ triệu đồng vào ngân hàng với hình thức lãi kép kì hạn $1$ năm, lãi suất $6\%$/năm. Sau mỗi năm, tiền lãi được cộng dồn vào vốn gốc để tính lãi cho năm tiếp theo.
+\begin{itemize}
+    \item a) Hãy chứng minh số tiền bác An nhận được sau mỗi năm lập thành một cấp số nhân.
+    \item b) Tính tổng số tiền (cả gốc lẫn lãi) bác An nhận được sau $5$ năm gửi (làm tròn đến hàng nghìn đồng).
+\end{itemize}
+\textit{Lời giải:}\\
+a) Gọi $A_n$ là số tiền sau $n$ năm gửi.
+Sau $1$ năm: $A_1 = 100 \cdot (1 + 0{,}06) = 100 \cdot 1{,}06$ (triệu đồng).\\
+Sau $2$ năm: $A_2 = A_1 \cdot (1 + 0{,}06) = 100 \cdot (1{,}06)^2$.\\
+Quy nạp sau $n$ năm: $A_n = 100 \cdot (1{,}06)^n$.\\
+Dãy $(A_n)$ là cấp số nhân có số hạng đầu $A_1 = 106$ triệu và công bội $q = 1{,}06$.\\
+b) Sau $5$ năm, số tiền nhận được là:
+$$A_5 = 100 \cdot (1{,}06)^5 \approx 133{,}823\text{ (triệu đồng)} = 133\,823\,000\text{ đồng}$$
+
+
+\newpage
+
+
+\section*{IV. PHỤ LỤC HỌC LIỆU BỔ TRỢ}
+
+
+\subsection*{Phụ lục 1: Phiếu học tập số 1 (Tiết 15) --- Định nghĩa \& Số hạng tổng quát CSN}
+\noindent\textbf{Họ và tên:} .................................................................... \textbf{Lớp:} 11A....... \textbf{Nhóm:} ..........
+
+
+\begin{pedabox}[Nhiệm vụ 1: Hoàn thành thông tin công thức Cấp số nhân]
+    $\bullet$ Dãy số $(u_n)$ là cấp số nhân khi và chỉ khi: $u_{n+1} = $ .......................................... ($n \ge 1$).\\[0.3em]
+    $\bullet$ Công thức tính công bội từ hai số hạng liền kề: $q = $ .............................................\\[0.3em]
+    $\bullet$ Công thức số hạng tổng quát: $u_n = $ .................................................................... ($n \ge 2$).\\[0.3em]
+    $\bullet$ \textbf{Bài tập nhanh:} Cho cấp số nhân có $u_1 = 3$ và $q = -2$. Tìm $u_6$.\\
+    \textit{Bài làm:} ...........................................................................................................................................
+\end{pedabox}
+
+
+\subsection*{Phụ lục 2: Phiếu học tập số 2 (Tiết 16) --- Tổng $n$ số hạng đầu tiên \& Ứng dụng số}
+\noindent\textbf{Họ và tên:} .................................................................... \textbf{Lớp:} 11A....... \textbf{Nhóm:} ..........
+
+
+\begin{pedabox}[Nhiệm vụ 2: Điền khuyết công thức tính tổng $S_n$]
+    $\bullet$ Công thức tính tổng $n$ số hạng đầu tiên của cấp số nhân (với $q \neq 1$):\\
+    $S_n = $ ........................................................................................................................................................\\[0.3em]
+    $\bullet$ Khi công bội $q = 1$, tổng $S_n = $ ....................................................................................................\\[0.3em]
+    $\bullet$ \textbf{Thực hành so sánh:} Dãy nào tăng nhanh hơn khi $n$ lớn?\\
+    - Dãy 1 (Cấp số cộng): $u_n = 100n$.\\
+    - Dãy 2 (Cấp số nhân): $v_n = 2^n$.\\
+    \textit{Hãy kiểm tra giá trị tại $n = 10$ và $n = 20$:} ..................................................................................
+\end{pedabox}
+
+
+\subsection*{Phụ lục 3: Bảng Rubric đánh giá năng lực tích hợp trong Bài 7}
+
+
+\begin{center}
+\begin{tabularx}{\linewidth}{|p{3.2cm}|X|X|X|X|}
+\hline
+\textbf{Tiêu chí} & \textbf{Mức 1 (Chưa đạt)} & \textbf{Mức 2 (Đạt)} & \textbf{Mức 3 (Khá)} & \textbf{Mức 4 (Tốt)} \\
+\hline
+\textbf{1. Giải toán Cấp số nhân} & Nhầm lẫn giữa công bội $q$ và công sai $d$; chưa nhớ công thức $S_n$. & Tìm được $u_n$ và tính được $S_n$ ở mức cơ bản; nhớ điều kiện $q \neq 1$. & Giải thành thạo hệ phương trình tìm $u_1, q$; phân biệt rõ dãy đan dấu $q < 0$. & Vận dụng linh hoạt giải quyết bài toán lãi kép, tăng trưởng dân số và bài toán bùng nổ số lượng. \\
+\hline
+\textbf{2. Ứng dụng số (Mã 1.1NC1a \& 3.2NC1a)} & Bấm máy tính nhầm số mũ âm hoặc tràn màn hình. & Sử dụng thành thạo phím lũy thừa $x^\blacksquare$ trên Casio fx-580VN X. & Thiết lập bảng tính Excel vẽ biểu đồ so sánh CSC và CSN rõ nét. & Khai thác chuyên sâu bảng tính mô phỏng xu hướng tăng trưởng bùng nổ của cấp số nhân. \\
+\hline
+\textbf{3. Năng lực AI (Mã 11.C5.1 \& 11.A1.2)} & Chưa hiểu vai trò của cấp số nhân trong công nghệ. & Nhận biết được hiện tượng bùng nổ đạo hàm liên quan đến hàm mũ trong AI. & Trình bày được ứng dụng của AI trong mô phỏng dịch bệnh dựa trên quy luật cấp số nhân. & Đánh giá sâu sắc tầm quan trọng của việc kiểm soát hệ số tăng trưởng trong các thuật toán AI tự học. \\
+\hline
+\end{tabularx}
+\end{center}
+
+
+\end{document}
