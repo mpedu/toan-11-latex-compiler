@@ -21,15 +21,31 @@ jobs:
           latexmk_use_pdflatex: true
           args: "-interaction=nonstopmode -file-line-error -pdf"
 
-      - name: Move generated PDFs to outputs
+      - name: Send compiled PDFs back to Google Drive
+        env:
+          DRIVE_WEBHOOK_URL: ${{ secrets.DRIVE_WEBHOOK_URL }}
+        run: |
+          for pdf in inputs/*.pdf; do
+            if [ -f "$pdf" ]; then
+              filename=$(basename "$pdf")
+              echo "Đang gửi $filename về Google Drive..."
+              base64_data=$(base64 -w 0 "$pdf")
+              
+              curl -L -X POST "$DRIVE_WEBHOOK_URL" \
+                -H "Content-Type: application/json" \
+                -d "{\"file_name\":\"$filename\", \"file_base64\":\"$base64_data\"}"
+            fi
+          done
+
+      - name: Move generated PDFs to outputs folder
         run: |
           mkdir -p outputs
           mv inputs/*.pdf outputs/ || true
 
-      - name: Commit and Push PDFs back to Repo
+      - name: Commit and Push PDFs to GitHub Repo
         run: |
           git config --global user.name "LaTeX Bot"
           git config --global user.email "bot@github.com"
           git add outputs/*.pdf
-          git commit -m "Auto-compiled PDF: $(date +'%Y-%m-%d %H:%M')" || echo "No changes to commit"
+          git commit -m "Auto-compiled and synced PDF: $(date +'%Y-%m-%d %H:%M')" || echo "No changes to commit"
           git push
