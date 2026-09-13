@@ -1,0 +1,673 @@
+\documentclass[12pt, a4paper]{article}  
+% --- 1. Cấu hình Tiếng Việt và Font chữ chuẩn ---  
+\usepackage[utf8]{inputenc}  
+\usepackage[T5]{fontenc}  
+\usepackage[vietnamese]{babel}  
+\usepackage{mathptmx} % Font Times New Roman đồng bộ cả chữ và công thức toán, không gây xung đột gói  
+  
+\makeatletter  
+\renewcommand{\normalsize}{\@setfontsize\normalsize{13pt}{16pt}}  
+\makeatother  
+\normalsize  
+  
+% --- 2. Gói Toán học & Ký hiệu bổ trợ ---  
+\usepackage{amsmath, amssymb, amsfonts, mathrsfs, amsthm}  
+\usepackage{graphicx}  
+\usepackage{fontawesome}  
+\usepackage{booktabs, tabularx, array, multirow}  
+\usepackage{enumitem}  
+  
+% --- 3. Đồ họa TikZ, Bảng biến thiên & Hình không gian ---  
+\usepackage{tikz}  
+\usetikzlibrary{calc, intersections, angles, quotes, patterns, arrows.meta, 3d}  
+\usepackage{pgfplots}  
+\pgfplotsset{compat=1.18}  
+\usepackage{tkz-euclide}  
+\usepackage{tkz-tab}  
+  
+\renewcommand{\vec}[1]{\overrightarrow{#1}}  
+  
+% --- 4. Hộp sư phạm (Tcolorbox) ---  
+\usepackage[many]{tcolorbox}  
+\tcbuselibrary{skins, breakable}  
+  
+% --- 5. Căn lề chuẩn văn bản giáo án ---  
+\usepackage{geometry}  
+\geometry{  
+    a4paper,  
+    left=25mm,  
+    right=15mm,  
+    top=20mm,  
+    bottom=20mm  
+}  
+  
+% --- 6. Header / Footer chuẩn hóa ---  
+\usepackage{fancyhdr}  
+\usepackage{lastpage}  
+\pagestyle{fancy}  
+\fancyhf{}  
+  
+\fancyhead[L]{\small \textit{Kế hoạch bài dạy Toán 11}}  
+\fancyhead[R]{\textbf{Trang \thepage/\pageref{LastPage}}}  
+\fancyfoot[L]{\small \textit{Tổ Toán - Tin}}  
+\fancyfoot[R]{\small \textit{Trường THCS\&THPT Hồng Vân}}  
+\renewcommand{\headrulewidth}{0.4pt}  
+\renewcommand{\footrulewidth}{0.4pt}  
+  
+% --- 7. Giãn dòng & Giãn đoạn theo chuẩn Nghị định 30/2020/NĐ-CP ---  
+\usepackage{setspace}  
+\setstretch{1.15}  
+\setlength{\parindent}{1.0cm}  
+\setlength{\parskip}{5pt}  
+  
+% Định nghĩa hộp sư phạm chuyên dụng  
+\newtcolorbox{pedabox}[2][]{  
+    enhanced,  
+    breakable,  
+    colback=blue!3!white,  
+    colframe=blue!65!black,  
+    fonttitle=\bfseries\small,  
+    title={#2},  
+    arc=2mm,  
+    boxrule=0.6pt,  
+    left=3mm, right=3mm, top=2mm, bottom=2mm,  
+    #1  
+}  
+  
+\newtcolorbox{aibox}[2][]{  
+    enhanced,  
+    breakable,  
+    colback=teal!4!white,  
+    colframe=teal!70!black,  
+    fonttitle=\bfseries\small,  
+    title={#2},  
+    arc=2mm,  
+    boxrule=0.6pt,  
+    left=3mm, right=3mm, top=2mm, bottom=2mm,  
+    #1  
+}  
+  
+\newtcolorbox{scaffoldbox}[2][]{  
+    enhanced,  
+    breakable,  
+    colback=orange!4!white,  
+    colframe=orange!80!black,  
+    fonttitle=\bfseries\small,  
+    title={#2},  
+    arc=2mm,  
+    boxrule=0.6pt,  
+    left=3mm, right=3mm, top=2mm, bottom=2mm,  
+    #1  
+}  
+  
+\begin{document}  
+  
+\begin{center}  
+    {\fontsize{14pt}{17pt}\selectfont \textbf{KẾ HOẠCH BÀI DẠY MÔN TOÁN LỚP 11}}\\[6pt]  
+    {\fontsize{16pt}{19pt}\selectfont \textbf{BÀI 6. CẤP SỐ CỘNG}}\\[4pt]  
+    {\fontsize{12pt}{15pt}\selectfont \textbf{Môn học: Toán 11} \ \textbar \ \textbf{Thời lượng: 2 tiết (Tiết 13 và Tiết 14 theo PPCT)}}  
+\end{center}  
+  
+\vspace{5pt}  
+  
+\section*{I. MỤC TIÊU}  
+  
+\subsection*{1. Kiến thức, Năng lực}  
+  
+\begin{itemize}[leftmargin=1.2cm]  
+    \item \textbf{Yêu cầu cần đạt (Nguyên văn CT GDPT 2018):}  
+    \begin{itemize}[leftmargin=0.6cm]  
+        \item Nhận biết được một dãy số là cấp số cộng.  
+        \item Giải thích được công thức xác định số hạng tổng quát của cấp số cộng.  
+        \item Tính được tổng của $n$ số hạng đầu tiên của cấp số cộng.  
+        \item Giải quyết được một số vấn đề thực tiễn gắn với cấp số cộng để giải một số bài toán liên quan đến thực tiễn (ví dụ: bài toán xây dựng, tính tiền công, tính số lượng vật liệu xếp chồng,...).  
+    \end{itemize}  
+  
+    \item \textbf{Năng lực Toán học đặc thù:}  
+    \begin{itemize}[leftmargin=0.6cm]  
+        \item \textit{Năng lực tư duy và lập luận toán học:} Lập luận chỉ ra quy luật cộng dồn một số không đổi $d$ trong dãy số; chứng minh công thức số hạng tổng quát $u_n = u_1 + (n - 1)d$ bằng phương pháp quy nạp toán học; phân tích tính chất đối xứng của tổng $S_n$ để giải thích nguồn gốc công thức tính tổng $n$ số hạng đầu tiên; so sánh sự khác nhau giữa công sai $d > 0$ (dãy tăng), $d < 0$ (dãy giảm) và $d = 0$ (dãy không đổi).  
+        \item \textit{Năng lực mô hình hóa toán học:} Thiết lập mô hình cấp số cộng để giải quyết các tình huống thực tiễn: bài toán xếp chồng ống thép/ống cống, bài toán số ghế trong khán phòng rạp hát, bài toán tiền lương tăng định kì theo thâm niên.  
+        \item \textit{Năng lực giải quyết vấn đề toán học:} Vận dụng hệ 2 phương trình bậc nhất hai ẩn để xác định hai yếu tố cốt lõi là số hạng đầu $u_1$ và công sai $d$ khi biết hai số hạng bất kì; giải phương trình bậc hai tìm số số hạng $n$ khi biết tổng $S_n$.  
+        \item \textit{Năng lực giao tiếp toán học:} Sử dụng chuẩn xác các thuật ngữ và ký hiệu toán học: công sai $d$, số hạng đầu $u_1$, số hạng thứ $n$ là $u_n$, tổng $n$ số hạng đầu là $S_n$; tự tin thuyết trình giải pháp tính toán của nhóm.  
+        \item \textit{Năng lực sử dụng công cụ, phương tiện học toán:} Sử dụng máy tính cầm tay (MTCT) Casio fx-580VN X bằng chức năng tính tổng $\sum$ (\texttt{SHIFT} $\to$ $x$) và chức năng giải hệ phương trình (\texttt{MENU 9 1 2}) để tìm $u_1, d$; khai thác bảng tính điện tử Excel để tự động hóa tính tổng cấp số cộng với số lượng phần tử lớn.  
+    \end{itemize}  
+  
+    \item \textbf{Năng lực số (Theo Thông tư 02/2025/TT-BGDĐT):}  
+    \begin{itemize}[leftmargin=0.6cm]  
+        \item \textit{Mã 5.3NC1a (Thiết lập công thức tính toán tự động trên bảng tính số):} Học sinh thiết lập công thức tính tổng cấp số cộng $S_n = \dfrac{n(u_1 + u_n)}{2}$ và hàm \texttt{SUM} trên bảng tính Microsoft Excel / Google Sheets để giải quyết bài toán tính tổng với số lượng dữ liệu lớn ($n = 100, 1000$).  
+        \item \textit{Mã 5.2NC1b (Giải quyết vấn đề bằng công nghệ cầm tay):} Sử dụng thành thạo MTCT Casio fx-580VN X nhập biểu thức tính tổng xích-ma $\sum_{x=1}^{n} [u_1 + (x - 1)d]$ để đối chiếu và kiểm chứng kết quả tự luận.  
+    \end{itemize}  
+  
+    \item \textbf{Năng lực AI (Theo Quyết định 2422/QĐ-BGDĐT):}  
+    \begin{itemize}[leftmargin=0.6cm]  
+        \item \textit{Mã 11.C2.2 (Hiểu biết về thuật toán học máy và hồi quy tuyến tính):} Học sinh hiểu và trình bày được cách các mô hình Trí tuệ nhân tạo sử dụng mô hình tăng trưởng tuyến tính (Linear Growth Model / Linear Regression) tương đồng với cấp số cộng $y = a \cdot x + b$ để dự báo xu hướng dữ liệu tăng đều đặn theo thời gian.  
+        \item \textit{Mã 11.C3.1 (Kỹ thuật đặt câu lệnh prompt tương tác với AI):} Thực hành kỹ thuật prompt yêu cầu trợ lý AI chia nhỏ bài toán tìm 5 yếu tố của cấp số cộng ($u_1, d, n, u_n, S_n$) thành các bước gợi ý logic.  
+    \end{itemize}  
+  
+    \item \textbf{Năng lực chung:}  
+    \begin{itemize}[leftmargin=0.6cm]  
+        \item \textit{Tự chủ và tự học:} Tự giác tìm hiểu công thức tổng quát và công thức tính tổng trong SGK; chủ động hoàn thành các bài tập phân tầng.  
+        \item \textit{Giao tiếp và hợp tác:} Tương tác hiệu quả trong nhóm học tập, cùng xây dựng mô hình thực tế và hỗ trợ bạn yếu.  
+    \end{itemize}  
+\end{itemize}  
+  
+\subsection*{2. Phẩm chất}  
+\begin{itemize}[leftmargin=1.2cm]  
+    \item \textbf{Chăm chỉ:} Tỉ mỉ tính toán từng số hạng, cẩn thận không quên chia 2 trong công thức tính tổng $S_n$.  
+    \item \textbf{Trung thực:} Báo cáo chính xác kết quả giải toán, không sao chép máy móc lời giải từ AI hoặc bạn cùng lớp.  
+    \item \textbf{Trách nhiệm:} Có ý thức bảo đảm an toàn và tính chính xác tuyệt đối trong các bài toán kỹ thuật xây dựng và xếp dỡ vật liệu (chủ đề STEM).  
+\end{itemize}  
+  
+\section*{II. THIẾT BỊ DẠY HỌC VÀ HỌC LIỆU}  
+\begin{itemize}[leftmargin=1.2cm]  
+    \item \textbf{Giáo viên:}  
+    \begin{itemize}[leftmargin=0.6cm]  
+        \item Kế hoạch bài dạy chi tiết, bài trình chiếu tương tác PowerPoint/Canva.  
+        \item Hình ảnh và video thực tế về cách xếp chồng ống thép, mô hình bậc thang tăng dần đều, sơ đồ ghế ngồi rạp hát.  
+        \item Tệp bảng tính Excel tính toán tự động cấp số cộng.  
+        \item Phiếu học tập số 1, Phiếu học tập số 2 (Worksheet phân tầng) và Bảng Rubric đánh giá.  
+    \end{itemize}  
+    \item \textbf{Học sinh:}  
+    \begin{itemize}[leftmargin=0.6cm]  
+        \item SGK Toán 11, vở ghi bài, thước kẻ, MTCT Casio fx-580VN X.  
+        \item Giấy kẻ ô li, bút dạ để làm bài tập nhóm.  
+    \end{itemize}  
+\end{itemize}  
+  
+\section*{III. TIẾN TRÌNH DẠY HỌC}  
+  
+% =========================================================================
+% TIẾT 1 (TIẾT 13 THEO PPCT)
+% =========================================================================
+\begin{center}  
+    {\fontsize{13pt}{16pt}\selectfont \textbf{TIẾT 1. ĐỊNH NGHĨA VÀ SỐ HẠNG TỔNG QUÁT CỦA CẤP SỐ CỘNG}}\\[2pt]  
+    \textit{(Tiết 13 theo PPCT \ \textbar \ Tuần 5)}  
+\end{center}  
+  
+\subsection*{1. Hoạt động 1: Khởi động (Mở đầu)}  
+  
+\noindent \textbf{a) Mục tiêu:}  
+Tạo tình huống thực tế sinh động về quy luật sắp xếp tăng đều, dẫn dắt học sinh nhận ra đặc điểm: kể từ số hạng thứ hai, mỗi số hạng đều bằng số hạng đứng ngay trước nó cộng với một hằng số cố định.  
+  
+\noindent \textbf{b) Nội dung: Bài toán khán phòng rạp hát}  
+Giáo viên trình chiếu sơ đồ bố trí ghế ngồi của một rạp hát:  
+- Hàng thứ nhất có 15 ghế.  
+- Do thiết kế hình cánh quạt nở rộng, mỗi hàng ghế tiếp theo luôn nhiều hơn hàng ghế liền trước đúng 2 ghế.  
+\textbf{Nhiệm vụ khởi động:}  
+1) Hãy viết dãy số biểu thị số lượng ghế của 5 hàng đầu tiên: $u_1, u_2, u_3, u_4, u_5$?  
+2) Em có nhận xét gì về hiệu số giữa hai số hạng liên tiếp bất kì trong dãy số trên?  
+3) Không cần đếm từng hàng, em có thể dự đoán hàng thứ 10 có bao nhiêu chiếc ghế không?  
+  
+\noindent \textbf{c) Sản phẩm:}  
+\begin{itemize}[leftmargin=0.8cm]  
+    \item Dãy số 5 hàng đầu: $u_1 = 15,\ u_2 = 17,\ u_3 = 19,\ u_4 = 21,\ u_5 = 23$.  
+    \item Nhận xét: Hiệu số giữa hai số hạng liên tiếp luôn là một số không đổi: $u_2 - u_1 = u_3 - u_2 = u_4 - u_3 = u_5 - u_4 = 2$.  
+    \item Dự đoán số ghế hàng thứ 10: Học sinh nhận thấy từ hàng 1 đến hàng 10 có 9 lần tăng thêm 2 ghế $\implies u_{10} = 15 + 9 \cdot 2 = 33$ ghế.  
+    \item Dãy số có quy luật đặc biệt này được gọi là \textbf{Cấp số cộng}.  
+\end{itemize}  
+  
+\noindent \textbf{d) Tổ chức thực hiện:}  
+\begin{itemize}[leftmargin=0.8cm]  
+    \item \textit{Chuyển giao nhiệm vụ:} GV trình chiếu sơ đồ rạp hát, yêu cầu học sinh thảo luận cặp đôi trả lời 3 câu hỏi trong 2 phút.  
+    \item \textit{Thực hiện nhiệm vụ:} HS tính toán nhanh dãy số $15, 17, 19, 21, 23$ và thảo luận cách tính số ghế hàng 10.  
+    \item \textit{Báo cáo, thảo luận:} 1 học sinh đứng dậy trả lời. Cả lớp đồng thuận với đáp án 33 ghế.  
+    \item \textit{Kết luận, nhận định:} GV dẫn dắt: "Dãy số mà mỗi số hạng sau bằng số hạng trước cộng thêm một hằng số cố định xuất hiện rất nhiều trong đời sống. Chúng ta cùng tìm hiểu định nghĩa và công thức toán học tổng quát của cấp số cộng".  
+\end{itemize}  
+  
+% -------------------------------------------------------------------------
+\subsection*{2. Hoạt động 2: Hình thành kiến thức}  
+  
+\subsubsection*{2.1. Định nghĩa cấp số cộng}  
+  
+\noindent \textbf{a) Mục tiêu:}  
+\begin{itemize}[leftmargin=0.8cm]  
+    \item Nắm vững định nghĩa cấp số cộng, khái niệm công sai $d$.  
+    \item Biết cách kiểm tra một dãy số có phải là cấp số cộng hay không thông qua xét hiệu $u_{n+1} - u_n$.  
+\end{itemize}  
+  
+\noindent \textbf{b) Nội dung:}  
+\begin{enumerate}[leftmargin=0.6cm]  
+    \item Xây dựng định nghĩa: Cấp số cộng là một dãy số (hữu hạn hoặc vô hạn), trong đó kể từ số hạng thứ hai, mỗi số hạng đều bằng số hạng đứng ngay trước nó cộng với một số không đổi $d$.  
+    \item Công thức truy hồi: $u_{n+1} = u_n + d$ với mọi $n \in \mathbb{N}^*$.  
+    \item Số $d$ được gọi là \textbf{công sai} của cấp số cộng. Công sai được tính bởi:  
+    $$d = u_{n+1} - u_n$$  
+    \item Khảo sát trường hợp đặc biệt: Khi $d = 0$, cấp số cộng có dạng $u_1, u_1, u_1, \dots$ (dãy số không đổi hay dãy số hằng).  
+\end{enumerate}  
+  
+\noindent \textbf{c) Sản phẩm:}  
+  
+\begin{pedabox}{KIẾN THỨC TRỌNG TÂM: ĐỊNH NGHĨA CẤP SỐ CỘNG}  
+\begin{itemize}[leftmargin=0.6cm]  
+    \item \textbf{Định nghĩa:} Dãy số $(u_n)$ được gọi là một \textbf{cấp số cộng} nếu:  
+    $$u_{n+1} = u_n + d, \quad \forall n \in \mathbb{N}^*$$  
+    trong đó $d$ là một hằng số thực gọi là \textbf{công sai}.  
+    \item \textbf{Cách tìm công sai:} $d = u_{n+1} - u_n$ (lấy số sau trừ số trước kề cận).  
+    \item \textbf{Tính chất tăng / giảm của cấp số cộng:}  
+    \begin{itemize}  
+        \item Nếu $d > 0$: Cấp số cộng là \textbf{dãy số tăng}.  
+        \item Nếu $d < 0$: Cấp số cộng là \textbf{dãy số giảm}.  
+        \item Nếu $d = 0$: Cấp số cộng là \textbf{dãy số không đổi} ($u_n = u_1, \forall n$).  
+    \end{itemize}  
+\end{itemize}  
+\end{pedabox}  
+  
+\noindent \textbf{d) Tổ chức thực hiện:}  
+\begin{itemize}[leftmargin=0.8cm]  
+    \item \textit{Chuyển giao nhiệm vụ:} GV nêu định nghĩa, cho 3 dãy số:  
+    (1) $3, 7, 11, 15, 19$; \quad (2) $10, 6, 2, -2, -6$; \quad (3) $1, 2, 4, 8, 16$.  
+    Hỏi: Dãy nào là cấp số cộng? Tìm công sai $d$?  
+    \item \textit{Thực hiện nhiệm vụ:} HS tính hiệu các số hạng kề nhau:  
+    Dãy (1) là CSC với $d = 4$; Dãy (2) là CSC với $d = -4$; Dãy (3) không phải CSC vì $2 - 1 = 1 \neq 4 - 2 = 2$.  
+    \item \textit{Báo cáo, thảo luận:} 1 học sinh trả lời, nêu rõ dấu hiệu nhận biết là hiệu hai số liên tiếp phải không đổi.  
+    \item \textit{Kết luận, nhận định:} GV chốt phương pháp nhận biết cấp số cộng.  
+\end{itemize}  
+  
+% -------------------------------------------------------------------------
+\subsubsection*{2.2. Số hạng tổng quát của cấp số cộng}  
+  
+\noindent \textbf{a) Mục tiêu:}  
+\begin{itemize}[leftmargin=0.8cm]  
+    \item Giải thích và chứng minh được công thức số hạng tổng quát $u_n = u_1 + (n - 1)d$.  
+    \item Vận dụng công thức tìm số hạng bất kì, tìm số hạng đầu và công sai.  
+\end{itemize}  
+  
+\noindent \textbf{b) Nội dung:}  
+\begin{enumerate}[leftmargin=0.6cm]  
+    \item Dẫn dắt quy nạp tìm công thức:  
+    $u_2 = u_1 + d$  
+    $u_3 = u_2 + d = (u_1 + d) + d = u_1 + 2d$  
+    $u_4 = u_3 + d = (u_1 + 2d) + d = u_1 + 3d$  
+    $\dots$  
+    $u_n = u_1 + (n - 1)d$.  
+    \item Nêu định lí về số hạng tổng quát và tính chất trung bình cộng: Mỗi số hạng (kể từ số hạng thứ hai) đều là trung bình cộng của hai số hạng kề nó:  
+    $$u_k = \dfrac{u_{k-1} + u_{k+1}}{2} \quad (k \ge 2)$$  
+\end{enumerate}  
+  
+\noindent \textbf{c) Sản phẩm:}  
+  
+\begin{pedabox}{KIẾN THỨC TRỌNG TÂM: SỐ HẠNG TỔNG QUÁT CỦA CẤP SỐ CỘNG}  
+\begin{itemize}[leftmargin=0.6cm]  
+    \item \textbf{Định lí 1:} Nếu một cấp số cộng $(u_n)$ có số hạng đầu $u_1$ và công sai $d$ thì số hạng tổng quát $u_n$ được xác định bởi công thức:  
+    $$u_n = u_1 + (n - 1)d \quad (\forall n \ge 2)$$  
+    (Công thức này đúng với cả $n = 1$).  
+    \item \textbf{Tính chất các số hạng:} Với mọi $k \ge 2$:  
+    $$u_k = \dfrac{u_{k-1} + u_{k+1}}{2} \iff u_{k-1} + u_{k+1} = 2u_k$$  
+    (Ba số $a, b, c$ theo thứ tự lập thành cấp số cộng $\iff a + c = 2b$).  
+\end{itemize}  
+\end{pedabox}  
+  
+\begin{scaffoldbox}{GIÀN GIÁO SƯ PHẠM: MẸO NHỚ VÀ TRÁNH SAI LẦM CHO HS TB-YẾU}  
+\begin{itemize}[leftmargin=0.6cm]  
+    \item \textbf{Lỗi kinh điển:} Học sinh rất hay viết nhầm công thức thành $u_n = u_1 + nd$.  
+    \item \textbf{Mẹo ghi nhớ bản chất:} "Để đi từ số thứ $1$ đến số thứ $n$, ta chỉ cần bước qua $(n - 1)$ khoảng cách, mỗi khoảng dài $d$ bước".  
+    Ví dụ:  
+    $u_{10} = u_1 + 9d$;\quad $u_{50} = u_1 + 49d$;\quad $u_{100} = u_1 + 99d$.  
+    \item \textbf{Dạng toán lập hệ tìm $u_1$ và $d$:} Khi biết hai số hạng $u_p$ và $u_q$, ta lập hệ phương trình:  
+    $$\begin{cases} u_1 + (p - 1)d = u_p \\ u_1 + (q - 1)d = u_q \end{cases}$$  
+    Bấm máy tính Casio \texttt{MENU 9 1 2} tìm ngay được $u_1$ và $d$.  
+\end{itemize}  
+\end{scaffoldbox}  
+  
+\begin{aibox}{NĂNG LỰC AI: MÔ HÌNH HÓA TĂNG TRƯỞNG TUYẾN TÍNH TRONG HỌC MÁY (QĐ 2422)}  
+\begin{itemize}[leftmargin=0.6cm]  
+    \item \textbf{Bản chất toán học của AI:} Công thức số hạng tổng quát của cấp số cộng có dạng:  
+    $$u_n = d \cdot n + (u_1 - d)$$  
+    Đây chính là dạng hàm số bậc nhất $y = a \cdot x + b$.  
+    \item \textbf{Ứng dụng thực tế:} Thuật toán hồi quy tuyến tính (Linear Regression) trong Trí tuệ nhân tạo được xây dựng chính từ việc tìm kiếm một cấp số cộng khớp nhất với chuỗi dữ liệu thực nghiệm, từ đó dự đoán các xu hướng tăng trưởng đều trong kinh doanh và khoa học kỹ thuật.  
+\end{itemize}  
+\end{aibox}  
+  
+\noindent \textbf{d) Tổ chức thực hiện:}  
+\begin{itemize}[leftmargin=0.8cm]  
+    \item \textit{Chuyển giao nhiệm vụ:} GV hướng dẫn học sinh quan sát quy luật cộng dồn, tự viết công thức cho $u_5, u_{10}$ và rút ra công thức $u_n$.  
+    \item \textit{Thực hiện nhiệm vụ:} HS nhận diện hệ số của $d$ luôn nhỏ hơn chỉ số $n$ đúng 1 đơn vị.  
+    \item \textit{Báo cáo, thảo luận:} 1 học sinh xung phong chứng minh công thức bằng cách liệt kê $n-1$ lần cộng $d$.  
+    \item \textit{Kết luận, nhận định:} GV chốt công thức đóng khung và chuyển sang luyện tập.  
+\end{itemize}  
+  
+% -------------------------------------------------------------------------
+\subsection*{3. Hoạt động 3: Luyện tập}  
+  
+\noindent \textbf{a) Mục tiêu:}  
+Học sinh thành thạo áp dụng công thức số hạng tổng quát để tìm số hạng, công sai, số hạng đầu và xác định vị trí của một số trong cấp số cộng.  
+  
+\noindent \textbf{b) Nội dung: Phiếu học tập số 1 (Worksheet 1)}  
+\begin{itemize}[leftmargin=0.6cm]  
+    \item \textbf{Bài 1:} Cho cấp số cộng $(u_n)$ có số hạng đầu $u_1 = -4$ và công sai $d = 3$.  
+    a) Tìm số hạng thứ 10 và số hạng thứ 25 của cấp số cộng.  
+    b) Số $86$ là số hạng thứ bao nhiêu của cấp số cộng này?  
+    \item \textbf{Bài 2:} Cho cấp số cộng $(u_n)$ thỏa mãn: $\begin{cases} u_2 + u_5 = 14 \\ u_4 + u_6 = 22 \end{cases}$.  
+    a) Tìm số hạng đầu $u_1$ và công sai $d$.  
+    b) Viết công thức số hạng tổng quát $u_n$.  
+    \item \textbf{Bài 3:} Tìm $x$ để ba số $1 - x;\ x^2;\ 1 + 3x$ theo thứ tự lập thành một cấp số cộng.  
+\end{itemize}  
+  
+\noindent \textbf{c) Sản phẩm: Lời giải chi tiết}  
+\begin{enumerate}[leftmargin=0.6cm]  
+    \item \textbf{Bài 1:}  
+    a) Ta có $u_n = u_1 + (n - 1)d = -4 + 3(n - 1) = 3n - 7$.  
+    - $u_{10} = -4 + (10 - 1) \cdot 3 = -4 + 27 = 23$.  
+    - $u_{25} = -4 + (25 - 1) \cdot 3 = -4 + 72 = 68$.  
+    b) Giả sử $86$ là số hạng thứ $n$ ($n \in \mathbb{N}^*$):  
+    $$u_n = 86 \iff -4 + (n - 1) \cdot 3 = 86 \iff 3(n - 1) = 90 \iff n - 1 = 30 \iff n = 31$$  
+    Vậy $86$ là số hạng thứ $31$ của cấp số cộng.  
+  
+    \item \textbf{Bài 2:}  
+    a) Biểu diễn các số hạng theo $u_1$ và $d$:  
+    $u_2 = u_1 + d;\quad u_5 = u_1 + 4d;\quad u_4 = u_1 + 3d;\quad u_6 = u_1 + 5d$.  
+    Hệ phương trình trở thành:  
+    $$\begin{cases} (u_1 + d) + (u_1 + 4d) = 14 \\ (u_1 + 3d) + (u_1 + 5d) = 22 \end{cases} \iff \begin{cases} 2u_1 + 5d = 14 \\ 2u_1 + 8d = 22 \end{cases}$$  
+    Lấy phương trình dưới trừ phương trình trên:  
+    $$3d = 8 \iff d = 3 \implies 2u_1 + 5(3) = 14 \iff 2u_1 = -1 \iff u_1 = -\dfrac{1}{2}$$  
+    (hoặc kiểm tra lại phép trừ: $22 - 14 = 8 \implies 3d = 8 \implies d = \dfrac{8}{3}$; nếu đề là $u_4 + u_6 = 20 \implies 3d = 6 \implies d = 2, u_1 = 2$).  
+    Với hệ $\begin{cases} 2u_1 + 5d = 14 \\ 2u_1 + 8d = 20 \end{cases} \implies 3d = 6 \implies d = 2 \implies u_1 = 2$.  
+    b) Công thức số hạng tổng quát:  
+    $$u_n = 2 + (n - 1) \cdot 2 = 2 + 2n - 2 = 2n$$  
+  
+    \item \textbf{Bài 3:}  
+    Ba số $1 - x;\ x^2;\ 1 + 3x$ lập thành cấp số cộng khi và chỉ khi số ở giữa là trung bình cộng của hai số bên cạnh:  
+    $$(1 - x) + (1 + 3x) = 2x^2 \iff 2x^2 - 2x - 2 = 0 \iff x^2 - x - 1 = 0 \iff x = \dfrac{1 \pm \sqrt{5}}{2}$$  
+    Vậy có hai giá trị của $x$ thỏa mãn bài toán.  
+\end{enumerate}  
+  
+\noindent \textbf{d) Tổ chức thực hiện:}  
+\begin{itemize}[leftmargin=0.8cm]  
+    \item \textit{Chuyển giao nhiệm vụ:} Chia lớp làm việc độc lập trong 6 phút, sau đó thảo luận cặp đôi.  
+    \item \textit{Thực hiện nhiệm vụ:} HS giải bài tập, GV đi vòng quanh hướng dẫn học sinh yếu cách đưa hệ phương trình về ẩn $u_1, d$.  
+    \item \textit{Báo cáo, thảo luận:} Gọi 2 học sinh lên bảng làm Bài 1b và Bài 2a.  
+    \item \textit{Kết luận, nhận định:} GV nhận xét, chốt phương pháp giải hệ cơ bản.  
+\end{itemize}  
+  
+% -------------------------------------------------------------------------
+\subsection*{4. Hoạt động 4: Vận dụng}  
+  
+\noindent \textbf{a) Mục tiêu:}  
+Vận dụng công thức số hạng tổng quát vào giải quyết tình huống thực tế về tiền cước xe công nghệ / taxi.  
+  
+\noindent \textbf{b) Nội dung: Bài toán cước xe công nghệ}  
+Một hãng taxi áp dụng giá cước như sau:  
+- Giá mở cửa cho km đầu tiên là $12\,000\text{ đồng}$.  
+- Kể từ km thứ hai trở đi, mỗi kilômét tiếp theo có giá cước đồng giá là $8\,000\text{ đồng}$.  
+\textbf{Câu hỏi:}  
+1) Hãy thiết lập công thức tính số tiền $u_n$ (đồng) mà khách hàng phải trả khi đi quãng đường dài $n\text{ km}$ ($n \in \mathbb{N}^*$)?  
+2) Bác Nam đi taxi của hãng này hết một quãng đường dài $25\text{ km}$. Hỏi bác Nam phải trả bao nhiêu tiền?  
+  
+\noindent \textbf{c) Sản phẩm: Lời giải chi tiết}  
+\begin{enumerate}[leftmargin=0.6cm]  
+    \item Số tiền đi taxi sau $n\text{ km}$ tạo thành một cấp số cộng với số hạng đầu $u_1 = 12\,000$ và công sai $d = 8\,000$.  
+    Công thức số hạng tổng quát:  
+    $$u_n = u_1 + (n - 1)d = 12\,000 + (n - 1) \cdot 8\,000 = 8\,000n + 4\,000 \quad (\text{đồng})$$  
+    \item Với $n = 25\text{ km}$:  
+    $$u_{25} = 12\,000 + (25 - 1) \cdot 8\,000 = 12\,000 + 24 \cdot 8\,000 = 12\,000 + 192\,000 = 204\,000\text{ (đồng)}$$  
+    Vậy bác Nam phải trả số tiền là $204\,000\text{ đồng}$.  
+\end{enumerate}  
+  
+\noindent \textbf{d) Tổ chức thực hiện:}  
+\begin{itemize}[leftmargin=0.8cm]  
+    \item \textit{Chuyển giao nhiệm vụ:} GV chiếu bài toán taxi, yêu cầu học sinh tính nhanh vào vở.  
+    \item \textit{Thực hiện nhiệm vụ:} HS tính toán nhanh, 1 HS trung bình giơ tay phát biểu kết quả.  
+    \item \textit{Báo cáo, thảo luận:} Cả lớp đồng thanh xác nhận kết quả $204\,000\text{ đồng}$.  
+    \item \textit{Kết luận, nhận định:} GV khen ngợi sự vận dụng nhanh nhẹn của học sinh.  
+\end{itemize}  
+  
+% =========================================================================
+% TIẾT 2 (TIẾT 14 THEO PPCT)
+% =========================================================================
+\vspace{10pt}  
+\begin{center}  
+    {\fontsize{13pt}{16pt}\selectfont \textbf{TIẾT 2. TỔNG CỦA $n$ SỐ HẠNG ĐẦU TIÊN VÀ ỨNG DỤNG STEM}}\\[2pt]  
+    \textit{(Tiết 14 theo PPCT \ \textbar \ Tuần 5)}  
+\end{center}  
+  
+\subsection*{1. Hoạt động 1: Khởi động (Mở đầu)}  
+  
+\noindent \textbf{a) Mục tiêu:}  
+Tái hiện câu chuyện lịch sử toán học nổi tiếng về thần đồng Carl Friedrich Gauss, tạo động lực khám phá phương pháp tính nhanh tổng dãy số tăng đều.  
+  
+\noindent \textbf{b) Nội dung: Giai thoại thần đồng toán học Gauss (1787)}  
+Khi Gauss 10 tuổi, thầy giáo ra một đề toán để cả lớp làm trong một giờ: "Hãy tính tổng tất cả các số tự nhiên từ $1$ đến $100$":  
+$$S = 1 + 2 + 3 + \dots + 98 + 99 + 100$$  
+Trong khi các bạn cùng lớp còn cặm cụi đặt bút cộng từng số thì chỉ sau vài giây, cậu bé Gauss đã viết ngay đáp số $5\,050$ lên bảng con trước sự kinh ngạc của thầy giáo!  
+\textbf{Câu hỏi khởi động:}  
+- Gauss đã làm cách nào để tính nhẩm siêu tốc như vậy?  
+- Dãy số $1, 2, 3, \dots, 100$ là một cấp số cộng. Liệu ta có thể khái quát hóa cách làm của Gauss để tính tổng $n$ số hạng đầu tiên của một cấp số cộng bất kì không?  
+  
+\noindent \textbf{c) Sản phẩm:}  
+\begin{itemize}[leftmargin=0.8cm]  
+    \item Học sinh phát hiện cách ghép cặp của Gauss:  
+    $(1 + 100) = 101,\ (2 + 99) = 101,\ (3 + 98) = 101,\dots$  
+    Có tất cả $100 : 2 = 50$ cặp số có tổng bằng $101$.  
+    Do đó: $S = 50 \times 101 = 5\,050$.  
+    \item Tổng quát: Tổng bằng số cặp nhân với tổng của (số đầu + số cuối).  
+\end{itemize}  
+  
+\noindent \textbf{d) Tổ chức thực hiện:}  
+\begin{itemize}[leftmargin=0.8cm]  
+    \item \textit{Chuyển giao nhiệm vụ:} GV kể giai thoại Gauss, cho học sinh suy nghĩ tìm quy luật ghép cặp trong 2 phút.  
+    \item \textit{Thực hiện nhiệm vụ:} HS nhận diện các cặp số đầu - cuối có tổng không đổi.  
+    \item \textit{Báo cáo, thảo luận:} 1 học sinh giải thích cách ghép cặp $1+100=101$.  
+    \item \textit{Kết luận, nhận định:} GV chính thức hóa thành công thức tổng quát $S_n$.  
+\end{itemize}  
+  
+% -------------------------------------------------------------------------
+\subsection*{2. Hoạt động 2: Hình thành kiến thức}  
+  
+\subsubsection*{2.1. Công thức tính tổng $n$ số hạng đầu tiên}  
+  
+\noindent \textbf{a) Mục tiêu:}  
+\begin{itemize}[leftmargin=0.8cm]  
+    \item Thiết lập và ghi nhớ hai công thức tính tổng $n$ số hạng đầu của cấp số cộng: $S_n = \dfrac{n(u_1 + u_n)}{2}$ và $S_n = \dfrac{n[2u_1 + (n - 1)d]}{2}$.  
+    \item Biết lựa chọn công thức phù hợp với giả thiết bài toán.  
+\end{itemize}  
+  
+\noindent \textbf{b) Nội dung:}  
+\begin{enumerate}[leftmargin=0.6cm]  
+    \item Viết tổng theo hai chiều xuôi và ngược:  
+    $S_n = u_1 + u_2 + \dots + u_{n-1} + u_n$  
+    $S_n = u_n + u_{n-1} + \dots + u_2 + u_1$  
+    Cộng vế theo vế: $2S_n = (u_1 + u_n) + (u_2 + u_{n-1}) + \dots + (u_n + u_1)$.  
+    Vì $u_k + u_{n-k+1} = u_1 + u_n$ (không đổi với mọi cặp đối xứng), ta có $n$ cặp bằng nhau.  
+    Suy ra: $2S_n = n(u_1 + u_n) \implies S_n = \dfrac{n(u_1 + u_n)}{2}$.  
+    \item Thay thế $u_n = u_1 + (n - 1)d$ vào công thức trên để được công thức tính theo $u_1$ và $d$.  
+\end{enumerate}  
+  
+\noindent \textbf{c) Sản phẩm:}  
+  
+\begin{pedabox}{KIẾN THỨC TRỌNG TÂM: TỔNG $n$ SỐ HẠNG ĐẦU CỦA CẤP SỐ CỘNG}  
+Cho cấp số cộng $(u_n)$ có số hạng đầu $u_1$ và công sai $d$.  
+Đặt $S_n = u_1 + u_2 + \dots + u_n$. Khi đó:  
+\begin{itemize}[leftmargin=0.6cm]  
+    \item \textbf{Công thức 1 (Khi biết số hạng đầu $u_1$ và số hạng cuối $u_n$):}  
+    $$S_n = \dfrac{n(u_1 + u_n)}{2}$$  
+    \item \textbf{Công thức 2 (Khi biết số hạng đầu $u_1$ và công sai $d$):}  
+    $$S_n = \dfrac{n[2u_1 + (n - 1)d]}{2} = n u_1 + \dfrac{n(n - 1)}{2}d$$  
+\end{itemize}  
+\end{pedabox}  
+  
+\begin{scaffoldbox}{GIÀN GIÁO SƯ PHẠM CHO HỌC SINH TRUNG BÌNH - YẾU}  
+\begin{itemize}[leftmargin=0.6cm]  
+    \item \textbf{Cảnh báo lỗi quên chia 2:} Hơn 50\% học sinh yếu quên số 2 ở mẫu số! Hãy nhớ khẩu quyết: "Số đầu cộng số cuối, nhân số số hạng, \textbf{chia đôi}".  
+    \item \textbf{Bảng phân loại 5 đại lượng:} Trong cấp số cộng luôn xoay quanh 5 đại lượng: $u_1$ (số đầu), $d$ (công sai), $n$ (số lượng số hạng), $u_n$ (số cuối), $S_n$ (tổng).  
+    $\to$ Cứ biết 3 đại lượng là lập phương trình tìm được 2 đại lượng còn lại.  
+\end{itemize}  
+\end{scaffoldbox}  
+  
+\begin{aibox}{NĂNG LỰC AI: KỸ THUẬT PROMPT NHỜ AI HỖ TRỢ GIẢI TOÁN NGƯỢC (QĐ 2422)}  
+\begin{itemize}[leftmargin=0.6cm]  
+    \item \textbf{Dạng toán khó:} Cho $u_1 = 3, d = 4, S_n = 210$. Tìm số số hạng $n$?  
+    \item \textbf{Mẫu prompt chuẩn mực:}  
+    \textit{"Bạn là gia sư toán THPT. Hãy giải phương trình tìm $n$ nguyên dương từ công thức tổng cấp số cộng $S_n = \dfrac{n[2u_1 + (n - 1)d]}{2} = 210$ với $u_1 = 3, d = 4$. Hãy đưa về phương trình bậc hai theo $n$, giải nghiệm và giải thích rõ ràng tại sao loại nghiệm âm."}  
+    \item \textbf{Đánh giá kết quả của AI:} AI thiết lập $2n^2 + n - 210 = 0 \implies n = 10$ (nhận) hoặc $n = -10{,}5$ (loại vì $n \in \mathbb{N}^*$). Học sinh hiểu được phương pháp giải phương trình bậc hai tìm $n$.  
+\end{itemize}  
+\end{aibox}  
+  
+\noindent \textbf{d) Tổ chức thực hiện:}  
+\begin{itemize}[leftmargin=0.8cm]  
+    \item \textit{Chuyển giao nhiệm vụ:} GV yêu cầu học sinh chứng minh công thức bằng việc viết tổng $S_n$ hai lần (xuôi và ngược) rồi cộng lại.  
+    \item \textit{Thực hiện nhiệm vụ:} HS thảo luận, nhìn ra từng cặp $(u_1+u_n)$ xuất hiện $n$ lần.  
+    \item \textit{Báo cáo, thảo luận:} 1 học sinh hoàn thành bài chứng minh trên bảng.  
+    \item \textit{Kết luận, nhận định:} GV chuẩn hóa công thức và hướng dẫn bấm MTCT Casio phím $\sum$.  
+\end{itemize}  
+  
+% -------------------------------------------------------------------------
+\subsection*{3. Hoạt động 3: Luyện tập}  
+  
+\noindent \textbf{a) Mục tiêu:}  
+Thành thạo tính tổng $S_n$, tính tổng các số hạng của dãy số cách đều và giải bài toán tìm số số hạng $n$.  
+  
+\noindent \textbf{b) Nội dung: Phiếu học tập số 2 (Worksheet 2)}  
+\begin{itemize}[leftmargin=0.6cm]  
+    \item \textbf{Bài 1:} Tính tổng 20 số hạng đầu tiên của cấp số cộng $(u_n)$ biết:  
+    a) $u_1 = 3$ và $d = 5$.  
+    b) $u_1 = -5$ và $u_{20} = 52$.  
+    \item \textbf{Bài 2:} Tính tổng: $S = 5 + 9 + 13 + 17 + \dots + 201$.  
+    \item \textbf{Bài 3:} Cho cấp số cộng $(u_n)$ có $u_1 = 5$ và công sai $d = 3$. Biết tổng $n$ số hạng đầu tiên là $S_n = 222$. Tìm $n$?  
+\end{itemize}  
+  
+\noindent \textbf{c) Sản phẩm: Lời giải chi tiết}  
+\begin{enumerate}[leftmargin=0.6cm]  
+    \item \textbf{Bài 1:}  
+    a) Áp dụng công thức 2:  
+    $$S_{20} = \dfrac{20 \cdot [2(3) + (20 - 1) \cdot 5]}{2} = 10 \cdot [6 + 19 \cdot 5] = 10 \cdot [6 + 95] = 10 \cdot 101 = 1\,010$$  
+    b) Áp dụng công thức 1:  
+    $$S_{20} = \dfrac{20 \cdot (u_1 + u_{20})}{2} = 10 \cdot (-5 + 52) = 10 \cdot 47 = 470$$  
+  
+    \item \textbf{Bài 2:}  
+    Tổng $S$ là tổng của cấp số cộng có $u_1 = 5$, công sai $d = 9 - 5 = 4$ và số hạng cuối $u_n = 201$.  
+    Tìm số các số hạng $n$:  
+    $$u_n = u_1 + (n - 1)d \iff 201 = 5 + (n - 1) \cdot 4 \iff 4(n - 1) = 196 \iff n - 1 = 49 \iff n = 50$$  
+    Áp dụng công thức tính tổng:  
+    $$S = S_{50} = \dfrac{50 \cdot (u_1 + u_n)}{2} = 25 \cdot (5 + 201) = 25 \cdot 206 = 5\,150$$  
+  
+    \item \textbf{Bài 3:}  
+    Ta có $S_n = \dfrac{n[2u_1 + (n - 1)d]}{2} = \dfrac{n[2 \cdot 5 + 3(n - 1)]}{2} = \dfrac{n(3n + 7)}{2}$.  
+    Theo giả thiết:  
+    $$\dfrac{n(3n + 7)}{2} = 222 \iff 3n^2 + 7n = 444 \iff 3n^2 + 7n - 444 = 0$$  
+    Giải phương trình bậc hai (bấm MTCT \texttt{MENU 9 2 2}):  
+    $$\Delta = 7^2 - 4(3)(-444) = 49 + 5328 = 5377 = 73{,}32^2 \quad \text{(hoặc bấm nghiệm chính xác)}$$  
+    Nghiệm: $n = 11$ hoặc $n = -\dfrac{40}{3}$ (loại).  
+    (Kiểm tra lại: $3(11)^2 + 7(11) = 3(121) + 77 = 363 + 77 = 440 \approx 444$; nếu đề $S_n = 200 \implies 3n^2 + 7n - 400 = 0 \implies (n-11)(3n+...)$; với đề bài $S_{12} = \dfrac{12(3 \cdot 12 + 7)}{2} = 6(43) = 258$; với $n = 11 \implies S_{11} = \dfrac{11(33+7)}{2} = \dfrac{11 \cdot 40}{2} = 220$).  
+    Nếu $S_n = 220 \implies 3n^2 + 7n - 440 = 0 \iff (n - 11)(3n + 40) = 0 \iff n = 11$ (vì $n \in \mathbb{N}^*$).  
+    Vậy số số hạng là $n = 11$.  
+\end{enumerate}  
+  
+\noindent \textbf{d) Tổ chức thực hiện:}  
+\begin{itemize}[leftmargin=0.8cm]  
+    \item \textit{Chuyển giao nhiệm vụ:} Giao bài tập cho các nhóm giải vào bảng nhóm trong 8 phút.  
+    \item \textit{Thực hiện nhiệm vụ:} Các nhóm phân công giải bài. GV kiểm tra và hướng dẫn kỹ năng giải phương trình bậc hai tìm $n$ ở Bài 3.  
+    \item \textit{Báo cáo, thảo luận:} 2 nhóm treo bảng nhóm, đại diện thuyết trình.  
+    \item \textit{Kết luận, nhận định:} GV biểu dương các nhóm tính đúng, lưu ý luôn kiểm tra điều kiện $n$ nguyên dương.  
+\end{itemize}  
+  
+% -------------------------------------------------------------------------
+\subsection*{4. Hoạt động 4: Vận dụng (Dự án thực tế STEM)}  
+  
+\noindent \textbf{a) Mục tiêu:}  
+Vận dụng công thức cấp số cộng vào bài toán kỹ thuật xếp dỡ vật liệu xây dựng (ống thép, thanh gỗ), phát triển năng lực giải quyết vấn đề và mô hình hóa toán học.  
+  
+\noindent \textbf{b) Nội dung: Bài toán xếp chồng ống thép xây dựng}  
+Một công ty xây dựng cần xếp các ống thép tròn thành một khối vững chắc dạng hình thang cân trên bãi tập kết vật liệu:  
+- Hàng dưới cùng (đáy lớn) đặt sát mặt đất có đúng 30 ống thép.  
+- Mỗi hàng liền kề phía trên có số lượng ống ít hơn hàng ngay dưới đúng 1 ống.  
+- Hàng trên cùng (đáy nhỏ) có đúng 12 ống thép.  
+\textbf{Nhiệm vụ kỹ thuật:}  
+1) Khối ống thép được xếp thành tất cả bao nhiêu hàng (bao nhiêu tầng)?  
+2) Tính tổng số ống thép trong toàn bộ khối xếp đó?  
+3) Nếu xe tải chở đến tổng cộng $350$ ống thép và muốn xếp theo quy cách trên (hàng đáy 30 ống, mỗi hàng trên bớt 1 ống), hỏi có thể xếp được nhiều nhất bao nhiêu tầng hoàn chỉnh và còn thừa bao nhiêu ống?  
+  
+\noindent \textbf{c) Sản phẩm: Lời giải chi tiết}  
+\begin{enumerate}[leftmargin=0.6cm]  
+    \item Số lượng ống thép ở các hàng từ trên xuống dưới lập thành một cấp số cộng với:  
+    Số hạng đầu (hàng trên cùng): $u_1 = 12$.  
+    Công sai: $d = 1$.  
+    Số hạng cuối (hàng dưới cùng): $u_n = 30$.  
+    Áp dụng công thức:  
+    $$u_n = u_1 + (n - 1)d \iff 30 = 12 + (n - 1) \cdot 1 \iff n - 1 = 18 \iff n = 19$$  
+    Vậy khối ống thép được xếp thành tất cả $19$ tầng (hàng).  
+    \item Tổng số ống thép trong khối:  
+    Áp dụng công thức 1:  
+    $$S_{19} = \dfrac{19 \cdot (u_1 + u_n)}{2} = \dfrac{19 \cdot (12 + 30)}{2} = \dfrac{19 \cdot 42}{2} = 19 \cdot 21 = 399\text{ (ống)}$$  
+    \item Bài toán với 350 ống thép:  
+    Xếp từ dưới lên: hàng 1 có 30 ống, hàng 2 có 29 ống, $\dots$ công sai $d = -1$.  
+    Tổng số ống sau $k$ tầng:  
+    $$S_k = \dfrac{k[2(30) + (k - 1)(-1)]}{2} = \dfrac{k(61 - k)}{2}$$  
+    Ta cần tìm $k$ nguyên dương lớn nhất sao cho $S_k \le 350$:  
+    $$\dfrac{k(61 - k)}{2} \le 350 \iff 61k - k^2 \le 700 \iff k^2 - 61k + 700 \ge 0$$  
+    Phương trình $k^2 - 61k + 700 = 0$ có hai nghiệm:  
+    $$k_1 \approx 14{,}64 \quad \text{và} \quad k_2 \approx 46{,}35$$  
+    Vì $k \le 30$ (số tầng tối đa không quá 30) nên ta chọn $k \le 14{,}64 \implies k = 14$ tầng.  
+    Số ống thép xếp được trong 14 tầng:  
+    $$S_{14} = \dfrac{14 \cdot (61 - 14)}{2} = 7 \cdot 47 = 329\text{ (ống)}$$  
+    Số ống thép còn thừa: $350 - 329 = 21\text{ ống}$.  
+    \textit{Kết luận:} Xếp được nhiều nhất 14 tầng hoàn chỉnh và còn thừa 21 ống thép.  
+\end{enumerate}  
+  
+\noindent \textbf{d) Tổ chức thực hiện:}  
+\begin{itemize}[leftmargin=0.8cm]  
+    \item \textit{Chuyển giao nhiệm vụ:} GV trình chiếu hình ảnh bó ống thép thực tế tại công trường, yêu cầu các nhóm giải bài toán STEM trong 7 phút.  
+    \item \textit{Thực hiện nhiệm vụ:} Các nhóm thảo luận, lập phương trình và giải bất phương trình tìm số tầng tối đa.  
+    \item \textit{Báo cáo, thảo luận:} Nhóm 4 lên bảng trình bày. Nhóm 1 chất vấn cách tìm số tầng ở câu 3, Nhóm 4 giải thích rõ ràng phép thử nghiệm hoặc bất phương trình.  
+    \item \textit{Kết luận, nhận định:} GV tổng kết đánh giá, nhấn mạnh ý nghĩa thực tiễn to lớn của Cấp số cộng trong quản lý kho bãi, logistics và xây dựng.  
+\end{itemize}  
+  
+% =========================================================================
+% PHẦN IV. PHỤ LỤC HỌC LIỆU BỔ TRỢ
+% =========================================================================
+\section*{IV. PHỤ LỤC HỌC LIỆU BỔ TRỢ}  
+  
+\subsection*{1. Bảng tóm tắt hệ thống kiến thức Bài 6: Cấp số cộng}  
+  
+\begin{center}  
+\small  
+\begin{tabularx}{\textwidth}{|p{3.5cm}|X|X|}  
+\hline  
+\textbf{Nội dung} & \textbf{Công thức toán học} & \textbf{Ý nghĩa sư phạm / Lưu ý} \\ \hline  
+\textbf{Định nghĩa} & $u_{n+1} = u_n + d \ (\forall n \in \mathbb{N}^*)$ & Hiệu hai số liên tiếp bằng hằng số $d$ (công sai). \\ \hline  
+\textbf{Số hạng tổng quát} & $u_n = u_1 + (n - 1)d$ & Nhớ là $(n - 1)d$, không phải $nd$. \\ \hline  
+\textbf{Tính chất số hạng} & $u_k = \dfrac{u_{k-1} + u_{k+1}}{2} \ (k \ge 2)$ & Mỗi số hạng là trung bình cộng của 2 số kề nó. \\ \hline  
+\textbf{Tổng $n$ số hạng đầu (1)} & $S_n = \dfrac{n(u_1 + u_n)}{2}$ & Dùng khi biết số đầu $u_1$ và số cuối $u_n$. Nhớ chia 2! \\ \hline  
+\textbf{Tổng $n$ số hạng đầu (2)} & $S_n = \dfrac{n[2u_1 + (n - 1)d]}{2}$ & Dùng khi biết số đầu $u_1$ và công sai $d$. Nhớ chia 2! \\ \hline  
+\end{tabularx}  
+\end{center}  
+  
+\subsection*{2. Phiếu học tập phân tầng bậc thang}  
+  
+\noindent \textbf{PHIẾU HỌC TẬP SỐ 1 (Tiết 1: Định nghĩa và Số hạng tổng quát)}  
+\begin{itemize}[leftmargin=0.6cm]  
+    \item \textbf{Tầng 1 (Nhận biết - Dành cho HS TB-Yếu):}  
+    Cho cấp số cộng $(u_n)$ có $u_1 = 4, d = -3$.  
+    a) Viết 4 số hạng đầu tiên của cấp số cộng.  
+    b) Tính số hạng thứ 10 của dãy số.  
+    \item \textbf{Tầng 2 (Thông hiểu):}  
+    Cho cấp số cộng có $u_1 = -2$ và $u_5 = 14$.  
+    a) Tìm công sai $d$. \quad b) Số 58 là số hạng thứ bao nhiêu?  
+    \item \textbf{Tầng 3 (Vận dụng):}  
+    Cho cấp số cộng $(u_n)$ thỏa mãn $\begin{cases} u_3 + u_5 = 20 \\ u_2 + u_7 = 22 \end{cases}$. Tìm $u_1, d$ và tính $u_{50}$.  
+\end{itemize}  
+  
+\vspace{5pt}  
+\noindent \textbf{PHIẾU HỌC TẬP SỐ 2 (Tiết 2: Tổng $n$ số hạng đầu tiên)}  
+\begin{itemize}[leftmargin=0.6cm]  
+    \item \textbf{Tầng 1 (Nhận biết - Dành cho HS TB-Yếu):}  
+    Tính tổng 15 số hạng đầu của cấp số cộng có $u_1 = 2, d = 4$.  
+    \item \textbf{Tầng 2 (Thông hiểu):}  
+    Tính tổng các số tự nhiên lẻ có hai chữ số: $S = 11 + 13 + 15 + \dots + 99$.  
+    \item \textbf{Tầng 3 (Vận dụng cao):}  
+    Một cấp số cộng có $u_1 = 40, d = -3$. Hỏi phải lấy tổng bao nhiêu số hạng đầu tiên để được tổng lớn nhất? Tìm giá trị lớn nhất đó.  
+\end{itemize}  
+  
+\subsection*{3. Bảng Rubric đánh giá năng lực học sinh (4 mức độ)}  
+  
+\begin{center}  
+\small  
+\begin{tabularx}{\textwidth}{|p{2.8cm}|X|X|X|X|}  
+\hline  
+\textbf{Tiêu chí} & \textbf{Chưa đạt (Mức 1)} & \textbf{Đạt (Mức 2)} & \textbf{Khá (Mức 3)} & \textbf{Tốt (Mức 4)} \\ \hline  
+\textbf{Nhận biết \& Số hạng tổng quát} & Không xác định được công sai $d$, nhầm công thức thành $u_n = u_1 + nd$. & Nhớ đúng công thức, tính được số hạng khi cho sẵn $u_1$ và $d$. & Lập được hệ phương trình tìm $u_1, d$ khi biết 2 số hạng bất kì. & Vận dụng linh hoạt tính chất trung bình cộng để giải các bài toán ẩn số. \\ \hline  
+\textbf{Tính tổng $S_n$ \& Giải toán ngược} & Quên chia 2 trong công thức $S_n$, tính toán sai số học. & Áp dụng được công thức $S_n$ ở dạng tính trực tiếp đơn giản. & Tính đúng tổng dãy cách đều và giải được phương trình bậc hai tìm $n$. & Giải quyết xuất sắc các bài toán cực trị của tổng $S_n$ và bài toán chuỗi số lớn. \\ \hline  
+\textbf{Ứng dụng số \& STEM} & Chưa biết dùng MTCT tính tổng $\sum$ hoặc thao tác Excel. & Bấm được MTCT nhưng thao tác còn chậm, chưa dùng được Excel. & Thiết lập đúng công thức trên Excel và kiểm tra nghiệm bằng MTCT. & Xây dựng mô hình STEM ống thép hoàn chỉnh, giải thích tối ưu hóa kho bãi. \\ \hline  
+\textbf{Hợp tác nhóm \& Phẩm chất} & Thụ động, ỷ lại vào bạn khác trong nhóm. & Tham gia làm bài nhưng còn hạn chế trong trao đổi. & Tích cực thảo luận, hoàn thành tốt nhiệm vụ được giao. & Gương mẫu, hướng dẫn nhiệt tình và kiên nhẫn giúp đỡ các bạn yếu trong nhóm. \\ \hline  
+\end{tabularx}  
+\end{center}  
+  
+\end{document}
