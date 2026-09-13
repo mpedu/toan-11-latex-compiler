@@ -1,0 +1,446 @@
+\documentclass[12pt, a4paper]{article}  
+% --- 1. Cấu hình Tiếng Việt và Font chữ chuẩn ---  
+\usepackage[utf8]{inputenc}  
+\usepackage[T5]{fontenc}  
+\usepackage[vietnamese]{babel}  
+\usepackage{mathptmx} % Font Times New Roman đồng bộ cả chữ và công thức toán, không gây xung đột gói  
+  
+\makeatletter  
+\renewcommand{\normalsize}{\@setfontsize\normalsize{13pt}{16pt}}  
+\makeatother  
+\normalsize  
+  
+% --- 2. Gói Toán học & Ký hiệu bổ trợ ---  
+\usepackage{amsmath, amssymb, amsfonts, mathrsfs, amsthm}  
+\usepackage{graphicx}  
+\usepackage{fontawesome}  
+\usepackage{booktabs, tabularx, array, multirow}  
+\usepackage{enumitem}  
+  
+% --- 3. Đồ họa TikZ, Bảng biến thiên & Hình không gian ---  
+\usepackage{tikz}  
+\usetikzlibrary{calc, intersections, angles, quotes, patterns, arrows.meta, 3d}  
+\usepackage{pgfplots}  
+\pgfplotsset{compat=1.18}  
+\usepackage{tkz-euclide}  
+\usepackage{tkz-tab}  
+  
+\renewcommand{\vec}[1]{\overrightarrow{#1}}  
+  
+% --- 4. Hộp sư phạm (Tcolorbox) ---  
+\usepackage[many]{tcolorbox}  
+\tcbuselibrary{skins, breakable}  
+  
+% --- 5. Căn lề chuẩn văn bản giáo án ---  
+\usepackage{geometry}  
+\geometry{  
+    a4paper,  
+    left=25mm,  
+    right=15mm,  
+    top=20mm,  
+    bottom=20mm  
+}  
+  
+% --- 6. Header / Footer chuẩn hóa ---  
+\usepackage{fancyhdr}  
+\usepackage{lastpage}  
+\pagestyle{fancy}  
+\fancyhf{}  
+  
+\fancyhead[L]{\small \textit{Kế hoạch bài dạy Toán 11}}  
+\fancyhead[R]{\textbf{Trang \thepage/\pageref{LastPage}}}  
+\fancyfoot[L]{\small \textit{Tổ Toán - Tin}}  
+\fancyfoot[R]{\small \textit{Trường THCS\&THPT Hồng Vân}}  
+\renewcommand{\headrulewidth}{0.4pt}  
+\renewcommand{\footrulewidth}{0.4pt}  
+  
+% --- 7. Giãn dòng & Giãn đoạn theo chuẩn Nghị định 30/2020/NĐ-CP ---  
+\usepackage{setspace}  
+\setstretch{1.15}  
+\setlength{\parindent}{1.0cm}  
+\setlength{\parskip}{5pt}  
+  
+% Định nghĩa hộp sư phạm chuyên dụng  
+\newtcolorbox{pedabox}[2][]{  
+    enhanced,  
+    breakable,  
+    colback=blue!3!white,  
+    colframe=blue!65!black,  
+    fonttitle=\bfseries\small,  
+    title={#2},  
+    arc=2mm,  
+    boxrule=0.6pt,  
+    left=3mm, right=3mm, top=2mm, bottom=2mm,  
+    #1  
+}  
+  
+\newtcolorbox{aibox}[2][]{  
+    enhanced,  
+    breakable,  
+    colback=teal!4!white,  
+    colframe=teal!70!black,  
+    fonttitle=\bfseries\small,  
+    title={#2},  
+    arc=2mm,  
+    boxrule=0.6pt,  
+    left=3mm, right=3mm, top=2mm, bottom=2mm,  
+    #1  
+}  
+  
+\newtcolorbox{scaffoldbox}[2][]{  
+    enhanced,  
+    breakable,  
+    colback=orange!4!white,  
+    colframe=orange!80!black,  
+    fonttitle=\bfseries\small,  
+    title={#2},  
+    arc=2mm,  
+    boxrule=0.6pt,  
+    left=3mm, right=3mm, top=2mm, bottom=2mm,  
+    #1  
+}  
+  
+\begin{document}  
+  
+\begin{center}  
+    {\fontsize{14pt}{17pt}\selectfont \textbf{KẾ HOẠCH BÀI DẠY MÔN TOÁN LỚP 11}}\\[6pt]  
+    {\fontsize{16pt}{19pt}\selectfont \textbf{BÀI TẬP CUỐI CHƯƠNG I}}\\[4pt]  
+    {\fontsize{12pt}{15pt}\selectfont \textbf{Môn học: Toán 11} \ \textbar \ \textbf{Thời lượng: 1 tiết (Tiết 10 theo PPCT)}}  
+\end{center}  
+  
+\vspace{5pt}  
+  
+\section*{I. MỤC TIÊU}  
+  
+\subsection*{1. Kiến thức, Năng lực}  
+  
+\begin{itemize}[leftmargin=1.2cm]  
+    \item \textbf{Yêu cầu cần đạt (Nguyên văn CT GDPT 2018):}  
+    \begin{itemize}[leftmargin=0.6cm]  
+        \item Hệ thống hóa toàn diện các kiến thức cốt lõi của Chương I: Góc lượng giác và giá trị lượng giác của góc lượng giác; Các phép biến đổi lượng giác cơ bản (công thức cộng, nhân đôi, biến đổi tích thành tổng và tổng thành tích); Bốn hàm số lượng giác cơ bản (tập xác định, tập giá trị, tính chẵn - lẻ, tính tuần hoàn, chu kì, đồ thị); Bốn phương trình lượng giác cơ bản.  
+        \item Vận dụng linh hoạt các kiến thức đã học để giải quyết các dạng toán trọng tâm: tính giá trị lượng giác, rút gọn biểu thức, chứng minh đẳng thức lượng giác, tìm tập xác định, tìm giá trị lớn nhất - nhỏ nhất của hàm số và giải phương trình lượng giác.  
+        \item Giải quyết được một số vấn đề thực tiễn gắn với hàm số và phương trình lượng giác (dao động điều hòa trong Vật lí, chuyển động tuần hoàn).  
+    \end{itemize}  
+  
+    \item \textbf{Năng lực Toán học đặc thù:}  
+    \begin{itemize}[leftmargin=0.6cm]  
+        \item \textit{Năng lực tư duy và lập luận toán học:} Xâu chuỗi logic giữa định nghĩa giá trị lượng giác trên đường tròn với công thức biến đổi đại số; so sánh tính tuần hoàn và tập xác định của các hàm số lượng giác; phân tích cấu trúc họ nghiệm của các phương trình lượng giác cơ bản; nhận diện bẫy sai lầm khi biến đổi lượng giác.  
+        \item \textit{Năng lực mô hình hóa toán học:} Thiết lập biểu thức lượng giác mô tả sự biến thiên của các đại lượng dao động điều hòa trong Vật lí $x(t) = A\cos(\omega t + \varphi)$, bài toán mực nước thủy triều lên xuống hoặc góc quay của cánh quạt tua-bin gió.  
+        \item \textit{Năng lực giải quyết vấn đề toán học:} Phân loại và lựa chọn phương pháp phù hợp để giải phương trình lượng giác (đưa về phương trình tích, phương trình bậc hai đối với một hàm số lượng giác, sử dụng công thức cộng); kết hợp điều kiện xác định để loại bỏ nghiệm ngoại lai chính xác.  
+        \item \textit{Năng lực giao tiếp toán học:} Trình bày lời giải tự luận bài bản, mạch lạc, sử dụng chuẩn mực hệ thống ký hiệu toán học ($k \in \mathbb{Z}, \pi, \arcsin, \arccos, \arctan$); thảo luận nhóm hiệu quả, biết phản biện và giải thích cho bạn học.  
+        \item \textit{Năng lực sử dụng công cụ, phương tiện học toán:} Khai thác triệt để máy tính cầm tay (MTCT) Casio fx-580VN X bằng các chức năng: chuyển đổi đơn vị góc rad/độ, tính năng TABLE (bảng giá trị) khảo sát GTLN-GTNN, tính năng CALC và SOLVE kiểm tra nghiệm của phương trình lượng giác.  
+    \end{itemize}  
+  
+    \item \textbf{Năng lực số (Theo Thông tư 02/2025/TT-BGDĐT):}  
+    \begin{itemize}[leftmargin=0.6cm]  
+        \item \textit{Mã 2.4NC1a (Cộng tác và chia sẻ tài liệu trên môi trường số):} Học sinh trong 7 nhóm học tập hợp tác qua bảng tính số (Google Sheets / Padlet lớp học) để chia sẻ các bước giải phương trình lượng giác, tổng hợp ngân hàng công thức lượng giác và đối chiếu kết quả giữa các nhóm.  
+        \item \textit{Mã 5.2NC1b (Giải quyết vấn đề bằng công nghệ số):} Vận dụng thành thạo MTCT Casio fx-580VN X kiểm tra tính đúng đắn của việc rút gọn biểu thức bằng cách gán giá trị cụ thể (\texttt{CALC}) và thử lại nghiệm phương trình.  
+    \end{itemize}  
+  
+    \item \textbf{Năng lực AI (Theo Quyết định 2422/QĐ-BGDĐT):}  
+    \begin{itemize}[leftmargin=0.6cm]  
+        \item \textit{Mã 11.A1.1 (Kiểm soát và đánh giá kết quả của hệ thống AI):} Học sinh xây dựng được quy trình kiểm chứng nghiệm của phương trình lượng giác do AI gợi ý bằng cách thế trực tiếp nghiệm vào phương trình ban đầu hoặc phân tích điều kiện xác định; nhận diện các lỗi sai phổ biến của AI khi giải phương trình lượng giác có điều kiện phức tạp.  
+        \item \textit{Mã 11.C3.1 (Kỹ thuật câu lệnh prompt tối ưu hóa việc ôn tập):} Học sinh thực hành kỹ thuật đặt câu lệnh prompt để yêu cầu trợ lý AI tóm tắt sơ đồ tư duy phân nhánh các công thức lượng giác khó nhớ.  
+    \end{itemize}  
+  
+    \item \textbf{Năng lực chung:}  
+    \begin{itemize}[leftmargin=0.6cm]  
+        \item \textit{Tự chủ và tự học:} Tự giác hệ thống lại kiến thức cá nhân qua sơ đồ tư duy; chủ động rà soát các dạng bài còn yếu.  
+        \item \textit{Giao tiếp và hợp tác:} Chia sẻ trách nhiệm trong nhóm 5 học sinh, phân công hỗ trợ học sinh trung bình - yếu hoàn thành tốt các bài tập nhận biết.  
+    \end{itemize}  
+\end{itemize}  
+  
+\subsection*{2. Phẩm chất}  
+\begin{itemize}[leftmargin=1.2cm]  
+    \item \textbf{Chăm chỉ:} Kiên trì tổng hợp kiến thức toàn chương, cẩn thận trong từng bước biến đổi đại số lượng giác.  
+    \item \textbf{Trung thực:} Tự giác làm bài tập ôn luyện, trung thực khi báo cáo kết quả và đối chiếu với đáp án kiểm chứng.  
+    \item \textbf{Trách nhiệm:} Tinh thần tương trợ đồng đội cao trong hoạt động nhóm 35 học sinh chia 7 nhóm (mỗi nhóm có bạn học lực khá kèm bạn học lực yếu).  
+\end{itemize}  
+  
+\section*{II. THIẾT BỊ DẠY HỌC VÀ HỌC LIỆU}  
+\begin{itemize}[leftmargin=1.2cm]  
+    \item \textbf{Giáo viên:}  
+    \begin{itemize}[leftmargin=0.6cm]  
+        \item Kế hoạch bài dạy chi tiết, bài giảng trình chiếu đa phương tiện PowerPoint/Canva tương tác cao.  
+        \item Sơ đồ tư duy số (Mindmap) tổng kết Chương I: Hàm số lượng giác và phương trình lượng giác.  
+        \item Trò chơi khởi động trắc nghiệm nhanh (Quizizz / Plickers / Bảng phụ tương tác).  
+        \item Phiếu học tập ôn tập chương phân tầng bậc thang (Worksheet 3 tầng) và Bảng Rubric đánh giá tiết ôn tập.  
+    \end{itemize}  
+    \item \textbf{Học sinh:}  
+    \begin{itemize}[leftmargin=0.6cm]  
+        \item SGK Toán 11, vở ghi bài, đề cương ôn tập Chương I.  
+        \item Sơ đồ tư duy do cá nhân tự chuẩn bị trước ở nhà.  
+        \item MTCT Casio fx-580VN X, bút màu, thước kẻ.  
+    \end{itemize}  
+\end{itemize}  
+  
+\section*{III. TIẾN TRÌNH DẠY HỌC (TIẾT 10 THEO PPCT)}  
+  
+\subsection*{1. Hoạt động 1: Khởi động (Mở đầu)}  
+  
+\noindent \textbf{a) Mục tiêu:}  
+\begin{itemize}[leftmargin=0.8cm]  
+    \item Tái hiện nhanh các công thức lượng giác then chốt và kết quả cơ bản của 4 bài học trong Chương I thông qua trò chơi trắc nghiệm ngắn 5 phút.  
+    \item Tạo không khí học tập sôi nổi, sẵn sàng cho tiết tổng kết chương.  
+\end{itemize}  
+  
+\noindent \textbf{b) Nội dung: Trò chơi "Vượt chướng ngại vật lượng giác" (4 câu hỏi trắc nghiệm nhanh)}  
+\begin{enumerate}[leftmargin=0.6cm]  
+    \item \textbf{Câu 1:} Đẳng thức nào sau đây đúng với mọi góc $\alpha$?  
+    A. $\sin^2\alpha - \cos^2\alpha = 1$. \quad B. $\sin^2\alpha + \cos^2\alpha = 1$. \quad C. $1 + \tan^2\alpha = \dfrac{1}{\sin^2\alpha}$. \quad D. $\tan\alpha \cdot \cot\alpha = -1$.  
+    \item \textbf{Câu 2:} Khẳng định nào sau đây về công thức nhân đôi là SAI?  
+    A. $\sin 2a = 2\sin a \cos a$. \quad B. $\cos 2a = \cos^2 a - \sin^2 a$. \quad C. $\cos 2a = 2\cos^2 a - 1$. \quad D. $\cos 2a = 1 - 2\cos^2 a$.  
+    \item \textbf{Câu 3:} Tập xác định của hàm số $y = \tan x$ là:  
+    A. $D = \mathbb{R} \setminus \{k\pi, k \in \mathbb{Z}\}$. \qquad B. $D = \mathbb{R} \setminus \left\{\dfrac{\pi}{2} + k\pi, k \in \mathbb{Z}\right\}$.  
+    C. $D = \mathbb{R} \setminus \left\{\dfrac{\pi}{2} + k2\pi, k \in \mathbb{Z}\right\}$. \quad D. $D = \mathbb{R}$.  
+    \item \textbf{Câu 4:} Nghiệm của phương trình lượng giác $\cos x = 0$ là:  
+    A. $x = k2\pi \ (k \in \mathbb{Z})$. \qquad B. $x = \dfrac{\pi}{2} + k2\pi \ (k \in \mathbb{Z})$.  
+    C. $x = \dfrac{\pi}{2} + k\pi \ (k \in \mathbb{Z})$. \qquad D. $x = \pi + k\pi \ (k \in \mathbb{Z})$.  
+\end{enumerate}  
+  
+\noindent \textbf{c) Sản phẩm: Đáp án chuẩn xác}  
+\begin{itemize}[leftmargin=0.8cm]  
+    \item Câu 1: \textbf{B} ($\sin^2\alpha + \cos^2\alpha = 1$).  
+    \item Câu 2: \textbf{D} (Công thức đúng là $\cos 2a = 1 - 2\sin^2 a$).  
+    \item Câu 3: \textbf{B} ($\cos x \neq 0 \iff x \neq \dfrac{\pi}{2} + k\pi$).  
+    \item Câu 4: \textbf{C} ($x = \dfrac{\pi}{2} + k\pi$).  
+\end{itemize}  
+  
+\noindent \textbf{d) Tổ chức thực hiện:}  
+\begin{itemize}[leftmargin=0.8cm]  
+    \item \textit{Chuyển giao nhiệm vụ:} GV trình chiếu từng câu hỏi lên màn hình, yêu cầu cả lớp giơ thẻ màu (A, B, C, D) chọn đáp án trong 15 giây/câu.  
+    \item \textit{Thực hiện nhiệm vụ:} Toàn bộ 35 học sinh hào hứng giơ thẻ đáp án. GV quét nhanh kết quả cả lớp.  
+    \item \textit{Báo cáo, thảo luận:} GV mời 1 học sinh chọn đáp án đúng giải thích tại sao Câu 2 sai và sửa lại cho đúng.  
+    \item \textit{Kết luận, nhận định:} GV nhận xét: "Hầu hết các em đã nắm được công thức cơ bản. Tuy nhiên, khi kết hợp nhiều công thức vào một bài toán tổng hợp, chúng ta rất dễ mắc sai lầm. Tiết học hôm nay sẽ giúp các em hệ thống hóa và rèn luyện kỹ năng giải toán vững chắc".  
+\end{itemize}  
+  
+% -------------------------------------------------------------------------
+\subsection*{2. Hoạt động 2: Hệ thống hóa kiến thức trọng tâm}  
+  
+\noindent \textbf{a) Mục tiêu:}  
+\begin{itemize}[leftmargin=0.8cm]  
+    \item Tái cấu trúc toàn bộ nội dung 4 bài học Chương I thành một bản đồ tư duy logic, mạch lạc.  
+    \item Giúp học sinh trung bình - yếu nhận diện rõ các công thức cốt lõi và các bẫy sai lầm kinh điển.  
+\end{itemize}  
+  
+\noindent \textbf{b) Nội dung:}  
+Giáo viên trình chiếu Sơ đồ tư duy tổng kết Chương I và phát Bảng tổng hợp công thức chuẩn:  
+\begin{enumerate}[leftmargin=0.6cm]  
+    \item \textbf{Cụm 1: Góc lượng giác \& Giá trị lượng giác (Bài 1):}  
+    - Đường tròn lượng giác gốc $A(1; 0)$, chiều dương ngược chiều kim đồng hồ.  
+    - Bốn hệ thức cơ bản: $\sin^2\alpha + \cos^2\alpha = 1$; $1 + \tan^2\alpha = \dfrac{1}{\cos^2\alpha}$; $1 + \cot^2\alpha = \dfrac{1}{\sin^2\alpha}$; $\tan\alpha \cdot \cot\alpha = 1$.  
+    - Góc liên quan đặc biệt: "Cos đối, Sin bù, Phụ chéo, Khác $\pi$ tan/cot".  
+    \item \textbf{Cụm 2: Các phép biến đổi lượng giác (Bài 2):}  
+    - Công thức cộng: $\cos(a \pm b) = \cos a \cos b \mp \sin a \sin b$; $\sin(a \pm b) = \sin a \cos b \pm \cos a \sin b$.  
+    - Công thức góc nhân đôi: $\sin 2a = 2\sin a \cos a$; $\cos 2a = \cos^2 a - \sin^2 a = 2\cos^2 a - 1 = 1 - 2\sin^2 a$.  
+    - Công thức biến đổi tích thành tổng và tổng thành tích.  
+    \item \textbf{Cụm 3: Hàm số lượng giác (Bài 3):}  
+    - Bảng đối chiếu 4 hàm số lượng giác: Tập xác định $D$, Tập giá trị $T$, Tính chẵn/lẻ, Chu kì tuần hoàn $T_0$.  
+    \item \textbf{Cụm 4: Phương trình lượng giác cơ bản (Bài 4):}  
+    - Công thức nghiệm của $\sin x = m$, $\cos x = m$ (chu kì $k2\pi$, điều kiện $|m| \le 1$).  
+    - Công thức nghiệm của $\tan x = m$, $\cot x = m$ (chu kì $k\pi$, luôn có nghiệm $\forall m \in \mathbb{R}$).  
+\end{enumerate}  
+  
+\noindent \textbf{c) Sản phẩm:}  
+  
+\begin{pedabox}{BẢNG ĐỐI CHIẾU 4 HÀM SỐ LƯỢNG GIÁC CƠ BẢN}  
+\small  
+\begin{tabularx}{\textwidth}{|l|X|X|l|l|l|}  
+\hline  
+\textbf{Hàm số} & \textbf{Tập xác định $D$} & \textbf{Tập giá trị $T$} & \textbf{Chẵn / Lẻ} & \textbf{Chu kì $T_0$} & \textbf{Đặc trưng đồ thị} \\ \hline  
+$y = \sin x$ & $\mathbb{R}$ & $[-1; 1]$ & Hàm lẻ & $2\pi$ & Đối xứng qua gốc $O$ \\ \hline  
+$y = \cos x$ & $\mathbb{R}$ & $[-1; 1]$ & Hàm chẵn & $2\pi$ & Đối xứng qua trục $Oy$ \\ \hline  
+$y = \tan x$ & $\mathbb{R} \setminus \left\{\dfrac{\pi}{2} + k\pi\right\}$ & $\mathbb{R}$ & Hàm lẻ & $\pi$ & Tâm đối xứng tại các điểm uốn \\ \hline  
+$y = \cot x$ & $\mathbb{R} \setminus \{k\pi\}$ & $\mathbb{R}$ & Hàm lẻ & $\pi$ & Giảm trên từng khoảng xác định \\ \hline  
+\end{tabularx}  
+\end{pedabox}  
+  
+\begin{scaffoldbox}{GIÀN GIÁO SƯ PHẠM: CÁC BẪY SAI LẦM KINH ĐIỂN CẦN TRÁNH}  
+\begin{itemize}[leftmargin=0.6cm]  
+    \item \textbf{Bẫy 1 (Quên đặt điều kiện xác định):} Khi giải phương trình chứa $\tan x$ hoặc $\cot x$, học sinh thường quên đặt điều kiện làm cho bài giải bị trừ điểm hoặc nhận nghiệm ngoại lai.  
+    \item \textbf{Bẫy 2 (Nhầm lẫn chu kì nghiệm):} Viết nghiệm của phương trình $\tan, \cot$ có đuôi $+ k2\pi$ là SAI (phải là $+ k\pi$).  
+    \item \textbf{Bẫy 3 (Thiếu họ nghiệm thứ hai của hàm Sin):} Phương trình $\sin x = \sin\alpha$ có 2 họ nghiệm là $\alpha + k2\pi$ và góc bù $\pi - \alpha + k2\pi$. Học sinh yếu rất hay bỏ quên nghiệm bù $\pi - \alpha$.  
+    \item \textbf{Bẫy 4 (Lẫn lộn đơn vị độ và radian):} Viết $x = 30^\circ + k2\pi$ là hoàn toàn sai quy chuẩn toán học.  
+\end{itemize}  
+\end{scaffoldbox}  
+  
+\begin{aibox}{NĂNG LỰC AI: QUY TRÌNH KIỂM CHỨNG NGHIỆM TỪ CÔNG CỤ AI (QĐ 2422)}  
+\begin{itemize}[leftmargin=0.6cm]  
+    \item \textbf{Thực trạng:} Các ứng dụng giải toán tự động (Photomath, Qanda, ChatGPT) khi giải phương trình lượng giác thường tự động triệt tiêu các nhân tử chung ở hai vế mà không xét trường hợp nhân tử bằng $0$, dẫn đến làm mất nghiệm.  
+    \item \textbf{Quy trình kiểm chứng 3 bước dành cho học sinh (Mã 11.A1.1):}  
+    \begin{enumerate}  
+        \item \textit{Bước 1 (Kiểm tra điều kiện):} Đối chiếu các nghiệm do AI đưa ra xem có vi phạm điều kiện xác định mẫu số hay không.  
+        \item \textit{Bước 2 (Kiểm tra số họ nghiệm):} Đếm số điểm ngọn nghiệm trên đường tròn lượng giác xem có đủ họ nghiệm theo bậc phương trình không.  
+        \item \textit{Bước 3 (Thử lại bằng MTCT):} Nhập biểu thức vế trái trừ vế phải vào MTCT, dùng phím \texttt{CALC} nhập giá trị nghiệm cụ thể (chọn $k = 0, k = 1$), nếu màn hình ra $0$ thì nghiệm chính xác.  
+    \end{enumerate}  
+\end{itemize}  
+\end{aibox}  
+  
+\noindent \textbf{d) Tổ chức thực hiện:}  
+\begin{itemize}[leftmargin=0.8cm]  
+    \item \textit{Chuyển giao nhiệm vụ:} GV yêu cầu 7 nhóm học sinh mở bảng sơ đồ tư duy đã chuẩn bị, cùng rà soát các nhánh kiến thức chính.  
+    \item \textit{Thực hiện nhiệm vụ:} Các nhóm đối chiếu, cử bạn học lực khá giải thích lại cho bạn học lực yếu về quy tắc phân biệt nghiệm của $\sin$ và $\cos$.  
+    \item \textit{Báo cáo, thảo luận:} 1 nhóm đại diện trình bày tóm tắt trước lớp.  
+    \item \textit{Kết luận, nhận định:} GV nhấn mạnh 4 bẫy sai lầm và chuyển sang luyện tập giải các bài toán trọng tâm.  
+\end{itemize}  
+  
+% -------------------------------------------------------------------------
+\subsection*{3. Hoạt động 3: Luyện tập giải toán theo chủ đề phân hóa}  
+  
+\noindent \textbf{a) Mục tiêu:}  
+\begin{itemize}[leftmargin=0.8cm]  
+    \item Rèn luyện kỹ năng biến đổi biểu thức lượng giác, tìm tập xác định, tìm GTLN-GTNN và giải phương trình lượng giác.  
+    \item Phát triển năng lực giải quyết vấn đề và năng lực giao tiếp toán học thông qua làm việc nhóm có phân hóa.  
+\end{itemize}  
+  
+\noindent \textbf{b) Nội dung: Hệ thống bài tập trong Phiếu học tập ôn tập chương}  
+Lớp 35 học sinh chia thành 7 nhóm (mỗi nhóm 5 em), thực hiện các bài toán sau:  
+\begin{itemize}[leftmargin=0.6cm]  
+    \item \textbf{Bài 1 (Tính giá trị lượng giác):} Cho $\cos\alpha = -\dfrac{3}{5}$ với $\pi < \alpha < \dfrac{3\pi}{2}$.  
+    a) Tính $\sin\alpha$ và $\tan\alpha$.  
+    b) Tính giá trị của $\sin 2\alpha$ và $\cos 2\alpha$.  
+    \item \textbf{Bài 2 (Rút gọn biểu thức):} Rút gọn biểu thức:  
+    $$P = \dfrac{\sin 2x + \sin x}{1 + \cos 2x + \cos x}$$  
+    \item \textbf{Bài 3 (Tập xác định \& GTLN-GTNN):}  
+    a) Tìm tập xác định của hàm số $y = \dfrac{\tan x}{\cos x - 1}$.  
+    b) Tìm giá trị lớn nhất và giá trị nhỏ nhất của hàm số $y = 3\sin\left(2x - \dfrac{\pi}{4}\right) + 2$.  
+    \item \textbf{Bài 4 (Giải phương trình lượng giác):} Giải các phương trình sau:  
+    a) $2\sin\left(2x + \dfrac{\pi}{3}\right) - \sqrt{3} = 0$.  
+    b) $2\cos^2 x - 3\cos x + 1 = 0$.  
+    c) $\sin x + \cos x = 1$.  
+\end{itemize}  
+  
+\noindent \textbf{c) Sản phẩm: Lời giải chi tiết}  
+\begin{enumerate}[leftmargin=0.6cm]  
+    \item \textbf{Bài 1:}  
+    a) Vì $\pi < \alpha < \dfrac{3\pi}{2}$ (góc phần tư thứ III) nên $\sin\alpha < 0$.  
+    Ta có: $\sin^2\alpha = 1 - \cos^2\alpha = 1 - \left(-\dfrac{3}{5}\right)^2 = 1 - \dfrac{9}{25} = \dfrac{16}{25} \implies \sin\alpha = -\dfrac{4}{5}$.  
+    Từ đó: $\tan\alpha = \dfrac{\sin\alpha}{\cos\alpha} = \dfrac{-4/5}{-3/5} = \dfrac{4}{3}$.  
+    b) Áp dụng công thức nhân đôi:  
+    $$\sin 2\alpha = 2\sin\alpha \cos\alpha = 2 \cdot \left(-\dfrac{4}{5}\right) \cdot \left(-\dfrac{3}{5}\right) = \dfrac{24}{25}$$  
+    $$\cos 2\alpha = 2\cos^2\alpha - 1 = 2 \cdot \left(-\dfrac{3}{5}\right)^2 - 1 = 2 \cdot \dfrac{9}{25} - 1 = \dfrac{18}{25} - 1 = -\dfrac{7}{25}$$  
+  
+    \item \textbf{Bài 2:}  
+    Điều kiện xác định: $1 + \cos 2x + \cos x \neq 0$.  
+    Sử dụng công thức nhân đôi: $\sin 2x = 2\sin x \cos x$ và $1 + \cos 2x = 2\cos^2 x$.  
+    Khi đó:  
+    $$P = \dfrac{2\sin x \cos x + \sin x}{2\cos^2 x + \cos x} = \dfrac{\sin x(2\cos x + 1)}{\cos x(2\cos x + 1)} = \dfrac{\sin x}{\cos x} = \tan x$$  
+  
+    \item \textbf{Bài 3:}  
+    a) Hàm số $y = \dfrac{\tan x}{\cos x - 1}$ xác định khi và chỉ khi:  
+    $$\begin{cases} \tan x \text{ xác định} \\ \cos x - 1 \neq 0 \end{cases} \iff \begin{cases} \cos x \neq 0 \\ \cos x \neq 1 \end{cases} \iff \begin{cases} x \neq \dfrac{\pi}{2} + k\pi \\ x \neq k2\pi \end{cases} \quad (k \in \mathbb{Z})$$  
+    Vậy tập xác định là $D = \mathbb{R} \setminus \left(\left\{\dfrac{\pi}{2} + k\pi, k \in \mathbb{Z}\right\} \cup \{k2\pi, k \in \mathbb{Z}\}\right)$.  
+    b) Với mọi $x \in \mathbb{R}$, ta luôn có:  
+    $$-1 \le \sin\left(2x - \dfrac{\pi}{4}\right) \le 1$$  
+    $$\iff -3 \le 3\sin\left(2x - \dfrac{\pi}{4}\right) \le 3 \iff -1 \le 3\sin\left(2x - \dfrac{\pi}{4}\right) + 2 \le 5$$  
+    Vậy $\min y = -1$ (đạt được khi $\sin\left(2x - \dfrac{\pi}{4}\right) = -1$) và $\max y = 5$ (đạt được khi $\sin\left(2x - \dfrac{\pi}{4}\right) = 1$).  
+  
+    \item \textbf{Bài 4:}  
+    a) $2\sin\left(2x + \dfrac{\pi}{3}\right) - \sqrt{3} = 0 \iff \sin\left(2x + \dfrac{\pi}{3}\right) = \dfrac{\sqrt{3}}{2} = \sin\dfrac{\pi}{3}$  
+    $$\iff \left[\begin{aligned} 2x + \dfrac{\pi}{3} &= \dfrac{\pi}{3} + k2\pi \\ 2x + \dfrac{\pi}{3} &= \pi - \dfrac{\pi}{3} + k2\pi \end{aligned}\right. \iff \left[\begin{aligned} 2x &= k2\pi \\ 2x &= \dfrac{\pi}{3} + k2\pi \end{aligned}\right. \iff \left[\begin{aligned} x &= k\pi \\ x &= \dfrac{\pi}{6} + k\pi \end{aligned}\right. \quad (k \in \mathbb{Z})$$  
+    b) $2\cos^2 x - 3\cos x + 1 = 0$. Đặt $t = \cos x$ ($-1 \le t \le 1$), phương trình trở thành:  
+    $$2t^2 - 3t + 1 = 0 \iff \left[\begin{aligned} t &= 1 \text{ (nhận)} \\ t &= \dfrac{1}{2} \text{ (nhận)} \end{aligned}\right.$$  
+    \begin{itemize}  
+        \item Với $\cos x = 1 \iff x = k2\pi \ (k \in \mathbb{Z})$.  
+        \item Với $\cos x = \dfrac{1}{2} = \cos\dfrac{\pi}{3} \iff x = \pm\dfrac{\pi}{3} + k2\pi \ (k \in \mathbb{Z})$.  
+    \end{itemize}  
+    Vậy tập nghiệm của phương trình là $S = \left\{k2\pi; \pm\dfrac{\pi}{3} + k2\pi, k \in \mathbb{Z}\right\}$.  
+    c) $\sin x + \cos x = 1 \iff \sqrt{2}\sin\left(x + \dfrac{\pi}{4}\right) = 1 \iff \sin\left(x + \dfrac{\pi}{4}\right) = \dfrac{\sqrt{2}}{2} = \sin\dfrac{\pi}{4}$  
+    $$\iff \left[\begin{aligned} x + \dfrac{\pi}{4} &= \dfrac{\pi}{4} + k2\pi \\ x + \dfrac{\pi}{4} &= \pi - \dfrac{\pi}{4} + k2\pi \end{aligned}\right. \iff \left[\begin{aligned} x &= k2\pi \\ x &= \dfrac{\pi}{2} + k2\pi \end{aligned}\right. \quad (k \in \mathbb{Z})$$  
+\end{enumerate}  
+  
+\noindent \textbf{d) Tổ chức thực hiện:}  
+\begin{itemize}[leftmargin=0.8cm]  
+    \item \textit{Chuyển giao nhiệm vụ:} GV phân công:  
+    - Nhóm 1, 2: Thực hiện Bài 1 và Bài 2.  
+    - Nhóm 3, 4: Thực hiện Bài 3.  
+    - Nhóm 5, 6, 7: Thực hiện Bài 4 (mỗi nhóm phụ trách 1 câu a, b, c).  
+    Mỗi nhóm cử 1 học sinh khá hỗ trợ hướng dẫn các bạn học sinh trung bình - yếu.  
+    \item \textit{Thực hiện nhiệm vụ:} Các nhóm thảo luận sôi nổi trong 12 phút, trình bày bài giải lên bảng phụ. GV quan sát, trực tiếp gỡ rối cho nhóm gặp vướng mắc ở Bài 4c về công thức biến đổi $\sin x + \cos x = \sqrt{2}\sin\left(x + \dfrac{\pi}{4}\right)$.  
+    \item \textit{Báo cáo, thảo luận:} Đại diện 3 nhóm lên bảng trình bày 3 bài toán đặc trưng (Bài 2, Bài 3b, Bài 4b). Các nhóm khác chấm chéo và nhận xét.  
+    \item \textit{Kết luận, nhận định:} GV nhận xét, chốt đáp án, biểu dương các bạn học sinh trung bình đã nỗ lực giải thành công phương trình bậc hai ở Bài 4b.  
+\end{itemize}  
+  
+% -------------------------------------------------------------------------
+\subsection*{4. Hoạt động 4: Vận dụng thực tiễn \& Kiểm chứng số}  
+  
+\noindent \textbf{a) Mục tiêu:}  
+Vận dụng tổng hợp công thức biến đổi và phương trình lượng giác để giải bài toán dao động điều hòa tổng hợp trong Vật lí, kết hợp kiểm chứng nghiệm bằng máy tính cầm tay.  
+  
+\noindent \textbf{b) Nội dung: Bài toán dao động điều hòa trong kỹ thuật cơ khí}  
+Một pittông trong động cơ đốt trong chuyển động tịnh tiến qua lại dọc theo một đường thẳng. Li độ dao động của đầu pittông tại thời điểm $t$ (giây, $t \ge 0$) được xác định bởi biểu thức:  
+$$x(t) = 5\cos(4\pi t) + 5\sqrt{3}\sin(4\pi t) \quad (\text{cm})$$  
+\textbf{Yêu cầu:}  
+1) Hãy biến đổi biểu thức $x(t)$ về dạng dao động điều hòa chuẩn $x(t) = A\cos(\omega t + \varphi)$ để xác định biên độ dao động $A$ và pha ban đầu $\varphi$?  
+2) Tìm tất cả các thời điểm trong 2 giây đầu tiên ($0 \le t \le 2$) mà đầu pittông đi qua vị trí cân bằng ($x = 0$)?  
+3) Dùng tính năng \texttt{CALC} trên MTCT Casio fx-580VN X để kiểm chứng lại nghiệm tìm được.  
+  
+\noindent \textbf{c) Sản phẩm: Lời giải chi tiết}  
+\begin{enumerate}[leftmargin=0.6cm]  
+    \item Biến đổi biểu thức li độ:  
+    $$x(t) = 10 \left[ \dfrac{1}{2}\cos(4\pi t) + \dfrac{\sqrt{3}}{2}\sin(4\pi t) \right]$$  
+    Vì $\dfrac{1}{2} = \cos\dfrac{\pi}{3}$ và $\dfrac{\sqrt{3}}{2} = \sin\dfrac{\pi}{3}$, ta có:  
+    $$x(t) = 10 \left[ \cos(4\pi t)\cos\dfrac{\pi}{3} + \sin(4\pi t)\sin\dfrac{\pi}{3} \right] = 10\cos\left(4\pi t - \dfrac{\pi}{3}\right) \quad (\text{cm})$$  
+    Vậy biên độ dao động là $A = 10\text{ cm}$, tần số góc $\omega = 4\pi\text{ (rad/s)}$ và pha ban đầu $\varphi = -\dfrac{\pi}{3}\text{ (rad)}$.  
+    \item Pittông đi qua vị trí cân bằng khi $x(t) = 0$:  
+    $$10\cos\left(4\pi t - \dfrac{\pi}{3}\right) = 0 \iff \cos\left(4\pi t - \dfrac{\pi}{3}\right) = 0$$  
+    $$\iff 4\pi t - \dfrac{\pi}{3} = \dfrac{\pi}{2} + k\pi \iff 4\pi t = \dfrac{5\pi}{6} + k\pi \iff t = \dfrac{5}{24} + \dfrac{k}{4} \quad (k \in \mathbb{Z})$$  
+    Xét điều kiện $0 \le t \le 2$:  
+    $$0 \le \dfrac{5}{24} + \dfrac{k}{4} \le 2 \iff -\dfrac{5}{24} \le \dfrac{k}{4} \le \dfrac{43}{24} \iff -\dfrac{5}{6} \le k \le \dfrac{43}{6} \approx 7{,}17$$  
+    Vì $k \in \mathbb{Z} \implies k \in \{0, 1, 2, 3, 4, 5, 6, 7\}$ (có đúng $8$ thời điểm trong 2 giây đầu tiên).  
+    Cụ thể các thời điểm: $t \in \left\{\dfrac{5}{24}, \dfrac{11}{24}, \dfrac{17}{24}, \dfrac{23}{24}, \dfrac{29}{24}, \dfrac{35}{24}, \dfrac{41}{24}, \dfrac{47}{24}\right\}\text{ (giây)}$.  
+    \item Kiểm chứng trên MTCT: Nhập $5\cos(4\pi X) + 5\sqrt{3}\sin(4\pi X)$, bấm \texttt{CALC} $X = 5/24 \to$ kết quả hiển thị $0$. Nghiệm hoàn toàn chính xác.  
+\end{enumerate}  
+  
+\noindent \textbf{d) Tổ chức thực hiện:}  
+\begin{itemize}[leftmargin=0.8cm]  
+    \item \textit{Chuyển giao nhiệm vụ:} GV trình chiếu bài toán thực tế, giao cả lớp thực hiện trong 5 phút vào vở.  
+    \item \textit{Thực hiện nhiệm vụ:} HS vận dụng công thức biến đổi tổng hợp $a\sin + b\cos$ và phương trình $\cos = 0$, sau đó bấm MTCT đối soát.  
+    \item \textit{Báo cáo, thảo luận:} 1 HS khá lên bảng viết nhanh đáp án, 1 HS trung bình đọc kết quả bấm máy tính kiểm chứng.  
+    \item \textit{Kết luận, nhận định:} GV tổng kết: Bài toán minh chứng sự gắn kết mật thiết giữa Toán học và Vật lí 11; dặn dò học sinh chuẩn bị bài học tiếp theo: Bài 5. Dãy số.  
+\end{itemize}  
+  
+% =========================================================================
+% PHẦN IV. PHỤ LỤC HỌC LIỆU BỔ TRỢ
+% =========================================================================
+\section*{IV. PHỤ LỤC HỌC LIỆU BỔ TRỢ}  
+  
+\subsection*{1. Phiếu học tập ôn tập chương (Worksheet phân tầng bậc thang)}  
+  
+\begin{itemize}[leftmargin=0.6cm]  
+    \item \textbf{Tầng 1: Nhận biết (Dành cho HS Trung bình - Yếu):}  
+    \begin{enumerate}  
+        \item Cho $\sin\alpha = \dfrac{1}{3}$ với $0 < \alpha < \dfrac{\pi}{2}$. Tính $\cos\alpha$.  
+        \item Giải các phương trình lượng giác cơ bản: a) $\sin x = -\dfrac{1}{2}$; \quad b) $\cos x = 1$; \quad c) $\tan x = \sqrt{3}$.  
+        \item Xác định chu kì tuần hoàn của các hàm số $y = \cos(2x)$ và $y = \tan(3x)$.  
+    \end{enumerate}  
+  
+    \item \textbf{Tầng 2: Thông hiểu (Mức độ đại trà):}  
+    \begin{enumerate}  
+        \item Rút gọn biểu thức lượng giác: $A = \dfrac{\cos a - \cos 3a}{\sin 3a - \sin a}$.  
+        \item Tìm tập xác định của hàm số: $y = \sqrt{\dfrac{1 - \cos x}{2}} + \cot x$.  
+        \item Giải phương trình: $\cos\left(2x - \dfrac{\pi}{6}\right) = \sin x$.  
+    \end{enumerate}  
+  
+    \item \textbf{Tầng 3: Vận dụng \& Vận dụng cao:}  
+    \begin{enumerate}  
+        \item Tìm số nghiệm thuộc khoảng $(0; 2\pi)$ của phương trình: $2\cos 2x + 2\cos x - \sqrt{2} = 0$.  
+        \item Tìm giá trị lớn nhất và nhỏ nhất của hàm số: $y = \sin^4 x + \cos^4 x$.  
+    \end{enumerate}  
+\end{itemize}  
+  
+\subsection*{2. Bảng Rubric đánh giá năng lực học sinh trong tiết ôn tập chương}  
+  
+\begin{center}  
+\small  
+\begin{tabularx}{\textwidth}{|p{2.8cm}|X|X|X|X|}  
+\hline  
+\textbf{Tiêu chí} & \textbf{Chưa đạt (Mức 1)} & \textbf{Đạt (Mức 2)} & \textbf{Khá (Mức 3)} & \textbf{Tốt (Mức 4)} \\ \hline  
+\textbf{Hệ thống hóa kiến thức (30\%)} & Nhớ rời rạc, nhầm lẫn công thức cộng, nhân đôi hoặc chu kì hàm số. & Nhớ được phần lớn công thức cơ bản nhưng áp dụng còn lúng túng. & Nắm vững hệ thống công thức, lập được sơ đồ tư duy toàn diện chương. & Hệ thống hóa xuất sắc, giải thích được bản chất và mối liên hệ giữa các công thức. \\ \hline  
+\textbf{Kỹ năng giải toán lượng giác (40\%)} & Chưa biết cách biến đổi biểu thức hoặc giải sai phương trình cơ bản. & Giải được các bài toán cơ bản ở Tầng 1 (tính giá trị, giải PT trực tiếp). & Giải thành thạo các bài toán Tầng 2, biến đổi đại số chính xác, đủ điều kiện. & Giải quyết tốt các bài toán phân hóa Tầng 3 và mô hình hóa thực tế Vật lí. \\ \hline  
+\textbf{Kỹ năng số \& Đánh giá AI (15\%)} & Chưa biết bấm MTCT hoặc phụ thuộc hoàn toàn vào phần mềm giải toán. & Bấm được máy tính để tính góc nhưng chưa biết dùng kiểm tra nghiệm. & Sử dụng thành thạo MTCT kiểm tra biểu thức và thử nghiệm phương trình. & Vận dụng xuất sắc quy trình kiểm chứng số, phát hiện được các lỗi thiếu nghiệm của AI. \\ \hline  
+\textbf{Hợp tác nhóm \& Phẩm chất (15\%)} & Thụ động, không tham gia giải bài tập cùng nhóm. & Có tham gia nhưng chưa đóng góp nhiều vào sản phẩm chung của nhóm. & Tích cực thảo luận, hoàn thành tốt nhiệm vụ được nhóm phân công. & Chủ động dẫn dắt, hỗ trợ nhiệt tình các bạn yếu hoàn thành bài tập. \\ \hline  
+\end{tabularx}  
+\end{center}  
+  
+\end{document}
