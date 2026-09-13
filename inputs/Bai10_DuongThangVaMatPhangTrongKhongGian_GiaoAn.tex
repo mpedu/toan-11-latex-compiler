@@ -1,0 +1,777 @@
+\documentclass[12pt, a4paper]{article}
+% --- 1. Cấu hình Tiếng Việt và Font chữ chuẩn ---
+\usepackage[utf8]{inputenc}
+\usepackage[T5]{fontenc}
+\usepackage[vietnamese]{babel}
+\usepackage{mathptmx} % Font Times New Roman đồng bộ cả chữ và công thức toán, không gây xung đột gói
+
+\makeatletter
+\renewcommand{\normalsize}{\@setfontsize\normalsize{13pt}{16pt}}
+\makeatother
+\normalsize
+
+% --- 2. Gói Toán học & Ký hiệu bổ trợ ---
+\usepackage{amsmath, amssymb, amsfonts, mathrsfs, amsthm}
+\usepackage{graphicx}
+\usepackage{fontawesome}
+\usepackage{booktabs, tabularx, array, multirow}
+\usepackage{enumitem}
+
+% --- 3. Đồ họa TikZ, Bảng biến thiên & Hình không gian ---
+\usepackage{tikz}
+\usetikzlibrary{calc, intersections, angles, quotes, patterns, arrows.meta, 3d}
+\usepackage{pgfplots}
+\pgfplotsset{compat=1.18}
+\usepackage{tkz-euclide}
+\usepackage{tkz-tab}
+
+\renewcommand{\vec}[1]{\overrightarrow{#1}}
+
+% --- 4. Hộp sư phạm (Tcolorbox) ---
+\usepackage[many]{tcolorbox}
+\tcbuselibrary{skins, breakable}
+
+% --- 5. Căn lề chuẩn văn bản giáo án ---
+\usepackage{geometry}
+\geometry{
+    a4paper,
+    left=25mm,
+    right=15mm,
+    top=20mm,
+    bottom=20mm
+}
+
+% --- 6. Header / Footer chuẩn hóa ---
+\usepackage{fancyhdr}
+\usepackage{lastpage}
+\pagestyle{fancy}
+\fancyhf{}
+
+\fancyhead[L]{\small \textit{Kế hoạch bài dạy Toán 11}}
+\fancyhead[R]{\textbf{Trang \thepage/\pageref{LastPage}}}
+\fancyfoot[L]{\small \textit{Tổ Toán - Tin}}
+\fancyfoot[R]{\small \textit{Trường THCS\&THPT Hồng Vân}}
+\renewcommand{\headrulewidth}{0.4pt}
+\renewcommand{\footrulewidth}{0.4pt}
+
+% --- 7. Giãn dòng & Giãn đoạn theo chuẩn Nghị định 30/2020/NĐ-CP ---
+\usepackage{setspace}
+\setstretch{1.15}
+\setlength{\parindent}{1.0cm}
+\setlength{\parskip}{5pt}
+
+% Định nghĩa hộp sư phạm chuyên dụng
+\newtcolorbox{pedabox}[2][]{
+    enhanced,
+    breakable,
+    colback=blue!3!white,
+    colframe=blue!65!black,
+    fonttitle=\bfseries\small,
+    title={#2},
+    arc=2mm,
+    boxrule=0.6pt,
+    left=3mm, right=3mm, top=2mm, bottom=2mm,
+    #1
+}
+
+\newtcolorbox{aibox}[2][]{
+    enhanced,
+    breakable,
+    colback=teal!4!white,
+    colframe=teal!70!black,
+    fonttitle=\bfseries\small,
+    title={#2},
+    arc=2mm,
+    boxrule=0.6pt,
+    left=3mm, right=3mm, top=2mm, bottom=2mm,
+    #1
+}
+
+\newtcolorbox{scaffoldbox}[2][]{
+    enhanced,
+    breakable,
+    colback=orange!4!white,
+    colframe=orange!80!black,
+    fonttitle=\bfseries\small,
+    title={#2},
+    arc=2mm,
+    boxrule=0.6pt,
+    left=3mm, right=3mm, top=2mm, bottom=2mm,
+    #1
+}
+
+\begin{document}
+
+\begin{center}
+    {\fontsize{14pt}{17pt}\selectfont \textbf{KẾ HOẠCH BÀI DẠY MÔN TOÁN LỚP 11}}\\[6pt]
+    {\fontsize{16pt}{19pt}\selectfont \textbf{BÀI 10. ĐƯỜNG THẲNG VÀ MẶT PHẲNG TRONG KHÔNG GIAN}}\\[4pt]
+    {\fontsize{12pt}{15pt}\selectfont \textbf{Môn học: Toán 11} \ \textbar \ \textbf{Thời lượng: 3 tiết (Tiết 25 đến 27 theo PPCT | Tuần 9)}}
+\end{center}
+
+\vspace{5pt}
+
+\section*{I. MỤC TIÊU}
+
+\subsection*{1. Kiến thức, Năng lực}
+
+\begin{itemize}[leftmargin=1.2cm]
+    \item \textbf{Yêu cầu cần đạt (Nguyên văn CT GDPT 2018):}
+    \begin{itemize}[leftmargin=0.6cm]
+        \item Nhận biết được các quan hệ liên thuộc cơ bản giữa điểm, đường thẳng, mặt phẳng trong không gian.
+        \item Mô tả được ba cách xác định mặt phẳng (qua ba điểm không thẳng hàng; qua một đường thẳng và một điểm không thuộc đường thẳng đó; qua hai đường thẳng cắt nhau).
+        \item Xác định được giao tuyến của hai mặt phẳng; giao điểm của đường thẳng và mặt phẳng.
+        \item Vận dụng được các tính chất về giao tuyến của hai mặt phẳng; giao điểm của đường thẳng và mặt phẳng vào giải bài tập.
+        \item Nhận biết được hình chóp, hình tứ diện.
+        \item Vận dụng được kiến thức về đường thẳng, mặt phẳng trong không gian để mô tả một số hình ảnh trong thực tiễn.
+    \end{itemize}
+
+    \item \textbf{Năng lực Toán học đặc thù:}
+    \begin{itemize}[leftmargin=0.6cm]
+        \item \textit{Năng lực tư duy và lập luận toán học:} Khả năng tưởng tượng và trừu tượng hóa các đối tượng trong không gian ba chiều ($3\text{D}$); phân biệt rõ quan hệ giữa điểm với mặt phẳng ($\in, \notin$), giữa đường thẳng với mặt phẳng ($\subset, \not\subset$); lập luận logic suy ra giao tuyến từ hai điểm chung phân biệt; chứng minh tính đồng phẳng và thẳng hàng của các điểm trong không gian.
+        \item \textit{Năng lực mô hình hóa toán học:} Mô tả các vật thể thực tế trong đời sống (kim tự tháp, mái nhà chóp, giá đỡ ba chân, góc phòng học) dưới dạng hình học không gian (hình tứ diện, hình chóp, giao tuyến của các mặt tường và sàn).
+        \item \textit{Năng lực giải quyết vấn đề toán học:} Thiết lập thuật toán tìm giao tuyến của hai mặt phẳng bằng cách tìm hai điểm chung phân biệt; xây dựng phương pháp tìm giao điểm của đường thẳng và mặt phẳng bằng cách chọn mặt phẳng phụ trợ chứa đường thẳng; giải bài tập hình học không gian phân tầng.
+        \item \textit{Năng lực giao tiếp toán học:} Trình bày lời giải hình học không gian chuẩn mực, vẽ hình biểu diễn chính xác theo quy ước nét thấy (nét liền) và nét khuất (nét đứt); sử dụng chuẩn xác các ký hiệu toán học liên thuộc ($\in, \subset, \cap$).
+        \item \textit{Năng lực sử dụng công cụ, phương tiện học toán:} Sử dụng mô hình hình học không gian trực quan (bộ lắp ghép hình học, que đũa và đất nặn); khai thác phần mềm GeoGebra 3D để xoay hình, quan sát giao tuyến từ nhiều góc nhìn khác nhau trong không gian ảo.
+    \end{itemize}
+
+    \item \textbf{Năng lực số (Theo Thông tư 02/2025/TT-BGDĐT):}
+    \begin{itemize}[leftmargin=0.6cm]
+        \item \textit{Mã 1.1NC1a (Khai thác và tìm kiếm thông tin số phục vụ học tập):} Học sinh tra cứu, sưu tầm các hình ảnh thực tế và mô hình kiến trúc có cấu trúc mặt phẳng, giao tuyến (mặt bàn, trần nhà, mái dốc kim tự tháp) trên Internet để đối chiếu với bài học hình học không gian.
+    \end{itemize}
+
+    \item \textbf{Năng lực AI (Theo Quyết định 2422/QĐ-BGDĐT):}
+    \begin{itemize}[leftmargin=0.6cm]
+        \item \textit{Mã 11.D1.1 (Ứng dụng Trí tuệ nhân tạo trong nhận dạng không gian):} Học sinh trình bày được ví dụ thực tiễn về cách các hệ thống AI thị giác máy tính (Computer Vision trong xe tự hành, Robot hút bụi SLAM) nhận diện các mặt phẳng sàn nhà, bức tường và đường giao tuyến để lập bản đồ 3D và tự động điều hướng di chuyển an toàn tránh vật cản.
+    \end{itemize}
+
+    \item \textbf{Năng lực chung:}
+    \begin{itemize}[leftmargin=0.6cm]
+        \item \textit{Tự chủ và tự học:} Chủ động tìm tòi, rèn luyện kỹ năng vẽ hình không gian đúng quy ước nét thấy/nét khuất, tự giác hoàn thành phiếu học tập.
+        \item \textit{Giao tiếp và hợp tác:} Tích cực phối hợp nhóm, trao đổi về các phương án tìm điểm chung của hai mặt phẳng, hỗ trợ bạn cùng bàn điều chỉnh hình vẽ sai nét khuất.
+    \end{itemize}
+\end{itemize}
+
+\subsection*{2. Phẩm chất}
+
+\begin{itemize}[leftmargin=1.2cm]
+    \item \textbf{Chăm chỉ:} Cẩn thận, tỉ mỉ khi dùng thước kẻ và bút chì để vẽ hình biểu diễn không gian; kiên trì tưởng tượng các hình khối 3D.
+    \item \textbf{Trung thực:} Báo cáo kết quả bài tập nhóm trung thực, tôn trọng lập luận hình học khách quan.
+    \item \textbf{Trách nhiệm:} Có ý thức bảo quản các thiết bị học tập và mô hình không gian, sẵn sàng hợp tác chia sẻ góc nhìn hình học với bạn học.
+\end{itemize}
+
+\section*{II. THIẾT BỊ DẠY HỌC VÀ HỌC LIỆU}
+
+\begin{itemize}[leftmargin=1.2cm]
+    \item \textbf{Giáo viên:}
+    \begin{itemize}[leftmargin=0.6cm]
+        \item Kế hoạch bài dạy, giáo án điện tử có video clip mô phỏng Robot hút bụi quét mặt phẳng sàn 3D bằng công nghệ AI LiDAR.
+        \item Bộ mô hình hình học không gian cỡ lớn: Mô hình khung tứ diện, hình chóp tam giác, hình chóp tứ giác bằng mica hoặc dây thép.
+        \item Tệp trình diễn GeoGebra 3D trực quan hóa giao tuyến của hai mặt phẳng.
+        \item Phiếu học tập phân tầng bậc thang (Worksheet) và Bảng Rubric đánh giá năng lực hình học không gian.
+    \end{itemize}
+    \item \textbf{Học sinh:}
+    \begin{itemize}[leftmargin=0.6cm]
+        \item SGK Toán 11, vở ghi chép, thước kẻ, compa, bút chì và tẩy.
+        \item Bộ que đũa và đất nặn hoặc dây buộc để tự lắp ráp khung hình tứ diện theo nhóm.
+    \end{itemize}
+\end{itemize}
+
+\section*{III. TIẾN TRÌNH DẠY HỌC (TIẾT 25 ĐẾN TIẾT 27 THEO PPCT)}
+
+% ==============================================================================
+% TIẾT 1 (TIẾT 25 THEO PPCT)
+% ==============================================================================
+\subsection*{TIẾT 1 (TIẾT 25 THEO PPCT): MẶT PHẲNG, HÌNH BIỂU DIỄN VÀ CÁC TÍNH CHẤT THỪA NHẬN ĐẦU TIÊN}
+
+\subsubsection*{1. Hoạt động 1: Mở đầu (Khởi động) (5 phút)}
+
+\noindent \textbf{a) Mục tiêu:}
+Tạo hứng thú học tập và kích thích trí tò mò của học sinh khi bước từ hình học phẳng ($2\text{D}$) sang hình học không gian ($3\text{D}$); nhận biết sự tồn tại của mặt phẳng trong thực tiễn.
+
+\noindent \textbf{b) Nội dung: Thử thách trực quan ``Bước vào không gian 3 chiều''}
+\begin{pedabox}{Khám phá mở đầu: Hình phẳng và Không gian 3 chiều}
+Quan sát lớp học của chúng ta:
+\begin{enumerate}[leftmargin=0.6cm]
+    \item Hãy chỉ ra 3 bề mặt phẳng trong phòng học cho ta hình ảnh của một phần mặt phẳng.
+    \item Mặt bảng và mặt sàn nhà có điểm nào chung không? Chúng gặp nhau theo hình gì?
+    \item Nếu lấy một tờ giấy phẳng và một cây bút: Cây bút có thể nằm hoàn toàn trên mặt giấy, hoặc đâm xuyên qua tờ giấy không?
+\end{enumerate}
+\end{pedabox}
+
+\noindent \textbf{c) Sản phẩm: Câu trả lời của học sinh}
+\begin{enumerate}[leftmargin=0.6cm]
+    \item Ba bề mặt phẳng trong phòng học: Mặt sàn lớp học, mặt trần nhà, mặt bảng kính/mặt bàn học sinh.
+    \item Bức tường gắn bảng và mặt sàn nhà gặp nhau theo một đường thẳng (đường mép chân tường).
+    \item Cây bút có thể đặt nằm trọn vẹn trên mặt giấy, hoặc cầm dựng đứng đâm xuyên qua mặt giấy tại một điểm duy nhất.
+\end{enumerate}
+
+\noindent \textbf{d) Tổ chức thực hiện:}
+\begin{itemize}[leftmargin=0.8cm]
+    \item \textit{Chuyển giao nhiệm vụ:} Giáo viên yêu cầu học sinh quan sát lớp học, thảo luận cặp đôi nhanh trong 2 phút và trả lời 3 câu hỏi gợi mở.
+    \item \textit{Thực hiện nhiệm vụ:} Học sinh quan sát phòng học, trao đổi với bạn cùng bàn.
+    \item \textit{Báo cáo, thảo luận:} 2 học sinh trả lời trước lớp; các học sinh khác bổ sung thêm ví dụ.
+    \item \textit{Kết luận, nhận định:} Giáo viên dẫn dắt: Mặt bảng, mặt sàn nhà không giới hạn về mọi phía cho ta hình ảnh của mặt phẳng. Môn Hình học không gian nghiên cứu các tính chất của điểm, đường thẳng và mặt phẳng trong không gian ba chiều.
+\end{itemize}
+
+\subsubsection*{2. Hoạt động 2: Hình thành kiến thức mới (25 phút)}
+
+\noindent \textbf{a) Mục tiêu:}
+- Nhận biết khái niệm mặt phẳng, ký hiệu mặt phẳng; nắm vững quy ước vẽ hình biểu diễn của hình không gian (nét thấy vẽ liền, nét khuất vẽ đứt).
+- Nắm vững 3 tính chất thừa nhận đầu tiên (Tính chất 1, 2, 3) và vận dụng vào các tình huống hình học cơ bản.
+
+\noindent \textbf{b) Nội dung: Các khái niệm cơ bản \& Tính chất thừa nhận 1, 2, 3}
+\begin{pedabox}{Nội dung 1: Khái niệm mặt phẳng và Quy ước vẽ hình biểu diễn}
+\begin{itemize}[leftmargin=0.6cm]
+    \item \textbf{Mặt phẳng:} Mặt phẳng là một đối tượng cơ bản của hình học không gian, không có bề dày và mở rộng vô tận về mọi phía.
+    \item \textbf{Ký hiệu mặt phẳng:} Dùng chữ cái in hoa đặt trong dấu ngoặc đơn: mặt phẳng $(P)$, $(Q)$, $(\alpha)$, $(\beta)$, hoặc $(ABCD)$.
+    \item \textbf{Điểm thuộc mặt phẳng:} Nếu điểm $A$ thuộc mặt phẳng $(P)$, ta viết $A \in (P)$. Nếu điểm $B$ không thuộc mặt phẳng $(P)$, ta viết $B \notin (P)$.
+    \item \textbf{Hình biểu diễn của một hình không gian trên mặt phẳng:}
+    \begin{itemize}
+        \item Đường thẳng được biểu diễn bằng đường thẳng; đoạn thẳng bằng đoạn thẳng.
+        \item Giữ nguyên tính liên thuộc (điểm thuộc đường thẳng, điểm nằm giữa hai điểm).
+        \item Hai đường thẳng song song biểu diễn bằng hai đường thẳng song song.
+        \item \textbf{Quy ước cốt lõi về nét vẽ:} \textit{Đường nhìn thấy vẽ bằng nét liền (\rule{1cm}{0.8pt}); đường bị che khuất vẽ bằng nét đứt (- - - - -).}
+    \end{itemize}
+\end{itemize}
+\end{pedabox}
+
+\begin{scaffoldbox}{Giàn giáo sư phạm: Khắc phục lỗi vẽ hình không gian cho học sinh TB-Yếu}
+\begin{itemize}[leftmargin=0.6cm]
+    \item \textit{Sai lầm kinh điển:} Vẽ tất cả các cạnh đều là nét liền! Dẫn đến hình vẽ bị méo mó, không nhìn ra hình khối 3 chiều.
+    \item \textit{Mẹo sư phạm:} Tưởng tượng hình khối làm bằng gỗ đặc: Cạnh nào nằm ở phía sau bức tường/đáy bị che khuất thì \textbf{bắt buộc vẽ bằng nét đứt}!
+\end{itemize}
+\end{scaffoldbox}
+
+\begin{pedabox}{Nội dung 2: Ba tính chất thừa nhận đầu tiên (Các tiên đề cơ bản)}
+\begin{itemize}[leftmargin=0.6cm]
+    \item \textbf{Tính chất 1 (Tồn tại đường thẳng):} Có một và chỉ một đường thẳng đi qua hai điểm phân biệt cho trước.
+    \item \textbf{Tính chất 2 (Tồn tại mặt phẳng qua 3 điểm):} Có một và chỉ một mặt phẳng đi qua ba điểm không thẳng hàng cho trước. Mặt phẳng đi qua ba điểm không thẳng hàng $A, B, C$ được ký hiệu là mặt phẳng $(ABC)$.
+    \item \textbf{Tính chất 3 (Đường thẳng nằm trên mặt phẳng):} Nếu một đường thẳng có hai điểm phân biệt cùng thuộc một mặt phẳng thì mọi điểm của đường thẳng đều thuộc mặt phẳng đó.
+    $$\text{Nếu } A \in (P), B \in (P) \text{ với } A \neq B \implies AB \subset (P)$$
+\end{itemize}
+\end{pedabox}
+
+\noindent \textbf{c) Sản phẩm: Kiến thức chuẩn hóa và bài tập áp dụng}
+\begin{enumerate}[leftmargin=0.6cm]
+    \item \textbf{Ví dụ áp dụng Tính chất 3:} Cho tam giác $ABC$ có ba đỉnh đều thuộc mặt phẳng $(P)$. Chứng minh rằng mọi điểm thuộc cạnh $AB, BC, CA$ và miền trong tam giác $ABC$ đều nằm trong mặt phẳng $(P)$.
+    \begin{itemize}
+        \item \textit{Lời giải:} Vì $A, B \in (P) \implies$ đường thẳng $AB \subset (P)$. Do đó mọi điểm thuộc đoạn thẳng $AB$ đều thuộc $(P)$. Tương tự, các cạnh $BC \subset (P)$ và $CA \subset (P)$. Vậy toàn bộ tam giác $ABC$ nằm trong mặt phẳng $(P)$, ta viết $(ABC) \equiv (P)$.
+    \end{itemize}
+    \item \textbf{Thực hành vẽ hình biểu diễn của mặt phẳng $(P)$:}
+    \begin{center}
+    \begin{tikzpicture}[scale=0.9]
+        \draw[thick, fill=blue!5] (0,0) -- (4,0) -- (5,2) -- (1,2) -- cycle;
+        \node at (0.6, 0.4) {$(P)$};
+        \coordinate (A) at (2,1);
+        \coordinate (B) at (3.5,1.5);
+        \fill (A) circle (1.5pt) node[below] {$A$};
+        \fill (B) circle (1.5pt) node[above] {$B$};
+        \draw[thick, blue] (1.2,0.73) -- (4.2,1.73) node[right] {$d$};
+        \coordinate (C) at (3,2.8);
+        \fill (C) circle (1.5pt) node[above] {$C \notin (P)$};
+    \end{tikzpicture}
+    \end{center}
+\end{enumerate}
+
+\noindent \textbf{d) Tổ chức thực hiện:}
+\begin{itemize}[leftmargin=0.8cm]
+    \item \textit{Chuyển giao nhiệm vụ:} GV trình chiếu các tính chất thừa nhận, vẽ hình minh họa mặt phẳng và hướng dẫn cách ký hiệu; yêu cầu học sinh vẽ hình biểu diễn của mặt phẳng $(P)$ chứa đường thẳng $d$ đi qua 2 điểm $A, B$ vào vở.
+    \item \textit{Thực hiện nhiệm vụ:} Học sinh theo dõi, vẽ hình bằng thước kẻ, ghi chép định lý và quy ước nét vẽ.
+    \item \textit{Báo cáo, thảo luận:} 1 học sinh lên bảng vẽ hình biểu diễn; cả lớp nhận xét nét vẽ.
+    \item \textit{Kết luận, nhận định:} GV nhấn mạnh tầm quan trọng của Tính chất 3: Đây là phương pháp chứng minh một đường thẳng nằm hoàn toàn trên một mặt phẳng.
+\end{itemize}
+
+\subsubsection*{3. Hoạt động 3: Luyện tập (10 phút)}
+
+\noindent \textbf{a) Mục tiêu:}
+Rèn luyện kỹ năng nhận diện điểm thuộc/không thuộc mặt phẳng, đường thẳng nằm trên mặt phẳng và thực hành phân biệt nét thấy/nét đứt trên hình vẽ cơ bản.
+
+\noindent \textbf{b) Nội dung: Bài tập củng cố Tiết 1}
+\begin{pedabox}{Luyện tập 1: Khảo sát quan hệ liên thuộc cơ bản}
+Cho hình chóp tam giác $S.ABC$ (tứ diện $SABC$).
+\begin{enumerate}[leftmargin=0.6cm]
+    \item Vẽ hình biểu diễn của hình chóp tam giác $S.ABC$, chỉ rõ cạnh nào bị che khuất và phải vẽ bằng nét đứt.
+    \item Điểm $S$ có thuộc mặt phẳng $(ABC)$ không?
+    \item Gọi $M$ là trung điểm của cạnh $SA$. Điểm $M$ có thuộc mặt phẳng $(SAB)$ không? Đường thẳng $BM$ có nằm trong mặt phẳng $(SAB)$ không? Vì sao?
+\end{enumerate}
+\end{pedabox}
+
+\noindent \textbf{c) Sản phẩm: Lời giải chi tiết và hình vẽ chuẩn TikZ}
+\begin{center}
+\begin{tikzpicture}[scale=1.0]
+    \coordinate (A) at (0,0);
+    \coordinate (B) at (1.8,-1.2);
+    \coordinate (C) at (4.5,0);
+    \coordinate (S) at (2.2,3.2);
+
+    \draw[thick] (S) -- (A) -- (B) -- (C) -- (S) -- (B);
+    \draw[dashed, thick] (A) -- (C);
+
+    \fill (S) circle (1.5pt) node[above] {$S$};
+    \fill (A) circle (1.5pt) node[left] {$A$};
+    \fill (B) circle (1.5pt) node[below] {$B$};
+    \fill (C) circle (1.5pt) node[right] {$C$};
+
+    \coordinate (M) at ($(S)!0.5!(A)$);
+    \fill (M) circle (1.5pt) node[left] {$M$};
+    \draw[thick, red] (B) -- (M);
+\end{tikzpicture}
+\end{center}
+\begin{enumerate}[leftmargin=0.6cm]
+    \item Trong hình vẽ trên: Đáy là tam giác $ABC$, đỉnh $S$ nằm ngoài $(ABC)$. Cạnh $AC$ nằm ở phía sau nên bị che khuất, \textbf{bắt buộc vẽ bằng nét đứt}. Các cạnh $SA, SB, SC, AB, BC$ là nét thấy nên vẽ bằng \textbf{nét liền}.
+    \item Điểm $S$ không thuộc mặt phẳng $(ABC)$, ta viết $S \notin (ABC)$ (bốn điểm $S, A, B, C$ không đồng phẳng).
+    \item Vì $M$ thuộc đoạn thẳng $SA$ mà $SA \subset (SAB) \implies M \in (SAB)$.
+    \item Điểm $B \in (SAB)$ và điểm $M \in (SAB)$. Do đó theo Tính chất 3, đường thẳng $BM$ có hai điểm phân biệt thuộc $(SAB)$ nên đường thẳng $BM \subset (SAB)$.
+\end{enumerate}
+
+\noindent \textbf{d) Tổ chức thực hiện:}
+\begin{itemize}[leftmargin=0.8cm]
+    \item \textit{Chuyển giao nhiệm vụ:} Giáo viên yêu cầu học sinh làm việc cá nhân vào vở bài tập trong 5 phút.
+    \item \textit{Thực hiện nhiệm vụ:} Học sinh dùng thước kẻ vẽ hình chóp tam giác, chú ý nét đứt $AC$, trả lời câu hỏi vào vở.
+    \item \textit{Báo cáo, thảo luận:} 1 học sinh lên bảng vẽ hình và trình bày; giáo viên hướng dẫn học sinh dưới lớp kiểm tra chéo vở của bạn cùng bàn xem có vẽ nhầm $AC$ thành nét liền không.
+    \item \textit{Kết luận, nhận định:} Giáo viên biểu dương các em vẽ hình đúng quy ước nét đứt và chuyển tiếp sang hoạt động vận dụng.
+\end{itemize}
+
+\subsubsection*{4. Hoạt động 4: Vận dụng thực tiễn & Năng lực số (5 phút)}
+
+\noindent \textbf{a) Mục tiêu:}
+Tích hợp Năng lực số (Mã 1.1NC1a): Rèn luyện cho học sinh thói quen tra cứu hình ảnh thực tế trên Internet để kết nối hình học lý thuyết với đời sống.
+
+\noindent \textbf{b) Nội dung: Nhiệm vụ tra cứu số}
+\begin{aibox}{Nhiệm vụ số: Tra cứu các mặt phẳng kiến trúc trong đời sống (Mã 1.1NC1a)}
+Sử dụng điện thoại thông minh hoặc máy tính bảng tra cứu nhanh hình ảnh của:
+\begin{enumerate}[leftmargin=0.6cm]
+    \item Kim tự tháp kính Louvre (Paris, Pháp). Hãy chỉ ra các mặt phẳng tạo nên khối kiến trúc này.
+    \item Tìm kiếm hình ảnh một công trình xây dựng đang đổ sàn bê tông và giải thích tại sao người thợ hồ dùng một cây thước nhôm thẳng gạt trên hai mép gờ để tạo nên một mặt sàn phẳng lì (áp dụng Tính chất 3).
+\end{enumerate}
+\end{aibox}
+
+\noindent \textbf{c) Sản phẩm: Báo cáo ngắn của học sinh}
+\begin{itemize}[leftmargin=0.6cm]
+    \item Kim tự tháp Louvre được tạo bởi 1 mặt phẳng đáy hình vuông và 4 mặt phẳng bên hình tam giác ghép lại.
+    \item Cây thước nhôm có 2 điểm tựa trên hai mép gờ chuẩn. Khi gạt thước, toàn bộ các điểm trên cây thước đều quét qua các điểm thuộc mặt phẳng, tạo nên bề mặt sàn phẳng hoàn hảo theo đúng Tính chất 3.
+\end{itemize}
+
+\noindent \textbf{d) Tổ chức thực hiện:}
+GV trình chiếu hình ảnh, nêu câu hỏi vận dụng; HS thảo luận nhanh và chốt lại kiến thức Tiết 1.
+
+% ==============================================================================
+% TIẾT 2 (TIẾT 26 THEO PPCT)
+% ==============================================================================
+\newpage
+\subsection*{TIẾT 2 (TIẾT 26 THEO PPCT): CÁC TÍNH CHẤT THỪA NHẬN TIẾP THEO \& BA CÁCH XÁC ĐỊNH MẶT PHẲNG}
+
+\subsubsection*{1. Hoạt động 1: Khởi động (Mở đầu) (5 phút)}
+
+\noindent \textbf{a) Mục tiêu:}
+Dẫn dắt học sinh nhận thức sâu sắc về điều kiện xác định duy nhất một mặt phẳng thông qua bài toán thực tế đời sống quen thuộc (chiếc ghế 3 chân và ghế 4 chân).
+
+\noindent \textbf{b) Nội dung: Câu đố thực tế ``Chiếc kiềng 3 chân và Bàn 4 chân''}
+\begin{pedabox}{Khám phá mở đầu: Tại sao kiềng 3 chân không bao giờ bập bênh?}
+\begin{enumerate}[leftmargin=0.6cm]
+    \item Tại sao một chiếc kiềng 3 chân (hoặc giá đỡ máy ảnh 3 chân - tripod) khi đặt trên bất kỳ nền đất gồ ghề nào cũng luôn đứng vững, không bao giờ bị bập bênh?
+    \item Ngược lại, một chiếc bàn có 4 chân bằng nhau khi kê trên sân trường gồ ghề lại rất dễ bị bập bênh một chân? Để bàn không bập bênh, 4 đầu chân bàn phải thỏa mãn điều kiện hình học nào?
+\end{enumerate}
+\end{pedabox}
+
+\noindent \textbf{c) Sản phẩm: Câu trả lời của học sinh}
+\begin{enumerate}[leftmargin=0.6cm]
+    \item Ba điểm mút của kiềng 3 chân là ba điểm không thẳng hàng. Theo Tính chất 2, luôn có duy nhất một mặt phẳng đi qua ba điểm này, do đó 3 chân kiềng luôn cùng chạm vào một mặt phẳng xác định $\implies$ luôn vững vàng.
+    \item Bàn 4 chân có 4 điểm tiếp đất. Qua 3 điểm đã xác định một mặt phẳng; điểm chân thứ tư chưa chắc đã nằm trên mặt phẳng đó (4 điểm không đồng phẳng) nên bị hẫng, gây ra hiện tượng bập bênh! Để bàn không bập bênh, 4 chân bàn phải cùng nằm trên một mặt phẳng (đồng phẳng).
+\end{enumerate}
+
+\noindent \textbf{d) Tổ chức thực hiện:}
+Giáo viên đặt câu hỏi đố vui; học sinh liên hệ thực tế trả lời; giáo viên kết nối vào bài học về các cách xác định duy nhất một mặt phẳng.
+
+\subsubsection*{2. Hoạt động 2: Hình thành kiến thức mới (23 phút)}
+
+\noindent \textbf{a) Mục tiêu:}
+- Nắm vững Tính chất 4 (giao tuyến của hai mặt phẳng), Tính chất 5 (mặt phẳng phân chia không gian) và Tính chất 6 (định lý hình học phẳng đúng trên từng mặt phẳng).
+- Hiểu và vận dụng thành thạo 3 cách xác định một mặt phẳng; biết cách ký hiệu một mặt phẳng.
+
+\noindent \textbf{b) Nội dung: Các tính chất thừa nhận 4, 5, 6 \& Ba cách xác định mặt phẳng}
+\begin{pedabox}{Nội dung 1: Các tính chất thừa nhận tiếp theo}
+\begin{itemize}[leftmargin=0.6cm]
+    \item \textbf{Tính chất 4 (Giao tuyến của hai mặt phẳng):} Nếu hai mặt phẳng phân biệt có một điểm chung thì chúng có một đường thẳng chung duy nhất chứa tất cả các điểm chung của hai mặt phẳng đó. Đường thẳng chung đó gọi là \textbf{giao tuyến} của hai mặt phẳng.
+    $$\text{Nếu } d = (P) \cap (Q) \text{ và } A \in (P) \cap (Q) \implies A \in d$$
+    \item \textbf{Tính chất 5 (Tồn tại 4 điểm không đồng phẳng):} Trên mỗi mặt phẳng, các kết quả đã biết của hình học phẳng đều đúng. Tồn tại bốn điểm không cùng thuộc một mặt phẳng (bốn điểm không đồng phẳng).
+\end{itemize}
+\end{pedabox}
+
+\begin{pedabox}{Nội dung 2: Ba cách xác định một mặt phẳng}
+Một mặt phẳng hoàn toàn được xác định khi biết:
+\begin{center}
+\small
+\begin{tabularx}{\textwidth}{|p{3.5cm}|X|c|}
+\hline
+\textbf{Cách xác định} & \textbf{Nội dung định lý} & \textbf{Ký hiệu mặt phẳng} \\ \hline
+\textbf{Cách 1:} Qua 3 điểm & Qua ba điểm không thẳng hàng $A, B, C$, có một và chỉ một mặt phẳng. & Mặt phẳng $(ABC)$ \\ \hline
+\textbf{Cách 2:} Qua 1 đường thẳng và 1 điểm ngoài & Qua một đường thẳng $d$ và một điểm $A$ không thuộc $d$, có một và chỉ một mặt phẳng. & Mặt phẳng $(A, d)$ \\ \hline
+\textbf{Cách 3:} Qua 2 đường thẳng cắt nhau & Qua hai đường thẳng cắt nhau $a$ và $b$, có một và chỉ một mặt phẳng. & Mặt phẳng $(a, b)$ \\ \hline
+\end{tabularx}
+\end{center}
+\end{pedabox}
+
+\begin{scaffoldbox}{Hộp hỗ trợ sư phạm: Mẹo chứng minh 3 cách xác định mặt phẳng tương đương}
+\begin{itemize}[leftmargin=0.6cm]
+    \item \textit{Từ Cách 2 về Cách 1:} Lấy 2 điểm phân biệt $B, C \in d$. Vì $A \notin d$ nên ba điểm $A, B, C$ không thẳng hàng $\implies$ quy về mặt phẳng $(ABC)$.
+    \item \textit{Từ Cách 3 về Cách 1:} Gọi giao điểm là $O = a \cap b$. Lấy điểm $A \in a$ ($A \neq O$) và điểm $B \in b$ ($B \neq O$). Ba điểm $O, A, B$ không thẳng hàng $\implies$ quy về mặt phẳng $(OAB)$.
+\end{itemize}
+\end{scaffoldbox}
+
+\noindent \textbf{c) Sản phẩm: Lời giải bài toán xác định số mặt phẳng}
+\begin{pedabox}{Ví dụ thực hành: Đếm số mặt phẳng xác định bởi các điểm}
+Cho 4 điểm $A, B, C, D$ không đồng phẳng.
+\begin{enumerate}[leftmargin=0.6cm]
+    \item Có bao nhiêu đường thẳng đi qua từng cặp hai điểm trong số 4 điểm trên?
+    \item Có bao nhiêu mặt phẳng đi qua từng bộ ba điểm trong số 4 điểm trên? Kể tên các mặt phẳng đó.
+\end{enumerate}
+\end{pedabox}
+\textbf{Lời giải chi tiết:}
+\begin{enumerate}[leftmargin=0.6cm]
+    \item Số đường thẳng đi qua 2 điểm là $C_4^2 = \dfrac{4 \cdot 3}{2} = 6$ đường thẳng: $AB, AC, AD, BC, BD, CD$.
+    \item Số mặt phẳng đi qua 3 điểm là $C_4^3 = 4$ mặt phẳng: $(ABC), (ABD), (ACD), (BCD)$. Bốn mặt phẳng này tạo thành 4 mặt của một khối hình gọi là \textbf{hình tứ diện $ABCD$}.
+\end{enumerate}
+
+\noindent \textbf{d) Tổ chức thực hiện:}
+\begin{itemize}[leftmargin=0.8cm]
+    \item \textit{Chuyển giao nhiệm vụ:} Giáo viên trình chiếu bảng 3 cách xác định mặt phẳng, gọi học sinh phân tích sự tương đương; yêu cầu làm ví dụ đếm số mặt phẳng.
+    \item \textit{Thực hiện nhiệm vụ:} Học sinh lắng nghe, ghi chép và suy nghĩ giải ví dụ.
+    \item \textit{Báo cáo, thảo luận:} 1 học sinh đứng tại chỗ trả lời số đường thẳng và số mặt phẳng; cả lớp đồng thuận.
+    \item \textit{Kết luận, nhận định:} Giáo viên chốt lại: 3 điểm không thẳng hàng là hạt nhân cốt lõi để xác định duy nhất một mặt phẳng.
+\end{itemize}
+
+\subsubsection*{3. Hoạt động 3: Luyện tập (12 phút)}
+
+\noindent \textbf{a) Mục tiêu:}
+Rèn luyện kỹ năng tìm giao tuyến của hai mặt phẳng dựa trên việc tìm hai điểm chung phân biệt (áp dụng Tính chất 4).
+
+\noindent \textbf{b) Nội dung: Bài toán tìm giao tuyến cơ bản}
+\begin{pedabox}{Luyện tập 2: Xác định giao tuyến của hai mặt phẳng}
+Cho tứ diện $ABCD$. Gọi $M$ là một điểm nằm trên cạnh $AB$ ($M$ không trùng với $A$ và $B$).
+\begin{enumerate}[leftmargin=0.6cm]
+    \item Tìm giao tuyến của hai mặt phẳng $(MCD)$ và $(ABC)$.
+    \item Tìm giao tuyến của hai mặt phẳng $(MCD)$ và $(ABD)$.
+\end{enumerate}
+\end{pedabox}
+
+\noindent \textbf{c) Sản phẩm: Lời giải chi tiết và hình vẽ minh họa}
+\begin{center}
+\begin{tikzpicture}[scale=1.0]
+    \coordinate (B) at (0,0);
+    \coordinate (C) at (1.6,-1.2);
+    \coordinate (D) at (4.2,0);
+    \coordinate (A) at (2.0,3.0);
+
+    \draw[thick] (A) -- (B) -- (C) -- (D) -- (A) -- (C);
+    \draw[dashed, thick] (B) -- (D);
+
+    \coordinate (M) at ($(A)!0.4!(B)$);
+    \fill (M) circle (1.5pt) node[left] {$M$};
+    \fill (A) circle (1.5pt) node[above] {$A$};
+    \fill (B) circle (1.5pt) node[left] {$B$};
+    \fill (C) circle (1.5pt) node[below] {$C$};
+    \fill (D) circle (1.5pt) node[right] {$D$};
+
+    \draw[thick, red] (M) -- (C);
+    \draw[dashed, thick, red] (M) -- (D);
+\end{tikzpicture}
+\end{center}
+\begin{enumerate}[leftmargin=0.6cm]
+    \item \textbf{Tìm $(MCD) \cap (ABC)$:}
+    \begin{itemize}
+        \item Điểm $C$ hiển nhiên thuộc cả hai mặt phẳng: $C \in (MCD) \cap (ABC)$ (điểm chung thứ nhất).
+        \item Điểm $M \in (MCD)$ và $M \in AB \subset (ABC) \implies M \in (ABC)$. Do đó $M$ là điểm chung thứ hai: $M \in (MCD) \cap (ABC)$.
+        \item Vậy giao tuyến của hai mặt phẳng $(MCD)$ và $(ABC)$ là đường thẳng $MC$:
+        $$(MCD) \cap (ABC) = MC$$
+    \end{itemize}
+
+    \item \textbf{Tìm $(MCD) \cap (ABD)$:}
+    \begin{itemize}
+        \item Điểm $D \in (MCD) \cap (ABD)$ (điểm chung thứ nhất).
+        \item Điểm $M \in (MCD)$ và $M \in AB \subset (ABD) \implies M \in (MCD) \cap (ABD)$ (điểm chung thứ hai).
+        \item Vậy giao tuyến của hai mặt phẳng $(MCD)$ và $(ABD)$ là đường thẳng $MD$:
+        $$(MCD) \cap (ABD) = MD$$
+    \end{itemize}
+\end{enumerate}
+
+\noindent \textbf{d) Tổ chức thực hiện:}
+\begin{itemize}[leftmargin=0.8cm]
+    \item \textit{Chuyển giao nhiệm vụ:} Giáo viên chia nhóm bàn, yêu cầu học sinh vẽ hình và trình bày chặt chẽ hai bước tìm điểm chung để kết luận giao tuyến.
+    \item \textit{Thực hiện nhiệm vụ:} Học sinh vẽ hình vào vở, trao đổi tìm điểm chung.
+    \item \textit{Báo cáo, thảo luận:} 1 học sinh đại diện lên bảng viết lời giải; giáo viên uốn nắn cách dùng ký hiệu $\in$ (cho điểm) và $\subset$ (cho đường thẳng).
+    \item \textit{Kết luận, nhận định:} Giáo viên đúc kết phương pháp vàng: ``Muốn tìm giao tuyến của hai mặt phẳng, chỉ cần tìm hai điểm chung phân biệt''.
+\end{itemize}
+
+\subsubsection*{4. Hoạt động 4: Vận dụng thực tiễn (5 phút)}
+
+\noindent \textbf{a) Mục tiêu:}
+Vận dụng nguyên lý giao tuyến của hai mặt phẳng để giải thích kết cấu khung chịu lực trong xây dựng và mộc dân dụng.
+
+\noindent \textbf{b) Nội dung: Ứng dụng thực tiễn}
+\begin{pedabox}{Tình huống xây dựng: Gờ ghép nối của hai bức tường}
+Khi thợ xây dựng ráp hai bức tường gạch vuông góc nhau:
+\begin{enumerate}[leftmargin=0.6cm]
+    \item Vết nối giữa hai bức tường tạo thành hình ảnh của đối tượng toán học nào?
+    \item Tại sao tại vết nối đó, người thợ phải xây các viên gạch so le khóa vào nhau (khóa góc)?
+\end{enumerate}
+\end{pedabox}
+
+\noindent \textbf{c) Sản phẩm:}
+Vết nối giữa hai bức tường là hình ảnh giao tuyến của hai mặt phẳng cắt nhau. Việc khóa gạch so le giúp tạo liên kết cơ học vững chắc dọc theo đường giao tuyến, chống nứt xé tường.
+
+\noindent \textbf{d) Tổ chức thực hiện:}
+GV trình chiếu hình ảnh góc tường thực tế; HS trả lời và kết thúc Tiết 2.
+
+% ==============================================================================
+% TIẾT 3 (TIẾT 27 THEO PPCT)
+% ==============================================================================
+\newpage
+\subsection*{TIẾT 3 (TIẾT 27 THEO PPCT): HÌNH CHÓP, HÌNH TỨ DIỆN \& BÀI TOÁN GIAO TUYẾN, GIAO ĐIỂM}
+
+\subsubsection*{1. Hoạt động 1: Khởi động (Mở đầu) (5 phút)}
+
+\noindent \textbf{a) Mục tiêu:}
+Tạo ấn tượng thị giác mạnh mẽ về các khối đa diện chóp trong kiến trúc thế giới và dẫn dắt vào khái niệm hình chóp, hình tứ diện.
+
+\noindent \textbf{b) Nội dung: Khám phá hình ảnh Kim tự tháp Ai Cập}
+\begin{pedabox}{Khám phá mở đầu: Hình chóp trong kỳ quan kiến trúc}
+Quan sát hình ảnh Kim tự tháp Kê-ốp (Ai Cập):
+\begin{enumerate}[leftmargin=0.6cm]
+    \item Đáy của kim tự tháp là hình gì?
+    \item Các mặt bên của kim tự tháp là những hình gì và chúng có đặc điểm gì chung?
+\end{enumerate}
+\end{pedabox}
+
+\noindent \textbf{c) Sản phẩm: Câu trả lời của học sinh}
+Đáy kim tự tháp là một tứ giác (hình vuông); bốn mặt bên là bốn tam giác có chung một đỉnh nhọn ở trên cùng.
+
+\noindent \textbf{d) Tổ chức thực hiện:}
+Giáo viên chiếu hình ảnh kim tự tháp, gợi mở định nghĩa hình chóp tứ giác.
+
+\subsubsection*{2. Hoạt động 2: Hình thành kiến thức mới (20 phút)}
+
+\noindent \textbf{a) Mục tiêu:}
+- Nhận biết định nghĩa và các yếu tố của hình chóp, hình tứ diện (đỉnh, cạnh bên, mặt bên, cạnh đáy, mặt đáy).
+- Nắm vững phương pháp tìm giao tuyến của hai mặt phẳng và phương pháp tìm giao điểm của đường thẳng và mặt phẳng.
+
+\noindent \textbf{b) Nội dung: Khái niệm Hình chóp, Hình tứ diện \& Phương pháp giải toán}
+\begin{pedabox}{Nội dung 1: Khái niệm Hình chóp và Hình tứ diện}
+\begin{itemize}[leftmargin=0.6cm]
+    \item \textbf{Hình chóp:} Trong mặt phẳng $(\alpha)$, cho đa giác $A_1A_2\dots A_n$. Lấy điểm $S$ nằm ngoài $(\alpha)$. Nối $S$ với các đỉnh $A_1, A_2, \dots, A_n$. Hình tạo bởi đa giác đáy $A_1A_2\dots A_n$ và $n$ tam giác $SA_1A_2, SA_2A_3, \dots, SA_nA_1$ gọi là \textbf{hình chóp}, ký hiệu $S.A_1A_2\dots A_n$.
+    \begin{itemize}
+        \item $S$: Đỉnh của hình chóp.
+        \item Đa giác $A_1A_2\dots A_n$: Mặt đáy.
+        \item Các đoạn thẳng $SA_1, SA_2, \dots$: Các cạnh bên.
+        \item Các đoạn thẳng $A_1A_2, A_2A_3, \dots$: Các cạnh đáy.
+        \item Các tam giác $SA_1A_2, SA_2A_3, \dots$: Các mặt bên.
+    \end{itemize}
+    \item \textbf{Hình tứ diện:} Hình chóp tam giác có 4 mặt đều là các tam giác gọi là \textbf{hình tứ diện}. Tứ diện có 4 đỉnh, 6 cạnh, 4 mặt. Hai cạnh không có điểm chung gọi là \textbf{hai cạnh đối diện} (ví dụ: $AB$ và $CD$).
+\end{itemize}
+\end{pedabox}
+
+\begin{pedabox}{Nội dung 2: Phương pháp giải hai bài toán trọng tâm}
+\begin{enumerate}[leftmargin=0.6cm]
+    \item \textbf{Bài toán 1: Tìm giao tuyến của hai mặt phẳng $(\alpha)$ và $(\beta)$:}
+    \begin{itemize}
+        \item \textit{Bước 1:} Tìm điểm chung thứ nhất $A \in (\alpha) \cap (\beta)$.
+        \item \textit{Bước 2:} Tìm điểm chung thứ hai $B \in (\alpha) \cap (\beta)$ (thường là giao điểm của hai đường thẳng $a \subset (\alpha)$ và $b \subset (\beta)$ cùng nằm trong một mặt phẳng thứ ba).
+        \item \textit{Bước 3:} Kết luận giao tuyến là đường thẳng $AB$: $(\alpha) \cap (\beta) = AB$.
+    \end{itemize}
+
+    \item \textbf{Bài toán 2: Tìm giao điểm của đường thẳng $d$ và mặt phẳng $(\alpha)$ ($d \not\subset (\alpha)$):}
+    \begin{itemize}
+        \item \textit{Trường hợp 1 (Dễ):} Trong mặt phẳng $(\alpha)$ có sẵn đường thẳng $a$ cắt $d$ tại $I \implies I = d \cap (\alpha)$.
+        \item \textit{Trường hợp 2 (Tổng quát):}
+        \begin{itemize}
+            \item Tìm một mặt phẳng phụ $(\beta)$ chứa $d$.
+            \item Tìm giao tuyến $a = (\alpha) \cap (\beta)$.
+            \item Trong $(\beta)$, gọi $I = d \cap a \implies I = d \cap (\alpha)$.
+        \end{itemize}
+    \end{itemize}
+\end{enumerate}
+\end{pedabox}
+
+\noindent \textbf{c) Sản phẩm: Sơ đồ thuật toán giải toán trong vở học sinh}
+Học sinh ghi nhớ quy trình 3 bước tìm giao tuyến và quy trình chọn mặt phẳng phụ tìm giao điểm.
+
+\noindent \textbf{d) Tổ chức thực hiện:}
+Giáo viên trình bày định nghĩa, vẽ hình mẫu hình chóp tứ giác $S.ABCD$ lên bảng; hướng dẫn học sinh phân biệt mặt đáy và các mặt bên; chốt quy trình giải toán.
+
+\subsubsection*{3. Hoạt động 3: Luyện tập (12 phút)}
+
+\noindent \textbf{a) Mục tiêu:}
+Thực hành giải trọn vẹn bài toán tìm giao tuyến của hai mặt phẳng và tìm giao điểm của đường thẳng với mặt phẳng trên hình chóp tứ giác.
+
+\noindent \textbf{b) Nội dung: Bài toán hình học không gian phân tầng}
+\begin{pedabox}{Luyện tập tổng hợp: Khảo sát hình chóp tứ giác $S.ABCD$}
+Cho hình chóp $S.ABCD$ có đáy $ABCD$ là hình thang có đáy lớn $AB$ và đáy nhỏ $CD$ ($AB$ không song song với $CD$).
+\begin{enumerate}[leftmargin=0.6cm]
+    \item Tìm giao tuyến của hai mặt phẳng $(SAC)$ và $(SBD)$.
+    \item Tìm giao tuyến của hai mặt phẳng $(SAD)$ và $(SBC)$.
+    \item Lấy điểm $M$ trên cạnh $SC$ ($M$ không trùng với $S$ và $C$). Tìm giao điểm của đường thẳng $AM$ và mặt phẳng $(SBD)$.
+\end{enumerate}
+\end{pedabox}
+
+\noindent \textbf{c) Sản phẩm: Lời giải chi tiết và hình vẽ TikZ chuẩn xác}
+\begin{center}
+\begin{tikzpicture}[scale=1.1]
+    \coordinate (A) at (0,0);
+    \coordinate (B) at (4.5,0);
+    \coordinate (D) at (1.2,-1.5);
+    \coordinate (C) at (3.2,-1.5);
+    \coordinate (S) at (1.8,3.2);
+
+    \draw[thick] (S) -- (A) -- (D) -- (C) -- (B) -- (S) -- (C);
+    \draw[thick] (S) -- (D);
+    \draw[dashed, thick] (A) -- (B);
+    \draw[dashed, thick] (A) -- (C);
+    \draw[dashed, thick] (B) -- (D);
+
+    % Giao điểm O của AC và BD
+    \coordinate (O) at (intersection of A--C and B--D);
+    \draw[dashed, thick, red] (S) -- (O);
+
+    % Giao điểm E của AD và BC
+    \coordinate (E) at (intersection of A--D and B--C);
+    \draw[thick, blue] (D) -- (E) -- (C);
+    \draw[thick, blue] (S) -- (E);
+
+    % Điểm M trên SC
+    \coordinate (M) at ($(S)!0.55!(C)$);
+    \draw[thick] (A) -- (M);
+
+    % Giao điểm I của AM và SO
+    \coordinate (I) at (intersection of A--M and S--O);
+
+    \fill (S) circle (1.5pt) node[above] {$S$};
+    \fill (A) circle (1.5pt) node[left] {$A$};
+    \fill (B) circle (1.5pt) node[right] {$B$};
+    \fill (C) circle (1.5pt) node[below] {$C$};
+    \fill (D) circle (1.5pt) node[below left] {$D$};
+    \fill (O) circle (1.5pt) node[below] {$O$};
+    \fill (E) circle (1.5pt) node[below] {$E$};
+    \fill (M) circle (1.5pt) node[right] {$M$};
+    \fill (I) circle (1.5pt) node[above left] {$I$};
+\end{tikzpicture}
+\end{center}
+
+\textbf{Lời giải chi tiết từng câu:}
+\begin{enumerate}[leftmargin=0.6cm]
+    \item \textbf{Tìm giao tuyến $(SAC) \cap (SBD)$:}
+    \begin{itemize}
+        \item Điểm $S$ là điểm chung thứ nhất: $S \in (SAC) \cap (SBD)$.
+        \item Trong mặt phẳng đáy $(ABCD)$, vì $ABCD$ là hình thang nên hai đường chéo $AC$ và $BD$ cắt nhau tại một điểm. Gọi $O = AC \cap BD$.
+        \item Ta có: $O \in AC \subset (SAC) \implies O \in (SAC)$; $O \in BD \subset (SBD) \implies O \in (SBD)$.
+        \item Do đó $O$ là điểm chung thứ hai: $O \in (SAC) \cap (SBD)$.
+        \item Kết luận: $(SAC) \cap (SBD) = SO$.
+    \end{itemize}
+
+    \item \textbf{Tìm giao tuyến $(SAD) \cap (SBC)$:}
+    \begin{itemize}
+        \item Điểm $S$ là điểm chung thứ nhất: $S \in (SAD) \cap (SBC)$.
+        \item Trong mặt phẳng đáy $(ABCD)$, vì $AB$ không song song với $CD$ nên hai cạnh bên $AD$ và $BC$ cắt nhau tại một điểm. Gọi $E = AD \cap BC$.
+        \item Ta có: $E \in AD \subset (SAD) \implies E \in (SAD)$; $E \in BC \subset (SBC) \implies E \in (SBC)$.
+        \item Do đó $E$ là điểm chung thứ hai: $E \in (SAD) \cap (SBC)$.
+        \item Kết luận: $(SAD) \cap (SBC) = SE$.
+    \end{itemize}
+
+    \item \textbf{Tìm giao điểm của $AM$ và mặt phẳng $(SBD)$:}
+    \begin{itemize}
+        \item \textit{Bước 1 (Chọn mặt phẳng phụ):} Chọn mặt phẳng $(SAC)$ chứa đường thẳng $AM$.
+        \item \textit{Bước 2 (Tìm giao tuyến):} Theo câu 1, giao tuyến của $(SAC)$ và $(SBD)$ là đường thẳng $SO$.
+        \item \textit{Bước 3 (Tìm giao điểm):} Trong mặt phẳng $(SAC)$, gọi $I = AM \cap SO$.
+        \item Vì $I \in SO$ mà $SO \subset (SBD) \implies I \in (SBD)$.
+        \item Lại có $I \in AM$. Vậy $I$ chính là giao điểm của đường thẳng $AM$ và mặt phẳng $(SBD)$:
+        $$I = AM \cap (SBD)$$
+    \end{itemize}
+\end{enumerate}
+
+\noindent \textbf{d) Tổ chức thực hiện:}
+\begin{itemize}[leftmargin=0.8cm]
+    \item \textit{Chuyển giao nhiệm vụ:} Giáo viên chia lớp thành các nhóm 4 học sinh, giao nhiệm vụ giải 3 câu vào bảng phụ trong 8 phút.
+    \item \textit{Thực hiện nhiệm vụ:} Các nhóm phân công: 1 bạn vẽ hình chuẩn nét liền/đứt, 1 bạn viết câu 1, 1 bạn viết câu 2, nhóm trưởng tổng hợp câu 3.
+    \item \textit{Báo cáo, thảo luận:} 2 nhóm treo bảng phụ lên bảng; đại diện thuyết trình; các nhóm khác nhận xét, chấm chéo.
+    \item \textit{Kết luận, nhận định:} Giáo viên chuẩn hóa lời giải, lưu ý học sinh luôn phải chỉ rõ hai đường thẳng cắt nhau trong mặt phẳng nào để tránh sai lầm ngộ nhận cắt nhau trong không gian.
+\end{itemize}
+
+\subsubsection*{4. Hoạt động 4: Vận dụng thực tiễn \& Tích hợp Năng lực AI (8 phút)}
+
+\noindent \textbf{a) Mục tiêu:}
+Tích hợp Năng lực AI (Mã 11.D1.1): Giúp học sinh hiểu được ứng dụng mang tính cách mạng của việc nhận diện mặt phẳng, giao tuyến trong công nghệ Trí tuệ nhân tạo thị giác máy tính và Robot tự hành.
+
+\noindent \textbf{b) Nội dung: Tình huống công nghệ số}
+\begin{aibox}{Tích hợp AI: Thị giác máy tính nhận diện mặt phẳng không gian (Mã 11.D1.1)}
+\textbf{Tình huống công nghệ thực tế:}
+Các robot hút bụi thông minh (như Ecovacs, Roborock) hay xe ô tô tự hành của Tesla đều được trang bị camera AI và cảm biến quét laser 3D (LiDAR) ứng dụng thuật toán SLAM (Simultaneous Localization and Mapping).
+\begin{enumerate}[leftmargin=0.6cm]
+    \item \textbf{Cơ chế hoạt động:} Khi quét qua phòng khách, cảm biến bắn hàng triệu tia laser để thu về tập hợp các điểm tọa độ $(x, y, z)$. Làm thế nào thuật toán AI có thể nhận diện được đâu là \textbf{mặt sàn}, đâu là \textbf{bức tường}, và đâu là \textbf{chân bàn}?
+    \item \textbf{Kết nối toán học:}
+    \begin{itemize}
+        \item Thuật toán AI tìm các tập hợp điểm cùng nằm trên một mặt phẳng (dựa trên phương trình mặt phẳng đi qua 3 điểm).
+        \item Giao tuyến giữa mặt phẳng tường và mặt sàn chính là đường biên mà robot cần nhận diện để di chuyển men theo mép tường quét sạch bụi.
+    \end{itemize}
+    \item \textbf{Câu hỏi tư duy:} Nếu trên sàn có một tấm thảm phẳng lì nhưng có hoa văn hình hố sâu màu đen, tại sao camera AI thông thường có thể nhầm lẫn, còn cảm biến quét mặt phẳng 3D lại không bị lừa?
+\end{enumerate}
+\end{aibox}
+
+\noindent \textbf{c) Sản phẩm: Thảo luận của học sinh}
+\begin{itemize}[leftmargin=0.6cm]
+    \item AI sử dụng toán học không gian: Gom nhóm các điểm có cùng độ cao và cùng thuộc một mặt phẳng để định vị mặt sàn di chuyển.
+    \item Camera 2D chỉ chụp hình ảnh màu sắc nên dễ bị ảo ảnh thị giác (hoa văn đen nhầm là hố sâu); trong khi cảm biến 3D đo khoảng cách thực tế của các điểm trong không gian, nhận biết tấm thảm vẫn nằm trọn vẹn trên mặt phẳng sàn nhà nên robot vẫn tự tin đi qua.
+\end{itemize}
+
+\noindent \textbf{d) Tổ chức thực hiện:}
+\begin{itemize}[leftmargin=0.8cm]
+    \item \textit{Chuyển giao nhiệm vụ:} Giáo viên chiếu đoạn video 1 phút mô phỏng mắt quét laser của robot hút bụi đang vẽ bản đồ mặt phẳng phòng; nêu câu hỏi thảo luận.
+    \item \textit{Thực hiện nhiệm vụ:} Học sinh quan sát, liên hệ kiến thức về mặt phẳng và điểm thuộc mặt phẳng vừa học.
+    \item \textit{Báo cáo, thảo luận:} 2 học sinh phát biểu cảm nhận về sự kỳ diệu của toán học trong công nghệ AI.
+    \item \textit{Kết luận, nhận định:} Giáo viên tổng kết: Hình học không gian không hề trừu tượng xa xôi, mà là nền tảng cốt lõi của đồ họa máy tính, thực tế ảo (VR/AR) và Trí tuệ nhân tạo hiện đại. Dặn dò bài tập về nhà.
+\end{itemize}
+
+---
+
+\section*{IV. PHỤ LỤC HỌC LIỆU BỔ TRỢ}
+
+\subsection*{1. Phiếu học tập phân tầng bậc thang (Worksheet)}
+
+\noindent \textbf{A. PHẦN TRẮC NGHIỆM NHANH (Khắc sâu lý thuyết)}
+\begin{enumerate}[leftmargin=0.6cm]
+    \item Có bao nhiêu mặt phẳng đi qua ba điểm phân biệt không thẳng hàng?
+    \begin{itemize}[leftmargin=0.6cm]
+        \item[\textbf{A.}] $1$. \quad B. $2$. \quad C. $3$. \quad D. Vô số.
+    \end{itemize}
+    \item Quy ước nào sau đây là ĐÚNG khi vẽ hình biểu diễn của hình không gian?
+    \begin{itemize}[leftmargin=0.6cm]
+        \item[A.] Đường nhìn thấy vẽ bằng nét đứt. \quad \textbf{B.} Đường bị che khuất vẽ bằng nét đứt.
+        \item[C.] Mọi đường thẳng đều vẽ bằng nét liền. \quad D. Góc vuông bắt buộc phải vẽ thành góc vuông.
+    \end{itemize}
+    \item Trong không gian, hai mặt phẳng phân biệt có điểm chung thì chúng có:
+    \begin{itemize}[leftmargin=0.6cm]
+        \item[A.] Đúng 1 điểm chung. \quad B. Đúng 2 điểm chung.
+        \item[\textbf{C.}] Một đường thẳng chung duy nhất. \quad D. Vô số đường thẳng chung.
+    \end{itemize}
+\end{enumerate}
+
+\noindent \textbf{B. PHẦN TỰ LUẬN PHÂN TẦNG BẬC THANG}
+\begin{itemize}[leftmargin=0.6cm]
+    \item \textbf{Tầng 1 (Cơ bản dành cho HS TB-Yếu):} Cho tứ diện $S.ABC$. Hãy liệt kê tất cả các mặt bên, mặt đáy, các cạnh bên và cạnh đáy của hình chóp tam giác này. Vẽ hình biểu diễn đúng nét đứt.
+    \item \textbf{Tầng 2 (Thông hiểu):} Cho hình chóp tứ giác $S.ABCD$ có đáy $ABCD$ là hình bình hành tâm $O$. Tìm giao tuyến của mặt phẳng $(SAB)$ và $(SCD)$; tìm giao tuyến của mặt phẳng $(SAC)$ và $(SBD)$.
+    \item \textbf{Tầng 3 (Vận dụng cao):} Cho tứ diện $ABCD$. Lấy điểm $M$ trên cạnh $AB$, điểm $N$ trên cạnh $AC$ sao cho $MN$ không song song với $BC$. Lấy điểm $P$ nằm bên trong tam giác $BCD$. Tìm giao điểm của đường thẳng $MN$ với mặt phẳng $(BCD)$; tìm giao tuyến của mặt phẳng $(MNP)$ với các mặt của tứ diện $ABCD$.
+\end{itemize}
+
+\subsection*{2. Bảng Rubric đánh giá năng lực học sinh trong bài học}
+
+\begin{center}
+\small
+\begin{tabularx}{\textwidth}{|p{2.8cm}|X|X|X|X|}
+\hline
+\textbf{Tiêu chí} & \textbf{Chưa đạt (Mức 1)} & \textbf{Đạt (Mức 2)} & \textbf{Khá (Mức 3)} & \textbf{Tốt (Mức 4)} \\ \hline
+\textbf{Kỹ năng vẽ hình không gian} & Vẽ tất cả các cạnh bằng nét liền; hình vẽ méo mó, không gian phẳng. & Vẽ được hình chóp nhưng còn nhầm $1$ nét khuất thành nét liền. & Vẽ hình biểu diễn chính xác, đúng quy ước nét thấy/nét khuất. & Hình vẽ chuẩn xác, trực quan, thẩm mỹ cao, hỗ trợ đắc lực cho tư duy giải toán. \\ \hline
+\textbf{Xác định giao tuyến \& giao điểm} & Không tìm được điểm chung của hai mặt phẳng; ngộ nhận hai đường chéo nhau cắt nhau. & Tìm được điểm chung hiển nhiên (điểm $S$); còn lúng túng khi tìm điểm chung thứ hai. & Nắm vững thuật toán 3 bước, xác định đúng giao tuyến và giao điểm trên hình. & Lập luận toán học chặt chẽ, trình bày mẫu mực, giải quyết tốt bài toán phân hóa mức 3. \\ \hline
+\textbf{Năng lực số \& Ứng dụng AI} & Chưa hiểu ứng dụng của mặt phẳng; không có ý thức tìm kiếm thông tin số. & Biết tra cứu hình ảnh kiến trúc thực tế minh họa cho mặt phẳng. & Trình bày được ví dụ AI thị giác máy tính nhận diện mặt phẳng cho robot SLAM. & Phân tích sâu sắc mối liên hệ giữa toán học không gian 3D với công nghệ xe tự hành và đồ họa AI. \\ \hline
+\textbf{Hợp tác nhóm \& Phẩm chất} & Thụ động, không tham gia vẽ hình hoặc thảo luận nhóm. & Có tham gia làm việc nhóm khi giáo viên nhắc nhở. & Tích cực đóng góp ý kiến, kiểm tra chéo nét vẽ hình học cho bạn. & Điều hành nhóm xuất sắc, tận tình hướng dẫn các bạn yếu tư duy hình không gian 3D. \\ \hline
+\end{tabularx}
+\end{center}
+
+\end{document}
