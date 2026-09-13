@@ -1,0 +1,663 @@
+\documentclass[12pt, a4paper]{article}  
+% --- 1. Cấu hình Tiếng Việt và Font chữ chuẩn ---  
+\usepackage[utf8]{inputenc}  
+\usepackage[T5]{fontenc}  
+\usepackage[vietnamese]{babel}  
+\usepackage{mathptmx} % Font Times New Roman đồng bộ cả chữ và công thức toán, không gây xung đột gói  
+  
+\makeatletter  
+\renewcommand{\normalsize}{\@setfontsize\normalsize{13pt}{16pt}}  
+\makeatother  
+\normalsize  
+  
+% --- 2. Gói Toán học & Ký hiệu bổ trợ ---  
+\usepackage{amsmath, amssymb, amsfonts, mathrsfs, amsthm}  
+\usepackage{graphicx}  
+\usepackage{fontawesome}  
+\usepackage{booktabs, tabularx, array, multirow}  
+\usepackage{enumitem}  
+  
+% --- 3. Đồ họa TikZ, Bảng biến thiên & Hình không gian ---  
+\usepackage{tikz}  
+\usetikzlibrary{calc, intersections, angles, quotes, patterns, arrows.meta, 3d}  
+\usepackage{pgfplots}  
+\pgfplotsset{compat=1.18}  
+\usepackage{tkz-euclide}  
+\usepackage{tkz-tab}  
+  
+\renewcommand{\vec}[1]{\overrightarrow{#1}}  
+  
+% --- 4. Hộp sư phạm (Tcolorbox) ---  
+\usepackage[many]{tcolorbox}  
+\tcbuselibrary{skins, breakable}  
+  
+% --- 5. Căn lề chuẩn văn bản giáo án ---  
+\usepackage{geometry}  
+\geometry{  
+    a4paper,  
+    left=25mm,  
+    right=15mm,  
+    top=20mm,  
+    bottom=20mm  
+}  
+  
+% --- 6. Header / Footer chuẩn hóa ---  
+\usepackage{fancyhdr}  
+\usepackage{lastpage}  
+\pagestyle{fancy}  
+\fancyhf{}  
+  
+\fancyhead[L]{\small \textit{Kế hoạch bài dạy Toán 11}}  
+\fancyhead[R]{\textbf{Trang \thepage/\pageref{LastPage}}}  
+\fancyfoot[L]{\small \textit{Tổ Toán - Tin}}  
+\fancyfoot[R]{\small \textit{Trường THCS\&THPT Hồng Vân}}  
+\renewcommand{\headrulewidth}{0.4pt}  
+\renewcommand{\footrulewidth}{0.4pt}  
+  
+% --- 7. Giãn dòng & Giãn đoạn theo chuẩn Nghị định 30/2020/NĐ-CP ---  
+\usepackage{setspace}  
+\setstretch{1.15}  
+\setlength{\parindent}{1.0cm}  
+\setlength{\parskip}{5pt}  
+  
+% Định nghĩa hộp sư phạm chuyên dụng  
+\newtcolorbox{pedabox}[2][]{  
+    enhanced,  
+    breakable,  
+    colback=blue!3!white,  
+    colframe=blue!65!black,  
+    fonttitle=\bfseries\small,  
+    title={#2},  
+    arc=2mm,  
+    boxrule=0.6pt,  
+    left=3mm, right=3mm, top=2mm, bottom=2mm,  
+    #1  
+}  
+  
+\newtcolorbox{aibox}[2][]{  
+    enhanced,  
+    breakable,  
+    colback=teal!4!white,  
+    colframe=teal!70!black,  
+    fonttitle=\bfseries\small,  
+    title={#2},  
+    arc=2mm,  
+    boxrule=0.6pt,  
+    left=3mm, right=3mm, top=2mm, bottom=2mm,  
+    #1  
+}  
+  
+\newtcolorbox{scaffoldbox}[2][]{  
+    enhanced,  
+    breakable,  
+    colback=orange!4!white,  
+    colframe=orange!80!black,  
+    fonttitle=\bfseries\small,  
+    title={#2},  
+    arc=2mm,  
+    boxrule=0.6pt,  
+    left=3mm, right=3mm, top=2mm, bottom=2mm,  
+    #1  
+}  
+  
+\begin{document}  
+  
+\begin{center}  
+    {\fontsize{14pt}{17pt}\selectfont \textbf{KẾ HOẠCH BÀI DẠY MÔN TOÁN LỚP 11}}\\[6pt]  
+    {\fontsize{16pt}{19pt}\selectfont \textbf{CHUYÊN ĐỀ 1 - BÀI 2. PHÉP TỊNH TIẾN}}\\[4pt]  
+    {\fontsize{12pt}{15pt}\selectfont \textbf{Môn học: Toán 11} \ \textbar \ \textbf{Thời lượng: 2 tiết (Tiết CĐ3 và Tiết CĐ4 theo PPCT)}}  
+\end{center}  
+  
+\vspace{5pt}  
+  
+\section*{I. MỤC TIÊU}  
+  
+\subsection*{1. Kiến thức, Năng lực}  
+  
+\begin{itemize}[leftmargin=1.2cm]  
+    \item \textbf{Yêu cầu cần đạt (Nguyên văn CT GDPT 2018):}  
+    \begin{itemize}[leftmargin=0.6cm]  
+        \item Nhận biết được định nghĩa và các tính chất cơ bản của phép tịnh tiến.  
+        \item Xác định được ảnh của một điểm, một đoạn thẳng, một tam giác, một đường thẳng, một đường tròn qua phép tịnh tiến.  
+        \item Thiết lập và sử dụng được biểu thức tọa độ của phép tịnh tiến trong mặt phẳng tọa độ $Oxy$.  
+        \item Vận dụng được phép tịnh tiến trong đồ họa, trong thiết kế hoa văn đường diềm và trong một số vấn đề thực tiễn (ví dụ: tạo các hoa văn, hình khối, trang trí trang phục truyền thống,...).  
+    \end{itemize}  
+  
+    \item \textbf{Năng lực Toán học đặc thù:}  
+    \begin{itemize}[leftmargin=0.6cm]  
+        \item \textit{Năng lực tư duy và lập luận toán học:} Lập luận chứng minh tính chất bảo toàn khoảng cách giữa hai điểm bất kì của phép tịnh tiến thông qua quy tắc ba điểm và hình bình hành; giải thích tại sao phép tịnh tiến biến đường thẳng thành đường thẳng song song hoặc trùng với nó; suy luận ảnh của đường tròn là đường tròn có cùng bán kính thông qua định nghĩa phép dời hình.  
+        \item \textit{Năng lực mô hình hóa toán học:} Thiết lập mô hình toán học sử dụng phép tịnh tiến vectơ để mô tả chuyển động cơ học trong thực tiễn (chuyển động của thang máy thẳng đứng, cánh cửa lùa ngang, băng chuyền sản xuất); thiết kế quy luật lặp lại của hoa văn đường diềm bằng chuỗi phép tịnh tiến cùng phương.  
+        \item \textit{Năng lực giải quyết vấn đề toán học:} Vận dụng biểu thức tọa độ $\begin{cases} x' = x + a \\ y' = y + b \end{cases}$ để tìm tọa độ ảnh của điểm, tìm điểm gốc khi biết ảnh, viết phương trình đường thẳng ảnh và phương trình đường tròn ảnh; kết hợp phương pháp vectơ giải quyết các bài toán dựng hình và quỹ tích đơn giản.  
+        \item \textit{Năng lực giao tiếp toán học:} Trình bày rõ ràng các bước lập luận hình học; sử dụng chính xác các ký hiệu toán học $T_{\vec{v}}(M) = M' \iff \vec{MM'} = \vec{v}$; trao đổi, phản biện tự tin trong hoạt động nhóm thiết kế hoa văn đường diềm.  
+        \item \textit{Năng lực sử dụng công cụ, phương tiện học toán:} Khai thác công cụ vectơ (Vector) và phép tịnh tiến (Translate by Vector) trong phần mềm hình học động GeoGebra để trực quan hóa phép tịnh tiến; sử dụng máy tính cầm tay (MTCT) Casio fx-580VN X hỗ trợ tính toán tọa độ nhanh chóng.  
+    \end{itemize}  
+  
+    \item \textbf{Năng lực số (Theo Thông tư 02/2025/TT-BGDĐT):}  
+    \begin{itemize}[leftmargin=0.6cm]  
+        \item \textit{Mã 3.1NC1a (Sáng tạo nội dung và mô phỏng trên nền tảng số):} Học sinh sử dụng công cụ vectơ trong phần mềm GeoGebra thực hiện phép tịnh tiến hình phẳng (đa giác, đường tròn, đồ thị) theo vectơ $\vec{v}$ cho trước, kéo thả thanh trượt slider hoặc đổi hướng vectơ để quan sát tính bảo toàn hình dạng và khoảng cách của hình ảnh số.  
+        \item \textit{Mã 5.3NC1a (Giải quyết vấn đề và sáng tạo với công nghệ số):} Học sinh sử dụng thành thạo thao tác "Copy - Paste" và lệnh dịch chuyển tọa độ (Offset / Translate) trên các phần mềm đồ họa máy tính (GeoGebra, Paint, Canva) để sáng tạo dải hoa văn đường diềm trang trí chuẩn xác, thẩm mỹ.  
+    \end{itemize}  
+  
+    \item \textbf{Năng lực AI (Theo Quyết định 2422/QĐ-BGDĐT):}  
+    \begin{itemize}[leftmargin=0.6cm]  
+        \item \textit{Mã 11.C5.2 (Hiểu biết về thuật toán ứng dụng của AI):} Học sinh nêu được một số ứng dụng của thuật toán tịnh tiến vectơ (Vector Translation) và ma trận biến đổi tọa độ trong công nghệ AI thị giác máy tính (Computer Vision), đặc biệt là kỹ thuật theo dõi đối tượng chuyển động (Object Tracking) và xe tự hành (Autonomous Vehicles).  
+        \item \textit{Mã 11.C3.2 (Mô hình hóa và AI tạo sinh):} Học sinh mô tả và phân tích được cách công nghệ Trí tuệ nhân tạo tạo sinh (Generative AI) tự động sinh ra các mẫu họa tiết đối xứng, dải hoa văn lặp lại liên tục (Seamless Texture / Patterns) trong ngành công nghiệp game và thiết kế thời trang kỹ thuật số.  
+    \end{itemize}  
+  
+    \item \textbf{Năng lực chung:}  
+    \begin{itemize}[leftmargin=0.6cm]  
+        \item \textit{Tự chủ và tự học:} Tự giác nghiên cứu tài liệu chuyên đề, tự giác làm bài tập tìm ảnh của điểm và đường thẳng qua biểu thức tọa độ.  
+        \item \textit{Giao tiếp và hợp tác:} Tích cực phối hợp với các thành viên trong nhóm hoàn thành sản phẩm STEM thiết kế hoa văn đường diềm.  
+    \end{itemize}  
+\end{itemize}  
+  
+\subsection*{2. Phẩm chất}  
+\begin{itemize}[leftmargin=1.2cm]  
+    \item \textbf{Chăm chỉ:} Tỉ mỉ thực hiện các phép tính đại số tọa độ, kiên trì vẽ hình chính xác từng đỉnh và vectơ tịnh tiến.  
+    \item \textbf{Trung thực:} Báo cáo chính xác kết quả thảo luận nhóm, ghi nhận rõ nguồn gốc hình ảnh và tôn trọng bản quyền thiết kế đồ họa.  
+    \item \textbf{Trách nhiệm:} Có ý thức bảo tồn và phát huy giá trị hoa văn thổ cẩm truyền thống của đồng bào dân tộc thiểu số vùng cao A Lưới (Thừa Thiên Huế) thông qua sản phẩm STEM.  
+\end{itemize}  
+  
+\section*{II. THIẾT BỊ DẠY HỌC VÀ HỌC LIỆU}  
+\begin{itemize}[leftmargin=1.2cm]  
+    \item \textbf{Giáo viên:}  
+    \begin{itemize}[leftmargin=0.6cm]  
+        \item Kế hoạch bài dạy chi tiết, bài trình chiếu tương tác PowerPoint/Canva.  
+        \item Tệp GeoGebra dựng sẵn mô phỏng phép tịnh tiến hình phẳng và thanh trượt vectơ $\vec{v}$.  
+        \item Hình ảnh, video thực tế về chuyển động của thang máy, cánh cửa lùa và các mẫu hoa văn đường diềm trang trí trên thổ cẩm A Lưới và kiến trúc Cố đô Huế.  
+        \item Phiếu học tập số 1, Phiếu học tập số 2 (Worksheet phân tầng) và Bảng Rubric đánh giá.  
+    \end{itemize}  
+    \item \textbf{Học sinh:}  
+    \begin{itemize}[leftmargin=0.6cm]  
+        \item Chuyên đề học tập Toán 11, vở ghi bài, thước kẻ, ê-ke, compa, bút màu.  
+        \item Giấy kẻ ô li (hoặc giấy A4) để thực hành vẽ hoa văn đường diềm.  
+        \item MTCT Casio fx-580VN X, thiết bị di động/máy tính có cài đặt GeoGebra.  
+    \end{itemize}  
+\end{itemize}  
+  
+\section*{III. TIẾN TRÌNH DẠY HỌC}  
+  
+% =========================================================================
+% TIẾT 1 (TIẾT CĐ3 THEO PPCT)
+% =========================================================================
+\begin{center}  
+    {\fontsize{13pt}{16pt}\selectfont \textbf{TIẾT 1. ĐỊNH NGHĨA, TÍNH CHẤT VÀ BIỂU THỨC TỌA ĐỘ CỦA PHÉP TỊNH TIẾN}}\\[2pt]  
+    \textit{(Tiết CĐ3 theo PPCT \ \textbar \ Tuần 3)}  
+\end{center}  
+  
+\subsection*{1. Hoạt động 1: Khởi động (Mở đầu)}  
+  
+\noindent \textbf{a) Mục tiêu:}  
+\begin{itemize}[leftmargin=0.8cm]  
+    \item Tạo tình huống thực tiễn từ các chuyển động thẳng trượt trong đời sống (thang máy, cửa kéo, ngăn kéo bàn), gợi mở khái niệm dời chuyển tất cả các điểm theo một hướng và độ dài cố định.  
+    \item Khơi gợi nhu cầu toán học hóa chuyển động trượt này bằng công cụ vectơ đã học ở lớp 10.  
+\end{itemize}  
+  
+\noindent \textbf{b) Nội dung:}  
+Giáo viên trình chiếu đoạn clip ngắn minh họa hoạt động của một chiếc thang máy chuyển động thẳng đứng từ tầng 1 lên tầng 3 của tòa nhà, hoặc chuyển động trượt của cánh cửa lùa trên rãnh ray ngang.  
+\textbf{Câu hỏi khởi động:}  
+1) Khi thang máy chuyển động từ vị trí ban đầu đến vị trí mới, mỗi điểm $M$ trên cabin thang máy di chuyển như thế nào?  
+2) Nếu lấy hai điểm bất kì $A$ và $B$ trên cabin, hãy so sánh vectơ dịch chuyển $\vec{AA'}$ và $\vec{BB'}$ của hai điểm đó? Khoảng cách giữa hai điểm sau khi chuyển động ($A'B'$) có thay đổi so với ban đầu ($AB$) không?  
+  
+\noindent \textbf{c) Sản phẩm:}  
+\begin{itemize}[leftmargin=0.8cm]  
+    \item Học sinh nhận xét: Mọi điểm trên cabin đều dịch chuyển theo cùng một hướng thẳng đứng và cùng một quãng đường bằng nhau.  
+    \item Về mặt toán học: $\vec{AA'} = \vec{BB'} = \vec{v}$ (với $\vec{v}$ là vectơ chuyển động). Khoảng cách $A'B' = AB$ không hề bị biến dạng hay co giãn.  
+    \item Nhận định: Chuyển động này tương ứng với một phép biến hình đặc biệt gọi là phép tịnh tiến.  
+\end{itemize}  
+  
+\noindent \textbf{d) Tổ chức thực hiện:}  
+\begin{itemize}[leftmargin=0.8cm]  
+    \item \textit{Chuyển giao nhiệm vụ:} GV chiếu video, chia lớp thành các cặp đôi bàn suy nghĩ và thảo luận trong 2 phút về sự thay đổi vị trí của các điểm trên vật.  
+    \item \textit{Thực hiện nhiệm vụ:} HS theo dõi hình ảnh trực quan, vận dụng kiến thức vectơ lớp 10 (hai vectơ bằng nhau có cùng hướng và cùng độ dài) để trả lời.  
+    \item \textit{Báo cáo, thảo luận:} Đại diện 1 học sinh trả lời trước lớp. Các học sinh khác nhận xét, bổ sung.  
+    \item \textit{Kết luận, nhận định:} GV nhận xét, chính xác hóa: Phép đặt tương ứng mỗi điểm $M$ với một điểm $M'$ sao cho $\vec{MM'}$ bằng một vectơ cố định chính là phép tịnh tiến. Chúng ta cùng đi vào tìm hiểu định nghĩa và các tính chất cơ bản.  
+\end{itemize}  
+  
+% -------------------------------------------------------------------------
+\subsection*{2. Hoạt động 2: Hình thành kiến thức}  
+  
+\subsubsection*{2.1. Định nghĩa phép tịnh tiến}  
+  
+\noindent \textbf{a) Mục tiêu:}  
+\begin{itemize}[leftmargin=0.8cm]  
+    \item Nắm vững định nghĩa phép tịnh tiến theo một vectơ $\vec{v}$ và ký hiệu $T_{\vec{v}}$.  
+    \item Xác định được ảnh của một điểm bất kì qua phép tịnh tiến bằng quy tắc dựng hình vectơ.  
+\end{itemize}  
+  
+\noindent \textbf{b) Nội dung:}  
+\begin{enumerate}[leftmargin=0.6cm]  
+    \item Nêu định nghĩa phép tịnh tiến trong mặt phẳng.  
+    \item Xét trường hợp đặc biệt khi vectơ tịnh tiến là vectơ-không ($\vec{v} = \vec{0}$).  
+    \item Thực hành xác định ảnh của điểm $M$ khi biết điểm $M$ và vectơ $\vec{v}$.  
+\end{enumerate}  
+  
+\noindent \textbf{c) Sản phẩm:}  
+  
+\begin{pedabox}{KIẾN THỨC TRỌNG TÂM: ĐỊNH NGHĨA PHÉP TỊNH TIẾN}  
+\begin{itemize}[leftmargin=0.6cm]  
+    \item \textbf{Định nghĩa:} Trong mặt phẳng, cho vectơ $\vec{v}$. Phép biến hình biến mỗi điểm $M$ thành điểm $M'$ sao cho:  
+    $$\vec{MM'} = \vec{v}$$  
+    được gọi là \textbf{phép tịnh tiến} theo vectơ $\vec{v}$.  
+    \item \textbf{Ký hiệu:} $T_{\vec{v}}$. Điểm $M'$ được gọi là ảnh của điểm $M$ qua phép tịnh tiến $T_{\vec{v}}$, ký hiệu:  
+    $$M' = T_{\vec{v}}(M) \iff \vec{MM'} = \vec{v}$$  
+    \item \textbf{Trường hợp đặc biệt:} Phép tịnh tiến theo vectơ-không $\vec{0}$ chính là \textbf{phép đồng nhất} ($T_{\vec{0}}(M) = M, \forall M$).  
+\end{itemize}  
+\end{pedabox}  
+  
+\noindent \textbf{d) Tổ chức thực hiện:}  
+\begin{itemize}[leftmargin=0.8cm]  
+    \item \textit{Chuyển giao nhiệm vụ:} GV yêu cầu HS vẽ điểm $M$ bất kì trên giấy ô li và một vectơ $\vec{v}$ cho trước, sau đó dùng thước kẻ và compa dựng điểm $M'$ sao cho $\vec{MM'} = \vec{v}$.  
+    \item \textit{Thực hiện nhiệm vụ:} HS thực hành vẽ hình: Kẻ đường thẳng qua $M$ song song (hoặc trùng) với giá của $\vec{v}$, lấy điểm $M'$ cùng hướng với $\vec{v}$ sao cho đoạn thẳng $MM' = |\vec{v}|$.  
+    \item \textit{Báo cáo, thảo luận:} GV quan sát bảng học sinh, mời 1 học sinh nhận xét: Có bao nhiêu điểm $M'$ thỏa mãn điều kiện? (Trả lời: Luôn tồn tại duy nhất 1 điểm $M'$).  
+    \item \textit{Kết luận, nhận định:} GV chốt định nghĩa và tính duy nhất của ảnh.  
+\end{itemize}  
+  
+% -------------------------------------------------------------------------
+\subsubsection*{2.2. Các tính chất của phép tịnh tiến}  
+  
+\noindent \textbf{a) Mục tiêu:}  
+\begin{itemize}[leftmargin=0.8cm]  
+    \item Nhận biết và chứng minh được tính chất bảo toàn khoảng cách giữa hai điểm bất kì của phép tịnh tiến.  
+    \item Nắm vững các tính chất cơ bản: biến đường thẳng thành đường thẳng song song hoặc trùng, biến đoạn thẳng thành đoạn thẳng bằng nó, biến tam giác thành tam giác bằng nó, biến đường tròn thành đường tròn có cùng bán kính.  
+\end{itemize}  
+  
+\noindent \textbf{b) Nội dung:}  
+\begin{enumerate}[leftmargin=0.6cm]  
+    \item Cho $M' = T_{\vec{v}}(M)$ và $N' = T_{\vec{v}}(N)$. Chứng minh $\vec{M'N'} = \vec{MN}$ và suy ra $M'N' = MN$.  
+    \item Khảo sát ảnh của một hình hình học cơ bản (đường thẳng, đoạn thẳng, tam giác, đường tròn).  
+\end{enumerate}  
+  
+\noindent \textbf{c) Sản phẩm:}  
+  
+\begin{pedabox}{KIẾN THỨC TRỌNG TÂM: CÁC TÍNH CHẤT CỦA PHÉP TỊNH TIẾN}  
+\begin{itemize}[leftmargin=0.6cm]  
+    \item \textbf{Định lí 1 (Bảo toàn khoảng cách):}  
+    Nếu $M' = T_{\vec{v}}(M)$ và $N' = T_{\vec{v}}(N)$ thì $\vec{M'N'} = \vec{MN}$, từ đó suy ra:  
+    $$M'N' = MN$$  
+    \textit{Chứng minh:} Ta có $\vec{M'N'} = \vec{M'M} + \vec{MN} + \vec{NN'} = -\vec{v} + \vec{MN} + \vec{v} = \vec{MN}$.  
+    Do đó độ dài $M'N' = |\vec{M'N'}| = |\vec{MN}| = MN$.  
+    $\implies$ Phép tịnh tiến là một \textbf{phép dời hình}.  
+    \item \textbf{Tính chất 2:} Phép tịnh tiến:  
+    \begin{itemize}  
+        \item Biến đường thẳng $d$ thành đường thẳng $d'$ song song hoặc trùng với nó ($d' \parallel d$ hoặc $d' \equiv d$).  
+        (Trùng khi và chỉ khi $\vec{v}$ là vectơ chỉ phương của $d$).  
+        \item Biến đoạn thẳng thành đoạn thẳng bằng nó.  
+        \item Biến tam giác thành tam giác bằng nó.  
+        \item Biến đường tròn $(I; R)$ thành đường tròn $(I'; R)$ có cùng bán kính, với tâm ảnh $I' = T_{\vec{v}}(I)$.  
+        \item Biến góc thành góc bằng nó.  
+    \end{itemize}  
+\end{itemize}  
+\end{pedabox}  
+  
+\begin{scaffoldbox}{GIÀN GIÁO SƯ PHẠM: QUY TẮC BẢO TOÀN DỄ NHỚ CHO HS TB-YẾU}  
+\begin{itemize}[leftmargin=0.6cm]  
+    \item \textbf{Quy tắc hình dạng:} Phép tịnh tiến chỉ "trượt" cả hình sang vị trí mới, \textbf{hoàn toàn không làm méo mó, không quay và không phóng to thu nhỏ hình}.  
+    \item \textbf{Tìm ảnh của đường tròn:} Chỉ cần tìm ảnh của tâm $I \to I'$, bán kính giữ nguyên $R' = R$.  
+    \item \textbf{Tìm ảnh của tam giác $ABC$:} Chỉ cần tìm ảnh của 3 đỉnh $A, B, C \to A', B', C'$ rồi nối lại.  
+\end{itemize}  
+\end{scaffoldbox}  
+  
+\noindent \textbf{d) Tổ chức thực hiện:}  
+\begin{itemize}[leftmargin=0.8cm]  
+    \item \textit{Chuyển giao nhiệm vụ:} GV trình chiếu hình bình hành $MM'N'N$ khi bốn điểm không thẳng hàng để chứng minh trực quan vectơ $\vec{M'N'} = \vec{MN}$. Cho học sinh quan sát mô hình GeoGebra tịnh tiến tam giác và đường tròn.  
+    \item \textit{Thực hiện nhiệm vụ:} HS theo dõi, ghi nhớ tính chất bảo toàn hình dạng và bán kính.  
+    \item \textit{Báo cáo, thảo luận:} HS trả lời câu hỏi nhanh: "Nếu đường tròn $(C)$ có diện tích $25\pi$ thì đường tròn ảnh $(C')$ có diện tích bằng bao nhiêu?" $\to$ Bằng $25\pi$.  
+    \item \textit{Kết luận, nhận định:} GV nhấn mạnh tính chất đường thẳng biến thành đường thẳng song song hoặc trùng giúp ích rất lớn cho việc viết phương trình đường thẳng ở phần sau.  
+\end{itemize}  
+  
+% -------------------------------------------------------------------------
+\subsubsection*{2.3. Biểu thức tọa độ của phép tịnh tiến}  
+  
+\noindent \textbf{a) Mục tiêu:}  
+\begin{itemize}[leftmargin=0.8cm]  
+    \item Thiết lập biểu thức tọa độ của phép tịnh tiến trong mặt phẳng tọa độ $Oxy$.  
+    \item Vận dụng thành thạo biểu thức tọa độ để giải bài toán đại số tìm ảnh của điểm, tìm điểm gốc và viết phương trình đường.  
+\end{itemize}  
+  
+\noindent \textbf{b) Nội dung:}  
+\begin{enumerate}[leftmargin=0.6cm]  
+    \item Trong $Oxy$, cho $\vec{v} = (a; b)$ và $M(x; y)$. Tìm tọa độ của $M'(x'; y') = T_{\vec{v}}(M)$.  
+    \item Rút ra công thức thuận (tìm ảnh) và công thức nghịch (tìm điểm gốc ban đầu).  
+\end{enumerate}  
+  
+\noindent \textbf{c) Sản phẩm:}  
+  
+\begin{pedabox}{KIẾN THỨC TRỌNG TÂM: BIỂU THỨC TỌA ĐỘ CỦA PHÉP TỊNH TIẾN}  
+Trong mặt phẳng tọa độ $Oxy$, cho vectơ $\vec{v} = (a; b)$ và điểm $M(x; y)$.  
+Gọi $M'(x'; y') = T_{\vec{v}}(M)$ là ảnh của $M$ qua phép tịnh tiến theo $\vec{v}$.  
+Vì $\vec{MM'} = (x' - x; y' - y)$ và $\vec{MM'} = \vec{v} = (a; b)$, ta có:  
+$$\begin{cases} x' - x = a \\ y' - y = b \end{cases} \iff \begin{cases} x' = x + a \\ y' = y + b \end{cases}$$  
+\textbf{Ý nghĩa:} Tọa độ điểm ảnh bằng tọa độ điểm gốc cộng với tọa độ vectơ tịnh tiến.  
+\textbf{Công thức ngược (tìm điểm gốc $M$ khi biết ảnh $M'$):}  
+$$\begin{cases} x = x' - a \\ y = y' - b \end{cases}$$  
+\end{pedabox}  
+  
+\begin{aibox}{NĂNG LỰC AI: THUẬT TOÁN TỊNH TIẾN TRONG THỊ GIÁC MÁY TÍNH (QĐ 2422)}  
+\begin{itemize}[leftmargin=0.6cm]  
+    \item \textbf{Ứng dụng thực tiễn:} Trong công nghệ Trí tuệ nhân tạo nhận diện hình ảnh và thị giác máy tính (AI Computer Vision), một khung hình số bao gồm hàng triệu điểm ảnh (pixels).  
+    \item \textbf{Bản chất toán học:} Khi camera AI theo dõi một chiếc xe đang chạy trên đường (Object Tracking), thuật toán AI liên tục tính toán vectơ chuyển dịch vận tốc $\vec{v} = (\Delta x; \Delta y)$ giữa hai khung hình liên tiếp và áp dụng phép tịnh tiến tọa độ ma trận:  
+    $$\begin{bmatrix} x' \\ y' \\ 1 \end{bmatrix} = \begin{bmatrix} 1 & 0 & a \\ 0 & 1 & b \\ 0 & 0 & 1 \end{bmatrix} \begin{bmatrix} x \\ y \\ 1 \end{bmatrix}$$  
+    để dự đoán vị trí tiếp theo của vật thể mà không cần phải nhận diện lại từ đầu, giúp tăng tốc độ xử lý của xe tự hành trong thời gian thực.  
+\end{itemize}  
+\end{aibox}  
+  
+\noindent \textbf{d) Tổ chức thực hiện:}  
+\begin{itemize}[leftmargin=0.8cm]  
+    \item \textit{Chuyển giao nhiệm vụ:} GV hướng dẫn học sinh từ định nghĩa $\vec{MM'} = \vec{v}$ viết ra tọa độ từng thành phần.  
+    \item \textit{Thực hiện nhiệm vụ:} HS ghi nhận công thức vào vở, nhận xét công thức này chỉ là phép cộng đại số thông thường rất đơn giản.  
+    \item \textit{Báo cáo, thảo luận:} GV cho ví dụ nhanh: $M(2; 3)$ và $\vec{v}(1; -4) \implies M' = (2+1; 3-4) = (3; -1)$. Cả lớp đồng thanh xác nhận.  
+    \item \textit{Kết luận, nhận định:} GV chuyển sang Hoạt động Luyện tập để rèn luyện kỹ năng giải các dạng toán cơ bản.  
+\end{itemize}  
+  
+% -------------------------------------------------------------------------
+\subsection*{3. Hoạt động 3: Luyện tập}  
+  
+\noindent \textbf{a) Mục tiêu:}  
+\begin{itemize}[leftmargin=0.8cm]  
+    \item Thành thạo tính toán tọa độ điểm ảnh và điểm gốc qua phép tịnh tiến.  
+    \item Viết được phương trình đường thẳng và phương trình đường tròn ảnh qua phép tịnh tiến.  
+\end{itemize}  
+  
+\noindent \textbf{b) Nội dung:}  
+Thực hiện các bài toán trong Phiếu học tập số 1 (Worksheet 1):  
+\begin{itemize}[leftmargin=0.6cm]  
+    \item \textbf{Bài 1:} Trong mặt phẳng $Oxy$, cho vectơ $\vec{v} = (2; -3)$. Tìm tọa độ ảnh của các điểm $A(1; 5)$ và $B(-4; 2)$ qua phép tịnh tiến $T_{\vec{v}}$.  
+    \item \textbf{Bài 2:} Cho điểm $M'(1; -2)$ là ảnh của điểm $M$ qua phép tịnh tiến $T_{\vec{v}}$ với $\vec{v} = (-3; 4)$. Tìm tọa độ điểm $M$.  
+    \item \textbf{Bài 3:} Viết phương trình đường thẳng $d'$ là ảnh của đường thẳng $d: 2x - 5y + 7 = 0$ qua phép tịnh tiến $T_{\vec{v}}$ với $\vec{v} = (1; -2)$.  
+    \item \textbf{Bài 4:} Cho đường tròn $(C): (x - 2)^2 + (y + 1)^2 = 16$. Viết phương trình đường tròn $(C')$ là ảnh của $(C)$ qua phép tịnh tiến $T_{\vec{v}}$ với $\vec{v} = (-3; 5)$.  
+\end{itemize}  
+  
+\noindent \textbf{c) Sản phẩm: Lời giải chi tiết}  
+\begin{enumerate}[leftmargin=0.6cm]  
+    \item \textbf{Bài 1:}  
+    Áp dụng biểu thức tọa độ:  
+    $$A' = T_{\vec{v}}(A) \implies \begin{cases} x_{A'} = 1 + 2 = 3 \\ y_{A'} = 5 + (-3) = 2 \end{cases} \implies A'(3; 2)$$  
+    $$B' = T_{\vec{v}}(B) \implies \begin{cases} x_{B'} = -4 + 2 = -2 \\ y_{B'} = 2 + (-3) = -1 \end{cases} \implies B'(-2; -1)$$  
+    \item \textbf{Bài 2:}  
+    Vì $M'$ là ảnh của $M$ qua $T_{\vec{v}}$, ta có:  
+    $$\begin{cases} x_{M'} = x_M + a \\ y_{M'} = y_M + b \end{cases} \iff \begin{cases} 1 = x_M - 3 \\ -2 = y_M + 4 \end{cases} \iff \begin{cases} x_M = 1 + 3 = 4 \\ y_M = -2 - 4 = -6 \end{cases}$$  
+    Vậy điểm gốc là $M(4; -6)$.  
+    \item \textbf{Bài 3:}  
+    \textit{Cách 1 (Dùng tính chất song song):}  
+    Vì $d'$ là ảnh của $d$ qua phép tịnh tiến nên $d' \parallel d$ hoặc $d' \equiv d$. Do đó phương trình $d'$ có dạng:  
+    $$2x - 5y + c = 0$$  
+    Lấy điểm $A(4; 3) \in d$ (do $2 \cdot 4 - 5 \cdot 3 + 7 = 0$).  
+    Ảnh của $A$ qua $T_{\vec{v}}$ là điểm $A'(x'; y')$ thỏa mãn:  
+    $$\begin{cases} x' = 4 + 1 = 5 \\ y' = 3 + (-2) = 1 \end{cases} \implies A'(5; 1) \in d'$$  
+    Thay tọa độ $A'$ vào phương trình $d'$:  
+    $$2(5) - 5(1) + c = 0 \iff 10 - 5 + c = 0 \iff c = -5$$  
+    Vậy phương trình đường thẳng $d'$ là: $2x - 5y - 5 = 0$.  
+    \textit{Cách 2 (Phương pháp thế tọa độ):}  
+    Với mọi $M(x; y) \in d$, gọi $M'(x'; y') = T_{\vec{v}}(M) \implies \begin{cases} x = x' - 1 \\ y = y' + 2 \end{cases}$.  
+    Thay vào phương trình $d$:  
+    $$2(x' - 1) - 5(y' + 2) + 7 = 0 \iff 2x' - 5y' - 2 - 10 + 7 = 0 \iff 2x' - 5y' - 5 = 0$$  
+    Vậy phương trình của $d'$ là $2x - 5y - 5 = 0$.  
+    \item \textbf{Bài 4:}  
+    Đường tròn $(C)$ có tâm $I(2; -1)$ và bán kính $R = \sqrt{16} = 4$.  
+    Gọi $(C')$ là ảnh của $(C)$ qua $T_{\vec{v}}$ thì $(C')$ có bán kính $R' = R = 4$ và tâm $I'$ là ảnh của $I$ qua $T_{\vec{v}}$:  
+    $$\begin{cases} x_{I'} = 2 + (-3) = -1 \\ y_{I'} = -1 + 5 = 4 \end{cases} \implies I'(-1; 4)$$  
+    Vậy phương trình đường tròn $(C')$ là:  
+    $$(x + 1)^2 + (y - 4)^2 = 16$$  
+\end{enumerate}  
+  
+\noindent \textbf{d) Tổ chức thực hiện:}  
+\begin{itemize}[leftmargin=0.8cm]  
+    \item \textit{Chuyển giao nhiệm vụ:} GV chia lớp làm việc theo nhóm 4 học sinh, giao nhiệm vụ giải 4 bài toán vào phiếu học tập trong thời gian 10 phút.  
+    \item \textit{Thực hiện nhiệm vụ:} Các nhóm phân công làm bài. GV đi từng bàn kiểm tra, đặc biệt hướng dẫn HS yếu ở Bài 3 không bị nhầm dấu khi tìm $c$.  
+    \item \textit{Báo cáo, thảo luận:} Đại diện 2 nhóm lên bảng trình bày Bài 3 (hai cách khác nhau) và Bài 4. Cả lớp nhận xét, đánh giá lời giải.  
+    \item \textit{Kết luận, nhận định:} GV chuẩn hóa hai cách viết phương trình đường thẳng ảnh và biểu dương tinh thần hỗ trợ nhau trong nhóm.  
+\end{itemize}  
+  
+% -------------------------------------------------------------------------
+\subsection*{4. Hoạt động 4: Vận dụng}  
+  
+\noindent \textbf{a) Mục tiêu:}  
+Vận dụng biểu thức tọa độ của phép tịnh tiến vào giải quyết bài toán cơ khí kỹ thuật hoặc lập trình điều khiển chuyển động của cánh tay robot.  
+  
+\noindent \textbf{b) Nội dung:}  
+Trong một dây chuyền lắp ráp linh kiện bán dẫn tự động, một đầu kẹp robot cần gắp vi mạch từ vị trí có tâm tọa độ $A(12; 45)\text{ (mm)}$ trên băng chuyền thứ nhất và đưa đến vị trí lắp ráp trên bản mạch in có tâm tọa độ $B(82; 105)\text{ (mm)}$ trên băng chuyền thứ hai.  
+1) Hãy xác định vectơ chuyển dịch $\vec{v}$ của đầu kẹp robot để thực hiện phép tịnh tiến biến điểm $A$ thành điểm $B$?  
+2) Nếu cùng thời điểm đó, trên bản mạch có một điểm tiếp xúc khác $C(20; 30)\text{ (mm)}$, hãy xác định tọa độ vị trí mới $C'$ của điểm tiếp xúc này sau khi thực hiện cùng phép dịch chuyển vectơ $\vec{v}$?  
+  
+\noindent \textbf{c) Sản phẩm: Lời giải chi tiết}  
+\begin{enumerate}[leftmargin=0.6cm]  
+    \item Vectơ chuyển dịch $\vec{v}$ biến $A$ thành $B$ chính là vectơ $\vec{AB}$:  
+    $$\vec{v} = \vec{AB} = (x_B - x_A; y_B - y_A) = (82 - 12; 105 - 45) = (70; 60)\text{ (mm)}$$  
+    Độ dài dịch chuyển của cánh tay robot là:  
+    $$|\vec{v}| = \sqrt{70^2 + 60^2} = \sqrt{4900 + 3600} = \sqrt{8500} \approx 92{,}2\text{ mm}$$  
+    \item Tọa độ điểm tiếp xúc mới $C' = T_{\vec{v}}(C)$:  
+    $$\begin{cases} x_{C'} = x_C + a = 20 + 70 = 90\text{ (mm)} \\ y_{C'} = y_C + b = 30 + 60 = 90\text{ (mm)} \end{cases} \implies C'(90; 90)$$  
+\end{enumerate}  
+  
+\noindent \textbf{d) Tổ chức thực hiện:}  
+\begin{itemize}[leftmargin=0.8cm]  
+    \item \textit{Chuyển giao nhiệm vụ:} GV trình chiếu hình ảnh cánh tay robot trong nhà máy công nghệ cao, yêu cầu học sinh mô hình hóa bài toán sang ngôn ngữ vectơ và phép tịnh tiến.  
+    \item \textit{Thực hiện nhiệm vụ:} HS tính toán nhanh vectơ $\vec{AB}$ và tìm tọa độ $C'$.  
+    \item \textit{Báo cáo, thảo luận:} 1 HS xung phong đọc đáp án và giải thích ý nghĩa của độ dài vectơ đối với việc lập trình hành trình của robot.  
+    \item \textit{Kết luận, nhận định:} GV nhấn mạnh tầm quan trọng của phép biến hình trong công nghệ tự động hóa hiện đại.  
+\end{itemize}  
+  
+% =========================================================================
+% TIẾT 2 (TIẾT CĐ4 THEO PPCT)
+% =========================================================================
+\vspace{10pt}  
+\begin{center}  
+    {\fontsize{13pt}{16pt}\selectfont \textbf{TIẾT 2. ỨNG DỤNG PHÉP TỊNH TIẾN TRONG ĐỒ HỌA, THIẾT KẾ HOA VĂN ĐƯỜNG DIỀM VÀ STEM}}\\[2pt]  
+    \textit{(Tiết CĐ4 theo PPCT \ \textbar \ Tuần 4)}  
+\end{center}  
+  
+\subsection*{1. Hoạt động 1: Khởi động (Mở đầu)}  
+  
+\noindent \textbf{a) Mục tiêu:}  
+Tiếp cận nghệ thuật trang trí truyền thống của dân tộc qua lăng kính toán học; nhận diện quy luật lặp lại của hoa văn đường diềm bằng phép tịnh tiến, tạo cảm hứng cho hoạt động trải nghiệm STEM.  
+  
+\noindent \textbf{b) Nội dung:}  
+Giáo viên chiếu bộ sưu tập hình ảnh trang phục dệt zèng (thổ cẩm) của đồng bào Pa Cô - Tà Ôi huyện A Lưới (Thừa Thiên Huế) và các họa tiết diềm trang trí trên thành bậc cầu, bờ nóc di tích Cố đô Huế.  
+\textbf{Câu hỏi khởi động:}  
+1) Các dải hoa văn trang trí viền (đường diềm) trên trang phục thổ cẩm và kiến trúc có đặc điểm chung gì về mặt cấu trúc hình học?  
+2) Làm thế nào một người nghệ nhân chỉ với một mẫu họa tiết hình thoi hoặc hình tam giác ban đầu có thể tạo ra được một dải hoa văn kéo dài liên tục, đều đặn trên toàn bộ viền áo?  
+  
+\noindent \textbf{c) Sản phẩm:}  
+\begin{itemize}[leftmargin=0.8cm]  
+    \item Học sinh phát hiện: Có một họa tiết cơ sở (mô-típ ban đầu) được lặp đi lặp lại nhiều lần liên tiếp theo một phương nhất định dọc theo mép vải.  
+    \item Bản chất toán học: Đó chính là việc thực hiện liên tiếp các phép tịnh tiến theo cùng một vectơ $\vec{v}$ (vectơ có phương trùng với dải hoa văn và độ dài bằng khoảng cách chu kì giữa hai họa tiết liên tiếp).  
+\end{itemize}  
+  
+\noindent \textbf{d) Tổ chức thực hiện:}  
+\begin{itemize}[leftmargin=0.8cm]  
+    \item \textit{Chuyển giao nhiệm vụ:} GV cho học sinh quan sát ảnh chụp thực tế các dải hoa văn đường diềm, đặt câu hỏi suy ngẫm cho toàn lớp.  
+    \item \textit{Thực hiện nhiệm vụ:} Học sinh thảo luận theo bàn, quan sát sự lặp lại của các hình tam giác, hình thoi, đường zíc-zắc trên thổ cẩm.  
+    \item \textit{Báo cáo, thảo luận:} 1 học sinh trả lời: "Các họa tiết giống hệt nhau được dịch chuyển đều một khoảng sang phải".  
+    \item \textit{Kết luận, nhận định:} GV khẳng định: Phép tịnh tiến là công cụ cốt lõi trong mỹ thuật công nghiệp và đồ họa để tạo ra các dải hoa văn đường diềm (Frieze Patterns). Tiết học hôm nay chúng ta sẽ dùng toán học để thiết kế hoa văn đường diềm.  
+\end{itemize}  
+  
+% -------------------------------------------------------------------------
+\subsection*{2. Hoạt động 2: Hình thành kiến thức}  
+  
+\subsubsection*{2.1. Nguyên lí tạo hoa văn đường diềm bằng phép tịnh tiến}  
+  
+\noindent \textbf{a) Mục tiêu:}  
+Hiểu rõ nguyên lí toán học của việc tạo hoa văn đường diềm: Chọn mô-típ cơ sở $\to$ Chọn vectơ tịnh tiến $\vec{v}$ $\to$ Thực hiện chuỗi tịnh tiến $T_{k\vec{v}}$ ($k \in \mathbb{Z}$).  
+  
+\noindent \textbf{b) Nội dung:}  
+\begin{enumerate}[leftmargin=0.6cm]  
+    \item Khái niệm hoa văn đường diềm: Dải họa tiết trang trí phẳng nằm giữa hai đường thẳng song song, có tính chất bất biến đối với một phép tịnh tiến theo vectơ $\vec{v}$ dọc theo phương của dải.  
+    \item Cấu trúc toán học của chuỗi phép tịnh tiến: Nếu $H_0$ là mô-típ hình học cơ sở, thì toàn bộ dải hoa văn là hợp của các hình ảnh:  
+    $$\mathcal{H} = \bigcup_{k \in \mathbb{Z}} T_{k\vec{v}}(H_0)$$  
+    \item Phân tích các bước thực hiện trên phần mềm máy tính (lệnh Copy/Paste kèm dịch chuyển tọa độ) và trên giấy kẻ ô li.  
+\end{enumerate}  
+  
+\noindent \textbf{c) Sản phẩm:}  
+  
+\begin{pedabox}{KIẾN THỨC TRỌNG TÂM: NGUYÊN LÍ TẠO HOA VĂN ĐƯỜNG DIỀM}  
+\begin{itemize}[leftmargin=0.6cm]  
+    \item \textbf{Định nghĩa hoa văn đường diềm (Frieze Pattern):} Là một hình trang trí vô hạn tuần hoàn theo một hướng trong mặt phẳng, được giới hạn bởi hai đường thẳng song song.  
+    \item \textbf{Quy trình 3 bước thiết kế hoa văn đường diềm bằng phép tịnh tiến:}  
+    \begin{itemize}  
+        \item \textit{Bước 1 (Thiết kế mô-típ cơ sở $H_0$):} Vẽ một họa tiết đơn giản (hình tam giác, hình thoi, chữ V, hình ngôi sao, đường zíc-zắc) trong một ô lưới chuẩn có kích thước chiều ngang là $w$ và chiều cao $h$.  
+        \item \textit{Bước 2 (Xác định vectơ tịnh tiến bước nhảy $\vec{v}$):} Chọn vectơ $\vec{v} = (w; 0)$ có phương song song với đường biên và độ dài bằng độ rộng chu kì của mô-típ.  
+        \item \textit{Bước 3 (Thực hiện phép tịnh tiến lặp lại):}  
+        Hình ảnh họa tiết thứ nhất: $H_1 = T_{\vec{v}}(H_0)$.  
+        Hình ảnh họa tiết thứ hai: $H_2 = T_{\vec{v}}(H_1) = T_{2\vec{v}}(H_0)$.  
+        Tổng quát họa tiết thứ $n$: $H_n = T_{n\vec{v}}(H_0)$ ($n \in \mathbb{Z}$).  
+    \end{itemize}  
+\end{itemize}  
+\end{pedabox}  
+  
+\begin{aibox}{NĂNG LỰC AI: CÔNG NGHỆ TẠO HOA VĂN TỰ ĐỘNG BẰNG GENERATIVE AI (QĐ 2422)}  
+\begin{itemize}[leftmargin=0.6cm]  
+    \item \textbf{Khám phá công nghệ:} Ngày nay, các mô hình Trí tuệ nhân tạo tạo sinh (như Midjourney, Adobe Firefly, Stable Diffusion) có tính năng tạo hình nền hoa văn liên tục không vết nối (\textit{Seamless Pattern / Texture Generation}).  
+    \item \textbf{Bản chất thuật toán:} AI sử dụng nguyên lí toán học của phép tịnh tiến modulo: Khi một phần của họa tiết chạm vào mép phải khung hình, thuật toán AI tự động tịnh tiến phần thừa đó sang đúng vị trí tương ứng ở mép trái:  
+    $$x_{\text{mới}} = (x + w) \pmod W$$  
+    nhờ đó khi ghép các tấm ảnh liên tiếp cạnh nhau bằng phép tịnh tiến, mắt người không nhận thấy bất kì vết cắt hay khớp nối nào.  
+\end{itemize}  
+\end{aibox}  
+  
+\noindent \textbf{d) Tổ chức thực hiện:}  
+\begin{itemize}[leftmargin=0.8cm]  
+    \item \textit{Chuyển giao nhiệm vụ:} GV hướng dẫn học sinh thao tác mô phỏng trên GeoGebra: Dựng một tam giác $ABC$, tạo thanh trượt số nguyên $n \in [1; 6]$ và vẽ vectơ $\vec{v} = (3; 0)$, dùng lệnh Sequence hoặc Translate để tạo dải 6 tam giác thẳng hàng.  
+    \item \textit{Thực hiện nhiệm vụ:} HS thực hành trên máy vi tính hoặc điện thoại thông minh, quan sát dải tam giác tự động dàn hàng đều đặn khi thanh trượt thay đổi.  
+    \item \textit{Báo cáo, thảo luận:} HS nhận xét: "Nhờ phép tịnh tiến mà các hình tạo ra hoàn toàn đồng nhất về kích thước, không tốn công vẽ lại từ đầu".  
+    \item \textit{Kết luận, nhận định:} GV chuẩn hóa quy trình 3 bước làm cơ sở cho bài tập thực hành.  
+\end{itemize}  
+  
+% -------------------------------------------------------------------------
+\subsection*{3. Hoạt động 3: Luyện tập}  
+  
+\noindent \textbf{a) Mục tiêu:}  
+Học sinh áp dụng biểu thức tọa độ của phép tịnh tiến để vẽ chính xác tọa độ các đỉnh của hoa văn đường diềm trên lưới ô li tọa độ.  
+  
+\noindent \textbf{b) Nội dung: Phiếu học tập số 2 (Worksheet 2)}  
+\textbf{Bài toán:} Trên mặt phẳng tọa độ $Oxy$ với đơn vị ô vuông là $1\text{ cm}$:  
+Cho mô-típ cơ sở là tam giác cân $A_0 B_0 C_0$ với tọa độ các đỉnh: $A_0(1; 0)$, $B_0(3; 0)$, $C_0(2; 3)$.  
+Thực hiện phép tịnh tiến liên tiếp theo vectơ $\vec{v} = (3; 0)$ để tạo ra dải hoa văn đường diềm gồm 4 tam giác:  
+$A_1 B_1 C_1 = T_{\vec{v}}(A_0 B_0 C_0)$, $A_2 B_2 C_2 = T_{\vec{v}}(A_1 B_1 C_1)$, $A_3 B_3 C_3 = T_{\vec{v}}(A_2 B_2 C_2)$.  
+1) Hãy xác định tọa độ các đỉnh của tam giác $A_1 B_1 C_1$, $A_2 B_2 C_2$ và $A_3 B_3 C_3$?  
+2) Viết phương trình đường thẳng chứa cạnh đáy của các tam giác và phương trình đường thẳng đi qua tất cả các đỉnh $C_0, C_1, C_2, C_3$?  
+3) Vẽ minh họa dải hoa văn đường diềm này trên giấy kẻ ô vuông.  
+  
+\noindent \textbf{c) Sản phẩm: Lời giải chi tiết}  
+\begin{enumerate}[leftmargin=0.6cm]  
+    \item Tọa độ các đỉnh: Vì $\vec{v} = (3; 0)$, tung độ $y$ của các điểm được giữ nguyên, hoành độ $x$ tăng thêm $3$ đơn vị sau mỗi bước tịnh tiến:  
+    \begin{itemize}  
+        \item Tam giác $A_1 B_1 C_1$:  
+        $A_1 = (1 + 3; 0) = (4; 0)$;\quad $B_1 = (3 + 3; 0) = (6; 0)$;\quad $C_1 = (2 + 3; 3) = (5; 3)$.  
+        \item Tam giác $A_2 B_2 C_2$:  
+        $A_2 = (4 + 3; 0) = (7; 0)$;\quad $B_2 = (6 + 3; 0) = (9; 0)$;\quad $C_2 = (5 + 3; 3) = (8; 3)$.  
+        \item Tam giác $A_3 B_3 C_3$:  
+        $A_3 = (7 + 3; 0) = (10; 0)$;\quad $B_3 = (9 + 3; 0) = (12; 0)$;\quad $C_3 = (8 + 3; 3) = (11; 3)$.  
+    \end{itemize}  
+    \item Phương trình các đường thẳng biên:  
+    \begin{itemize}  
+        \item Đường thẳng chứa cạnh đáy: Tất cả các điểm $A_k, B_k$ đều nằm trên trục hoành $Ox$, có phương trình là:  
+        $$y = 0$$  
+        \item Đường thẳng chứa các đỉnh chóp $C_0, C_1, C_2, C_3$: Tất cả các đỉnh đều có tung độ bằng $3$, do đó nằm trên đường thẳng song song với trục hoành có phương trình:  
+        $$y = 3$$  
+    \end{itemize}  
+    Hai đường thẳng $y = 0$ và $y = 3$ chính là hai đường biên song song kẹp dải hoa văn đường diềm ở giữa.  
+    \item Hình vẽ: 4 tam giác cân bằng nhau đứng liên tiếp trên trục hoành, các đáy kề sát nhau tạo thành dãy tam giác liên hoàn đẹp mắt.  
+\end{enumerate}  
+  
+\noindent \textbf{d) Tổ chức thực hiện:}  
+\begin{itemize}[leftmargin=0.8cm]  
+    \item \textit{Chuyển giao nhiệm vụ:} GV yêu cầu học sinh làm việc cá nhân vào vở kẻ ô li trong 6 phút.  
+    \item \textit{Thực hiện nhiệm vụ:} HS tính nhẩm nhanh tọa độ (cộng 3 vào hoành độ) và dùng thước vẽ ngay các tam giác.  
+    \item \textit{Báo cáo, thảo luận:} GV thu nhanh 3 bài của học sinh trung bình - yếu để kiểm tra, chiếu bài làm tốt lên tivi qua camera điện thoại.  
+    \item \textit{Kết luận, nhận định:} GV khen ngợi kỹ năng tính toán chuẩn xác, nhấn mạnh việc chuyển dịch ngang giữ nguyên tung độ $y$.  
+\end{itemize}  
+  
+% -------------------------------------------------------------------------
+\subsection*{4. Hoạt động 4: Vận dụng (Dự án trải nghiệm STEM)}  
+  
+\noindent \textbf{a) Mục tiêu:}  
+\begin{itemize}[leftmargin=0.8cm]  
+    \item Vận dụng tổng hợp phép tịnh tiến và biểu thức tọa độ vào sản phẩm thiết kế STEM thực tế: "Thiết kế họa tiết hoa văn đường diềm trang trí thổ cẩm truyền thống A Lưới".  
+    \item Rèn luyện tư duy thẩm mỹ, kỹ năng làm việc nhóm, kỹ năng thuyết trình và niềm tự hào văn hóa quê hương Thừa Thiên Huế.  
+\end{itemize}  
+  
+\noindent \textbf{b) Nội dung: Nhiệm vụ thiết kế STEM}  
+Lớp học đóng vai trò là "Xưởng thiết kế mỹ thuật ứng dụng". Mỗi nhóm 5 học sinh được cung cấp một tờ giấy A4 kẻ sẵn khung viền dải băng có kích thước $4\text{ cm} \times 24\text{ cm}$ (tỉ lệ tương ứng với đường viền cổ áo hoặc gấu váy thổ cẩm).  
+\textbf{Yêu cầu kỹ thuật và mỹ thuật:}  
+\begin{enumerate}[leftmargin=0.6cm]  
+    \item Thiết kế 01 mô-típ họa tiết cơ sở $H_0$ mang đậm nét văn hóa truyền thống (ví dụ: quả trám, chim A pắp, ngọn núi lửa, hoa sim rừng hoặc chữ V cách điệu).  
+    \item Xác định chính xác tọa độ vectơ tịnh tiến $\vec{v}$ (vectơ bước nhảy).  
+    \item Thực hiện tịnh tiến liên tiếp ít nhất 5 lần để phủ kín dải băng trang trí.  
+    \item Tô màu trang trí (kết hợp các màu đặc trưng của thổ cẩm A Lưới: đỏ, đen, trắng, vàng).  
+    \item Trình bày bài thuyết minh ngắn (1 phút): Nêu rõ mô-típ gốc, vectơ tịnh tiến và ý nghĩa văn hóa của sản phẩm.  
+\end{enumerate}  
+  
+\noindent \textbf{c) Sản phẩm:}  
+\begin{itemize}[leftmargin=0.8cm]  
+    \item Bản thiết kế hoàn chỉnh trên giấy A4 của 7 nhóm học sinh với các dải hoa văn đường diềm sắc nét, đều tăm tắp, phối màu sinh động.  
+    \item Bản mô tả toán học của sản phẩm: Ghi rõ mô-típ $H_0$, vectơ tịnh tiến $\vec{v} = (a; 0)$, số lần tịnh tiến $n = 5$, phương trình hai đường thẳng biên.  
+\end{itemize}  
+  
+\noindent \textbf{d) Tổ chức thực hiện:}  
+\begin{itemize}[leftmargin=0.8cm]  
+    \item \textit{Chuyển giao nhiệm vụ:} GV phổ biến tiêu chí chấm điểm theo Rubric STEM (Độ chính xác toán học 40\%, Tính thẩm mỹ 30\%, Tinh thần làm việc nhóm và thuyết minh 30\%). Phát dụng cụ cho các nhóm.  
+    \item \textit{Thực hiện nhiệm vụ:} Các nhóm phân công: 1 bạn phác thảo mô-típ cơ sở, 2 bạn đo đạc khoảng cách vectơ và vẽ các hình tịnh tiến tiếp theo, 2 bạn tô màu và viết bản thuyết minh.  
+    \item \textit{Báo cáo, trưng bày sản phẩm (Phòng tranh - Gallery Walk):} Các nhóm dán sản phẩm lên bảng lớp. Đại diện Nhóm 2 thuyết minh: "Nhóm em chọn mô-típ hình quả trám thổ cẩm cách điệu, chiều rộng mỗi quả là $4\text{ cm}$. Nhóm chọn vectơ tịnh tiến $\vec{v} = (4; 0)$ để các đỉnh quả trám chạm sát nhau liên tục, biểu tượng cho sự đoàn kết, gắn bó của buôn làng".  
+    \item \textit{Kết luận, nhận định:} GV tổng kết đánh giá, trao giải cho nhóm có sản phẩm đẹp và chuẩn xác nhất; giáo dục học sinh ý thức gìn giữ di sản văn hóa phi vật thể của địa phương thông qua toán học ứng dụng.  
+\end{itemize}  
+  
+% =========================================================================
+% PHẦN IV. PHỤ LỤC HỌC LIỆU BỔ TRỢ
+% =========================================================================
+\section*{IV. PHỤ LỤC HỌC LIỆU BỔ TRỢ}  
+  
+\subsection*{1. Bảng tóm tắt hệ thống kiến thức phép tịnh tiến}  
+  
+\begin{center}  
+\small  
+\begin{tabularx}{\textwidth}{|p{3.2cm}|X|X|}  
+\hline  
+\textbf{Nội dung} & \textbf{Định nghĩa / Tính chất hình học} & \textbf{Biểu thức tọa độ trong $Oxy$} \\ \hline  
+\textbf{Ảnh của điểm} & $M' = T_{\vec{v}}(M) \iff \vec{MM'} = \vec{v}$ & $\begin{cases} x' = x + a \\ y' = y + b \end{cases}$ với $\vec{v}(a; b)$ \\ \hline  
+\textbf{Tìm điểm gốc} & $M = T_{-\vec{v}}(M') \iff \vec{M'M} = -\vec{v}$ & $\begin{cases} x = x' - a \\ y = y' - b \end{cases}$ \\ \hline  
+\textbf{Ảnh của đường thẳng} & $d' = T_{\vec{v}}(d) \implies d' \parallel d$ hoặc $d' \equiv d$ & $d: Ax + By + C = 0 \implies d': Ax + By + C' = 0$ \\ \hline  
+\textbf{Ảnh của đường tròn} & $(C') = T_{\vec{v}}(C) \implies R' = R$, $I' = T_{\vec{v}}(I)$ & $(C): (x-a_0)^2 + (y-b_0)^2 = R^2 \implies (C'): (x-x_{I'})^2 + (y-y_{I'})^2 = R^2$ \\ \hline  
+\end{tabularx}  
+\end{center}  
+  
+\subsection*{2. Phiếu học tập phân tầng bậc thang}  
+  
+\noindent \textbf{PHIẾU HỌC TẬP SỐ 1 (Tiết CĐ3: Biểu thức tọa độ)}  
+\begin{itemize}[leftmargin=0.6cm]  
+    \item \textbf{Tầng 1 (Nhận biết - Dành cho HS TB-Yếu):}  
+    Trong mặt phẳng $Oxy$, cho $\vec{v} = (3; -2)$.  
+    a) Tìm ảnh của các điểm $O(0; 0)$ và $P(2; 4)$ qua $T_{\vec{v}}$.  
+    b) Cho $\vec{v} = \vec{0}$, tìm ảnh của điểm $A(5; -7)$.  
+    \item \textbf{Tầng 2 (Thông hiểu):}  
+    a) Cho điểm $K'(0; 5)$ là ảnh của điểm $K$ qua $T_{\vec{v}}$ với $\vec{v} = (4; -1)$. Tìm tọa độ $K$.  
+    b) Tìm phương trình đường thẳng $d'$ là ảnh của $d: 3x + 4y - 10 = 0$ qua $T_{\vec{v}}$ với $\vec{v} = (-1; 2)$.  
+    \item \textbf{Tầng 3 (Vận dụng):}  
+    Cho đường tròn $(C): x^2 + y^2 - 4x + 6y - 3 = 0$. Viết phương trình đường tròn $(C')$ là ảnh của $(C)$ qua phép tịnh tiến theo vectơ $\vec{v} = (1; -3)$.  
+\end{itemize}  
+  
+\vspace{5pt}  
+\noindent \textbf{PHIẾU HỌC TẬP SỐ 2 (Tiết CĐ4: Thiết kế hoa văn đường diềm)}  
+\begin{itemize}[leftmargin=0.6cm]  
+    \item \textbf{Tầng 1 (Nhận biết - Dành cho HS TB-Yếu):}  
+    Một hoa văn hình thoi có các đỉnh $A(0; 1), B(1; 2), C(2; 1), D(1; 0)$. Hãy tìm tọa độ của hình thoi tiếp theo khi tịnh tiến theo vectơ $\vec{v} = (2; 0)$.  
+    \item \textbf{Tầng 2 (Thông hiểu):}  
+    Một dải hoa văn đường diềm tạo bởi chuỗi tam giác tịnh tiến theo $\vec{v} = (4; 0)$. Nếu tam giác đầu tiên có đỉnh cao nhất tại $M(2; 5)$, hãy xác định tọa độ đỉnh cao nhất của tam giác thứ 5 trong dải hoa văn.  
+    \item \textbf{Tầng 3 (Vận dụng sáng tạo - STEM):}  
+    Thiết kế hoàn chỉnh một dải hoa văn đường diềm gồm 6 họa tiết đối xứng zíc-zắc trên giấy kẻ ô li, ghi rõ biểu thức tọa độ của từng mắt lưới tịnh tiến.  
+\end{itemize}  
+  
+\subsection*{3. Bảng Rubric đánh giá dự án STEM hoa văn đường diềm (4 mức độ)}  
+  
+\begin{center}  
+\small  
+\begin{tabularx}{\textwidth}{|p{2.8cm}|X|X|X|X|}  
+\hline  
+\textbf{Tiêu chí} & \textbf{Chưa đạt (Mức 1)} & \textbf{Đạt (Mức 2)} & \textbf{Khá (Mức 3)} & \textbf{Tốt (Mức 4)} \\ \hline  
+\textbf{Độ chính xác toán học (40\%)} & Tính sai tọa độ vectơ tịnh tiến, các họa tiết vẽ bị lệch lạc, méo mó, không đều nhau. & Xác định đúng vectơ tịnh tiến nhưng vẽ các hình lặp lại còn sai số nhỏ về kích thước. & Tính chuẩn xác tọa độ các đỉnh; các hình vẽ bảo toàn hoàn hảo khoảng cách và hình dạng. & Tính chuẩn xác 100\%; lập luận được phương trình các đường thẳng biên kẹp dải hoa văn. \\ \hline  
+\textbf{Tính thẩm mỹ \& Sáng tạo (30\%)} & Họa tiết quá đơn điệu, nét vẽ cẩu thả, không phối màu hoặc màu sắc lem nhem. & Họa tiết cơ bản, vẽ tương đối sạch sẽ, có phối 1-2 màu nhưng chưa nổi bật. & Họa tiết mang nét truyền thống rõ ràng, đường nét sắc sảo, phối màu hài hòa, bắt mắt. & Họa tiết độc đáo, mang đậm bản sắc thổ cẩm A Lưới / Cố đô Huế, phối màu tương phản nghệ thuật cao. \\ \hline  
+\textbf{Kỹ năng số \& Ứng dụng AI (15\%)} & Chưa biết ứng dụng công cụ vẽ số hoặc MTCT vào tính toán tọa độ. & Biết dùng MTCT tính tọa độ nhưng chưa dùng được GeoGebra để mô phỏng. & Sử dụng thành thạo GeoGebra dựng dải hoa văn động với thanh trượt bước nhảy. & Vận dụng xuất sắc phần mềm số và nêu rõ nguyên lí thuật toán AI tạo hoa văn không vết nối. \\ \hline  
+\textbf{Làm việc nhóm \& Báo cáo (15\%)} & Hoạt động nhóm rời rạc, chỉ 1 bạn làm; thuyết minh ngập ngừng, không nêu được ý nghĩa. & Có phân công nhiệm vụ; thuyết minh đủ ý chính nhưng chưa cuốn hút. & Hợp tác nhóm tích cực, hỗ trợ tốt bạn yếu; thuyết trình rõ ràng, đúng thời gian 1 phút. & Nhóm phối hợp nhịp nhàng, gắn kết; thuyết trình tự tin, truyền cảm hứng về nét đẹp văn hóa quê hương. \\ \hline  
+\end{tabularx}  
+\end{center}  
+  
+\end{document}
