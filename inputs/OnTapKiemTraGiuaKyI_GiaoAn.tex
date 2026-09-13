@@ -1,0 +1,447 @@
+\documentclass[12pt, a4paper]{article}
+% --- 1. Cấu hình Tiếng Việt và Font chữ chuẩn ---
+\usepackage[utf8]{inputenc}
+\usepackage[T5]{fontenc}
+\usepackage[vietnamese]{babel}
+\usepackage{mathptmx} % Font Times New Roman đồng bộ cả chữ và công thức toán, không gây xung đột gói
+
+\makeatletter
+\renewcommand{\normalsize}{\@setfontsize\normalsize{13pt}{16pt}}
+\makeatother
+\normalsize
+
+% --- 2. Gói Toán học & Ký hiệu bổ trợ ---
+\usepackage{amsmath, amssymb, amsfonts, mathrsfs, amsthm}
+\usepackage{graphicx}
+\usepackage{fontawesome}
+\usepackage{booktabs, tabularx, array, multirow}
+\usepackage{enumitem}
+
+% --- 3. Đồ họa TikZ, Bảng biến thiên & Hình không gian ---
+\usepackage{tikz}
+\usetikzlibrary{calc, intersections, angles, quotes, patterns, arrows.meta, 3d}
+\usepackage{pgfplots}
+\pgfplotsset{compat=1.18}
+\usepackage{tkz-euclide}
+\usepackage{tkz-tab}
+
+\renewcommand{\vec}[1]{\overrightarrow{#1}}
+
+% --- 4. Hộp sư phạm (Tcolorbox) ---
+\usepackage[many]{tcolorbox}
+\tcbuselibrary{skins, breakable}
+
+% --- 5. Căn lề chuẩn văn bản giáo án ---
+\usepackage{geometry}
+\geometry{
+    a4paper,
+    left=25mm,
+    right=15mm,
+    top=20mm,
+    bottom=20mm
+}
+
+% --- 6. Header / Footer chuẩn hóa ---
+\usepackage{fancyhdr}
+\usepackage{lastpage}
+\pagestyle{fancy}
+\fancyhf{}
+
+\fancyhead[L]{\small \textit{Kế hoạch bài dạy Toán 11}}
+\fancyhead[R]{\textbf{Trang \thepage/\pageref{LastPage}}}
+\fancyfoot[L]{\small \textit{Tổ Toán - Tin}}
+\fancyfoot[R]{\small \textit{Trường THCS\&THPT Hồng Vân}}
+\renewcommand{\headrulewidth}{0.4pt}
+\renewcommand{\footrulewidth}{0.4pt}
+
+% --- 7. Giãn dòng & Giãn đoạn theo chuẩn Nghị định 30/2020/NĐ-CP ---
+\usepackage{setspace}
+\setstretch{1.15}
+\setlength{\parindent}{1.0cm}
+\setlength{\parskip}{5pt}
+
+% Định nghĩa hộp sư phạm chuyên dụng
+\newtcolorbox{pedabox}[2][]{
+    enhanced,
+    breakable,
+    colback=blue!3!white,
+    colframe=blue!65!black,
+    fonttitle=\bfseries\small,
+    title={#2},
+    arc=2mm,
+    boxrule=0.6pt,
+    left=3mm, right=3mm, top=2mm, bottom=2mm,
+    #1
+}
+
+\newtcolorbox{aibox}[2][]{
+    enhanced,
+    breakable,
+    colback=teal!4!white,
+    colframe=teal!70!black,
+    fonttitle=\bfseries\small,
+    title={#2},
+    arc=2mm,
+    boxrule=0.6pt,
+    left=3mm, right=3mm, top=2mm, bottom=2mm,
+    #1
+}
+
+\newtcolorbox{scaffoldbox}[2][]{
+    enhanced,
+    breakable,
+    colback=orange!4!white,
+    colframe=orange!80!black,
+    fonttitle=\bfseries\small,
+    title={#2},
+    arc=2mm,
+    boxrule=0.6pt,
+    left=3mm, right=3mm, top=2mm, bottom=2mm,
+    #1
+}
+
+\begin{document}
+
+\begin{center}
+    {\fontsize{14pt}{17pt}\selectfont \textbf{KẾ HOẠCH BÀI DẠY MÔN TOÁN LỚP 11}}\\[6pt]
+    {\fontsize{16pt}{19pt}\selectfont \textbf{ÔN TẬP KIỂM TRA GIỮA KỲ I}}\\[4pt]
+    {\fontsize{12pt}{15pt}\selectfont \textbf{Môn học: Toán 11} \ \textbar \ \textbf{Thời lượng: 1 tiết (Tiết 22 theo PPCT | Tuần 8)}}
+\end{center}
+
+\vspace{5pt}
+
+\section*{I. MỤC TIÊU}
+
+\subsection*{1. Kiến thức, Năng lực}
+
+\begin{itemize}[leftmargin=1.2cm]
+    \item \textbf{Yêu cầu cần đạt (Nguyên văn CT GDPT 2018):}
+    \begin{itemize}[leftmargin=0.6cm]
+        \item Hệ thống hóa toàn diện kiến thức cốt lõi từ Chương I đến hết Chương III:
+        \begin{itemize}
+            \item \textit{Chương I (Hàm số lượng giác và phương trình lượng giác):} Giá trị lượng giác của góc lượng giác, công thức lượng giác cơ bản và nâng cao (công thức cộng, nhân đôi, biến đổi tích thành tổng và tổng thành tích); tập xác định, tính chẵn lẻ, chu kỳ và đồ thị hàm số lượng giác; phương trình lượng giác cơ bản.
+            \item \textit{Chương II (Dãy số. Cấp số cộng và cấp số nhân):} Khái niệm dãy số, dãy tăng, dãy giảm, dãy bị chặn; định nghĩa, số hạng tổng quát, tính chất và công thức tính tổng $n$ số hạng đầu của cấp số cộng ($u_n, S_n$) và cấp số nhân ($u_n, S_n$).
+            \item \textit{Chương III (Các số đặc trưng đo xu thế trung tâm của mẫu số liệu ghép nhóm):} Ý nghĩa và kỹ năng tính số trung bình cộng ($\bar{x}$), trung vị ($M_e$), tứ phân vị ($Q_1, Q_2, Q_3$), mốt ($M_o$) của mẫu số liệu ghép nhóm.
+        \end{itemize}
+        \item Rèn luyện kỹ năng nhận diện cấu trúc đề kiểm tra, phân tích ma trận đề, xử lý nhanh các câu hỏi trắc nghiệm khách quan và trình bày chặt chẽ, mạch lạc bài toán tự luận.
+    \end{itemize}
+
+    \item \textbf{Năng lực Toán học đặc thù:}
+    \begin{itemize}[leftmargin=0.6cm]
+        \item \textit{Năng lực tư duy và lập luận toán học:} So sánh, phân biệt bản chất giữa cấp số cộng (tăng/giảm tuyến tính theo công sai $d$) và cấp số nhân (tăng/giảm theo hàm mũ qua công bội $q$); phân tích tính hợp lý của nghiệm phương trình lượng giác trên khoảng, đoạn cho trước; lập luận đánh giá việc lựa chọn số đặc trưng thống kê phù hợp.
+        \item \textit{Năng lực mô hình hóa toán học:} Chuyển đổi các bài toán thực tiễn (mô hình tăng trưởng dân số, lãi kép ngân hàng, trả góp, đo lường thống kê đời sống) về dạng toán cấp số cộng, cấp số nhân và thống kê ghép nhóm.
+        \item \textit{Năng lực giải quyết vấn đề toán học:} Thiết lập chiến lược giải đề kiểm tra tối ưu thời gian: ưu tiên câu hỏi nhận biết - thông hiểu trước, vận dụng sau; biết cách kiểm tra ngược kết quả bằng phương pháp thử số hoặc loại trừ phương án nhiễu.
+        \item \textit{Năng lực giao tiếp toán học:} Trình bày lời giải bài toán tự luận rõ ràng, đúng chuẩn mực ký hiệu toán học; diễn đạt chính xác điều kiện xác định, họ nghiệm phương trình lượng giác, thứ nguyên của các đại lượng thống kê.
+        \item \textit{Năng lực sử dụng công cụ, phương tiện học toán:} Thành thạo kỹ thuật bấm máy tính cầm tay (MTCT) Casio fx-580VN X: giải phương trình lượng giác (\texttt{SHIFT SOLVE}), tính giá trị biểu thức (\texttt{CALC}), bảng giá trị kiểm tra nghiệm (\texttt{TABLE}), thống kê một biến (\texttt{MENU} $6 \to 1$).
+    \end{itemize}
+
+    \item \textbf{Năng lực số (Theo Thông tư 02/2025/TT-BGDĐT):}
+    \begin{itemize}[leftmargin=0.6cm]
+        \item \textit{Mã 2.6NC1a (Quản lý danh tính và bảo vệ tài khoản số trong môi trường học tập trực tuyến):} Học sinh biết cách thiết lập mật khẩu mạnh, bảo mật tài khoản học tập cá nhân trên các nền tảng ôn thi trực tuyến (như LMS, Azota, Shub Classroom, Google Classroom); không chia sẻ tài khoản làm bài thi thử; nhận diện các nguy cơ lừa đảo hoặc đánh cắp dữ liệu điểm số cá nhân.
+    \end{itemize}
+
+    \item \textbf{Năng lực AI (Theo Quyết định 2422/QĐ-BGDĐT):}
+    \begin{itemize}[leftmargin=0.6cm]
+        \item \textit{Mã 11.B2.1 (Đạo đức học thuật và Sử dụng AI có trách nhiệm trong học tập):} Học sinh xây dựng ý thức cam kết trung thực học thuật, không lạm dụng các công cụ AI (PhotoMath, ChatGPT, QANDA) để giải hộ đề cương hoặc gian lận trong kiểm tra; hiểu rõ AI chỉ đóng vai trò là gia sư ảo gợi ý phương pháp và giải thích bước giải khi gặp bế tắc tư duy.
+    \end{itemize}
+
+    \item \textbf{Năng lực chung:}
+    \begin{itemize}[leftmargin=0.6cm]
+        \item \textit{Tự chủ và tự học:} Tự giác hoàn thành đề cương ôn tập, lập bảng tóm tắt công thức cá nhân hóa, chủ động khắc phục các dạng bài còn yếu.
+        \item \textit{Giao tiếp và hợp tác:} Tích cực thảo luận cặp đôi và nhóm để tìm ra cách giải ngắn gọn nhất, chia sẻ kinh nghiệm xử lý các bẫy đề thi.
+    \end{itemize}
+\end{itemize}
+
+\subsection*{2. Phẩm chất}
+
+\begin{itemize}[leftmargin=1.2cm]
+    \item \textbf{Chăm chỉ:} Kiên trì giải quyết trọn vẹn các câu hỏi trong phiếu ôn tập, cẩn thận kiểm tra từng phép tính đại số và lượng giác.
+    \item \textbf{Trung thực:} Tự đánh giá đúng năng lực cá nhân, nghiêm túc làm bài tập không quay cóp hoặc nhờ AI giải hộ đối phó.
+    \item \textbf{Trách nhiệm:} Có ý thức tự giác ôn thi, giữ gìn trật tự và kỷ cương phòng thi, bảo vệ an toàn dữ liệu cá nhân trên không gian mạng.
+\end{itemize}
+
+\section*{II. THIẾT BỊ DẠY HỌC VÀ HỌC LIỆU}
+
+\begin{itemize}[leftmargin=1.2cm]
+    \item \textbf{Giáo viên:}
+    \begin{itemize}[leftmargin=0.6cm]
+        \item Kế hoạch bài dạy ôn tập, hệ thống Slide bài giảng tương tác.
+        \item Bảng ma trận đề kiểm tra Giữa kỳ I (tỷ lệ: 70\% trắc nghiệm - 30\% tự luận; 40\% Nhận biết, 30\% Thông hiểu, 20\% Vận dụng, 10\% Vận dụng cao).
+        \item Phiếu học tập ôn tập tổng hợp (Worksheet phân tầng 3 cấp độ kèm hướng dẫn khắc phục sai lầm).
+        \item Bảng Rubric đánh giá năng lực học sinh trong tiết ôn tập.
+    \end{itemize}
+    \item \textbf{Học sinh:}
+    \begin{itemize}[leftmargin=0.6cm]
+        \item Đề cương ôn tập Giữa kỳ I, SGK Toán 11, vở ghi chép.
+        \item Máy tính cầm tay Casio fx-580VN X, bảng phụ nhóm và bút lông.
+    \end{itemize}
+\end{itemize}
+
+\section*{III. TIẾN TRÌNH DẠY HỌC (TIẾT 22 THEO PPCT | TUẦN 8)}
+
+\subsection*{1. Hoạt động 1: Khởi động (Mở đầu)}
+
+\noindent \textbf{a) Mục tiêu:}
+Tạo tâm thế chủ động, kích hoạt trí nhớ dài hạn và rèn luyện phản xạ nhanh đối với các công thức then chốt của cả 3 chương thông qua trò chơi trắc nghiệm tương tác ``Bắn tên tiếp sức công thức vàng''.
+
+\noindent \textbf{b) Nội dung: Trò chơi ``Bắn tên tiếp sức - Khóa chặt công thức vàng''}
+\begin{pedabox}{Thử thách khởi động: Bắn tên tiếp sức điền khuyết công thức}
+Điền công thức hoặc kết quả chính xác vào chỗ trống (\dots) trong thời gian 15 giây mỗi câu:
+\begin{enumerate}[leftmargin=0.6cm]
+    \item $\cos(a + b) = \dots \dots \dots \dots$ và $\sin 2a = \dots \dots \dots \dots$
+    \item Nghiệm của phương trình $\sin x = \sin \alpha$ là $\left[\begin{array}{l} x = \dots \\ x = \dots \end{array}\right.$ ($k \in \mathbb{Z}$).
+    \item Cấp số cộng có số hạng đầu $u_1$ và công sai $d$. Số hạng tổng quát $u_n = \dots \dots$; Tổng $S_n = \dots \dots$
+    \item Cấp số nhân có số hạng đầu $u_1$ và công bội $q \neq 1$. Tổng $n$ số hạng đầu $S_n = \dots \dots$
+    \item Trong mẫu số liệu ghép nhóm, mốc tích lũy để tìm nhóm chứa trung vị $M_e$ là $\dots$, tứ phân vị $Q_1$ là $\dots$, $Q_3$ là $\dots$
+\end{enumerate}
+\end{pedabox}
+
+\noindent \textbf{c) Sản phẩm: Bộ công thức chuẩn xác}
+\begin{enumerate}[leftmargin=0.6cm]
+    \item $\cos(a + b) = \cos a \cos b - \sin a \sin b$; \quad $\sin 2a = 2\sin a \cos a$.
+    \item $\left[\begin{array}{l} x = \alpha + k2\pi \\ x = \pi - \alpha + k2\pi \end{array}\right.$ ($k \in \mathbb{Z}$).
+    \item $u_n = u_1 + (n-1)d$; \quad $S_n = \dfrac{n(u_1 + u_n)}{2} = \dfrac{n[2u_1 + (n-1)d]}{2}$.
+    \item $S_n = \dfrac{u_1(1 - q^n)}{1 - q}$ ($q \neq 1$).
+    \item Mốc tìm nhóm chứa trung vị là $\dfrac{n}{2}$; chứa $Q_1$ là $\dfrac{n}{4}$; chứa $Q_3$ là $\dfrac{3n}{4}$.
+\end{enumerate}
+
+\noindent \textbf{d) Tổ chức thực hiện:}
+\begin{itemize}[leftmargin=0.8cm]
+    \item \textit{Chuyển giao nhiệm vụ:} Giáo viên phổ biến luật chơi: GV gọi một học sinh bất kỳ trả lời câu 1, em đó trả lời đúng sẽ được quyền ``bắn tên'' gọi bạn tiếp theo trả lời câu 2.
+    \item \textit{Thực hiện nhiệm vụ:} Học sinh nối tiếp nhau phản xạ trả lời nhanh câu hỏi điền khuyết.
+    \item \textit{Báo cáo, thảo luận:} Cả lớp đối chiếu, đồng thanh xác nhận câu trả lời đúng hoặc đính chính ngay nếu bạn nhầm lẫn dấu.
+    \item \textit{Kết luận, nhận định:} Giáo viên chốt lại bảng công thức vàng, khen ngợi tinh thần ôn tập nghiêm túc của học sinh và dẫn dắt vào phần hệ thống hóa toàn diện.
+\end{itemize}
+
+\subsection*{2. Hoạt động 2: Hệ thống hóa kiến thức trọng tâm \& Cảnh báo sai lầm}
+
+\noindent \textbf{a) Mục tiêu:}
+Hệ thống hóa toàn bộ kiến thức cốt lõi từ Chương I đến Chương III dưới dạng bảng đối chiếu so sánh; chỉ rõ các lỗi sai kinh điển mà học sinh trung bình - yếu thường gặp để phòng tránh khi làm bài kiểm tra.
+
+\noindent \textbf{b) Nội dung: Bảng ma trận đối chiếu 3 chương \& Hộp cảnh báo bẫy thi}
+\begin{pedabox}{Bảng ma trận đối chiếu kiến thức trọng tâm giữa kỳ I}
+\begin{center}
+\small
+\begin{tabularx}{\textwidth}{|p{2.8cm}|X|X|}
+\hline
+\textbf{Chủ đề} & \textbf{Công thức / Kiến thức cốt lõi} & \textbf{Kỹ năng MTCT Casio fx-580} \\ \hline
+\textbf{Chương I: Lượng giác} & 
+- $\sin^2 x + \cos^2 x = 1$; $1 + \tan^2 x = \dfrac{1}{\cos^2 x}$. \newline
+- Cộng: $\cos(a \mp b) = \cos a \cos b \pm \sin a \sin b$. \newline
+- Nhân đôi: $\cos 2a = \cos^2 a - \sin^2 a = 2\cos^2 a - 1$. \newline
+- Nghiệm: $\cos x = \cos \alpha \iff x = \pm \alpha + k2\pi$. &
+- Chuyển đơn vị Radian: \texttt{SHIFT} $\to$ \texttt{MENU} $\to$ $2 \to 2$. \newline
+- Kiểm tra nghiệm: Dùng \texttt{CALC} thử trực tiếp các giá trị phương án vào phương trình. \\ \hline
+\textbf{Chương II: Dãy số, CSC, CSN} & 
+- CSC: $u_n = u_1 + (n-1)d$; $S_n = \dfrac{n(u_1 + u_n)}{2}$. \newline
+- CSN: $u_n = u_1 \cdot q^{n-1}$; $S_n = \dfrac{u_1(1 - q^n)}{1 - q}$. \newline
+- Tính chất: $2u_k = u_{k-1} + u_{k+1}$; $u_k^2 = u_{k-1} \cdot u_{k+1}$. &
+- Tìm quy luật dãy số: Dùng chức năng bảng giá trị \texttt{TABLE} (\texttt{MENU} $8$) nhập hàm số $f(x)$ với $x \in \mathbb{N}^*$. \\ \hline
+\textbf{Chương III: Thống kê ghép nhóm} & 
+- Trung bình: $\bar{x} = \dfrac{1}{n}\sum m_i c_i$ ($c_i = \dfrac{a_i + a_{i+1}}{2}$). \newline
+- Mốt: $M_o = u_j + \dfrac{m_j - m_{j-1}}{(m_j - m_{j-1}) + (m_j - m_{j+1})} \cdot h$. \newline
+- Trung vị: $M_e = u_m + \dfrac{\dfrac{n}{2} - C}{m_m} \cdot h$. &
+- Thống kê một biến: \texttt{MENU} $6 \to 1$, bật cột tần số (\texttt{SHIFT} $\to$ \texttt{MENU} $\to \downarrow \to 3 \to 1$), nhập $c_i$ và $m_i \to$ \texttt{OPTN} $3$. \\ \hline
+\end{tabularx}
+\end{center}
+\end{pedabox}
+
+\begin{scaffoldbox}{Hộp cảnh báo bẫy thi: 4 sai lầm kinh điển của học sinh TB-Yếu}
+\begin{enumerate}[leftmargin=0.6cm]
+    \item \textbf{Sai lầm 1 (Quên đuôi chu kỳ nghiệm lượng giác):} Viết nghiệm $\sin x = \sin \alpha \implies x = \alpha$ hoặc quên cộng $k2\pi$; nhầm lẫn đuôi nghiệm của $\tan, \cot$ (đuôi $+k\pi$) sang $+k2\pi$.
+    \item \textbf{Sai lầm 2 (Lẫn lộn số mũ của Cấp số nhân):} Viết nhầm $u_n = u_1 \cdot q^n$ thay vì công thức đúng là $u_n = u_1 \cdot q^{n-1}$ (số mũ giảm đi $1$).
+    \item \textbf{Sai lầm 3 (Nhầm lẫn công thức tổng $S_n$):} Trong CSC, nhầm $S_n = n(u_1 + u_n)$ (quên chia cho $2$); trong CSN, áp dụng công thức $S_n$ khi $q = 1$ (khi $q = 1$ thì $S_n = n \cdot u_1$).
+    \item \textbf{Sai lầm 4 (Nhầm lẫn ký hiệu trong công thức $M_e, Q_1, Q_3$):} Nhầm tần số tích lũy của nhóm trước ($C$) với tần số của chính nhóm chứa trung vị ($m_m$), hoặc quên nhân với độ rộng nhóm $h$.
+\end{enumerate}
+\end{scaffoldbox}
+
+\noindent \textbf{c) Sản phẩm: Bảng tổng kết và sổ tay ghi nhớ sai lầm}
+Học sinh hoàn thiện sơ đồ tổng hợp kiến thức vào vở; ghi chú đậm 4 bẫy thi cần tuyệt đối tránh.
+
+\noindent \textbf{d) Tổ chức thực hiện:}
+\begin{itemize}[leftmargin=0.8cm]
+    \item \textit{Chuyển giao nhiệm vụ:} Giáo viên trình chiếu bảng đối chiếu và phân tích 4 sai lầm thường gặp.
+    \item \textit{Thực hiện nhiệm vụ:} Học sinh lắng nghe, ghi chép nhanh các điểm nhấn vào vở.
+    \item \textit{Báo cáo, thảo luận:} 1 học sinh nhắc lại cách phân biệt đuôi nghiệm giữa phương trình $\sin, \cos$ ($k2\pi$) và $\tan, \cot$ ($k\pi$).
+    \item \textit{Kết luận, nhận định:} Giáo viên nhấn mạnh: ``Đúng công thức là đạt $50\%$ điểm số, cẩn thận không để mất điểm ở các câu hỏi nhận biết''.
+\end{itemize}
+
+\subsection*{3. Hoạt động 3: Luyện tập giải đề minh họa theo cấu trúc phân hóa}
+
+\noindent \textbf{a) Mục tiêu:}
+Rèn luyện kỹ năng giải toán phân tầng theo đúng cấu trúc ma trận đề kiểm tra Giữa kỳ I; nâng cao tốc độ phản xạ trắc nghiệm và tính chuẩn xác trong lập luận bài toán tự luận.
+
+\noindent \textbf{b) Nội dung: Phiếu học tập ôn tập tổng hợp (3 nhóm bài toán trọng tâm)}
+\begin{pedabox}{Đề luyện tập ôn thi giữa kỳ I (Trích từ Đề cương chuẩn hóa)}
+\textbf{Dạng 1 (Lượng giác):}
+\begin{enumerate}[leftmargin=0.6cm]
+    \item[1.1.] (Thông hiểu) Giải phương trình lượng giác: $2\cos\left(x - \dfrac{\pi}{3}\right) - \sqrt{3} = 0$.
+    \item[1.2.] (Vận dụng) Tìm số nghiệm của phương trình $\sin\left(2x + \dfrac{\pi}{4}\right) = \dfrac{\sqrt{2}}{2}$ trên đoạn $[0; 2\pi]$.
+\end{enumerate}
+\textbf{Dạng 2 (Cấp số cộng \& Cấp số nhân):}
+\begin{enumerate}[leftmargin=0.6cm]
+    \item[2.1.] (Thông hiểu) Cho cấp số cộng $(u_n)$ biết $u_1 = 3$ và $u_5 = 19$. Tìm công sai $d$ và tính tổng $S_{20}$ của $20$ số hạng đầu.
+    \item[2.2.] (Vận dụng) Cho cấp số nhân $(u_n)$ có $u_1 = 2$ và công bội $q = 3$. Hỏi số $486$ là số hạng thứ mấy của cấp số nhân đó? Tính tổng $S_6$.
+\end{enumerate}
+\textbf{Dạng 3 (Số đặc trưng mẫu số liệu ghép nhóm):}
+\begin{enumerate}[leftmargin=0.6cm]
+    \item[3.1.] (Thông hiểu - Vận dụng) Điểm kiểm tra khảo sát của $50$ học sinh được cho trong bảng sau:
+    \begin{center}
+    \small
+    \begin{tabular}{|c|c|c|c|c|c|}
+    \hline
+    \textbf{Khoảng điểm} & $[4; 5)$ & $[5; 6)$ & $[6; 7)$ & $[7; 8)$ & $[8; 10]$ \\ \hline
+    \textbf{Số học sinh} & $4$ & $12$ & $18$ & $10$ & $6$ \\ \hline
+    \end{tabular}
+    \end{center}
+    Xác định mốt $M_o$ và trung vị $M_e$ của mẫu số liệu trên (làm tròn kết quả đến hàng phần trăm).
+\end{enumerate}
+\end{pedabox}
+
+\noindent \textbf{c) Sản phẩm: Lời giải chi tiết}
+\begin{enumerate}[leftmargin=0.6cm]
+    \item \textbf{Giải Dạng 1 (Lượng giác):}
+    \begin{itemize}
+        \item \textit{Bài 1.1:} Phương trình tương đương:
+        $$\cos\left(x - \dfrac{\pi}{3}\right) = \dfrac{\sqrt{3}}{2} = \cos\dfrac{\pi}{6}$$
+        $$\iff \left[\begin{array}{l} x - \dfrac{\pi}{3} = \dfrac{\pi}{6} + k2\pi \\ x - \dfrac{\pi}{3} = -\dfrac{\pi}{6} + k2\pi \end{array}\right. \iff \left[\begin{array}{l} x = \dfrac{\pi}{2} + k2\pi \\ x = \dfrac{\pi}{6} + k2\pi \end{array}\right. \quad (k \in \mathbb{Z})$$
+        Vậy tập nghiệm của phương trình là $S = \left\{\dfrac{\pi}{2} + k2\pi; \, \dfrac{\pi}{6} + k2\pi \ \middle|\ k \in \mathbb{Z}\right\}$.
+
+        \item \textit{Bài 1.2:} Phương trình:
+        $$\sin\left(2x + \dfrac{\pi}{4}\right) = \sin\dfrac{\pi}{4} \iff \left[\begin{array}{l} 2x + \dfrac{\pi}{4} = \dfrac{\pi}{4} + k2\pi \\ 2x + \dfrac{\pi}{4} = \pi - \dfrac{\pi}{4} + k2\pi \end{array}\right. \iff \left[\begin{array}{l} 2x = k2\pi \\ 2x = \dfrac{\pi}{2} + k2\pi \end{array}\right. \iff \left[\begin{array}{l} x = k\pi \\ x = \dfrac{\pi}{4} + k\pi \end{array}\right. \ (k \in \mathbb{Z})$$
+        Xét trên đoạn $[0; 2\pi]$:
+        \begin{itemize}
+            \item Với họ nghiệm $x = k\pi$: $0 \le k\pi \le 2\pi \implies 0 \le k \le 2 \implies k \in \{0, 1, 2\} \implies x \in \{0; \pi; 2\pi\}$.
+            \item Với họ nghiệm $x = \dfrac{\pi}{4} + k\pi$: $0 \le \dfrac{\pi}{4} + k\pi \le 2\pi \implies -\dfrac{1}{4} \le k \le \dfrac{7}{4} \implies k \in \{0, 1\} \implies x \in \left\{\dfrac{\pi}{4}; \dfrac{5\pi}{4}\right\}$.
+        \end{itemize}
+        Vậy phương trình có đúng $3 + 2 = 5$ nghiệm trên đoạn $[0; 2\pi]$.
+    \end{itemize}
+
+    \item \textbf{Giải Dạng 2 (Cấp số cộng \& Cấp số nhân):}
+    \begin{itemize}
+        \item \textit{Bài 2.1:} 
+        Áp dụng công thức số hạng tổng quát của CSC:
+        $$u_5 = u_1 + 4d \implies 19 = 3 + 4d \implies 4d = 16 \implies d = 4$$
+        Tổng $20$ số hạng đầu tiên:
+        $$S_{20} = \dfrac{20 \cdot [2u_1 + 19d]}{2} = 10 \cdot [2 \cdot 3 + 19 \cdot 4] = 10 \cdot [6 + 76] = 10 \cdot 82 = 820$$
+
+        \item \textit{Bài 2.2:}
+        Áp dụng công thức số hạng tổng quát của CSN:
+        $$u_n = u_1 \cdot q^{n-1} \implies 486 = 2 \cdot 3^{n-1} \implies 3^{n-1} = 243 = 3^5 \implies n - 1 = 5 \implies n = 6$$
+        Vậy số $486$ là số hạng thứ $6$ của cấp số nhân ($u_6 = 486$).
+        Tổng $6$ số hạng đầu:
+        $$S_6 = \dfrac{u_1(1 - q^6)}{1 - q} = \dfrac{2 \cdot (1 - 3^6)}{1 - 3} = \dfrac{2 \cdot (1 - 729)}{-2} = 728$$
+    \end{itemize}
+
+    \item \textbf{Giải Dạng 3 (Số đặc trưng mẫu số liệu ghép nhóm):}
+    \begin{itemize}
+        \item Cỡ mẫu $n = 4 + 12 + 18 + 10 + 6 = 50$.
+        \item \textit{Tìm Mốt $M_o$:} Nhóm có tần số lớn nhất ($m_3 = 18$) là nhóm $[6; 7)$.
+        Ta có: $u_j = 6, h = 1, m_j = 18, m_{j-1} = 12, m_{j+1} = 10$.
+        $$M_o = 6 + \dfrac{18 - 12}{(18 - 12) + (18 - 10)} \cdot 1 = 6 + \dfrac{6}{6 + 8} = 6 + \dfrac{6}{14} = 6 + \dfrac{3}{7} \approx 6{,}43$$
+
+        \item \textit{Tìm Trung vị $M_e$:}
+        Lập bảng tần số tích lũy: $cf_1 = 4, cf_2 = 16, cf_3 = 34, cf_4 = 44, cf_5 = 50$.
+        Mốc $\dfrac{n}{2} = \dfrac{50}{2} = 25$.
+        Vì $cf_2 = 16 < 25 \le cf_3 = 34$ nên nhóm chứa trung vị là $[6; 7)$.
+        Ta có: $u_m = 6, h = 1, m_m = 18, C = cf_2 = 16$.
+        $$M_e = 6 + \dfrac{25 - 16}{18} \cdot 1 = 6 + \dfrac{9}{18} = 6 + 0{,}5 = 6{,}50$$
+    \end{itemize}
+\end{enumerate}
+
+\noindent \textbf{d) Tổ chức thực hiện:}
+\begin{itemize}[leftmargin=0.8cm]
+    \item \textit{Chuyển giao nhiệm vụ:} Chia lớp thành 3 khu vực chuyên đề: Khu vực A (Lượng giác), Khu vực B (Cấp số), Khu vực C (Thống kê). Mỗi nhóm hoàn thành nhiệm vụ được giao vào bảng phụ trong 8 phút.
+    \item \textit{Thực hiện nhiệm vụ:} Học sinh làm việc nhóm sôi nổi, kiểm tra chéo từng bước giải toán, đại diện các nhóm lên bảng trình bày.
+    \item \textit{Báo cáo, thảo luận:} Các nhóm chấm chéo bài của nhau, phản biện cách giải ngắn và phương pháp bấm máy kiểm chứng.
+    \item \textit{Kết luận, nhận định:} Giáo viên chuẩn hóa đáp án, lưu ý cách trình bày tự luận để không bị trừ điểm bước kết luận và điều kiện.
+\end{itemize}
+
+\subsection*{4. Hoạt động 4: Vận dụng - Đạo đức học thuật & An toàn tài khoản số}
+
+\noindent \textbf{a) Mục tiêu:}
+Tích hợp Năng lực số (Mã 2.6NC1a) và Năng lực AI (Mã 11.B2.1): Giáo dục ý thức bảo vệ tài khoản ôn thi trực tuyến và xây dựng đạo đức học thuật, cam kết trung thực, không lạm dụng AI giải bài tập đối phó.
+
+\noindent \textbf{b) Nội dung: Tình huống thực tiễn số}
+\begin{aibox}{Tình huống liên môn: Bảo mật tài khoản học tập \& Đạo đức AI trong ôn thi}
+\textbf{1. An toàn tài khoản ôn thi trực tuyến (Năng lực số 2.6NC1a):}
+Trường tổ chức hệ thống thi thử trực tuyến trước kỳ thi Giữa kỳ I trên nền tảng số. Học sinh A dùng ngày tháng năm sinh làm mật khẩu và đăng nhập trên máy tính công cộng ở quán internet rồi quên đăng xuất. Sau đó tài khoản của A bị bạn khác vào làm bài thi thử bừa bãi làm tụt thứ hạng, thậm chí bị lộ thông tin cá nhân.
+\begin{itemize}[leftmargin=0.6cm]
+    \item \textit{Câu hỏi:} Học sinh A đã vi phạm nguyên tắc bảo mật thông tin cá nhân nào? Em hãy hướng dẫn bạn A các bước cụ thể để thiết lập mật khẩu mạnh và quản lý tài khoản an toàn trên không gian số.
+\end{itemize}
+
+\textbf{2. Đạo đức học thuật trong thời đại AI (Năng lực AI 11.B2.1):}
+Nhiều bạn học sinh khi gặp bài toán khó trong đề cương ôn tập thường dùng ứng dụng AI (như ChatGPT, PhotoMath) chụp ảnh để lấy lời giải chép vào vở đối phó với thầy cô.
+\begin{itemize}[leftmargin=0.6cm]
+    \item \textit{Câu hỏi phản biện:} Hành vi dùng AI làm hộ bài tập có mang lại năng lực toán học thực sự cho người học không? Khi bước vào phòng thi chính thức không có điện thoại, học sinh sẽ đối mặt với hệ quả gì? Hãy đề xuất cách sử dụng AI như một ``trợ lý học tập thông minh'' đúng đắn và có đạo đức.
+\end{itemize}
+\end{aibox}
+
+\noindent \textbf{c) Sản phẩm: Báo cáo thảo luận của học sinh}
+\begin{enumerate}[leftmargin=0.6cm]
+    \item \textbf{Về quản lý tài khoản ôn tập số (Mã 2.6NC1a):}
+    \begin{itemize}
+        \item Vi phạm: Đặt mật khẩu quá yếu (thông tin cá nhân dễ đoán), không đăng xuất sau khi sử dụng trên thiết bị lạ, không bật xác thực hai yếu tố (2FA).
+        \item \textit{Quy tắc an toàn:} Đặt mật khẩu có ít nhất 10 ký tự gồm chữ hoa, chữ thường, chữ số và ký tự đặc biệt; luôn đăng xuất khỏi các thiết bị dùng chung; không lưu mật khẩu tự động trên trình duyệt công cộng.
+    \end{itemize}
+    \item \textbf{Về đạo đức học thuật và sử dụng AI (Mã 11.B2.1):}
+    \begin{itemize}
+        \item Chép lời giải từ AI chỉ là ``sao chép thụ động'', làm thui chột khả năng tư duy độc lập và năng lực giải quyết vấn đề toán học. Khi vào phòng thi viết, học sinh sẽ mất hoàn toàn kỹ năng phản xạ và không thể tự giải được bài.
+        \item \textit{Sử dụng AI có đạo đức:} Chỉ sử dụng AI sau khi bản thân đã nỗ lực tự suy nghĩ ít nhất 10-15 phút; dùng AI để kiểm tra lại đáp số cuối cùng; yêu cầu AI giải thích lại bước biến đổi logic mà mình chưa hiểu; tuyệt đối cam kết trung thực trong mọi kỳ kiểm tra.
+    \end{itemize}
+\end{enumerate}
+
+\noindent \textbf{d) Tổ chức thực hiện:}
+\begin{itemize}[leftmargin=0.8cm]
+    \item \textit{Chuyển giao nhiệm vụ:} Giáo viên trình chiếu tình huống, yêu cầu học sinh thảo luận cặp đôi trong 3 phút.
+    \item \textit{Thực hiện nhiệm vụ:} Học sinh trao đổi sôi nổi, liên hệ thẳng thắn với thực tế học tập của bản thân.
+    \item \textit{Báo cáo, thảo luận:} 2 học sinh đại diện trình bày ý kiến; cả lớp biểu quyết cam kết thi cử trung thực, công bằng.
+    \item \textit{Kết luận, nhận định:} Giáo viên chốt lại thông điệp: ``Toán học rèn luyện cho chúng ta sự trung thực, logic và bền bỉ. Điểm số chỉ có giá trị thực sự khi nó phản ánh đúng năng lực và công sức tự thân của các em''. Dặn dò các em chuẩn bị chu đáo đồ dùng, MTCT cho tiết Kiểm tra giữa kỳ I sắp tới.
+\end{itemize}
+
+\section*{IV. PHỤ LỤC HỌC LIỆU BỔ TRỢ}
+
+\subsection*{1. Phiếu học tập ôn tập giữa kỳ I (Worksheet phân tầng bậc thang)}
+
+\noindent \textbf{A. PHẦN TRẮC NGHIỆM KHÁCH QUAN (Nhận biết \& Thông hiểu)}
+\begin{enumerate}[leftmargin=0.6cm]
+    \item Chu kỳ tuần hoàn của hàm số $y = \sin 2x$ là:
+    \begin{itemize}[leftmargin=0.6cm]
+        \item[A.] $2\pi$. \quad \textbf{B.} $\pi$. \quad C. $\dfrac{\pi}{2}$. \quad D. $4\pi$.
+    \end{itemize}
+    \item Cho cấp số cộng $(u_n)$ có $u_1 = -2$ và $d = 3$. Số hạng $u_4$ bằng:
+    \begin{itemize}[leftmargin=0.6cm]
+        \item[A.] $10$. \quad \textbf{B.} $7$. \quad C. $-11$. \quad D. $1$.
+    \end{itemize}
+    \item Cho cấp số nhân $(u_n)$ có $u_1 = 3$ và $q = -2$. Số hạng $u_3$ bằng:
+    \begin{itemize}[leftmargin=0.6cm]
+        \item[A.] $-12$. \quad \textbf{B.} $12$. \quad C. $18$. \quad D. $-6$.
+    \end{itemize}
+    \item Trong mẫu số liệu ghép nhóm có $n = 40$. Nhóm chứa tứ phân vị $Q_1$ là nhóm đầu tiên có tần số tích lũy:
+    \begin{itemize}[leftmargin=0.6cm]
+        \item[A.] $cf_i \ge 5$. \quad \textbf{B.} $cf_i \ge 10$. \quad C. $cf_i \ge 20$. \quad D. $cf_i \ge 30$.
+    \end{itemize}
+\end{enumerate}
+
+\noindent \textbf{B. PHẦN TỰ LUẬN PHÂN TẦNG}
+\begin{itemize}[leftmargin=0.6cm]
+    \item \textbf{Tầng 1 (Cơ bản dành cho HS TB-Yếu):} Giải phương trình $\cos x = -\dfrac{1}{2}$. Cho cấp số cộng có $u_1 = 5, d = 2$, tính $u_{10}$.
+    \item \textbf{Tầng 2 (Thông hiểu):} Giải phương trình $\sqrt{3}\tan\left(2x - \dfrac{\pi}{6}\right) = 1$. Tính tổng $10$ số hạng đầu của cấp số nhân có $u_1 = 1, q = 2$.
+    \item \textbf{Tầng 3 (Vận dụng):} Một người gửi tiết kiệm $100$ triệu đồng vào ngân hàng theo hình thức lãi kép với lãi suất $6\%$/năm. Tính tổng số tiền (cả gốc lẫn lãi) người đó nhận được sau $5$ năm nếu không rút tiền giữa chừng.
+\end{itemize}
+
+\subsection*{2. Bảng Rubric đánh giá năng lực học sinh trong tiết ôn tập giữa kỳ I}
+
+\begin{center}
+\small
+\begin{tabularx}{\textwidth}{|p{2.8cm}|X|X|X|X|}
+\hline
+\textbf{Tiêu chí} & \textbf{Chưa đạt (Mức 1)} & \textbf{Đạt (Mức 2)} & \textbf{Khá (Mức 3)} & \textbf{Tốt (Mức 4)} \\ \hline
+\textbf{Hệ thống hóa kiến thức} & Chưa thuộc công thức cơ bản, nhầm lẫn giữa CSC và CSN. & Thuộc công thức cơ bản nhưng còn lúng túng khi tra cứu nhóm thống kê. & Nắm chắc toàn bộ công thức 3 chương, phân biệt rõ các đại lượng. & Hệ thống hóa kiến thức logic, liên kết sâu sắc giữa giải tích và đại số, thống kê. \\ \hline
+\textbf{Kỹ năng giải toán \& MTCT} & Tính toán sai nhiều, chưa biết dùng MTCT kiểm tra nghiệm. & Giải được bài toán nhận biết, bấm được nghiệm phương trình cơ bản. & Giải thành thạo bài toán thông hiểu, vận dụng tốt MTCT kiểm tra kết quả. & Giải nhanh, chính xác, sáng tạo, phát hiện và sửa được lỗi sai cho bạn cùng bàn. \\ \hline
+\textbf{Năng lực số \& Đạo đức AI} & Chưa có ý thức bảo vệ mật khẩu, lạm dụng AI chép bài đối phó. & Biết đặt mật khẩu bảo vệ tài khoản ôn tập ở mức cơ bản. & Quản lý an toàn tài khoản số; cam kết sử dụng AI đúng đạo đức học thuật. & Có ý thức công dân số gương mẫu, tuyên truyền an toàn thông tin và trung thực thi cử. \\ \hline
+\textbf{Thái độ \& Tinh thần ôn tập} & Thụ động, mất tập trung, không hoàn thành đề cương ôn tập. & Hoàn thành một phần đề cương khi có giáo viên nhắc nhở. & Tự giác giải đề cương, tích cực tham gia thảo luận nhóm. & Tinh thần tự học cao độ, gương mẫu, tận tình hỗ trợ các bạn yếu ôn thi đạt kết quả tốt. \\ \hline
+\end{tabularx}
+\end{center}
+
+\end{document}
