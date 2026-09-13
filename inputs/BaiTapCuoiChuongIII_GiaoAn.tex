@@ -1,0 +1,450 @@
+\documentclass[12pt, a4paper]{article}
+% --- 1. Cấu hình Tiếng Việt và Font chữ chuẩn ---
+\usepackage[utf8]{inputenc}
+\usepackage[T5]{fontenc}
+\usepackage[vietnamese]{babel}
+\usepackage{mathptmx} % Font Times New Roman đồng bộ cả chữ và công thức toán, không gây xung đột gói
+
+\makeatletter
+\renewcommand{\normalsize}{\@setfontsize\normalsize{13pt}{16pt}}
+\makeatother
+\normalsize
+
+% --- 2. Gói Toán học & Ký hiệu bổ trợ ---
+\usepackage{amsmath, amssymb, amsfonts, mathrsfs, amsthm}
+\usepackage{graphicx}
+\usepackage{fontawesome}
+\usepackage{booktabs, tabularx, array, multirow}
+\usepackage{enumitem}
+
+% --- 3. Đồ họa TikZ, Bảng biến thiên & Hình không gian ---
+\usepackage{tikz}
+\usetikzlibrary{calc, intersections, angles, quotes, patterns, arrows.meta, 3d}
+\usepackage{pgfplots}
+\pgfplotsset{compat=1.18}
+\usepackage{tkz-euclide}
+\usepackage{tkz-tab}
+
+\renewcommand{\vec}[1]{\overrightarrow{#1}}
+
+% --- 4. Hộp sư phạm (Tcolorbox) ---
+\usepackage[many]{tcolorbox}
+\tcbuselibrary{skins, breakable}
+
+% --- 5. Căn lề chuẩn văn bản giáo án ---
+\usepackage{geometry}
+\geometry{
+    a4paper,
+    left=25mm,
+    right=15mm,
+    top=20mm,
+    bottom=20mm
+}
+
+% --- 6. Header / Footer chuẩn hóa ---
+\usepackage{fancyhdr}
+\usepackage{lastpage}
+\pagestyle{fancy}
+\fancyhf{}
+
+\fancyhead[L]{\small \textit{Kế hoạch bài dạy Toán 11}}
+\fancyhead[R]{\textbf{Trang \thepage/\pageref{LastPage}}}
+\fancyfoot[L]{\small \textit{Tổ Toán - Tin}}
+\fancyfoot[R]{\small \textit{Trường THCS\&THPT Hồng Vân}}
+\renewcommand{\headrulewidth}{0.4pt}
+\renewcommand{\footrulewidth}{0.4pt}
+
+% --- 7. Giãn dòng & Giãn đoạn theo chuẩn Nghị định 30/2020/NĐ-CP ---
+\usepackage{setspace}
+\setstretch{1.15}
+\setlength{\parindent}{1.0cm}
+\setlength{\parskip}{5pt}
+
+% Định nghĩa hộp sư phạm chuyên dụng
+\newtcolorbox{pedabox}[2][]{
+    enhanced,
+    breakable,
+    colback=blue!3!white,
+    colframe=blue!65!black,
+    fonttitle=\bfseries\small,
+    title={#2},
+    arc=2mm,
+    boxrule=0.6pt,
+    left=3mm, right=3mm, top=2mm, bottom=2mm,
+    #1
+}
+
+\newtcolorbox{aibox}[2][]{
+    enhanced,
+    breakable,
+    colback=teal!4!white,
+    colframe=teal!70!black,
+    fonttitle=\bfseries\small,
+    title={#2},
+    arc=2mm,
+    boxrule=0.6pt,
+    left=3mm, right=3mm, top=2mm, bottom=2mm,
+    #1
+}
+
+\newtcolorbox{scaffoldbox}[2][]{
+    enhanced,
+    breakable,
+    colback=orange!4!white,
+    colframe=orange!80!black,
+    fonttitle=\bfseries\small,
+    title={#2},
+    arc=2mm,
+    boxrule=0.6pt,
+    left=3mm, right=3mm, top=2mm, bottom=2mm,
+    #1
+}
+
+\begin{document}
+
+\begin{center}
+    {\fontsize{14pt}{17pt}\selectfont \textbf{KẾ HOẠCH BÀI DẠY MÔN TOÁN LỚP 11}}\\[6pt]
+    {\fontsize{16pt}{19pt}\selectfont \textbf{BÀI TẬP CUỐI CHƯƠNG III}}\\[4pt]
+    {\fontsize{12pt}{15pt}\selectfont \textbf{Môn học: Toán 11} \ \textbar \ \textbf{Thời lượng: 1 tiết (Tiết 21 theo PPCT | Tuần 7)}}
+\end{center}
+
+\vspace{5pt}
+
+\section*{I. MỤC TIÊU}
+
+\subsection*{1. Kiến thức, Năng lực}
+
+\begin{itemize}[leftmargin=1.2cm]
+    \item \textbf{Yêu cầu cần đạt (Nguyên văn CT GDPT 2018):}
+    \begin{itemize}[leftmargin=0.6cm]
+        \item Củng cố và nâng cao kỹ năng tính các số đặc trưng đo xu thế trung tâm của mẫu số liệu ghép nhóm: số trung bình cộng ($\bar{x}$), trung vị ($M_e$), tứ phân vị ($Q_1, Q_2, Q_3$), mốt ($M_o$).
+        \item Hiểu rõ ý nghĩa, vai trò, ưu điểm và hạn chế của từng số đặc trưng; biết cách lựa chọn số đặc trưng phù hợp nhất để đại diện cho mẫu số liệu trong các tình huống thực tiễn khác nhau.
+        \item Nhận biết được mối liên hệ giữa thống kê mô tả với các môn học khác và đời sống xã hội; vận dụng phân tích các số liệu thực tế về giáo dục, y tế, kinh tế.
+    \end{itemize}
+
+    \item \textbf{Năng lực Toán học đặc thù:}
+    \begin{itemize}[leftmargin=0.6cm]
+        \item \textit{Năng lực tư duy và lập luận toán học:} So sánh, phản biện việc lựa chọn giữa số trung bình và trung vị khi mẫu số liệu có chứa giá trị ngoại lai (outlier); giải thích cơ chế nội suy tuyến tính trong công thức tính trung vị, tứ phân vị và mốt; lập luận đánh giá mức độ tập trung và phân tán của dữ liệu thông qua khoảng tứ phân vị $\Delta_Q = Q_3 - Q_1$.
+        \item \textit{Năng lực mô hình hóa toán học:} Thiết lập bảng phân bố tần số ghép nhóm từ dữ liệu thực tế đời sống; mô hình hóa các bài toán kinh tế (thu nhập, doanh số bán hàng, mức tiêu thụ năng lượng) và y tế học đường thành bài toán thống kê để đưa ra nhận định khách quan.
+        \item \textit{Năng lực giải quyết vấn đề toán học:} Thành thạo thuật toán xác định nhóm chứa trung vị, tứ phân vị dựa trên bảng tần số tích lũy; xác định nhóm chứa mốt dựa trên tần số cực đại; áp dụng chính xác các công thức đại số, không nhầm lẫn các ký hiệu đầu mút nhóm và tần số.
+        \item \textit{Năng lực giao tiếp toán học:} Trình bày báo cáo kết quả thống kê mạch lạc, sử dụng chuẩn xác các thuật ngữ khoa học; giải thích ý nghĩa của các con số đặc trưng bằng ngôn ngữ đời sống dễ hiểu cho các đối tượng khác nhau.
+        \item \textit{Năng lực sử dụng công cụ, phương tiện học toán:} Sử dụng thành thạo máy tính cầm tay (MTCT) Casio fx-580VN X trong chế độ thống kê một biến (\texttt{MENU} $6 \to 1$) để kiểm chứng giá trị trung bình; khai thác bảng tính điện tử Excel để tự động hóa tính toán các mốc phân vị.
+    \end{itemize}
+
+    \item \textbf{Năng lực số (Theo Thông tư 02/2025/TT-BGDĐT):}
+    \begin{itemize}[leftmargin=0.6cm]
+        \item \textit{Mã 4.1NC1a (Bảo vệ dữ liệu cá nhân và quyền riêng tư):} Học sinh nhận thức và thực hành nguyên tắc bảo mật thông tin cá nhân khi thu thập, xử lý và chia sẻ các bảng số liệu khảo sát học đường (chiều cao, cân nặng, học lực, hoàn cảnh gia đình); biết cách ẩn danh hóa (anonymization) dữ liệu trước khi công khai phân tích thống kê.
+    \end{itemize}
+
+    \item \textbf{Năng lực AI (Theo Quyết định 2422/QĐ-BGDĐT):}
+    \begin{itemize}[leftmargin=0.6cm]
+        \item \textit{Mã 11.A3.1 (Đạo đức dữ liệu và Quyền người dùng trong Trí tuệ nhân tạo):} Học sinh trình bày được quyền của người dùng dữ liệu và trách nhiệm đạo đức của các nhà phát triển hệ thống AI khi thu thập, lưu trữ và khai thác dữ liệu hành vi người dùng để huấn luyện các mô hình dự báo; nhận diện nguy cơ định kiến thuật toán (Algorithmic Bias) khi dữ liệu mẫu không mang tính đại diện.
+    \end{itemize}
+
+    \item \textbf{Năng lực chung:}
+    \begin{itemize}[leftmargin=0.6cm]
+        \item \textit{Tự chủ và tự học:} Tự rà soát các công thức của Chương III, chủ động hệ thống hóa kiến thức dưới dạng sơ đồ bảng biểu tóm tắt.
+        \item \textit{Giao tiếp và hợp tác:} Hợp tác tích cực trong nhóm, phân công kiểm tra chéo các bước tính toán, kiên nhẫn hướng dẫn các bạn yếu xác định đúng nhóm chứa trung vị.
+    \end{itemize}
+\end{itemize}
+
+\subsection*{2. Phẩm chất}
+
+\begin{itemize}[leftmargin=1.2cm]
+    \item \textbf{Chăm chỉ:} Cẩn trọng, tỉ mỉ khi lập bảng tần số tích lũy và thực hiện các phép tính phân số, kiểm tra lại số liệu trước khi kết luận.
+    \item \textbf{Trung thực:} Báo cáo số liệu trung thực, khách quan; tôn trọng quyền riêng tư dữ liệu của người khác.
+    \item \textbf{Trách nhiệm:} Nâng cao ý thức bảo vệ an toàn thông tin cá nhân trên không gian mạng và trách nhiệm công dân số.
+\end{itemize}
+
+\section*{II. THIẾT BỊ DẠY HỌC VÀ HỌC LIỆU}
+
+\begin{itemize}[leftmargin=1.2cm]
+    \item \textbf{Giáo viên:}
+    \begin{itemize}[leftmargin=0.6cm]
+        \item Kế hoạch bài dạy ôn tập, bài trình chiếu PowerPoint/Canva tương tác.
+        \item Bảng Infographic ma trận so sánh 4 số đặc trưng đo xu thế trung tâm.
+        \item Phiếu học tập ôn tập chương (Worksheet phân tầng 3 bậc thang) và Bảng Rubric đánh giá năng lực 4 mức độ.
+        \item Video clip ngắn / tư liệu tình huống về quyền riêng tư dữ liệu và an toàn thông tin trong thời đại Trí tuệ nhân tạo (AI).
+    \end{itemize}
+    \item \textbf{Học sinh:}
+    \begin{itemize}[leftmargin=0.6cm]
+        \item SGK Toán 11, vở ghi bài, bảng phụ nhóm/bút lông.
+        \item Máy tính cầm tay Casio fx-580VN X.
+    \end{itemize}
+\end{itemize}
+
+\section*{III. TIẾN TRÌNH DẠY HỌC (TIẾT 21 THEO PPCT | TUẦN 7)}
+
+\subsection*{1. Hoạt động 1: Khởi động (Mở đầu)}
+
+\noindent \textbf{a) Mục tiêu:}
+Tạo không khí học tập sôi nổi; thông qua trò chơi ghép nối nhanh giúp học sinh củng cố và phân biệt được ý nghĩa thực tiễn đặc trưng của 4 đại lượng: Số trung bình, Trung vị, Tứ phân vị và Mốt.
+
+\noindent \textbf{b) Nội dung: Trò chơi ``Chọn mặt gửi vàng - Ghép nối đúng số đặc trưng''}
+\begin{pedabox}{Thử thách khởi động: Ghép nối tình huống thực tế với số đặc trưng phù hợp}
+Ghép mỗi tình huống thực tiễn ở Cột A với một số đặc trưng phù hợp nhất ở Cột B:
+\begin{center}
+\small
+\begin{tabular}{|p{8.5cm}|p{5.5cm}|}
+\hline
+\textbf{Cột A: Tình huống thực tiễn} & \textbf{Cột B: Số đặc trưng} \\ \hline
+1. Một hãng giày cần quyết định sản xuất số lượng nhiều nhất cho cỡ giày nào. & a) Số trung bình cộng ($\bar{x}$) \\ \hline
+2. Đánh giá mức thu nhập tiêu biểu của người dân một khu phố khi có vài tỷ phú sinh sống. & b) Trung vị ($M_e$) \\ \hline
+3. Tính sản lượng thu hoạch lúa dự kiến trên toàn tỉnh để ước tính tổng lương thực. & c) Tứ phân vị ($Q_1, Q_3$) \\ \hline
+4. Phân loại nhóm $25\%$ học sinh có điểm thi thấp nhất để tổ chức phụ đạo ôn tập. & d) Mốt ($M_o$) \\ \hline
+\end{tabular}
+\end{center}
+\end{pedabox}
+
+\noindent \textbf{c) Sản phẩm: Lời giải chi tiết}
+\begin{enumerate}[leftmargin=0.6cm]
+    \item $1 \to \text{d)}$: Hãng giày cần chọn \textbf{Mốt ($M_o$)} vì mốt phản ánh kích cỡ được mua nhiều nhất, tránh tồn kho các cỡ ít người dùng.
+    \item $2 \to \text{b)}$: Đánh giá thu nhập khi có tỷ phú (giá trị ngoại lai cực lớn) bắt buộc dùng \textbf{Trung vị ($M_e$)} để không bị bóp méo con số đại diện.
+    \item $3 \to \text{a)}$: Ước tính tổng sản lượng cần dùng \textbf{Số trung bình cộng ($\bar{x}$)} vì $\text{Tổng sản lượng} = n \times \bar{x}$.
+    \item $4 \to \text{c)}$: Phân loại $25\%$ học sinh thấp nhất dùng \textbf{Tứ phân vị thứ nhất ($Q_1$)}, vì $Q_1$ chính là mốc phân cách $25\%$ số liệu nhỏ nhất.
+\end{enumerate}
+
+\noindent \textbf{d) Tổ chức thực hiện:}
+\begin{itemize}[leftmargin=0.8cm]
+    \item \textit{Chuyển giao nhiệm vụ:} Giáo viên trình chiếu 4 tình huống, yêu cầu học sinh làm việc cặp đôi trong 3 phút.
+    \item \textit{Thực hiện nhiệm vụ:} Học sinh thảo luận nhanh, ghép nối tình huống với số đặc trưng tương ứng.
+    \item \textit{Báo cáo, thảo luận:} 2 học sinh đại diện bàn đứng dậy trả lời và giải thích ngắn gọn lý do chọn.
+    \item \textit{Kết luận, nhận định:} Giáo viên chốt đáp án, biểu dương phản xạ nhạy bén của học sinh và chuyển tiếp vào phần hệ thống hóa kiến thức.
+\end{itemize}
+
+\subsection*{2. Hoạt động 2: Hệ thống hóa kiến thức trọng tâm}
+
+\noindent \textbf{a) Mục tiêu:}
+Học sinh hệ thống hóa toàn diện các công thức toán học tính $\bar{x}, M_e, Q_1, Q_3, M_o$ cho mẫu số liệu ghép nhóm; củng cố các kỹ thuật tìm nhóm chứa mốt và nhóm chứa phân vị.
+
+\noindent \textbf{b) Nội dung: Bảng ma trận tổng hợp các số đặc trưng đo xu thế trung tâm}
+\begin{pedabox}{Bảng ma trận công thức Chương III: Mẫu số liệu ghép nhóm}
+\begin{center}
+\small
+\begin{tabularx}{\textwidth}{|p{2.8cm}|p{3.8cm}|X|X|}
+\hline
+\textbf{Số đặc trưng} & \textbf{Cách xác định nhóm chứa} & \textbf{Công thức toán học} & \textbf{Ý nghĩa thực tiễn} \\ \hline
+\textbf{Số trung bình cộng} ($\bar{x}$) & Không cần tìm nhóm (tính trên tất cả các nhóm) & $\bar{x} = \dfrac{1}{n} \sum_{i=1}^k m_i c_i$ \newline ($c_i$: giá trị đại diện) & Giá trị đại diện tiêu biểu nhất; nhạy cảm với ngoại lai. \\ \hline
+\textbf{Mốt} ($M_o$) & Nhóm có tần số $m_j$ lớn nhất trong bảng & $M_o = u_j + \dfrac{m_j - m_{j-1}}{(m_j - m_{j-1}) + (m_j - m_{j+1})} \cdot h$ & Giá trị có mật độ xuất hiện dày đặc nhất. \\ \hline
+\textbf{Trung vị} ($M_e = Q_2$) & Nhóm đầu tiên có tần số tích lũy $cf_m \ge \dfrac{n}{2}$ & $M_e = u_m + \dfrac{\dfrac{n}{2} - C}{m_m} \cdot h$ & Chia đôi mẫu số liệu; không bị ảnh hưởng bởi ngoại lai. \\ \hline
+\textbf{Tứ phân vị thứ nhất} ($Q_1$) & Nhóm đầu tiên có tần số tích lũy $cf_p \ge \dfrac{n}{4}$ & $Q_1 = u_p + \dfrac{\dfrac{n}{4} - C_{p-1}}{m_p} \cdot h_p$ & Mốc phân cách $25\%$ số liệu nhỏ nhất. \\ \hline
+\textbf{Tứ phân vị thứ ba} ($Q_3$) & Nhóm đầu tiên có tần số tích lũy $cf_q \ge \dfrac{3n}{4}$ & $Q_3 = u_q + \dfrac{\dfrac{3n}{4} - C_{q-1}}{m_q} \cdot h_q$ & Mốc phân cách $75\%$ số liệu nhỏ nhất ($25\%$ cao nhất). \\ \hline
+\end{tabularx}
+\end{center}
+\end{pedabox}
+
+\begin{scaffoldbox}{Hộp hỗ trợ sư phạm: Khắc phục lỗi sai kinh điển của học sinh trung bình - yếu}
+\begin{itemize}[leftmargin=0.6cm]
+    \item \textbf{Lỗi 1 (Quên lập cột tích lũy):} Khi tìm trung vị và tứ phân vị, HS thường nhìn trực tiếp vào cột tần số $m_i$ thay vì phải lập cột tần số tích lũy $cf_i$. \textit{Khắc phục:} Luôn lập thêm cột $cf_i = m_1 + m_2 + \dots + m_i$.
+    \item \textbf{Lỗi 2 (Nhầm lẫn ký hiệu $C$ và $m_m$):}
+    \begin{itemize}
+        \item $m_m$: Là tần số của \textbf{chính nhóm} chứa trung vị (nằm ở mẫu số).
+        \item $C$: Là tần số tích lũy của \textbf{nhóm đứng liền trước} nhóm chứa trung vị.
+    \end{itemize}
+    \item \textbf{Lỗi 3 (Quên nhân độ dài nhóm $h$):} Học sinh hay quên nhân với $h = u_{m+1} - u_m$ ở phần sau phân số.
+    \item \textbf{Lỗi 4 (Xác định nhầm nhóm chứa mốt):} Nhầm nhóm có giá trị đại diện lớn nhất với nhóm có tần số lớn nhất. Nhóm chứa mốt phải là nhóm có tần số $m_i$ cao nhất!
+\end{itemize}
+\end{scaffoldbox}
+
+\noindent \textbf{c) Sản phẩm: Bảng hệ thống hóa kiến thức trong vở học sinh}
+Học sinh hoàn thành bảng ma trận công thức vào vở; ghi nhớ quy tắc: ``Trung vị $\to$ mốc $\dfrac{n}{2}$'', ``$Q_1 \to$ mốc $\dfrac{n}{4}$'', ``$Q_3 \to$ mốc $\dfrac{3n}{4}$''.
+
+\noindent \textbf{d) Tổ chức thực hiện:}
+\begin{itemize}[leftmargin=0.8cm]
+    \item \textit{Chuyển giao nhiệm vụ:} Giáo viên trình chiếu bảng tóm tắt, gọi học sinh nhắc lại công thức và các lỗi hay nhầm lẫn.
+    \item \textit{Thực hiện nhiệm vụ:} Học sinh ghi chép các công thức cốt lõi và khung lưu ý sư phạm vào vở.
+    \item \textit{Báo cáo, thảo luận:} 1 học sinh phân tích sự khác nhau giữa $C$ và $m_m$ trong công thức $M_e$.
+    \item \textit{Kết luận, nhận định:} Giáo viên chuẩn hóa kiến thức, chuyển sang luyện tập các dạng toán trọng tâm.
+\end{itemize}
+
+\subsection*{3. Hoạt động 3: Luyện tập giải toán theo chủ đề phân hóa}
+
+\noindent \textbf{a) Mục tiêu:}
+Rèn luyện kỹ năng tính toán thành thạo cả 4 số đặc trưng $\bar{x}, M_o, M_e, Q_1, Q_3$ trên một bảng số liệu thực tế hoàn chỉnh; biết cách so sánh các giá trị tìm được.
+
+\noindent \textbf{b) Nội dung: Phiếu học tập ôn tập chương (Worksheet phân tầng)}
+\begin{pedabox}{Bài tập ôn tập toàn diện}
+Thời gian tự học ở nhà trong một tuần (tính bằng giờ) của $40$ học sinh lớp 11 được ghi lại qua bảng ghép nhóm sau:
+\begin{center}
+\small
+\begin{tabular}{|c|c|c|c|c|c|}
+\hline
+\textbf{Thời gian (giờ)} & $[6; 10)$ & $[10; 14)$ & $[14; 18)$ & $[18; 22)$ & $[22; 26]$ \\ \hline
+\textbf{Số học sinh ($m_i$)} & $4$ & $10$ & $14$ & $8$ & $4$ \\ \hline
+\end{tabular}
+\end{center}
+\textbf{Nhiệm vụ:}
+\begin{enumerate}[leftmargin=0.6cm]
+    \item \textbf{Chủ đề 1 (Nhận biết - Thông hiểu):} Tính thời gian tự học trung bình $\bar{x}$ và mốt $M_o$ của mẫu số liệu trên.
+    \item \textbf{Chủ đề 2 (Thông hiểu - Vận dụng):} Lập bảng tần số tích lũy, tính trung vị $M_e$ và các tứ phân vị $Q_1, Q_3$.
+    \item \textbf{Chủ đề 3 (Vận dụng cao):} Tính khoảng tứ phân vị $\Delta_Q = Q_3 - Q_1$. Nêu ý nghĩa của các kết quả trên đối với việc phân bổ thời gian học tập của học sinh.
+\end{enumerate}
+\end{pedabox}
+
+\noindent \textbf{c) Sản phẩm: Lời giải chi tiết}
+Kích thước mẫu $n = 4 + 10 + 14 + 8 + 4 = 40$ học sinh. Độ dài mỗi nhóm là $h = 4$.
+\begin{enumerate}[leftmargin=0.6cm]
+    \item \textbf{Chủ đề 1: Tính số trung bình $\bar{x}$ và Mốt $M_o$:}
+    \begin{itemize}
+        \item \textit{Bảng tính số trung bình:}
+        \begin{center}
+        \small
+        \begin{tabular}{|c|c|c|c|}
+        \hline
+        \textbf{Nhóm thời gian} & \textbf{Tần số ($m_i$)} & \textbf{Giá trị đại diện ($c_i$)} & \textbf{Tích ($m_i \cdot c_i$)} \\ \hline
+        $[6; 10)$ & $4$ & $8$ & $32$ \\ \hline
+        $[10; 14)$ & $10$ & $12$ & $120$ \\ \hline
+        $[14; 18)$ & $14$ & $16$ & $224$ \\ \hline
+        $[18; 22)$ & $8$ & $20$ & $160$ \\ \hline
+        $[22; 26]$ & $4$ & $24$ & $96$ \\ \hline
+        \textbf{Tổng} & $n = 40$ & -- & $\sum m_i c_i = 632$ \\ \hline
+        \end{tabular}
+        \end{center}
+        Thời gian tự học trung bình:
+        $$\bar{x} = \dfrac{632}{40} = 15{,}8\text{ (giờ/tuần)}$$
+
+        \item \textit{Tính Mốt $M_o$:}
+        Tần số lớn nhất là $14 \implies$ nhóm chứa mốt là $[14; 18)$.
+        Ta có: $u_j = 14, h = 4, m_j = 14, m_{j-1} = 10, m_{j+1} = 8$.
+        $$M_o = 14 + \dfrac{14 - 10}{(14 - 10) + (14 - 8)} \cdot 4 = 14 + \dfrac{4}{4 + 6} \cdot 4 = 14 + \dfrac{16}{10} = 14 + 1{,}6 = 15{,}6\text{ (giờ/tuần)}$$
+    \end{itemize}
+
+    \item \textbf{Chủ đề 2: Tính Trung vị $M_e$ và Tứ phân vị $Q_1, Q_3$:}
+    \begin{itemize}
+        \item \textit{Bảng tần số tích lũy:}
+        \begin{center}
+        \small
+        \begin{tabular}{|c|c|c|c|c|c|}
+        \hline
+        \textbf{Nhóm} & $[6; 10)$ & $[10; 14)$ & $[14; 18)$ & $[18; 22)$ & $[22; 26]$ \\ \hline
+        \textbf{Tần số ($m_i$)} & $4$ & $10$ & $14$ & $8$ & $4$ \\ \hline
+        \textbf{Tần số tích lũy ($cf_i$)} & $4$ & $14$ & $28$ & $36$ & $40$ \\ \hline
+        \end{tabular}
+        \end{center}
+
+        \item \textit{Tính Trung vị $M_e$:}
+        Mốc $\dfrac{n}{2} = \dfrac{40}{2} = 20$.
+        Vì $cf_2 = 14 < 20 \le cf_3 = 28$ nên nhóm chứa trung vị là $[14; 18)$.
+        Các thông số: $u_m = 14, m_m = 14, C = cf_2 = 14, h = 4$.
+        $$M_e = 14 + \dfrac{20 - 14}{14} \cdot 4 = 14 + \dfrac{6 \cdot 4}{14} = 14 + \dfrac{12}{7} \approx 14 + 1{,}71 = 15{,}71\text{ (giờ/tuần)}$$
+
+        \item \textit{Tính Tứ phân vị thứ nhất $Q_1$:}
+        Mốc $\dfrac{n}{4} = \dfrac{40}{4} = 10$.
+        Vì $cf_1 = 4 < 10 \le cf_2 = 14$ nên nhóm chứa $Q_1$ là $[10; 14)$.
+        Các thông số: $u_p = 10, m_p = 10, C_{p-1} = cf_1 = 4, h = 4$.
+        $$Q_1 = 10 + \dfrac{10 - 4}{10} \cdot 4 = 10 + \dfrac{6}{10} \cdot 4 = 10 + 2{,}4 = 12{,}4\text{ (giờ/tuần)}$$
+
+        \item \textit{Tính Tứ phân vị thứ ba $Q_3$:}
+        Mốc $\dfrac{3n}{4} = \dfrac{3 \cdot 40}{4} = 30$.
+        Vì $cf_3 = 28 < 30 \le cf_4 = 36$ nên nhóm chứa $Q_3$ là $[18; 22)$.
+        Các thông số: $u_q = 18, m_q = 8, C_{q-1} = cf_3 = 28, h = 4$.
+        $$Q_3 = 18 + \dfrac{30 - 28}{8} \cdot 4 = 18 + \dfrac{2}{8} \cdot 4 = 18 + 1{,}0 = 19{,}0\text{ (giờ/tuần)}$$
+    \end{itemize}
+
+    \item \textbf{Chủ đề 3: Khoảng tứ phân vị \& Nhận định thực tiễn:}
+    \begin{itemize}
+        \item Khoảng tứ phân vị: $\Delta_Q = Q_3 - Q_1 = 19{,}0 - 12{,}4 = 6{,}6\text{ (giờ/tuần)}$.
+        \item \textit{Ý nghĩa thực tiễn:}
+        \begin{itemize}
+            \item Có $50\%$ học sinh có thời gian tự học dao động trong khoảng từ $12{,}4$ giờ đến $19{,}0$ giờ/tuần (độ phân tán là $6{,}6$ giờ).
+            \item Ba giá trị $\bar{x} = 15{,}8; M_o = 15{,}6; M_e \approx 15{,}71$ rất xấp xỉ nhau, chứng tỏ tập dữ liệu về thời gian tự học của lớp có tính đối xứng rất cao, không có hiện tượng méo lệch nghiêm trọng.
+        \end{itemize}
+    \end{itemize}
+\end{enumerate}
+
+\noindent \textbf{d) Tổ chức thực hiện:}
+\begin{itemize}[leftmargin=0.8cm]
+    \item \textit{Chuyển giao nhiệm vụ:} Giáo viên chia lớp thành 4 nhóm, phát phiếu học tập và giao nhiệm vụ giải trọn vẹn 3 chủ đề trong 7 phút.
+    \item \textit{Thực hiện nhiệm vụ:} Các nhóm phân công thành viên: 1 bạn lập bảng 4 cột tính $\bar{x}, M_o$; 1 bạn lập bảng tích lũy tính $M_e, Q_1, Q_3$; nhóm trưởng tổng hợp tính $\Delta_Q$. Giáo viên quan sát, đôn đốc các nhóm.
+    \item \textit{Báo cáo, thảo luận:} 2 nhóm treo bảng phụ lên bảng; đại diện thuyết trình các bước tính; 2 nhóm còn lại chấm chéo.
+    \item \textit{Kết luận, nhận định:} Giáo viên chốt điểm số, biểu dương kỹ năng làm việc nhóm phối hợp nhịp nhàng, nhấn mạnh tính đối xứng của dữ liệu khi $\bar{x} \approx M_e \approx M_o$.
+\end{itemize}
+
+\subsection*{4. Hoạt động 4: Vận dụng thực tiễn \& Đạo đức dữ liệu số - AI}
+
+\noindent \textbf{a) Mục tiêu:}
+Tích hợp Năng lực số (Mã 4.1NC1a) và Năng lực AI (Mã 11.A3.1): Giáo dục ý thức bảo mật dữ liệu cá nhân khi khảo sát và phân tích quyền riêng tư dữ liệu của người dùng trong các hệ thống Trí tuệ nhân tạo.
+
+\noindent \textbf{b) Nội dung: Tình huống khảo sát trực tuyến \& Đạo đức AI}
+\begin{aibox}{Tình huống liên môn: Bảo mật dữ liệu số \& Quyền riêng tư trong Kỷ nguyên AI}
+\textbf{1. Tình huống khảo sát số (Năng lực số 4.1NC1a):}
+Lớp 11A tạo biểu mẫu Google Forms để khảo sát thời gian sử dụng mạng xã hội và sức khỏe tâm lý của các bạn trong trường. Trong biểu mẫu có thu thập: Họ tên, Email cá nhân, Lớp, Số điện thoại và thời gian dùng mạng xã hội.
+\begin{itemize}[leftmargin=0.6cm]
+    \item \textit{Câu hỏi:} Việc thu thập công khai Họ tên và Số điện thoại kèm theo thông tin sức khỏe tâm lý có vi phạm nguyên tắc bảo mật dữ liệu cá nhân không? Để vừa có dữ liệu nghiên cứu thống kê, vừa bảo vệ an toàn cho người tham gia khảo sát, nhóm nghiên cứu cần thực hiện giải pháp kỹ thuật nào?
+\end{itemize}
+\textbf{2. Quyền riêng tư \& Đạo đức AI (Năng lực AI 11.A3.1):}
+Các mô hình AI lớn (như ChatGPT, Gemini, thuật toán đề xuất của TikTok, YouTube) liên tục thu thập hàng tỷ dữ liệu hành vi (thời gian xem video, lượt thích, vị trí GPS) để tính toán các số đặc trưng xu thế trung tâm và xây dựng hồ sơ người dùng (User Profiling).
+\begin{itemize}[leftmargin=0.6cm]
+    \item \textit{Câu hỏi tư duy:} Người dùng dữ liệu có những quyền gì đối với thông tin cá nhân của mình khi tương tác với các hệ thống AI? Tại sao các tổ chức quốc tế lại yêu cầu AI phải tuân thủ nguyên tắc ``Minh bạch dữ liệu'' và ``Quyền được lãng quên'' (Right to be Forgotten)?
+\end{itemize}
+\end{aibox}
+
+\noindent \textbf{c) Sản phẩm: Báo cáo thảo luận của học sinh}
+\begin{enumerate}[leftmargin=0.6cm]
+    \item \textbf{Về giải pháp bảo mật dữ liệu khảo sát (Mã 4.1NC1a):}
+    \begin{itemize}
+        \item Việc để lộ danh tính cá nhân kèm thông tin nhạy cảm là vi phạm nguyên tắc bảo mật và quyền riêng tư, dễ dẫn tới việc học sinh bị quấy rối hoặc định kiến.
+        \item \textit{Giải pháp kỹ thuật:} Áp dụng nguyên tắc \textbf{Ẩn danh hóa dữ liệu (Data Anonymization)}: Thiết lập biểu mẫu ở chế độ không thu thập địa chỉ email và không yêu cầu họ tên/số điện thoại; chỉ thu thập dữ liệu số thuần túy (thời gian, khối lớp) phục vụ ghép nhóm thống kê.
+    \end{itemize}
+    \item \textbf{Về quyền riêng tư và đạo đức AI (Mã 11.A3.1):}
+    \begin{itemize}
+        \item \textit{Quyền của người dùng:} Quyền được biết dữ liệu của mình được dùng vào mục đích gì (Tính minh bạch); Quyền từ chối chia sẻ dữ liệu (Opt-out); Quyền yêu cầu xóa toàn bộ lịch sử tương tác và dữ liệu cá nhân khỏi máy chủ AI (Right to be Forgotten).
+        \item \textit{Trách nhiệm đạo đức của AI:} Tránh định kiến thuật toán, bảo đảm dữ liệu thu thập không bị lạm dụng để thao túng tâm lý hoặc xâm phạm đời tư công dân.
+    \end{itemize}
+\end{enumerate}
+
+\noindent \textbf{d) Tổ chức thực hiện:}
+\begin{itemize}[leftmargin=0.8cm]
+    \item \textit{Chuyển giao nhiệm vụ:} Giáo viên trình chiếu tình huống đạo đức số, cho các nhóm thảo luận tự do trong 4 phút.
+    \item \textit{Thực hiện nhiệm vụ:} Học sinh trao đổi, liên hệ với thói quen chia sẻ thông tin trên mạng xã hội hàng ngày.
+    \item \textit{Báo cáo, thảo luận:} 2 học sinh đại diện nhóm phát biểu; các bạn khác bổ sung ý kiến.
+    \item \textit{Kết luận, nhận định:} Giáo viên tổng kết: Thống kê toán học cung cấp công cụ phân tích sức mạnh, nhưng người làm khoa học dữ liệu và công dân số phải luôn đặt đạo đức, sự trung thực và trách nhiệm bảo vệ con người lên hàng đầu. Dặn dò chuẩn bị cho tiết Ôn tập kiểm tra giữa kỳ I tiếp theo.
+\end{itemize}
+
+% =========================================================================
+% PHẦN IV. PHỤ LỤC HỌC LIỆU BỔ TRỢ
+% =========================================================================
+\section*{IV. PHỤ LỤC HỌC LIỆU BỔ TRỢ}
+
+\subsection*{1. Phiếu học tập ôn tập chương (Worksheet phân tầng bậc thang)}
+
+\noindent \textbf{A. PHẦN TRẮC NGHIỆM KHÁCH QUAN (Rèn phản xạ nhanh)}
+\begin{enumerate}[leftmargin=0.6cm]
+    \item Cho mẫu số liệu ghép nhóm có $n = 50$. Để xác định nhóm chứa trung vị $M_e$, ta cần tìm nhóm đầu tiên có tần số tích lũy thỏa mãn:
+    \begin{itemize}[leftmargin=0.6cm]
+        \item[A.] $cf_i \ge 12{,}5$. \quad \textbf{B.} $cf_i \ge 25$. \quad C. $cf_i \ge 37{,}5$. \quad D. $cf_i \ge 50$.
+    \end{itemize}
+    \item Nhóm chứa mốt của mẫu số liệu ghép nhóm là nhóm có:
+    \begin{itemize}[leftmargin=0.6cm]
+        \item[A.] Độ dài nhóm lớn nhất. \quad \textbf{B.} Tần số lớn nhất.
+        \item[C.] Giá trị đại diện lớn nhất. \quad D. Tần số tích lũy lớn nhất.
+    \end{itemize}
+    \item Trong các số đặc trưng đo xu thế trung tâm, số đặc trưng nào KHÔNG bị ảnh hưởng bởi các giá trị bất thường (outlier)?
+    \begin{itemize}[leftmargin=0.6cm]
+        \item[A.] Số trung bình cộng. \quad \textbf{B.} Trung vị và Tứ phân vị.
+        \item[C.] Phương sai. \quad D. Độ lệch chuẩn.
+    \end{itemize}
+\end{enumerate}
+
+\noindent \textbf{B. PHẦN TỰ LUẬN PHÂN TẦNG}
+\begin{itemize}[leftmargin=0.6cm]
+    \item \textbf{Tầng 1 (Cơ bản dành cho HS TB-Yếu):} Cho bảng tần số ghép nhóm có các nhóm $[10; 20), [20; 30), [30; 40)$ với tần số tương ứng $5, 12, 8$. Xác định nhóm chứa mốt và tính giá trị đại diện của từng nhóm.
+    \item \textbf{Tầng 2 (Thông hiểu):} Tính số trung bình $\bar{x}$, mốt $M_o$ và trung vị $M_e$ của mẫu số liệu ở Tầng 1.
+    \item \textbf{Tầng 3 (Vận dụng cao):} Khảo sát mức lương (triệu đồng/tháng) của $100$ công nhân một xưởng may: $[5; 7)$ có $15$ người; $[7; 9)$ có $35$ người; $[9; 11)$ có $30$ người; $[11; 13)$ có $15$ người; $[13; 15]$ có $5$ người. Tính khoảng tứ phân vị $\Delta_Q$ và đánh giá mức độ đồng đều về tiền lương của công nhân.
+\end{itemize}
+
+\subsection*{2. Bảng Rubric đánh giá năng lực học sinh trong tiết ôn tập chương}
+
+\begin{center}
+\small
+\begin{tabularx}{\textwidth}{|p{2.8cm}|X|X|X|X|}
+\hline
+\textbf{Tiêu chí} & \textbf{Chưa đạt (Mức 1)} & \textbf{Đạt (Mức 2)} & \textbf{Khá (Mức 3)} & \textbf{Tốt (Mức 4)} \\ \hline
+\textbf{Hệ thống hóa \& Tính toán} & Nhầm lẫn công thức, xác định sai nhóm chứa trung vị hoặc mốt. & Tính đúng $\bar{x}$ và xác định đúng nhóm chứa $M_e, M_o$. & Tính chính xác cả 4 số đặc trưng $\bar{x}, M_o, M_e, Q_1, Q_3$, không nhầm $C$ và $m_m$. & Vận dụng xuất sắc khoảng tứ phân vị $\Delta_Q$ phân tích sâu sắc độ phân tán của dữ liệu. \\ \hline
+\textbf{Lựa chọn số đặc trưng} & Không phân biệt được khi nào dùng $\bar{x}$, khi nào dùng $M_e$. & Biết chọn mốt cho bài toán kinh doanh kích cỡ mặt hàng. & Giải thích được lý do chọn trung vị khi có giá trị ngoại lai. & Phản biện sắc bén các kết luận thống kê sai lệch trong thực tế truyền thông và kinh tế. \\ \hline
+\textbf{Năng lực số \& Đạo đức AI} & Chưa có ý thức bảo mật dữ liệu, không biết về quyền riêng tư. & Hiểu khái niệm bảo mật dữ liệu cá nhân ở mức cơ bản. & Đề xuất được giải pháp ẩn danh hóa biểu mẫu khảo sát trực tuyến. & Phân tích sâu sắc quyền của người dùng dữ liệu và trách nhiệm đạo đức trong huấn luyện mô hình AI. \\ \hline
+\textbf{Hợp tác nhóm \& Phẩm chất} & Thụ động, ỷ lại vào nhóm trưởng trong các khâu tính toán. & Có tham gia làm việc nhóm nhưng còn hạn chế trong trao đổi. & Tích cực đóng góp ý kiến, hoàn thành tốt nhiệm vụ được giao. & Gương mẫu, điều hành nhóm xuất sắc, tận tình hướng dẫn và hỗ trợ các bạn yếu cùng tiến bộ. \\ \hline
+\end{tabularx}
+\end{center}
+
+\end{document}
