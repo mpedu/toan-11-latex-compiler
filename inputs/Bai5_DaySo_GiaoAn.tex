@@ -1,0 +1,699 @@
+\documentclass[12pt, a4paper]{article}  
+% --- 1. Cấu hình Tiếng Việt và Font chữ chuẩn ---  
+\usepackage[utf8]{inputenc}  
+\usepackage[T5]{fontenc}  
+\usepackage[vietnamese]{babel}  
+\usepackage{mathptmx} % Font Times New Roman đồng bộ cả chữ và công thức toán, không gây xung đột gói  
+  
+\makeatletter  
+\renewcommand{\normalsize}{\@setfontsize\normalsize{13pt}{16pt}}  
+\makeatother  
+\normalsize  
+  
+% --- 2. Gói Toán học & Ký hiệu bổ trợ ---  
+\usepackage{amsmath, amssymb, amsfonts, mathrsfs, amsthm}  
+\usepackage{graphicx}  
+\usepackage{fontawesome}  
+\usepackage{booktabs, tabularx, array, multirow}  
+\usepackage{enumitem}  
+  
+% --- 3. Đồ họa TikZ, Bảng biến thiên & Hình không gian ---  
+\usepackage{tikz}  
+\usetikzlibrary{calc, intersections, angles, quotes, patterns, arrows.meta, 3d}  
+\usepackage{pgfplots}  
+\pgfplotsset{compat=1.18}  
+\usepackage{tkz-euclide}  
+\usepackage{tkz-tab}  
+  
+\renewcommand{\vec}[1]{\overrightarrow{#1}}  
+  
+% --- 4. Hộp sư phạm (Tcolorbox) ---  
+\usepackage[many]{tcolorbox}  
+\tcbuselibrary{skins, breakable}  
+  
+% --- 5. Căn lề chuẩn văn bản giáo án ---  
+\usepackage{geometry}  
+\geometry{  
+    a4paper,  
+    left=25mm,  
+    right=15mm,  
+    top=20mm,  
+    bottom=20mm  
+}  
+  
+% --- 6. Header / Footer chuẩn hóa ---  
+\usepackage{fancyhdr}  
+\usepackage{lastpage}  
+\pagestyle{fancy}  
+\fancyhf{}  
+  
+\fancyhead[L]{\small \textit{Kế hoạch bài dạy Toán 11}}  
+\fancyhead[R]{\textbf{Trang \thepage/\pageref{LastPage}}}  
+\fancyfoot[L]{\small \textit{Tổ Toán - Tin}}  
+\fancyfoot[R]{\small \textit{Trường THCS\&THPT Hồng Vân}}  
+\renewcommand{\headrulewidth}{0.4pt}  
+\renewcommand{\footrulewidth}{0.4pt}  
+  
+% --- 7. Giãn dòng & Giãn đoạn theo chuẩn Nghị định 30/2020/NĐ-CP ---  
+\usepackage{setspace}  
+\setstretch{1.15}  
+\setlength{\parindent}{1.0cm}  
+\setlength{\parskip}{5pt}  
+  
+% Định nghĩa hộp sư phạm chuyên dụng  
+\newtcolorbox{pedabox}[2][]{  
+    enhanced,  
+    breakable,  
+    colback=blue!3!white,  
+    colframe=blue!65!black,  
+    fonttitle=\bfseries\small,  
+    title={#2},  
+    arc=2mm,  
+    boxrule=0.6pt,  
+    left=3mm, right=3mm, top=2mm, bottom=2mm,  
+    #1  
+}  
+  
+\newtcolorbox{aibox}[2][]{  
+    enhanced,  
+    breakable,  
+    colback=teal!4!white,  
+    colframe=teal!70!black,  
+    fonttitle=\bfseries\small,  
+    title={#2},  
+    arc=2mm,  
+    boxrule=0.6pt,  
+    left=3mm, right=3mm, top=2mm, bottom=2mm,  
+    #1  
+}  
+  
+\newtcolorbox{scaffoldbox}[2][]{  
+    enhanced,  
+    breakable,  
+    colback=orange!4!white,  
+    colframe=orange!80!black,  
+    fonttitle=\bfseries\small,  
+    title={#2},  
+    arc=2mm,  
+    boxrule=0.6pt,  
+    left=3mm, right=3mm, top=2mm, bottom=2mm,  
+    #1  
+}  
+  
+\begin{document}  
+  
+\begin{center}  
+    {\fontsize{14pt}{17pt}\selectfont \textbf{KẾ HOẠCH BÀI DẠY MÔN TOÁN LỚP 11}}\\[6pt]  
+    {\fontsize{16pt}{19pt}\selectfont \textbf{BÀI 5. DÃY SỐ}}\\[4pt]  
+    {\fontsize{12pt}{15pt}\selectfont \textbf{Môn học: Toán 11} \ \textbar \ \textbf{Thời lượng: 2 tiết (Tiết 11 và Tiết 12 theo PPCT)}}  
+\end{center}  
+  
+\vspace{5pt}  
+  
+\section*{I. MỤC TIÊU}  
+  
+\subsection*{1. Kiến thức, Năng lực}  
+  
+\begin{itemize}[leftmargin=1.2cm]  
+    \item \textbf{Yêu cầu cần đạt (Nguyên văn CT GDPT 2018):}  
+    \begin{itemize}[leftmargin=0.6cm]  
+        \item Nhận biết được dãy số hữu hạn, dãy số vô hạn.  
+        \item Thể hiện được cách cho dãy số bằng liệt kê các số hạng; bằng công thức tổng quát; bằng hệ thức truy hồi; bằng cách mô tả.  
+        \item Nhận biết được tính chất tăng, giảm, bị chặn của dãy số trong những trường hợp đơn giản.  
+    \end{itemize}  
+  
+    \item \textbf{Năng lực Toán học đặc thù:}  
+    \begin{itemize}[leftmargin=0.6cm]  
+        \item \textit{Năng lực tư duy và lập luận toán học:} Phân tích mối quan hệ giữa chỉ số thứ tự $n$ ($n \in \mathbb{N}^*$) và giá trị của số hạng $u_n$; so sánh sự khác nhau giữa công thức số hạng tổng quát và hệ thức truy hồi; lập luận chứng minh tính chất tăng, giảm thông qua xét dấu của hiệu $u_{n+1} - u_n$ hoặc xét tỉ số $\dfrac{u_{n+1}}{u_n}$; lập luận chứng minh dãy số bị chặn bằng bất đẳng thức đại số.  
+        \item \textit{Năng lực mô hình hóa toán học:} Thiết lập dãy số để mô hình hóa các quy luật sinh trưởng tự nhiên và kinh tế - xã hội: bài toán sinh sản của đàn thỏ (dãy số Fibonacci), bài toán tính tiền gửi tiết kiệm ngân hàng định kì, quy luật xếp chồng que tính/viên gạch tạo tháp tầng.  
+        \item \textit{Năng lực giải quyết vấn đề toán học:} Vận dụng các phương pháp đại số để tìm số hạng bất kì khi biết quy luật; giải bài toán xác định tính tăng, giảm và bị chặn của dãy phân thức bậc nhất $u_n = \dfrac{an+b}{cn+d}$.  
+        \item \textit{Năng lực giao tiếp toán học:} Trình bày rõ ràng, mạch lạc cách biểu diễn một dãy số; sử dụng chuẩn xác các ký hiệu $(u_n)$, $u_n$, $u_{n+1}$; tự tin báo cáo sản phẩm tính toán trên bảng tính số.  
+        \item \textit{Năng lực sử dụng công cụ, phương tiện học toán:} Sử dụng thành thạo máy tính cầm tay (MTCT) Casio fx-580VN X bằng tính năng \texttt{TABLE} (\texttt{MENU 8}) và tính năng lặp truy hồi (\texttt{Ans}) để sinh các số hạng; khai thác bảng tính điện tử Excel/Google Sheets để tự động hóa việc lập bảng số liệu dãy số.  
+    \end{itemize}  
+  
+    \item \textbf{Năng lực số (Theo Thông tư 02/2025/TT-BGDĐT):}  
+    \begin{itemize}[leftmargin=0.6cm]  
+        \item \textit{Mã 1.3NC1a (Tạo lập và xử lý dữ liệu tự động bằng phần mềm số):} Học sinh sử dụng bảng tính Excel trên máy vi tính phòng máy (hoặc Google Sheets), nhập công thức truy hồi và sử dụng thao tác kéo thả chuột (Fill Handle / AutoFill) để tự động sinh ra hàng loạt số hạng liên tiếp của dãy số trong tích tắc.  
+        \item \textit{Mã 5.2NC1c (Khảo sát số học bằng công nghệ cầm tay):} Sử dụng phím gán biến lặp \texttt{Ans} trên MTCT Casio fx-580VN X tính toán nhanh các số hạng của dãy số cho bởi hệ thức truy hồi phức tạp.  
+    \end{itemize}  
+  
+    \item \textbf{Năng lực AI (Theo Quyết định 2422/QĐ-BGDĐT):}  
+    \begin{itemize}[leftmargin=0.6cm]  
+        \item \textit{Mã 11.D1.1 (Ứng dụng AI trong phân tích chuỗi thời gian):} Học sinh trình bày và giải thích được cách các mô hình Trí tuệ nhân tạo (Time-Series Prediction Models như LSTM, Transformer) dựa trên dữ liệu chuỗi số trong quá khứ để nhận diện quy luật và dự đoán số hạng tiếp theo (dự báo chỉ số thời tiết, biến động phụ tải điện, xu hướng tiêu dùng).  
+        \item \textit{Mã 11.C3.1 (Kỹ thuật prompt câu lệnh đối thoại với AI):} Học sinh thực hành đặt câu lệnh (prompt) chuẩn mực để yêu cầu trợ lý AI tìm công thức tổng quát từ 5 số hạng đầu tiên cho trước, sau đó đối chiếu và kiểm chứng lại bằng phương pháp quy nạp toán học.  
+    \end{itemize}  
+  
+    \item \textbf{Năng lực chung:}  
+    \begin{itemize}[leftmargin=0.6cm]  
+        \item \textit{Tự chủ và tự học:} Tự giác tìm tòi quy luật của dãy số qua các ví dụ trực quan que tính; chủ động hoàn thành các bài tập trong phiếu học tập.  
+        \item \textit{Giao tiếp và hợp tác:} Tích cực trao đổi trong nhóm học tập, cùng nhau hoàn thành bảng số liệu trên bảng tính Excel.  
+    \end{itemize}  
+\end{itemize}  
+  
+\subsection*{2. Phẩm chất}  
+\begin{itemize}[leftmargin=1.2cm]  
+    \item \textbf{Chăm chỉ:} Kiên nhẫn tính toán từng số hạng, tích cực rèn luyện kỹ năng sử dụng bảng tính và MTCT.  
+    \item \textbf{Trung thực:} Báo cáo chính xác kết quả tính toán số học, không sao chép máy móc kết quả dự đoán của AI mà không kiểm chứng.  
+    \item \textbf{Trách nhiệm:} Có trách nhiệm hỗ trợ bạn yếu trong nhóm phân biệt rõ ràng giữa chỉ số $n$ và giá trị $u_n$.  
+\end{itemize}  
+  
+\section*{II. THIẾT BỊ DẠY HỌC VÀ HỌC LIỆU}  
+\begin{itemize}[leftmargin=1.2cm]  
+    \item \textbf{Giáo viên:}  
+    \begin{itemize}[leftmargin=0.6cm]  
+        \item Kế hoạch bài dạy chi tiết, bài giảng điện tử tương tác PowerPoint/Canva.  
+        \item Tệp mẫu bảng tính Excel tự động sinh số hạng dãy số và vẽ biểu đồ phân tán minh họa dãy số tăng/giảm.  
+        \item Hình ảnh minh họa bài toán tháp Hà Nội, bài toán đàn thỏ Fibonacci, mô hình tam giác số Pascal.  
+        \item Phiếu học tập số 1, Phiếu học tập số 2 (Worksheet phân tầng) và Bảng Rubric đánh giá.  
+    \end{itemize}  
+    \item \textbf{Học sinh:}  
+    \begin{itemize}[leftmargin=0.6cm]  
+        \item SGK Toán 11, vở ghi bài, thước kẻ, MTCT Casio fx-580VN X.  
+        \item Máy tính tại phòng thực hành tin học (hoặc điện thoại/máy tính bảng có cài đặt ứng dụng bảng tính Excel/Google Sheets).  
+    \end{itemize}  
+\end{itemize}  
+  
+\section*{III. TIẾN TRÌNH DẠY HỌC}  
+  
+% =========================================================================
+% TIẾT 1 (TIẾT 11 THEO PPCT)
+% =========================================================================
+\begin{center}  
+    {\fontsize{13pt}{16pt}\selectfont \textbf{TIẾT 1. ĐỊNH NGHĨA VÀ CÁC CÁCH CHO DÃY SỐ}}\\[2pt]  
+    \textit{(Tiết 11 theo PPCT \ \textbar \ Tuần 4)}  
+\end{center}  
+  
+\subsection*{1. Hoạt động 1: Khởi động (Mở đầu)}  
+  
+\noindent \textbf{a) Mục tiêu:}  
+\begin{itemize}[leftmargin=0.8cm]  
+    \item Tạo tình huống thực tế hấp dẫn thông qua bài toán cổ điển về số cặp thỏ sinh sản của nhà toán học Leonardo Fibonacci, gợi mở khái niệm một chuỗi các con số được sắp xếp theo thứ tự thời gian.  
+    \item Kích thích trí tò mò, khám phá quy luật toán học ẩn chứa trong tự nhiên.  
+\end{itemize}  
+  
+\noindent \textbf{b) Nội dung: Bài toán sinh sản của đàn thỏ Fibonacci}  
+Giáo viên trình chiếu hình ảnh bài toán đàn thỏ do Fibonacci đề xuất năm 1202:  
+Bắt đầu từ một cặp thỏ sơ sinh (tháng 1). Giả sử:  
+1) Mỗi cặp thỏ sau 1 tháng thì trưởng thành.  
+2) Mỗi cặp thỏ trưởng thành cứ sau mỗi tháng lại sinh ra đúng một cặp thỏ con.  
+3) Các con thỏ đều sống sót và khỏe mạnh.  
+\textbf{Nhiệm vụ:} Hãy đếm và ghi lại tổng số cặp thỏ ở mỗi tháng từ tháng 1 đến tháng 6?  
+Tháng 1: 1 cặp. \qquad Tháng 2: 1 cặp. \qquad Tháng 3: 2 cặp. \qquad Tháng 4: 3 cặp. \qquad Tháng 5: 5 cặp. \qquad Tháng 6: 8 cặp.  
+\textbf{Câu hỏi gợi mở:}  
+- Các con số $1, 1, 2, 3, 5, 8,\dots$ có tuân theo quy luật nào không?  
+- Một tập hợp các số được sắp xếp theo thứ tự $1, 2, 3, \dots, n, \dots$ trong toán học được gọi là gì?  
+  
+\noindent \textbf{c) Sản phẩm:}  
+\begin{itemize}[leftmargin=0.8cm]  
+    \item Học sinh phát hiện quy luật: Kể từ tháng thứ 3 trở đi, số cặp thỏ của mỗi tháng bằng tổng số cặp thỏ của hai tháng liền trước đó ($2 = 1 + 1, 3 = 1 + 2, 5 = 2 + 3, 8 = 3 + 5$).  
+    \item Dự đoán số cặp thỏ ở tháng thứ 7 là $5 + 8 = 13$ cặp.  
+    \item Nhận biết: Danh sách các số sắp xếp theo thứ tự $1, 2, 3, \dots$ tạo thành một \textbf{dãy số}.  
+\end{itemize}  
+  
+\noindent \textbf{d) Tổ chức thực hiện:}  
+\begin{itemize}[leftmargin=0.8cm]  
+    \item \textit{Chuyển giao nhiệm vụ:} GV chiếu hình ảnh đàn thỏ tăng dần qua từng tháng, yêu cầu học sinh thảo luận cặp đôi hoàn thành bảng thống kê số cặp thỏ từ tháng 1 đến tháng 6 trong 2 phút.  
+    \item \textit{Thực hiện nhiệm vụ:} HS đếm số thỏ theo sơ đồ cây phả hệ, thảo luận tìm quy luật cộng hai số liền trước.  
+    \item \textit{Báo cáo, thảo luận:} 1 học sinh đại diện trình bày bảng số liệu và giải thích quy luật.  
+    \item \textit{Kết luận, nhận định:} GV nhận xét: "Dãy số $1, 1, 2, 3, 5, 8, 13,\dots$ được gọi là dãy Fibonacci nổi tiếng. Các con số này được gắn liền với chỉ số thời gian $n = 1, 2, 3,\dots$. Trong toán học, một cấu trúc như vậy được định nghĩa là một dãy số".  
+\end{itemize}  
+  
+% -------------------------------------------------------------------------
+\subsection*{2. Hoạt động 2: Hình thành kiến thức}  
+  
+\subsubsection*{2.1. Định nghĩa dãy số}  
+  
+\noindent \textbf{a) Mục tiêu:}  
+\begin{itemize}[leftmargin=0.8cm]  
+    \item Nhận biết định nghĩa dãy số vô hạn và dãy số hữu hạn; hiểu bản chất dãy số là một hàm số xác định trên tập hợp các số nguyên dương $\mathbb{N}^*$ (hoặc tập hợp $\{1, 2, \dots, m\}$).  
+    \item Nắm vững ký hiệu số hạng tổng quát $u_n$ và ký hiệu toàn bộ dãy số $(u_n)$.  
+\end{itemize}  
+  
+\noindent \textbf{b) Nội dung:}  
+\begin{enumerate}[leftmargin=0.6cm]  
+    \item Xây dựng định nghĩa dãy số vô hạn: Mỗi hàm số $u$ xác định trên tập hợp các số nguyên dương $\mathbb{N}^* = \{1, 2, 3, \dots\}$ được gọi là một dãy số vô hạn (gọi tắt là dãy số).  
+    \item Ký hiệu dãy số: $(u_n)$ hay $u_1, u_2, u_3, \dots, u_n, \dots$.  
+    Trong đó: $u_1$ là số hạng thứ nhất (số hạng đầu), $u_n = u(n)$ là số hạng thứ $n$ (số hạng tổng quát).  
+    \item Xây dựng định nghĩa dãy số hữu hạn: Mỗi hàm số $u$ xác định trên tập hợp $M = \{1, 2, 3, \dots, m\}$ ($m \in \mathbb{N}^*$) được gọi là một dãy số hữu hạn. Viết là $u_1, u_2, \dots, u_m$.  
+\end{enumerate}  
+  
+\noindent \textbf{c) Sản phẩm:}  
+  
+\begin{pedabox}{KIẾN THỨC TRỌNG TÂM: ĐỊNH NGHĨA DÃY SỐ}  
+\begin{itemize}[leftmargin=0.6cm]  
+    \item \textbf{Dãy số vô hạn:}  
+    Mỗi hàm số $u: \mathbb{N}^* \to \mathbb{R},\ n \mapsto u(n)$ được gọi là một \textbf{dãy số vô hạn}.  
+    \begin{itemize}  
+        \item Ký hiệu: $(u_n)$ hoặc $u_1, u_2, \dots, u_n, \dots$.  
+        \item $u_1$ là số hạng đầu; $u_n$ là số hạng thứ $n$ (số hạng tổng quát).  
+    \end{itemize}  
+    \item \textbf{Dãy số hữu hạn:}  
+    Mỗi hàm số $u: \{1, 2, \dots, m\} \to \mathbb{R}$ được gọi là một \textbf{dãy số hữu hạn}.  
+    Ký hiệu: $u_1, u_2, \dots, u_m$ (với $u_1$ là số hạng đầu, $u_m$ là số hạng cuối).  
+\end{itemize}  
+\end{pedabox}  
+  
+\begin{scaffoldbox}{GIÀN GIÁO SƯ PHẠM: PHÂN BIỆT RÕ CHỈ SỐ $n$ VÀ GIÁ TRỊ $u_n$}  
+\begin{itemize}[leftmargin=0.6cm]  
+    \item \textbf{Chỉ số $n$ (Vị trí đứng):} Luôn là \textbf{số nguyên dương} ($n = 1, 2, 3, \dots$). Không bao giờ có số hạng thứ 0 hoặc số hạng thứ âm!  
+    \item \textbf{Giá trị $u_n$ (Nội dung tại vị trí):} Là một \textbf{số thực bất kì} (có thể là số âm, số 0, phân số, số vô tỉ,...).  
+    \item \textbf{Ký hiệu quan trọng:}  
+    \begin{itemize}  
+        \item $(u_n)$: Chỉ toàn bộ tập hợp dãy số.  
+        \item $u_n$: Chỉ giá trị của phần tử đứng ở vị trí thứ $n$.  
+        \item $u_{n+1}$: Số hạng đứng ngay liền sau số hạng $u_n$. Phân biệt rõ $u_{n+1}$ với $u_n + 1$ (cộng thêm 1 vào giá trị)!  
+    \end{itemize}  
+\end{itemize}  
+\end{scaffoldbox}  
+  
+\noindent \textbf{d) Tổ chức thực hiện:}  
+\begin{itemize}[leftmargin=0.8cm]  
+    \item \textit{Chuyển giao nhiệm vụ:} GV giới thiệu định nghĩa, yêu cầu học sinh thảo luận cặp đôi cho 2 ví dụ về dãy số hữu hạn và 2 ví dụ về dãy số vô hạn trong đời sống.  
+    \item \textit{Thực hiện nhiệm vụ:} HS thảo luận: Ví dụ dãy số các ngày trong tuần $2, 3, 4, 5, 6, 7, 8$ (dãy hữu hạn); dãy số các số nguyên tố $2, 3, 5, 7, 11, \dots$ (dãy vô hạn).  
+    \item \textit{Báo cáo, thảo luận:} Đại diện học sinh đọc ví dụ. GV phân tích chỉ số $n$ và số hạng $u_n$.  
+    \item \textit{Kết luận, nhận định:} GV chốt khái niệm và lưu ý lỗi sai thường gặp khi viết ký hiệu.  
+\end{itemize}  
+  
+% -------------------------------------------------------------------------
+\subsubsection*{2.2. Các cách cho một dãy số}  
+  
+\noindent \textbf{a) Mục tiêu:}  
+\begin{itemize}[leftmargin=0.8cm]  
+    \item Nhận biết và phân loại được 4 cách cho một dãy số: Liệt kê; Bằng công thức tổng quát; Bằng hệ thức truy hồi; Bằng cách mô tả.  
+    \item Biết cách chuyển đổi và tính toán các số hạng đầu tiên của dãy số theo từng cách cho.  
+\end{itemize}  
+  
+\noindent \textbf{b) Nội dung:}  
+\begin{enumerate}[leftmargin=0.6cm]  
+    \item Cách 1: Liệt kê các số hạng (áp dụng cho dãy hữu hạn hoặc dãy có quy luật tường minh): ví dụ $-2, 0, 2, 4, 6$.  
+    \item Cách 2: Cho bằng công thức của số hạng tổng quát $u_n = f(n)$: ví dụ $u_n = \dfrac{n}{n + 1}$ hoặc $u_n = (-1)^n \cdot 2n$.  
+    \item Cách 3: Cho bằng hệ thức truy hồi (quy nạp): Cho số hạng đầu $u_1$ và công thức tính $u_n$ qua các số hạng đứng trước. Ví dụ dãy Fibonacci: $u_1 = 1, u_2 = 1, u_n = u_{n-1} + u_{n-2}$ ($n \ge 3$).  
+    \item Cách 4: Cho bằng cách mô tả thuật toán / quy tắc: ví dụ $u_n$ là chữ số thập phân thứ $n$ của số vô tỉ $\pi = 3{,}14159265\dots$  
+\end{enumerate}  
+  
+\noindent \textbf{c) Sản phẩm:}  
+  
+\begin{pedabox}{BỐN CÁCH CHO MỘT DÃY SỐ}  
+\begin{enumerate}[leftmargin=0.6cm]  
+    \item \textbf{Cách 1: Liệt kê các số hạng} (chỉ rõ các số hạng lần lượt: $u_1, u_2, u_3,\dots$).  
+    \item \textbf{Cách 2: Cho bằng công thức số hạng tổng quát $u_n = f(n)$}:  
+    Cho phép tính ngay lập tức bất kì số hạng thứ $n$ nào mà không cần tính các số hạng trước đó.  
+    \item \textbf{Cách 3: Cho bằng hệ thức truy hồi}:  
+    Xác định dãy số gồm 2 phần:  
+    - Cho một hoặc một vài số hạng đầu tiên ($u_1, u_2,\dots$).  
+    - Cho hệ thức tính $u_n$ thông qua các số hạng đứng trước nó ($u_{n-1}, u_{n-2},\dots$).  
+    \item \textbf{Cách 4: Cho bằng phương pháp mô tả}:  
+    Diễn đạt bằng lời quy tắc xác định số hạng thứ $n$.  
+\end{enumerate}  
+\end{pedabox}  
+  
+\begin{aibox}{NĂNG LỰC AI: DỰ BÁO CHUỖI THỜI GIAN VÀ DÃY SỐ TRONG HỌC MÁY (QĐ 2422)}  
+\begin{itemize}[leftmargin=0.6cm]  
+    \item \textbf{Bản chất công nghệ:} Trong khoa học dữ liệu và Trí tuệ nhân tạo, một chuỗi dữ liệu thời gian (Time-Series) chính là một dãy số $u_1, u_2, \dots, u_n$ thu thập theo thời gian (ví dụ: nhiệt độ từng giờ, giá trị cổ phiếu từng ngày).  
+    \item \textbf{Thuật toán dự đoán:} Các mô hình AI hiện đại (Recurrent Neural Network - RNN, LSTM, Transformer) hoạt động tương tự như việc tìm một \textbf{hệ thức truy hồi phức tạp phi tuyến tính}:  
+    $$u_{n+1} \approx \mathcal{F}_{\text{AI}}(u_n, u_{n-1}, \dots, u_1)$$  
+    để dự báo số hạng tiếp theo $u_{n+1}$ với độ chính xác cao nhất.  
+\end{itemize}  
+\end{aibox}  
+  
+\noindent \textbf{d) Tổ chức thực hiện:}  
+\begin{itemize}[leftmargin=0.8cm]  
+    \item \textit{Chuyển giao nhiệm vụ:} GV chiếu 4 ví dụ đại diện cho 4 cách cho dãy số. Yêu cầu học sinh phân loại và tính 3 số hạng đầu tiên của mỗi dãy.  
+    \item \textit{Thực hiện nhiệm vụ:} HS làm việc cá nhân, thay $n = 1, 2, 3$ vào công thức.  
+    \item \textit{Báo cáo, thảo luận:} 2 học sinh lên bảng trình bày. Nhận xét: "Với cách cho bằng truy hồi, muốn tính $u_5$ bắt buộc phải tính tuần tự $u_2, u_3, u_4$ trước".  
+    \item \textit{Kết luận, nhận định:} GV nhấn mạnh ưu - nhược điểm của công thức tổng quát (tính trực tiếp được $u_{100}$) so với hệ thức truy hồi (phải tính tuần tự từng bước).  
+\end{itemize}  
+  
+% -------------------------------------------------------------------------
+\subsection*{3. Hoạt động 3: Luyện tập}  
+  
+\noindent \textbf{a) Mục tiêu:}  
+\begin{itemize}[leftmargin=0.8cm]  
+    \item Thành thạo tính các số hạng của dãy số khi biết công thức tổng quát hoặc hệ thức truy hồi.  
+    \item Ứng dụng công nghệ số (Excel và MTCT) vào việc tự động sinh dãy số.  
+\end{itemize}  
+  
+\noindent \textbf{b) Nội dung: Phiếu học tập số 1 (Worksheet 1)}  
+\begin{itemize}[leftmargin=0.6cm]  
+    \item \textbf{Bài 1:} Viết 5 số hạng đầu tiên của các dãy số sau:  
+    a) $u_n = \dfrac{2n - 1}{n + 2}$ \qquad b) $u_n = (-1)^n \cdot \dfrac{n}{2^n}$  
+    \item \textbf{Bài 2:} Cho dãy số $(u_n)$ xác định bởi hệ thức truy hồi:  
+    $$\begin{cases} u_1 = 3 \\ u_n = 2u_{n-1} - 1 \quad (n \ge 2) \end{cases}$$  
+    a) Tính 5 số hạng đầu tiên của dãy số?  
+    b) Dự đoán công thức số hạng tổng quát $u_n$ theo $n$?  
+    \item \textbf{Bài 3 (Thực hành số trên MTCT Casio):}  
+    Hướng dẫn bấm phím lặp truy hồi \texttt{Ans} để tính nhanh các số hạng của Bài 2 trên Casio fx-580VN X:  
+    Bấm: \texttt{3} $\to$ \texttt{=} $\to$ bấm tiếp \texttt{2} $\times$ \texttt{Ans} \texttt{-} \texttt{1} $\to$ bấm \texttt{=} liên tục để ra $u_2, u_3, u_4, u_5$.  
+\end{itemize}  
+  
+\noindent \textbf{c) Sản phẩm: Lời giải chi tiết}  
+\begin{enumerate}[leftmargin=0.6cm]  
+    \item \textbf{Bài 1:}  
+    a) Lần lượt thay $n = 1, 2, 3, 4, 5$:  
+    $u_1 = \dfrac{2(1) - 1}{1 + 2} = \dfrac{1}{3}$;\quad $u_2 = \dfrac{2(2) - 1}{2 + 2} = \dfrac{3}{4}$;\quad $u_3 = \dfrac{2(3) - 1}{3 + 2} = \dfrac{5}{5} = 1$;  
+    $u_4 = \dfrac{2(4) - 1}{4 + 2} = \dfrac{7}{6}$;\quad $u_5 = \dfrac{2(5) - 1}{5 + 2} = \dfrac{9}{7}$.  
+    b) Lần lượt thay $n = 1, 2, 3, 4, 5$:  
+    $u_1 = (-1)^1 \cdot \dfrac{1}{2^1} = -\dfrac{1}{2}$;\quad $u_2 = (-1)^2 \cdot \dfrac{2}{2^2} = \dfrac{2}{4} = \dfrac{1}{2}$;\quad $u_3 = (-1)^3 \cdot \dfrac{3}{2^3} = -\dfrac{3}{8}$;  
+    $u_4 = (-1)^4 \cdot \dfrac{4}{2^4} = \dfrac{4}{16} = \dfrac{1}{4}$;\quad $u_5 = (-1)^5 \cdot \dfrac{5}{2^5} = -\dfrac{5}{32}$.  
+  
+    \item \textbf{Bài 2:}  
+    a) Ta có $u_1 = 3$.  
+    $u_2 = 2u_1 - 1 = 2(3) - 1 = 5$.  
+    $u_3 = 2u_2 - 1 = 2(5) - 1 = 9$.  
+    $u_4 = 2u_3 - 1 = 2(9) - 1 = 17$.  
+    $u_5 = 2u_4 - 1 = 2(17) - 1 = 33$.  
+    b) Quan sát quy luật các số hạng:  
+    $u_1 = 3 = 2^1 + 1$  
+    $u_2 = 5 = 2^2 + 1$  
+    $u_3 = 9 = 2^3 + 1$  
+    $u_4 = 17 = 2^4 + 1$  
+    $u_5 = 33 = 2^5 + 1$  
+    Dự đoán công thức số hạng tổng quát: $u_n = 2^n + 1$ với mọi $n \in \mathbb{N}^*$.  
+    \item \textbf{Bài 3:} Học sinh thực hành trên máy tính cầm tay bấm liên tục phím \texttt{=} và đọc to kết quả $5, 9, 17, 33, 65, 129,\dots$  
+\end{enumerate}  
+  
+\noindent \textbf{d) Tổ chức thực hiện:}  
+\begin{itemize}[leftmargin=0.8cm]  
+    \item \textit{Chuyển giao nhiệm vụ:} GV chia lớp làm việc cá nhân trong 7 phút, sau đó hướng dẫn cả lớp thao tác phím \texttt{Ans} trên máy tính cầm tay.  
+    \item \textit{Thực hiện nhiệm vụ:} HS giải bài tập vào phiếu, tự kiểm tra kết quả bằng MTCT.  
+    \item \textit{Báo cáo, thảo luận:} 2 học sinh lên bảng viết bài giải Bài 1a và Bài 2. Cả lớp quan sát cách tìm ra quy luật $2^n + 1$.  
+    \item \textit{Kết luận, nhận định:} GV biểu dương học sinh phát hiện nhanh quy luật lũy thừa, dặn dò việc rèn luyện tư duy nhận dạng mẫu số.  
+\end{itemize}  
+  
+% -------------------------------------------------------------------------
+\subsection*{4. Hoạt động 4: Vận dụng (Ứng dụng bảng tính số)}  
+  
+\noindent \textbf{a) Mục tiêu:}  
+Thực hành kỹ năng số (Mã 1.3NC1a theo TT 02/2025): sử dụng bảng tính Excel kéo thả công thức để tự động sinh dãy số tài chính.  
+  
+\noindent \textbf{b) Nội dung: Bài toán gửi tiết kiệm tích lũy}  
+Bác Ba gửi vào ngân hàng số tiền ban đầu $u_1 = 100\text{ (triệu đồng)}$ với lãi suất không đổi là $6\%/\text{năm}$. Tiền lãi sau mỗi năm được nhập vào vốn (lãi kép).  
+1) Hãy thiết lập hệ thức truy hồi tính số tiền $u_n$ (triệu đồng) mà bác Ba có được sau $n$ năm?  
+2) Hãy mô tả cách nhập công thức trên phần mềm Microsoft Excel để kéo thả tự động sinh ra số tiền của bác Ba trong 10 năm đầu tiên?  
+  
+\noindent \textbf{c) Sản phẩm: Lời giải chi tiết}  
+\begin{enumerate}[leftmargin=0.6cm]  
+    \item Sau mỗi năm, số tiền mới bằng số tiền năm trước cộng với tiền lãi $6\%$:  
+    $$u_n = u_{n-1} + u_{n-1} \cdot 6\% = u_{n-1}(1 + 0{,}06) = 1{,}06 \cdot u_{n-1}$$  
+    Hệ thức truy hồi: $\begin{cases} u_1 = 100 \\ u_n = 1{,}06 \cdot u_{n-1} \quad (n \ge 2) \end{cases}$  
+    \item Thao tác trên phần mềm Excel:  
+    - Cột A (Số năm $n$): Nhập ô \texttt{A1} là 1, ô \texttt{A2} là 2, bôi đen và kéo thả chuột xuống đến ô \texttt{A10} (ra các số từ 1 đến 10).  
+    - Cột B (Số tiền $u_n$): Ô \texttt{B1} nhập \texttt{100}.  
+    - Tại ô \texttt{B2}, gõ công thức: \texttt{= B1 * 1.06} rồi nhấn \texttt{Enter}.  
+    - Đặt con trỏ chuột vào góc dưới bên phải ô \texttt{B2} (xuất hiện dấu cộng màu đen), kéo thả chuột xuống đến ô \texttt{B10}.  
+    Toàn bộ số tiền các năm từ 1 đến 10 tự động hiển thị chính xác trong tích tắc:  
+    Năm 1: 100 tr; Năm 2: 106 tr; Năm 3: 112,36 tr; $\dots$; Năm 10: $\approx 168{,}95\text{ tr}$.  
+\end{enumerate}  
+  
+\noindent \textbf{d) Tổ chức thực hiện:}  
+\begin{itemize}[leftmargin=0.8cm]  
+    \item \textit{Chuyển giao nhiệm vụ:} GV trình chiếu giao diện Excel trên máy chiếu, giao nhiệm vụ cho học sinh thiết lập công thức toán học và công thức Excel.  
+    \item \textit{Thực hiện nhiệm vụ:} HS thảo luận, 1 học sinh lên bàn giáo viên trực tiếp thao tác chuột trên máy tính trình chiếu cho cả lớp quan sát.  
+    \item \textit{Báo cáo, thảo luận:} Cả lớp đối chiếu kết quả số tiền sau 10 năm.  
+    \item \textit{Kết luận, nhận định:} GV nhận xét: "Đây chính là sức mạnh của công nghệ số trong toán học. Ở tiết học sau, chúng ta sẽ khảo sát xem dãy số này tăng hay giảm và có bị chặn hay không".  
+\end{itemize}  
+  
+% =========================================================================
+% TIẾT 2 (TIẾT 12 THEO PPCT)
+% =========================================================================
+\vspace{10pt}  
+\begin{center}  
+    {\fontsize{13pt}{16pt}\selectfont \textbf{TIẾT 2. DÃY SỐ TĂNG, DÃY SỐ GIẢM VÀ DÃY SỐ BỊ CHẶN}}\\[2pt]  
+    \textit{(Tiết 12 theo PPCT \ \textbar \ Tuần 4)}  
+\end{center}  
+  
+\subsection*{1. Hoạt động 1: Khởi động (Mở đầu)}  
+  
+\noindent \textbf{a) Mục tiêu:}  
+Tạo tình huống quan sát các biểu đồ xu hướng thực tế trong đời sống (nhiệt độ cơ thể sau khi uống thuốc hạ sốt, chiều cao của học sinh theo độ tuổi), dẫn dắt tự nhiên vào khái niệm dãy số tăng, dãy số giảm và dãy số bị chặn.  
+  
+\noindent \textbf{b) Nội dung:}  
+Giáo viên chiếu hai biểu đồ đường thực tế:  
+1) Biểu đồ 1: Theo dõi chiều cao trung bình của một học sinh nam từ năm 6 tuổi ($115\text{ cm}$) đến năm 18 tuổi ($175\text{ cm}$).  
+2) Biểu đồ 2: Lượng thuốc còn lại trong cơ thể của một bệnh nhân đo được sau mỗi khoảng thời gian 2 giờ ($100\text{ mg} \to 50\text{ mg} \to 25\text{ mg} \to 12{,}5\text{ mg} \dots$).  
+\textbf{Câu hỏi:}  
+- Nhận xét về xu hướng thay đổi của các giá trị số đo qua các mốc thời gian liên tiếp trong Biểu đồ 1 và Biểu đồ 2?  
+- Chiều cao của một con người có tăng mãi mãi lên đến vô cực được không? Lượng thuốc trong máu có bao giờ nhận giá trị âm không?  
+  
+\noindent \textbf{c) Sản phẩm:}  
+\begin{itemize}[leftmargin=0.8cm]  
+    \item Biểu đồ 1: Giá trị năm sau luôn lớn hơn năm trước $\implies$ Xu hướng tăng dần.  
+    \item Biểu đồ 2: Lượng thuốc ở mốc sau luôn nhỏ hơn mốc trước $\implies$ Xu hướng giảm dần.  
+    \item Chiều cao con người bị chặn lại (không thể cao quá $2{,}5\text{ m}$); lượng thuốc luôn lớn hơn $0$ (bị chặn dưới bởi số 0).  
+    \item Rút ra vấn đề toán học: Cần có các tiêu chuẩn toán học chính xác để định nghĩa dãy số tăng, dãy số giảm và dãy số bị chặn.  
+\end{itemize}  
+  
+\noindent \textbf{d) Tổ chức thực hiện:}  
+\begin{itemize}[leftmargin=0.8cm]  
+    \item \textit{Chuyển giao nhiệm vụ:} GV chiếu 2 biểu đồ, đặt câu hỏi cho học sinh trao đổi cặp đôi trong 2 phút.  
+    \item \textit{Thực hiện nhiệm vụ:} HS liên hệ thực tế, nhận diện từ ngữ "tăng", "giảm", "bị giới hạn".  
+    \item \textit{Báo cáo, thảo luận:} 1 học sinh trả lời trước lớp.  
+    \item \textit{Kết luận, nhận định:} GV chính xác hóa khái niệm hình thành bài mới.  
+\end{itemize}  
+  
+% -------------------------------------------------------------------------
+\subsection*{2. Hoạt động 2: Hình thành kiến thức}  
+  
+\subsubsection*{2.1. Dãy số tăng, dãy số giảm}  
+  
+\noindent \textbf{a) Mục tiêu:}  
+\begin{itemize}[leftmargin=0.8cm]  
+    \item Nhận biết định nghĩa dãy số tăng, dãy số giảm.  
+    \item Nắm vững phương pháp xét tính tăng giảm của một dãy số bằng cách xét dấu hiệu $u_{n+1} - u_n$.  
+\end{itemize}  
+  
+\noindent \textbf{b) Nội dung:}  
+\begin{enumerate}[leftmargin=0.6cm]  
+    \item Định nghĩa dãy số tăng: Dãy số $(u_n)$ được gọi là dãy số tăng nếu với mọi $n \in \mathbb{N}^*$, ta có $u_{n+1} > u_n$.  
+    \item Định nghĩa dãy số giảm: Dãy số $(u_n)$ được gọi là dãy số giảm nếu với mọi $n \in \mathbb{N}^*$, ta có $u_{n+1} < u_n$.  
+    \item Chú ý: Một dãy số có thể không tăng cũng không giảm (ví dụ: dãy đan dấu $u_n = (-1)^n$ hoặc dãy hằng số $u_n = c$).  
+    \item Phương pháp xét tính tăng giảm:  
+    - Cách 1 (Phương pháp xét hiệu): Xét $H = u_{n+1} - u_n$. Nếu $H > 0, \forall n \in \mathbb{N}^* \implies$ dãy tăng; nếu $H < 0, \forall n \in \mathbb{N}^* \implies$ dãy giảm.  
+    - Cách 2 (Phương pháp xét tỉ số, chỉ áp dụng khi $u_n > 0, \forall n$): Xét $T = \dfrac{u_{n+1}}{u_n}$. Nếu $T > 1 \implies$ dãy tăng; nếu $T < 1 \implies$ dãy giảm.  
+\end{enumerate}  
+  
+\noindent \textbf{c) Sản phẩm:}  
+  
+\begin{pedabox}{KIẾN THỨC TRỌNG TÂM: DÃY SỐ TĂNG VÀ DÃY SỐ GIẢM}  
+\begin{itemize}[leftmargin=0.6cm]  
+    \item \textbf{Dãy số tăng:} Dãy số $(u_n)$ là dãy số tăng khi và chỉ khi:  
+    $$u_{n+1} > u_n \iff u_{n+1} - u_n > 0 \quad (\forall n \in \mathbb{N}^*)$$  
+    \item \textbf{Dãy số giảm:} Dãy số $(u_n)$ là dãy số giảm khi và chỉ khi:  
+    $$u_{n+1} < u_n \iff u_{n+1} - u_n < 0 \quad (\forall n \in \mathbb{N}^*)$$  
+    \item \textbf{Lưu ý:} Dãy số $(u_n)$ không đổi ($u_n = c, \forall n$) hoặc dãy có dấu đan xen ($1, -1, 1, -1,\dots$) là dãy \textbf{không tăng, không giảm}.  
+\end{itemize}  
+\end{pedabox}  
+  
+\begin{scaffoldbox}{GIÀN GIÁO SƯ PHẠM: QUY TRÌNH 3 BƯỚC XÉT TÍNH TĂNG GIẢM}  
+Dành cho học sinh trung bình - yếu để tránh nhầm lẫn khi thay biến $n$:  
+\begin{itemize}[leftmargin=0.6cm]  
+    \item \textit{Bước 1 (Xác định $u_{n+1}$):} Trong công thức của $u_n$, ở đâu có chữ $n$, ta thay bằng biểu thức trong ngoặc $(n + 1)$.  
+    \item \textit{Bước 2 (Lập hiệu $H$):} Tính hiệu $H = u_{n+1} - u_n$, sau đó quy đồng mẫu số và rút gọn tối đa tử số.  
+    \item \textit{Bước 3 (Đánh giá dấu):} Nhớ rằng $n \ge 1$ ($n \in \mathbb{N}^*$), đánh giá tử và mẫu:  
+    Nếu $H > 0 \implies$ Dãy tăng; Nếu $H < 0 \implies$ Dãy giảm.  
+\end{itemize}  
+\end{scaffoldbox}  
+  
+\noindent \textbf{d) Tổ chức thực hiện:}  
+\begin{itemize}[leftmargin=0.8cm]  
+    \item \textit{Chuyển giao nhiệm vụ:} GV trình bày định nghĩa và làm mẫu ví dụ xét tính tăng giảm của $u_n = 3n - 2$.  
+    \item \textit{Thực hiện nhiệm vụ:} HS thực hành tìm $u_{n+1} = 3(n + 1) - 2 = 3n + 1$, tính $u_{n+1} - u_n = (3n + 1) - (3n - 2) = 3 > 0 \implies$ dãy số tăng.  
+    \item \textit{Báo cáo, thảo luận:} 1 học sinh nhận xét: "Dãy số bậc nhất $an + b$ tăng khi $a > 0$ và giảm khi $a < 0$".  
+    \item \textit{Kết luận, nhận định:} GV khen ngợi phát hiện khái quát rất thông minh của học sinh.  
+\end{itemize}  
+  
+% -------------------------------------------------------------------------
+\subsubsection*{2.2. Dãy số bị chặn}  
+  
+\noindent \textbf{a) Mục tiêu:}  
+\begin{itemize}[leftmargin=0.8cm]  
+    \item Nhận biết định nghĩa dãy số bị chặn trên, bị chặn dưới và bị chặn.  
+    \item Biết cách sử dụng bất đẳng thức đại số để tìm số chặn $m$ và $M$.  
+\end{itemize}  
+  
+\noindent \textbf{b) Nội dung:}  
+\begin{enumerate}[leftmargin=0.6cm]  
+    \item Định nghĩa dãy số bị chặn trên: Tồn tại số thực $M$ sao cho $u_n \le M, \forall n \in \mathbb{N}^*$. Số $M$ gọi là một chặn trên.  
+    \item Định nghĩa dãy số bị chặn dưới: Tồn tại số thực $m$ sao cho $u_n \ge m, \forall n \in \mathbb{N}^*$. Số $m$ gọi là một chặn dưới.  
+    \item Định nghĩa dãy số bị chặn: Dãy số vừa bị chặn trên vừa bị chặn dưới:  
+    $$\exists m, M \in \mathbb{R}: m \le u_n \le M, \quad \forall n \in \mathbb{N}^*$$  
+\end{enumerate}  
+  
+\noindent \textbf{c) Sản phẩm:}  
+  
+\begin{pedabox}{KIẾN THỨC TRỌNG TÂM: DÃY SỐ BỊ CHẶN}  
+\begin{itemize}[leftmargin=0.6cm]  
+    \item Dãy số $(u_n)$ \textbf{bị chặn trên} nếu tồn tại số $M$ sao cho:  
+    $$u_n \le M, \quad \forall n \in \mathbb{N}^*$$  
+    \item Dãy số $(u_n)$ \textbf{bị chặn dưới} nếu tồn tại số $m$ sao cho:  
+    $$u_n \ge m, \quad \forall n \in \mathbb{N}^*$$  
+    \item Dãy số $(u_n)$ \textbf{bị chặn} nếu nó vừa bị chặn trên vừa bị chặn dưới, tức là:  
+    $$m \le u_n \le M, \quad \forall n \in \mathbb{N}^*$$  
+\end{itemize}  
+\end{pedabox}  
+  
+\begin{aibox}{NĂNG LỰC AI: SỬ DỤNG TRỢ LÝ AI HỖ TRỢ CHỨNG MINH BỊ CHẶN (QĐ 2422)}  
+\begin{itemize}[leftmargin=0.6cm]  
+    \item \textbf{Thực hành kỹ thuật đặt câu lệnh prompt (Mã 11.C3.1):}  
+    \textit{"Hãy chứng minh dãy số $u_n = \dfrac{2n + 1}{n + 1}$ bị chặn. Hãy tách số hạng dưới dạng hỗn số $u_n = a + \dfrac{b}{n+1}$, chỉ rõ giá trị chặn dưới $m$ và chặn trên $M$, đồng thời giải thích rõ ràng cho học sinh lớp 11 dễ hiểu."}  
+    \item \textbf{Đánh giá kết quả của AI:} AI tách $u_n = 2 - \dfrac{1}{n+1}$. Vì $n \ge 1 \implies \dfrac{1}{n+1} \le \dfrac{1}{2} \implies u_n \ge \dfrac{3}{2}$ và do $\dfrac{1}{n+1} > 0 \implies u_n < 2$. Vậy $\dfrac{3}{2} \le u_n < 2 \implies$ Dãy số bị chặn. Học sinh học được phương pháp tách phần nguyên kinh điển.  
+\end{itemize}  
+\end{aibox}  
+  
+\noindent \textbf{d) Tổ chức thực hiện:}  
+\begin{itemize}[leftmargin=0.8cm]  
+    \item \textit{Chuyển giao nhiệm vụ:} GV yêu cầu học sinh đọc định nghĩa trong SGK, làm việc theo bàn ví dụ $u_n = \dfrac{1}{n}$.  
+    \item \textit{Thực hiện nhiệm vụ:} HS phân tích: Vì $n \ge 1 \implies 0 < \dfrac{1}{n} \le 1$. Do đó dãy số bị chặn dưới bởi $0$ và bị chặn trên bởi $1$.  
+    \item \textit{Báo cáo, thảo luận:} 1 học sinh trả lời, GV xác nhận dãy số bị chặn.  
+    \item \textit{Kết luận, nhận định:} GV nhấn mạnh kỹ thuật tách phần nguyên đối với hàm phân thức bậc nhất trên bậc nhất.  
+\end{itemize}  
+  
+% -------------------------------------------------------------------------
+\subsection*{3. Hoạt động 3: Luyện tập}  
+  
+\noindent \textbf{a) Mục tiêu:}  
+Học sinh áp dụng thành thạo các phương pháp chứng minh dãy số tăng, giảm và bị chặn qua hệ thống bài tập phân hóa.  
+  
+\noindent \textbf{b) Nội dung: Phiếu học tập số 2 (Worksheet 2)}  
+\begin{itemize}[leftmargin=0.6cm]  
+    \item \textbf{Bài 1:} Xét tính tăng, giảm của các dãy số sau:  
+    a) $u_n = 2n + 3$ \qquad b) $u_n = \dfrac{1}{2^n}$ \qquad c) $u_n = \dfrac{n - 1}{n + 1}$  
+    \item \textbf{Bài 2:} Xét tính bị chặn của các dãy số sau:  
+    a) $u_n = \dfrac{3n - 1}{n + 1}$ \qquad b) $u_n = \cos\left(\dfrac{\pi}{n}\right)$ \qquad c) $u_n = n^2 + 2$  
+\end{itemize}  
+  
+\noindent \textbf{c) Sản phẩm: Lời giải chi tiết}  
+\begin{enumerate}[leftmargin=0.6cm]  
+    \item \textbf{Bài 1:}  
+    a) Ta có $u_{n+1} = 2(n + 1) + 3 = 2n + 5$.  
+    Xét hiệu: $u_{n+1} - u_n = (2n + 5) - (2n + 3) = 2 > 0, \forall n \in \mathbb{N}^*$.  
+    Vậy dãy số $(u_n)$ là \textbf{dãy số tăng}.  
+    b) Ta có $u_n = \dfrac{1}{2^n} > 0, \forall n \in \mathbb{N}^*$.  
+    Xét hiệu: $u_{n+1} - u_n = \dfrac{1}{2^{n+1}} - \dfrac{1}{2^n} = \dfrac{1 - 2}{2^{n+1}} = -\dfrac{1}{2^{n+1}} < 0, \forall n \in \mathbb{N}^*$.  
+    Vậy dãy số $(u_n)$ là \textbf{dãy số giảm}.  
+    c) Ta có $u_n = \dfrac{n - 1}{n + 1}$ và $u_{n+1} = \dfrac{(n + 1) - 1}{(n + 1) + 1} = \dfrac{n}{n + 2}$.  
+    Xét hiệu:  
+    $$u_{n+1} - u_n = \dfrac{n}{n + 2} - \dfrac{n - 1}{n + 1} = \dfrac{n(n + 1) - (n - 1)(n + 2)}{(n + 2)(n + 1)}$$  
+    $$= \dfrac{(n^2 + n) - (n^2 + n - 2)}{(n + 2)(n + 1)} = \dfrac{2}{(n + 2)(n + 1)} > 0, \quad \forall n \in \mathbb{N}^*$$  
+    Vậy dãy số $(u_n)$ là \textbf{dãy số tăng}.  
+  
+    \item \textbf{Bài 2:}  
+    a) Ta tách: $u_n = \dfrac{3(n + 1) - 4}{n + 1} = 3 - \dfrac{4}{n + 1}$.  
+    Vì $n \ge 1 \implies n + 1 \ge 2 \implies 0 < \dfrac{4}{n + 1} \le \dfrac{4}{2} = 2$.  
+    - Do $\dfrac{4}{n+1} > 0 \implies u_n < 3$ (bị chặn trên bởi 3).  
+    - Do $\dfrac{4}{n+1} \le 2 \implies u_n \ge 3 - 2 = 1$ (bị chặn dưới bởi 1).  
+    Vậy $1 \le u_n < 3, \forall n \in \mathbb{N}^* \implies$ Dãy số $(u_n)$ là \textbf{dãy số bị chặn}.  
+    b) Do đặc trưng của hàm số cosin, với mọi $n \in \mathbb{N}^*$, ta luôn có:  
+    $$-1 \le \cos\left(\dfrac{\pi}{n}\right) \le 1$$  
+    Vậy dãy số $(u_n)$ là \textbf{dãy số bị chặn}.  
+    c) Vì $n \ge 1 \implies n^2 \ge 1 \implies u_n = n^2 + 2 \ge 1 + 2 = 3, \forall n \in \mathbb{N}^*$.  
+    Dãy số bị chặn dưới bởi 3. Tuy nhiên, khi $n$ tăng vô hạn thì $n^2 + 2$ tăng lên vô tận nên không bị chặn trên.  
+    Vậy dãy số $(u_n)$ chỉ \textbf{bị chặn dưới}, \textbf{không bị chặn}.  
+\end{enumerate}  
+  
+\noindent \textbf{d) Tổ chức thực hiện:}  
+\begin{itemize}[leftmargin=0.8cm]  
+    \item \textit{Chuyển giao nhiệm vụ:} Chia 7 nhóm học sinh giải 2 bài toán vào phiếu học tập trong 10 phút.  
+    \item \textit{Thực hiện nhiệm vụ:} Các nhóm phân công làm bài. GV hỗ trợ các bạn yếu ở Bài 1c trong bước khai triển đa thức tử số $n(n+1) - (n-1)(n+2)$.  
+    \item \textit{Báo cáo, thảo luận:} 2 đại diện lên bảng trình bày Bài 1c và Bài 2a.  
+    \item \textit{Kết luận, nhận định:} GV chuẩn hóa cách trình bày tự luận, chốt quy tắc tách phần nguyên.  
+\end{itemize}  
+  
+% -------------------------------------------------------------------------
+\subsection*{4. Hoạt động 4: Vận dụng (Giáo dục STEM)}  
+  
+\noindent \textbf{a) Mục tiêu:}  
+Tích hợp kiến thức toán học dãy số vào mô hình Dược học - Y tế thực tiễn: nồng độ thuốc trong máu bệnh nhân tuân theo một dãy số giảm và bị chặn, phát triển năng lực mô hình hóa toán học.  
+  
+\noindent \textbf{b) Nội dung: Mô hình đào thải thuốc trong điều trị y tế}  
+Một bệnh nhân được tiêm một liều thuốc kháng sinh ban đầu là $100\text{ mg}$. Cứ sau mỗi ngày, cơ thể bệnh nhân tự đào thải $40\%$ lượng thuốc còn lại từ ngày hôm trước.  
+1) Hãy thiết lập công thức số hạng tổng quát $u_n$ biểu thị lượng thuốc (mg) còn lại trong cơ thể bệnh nhân vào ngày thứ $n$ ($n \in \mathbb{N}^*$)?  
+2) Chứng minh rằng dãy số $(u_n)$ là một dãy số giảm?  
+3) Dãy số này có bị chặn không? Vì sao?  
+  
+\noindent \textbf{c) Sản phẩm: Lời giải chi tiết}  
+\begin{enumerate}[leftmargin=0.6cm]  
+    \item Ngày đầu tiên ($n = 1$): $u_1 = 100\text{ mg}$.  
+    Sau mỗi ngày, lượng thuốc đào thải $40\%$, nghĩa là lượng thuốc còn lại giữ lại $60\% = 0{,}6$:  
+    $u_2 = 100 \cdot 0{,}6$; \quad $u_3 = 100 \cdot 0{,}6^2$; \quad $\dots$ \quad $u_n = 100 \cdot (0{,}6)^{n-1}\text{ (mg)}$.  
+    \item Xét tỉ số giữa hai số hạng liên tiếp:  
+    Vì $u_n = 100 \cdot (0{,}6)^{n-1} > 0, \forall n \in \mathbb{N}^*$, ta có:  
+    $$\dfrac{u_{n+1}}{u_n} = \dfrac{100 \cdot (0{,}6)^n}{100 \cdot (0{,}6)^{n-1}} = 0{,}6 < 1 \implies u_{n+1} < u_n, \quad \forall n \in \mathbb{N}^*$$  
+    Vậy dãy số $(u_n)$ là một \textbf{dãy số giảm}.  
+    \item Xét tính bị chặn:  
+    - Vì $0{,}6 > 0 \implies u_n > 0, \forall n \in \mathbb{N}^*$ (bị chặn dưới bởi số 0).  
+    - Vì dãy số giảm liên tục nên số hạng đầu tiên là lớn nhất: $u_n \le u_1 = 100\text{ mg}, \forall n \in \mathbb{N}^*$ (bị chặn trên bởi 100).  
+    Do đó:  
+    $$0 < u_n \le 100, \quad \forall n \in \mathbb{N}^*$$  
+    Vậy dãy số $(u_n)$ là một \textbf{dãy số bị chặn}.  
+    \textit{Ý nghĩa y tế:} Nồng độ thuốc giảm dần theo thời gian và luôn giữ giá trị dương cho đến khi tiêm liều bổ sung tiếp theo, đảm bảo không bao giờ gây ngộ độc quá liều cho bệnh nhân.  
+\end{enumerate}  
+  
+\noindent \textbf{d) Tổ chức thực hiện:}  
+\begin{itemize}[leftmargin=0.8cm]  
+    \item \textit{Chuyển giao nhiệm vụ:} GV trình chiếu bài toán thực tế, giao cả lớp hoàn thành bài giải vào vở.  
+    \item \textit{Thực hiện nhiệm vụ:} HS đưa bài toán về dãy lũy thừa, chứng minh dãy giảm và bị chặn.  
+    \item \textit{Báo cáo, thảo luận:} 1 học sinh lên bảng giải, nêu ý nghĩa thực tiễn của bài toán.  
+    \item \textit{Kết luận, nhận định:} GV nhận xét, khen ngợi và tổng kết: Dãy số là bước đệm nền tảng để học hai quy luật dãy số đặc biệt nhất ở các bài sau: Cấp số cộng và Cấp số nhân.  
+\end{itemize}  
+  
+% =========================================================================
+% PHẦN IV. PHỤ LỤC HỌC LIỆU BỔ TRỢ
+% =========================================================================
+\section*{IV. PHỤ LỤC HỌC LIỆU BỔ TRỢ}  
+  
+\subsection*{1. Bảng tóm tắt hệ thống kiến thức Bài 5: Dãy số}  
+  
+\begin{center}  
+\small  
+\begin{tabularx}{\textwidth}{|p{3.2cm}|X|X|}  
+\hline  
+\textbf{Khái niệm} & \textbf{Định nghĩa toán học} & \textbf{Phương pháp nhận biết / Chứng minh} \\ \hline  
+\textbf{Dãy số vô hạn} & Hàm số $u: \mathbb{N}^* \to \mathbb{R},\ n \mapsto u_n$ & Tập xác định là $\mathbb{N}^* = \{1, 2, 3, \dots\}$ \\ \hline  
+\textbf{Dãy số hữu hạn} & Hàm số $u: \{1, 2, \dots, m\} \to \mathbb{R}$ & Có số hạng đầu $u_1$ và số hạng cuối $u_m$ \\ \hline  
+\textbf{Dãy số tăng} & $u_{n+1} > u_n, \quad \forall n \in \mathbb{N}^*$ & Xét hiệu $u_{n+1} - u_n > 0$ (hoặc $\dfrac{u_{n+1}}{u_n} > 1$ nếu $u_n > 0$) \\ \hline  
+\textbf{Dãy số giảm} & $u_{n+1} < u_n, \quad \forall n \in \mathbb{N}^*$ & Xét hiệu $u_{n+1} - u_n < 0$ (hoặc $\dfrac{u_{n+1}}{u_n} < 1$ nếu $u_n > 0$) \\ \hline  
+\textbf{Dãy số bị chặn} & $\exists m, M \in \mathbb{R}: m \le u_n \le M, \forall n$ & Đánh giá bất đẳng thức tìm cận dưới $m$ và cận trên $M$ \\ \hline  
+\end{tabularx}  
+\end{center}  
+  
+\subsection*{2. Phiếu học tập phân tầng bậc thang}  
+  
+\noindent \textbf{PHIẾU HỌC TẬP SỐ 1 (Tiết 1: Định nghĩa và cách cho dãy số)}  
+\begin{itemize}[leftmargin=0.6cm]  
+    \item \textbf{Tầng 1 (Nhận biết - Dành cho HS TB-Yếu):}  
+    Viết 4 số hạng đầu của dãy số: a) $u_n = 3n - 1$; \quad b) $u_n = 2^n$; \quad c) $u_n = \dfrac{1}{n + 1}$.  
+    \item \textbf{Tầng 2 (Thông hiểu):}  
+    Cho dãy số $(u_n)$ có $u_1 = 1, u_n = u_{n-1} + 3$ ($n \ge 2$).  
+    a) Tính $u_2, u_3, u_4, u_5$. \quad b) Dự đoán công thức tổng quát $u_n$.  
+    \item \textbf{Tầng 3 (Vận dụng):}  
+    Tìm số hạng thứ 100 của dãy số $u_n = \dfrac{n}{n^2 + 1}$.  
+\end{itemize}  
+  
+\vspace{5pt}  
+\noindent \textbf{PHIẾU HỌC TẬP SỐ 2 (Tiết 2: Tính tăng giảm và bị chặn)}  
+\begin{itemize}[leftmargin=0.6cm]  
+    \item \textbf{Tầng 1 (Nhận biết - Dành cho HS TB-Yếu):}  
+    Trong các dãy số sau, dãy số nào là dãy tăng, dãy giảm:  
+    a) $1, 3, 5, 7, 9,\dots$ \qquad b) $10, 8, 6, 4, 2,\dots$ \qquad c) $1, -1, 1, -1,\dots$  
+    \item \textbf{Tầng 2 (Thông hiểu):}  
+    Chứng minh dãy số $u_n = \dfrac{2n - 1}{n + 1}$ là dãy số tăng và bị chặn.  
+    \item \textbf{Tầng 3 (Vận dụng cao):}  
+    Xét tính tăng giảm và bị chặn của dãy số $u_n = \dfrac{n^2 + 1}{2n^2 + 3}$.  
+\end{itemize}  
+  
+\subsection*{3. Bảng Rubric đánh giá năng lực học sinh (4 mức độ)}  
+  
+\begin{center}  
+\small  
+\begin{tabularx}{\textwidth}{|p{2.8cm}|X|X|X|X|}  
+\hline  
+\textbf{Tiêu chí} & \textbf{Chưa đạt (Mức 1)} & \textbf{Đạt (Mức 2)} & \textbf{Khá (Mức 3)} & \textbf{Tốt (Mức 4)} \\ \hline  
+\textbf{Nhận biết khái niệm dãy số} & Nhầm lẫn giữa chỉ số $n$ và số hạng $u_n$, không tính được số hạng. & Tính được các số hạng đầu khi cho công thức tổng quát đơn giản. & Nắm vững 4 cách cho dãy số, tính đúng số hạng qua hệ thức truy hồi. & Hiểu sâu sắc bản chất hàm số trên $\mathbb{N}^*$, nhận diện linh hoạt các quy luật dãy số. \\ \hline  
+\textbf{Kỹ năng xét tăng/giảm \& bị chặn} & Chưa biết cách lập hiệu $u_{n+1} - u_n$, biến đổi đại số sai sót. & Tính được $u_{n+1}$ và lập hiệu nhưng bước đánh giá dấu còn lúng túng. & Thành thạo phương pháp xét hiệu, chứng minh chính xác tính tăng giảm và bị chặn. & Vận dụng linh hoạt cả phương pháp xét tỉ số và bất đẳng thức nâng cao. \\ \hline  
+\textbf{Ứng dụng số \& Đánh giá AI} & Chưa biết sử dụng MTCT hoặc phần mềm để tính toán dãy số. & Sử dụng được MTCT để tính một vài số hạng đầu tiên. & Sử dụng thành thạo tính năng lặp \texttt{Ans} trên Casio và kéo thả công thức trên Excel. & Khai thác xuất sắc bảng tính số để vẽ biểu đồ xu hướng và phân tích thuật toán chuỗi thời gian AI. \\ \hline  
+\textbf{Hợp tác nhóm \& Phẩm chất} & Thụ động, chưa tích cực tham gia thảo luận nhóm. & Có tham gia làm bài nhưng còn ỷ lại vào bạn học lực khá. & Tích cực thảo luận, hoàn thành đúng tiến độ phiếu học tập. & Chủ động hỗ trợ, hướng dẫn nhiệt tình các bạn yếu hoàn thành bài tập. \\ \hline  
+\end{tabularx}  
+\end{center}  
+  
+\end{document}
