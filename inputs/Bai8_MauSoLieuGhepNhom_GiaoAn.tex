@@ -1,0 +1,548 @@
+\documentclass[12pt, a4paper]{article}
+% --- 1. Cấu hình Tiếng Việt và Font chữ chuẩn ---
+\usepackage[utf8]{inputenc}
+\usepackage[T5]{fontenc}
+\usepackage[vietnamese]{babel}
+\usepackage{mathptmx} % Font Times New Roman đồng bộ cả chữ và công thức toán, không gây xung đột gói
+
+\makeatletter
+\renewcommand{\normalsize}{\@setfontsize\normalsize{13pt}{16pt}}
+\makeatother
+\normalsize
+
+% --- 2. Gói Toán học & Ký hiệu bổ trợ ---
+\usepackage{amsmath, amssymb, amsfonts, mathrsfs, amsthm}
+\usepackage{graphicx}
+\usepackage{fontawesome}
+\usepackage{booktabs, tabularx, array, multirow}
+\usepackage{enumitem}
+
+% --- 3. Đồ họa TikZ, Bảng biến thiên & Hình không gian ---
+\usepackage{tikz}
+\usetikzlibrary{calc, intersections, angles, quotes, patterns, arrows.meta, 3d}
+\usepackage{pgfplots}
+\pgfplotsset{compat=1.18}
+\usepackage{tkz-euclide}
+\usepackage{tkz-tab}
+
+\renewcommand{\vec}[1]{\overrightarrow{#1}}
+
+% --- 4. Hộp sư phạm (Tcolorbox) ---
+\usepackage[many]{tcolorbox}
+\tcbuselibrary{skins, breakable}
+
+% --- 5. Căn lề chuẩn văn bản giáo án ---
+\usepackage{geometry}
+\geometry{
+    a4paper,
+    left=25mm,
+    right=15mm,
+    top=20mm,
+    bottom=20mm
+}
+
+% --- 6. Header / Footer chuẩn hóa ---
+\usepackage{fancyhdr}
+\usepackage{lastpage}
+\pagestyle{fancy}
+\fancyhf{}
+
+\fancyhead[L]{\small \textit{Kế hoạch bài dạy Toán 11}}
+\fancyhead[R]{\textbf{Trang \thepage/\pageref{LastPage}}}
+\fancyfoot[L]{\small \textit{Tổ Toán - Tin}}
+\fancyfoot[R]{\small \textit{Trường THCS\&THPT Hồng Vân}}
+\renewcommand{\headrulewidth}{0.4pt}
+\renewcommand{\footrulewidth}{0.4pt}
+
+% --- 7. Giãn dòng & Giãn đoạn theo chuẩn Nghị định 30/2020/NĐ-CP ---
+\usepackage{setspace}
+\setstretch{1.15}
+\setlength{\parindent}{1.0cm}
+\setlength{\parskip}{5pt}
+
+% Định nghĩa hộp sư phạm chuyên dụng
+\newtcolorbox{pedabox}[2][]{
+    enhanced,
+    breakable,
+    colback=blue!3!white,
+    colframe=blue!65!black,
+    fonttitle=\bfseries\small,
+    title={#2},
+    arc=2mm,
+    boxrule=0.6pt,
+    left=3mm, right=3mm, top=2mm, bottom=2mm,
+    #1
+}
+
+\newtcolorbox{aibox}[2][]{
+    enhanced,
+    breakable,
+    colback=teal!4!white,
+    colframe=teal!70!black,
+    fonttitle=\bfseries\small,
+    title={#2},
+    arc=2mm,
+    boxrule=0.6pt,
+    left=3mm, right=3mm, top=2mm, bottom=2mm,
+    #1
+}
+
+\newtcolorbox{scaffoldbox}[2][]{
+    enhanced,
+    breakable,
+    colback=orange!4!white,
+    colframe=orange!80!black,
+    fonttitle=\bfseries\small,
+    title={#2},
+    arc=2mm,
+    boxrule=0.6pt,
+    left=3mm, right=3mm, top=2mm, bottom=2mm,
+    #1
+}
+
+\begin{document}
+
+\begin{center}
+    {\fontsize{14pt}{17pt}\selectfont \textbf{KẾ HOẠCH BÀI DẠY MÔN TOÁN LỚP 11}}\\[6pt]
+    {\fontsize{16pt}{19pt}\selectfont \textbf{BÀI 8. MẪU SỐ LIỆU GHÉP NHÓM}}\\[4pt]
+    {\fontsize{12pt}{15pt}\selectfont \textbf{Môn học: Toán 11} \ \textbar \ \textbf{Thời lượng: 1 tiết (Tiết 18 theo PPCT | Tuần 6)}}
+\end{center}
+
+\vspace{5pt}
+
+\section*{I. MỤC TIÊU}
+
+\subsection*{1. Kiến thức, Năng lực}
+
+\begin{itemize}[leftmargin=1.2cm]
+    \item \textbf{Yêu cầu cần đạt (Nguyên văn CT GDPT 2018):}
+    \begin{itemize}[leftmargin=0.6cm]
+        \item Thiết lập được bảng tần số ghép nhóm, bảng tần số tương đối ghép nhóm từ một mẫu số liệu cho trước.
+        \item Thiết lập được biểu đồ tần số tương đối ghép nhóm (histogram) (ở dạng biểu đồ cột liền kề hoặc biểu đồ đoạn thẳng).
+        \item Hiểu được ý nghĩa và sự cần thiết của việc ghép nhóm số liệu khi kích thước mẫu lớn hoặc số liệu có độ phân tán rộng trong thực tiễn.
+    \end{itemize}
+
+    \item \textbf{Năng lực Toán học đặc thù:}
+    \begin{itemize}[leftmargin=0.6cm]
+        \item \textit{Năng lực tư duy và lập luận toán học:} Lập luận chỉ ra sự hạn chế của mẫu số liệu không ghép nhóm khi đối mặt với dữ liệu có quy mô lớn; phân tích quy tắc phân chia các nửa khoảng $[a_i; a_{i+1})$ đảm bảo tính rời nhau, liên tục và bao phủ toàn bộ phạm vi dữ liệu; giải thích ý nghĩa đại diện của giá trị chính giữa $c_i = \dfrac{a_i + a_{i+1}}{2}$.
+        \item \textit{Năng lực mô hình hóa toán học:} Chuyển đổi dữ liệu thực tế đời sống (thời gian học tập, chiều cao, cân nặng, thu nhập, điểm thi) thành bảng tần số và tần số tương đối ghép nhóm; thiết lập biểu đồ tần số tương đối ghép nhóm để trực quan hóa quy luật phân bố của tập dữ liệu.
+        \item \textit{Năng lực giải quyết vấn đề toán học:} Phân loại các giá trị quan sát vào đúng nhóm theo quy tắc nửa khoảng $[a_i; a_{i+1})$; tính toán chuẩn xác tần số $m_i$, tần số tương đối $f_i = \dfrac{m_i}{n} \times 100\%$ và giá trị đại diện $c_i$; dựng biểu đồ cột ghép nhóm với các cột dính liền nhau phản ánh tính liên tục của dữ liệu.
+        \item \textit{Năng lực giao tiếp toán học:} Đọc, hiểu và diễn đạt chính xác các thông tin từ bảng phân bố tần số ghép nhóm và biểu đồ histogram; tự tin báo cáo, nhận xét xu thế tập trung của dữ liệu trước lớp.
+        \item \textit{Năng lực sử dụng công cụ, phương tiện học toán:} Khai thác máy tính cầm tay (MTCT) Casio fx-580VN X để tính tỉ số phần trăm; sử dụng phần mềm bảng tính điện tử (Microsoft Excel / Google Sheets) với hàm \texttt{FREQUENCY} và công cụ biểu đồ để tự động hóa quá trình ghép nhóm và trực quan hóa số liệu.
+    \end{itemize}
+
+    \item \textbf{Năng lực số (Theo Thông tư 02/2025/TT-BGDĐT):}
+    \begin{itemize}[leftmargin=0.6cm]
+        \item \textit{Mã 5.1NC1b (Tự động hóa xử lý dữ liệu trên bảng tính số):} Học sinh sử dụng hàm mảng \texttt{=FREQUENCY(data\_array, bins\_array)} trên phần mềm Microsoft Excel / Google Sheets để tự động đếm tần số các phần tử rơi vào từng nhóm định trước, tiết kiệm thời gian và loại bỏ sai sót thủ công.
+        \item \textit{Mã 3.2NC1a (Trực quan hóa dữ liệu số):} Học sinh tạo lập biểu đồ cột ghép nhóm (Histogram) trên bảng tính số, tùy biến độ rộng khoảng cách cột bằng 0 (\texttt{Gap Width = 0\%}) để tạo biểu đồ các cột liền kề chuẩn mực theo định dạng thống kê quốc tế.
+    \end{itemize}
+
+    \item \textbf{Năng lực AI (Theo Quyết định 2422/QĐ-BGDĐT):}
+    \begin{itemize}[leftmargin=0.6cm]
+        \item \textit{Mã 11.C5.2 (Hiểu biết về thuật toán gom cụm trong Học máy):} Học sinh nhận biết và nêu được sự tương đồng bản chất giữa thao tác ghép nhóm số liệu trong Thống kê với các thuật toán gom cụm không giám sát (Clustering Algorithms như $K$-Means Clustering) trong Trí tuệ nhân tạo (AI), dùng để phân khúc khách hàng, lọc dữ liệu và nén thông tin.
+    \end{itemize}
+
+    \item \textbf{Năng lực chung:}
+    \begin{itemize}[leftmargin=0.6cm]
+        \item \textit{Tự chủ và tự học:} Chủ động nghiên cứu các khái niệm về nhóm số liệu, giá trị đại diện và các bước vẽ biểu đồ trong SGK.
+        \item \textit{Giao tiếp và hợp tác:} Tương tác nhóm hiệu quả khi phân công đếm số liệu thô, đối chiếu kết quả đếm chéo giữa các thành viên để đảm bảo tổng tần số $\sum m_i = n$.
+    \end{itemize}
+\end{itemize}
+
+\subsection*{2. Phẩm chất}
+
+\begin{itemize}[leftmargin=1.2cm]
+    \item \textbf{Chăm chỉ:} Cẩn thận, tỉ mỉ trong việc kiểm đếm từng giá trị dữ liệu thô, không bỏ sót hoặc đếm trùng lặp phần tử.
+    \item \textbf{Trung thực:} Báo cáo số liệu trung thực, khách quan theo đúng dữ liệu thu thập thực tế, không tự ý thêm bớt số liệu để làm đẹp kết quả thống kê.
+    \item \textbf{Trách nhiệm:} Ý thức được vai trò sống còn của dữ liệu chuẩn xác trong việc ra quyết định quản lý và ứng dụng chuyển đổi số.
+\end{itemize}
+
+\section*{II. THIẾT BỊ DẠY HỌC VÀ HỌC LIỆU}
+
+\begin{itemize}[leftmargin=1.2cm]
+    \item \textbf{Giáo viên:}
+    \begin{itemize}[leftmargin=0.6cm]
+        \item Kế hoạch bài dạy chi tiết, bài trình chiếu PowerPoint/Canva tương tác.
+        \item Bảng số liệu thô thực tế: Khảo sát thời gian sử dụng mạng Internet trong một ngày của $40$ học sinh lớp 11.
+        \item Tệp bảng tính Microsoft Excel minh họa hàm \texttt{FREQUENCY} và biểu đồ Histogram.
+        \item Phiếu học tập phân tầng bậc thang (Worksheet 3 tầng) và Bảng Rubric đánh giá năng lực 4 mức độ.
+    \end{itemize}
+    \item \textbf{Học sinh:}
+    \begin{itemize}[leftmargin=0.6cm]
+        \item SGK Toán 11, vở ghi chép, thước kẻ có chia vạch milimét.
+        \item Máy tính cầm tay Casio fx-580VN X.
+    \end{itemize}
+\end{itemize}
+
+\section*{III. TIẾN TRÌNH DẠY HỌC (TIẾT 18 THEO PPCT | TUẦN 6)}
+
+\subsection*{1. Hoạt động 1: Khởi động (Mở đầu)}
+
+\noindent \textbf{a) Mục tiêu:}
+Tạo tình huống thực tế sinh động về một tập dữ liệu có quy mô lớn và rời rạc; tạo xung đột nhận thức giúp học sinh thấy rằng bảng phân bố tần số không ghép nhóm trở nên quá dài và khó quan sát, từ đó xuất hiện nhu cầu tự nhiên phải ``ghép nhóm'' số liệu.
+
+\noindent \textbf{b) Nội dung: Bài toán khảo sát thời gian sử dụng điện thoại thông minh}
+\begin{pedabox}{Tình huống mở đầu: Khảo sát thói quen sử dụng thiết bị số}
+Giáo viên ghi lại thời gian sử dụng điện thoại thông minh (tính bằng phút) trong một ngày Chủ nhật của $30$ học sinh lớp 11 như sau:
+\begin{center}
+\small
+\begin{tabular}{|cccccccccc|}
+\hline
+$35$ & $42$ & $55$ & $68$ & $72$ & $85$ & $90$ & $95$ & $105$ & $110$ \\
+$115$ & $120$ & $125$ & $130$ & $135$ & $140$ & $145$ & $150$ & $155$ & $160$ \\
+$165$ & $170$ & $175$ & $180$ & $185$ & $190$ & $200$ & $210$ & $225$ & $240$ \\
+\hline
+\end{tabular}
+\end{center}
+\textbf{Câu hỏi khởi động:}
+\begin{enumerate}[leftmargin=0.6cm]
+    \item Nếu lập bảng tần số không ghép nhóm (liệt kê từng giá trị cụ thể), bảng số liệu này sẽ có bao nhiêu dòng? Em có nhận xét gì về tính trực quan và khả năng rút ra nhận định nhanh từ bảng đó?
+    \item Làm thế nào để tóm tắt số liệu trên thành một bảng ngắn gọn gồm khoảng $4$ đến $5$ dòng mà vẫn phản ánh rõ xu hướng sử dụng điện thoại ít, trung bình hay nhiều của học sinh?
+\end{enumerate}
+\end{pedabox}
+
+\noindent \textbf{c) Sản phẩm: Lời giải chi tiết}
+\begin{enumerate}[leftmargin=0.6cm]
+    \item Nếu không ghép nhóm, do các giá trị hầu hết khác nhau đôi một ($30$ giá trị riêng biệt), bảng tần số sẽ gồm đúng $30$ dòng, mỗi giá trị chỉ có tần số bằng $1$. Bảng này quá dài dòng, cồng kềnh, phân tán và hầu như không giúp ích gì cho việc nhận diện quy luật chung hay xu thế của tập dữ liệu.
+    \item \textit{Giải pháp:} Ta nên gom các số liệu gần nhau vào từng nhóm (khoảng/nửa khoảng), ví dụ:
+    \begin{itemize}
+        \item Nhóm 1 (Dưới 1 giờ): Từ $30$ đến dưới $60$ phút.
+        \item Nhóm 2 (Từ 1 đến 2 giờ): Từ $60$ đến dưới $120$ phút.
+        \item Nhóm 3 (Từ 2 đến 3 giờ): Từ $120$ đến dưới $180$ phút.
+        \item Nhóm 4 (Từ 3 đến 4 giờ): Từ $180$ đến dưới $240$ phút.
+        \item Nhóm 5 (Từ 4 giờ trở lên): Từ $240$ đến dưới $300$ phút.
+    \end{itemize}
+    Bảng tóm tắt chỉ còn $5$ dòng rất gọn gàng, giúp ta thấy ngay khoảng thời gian nào có nhiều học sinh tập trung nhất. Đó chính là ý tưởng của \textbf{Mẫu số liệu ghép nhóm}.
+\end{enumerate}
+
+\noindent \textbf{d) Tổ chức thực hiện:}
+\begin{itemize}[leftmargin=0.8cm]
+    \item \textit{Chuyển giao nhiệm vụ:} Giáo viên trình chiếu bảng 30 số liệu thô, đặt vấn đề và yêu cầu học sinh thảo luận cặp đôi trong 3 phút.
+    \item \textit{Thực hiện nhiệm vụ:} Học sinh quan sát, nhận xét số dòng nếu lập bảng đơn lẻ và đề xuất cách gom khoảng thời gian.
+    \item \textit{Báo cáo, thảo luận:} 1 học sinh trả lời miệng; giáo viên ghi nhận ý tưởng gom nhóm theo từng khoảng 30 hoặc 60 phút.
+    \item \textit{Kết luận, nhận định:} Giáo viên dẫn dắt vào bài mới: Khi số liệu lớn hoặc là biến liên tục (thời gian, chiều cao, cân nặng), việc gom nhóm là bắt buộc $\implies$ Bài 8. Mẫu số liệu ghép nhóm.
+\end{itemize}
+
+\subsection*{2. Hoạt động 2: Hình thành kiến thức}
+
+\subsubsection*{2.1. Khái niệm mẫu số liệu ghép nhóm và các yếu tố cơ bản}
+
+\noindent \textbf{a) Mục tiêu:}
+Học sinh hiểu bản chất của mẫu số liệu ghép nhóm, nắm vững quy tắc nửa khoảng $[a_i; a_{i+1})$, xác định được đầu mút, độ dài nhóm và giá trị đại diện $c_i$.
+
+\noindent \textbf{b) Nội dung:}
+\begin{pedabox}{Khung kiến thức: Cấu trúc của Mẫu số liệu ghép nhóm}
+\textbf{1. Định nghĩa:} Mẫu số liệu ghép nhóm là mẫu số liệu được cho dưới dạng các nhóm số liệu, mỗi nhóm là một nửa khoảng có dạng $[a_i; a_{i+1})$ với $a_i < a_{i+1}$ (nhóm cuối cùng có thể là đoạn $[a_k; a_{k+1}]$).
+\begin{itemize}[leftmargin=0.6cm]
+    \item $a_i$ gọi là \textbf{đầu mút trái}, $a_{i+1}$ gọi là \textbf{đầu mút phải} của nhóm $[a_i; a_{i+1})$.
+    \item Hiệu $L_i = a_{i+1} - a_i$ gọi là \textbf{độ dài} của nhóm. Các nhóm thường được chọn có độ dài bằng nhau.
+    \item \textbf{Giá trị đại diện} của nhóm $[a_i; a_{i+1})$, ký hiệu là $c_i$, được tính bằng trung bình cộng hai đầu mút:
+    $$c_i = \dfrac{a_i + a_{i+1}}{2}$$
+\end{itemize}
+\end{pedabox}
+
+\begin{scaffoldbox}{Giàn giáo sư phạm then chốt dành cho học sinh trung bình - yếu}
+\textbf{Quy tắc nửa khoảng $[a; b)$ - Tránh đếm trùng lặp:}
+\begin{itemize}[leftmargin=0.6cm]
+    \item Ký hiệu ngoặc vuông $[$ ở đầu mút trái nghĩa là: \textbf{Lấy dấu bằng} ($x \ge a$).
+    \item Ký hiệu ngoặc tròn $)$ ở đầu mút phải nghĩa là: \textbf{Không lấy dấu bằng} ($x < b$).
+    \item \textit{Ví dụ cụ thể:} Nhóm $[60; 90)$ gồm các giá trị $x$ thỏa mãn $60 \le x < 90$.
+    \begin{itemize}
+        \item Giá trị $60$ được tính vào nhóm $[60; 90)$.
+        \item Giá trị $90$ \textbf{không} được tính vào nhóm $[60; 90)$ mà phải chuyển sang nhóm tiếp theo là $[90; 120)$.
+    \end{itemize}
+\end{itemize}
+\end{scaffoldbox}
+
+\textbf{Ví dụ 1:} Cho mẫu số liệu ghép nhóm về chiều cao (cm) của 40 học sinh lớp 11:
+\begin{center}
+\small
+\begin{tabular}{|c|c|c|c|c|c|}
+\hline
+\textbf{Chiều cao (cm)} & $[150; 155)$ & $[155; 160)$ & $[160; 165)$ & $[165; 170)$ & $[170; 175)$ \\ \hline
+\textbf{Số học sinh (Tần số)} & $5$ & $12$ & $15$ & $6$ & $2$ \\ \hline
+\end{tabular}
+\end{center}
+Xác định số nhóm, độ dài mỗi nhóm và giá trị đại diện của từng nhóm.
+
+\noindent \textbf{c) Sản phẩm: Lời giải chi tiết Ví dụ 1}
+\begin{enumerate}[leftmargin=0.6cm]
+    \item Mẫu số liệu gồm có $k = 5$ nhóm.
+    \item Độ dài của mỗi nhóm: $L = 155 - 150 = 160 - 155 = \dots = 5\text{ (cm)}$ (các nhóm có độ dài bằng nhau).
+    \item Giá trị đại diện của các nhóm:
+    \begin{itemize}
+        \item Nhóm 1 $[150; 155)$: $c_1 = \dfrac{150 + 155}{2} = 152{,}5\text{ (cm)}$.
+        \item Nhóm 2 $[155; 160)$: $c_2 = \dfrac{155 + 160}{2} = 157{,}5\text{ (cm)}$.
+        \item Nhóm 3 $[160; 165)$: $c_3 = \dfrac{160 + 165}{2} = 162{,}5\text{ (cm)}$.
+        \item Nhóm 4 $[165; 170)$: $c_4 = \dfrac{165 + 170}{2} = 167{,}5\text{ (cm)}$.
+        \item Nhóm 5 $[170; 175)$: $c_5 = \dfrac{170 + 175}{2} = 172{,}5\text{ (cm)}$.
+    \end{itemize}
+\end{enumerate}
+
+\noindent \textbf{d) Tổ chức thực hiện:}
+\begin{itemize}[leftmargin=0.8cm]
+    \item \textit{Chuyển giao nhiệm vụ:} Giáo viên giới thiệu định nghĩa, quy tắc nửa khoảng, yêu cầu học sinh làm Ví dụ 1 trong 3 phút.
+    \item \textit{Thực hiện nhiệm vụ:} Học sinh ghi nhớ quy tắc nửa khoảng, tính nhanh giá trị đại diện.
+    \item \textit{Báo cáo, thảo luận:} 1 học sinh đứng tại chỗ đọc giá trị đại diện 5 nhóm; cả lớp nhận xét.
+    \item \textit{Kết luận, nhận định:} Giáo viên nhấn mạnh: Giá trị đại diện $c_i$ sẽ đóng vai trò đại diện cho cả nhóm khi tính số trung bình ở bài học sau.
+\end{itemize}
+
+\subsubsection*{2.2. Bảng tần số ghép nhóm và Bảng tần số tương đối ghép nhóm}
+
+\noindent \textbf{a) Mục tiêu:}
+Học sinh biết cách thiết lập bảng tần số ghép nhóm và bảng tần số tương đối (tần suất) ghép nhóm; kiểm tra tính đúng đắn qua tổng tần số và tổng tỉ lệ phần trăm.
+
+\noindent \textbf{b) Nội dung:}
+\begin{pedabox}{Khung kiến thức: Tần số và Tần số tương đối ghép nhóm}
+\begin{itemize}[leftmargin=0.6cm]
+    \item \textbf{Tần số của một nhóm} ($m_i$): Là số lượng các giá trị quan sát của mẫu số liệu thuộc vào nhóm $[a_i; a_{i+1})$. Tổng các tần số luôn bằng kích thước mẫu $n$:
+    $$\sum_{i=1}^k m_i = m_1 + m_2 + \dots + m_k = n$$
+    \item \textbf{Tần số tương đối (Tần suất)} của một nhóm ($f_i$): Là tỉ số giữa tần số $m_i$ của nhóm đó và kích thước mẫu $n$, thường được biểu diễn dưới dạng phần trăm:
+    $$f_i = \dfrac{m_i}{n} \times 100\%$$
+    Tổng các tần số tương đối luôn bằng $100\%$: $\sum_{i=1}^k f_i = 100\%$.
+\end{itemize}
+\end{pedabox}
+
+\textbf{Ví dụ 2:} Từ bảng số liệu ở Ví dụ 1 ($n = 40$ học sinh), hãy thiết lập bảng tần số tương đối ghép nhóm.
+
+\noindent \textbf{c) Sản phẩm: Lời giải chi tiết Ví dụ 2}
+Ta có kích thước mẫu $n = 40$. Tính tần số tương đối của từng nhóm:
+\begin{itemize}[leftmargin=0.6cm]
+    \item Nhóm 1: $f_1 = \dfrac{5}{40} \times 100\% = 12{,}5\%$.
+    \item Nhóm 2: $f_2 = \dfrac{12}{40} \times 100\% = 30{,}0\%$.
+    \item Nhóm 3: $f_3 = \dfrac{15}{40} \times 100\% = 37{,}5\%$.
+    \item Nhóm 4: $f_4 = \dfrac{6}{40} \times 100\% = 15{,}0\%$.
+    \item Nhóm 5: $f_5 = \dfrac{2}{40} \times 100\% = 5{,}0\%$.
+\end{itemize}
+\textbf{Bảng tần số tương đối ghép nhóm hoàn chỉnh:}
+\begin{center}
+\small
+\begin{tabular}{|c|c|c|c|c|c|c|}
+\hline
+\textbf{Chiều cao (cm)} & $[150; 155)$ & $[155; 160)$ & $[160; 165)$ & $[165; 170)$ & $[170; 175)$ & \textbf{Tổng} \\ \hline
+\textbf{Tần số ($m_i$)} & $5$ & $12$ & $15$ & $6$ & $2$ & $40$ \\ \hline
+\textbf{Tần số tương đối ($f_i$)} & $12{,}5\%$ & $30{,}0\%$ & $37{,}5\%$ & $15{,}0\%$ & $5{,}0\%$ & $100\%$ \\ \hline
+\end{tabular}
+\end{center}
+
+\noindent \textbf{d) Tổ chức thực hiện:}
+\begin{itemize}[leftmargin=0.8cm]
+    \item \textit{Chuyển giao nhiệm vụ:} Giáo viên nêu công thức tính $f_i$, yêu cầu học sinh dùng MTCT tính các giá trị phần trăm của Ví dụ 2.
+    \item \textit{Thực hiện nhiệm vụ:} Học sinh thao tác tính toán, kiểm tra tổng các tỉ số phần trăm có tròn $100\%$ hay không.
+    \item \textit{Báo cáo, thảo luận:} 1 học sinh lên bảng hoàn thiện dòng tần số tương đối.
+    \item \textit{Kết luận, nhận định:} Giáo viên nhận xét, nhấn mạnh quy tắc kiểm tra: Tổng dòng tần số phải bằng $n$, tổng dòng tần số tương đối phải bằng $100\%$.
+\end{itemize}
+
+\subsubsection*{2.3. Biểu đồ tần số tương đối ghép nhóm (Histogram và Biểu đồ đoạn thẳng)}
+
+\noindent \textbf{a) Mục tiêu:}
+Học sinh mô tả và vẽ được biểu đồ tần số tương đối ghép nhóm dạng cột liền kề (Histogram) và biểu đồ đoạn thẳng.
+
+\noindent \textbf{b) Nội dung:}
+\begin{pedabox}{Khung kiến thức: Quy tắc dựng Biểu đồ cột liền kề (Histogram)}
+\begin{itemize}[leftmargin=0.6cm]
+    \item \textbf{Trục hoành:} Biểu diễn các nhóm số liệu. Các đầu mút của các nhóm được chia liên tiếp theo đúng tỉ lệ độ dài trên trục số.
+    \item \textbf{Trục tung:} Biểu diễn tần số tương đối (đơn vị $\%$).
+    \item \textbf{Các cột hình chữ nhật:} Mỗi nhóm được dựng thành một hình chữ nhật có đáy là đoạn nối hai đầu mút $[a_i; a_{i+1}]$ và chiều cao bằng tần số tương đối $f_i$ của nhóm đó.
+    \item \textbf{Đặc điểm quan trọng:} Do đầu mút phải của nhóm này là đầu mút trái của nhóm liền sau nên các cột hình chữ nhật \textbf{dính liền sát nhau} (không có khoảng trống giữa các cột như biểu đồ cột đơn lớp dưới).
+    \item \textbf{Biểu đồ đoạn thẳng:} Nối trung điểm đỉnh trên của các cột hình chữ nhật liên tiếp bằng các đoạn thẳng.
+\end{itemize}
+\end{pedabox}
+
+\noindent \textbf{c) Sản phẩm: Bản vẽ biểu đồ Histogram minh họa bằng TikZ}
+\begin{center}
+\begin{tikzpicture}[scale=0.85]
+    \begin{axis}[
+        ybar,
+        bar width=1.0cm,
+        ymin=0, ymax=45,
+        ylabel={\textbf{Tần số tương đối (\%)}},
+        xlabel={\textbf{Chiều cao (cm)}},
+        symbolic x coords={150-155, 155-160, 160-165, 165-170, 170-175},
+        xtick=data,
+        nodes near coords,
+        nodes near coords align={vertical},
+        grid=major,
+        width=12cm,
+        height=6.5cm,
+        enlarge x limits=0.15
+    ]
+        \addplot[fill=blue!30, draw=blue!80!black] coordinates {
+            (150-155, 12.5)
+            (155-160, 30.0)
+            (160-165, 37.5)
+            (165-170, 15.0)
+            (170-175, 5.0)
+        };
+    \end{axis}
+\end{tikzpicture}
+\end{center}
+
+\noindent \textbf{d) Tổ chức thực hiện:}
+\begin{itemize}[leftmargin=0.8cm]
+    \item \textit{Chuyển giao nhiệm vụ:} Giáo viên trình chiếu hình vẽ mẫu, phân tích các bước dựng trục hoành, trục tung và dựng cột.
+    \item \textit{Thực hiện nhiệm vụ:} Học sinh dùng thước kẻ chia khoảng trục tọa độ vào vở và vẽ các cột hình chữ nhật liền kề.
+    \item \textit{Báo cáo, thảo luận:} Giáo viên kiểm tra vở của 3 học sinh, chỉ ra lỗi hay gặp (vẽ các cột cách xa nhau).
+    \item \textit{Kết luận, nhận định:} Giáo viên nhấn mạnh: Trong biểu đồ ghép nhóm, các cột bắt buộc phải tiếp giáp nhau vì biến số là liên tục.
+\end{itemize}
+
+\subsection*{3. Hoạt động 3: Luyện tập}
+
+\noindent \textbf{a) Mục tiêu:}
+Rèn luyện kỹ năng thực hành phân loại số liệu thô vào các nhóm, lập bảng phân bố tần số, tần số tương đối và tính giá trị đại diện.
+
+\noindent \textbf{b) Nội dung: Phiếu học tập số 1}
+\begin{pedabox}{Bài tập luyện tập trên lớp}
+Điểm thi khảo sát môn Toán đầu năm của $25$ học sinh được ghi nhận như sau:
+\begin{center}
+$4{,}5 \quad 5{,}0 \quad 5{,}5 \quad 5{,}8 \quad 6{,}0 \quad 6{,}2 \quad 6{,}5 \quad 6{,}8 \quad 7{,}0 \quad 7{,}2$ \\
+$7{,}4 \quad 7{,}5 \quad 7{,}6 \quad 7{,}8 \quad 8{,}0 \quad 8{,}2 \quad 8{,}4 \quad 8{,}5 \quad 8{,}8 \quad 9{,}0$ \\
+$9{,}2 \quad 9{,}5 \quad 6{,}5 \quad 7{,}5 \quad 8{,}0$
+\end{center}
+\textbf{Yêu cầu:}
+\begin{enumerate}[leftmargin=0.6cm]
+    \item Ghép nhóm mẫu số liệu trên thành $5$ nhóm có độ dài bằng nhau là $1{,}0$:
+    $[4{,}5; 5{,}5); \ [5{,}5; 6{,}5); \ [6{,}5; 7{,}5); \ [7{,}5; 8{,}5); \ [8{,}5; 9{,}5]$.
+    \item Xác định tần số và tần số tương đối của từng nhóm.
+    \item Tìm giá trị đại diện $c_i$ của mỗi nhóm.
+\end{enumerate}
+\end{pedabox}
+
+\noindent \textbf{c) Sản phẩm: Lời giải chi tiết}
+\begin{enumerate}[leftmargin=0.6cm]
+    \item \textbf{Phân loại và đếm tần số từng nhóm theo quy tắc nửa khoảng:}
+    \begin{itemize}
+        \item Nhóm 1 $[4{,}5; 5{,}5)$: Gồm các điểm $4{,}5; 5{,}0 \implies m_1 = 2$ học sinh. (Lưu ý: điểm $5{,}5$ không tính vào nhóm 1).
+        \item Nhóm 2 $[5{,}5; 6{,}5)$: Gồm các điểm $5{,}5; 5{,}8; 6{,}0; 6{,}2 \implies m_2 = 4$ học sinh.
+        \item Nhóm 3 $[6{,}5; 7{,}5)$: Gồm các điểm $6{,}5; 6{,}8; 7{,}0; 7{,}2; 7{,}4; 6{,}5 \implies m_3 = 6$ học sinh.
+        \item Nhóm 4 $[7{,}5; 8{,}5)$: Gồm các điểm $7{,}5; 7{,}6; 7{,}8; 8{,}0; 8{,}2; 8{,}4; 7{,}5; 8{,}0 \implies m_4 = 8$ học sinh.
+        \item Nhóm 5 $[8{,}5; 9{,}5]$: Gồm các điểm $8{,}5; 8{,}8; 9{,}0; 9{,}2; 9{,}5 \implies m_5 = 5$ học sinh.
+    \end{itemize}
+    Tổng tần số: $2 + 4 + 6 + 8 + 5 = 25$ (khớp với sĩ số mẫu).
+    \item \textbf{Tính tần số tương đối ($f_i = \dfrac{m_i}{25} \times 100\%$):}
+    \begin{itemize}
+        \item $f_1 = \dfrac{2}{25} \times 100\% = 8\%$.
+        \item $f_2 = \dfrac{4}{25} \times 100\% = 16\%$.
+        \item $f_3 = \dfrac{6}{25} \times 100\% = 24\%$.
+        \item $f_4 = \dfrac{8}{25} \times 100\% = 32\%$.
+        \item $f_5 = \dfrac{5}{25} \times 100\% = 20\%$.
+    \end{itemize}
+    \item \textbf{Giá trị đại diện:}
+    $c_1 = 5{,}0; \ c_2 = 6{,}0; \ c_3 = 7{,}0; \ c_4 = 8{,}0; \ c_5 = 9{,}0$.
+    \item \textbf{Bảng tổng hợp hoàn chỉnh:}
+    \begin{center}
+    \small
+    \begin{tabular}{|c|c|c|c|c|c|c|}
+    \hline
+    \textbf{Nhóm điểm} & $[4{,}5; 5{,}5)$ & $[5{,}5; 6{,}5)$ & $[6{,}5; 7{,}5)$ & $[7{,}5; 8{,}5)$ & $[8{,}5; 9{,}5]$ & \textbf{Tổng} \\ \hline
+    \textbf{Giá trị đại diện ($c_i$)} & $5{,}0$ & $6{,}0$ & $7{,}0$ & $8{,}0$ & $9{,}0$ & -- \\ \hline
+    \textbf{Tần số ($m_i$)} & $2$ & $4$ & $6$ & $8$ & $5$ & $25$ \\ \hline
+    \textbf{Tần số tương đối ($f_i$)} & $8\%$ & $16\%$ & $24\%$ & $32\%$ & $20\%$ & $100\%$ \\ \hline
+    \end{tabular}
+    \end{center}
+\end{enumerate}
+
+\noindent \textbf{d) Tổ chức thực hiện:}
+\begin{itemize}[leftmargin=0.8cm]
+    \item \textit{Chuyển giao nhiệm vụ:} Giáo viên chia nhóm bàn, giao nhiệm vụ đếm và lập bảng trong 5 phút.
+    \item \textit{Thực hiện nhiệm vụ:} Học sinh làm bài, gạch chân các số liệu đã đếm để tránh nhầm. Giáo viên quan sát, hướng dẫn các bạn yếu xử lý giá trị biên ($5{,}5; 6{,}5; 7{,}5; 8{,}5$).
+    \item \textit{Báo cáo, thảo luận:} 1 học sinh lên điền bảng; cả lớp kiểm tra đối chiếu.
+    \item \textit{Kết luận, nhận định:} Giáo viên biểu dương các bàn tính nhanh, chính xác và nhấn mạnh kỹ thuật gạch chéo số liệu đã đếm.
+\end{itemize}
+
+\subsection*{4. Hoạt động 4: Vận dụng thực tiễn \& Chuyển đổi số - Năng lực AI}
+
+\noindent \textbf{a) Mục tiêu:}
+Tích hợp Năng lực số (Mã 5.1NC1b) và Năng lực AI (Mã 11.C5.2): Sử dụng hàm mảng Excel \texttt{FREQUENCY} để đếm tự động và phân tích sự tương đồng với thuật toán gom cụm $K$-Means trong Machine Learning.
+
+\noindent \textbf{b) Nội dung: Khai thác công nghệ số \& Trí tuệ nhân tạo trong xử lý dữ liệu lớn}
+\begin{aibox}{Tích hợp Công nghệ số \& Thuật toán AI Gom cụm (Clustering)}
+\textbf{1. Thực hành Bảng tính điện tử (Năng lực số 5.1NC1b):}
+Trong thực tế với các tập dữ liệu lớn hàng nghìn mẫu (Big Data), con người không thể đếm thủ công. Phần mềm Excel hỗ trợ hàm mảng \texttt{FREQUENCY}:
+\begin{itemize}[leftmargin=0.6cm]
+    \item Cú pháp: \texttt{=FREQUENCY(data\_array, bins\_array)}.
+    \item Trong đó: \texttt{data\_array} là vùng chứa số liệu thô; \texttt{bins\_array} là cột chứa các đầu mút phải của các nhóm.
+    \item Kết quả xuất ra ngay lập tức một cột tần số chuẩn xác trong một thao tác.
+\end{itemize}
+\textbf{2. Ứng dụng trong Trí tuệ nhân tạo (Năng lực AI 11.C5.2):}
+Trong Học máy không giám sát (Unsupervised Machine Learning), thuật toán \textbf{K-Means Clustering} tự động gom hàng triệu điểm dữ liệu thành $K$ nhóm dựa trên khoảng cách giữa các điểm dữ liệu với trọng tâm cụm.
+\begin{itemize}[leftmargin=0.6cm]
+    \item \textit{Câu hỏi tư duy:} Em hãy nêu sự giống nhau giữa việc chia nhóm số liệu trong Thống kê toán học với việc thuật toán AI gom cụm khách hàng theo độ tuổi và hành vi mua sắm trên các sàn thương mại điện tử (Shopee, TikTok Shop).
+\end{itemize}
+\end{aibox}
+
+\noindent \textbf{c) Sản phẩm: Báo cáo thảo luận}
+\begin{enumerate}[leftmargin=0.6cm]
+    \item Học sinh mô tả được quy trình nhập lệnh trên Excel để chia nhóm dữ liệu tự động.
+    \item \textbf{Liên hệ AI:}
+    \begin{itemize}
+        \item \textit{Bản chất tương đồng:} Cả hai phương pháp đều có chung mục đích: rút gọn kích thước dữ liệu phức tạp thành các nhóm đặc trưng tiêu biểu, giúp hệ thống nhận diện nhanh cấu trúc và quy luật phân bố.
+        \item \textit{Ứng dụng thực tiễn của AI:} Thuật toán gom cụm AI tự động phân loại khách hàng thành các nhóm (ví dụ: nhóm học sinh - sinh viên chi tiêu thấp, nhóm công sở thu nhập trung bình, nhóm khách hàng VIP mua sắm cao) để gợi ý các sản phẩm phù hợp nhất trên bảng tin cá nhân hóa.
+    \end{itemize}
+\end{enumerate}
+
+\noindent \textbf{d) Tổ chức thực hiện:}
+\begin{itemize}[leftmargin=0.8cm]
+    \item \textit{Chuyển giao nhiệm vụ:} Giáo viên trình chiếu video/hình ảnh giao diện hàm \texttt{FREQUENCY} trên Excel và mô hình trực quan thuật toán $K$-Means Clustering, yêu cầu học sinh suy nghĩ trả lời trong 3 phút.
+    \item \textit{Thực hiện nhiệm vụ:} Học sinh quan sát, liên hệ giữa toán học và các tính năng gợi ý thông minh trên điện thoại hàng ngày.
+    \item \textit{Báo cáo, thảo luận:} 1 học sinh nêu suy nghĩ về việc AI phân nhóm người dùng; giáo viên phân tích sâu thêm.
+    \item \textit{Kết luận, nhận định:} Giáo viên tổng kết bài học: Mẫu số liệu ghép nhóm là bước khởi đầu căn bản của Khoa học dữ liệu (Data Science) và Trí tuệ nhân tạo (AI).
+\end{itemize}
+
+\section*{IV. PHỤ LỤC HỌC LIỆU BỔ TRỢ}
+
+\subsection*{1. Bảng tóm tắt hệ thống kiến thức Bài 8: Mẫu số liệu ghép nhóm}
+
+\begin{center}
+\small
+\begin{tabularx}{\textwidth}{|p{3.5cm}|X|X|}
+\hline
+\textbf{Khái niệm} & \textbf{Công thức / Ký hiệu} & \textbf{Ý nghĩa sư phạm / Lưu ý cốt lõi} \\ \hline
+\textbf{Nhóm số liệu} & $[a_i; a_{i+1})$ & Nửa khoảng: Lấy giá trị tại đầu mút trái $a_i$, không lấy giá trị tại đầu mút phải $a_{i+1}$. \\ \hline
+\textbf{Độ dài nhóm} & $L_i = a_{i+1} - a_i$ & Thường chọn các nhóm có độ dài bằng nhau để biểu đồ không bị méo mó. \\ \hline
+\textbf{Giá trị đại diện} & $c_i = \dfrac{a_i + a_{i+1}}{2}$ & Trung bình cộng hai đầu mút, là giá trị thay thế cho cả nhóm khi tính toán đại số. \\ \hline
+\textbf{Tần số nhóm} & $m_i$ & Số lượng quan sát thuộc nhóm. Điều kiện kiểm tra: $\sum m_i = n$. \\ \hline
+\textbf{Tần số tương đối} & $f_i = \dfrac{m_i}{n} \times 100\%$ & Tỉ lệ phần trăm của nhóm so với tổng thể. Điều kiện kiểm tra: $\sum f_i = 100\%$. \\ \hline
+\textbf{Biểu đồ Histogram} & Các cột chữ nhật dính liền nhau & Đáy là khoảng nhóm $[a_i; a_{i+1}]$, chiều cao là tần số hoặc tần số tương đối $f_i$. \\ \hline
+\end{tabularx}
+\end{center}
+
+\subsection*{2. Phiếu học tập phân tầng bậc thang (Worksheet)}
+
+\noindent \textbf{PHIẾU HỌC TẬP SỐ 1 (Phân tầng 3 bậc thang)}
+\begin{itemize}[leftmargin=0.6cm]
+    \item \textbf{Tầng 1 (Nhận biết - Dành cho HS TB-Yếu):}
+    Cho mẫu số liệu ghép nhóm có các nhóm: $[10; 20); \ [20; 30); \ [30; 40); \ [40; 50]$.
+    \begin{enumerate}[leftmargin=0.6cm]
+        \item[a)] Chỉ ra đầu mút trái và đầu mút phải của nhóm thứ 2.
+        \item[b)] Tính giá trị đại diện của từng nhóm.
+        \item[c)] Giá trị $x = 30$ thuộc vào nhóm nào trong các nhóm trên?
+    \end{enumerate}
+    \item \textbf{Tầng 2 (Thông hiểu):}
+    Khảo sát số giờ tập thể dục trong tuần của $50$ người, thu được kết quả:
+    Nhóm $[0; 2)$ có 10 người; $[2; 4)$ có 18 người; $[4; 6)$ có 14 người; $[6; 8)$ có 8 người.
+    \begin{enumerate}[leftmargin=0.6cm]
+        \item[a)] Lập bảng tần số và tần số tương đối ghép nhóm.
+        \item[b)] Có bao nhiêu phần trăm số người tập thể dục từ 4 giờ trở lên mỗi tuần?
+    \end{enumerate}
+    \item \textbf{Tầng 3 (Vận dụng):}
+    Một lớp có $40$ học sinh với bảng tần số ghép nhóm có một ô bị nhòe mực không đọc được tần số của nhóm $[6; 8)$:
+    Nhóm $[0; 2)$ có $4$ HS; $[2; 4)$ có $10$ HS; $[4; 6)$ có $12$ HS; $[6; 8)$ bị nhòe; $[8; 10)$ có $6$ HS.
+    Em hãy khôi phục lại tần số và tính tần số tương đối của nhóm bị nhòe mực đó.
+\end{itemize}
+
+\subsection*{3. Bảng Rubric đánh giá năng lực học sinh trong bài học}
+
+\begin{center}
+\small
+\begin{tabularx}{\textwidth}{|p{2.8cm}|X|X|X|X|}
+\hline
+\textbf{Tiêu chí} & \textbf{Chưa đạt (Mức 1)} & \textbf{Đạt (Mức 2)} & \textbf{Khá (Mức 3)} & \textbf{Tốt (Mức 4)} \\ \hline
+\textbf{Phân loại \& Nhận diện nhóm} & Đếm trùng lặp tại các điểm mút biên, nhầm lẫn quy tắc nửa khoảng $[a; b)$. & Hiểu quy tắc nửa khoảng, phân loại đúng đa số các số liệu thô. & Phân loại chính xác $100\%$ số liệu thô vào các nhóm, kiểm tra $\sum m_i = n$. & Xử lý thành thạo các tình huống số liệu biên phức tạp, giải thích sâu sắc quy tắc chia nhóm. \\ \hline
+\textbf{Lập bảng tần số \& Tần suất} & Tính sai tần số tương đối phần trăm, tổng phần trăm khác $100\%$. & Tính đúng tần số tương đối cho các nhóm đơn giản. & Lập bảng tần số và tần số tương đối hoàn chỉnh, trình bày khoa học. & Khôi phục xuất sắc các bảng dữ liệu khuyết thiếu, phát hiện và sửa chữa sai sót số liệu. \\ \hline
+\textbf{Vẽ biểu đồ Histogram} & Vẽ các cột rời rạc cách nhau, chia sai tỉ lệ các trục tọa độ. & Dựng được các cột dính nhau nhưng tỉ lệ trục chưa thật chuẩn xác. & Vẽ biểu đồ Histogram chuẩn xác, chia đúng tỉ lệ, ghi chú đầy đủ tên trục. & Kết hợp vẽ thành thạo cả biểu đồ cột liền kề và biểu đồ đoạn thẳng, nhận xét hình dáng phân bố. \\ \hline
+\textbf{Ứng dụng số \& AI} & Chưa biết nhập hàm Excel hoặc không hiểu ứng dụng thực tiễn. & Biết về hàm \texttt{FREQUENCY} nhưng chưa thao tác độc lập được. & Sử dụng tốt bảng tính Excel để ghép nhóm và vẽ biểu đồ tự động. & Hiểu sâu sắc sự tương đồng giữa thống kê ghép nhóm và thuật toán AI gom cụm $K$-Means. \\ \hline
+\end{tabularx}
+\end{center}
+
+\end{document}
