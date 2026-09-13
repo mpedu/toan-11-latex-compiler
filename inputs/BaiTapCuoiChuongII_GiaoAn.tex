@@ -1,0 +1,428 @@
+\documentclass[12pt, a4paper]{article}
+% --- 1. Cấu hình Tiếng Việt và Font chữ chuẩn ---
+\usepackage[utf8]{inputenc}
+\usepackage[T5]{fontenc}
+\usepackage[vietnamese]{babel}
+\usepackage{mathptmx} % Font Times New Roman đồng bộ cả chữ và công thức toán, không gây xung đột gói
+
+\makeatletter
+\renewcommand{\normalsize}{\@setfontsize\normalsize{13pt}{16pt}}
+\makeatother
+\normalsize
+
+% --- 2. Gói Toán học & Ký hiệu bổ trợ ---
+\usepackage{amsmath, amssymb, amsfonts, mathrsfs, amsthm}
+\usepackage{graphicx}
+\usepackage{fontawesome}
+\usepackage{booktabs, tabularx, array, multirow}
+\usepackage{enumitem}
+
+% --- 3. Đồ họa TikZ, Bảng biến thiên & Hình không gian ---
+\usepackage{tikz}
+\usetikzlibrary{calc, intersections, angles, quotes, patterns, arrows.meta, 3d}
+\usepackage{pgfplots}
+\pgfplotsset{compat=1.18}
+\usepackage{tkz-euclide}
+\usepackage{tkz-tab}
+
+\renewcommand{\vec}[1]{\overrightarrow{#1}}
+
+% --- 4. Hộp sư phạm (Tcolorbox) ---
+\usepackage[many]{tcolorbox}
+\tcbuselibrary{skins, breakable}
+
+% --- 5. Căn lề chuẩn văn bản giáo án ---
+\usepackage{geometry}
+\geometry{
+    a4paper,
+    left=25mm,
+    right=15mm,
+    top=20mm,
+    bottom=20mm
+}
+
+% --- 6. Header / Footer chuẩn hóa ---
+\usepackage{fancyhdr}
+\usepackage{lastpage}
+\pagestyle{fancy}
+\fancyhf{}
+
+\fancyhead[L]{\small \textit{Kế hoạch bài dạy Toán 11}}
+\fancyhead[R]{\textbf{Trang \thepage/\pageref{LastPage}}}
+\fancyfoot[L]{\small \textit{Tổ Toán - Tin}}
+\fancyfoot[R]{\small \textit{Trường THCS\&THPT Hồng Vân}}
+\renewcommand{\headrulewidth}{0.4pt}
+\renewcommand{\footrulewidth}{0.4pt}
+
+% --- 7. Giãn dòng & Giãn đoạn theo chuẩn Nghị định 30/2020/NĐ-CP ---
+\usepackage{setspace}
+\setstretch{1.15}
+\setlength{\parindent}{1.0cm}
+\setlength{\parskip}{5pt}
+
+% Định nghĩa hộp sư phạm chuyên dụng
+\newtcolorbox{pedabox}[2][]{
+    enhanced,
+    breakable,
+    colback=blue!3!white,
+    colframe=blue!65!black,
+    fonttitle=\bfseries\small,
+    title={#2},
+    arc=2mm,
+    boxrule=0.6pt,
+    left=3mm, right=3mm, top=2mm, bottom=2mm,
+    #1
+}
+
+\newtcolorbox{aibox}[2][]{
+    enhanced,
+    breakable,
+    colback=teal!4!white,
+    colframe=teal!70!black,
+    fonttitle=\bfseries\small,
+    title={#2},
+    arc=2mm,
+    boxrule=0.6pt,
+    left=3mm, right=3mm, top=2mm, bottom=2mm,
+    #1
+}
+
+\newtcolorbox{scaffoldbox}[2][]{
+    enhanced,
+    breakable,
+    colback=orange!4!white,
+    colframe=orange!80!black,
+    fonttitle=\bfseries\small,
+    title={#2},
+    arc=2mm,
+    boxrule=0.6pt,
+    left=3mm, right=3mm, top=2mm, bottom=2mm,
+    #1
+}
+
+\begin{document}
+
+\begin{center}
+    {\fontsize{14pt}{17pt}\selectfont \textbf{KẾ HOẠCH BÀI DẠY MÔN TOÁN LỚP 11}}\\[6pt]
+    {\fontsize{16pt}{19pt}\selectfont \textbf{BÀI TẬP CUỐI CHƯƠNG II}}\\[4pt]
+    {\fontsize{12pt}{15pt}\selectfont \textbf{Môn học: Toán 11} \ \textbar \ \textbf{Thời lượng: 1 tiết (Tiết 17 theo PPCT)}}
+\end{center}
+
+\vspace{5pt}
+
+\section*{I. MỤC TIÊU}
+
+\subsection*{1. Kiến thức, Năng lực}
+
+\begin{itemize}[leftmargin=1.2cm]
+    \item \textbf{Yêu cầu cần đạt (Nguyên văn CT GDPT 2018):}
+    \begin{itemize}[leftmargin=0.6cm]
+        \item Củng cố, hệ thống hóa toàn diện các kiến thức cốt lõi của Chương II: Dãy số (dãy số hữu hạn, vô hạn, các cách cho dãy số, tính tăng, giảm, bị chặn); Cấp số cộng (định nghĩa, công sai $d$, số hạng tổng quát, tính chất, tổng $n$ số hạng đầu tiên); Cấp số nhân (định nghĩa, công bội $q$, số hạng tổng quát, tính chất, tổng $n$ số hạng đầu tiên).
+        \item Rèn luyện kỹ năng phân biệt, so sánh bản chất giữa cấp số cộng (tăng trưởng cộng dồn - tuyến tính) và cấp số nhân (tăng trưởng nhân dồn - hàm mũ); tránh nhầm lẫn giữa công sai $d$ và công bội $q$.
+        \item Vận dụng linh hoạt các công thức để giải quyết các bài toán đại số tổng hợp (tìm các yếu tố $u_1, d, q, n, u_n, S_n$) và các bài toán thực tiễn phong phú (lãi đơn, lãi kép, mô hình tăng trưởng dân số, bài toán xếp dỡ vật liệu).
+    \end{itemize}
+
+    \item \textbf{Năng lực Toán học đặc thù:}
+    \begin{itemize}[leftmargin=0.6cm]
+        \item \textit{Năng lực tư duy và lập luận toán học:} Lập luận so sánh đối chiếu hai mô hình cấp số; giải thích sự khác nhau cơ bản giữa phép toán cộng dồn hằng số ($u_{n+1} = u_n + d$) và nhân dồn hằng số ($u_{n+1} = u_n \cdot q$); phân tích cấu trúc họ nghiệm khi giải hệ phương trình cấp số nhân (dùng phép chia) so với cấp số cộng (dùng phép trừ/cộng đại số).
+        \item \textit{Năng lực mô hình hóa toán học:} Nhận diện và chuyển hóa các tình huống thực tiễn thành mô hình toán học tương ứng: bài toán tích lũy tài chính lãi đơn (Cấp số cộng) so với gửi tiết kiệm lãi kép (Cấp số nhân); bài toán phân rã phóng xạ hoặc tăng trưởng tế bào vi khuẩn.
+        \item \textit{Năng lực giải quyết vấn đề toán học:} Phân loại và lựa chọn chiến lược giải tối ưu cho từng dạng bài toán: xác định dãy số, tìm số hạng tổng quát, giải phương trình mũ/bậc hai tìm chỉ số $n$, tính tổng chuỗi số hữu hạn.
+        \item \textit{Năng lực giao tiếp toán học:} Trình bày lời giải bài toán một cách chặt chẽ, mạch lạc; sử dụng chuẩn xác các ký hiệu toán học; tự tin phản biện và bảo vệ lập luận của nhóm trước lớp.
+        \item \textit{Năng lực sử dụng công cụ, phương tiện học toán:} Khai thác thành thạo MTCT Casio fx-580VN X để bấm tổng $\sum$, tính giá trị số hạng và kiểm tra kết quả giải hệ phương trình; khai thác sơ đồ tư duy số để hệ thống hóa kiến thức.
+    \end{itemize}
+
+    \item \textbf{Năng lực số (Theo Thông tư 02/2025/TT-BGDĐT):}
+    \begin{itemize}[leftmargin=0.6cm]
+        \item \textit{Mã 2.2NC1a (Chia sẻ và hợp tác trên môi trường số):} Học sinh lưu trữ, chia sẻ sơ đồ tư duy tóm tắt công thức Chương II và các tệp bài tập ôn tập qua thư mục dùng chung Google Drive hoặc nhóm học tập số (Zalo/Teams) của lớp.
+        \item \textit{Mã 5.2NC1b (Sử dụng công nghệ cầm tay giải quyết vấn đề):} Sử dụng chức năng bảng giá trị \texttt{TABLE} (\texttt{MENU} $8$) và chức năng tính tổng xích-ma $\sum$ trên MTCT Casio fx-580VN X để rà soát, kiểm chứng nhanh tính tăng, giảm, bị chặn của dãy số và đối chiếu giá trị $S_n$.
+    \end{itemize}
+
+    \item \textbf{Năng lực AI (Theo Quyết định 2422/QĐ-BGDĐT):}
+    \begin{itemize}[leftmargin=0.6cm]
+        \item \textit{Mã 11.C3.1 (Kỹ thuật câu lệnh prompt chia nhỏ bài toán):} Học sinh thực hành kỹ thuật đặt câu lệnh prompt có cấu trúc (Scaffolding Prompt) yêu cầu trợ lý AI đóng vai trò gia sư sư phạm, chia nhỏ bài toán phức tạp về dãy số thành các bước gợi ý logic từ dễ đến khó thay vì đưa ra ngay đáp số cuối cùng.
+        \item \textit{Mã 11.A1.1 (Kiểm chứng tính xác thực của AI):} Học sinh đánh giá, phản biện các bước lập luận do AI tạo ra để phát hiện các lỗi sai logic phổ biến của AI (nhầm lẫn giữa $d$ và $q$, quên điều kiện $n \in \mathbb{N}^*$, quên chia 2 trong công thức $S_n$ của CSC hoặc quên điều kiện $q \neq 1$ của CSN).
+    \end{itemize}
+
+    \item \textbf{Năng lực chung:}
+    \begin{itemize}[leftmargin=0.6cm]
+        \item \textit{Tự chủ và tự học:} Chủ động hoàn thiện đề cương ôn tập, tự rà soát các lỗ hổng kiến thức sau hai bài học Cấp số cộng và Cấp số nhân.
+        \item \textit{Giao tiếp và hợp tác:} Làm việc nhóm tích cực, biết phân công nhiệm vụ hài hòa giữa các thành viên, hỗ trợ học sinh trung bình - yếu củng cố công thức cơ bản.
+    \end{itemize}
+\end{itemize}
+
+\subsection*{2. Phẩm chất}
+
+\begin{itemize}[leftmargin=1.2cm]
+    \item \textbf{Chăm chỉ:} Kiên nhẫn hệ thống lại toàn bộ kiến thức chương, nghiêm túc giải các bài tập tự luyện và ghi chép các lỗi sai thường gặp.
+    \item \textbf{Trung thực:} Khách quan tự đánh giá năng lực của bản thân theo bảng Rubric, trung thực trong kiểm tra chéo giữa các nhóm học tập.
+    \item \textbf{Trách nhiệm:} Có trách nhiệm với tiến độ học tập của nhóm, tích cực chia sẻ tài liệu ôn tập hữu ích cho bạn bè.
+\end{itemize}
+
+\section*{II. THIẾT BỊ DẠY HỌC VÀ HỌC LIỆU}
+
+\begin{itemize}[leftmargin=1.2cm]
+    \item \textbf{Giáo viên:}
+    \begin{itemize}[leftmargin=0.6cm]
+        \item Kế hoạch bài dạy ôn tập, bài trình chiếu PowerPoint/Canva tương tác.
+        \item Bảng đối chiếu song song Cấp số cộng và Cấp số nhân (Infographic trực quan).
+        \item Phiếu học tập ôn tập chương (Worksheet phân tầng 3 bậc thang) và Bảng Rubric đánh giá năng lực 4 mức độ.
+        \item Tài liệu mẫu câu lệnh prompt sư phạm chuẩn để học sinh tương tác với AI.
+    \end{itemize}
+    \item \textbf{Học sinh:}
+    \begin{itemize}[leftmargin=0.6cm]
+        \item SGK Toán 11, vở ghi chép, bảng phụ nhóm/bút lông.
+        \item Máy tính cầm tay Casio fx-580VN X.
+    \end{itemize}
+\end{itemize}
+
+\section*{III. TIẾN TRÌNH DẠY HỌC (TIẾT 17 THEO PPCT | TUẦN 6)}
+
+\subsection*{1. Hoạt động 1: Khởi động (Mở đầu)}
+
+\noindent \textbf{a) Mục tiêu:}
+Tạo không khí học tập sôi nổi, thông qua thử thách phân loại nhanh giúp học sinh khắc sâu sự khác biệt bản chất giữa Cấp số cộng và Cấp số nhân, khắc phục triệt để lỗi nhầm lẫn giữa công sai $d$ (phép cộng) và công bội $q$ (phép nhân).
+
+\noindent \textbf{b) Nội dung: Trò chơi ``Thử tài tinh mắt - Phân loại dãy số''}
+\begin{pedabox}{Thử thách khởi động: Nhận diện và phân loại dãy số}
+Cho 5 dãy số sau:
+\begin{itemize}[leftmargin=0.6cm]
+    \item Dãy 1: $4; \ 7; \ 10; \ 13; \ 16; \ \dots$
+    \item Dãy 2: $3; \ 6; \ 12; \ 24; \ 48; \ \dots$
+    \item Dãy 3: $1; \ -2; \ 4; \ -8; \ 16; \ \dots$
+    \item Dãy 4: $10; \ 5; \ 0; \ -5; \ -10; \ \dots$
+    \item Dãy 5: $5; \ 5; \ 5; \ 5; \ 5; \ \dots$
+\end{itemize}
+\textbf{Nhiệm vụ khởi động:}
+\begin{enumerate}[leftmargin=0.6cm]
+    \item Hãy xếp từng dãy số vào đúng nhóm: \textbf{Cấp số cộng (CSC)} hay \textbf{Cấp số nhân (CSN)}?
+    \item Chỉ ra yếu tố đặc trưng của mỗi dãy: số hạng đầu $u_1$ và công sai $d$ (nếu là CSC) hoặc công bội $q$ (nếu là CSN).
+    \item Có dãy số nào vừa là Cấp số cộng, vừa là Cấp số nhân không? Giải thích vì sao.
+\end{enumerate}
+\end{pedabox}
+
+\noindent \textbf{c) Sản phẩm: Lời giải chi tiết}
+\begin{enumerate}[leftmargin=0.6cm]
+    \item \textbf{Phân loại chi tiết:}
+    \begin{itemize}
+        \item \textbf{Dãy 1:} Là Cấp số cộng vì hiệu hai số liên tiếp luôn bằng $3$ ($7 - 4 = 10 - 7 = 3$). Ta có: $u_1 = 4$, công sai $d = 3$.
+        \item \textbf{Dãy 2:} Là Cấp số nhân vì tỉ số hai số liên tiếp luôn bằng $2$ ($\dfrac{6}{3} = \dfrac{12}{6} = 2$). Ta có: $u_1 = 3$, công bội $q = 2$.
+        \item \textbf{Dãy 3:} Là Cấp số nhân đan dấu vì tỉ số hai số liên tiếp bằng $-2$ ($\dfrac{-2}{1} = \dfrac{4}{-2} = -2$). Ta có: $u_1 = 1$, công bội $q = -2$.
+        \item \textbf{Dãy 4:} Là Cấp số cộng giảm vì $5 - 10 = 0 - 5 = -5$. Ta có: $u_1 = 10$, công sai $d = -5$.
+        \item \textbf{Dãy 5:} Dãy số hằng $5; 5; 5; 5; \dots$ vừa là Cấp số cộng với $u_1 = 5, d = 0$, vừa là Cấp số nhân với $u_1 = 5, q = 1$.
+    \end{itemize}
+    \item \textit{Bản chất toán học:}\\
+    - Cấp số cộng gắn liền với quy luật cộng dồn: $u_{n+1} - u_n = d$ (tăng trưởng bậc nhất/tuyến tính).\\
+    - Cấp số nhân gắn liền với quy luật nhân dồn: $\dfrac{u_{n+1}}{u_n} = q$ (tăng trưởng hàm mũ).
+\end{enumerate}
+
+\noindent \textbf{d) Tổ chức thực hiện:}
+\begin{itemize}[leftmargin=0.8cm]
+    \item \textit{Chuyển giao nhiệm vụ:} Giáo viên trình chiếu 5 dãy số, phát phiếu khảo sát nhanh hoặc giơ thẻ A/B cho các bàn trong 3 phút.
+    \item \textit{Thực hiện nhiệm vụ:} Học sinh quan sát, tính nhẩm hiệu số hoặc tỉ số để xác định loại dãy.
+    \item \textit{Báo cáo, thảo luận:} 2 học sinh đại diện bàn đứng dậy đọc kết quả phân loại; học sinh dưới lớp nhận xét Dãy 5.
+    \item \textit{Kết luận, nhận định:} Giáo viên chốt kiến thức: Khắc sâu dấu hiệu nhận biết CSC qua hiệu $u_{n+1} - u_n = d$ và CSN qua thương $\dfrac{u_{n+1}}{u_n} = q$.
+\end{itemize}
+
+\subsection*{2. Hoạt động 2: Hệ thống hóa kiến thức trọng tâm}
+
+\noindent \textbf{a) Mục tiêu:}
+Học sinh hệ thống hóa toàn bộ công thức toán học của Chương II theo dạng bảng đối sánh song song; củng cố các lưu ý sư phạm và các bẫy sai lầm hay mắc phải.
+
+\noindent \textbf{b) Nội dung: Bảng ma trận đối sánh toàn diện Cấp số cộng và Cấp số nhân}
+\begin{pedabox}{Bảng ma trận đối sánh Cấp số cộng và Cấp số nhân}
+\begin{center}
+\small
+\begin{tabularx}{\textwidth}{|p{3.2cm}|X|X|}
+\hline
+\textbf{Đặc trưng so sánh} & \textbf{CẤP SỐ CỘNG (CSC)} & \textbf{CẤP SỐ NHÂN (CSN)} \\ \hline
+\textbf{Quy luật sinh dãy} & Cộng dồn hằng số $d$ (công sai): \newline $u_{n+1} = u_n + d$ & Nhân dồn hằng số $q$ (công bội): \newline $u_{n+1} = u_n \cdot q$ \\ \hline
+\textbf{Công sai / Công bội} & $d = u_{n+1} - u_n$ & $q = \dfrac{u_{n+1}}{u_n} \ (u_n \neq 0)$ \\ \hline
+\textbf{Số hạng tổng quát} & $u_n = u_1 + (n - 1)d \ (n \ge 2)$ & $u_n = u_1 \cdot q^{n-1} \ (n \ge 2)$ \\ \hline
+\textbf{Tính chất số hạng} & $u_k = \dfrac{u_{k-1} + u_{k+1}}{2} \ (k \ge 2)$ \newline (Trung bình cộng) & $u_k^2 = u_{k-1} \cdot u_{k+1} \ (k \ge 2)$ \newline (Trung bình nhân) \\ \hline
+\textbf{Tổng $n$ số hạng đầu} & $S_n = \dfrac{n(u_1 + u_n)}{2}$ \newline $S_n = \dfrac{n[2u_1 + (n - 1)d]}{2}$ & $\bullet \ q \neq 1: \ S_n = \dfrac{u_1(1 - q^n)}{1 - q} = \dfrac{u_1(q^n - 1)}{q - 1}$ \newline $\bullet \ q = 1: \ S_n = n \cdot u_1$ \\ \hline
+\textbf{Phương pháp giải hệ} & Biến đổi về $u_1, d \implies$ Dùng phép trừ/cộng đại số & Biến đổi về $u_1, q \implies$ Dùng phép chia vế theo vế triệt tiêu \\ \hline
+\end{tabularx}
+\end{center}
+\end{pedabox}
+
+\begin{scaffoldbox}{Hộp hỗ trợ sư phạm: Các lỗi sai kinh điển của học sinh trung bình - yếu}
+\begin{itemize}[leftmargin=0.6cm]
+    \item \textbf{Lỗi 1 (Nhầm lẫn số mũ):} Viết $u_n = u_1 \cdot q^n$ hoặc $u_n = u_1 + nd$. \textit{Khắc phục:} Khắc sâu số bước nhảy từ $u_1$ đến $u_n$ luôn là $(n - 1)$ bước.
+    \item \textbf{Lỗi 2 (Quên chia 2):} Trong công thức tính tổng CSC: $S_n = n(u_1 + u_n)$ (quên mẫu số $2$).
+    \item \textbf{Lỗi 3 (Cơ số âm):} Khi $q = -2, n = 4$, bấm máy tính $-2^4 = -16$ thay vì $(-2)^4 = 16$. Bắt buộc đóng ngoặc cơ số âm.
+    \item \textbf{Lỗi 4 (Điều kiện công bội):} Áp dụng công thức $S_n = \dfrac{u_1(1 - q^n)}{1 - q}$ cho cả trường hợp $q = 1$ dẫn tới chia cho $0$.
+\end{itemize}
+\end{scaffoldbox}
+
+\noindent \textbf{c) Sản phẩm: Bảng hệ thống hóa kiến thức trong vở học sinh}
+Học sinh hoàn thành bảng đối sánh vào vở ghi; ghi nhớ các từ khóa cốt lõi: ``Cộng $\implies$ Sai $d$'', ``Nhân $\implies$ Bội $q$'', ``Số mũ luôn lùi 1 đơn vị là $n-1$''.
+
+\noindent \textbf{d) Tổ chức thực hiện:}
+\begin{itemize}[leftmargin=0.8cm]
+    \item \textit{Chuyển giao nhiệm vụ:} Giáo viên trình chiếu bảng khuyết một số công thức, gọi học sinh lên điền vào các vị trí trống.
+    \item \textit{Thực hiện nhiệm vụ:} Học sinh làm việc theo cặp, hoàn thiện bảng đối chiếu vào vở học tập.
+    \item \textit{Báo cáo, thảo luận:} 2 học sinh lên bảng điền công thức; cả lớp nhận xét đối chiếu.
+    \item \textit{Kết luận, nhận định:} Giáo viên chuẩn hóa bảng công thức, chiếu hộp lưu ý sư phạm và chuyển tiếp sang hoạt động luyện tập bài tập phân hóa.
+\end{itemize}
+
+\subsection*{3. Hoạt động 3: Luyện tập giải toán theo chủ đề phân hóa}
+
+\noindent \textbf{a) Mục tiêu:}
+Rèn luyện kỹ năng giải các bài toán trọng tâm của chương: tìm các yếu tố cơ bản, lập và giải hệ phương trình, tính tổng và giải bài toán đảo tìm chỉ số $n$.
+
+\noindent \textbf{b) Nội dung: Phiếu học tập ôn tập chương (Worksheet phân tầng)}
+\begin{pedabox}{Nội dung bài tập luyện tập phân tầng}
+\textbf{Chủ đề 1 (Nhận biết - Thông hiểu: Xác định số hạng và công sai, công bội):}
+\begin{enumerate}[leftmargin=0.6cm]
+    \item Cho cấp số cộng $(u_n)$ có $u_1 = -3$ và công sai $d = 4$. Tính $u_{15}$ và tổng $S_{20}$.
+    \item Cho cấp số nhân $(v_n)$ có $v_1 = 2$ và công bội $q = -3$. Tính $v_6$ và tổng $S_6$.
+\end{enumerate}
+\textbf{Chủ đề 2 (Vận dụng: Giải hệ phương trình tìm số hạng đầu và công sai/công bội):}
+\begin{enumerate}[leftmargin=0.6cm]
+    \item Tìm $u_1$ và $d$ của cấp số cộng $(u_n)$ biết: $\begin{cases} u_2 + u_5 = 19 \\ u_3 + u_8 = 29 \end{cases}$.
+    \item Tìm $v_1$ và $q$ của cấp số nhân $(v_n)$ có các số hạng dương thỏa mãn: $\begin{cases} v_4 - v_2 = 18 \\ v_5 - v_3 = 36 \end{cases}$.
+\end{enumerate}
+\textbf{Chủ đề 3 (Vận dụng cao: Bài toán tìm số số hạng $n$ và cực trị):}
+Cho cấp số cộng $(u_n)$ có $u_1 = 40$ và $d = -3$. Hỏi phải lấy tổng bao nhiêu số hạng đầu tiên để tổng đạt giá trị lớn nhất? Tính giá trị lớn nhất đó.
+\end{pedabox}
+
+\noindent \textbf{c) Sản phẩm: Lời giải chi tiết}
+\begin{enumerate}[leftmargin=0.6cm]
+    \item \textbf{Chủ đề 1:}
+    \begin{itemize}
+        \item Cấp số cộng:
+        $$u_{15} = u_1 + 14d = -3 + 14 \cdot 4 = -3 + 56 = 53$$
+        $$S_{20} = \dfrac{20 \cdot [2u_1 + 19d]}{2} = 10 \cdot [2(-3) + 19 \cdot 4] = 10 \cdot [-6 + 76] = 10 \cdot 70 = 700$$
+        \item Cấp số nhân:
+        $$v_6 = v_1 \cdot q^5 = 2 \cdot (-3)^5 = 2 \cdot (-243) = -486$$
+        $$S_6 = \dfrac{v_1(1 - q^6)}{1 - q} = \dfrac{2 \cdot [1 - (-3)^6]}{1 - (-3)} = \dfrac{2 \cdot (1 - 729)}{4} = \dfrac{2 \cdot (-728)}{4} = -364$$
+    \end{itemize}
+
+    \item \textbf{Chủ đề 2:}
+    \begin{itemize}
+        \item Giải hệ cấp số cộng:
+        $$\begin{cases} (u_1 + d) + (u_1 + 4d) = 19 \\ (u_1 + 2d) + (u_1 + 7d) = 29 \end{cases} \iff \begin{cases} 2u_1 + 5d = 19 \\ 2u_1 + 9d = 29 \end{cases}$$
+        Trừ phương trình dưới cho phương trình trên:
+        $$4d = 10 \implies d = 2{,}5 \implies 2u_1 = 19 - 5(2{,}5) = 6{,}5 \implies u_1 = 3{,}25$$
+        \item Giải hệ cấp số nhân (các số hạng dương $\implies v_1 > 0, q > 0$):
+        $$\begin{cases} v_1 q^3 - v_1 q = 18 \\ v_1 q^4 - v_1 q^2 = 36 \end{cases} \iff \begin{cases} v_1 q(q^2 - 1) = 18 & (1) \\ v_1 q^2(q^2 - 1) = 36 & (2) \end{cases}$$
+        Lấy $(2)$ chia $(1)$ vế theo vế:
+        $$\dfrac{v_1 q^2(q^2 - 1)}{v_1 q(q^2 - 1)} = \dfrac{36}{18} \iff q = 2$$
+        Thay $q = 2$ vào $(1)$:
+        $$v_1 \cdot 2 \cdot (2^2 - 1) = 18 \iff v_1 \cdot 6 = 18 \iff v_1 = 3$$
+        Vậy $v_1 = 3$ và $q = 2$.
+    \end{itemize}
+
+    \item \textbf{Chủ đề 3:}
+    Ta có $u_n = u_1 + (n - 1)d = 40 + (n - 1)(-3) = 43 - 3n$.
+    Vì $d = -3 < 0$ nên $(u_n)$ là dãy số giảm. Các số hạng đầu tiên mang dấu dương, sau đó giảm dần và mang dấu âm.
+    Tổng $S_n$ đạt giá trị lớn nhất khi ta cộng toàn bộ các số hạng không âm của dãy số.
+    Ta tìm $n$ sao cho $u_n \ge 0$:
+    $$43 - 3n \ge 0 \iff 3n \le 43 \iff n \le \dfrac{43}{3} \approx 14{,}33$$
+    Vì $n \in \mathbb{N}^*$ nên số hạng dương cuối cùng là $u_{14} = 43 - 3(14) = 1$. Số hạng tiếp theo là $u_{15} = 43 - 3(15) = -2 < 0$.
+    Do đó, để $S_n$ đạt giá trị lớn nhất, ta phải lấy tổng của đúng $14$ số hạng đầu tiên ($n = 14$).
+    Giá trị lớn nhất của tổng là:
+    $$S_{14} = \dfrac{14 \cdot (u_1 + u_{14})}{2} = 7 \cdot (40 + 1) = 7 \cdot 41 = 287$$
+\end{enumerate}
+
+\noindent \textbf{d) Tổ chức thực hiện:}
+\begin{itemize}[leftmargin=0.8cm]
+    \item \textit{Chuyển giao nhiệm vụ:} Giáo viên chia lớp thành 4 tổ/nhóm lớn, giao nhiệm vụ: Tổ 1 \& 2 làm Chủ đề 1 và 2a; Tổ 3 \& 4 làm Chủ đề 2b và 3.
+    \item \textit{Thực hiện nhiệm vụ:} Học sinh giải bài tập theo nhóm. Giáo viên hướng dẫn các học sinh yếu kỹ năng rút nhân tử chung $v_1 q(q^2 - 1)$ ở Chủ đề 2b.
+    \item \textit{Báo cáo, thảo luận:} Đại diện 3 nhóm lên bảng trình bày 3 chủ đề; các nhóm khác nhận xét, chấm chéo lời giải.
+    \item \textit{Kết luận, nhận định:} Giáo viên chốt phương pháp: Giải hệ CSC dùng phép trừ đại số; giải hệ CSN dùng phép chia đại số; bài toán cực trị tổng CSC chuyển về tìm các số hạng dương.
+\end{itemize}
+
+\subsection*{4. Hoạt động 4: Vận dụng thực tiễn \& Kiểm chứng số - AI}
+
+\noindent \textbf{a) Mục tiêu:}
+Tích hợp Năng lực AI (Mã 11.C3.1, Mã 11.A1.1) và Năng lực số (Mã 2.2NC1a): Học sinh vận dụng kiến thức giải bài toán kinh tế thực tế so sánh lãi đơn và lãi kép; biết cách viết câu lệnh prompt sư phạm nhờ AI hướng dẫn bài toán theo từng bước.
+
+\noindent \textbf{b) Nội dung: Bài toán tài chính thực tế \& Kỹ thuật Prompt AI}
+\begin{aibox}{Tình huống liên môn: Bài toán đầu tư tài chính \& Kỹ thuật Prompt AI}
+\textbf{Bài toán thực tế: So sánh Lãi đơn (Cấp số cộng) và Lãi kép (Cấp số nhân)}
+Bác An có số vốn $200$ triệu đồng dự định đầu tư trong thời hạn 10 năm với mức sinh lời $8\%$/năm.
+\begin{itemize}[leftmargin=0.6cm]
+    \item \textit{Phương án 1 (Lãi đơn):} Tiền lãi mỗi năm được tính cố định trên số vốn gốc ban đầu và không nhập vào gốc.
+    \item \textit{Phương án 2 (Lãi kép):} Tiền lãi mỗi năm được cộng dồn vào gốc để tính lãi cho năm tiếp theo.
+\end{itemize}
+\textbf{Nhiệm vụ:}
+\begin{enumerate}[leftmargin=0.6cm]
+    \item Tính số tiền bác An nhận được sau 10 năm theo từng phương án. So sánh sự chênh lệch và giải thích tại sao nhà bác học Albert Einstein gọi lãi kép là ``kỳ quan thứ tám của thế giới''.
+    \item \textbf{Thực hành Năng lực AI (Mã 11.C3.1):} Giả sử em gặp một bài toán khó về cấp số trong đề thi, em hãy viết một câu lệnh prompt chuẩn mực để yêu cầu trợ lý AI hướng dẫn em theo phương pháp giàn giáo sư phạm (từng bước) mà không giải hộ trực tiếp.
+\end{enumerate}
+\end{aibox}
+
+\noindent \textbf{c) Sản phẩm: Lời giải chi tiết}
+\begin{enumerate}[leftmargin=0.6cm]
+    \item \textbf{Tính toán so sánh tài chính:}
+    \begin{itemize}
+        \item \textbf{Phương án 1 (Lãi đơn - Mô hình Cấp số cộng):}
+        Số tiền lãi cố định mỗi năm: $d = 200 \times 8\% = 16$ triệu đồng.
+        Số tiền sau 10 năm là:
+        $$T_1 = 200 + 10 \cdot 16 = 200 + 160 = 360\text{ (triệu đồng)}$$
+        \item \textbf{Phương án 2 (Lãi kép - Mô hình Cấp số nhân):}
+        Số tiền sau mỗi năm là cấp số nhân có $A_0 = 200$ triệu, công bội $q = 1 + 0{,}08 = 1{,}08$.
+        Số tiền sau 10 năm là:
+        $$T_2 = 200 \cdot (1{,}08)^{10} \approx 200 \cdot 2{,}158925 = 431{,}785\text{ (triệu đồng)}$$
+        \item \textbf{So sánh \& Nhận định:}\\
+        Chênh lệch số tiền: $431{,}785 - 360 = 71{,}785$ triệu đồng (hơn 71 triệu đồng!).\\
+        \textit{Giải thích:} Lãi đơn tăng trưởng tuyến tính theo cấp số cộng ($y = ax + b$). Lãi kép tăng trưởng hàm mũ theo cấp số nhân ($y = a \cdot q^x$). Với thời gian đủ dài, cấp số nhân sẽ bứt phá vượt bậc so với cấp số cộng.
+    \end{itemize}
+
+    \item \textbf{Thiết kế câu lệnh prompt AI chuẩn (Mã 11.C3.1):}
+    \begin{pedabox}{Mẫu câu lệnh Prompt chuẩn sư phạm tương tác với AI}
+    \texttt{"Em là học sinh lớp 11 đang ôn tập Chương II Dãy số - Cấp số. Em đang gặp khó khăn với bài toán: [Dán đề bài toán]. Nhờ bạn đóng vai trò là một gia sư Toán học kiên nhẫn. Bạn TUYỆT ĐỐI KHÔNG giải hộ ngay hay đưa ra đáp số cuối cùng. Hãy gợi ý cho em từng bước: Bước 1: Nhắc lại công thức cốt lõi cần dùng; Bước 2: Đặt cho em một câu hỏi gợi mở để em tự thiết lập phương trình; sau khi em trả lời thì bạn mới nhận xét và hướng dẫn bước tiếp theo."}
+    \end{pedabox}
+\end{enumerate}
+
+\noindent \textbf{d) Tổ chức thực hiện:}
+\begin{itemize}[leftmargin=0.8cm]
+    \item \textit{Chuyển giao nhiệm vụ:} Giáo viên trình chiếu bài toán so sánh lãi đơn - lãi kép và kỹ thuật tương tác số, yêu cầu học sinh thảo luận cặp đôi trong 4 phút.
+    \item \textit{Thực hiện nhiệm vụ:} Học sinh tính toán chênh lệch số tiền bằng MTCT và phân tích cấu trúc prompt.
+    \item \textit{Báo cáo, thảo luận:} 1 học sinh báo cáo kết quả tài chính, 1 học sinh đọc to câu lệnh prompt tự thiết kế.
+    \item \textit{Kết luận, nhận định:} Giáo viên tổng kết toàn chương: Dãy số, Cấp số cộng và Cấp số nhân là công cụ nền tảng để hiểu về tăng trưởng, tài chính và thuật toán máy tính; căn dặn học sinh ôn tập chuẩn bị bước sang Chương III: Các số đặc trưng đo xu thế trung tâm của mẫu số liệu ghép nhóm.
+\end{itemize}
+
+\section*{IV. PHỤ LỤC HỌC LIỆU BỔ TRỢ}
+
+\subsection*{1. Phiếu học tập ôn tập chương (Worksheet phân tầng bậc thang)}
+
+\noindent \textbf{A. PHẦN TRẮC NGHIỆM KHÁCH QUAN (Rèn phản xạ nhanh)}
+\begin{enumerate}[leftmargin=0.6cm]
+    \item Cho cấp số cộng $(u_n)$ có $u_1 = 3, d = -2$. Số hạng thứ 5 là:
+    \begin{itemize}[leftmargin=0.6cm]
+        \item[A.] $u_5 = -7$. \quad \textbf{B.} $u_5 = -5$. \quad C. $u_5 = 11$. \quad D. $u_5 = -10$.
+    \end{itemize}
+    \item Cho cấp số nhân $(u_n)$ có $u_1 = -2, q = 3$. Số hạng thứ 4 là:
+    \begin{itemize}[leftmargin=0.6cm]
+        \item[A.] $u_4 = 54$. \quad \textbf{B.} $u_4 = -54$. \quad C. $u_4 = -162$. \quad D. $u_4 = 18$.
+    \end{itemize}
+    \item Trong các dãy số sau, dãy số nào là cấp số cộng?
+    \begin{itemize}[leftmargin=0.6cm]
+        \item[A.] $1; 3; 6; 10$. \quad \textbf{B.} $2; 5; 8; 11$. \quad C. $2; 4; 8; 16$. \quad D. $1; -1; 1; -1$.
+    \end{itemize}
+\end{enumerate}
+
+\noindent \textbf{B. PHẦN TỰ LUẬN PHÂN TẦNG}
+\begin{itemize}[leftmargin=0.6cm]
+    \item \textbf{Tầng 1 (Cơ bản dành cho HS TB-Yếu):} Cho CSC $(u_n)$ có $u_1 = 2, d = 5$. Tính $u_{10}$ và tổng 15 số hạng đầu tiên.
+    \item \textbf{Tầng 2 (Thông hiểu):} Cho CSN $(v_n)$ có $v_2 = 6, v_5 = 162$. Tìm số hạng đầu $v_1$, công bội $q$ và tính tổng 8 số hạng đầu tiên.
+    \item \textbf{Tầng 3 (Vận dụng cao):} Cho 3 số $a, b, c$ theo thứ tự lập thành một cấp số nhân. Nếu tăng số thứ hai thêm $2$ thì ba số đó trở thành một cấp số cộng; nếu sau đó tiếp tục tăng số thứ ba thêm $9$ thì ba số mới lại trở thành một cấp số nhân. Tìm ba số $a, b, c$ ban đầu.
+\end{itemize}
+
+\subsection*{2. Bảng Rubric đánh giá năng lực học sinh trong tiết ôn tập chương}
+
+\begin{center}
+\small
+\begin{tabularx}{\textwidth}{|p{2.8cm}|X|X|X|X|}
+\hline
+\textbf{Tiêu chí} & \textbf{Chưa đạt (Mức 1)} & \textbf{Đạt (Mức 2)} & \textbf{Khá (Mức 3)} & \textbf{Tốt (Mức 4)} \\ \hline
+\textbf{Hệ thống hóa \& Phân loại} & Vẫn nhầm lẫn giữa CSC và CSN, không phân biệt được $d$ và $q$. & Phân loại đúng các dãy số đơn giản, nhớ được định nghĩa. & Thuộc đầy đủ bảng công thức đối sánh, phân tích rõ sự khác nhau giữa $d$ và $q$. & Hệ thống hóa kiến thức xuất sắc bằng sơ đồ tư duy, giải thích sâu sắc về mô hình tăng trưởng. \\ \hline
+\textbf{Kỹ năng giải toán đại số} & Áp dụng sai công thức tổng quát, tính sai số học các phép toán cơ bản. & Tính đúng $u_n, S_n$ khi cho sẵn $u_1$ và $d$ hoặc $q$. & Giải tốt hệ phương trình CSC (dùng phép trừ) và CSN (dùng phép chia). & Giải quyết hoàn hảo bài toán cực trị tổng CSC và bài toán kết hợp cả CSC lẫn CSN. \\ \hline
+\textbf{Ứng dụng số \& AI} & Chưa biết bấm MTCT kiểm tra hoặc đặt prompt mơ hồ cho AI. & Bấm được MTCT nhưng còn chậm, chưa biết tận dụng AI để học tập. & Dùng MTCT kiểm tra nghiệm nhanh chóng, viết được prompt AI có chia nhỏ bước hỏi. & Khai thác tối ưu MTCT/Excel, phân tích sâu sắc mô hình tài chính và phản biện tốt lời giải của AI. \\ \hline
+\textbf{Hợp tác nhóm \& Thái độ} & Thụ động, không ghi chép đầy đủ nội dung ôn tập. & Có tham gia làm việc nhóm nhưng còn thụ động trong thảo luận. & Tích cực đóng góp ý kiến, hoàn thành tốt nhiệm vụ được phân công. & Gương mẫu, hỗ trợ nhiệt tình và kiên nhẫn hướng dẫn các bạn yếu trong nhóm cùng tiến bộ. \\ \hline
+\end{tabularx}
+\end{center}
+
+\end{document}
