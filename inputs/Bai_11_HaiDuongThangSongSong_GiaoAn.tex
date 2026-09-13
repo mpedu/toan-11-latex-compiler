@@ -1,0 +1,580 @@
+\documentclass[12pt, a4paper]{article}
+
+% --- 1. Cấu hình Tiếng Việt và Font chữ ---
+\usepackage[utf8]{inputenc}
+\usepackage[T5]{fontenc}
+\usepackage[vietnamese]{babel}
+\usepackage{newtxtext,newtxmath}
+
+\makeatletter
+\renewcommand{\normalsize}{\@setfontsize\normalsize{13pt}{16pt}}
+\makeatother
+\normalsize
+
+% 2. Gói Toán học & Ký hiệu bổ trợ
+\usepackage{amsmath, amssymb, amsfonts, mathrsfs, amsthm}
+\usepackage{graphicx}
+\usepackage{fontawesome}
+\usepackage{booktabs, tabularx, array, multirow}
+\usepackage{enumitem}
+
+% 3. Đồ họa TikZ, Bảng biến thiên & Hình không gian
+\usepackage{tikz}
+\usetikzlibrary{calc, intersections, angles, quotes, patterns, arrows.meta, 3d}
+\usepackage{pgfplots}
+\pgfplotsset{compat=1.18}
+\usepackage{tkz-euclide}
+\usepackage{tkz-tab}
+
+\renewcommand{\vec}[1]{\overrightarrow{#1}}
+
+% 4. Hộp sư phạm (Tcolorbox)
+\usepackage[many]{tcolorbox}
+\tcbuselibrary{skins, breakable}
+
+\newtcolorbox{pedabox}[1][]{
+    enhanced,
+    colback=blue!5!white,
+    colframe=blue!75!black,
+    fonttitle=\bfseries\sffamily,
+    title=#1,
+    boxrule=0.8pt,
+    arc=2mm,
+    breakable,
+    left=3mm, right=3mm, top=2mm, bottom=2mm
+}
+
+\newtcolorbox{scaffoldbox}[1][]{
+    enhanced,
+    colback=orange!5!white,
+    colframe=orange!85!black,
+    fonttitle=\bfseries\sffamily,
+    title=#1,
+    boxrule=0.8pt,
+    arc=2mm,
+    breakable,
+    left=3mm, right=3mm, top=2mm, bottom=2mm
+}
+
+\newtcolorbox{aibox}[1][]{
+    enhanced,
+    colback=green!5!white,
+    colframe=teal!80!black,
+    fonttitle=\bfseries\sffamily,
+    title=#1,
+    boxrule=0.8pt,
+    arc=2mm,
+    breakable,
+    left=3mm, right=3mm, top=2mm, bottom=2mm
+}
+
+% 5. Căn lề chuẩn văn bản giáo án
+\usepackage{geometry}
+\geometry{
+    a4paper,
+    left=25mm,
+    right=15mm,
+    top=20mm,
+    bottom=20mm
+}
+
+% 6. Header / Footer chuẩn hóa (BẮT BUỘC CHÍNH XÁC NỘI DUNG NÀY)
+\usepackage{fancyhdr}
+\usepackage{lastpage}
+\pagestyle{fancy}
+\fancyhf{}
+
+\fancyhead[L]{\small \textit{Kế hoạch bài dạy Toán 11}}
+\fancyhead[R]{\textbf{Trang \thepage/\pageref{LastPage}}}
+\fancyfoot[L]{\small \textit{Tổ Toán - Tin}}
+\fancyfoot[R]{\small \textit{Trường THCS\&THPT Hồng Vân}}
+\renewcommand{\headrulewidth}{0.4pt}
+\renewcommand{\footrulewidth}{0.4pt}
+
+% 7. Giãn dòng & Giãn đoạn theo chuẩn Nghị định 30/2020/NĐ-CP
+\usepackage{setspace}
+\setstretch{1.15}
+\setlength{\parindent}{1.0cm}
+\setlength{\parskip}{5pt}
+
+\begin{document}
+
+\begin{center}
+    {\Large \textbf{KẾ HOẠCH BÀI DẠY MÔN TOÁN LỚP 11}}\\[0.4em]
+    {\LARGE \textbf{BÀI 11. HAI ĐƯỜNG THẲNG SONG SONG}}\\[0.5em]
+    \textbf{Môn học:} Toán 11 | \textbf{Thời lượng:} 03 tiết (Tiết 28, 29, 30 theo PPCT)
+\end{center}
+
+\vspace{0.5em}
+\hrule
+\vspace{1em}
+
+\section*{I. MỤC TIÊU DẠY HỌC}
+
+\subsection*{1. Kiến thức, Năng lực}
+
+\textbf{a) Năng lực Toán học đặc thù (nguyên văn chuẩn CT GDPT 2018):}
+\begin{itemize}[leftmargin=1.5em]
+    \item \textbf{Năng lực tư duy và lập luận toán học:}
+    \begin{itemize}
+        \item Nhận biết được vị trí tương đối của hai đường thẳng trong không gian: hai đường thẳng trùng nhau, song song, cắt nhau (đồng phẳng) và chéo nhau (không đồng phẳng).
+        \item Phân biệt được sự khác biệt bản chất giữa hai đường thẳng song song và hai đường thẳng chéo nhau (cùng không có điểm chung nhưng một cặp đồng phẳng còn một cặp không đồng phẳng).
+        \item Hiểu rõ và phát biểu chính xác các tính chất cơ bản về hai đường thẳng song song trong không gian:
+        \begin{itemize}
+            \item Tiên đề về đường thẳng song song: Trong không gian, qua một điểm không nằm trên một đường thẳng cho trước, có một và chỉ một đường thẳng song song với đường thẳng đã cho.
+            \item Tính chất bắc cầu: Hai đường thẳng phân biệt cùng song song với một đường thẳng thứ ba thì song song với nhau.
+            \item Định lí giao tuyến của ba mặt phẳng (Định lí giao tuyến song song): Nếu ba mặt phẳng phân biệt đôi một cắt nhau theo ba giao tuyến phân biệt thì ba giao tuyến đó hoặc đồng quy, hoặc đôi một song song.
+            \item Hệ quả: Nếu hai mặt phẳng phân biệt lần lượt chứa hai đường thẳng song song thì giao tuyến của chúng (nếu có) cũng song song với hai đường thẳng đó (hoặc trùng với một trong hai đường thẳng đó).
+        \end{itemize}
+    \end{itemize}
+    \item \textbf{Năng lực giải quyết vấn đề toán học:}
+    \begin{itemize}
+        \item Vận dụng định lí giao tuyến song song và hệ quả để tìm giao tuyến của hai mặt phẳng khi biết một điểm chung và hai mặt phẳng lần lượt chứa hai đường thẳng song song.
+        \item Vận dụng tính chất bắc cầu và định lí đường trung bình của tam giác/hình thang để chứng minh hai đường thẳng song song trong không gian.
+        \item Xác định được thiết diện của hình chóp, hình tứ diện khi cắt bởi một mặt phẳng đi qua một điểm cho trước và song song với một hoặc hai đường thẳng cho trước.
+    \end{itemize}
+    \item \textbf{Năng lực mô hình hóa toán học:}
+    \begin{itemize}
+        \item Vận dụng được kiến thức về vị trí tương đối của hai đường thẳng trong không gian để mô tả các hình ảnh thực tiễn: đường ray xe lửa, thanh xà nhà, mép tường, cầu vượt bộ hành bắc qua đường quốc lộ (hình ảnh hai đường thẳng chéo nhau), dây điện cao thế.
+    \end{itemize}
+    \item \textbf{Năng lực giao tiếp toán học:}
+    \begin{itemize}
+        \item Sử dụng chính xác các thuật ngữ và kí hiệu hình học không gian: $a \parallel b$, $a \cap b = \{M\}$, $a$ và $b$ chéo nhau, $(P) \cap (Q) = d$; diễn đạt lập luận chứng minh hình học khúc chiết, mạch lạc.
+    \end{itemize}
+    \item \textbf{Năng lực sử dụng công cụ, phương tiện học toán:}
+    \begin{itemize}
+        \item Sử dụng thành thạo thước kẻ để vẽ hình biểu diễn của hai đường thẳng song song (giữ nguyên tính song song); sử dụng phần mềm GeoGebra 3D để xoay không gian 3 chiều, trực quan hóa góc nhìn nhằm phân biệt hai đường thẳng chéo nhau với cắt nhau.
+    \end{itemize}
+\end{itemize}
+
+\textbf{b) Năng lực số (theo Thông tư 02/2025/TT-BGDĐT):}
+\begin{itemize}[leftmargin=1.5em]
+    \item \textbf{Mã 3.1NC1b (Sáng tạo và trực quan hóa nội dung số trong môi trường 3D):} Học sinh quan sát mô hình 3D xoay các góc nhìn trên phần mềm GeoGebra 3D để phân biệt trực quan hai đường thẳng chéo nhau và hai đường thẳng cắt nhau; tự dựng mô hình khối chóp hoặc hình hộp để quan sát các cặp đường thẳng chéo nhau trong không gian số.
+\end{itemize}
+
+\textbf{c) Năng lực AI (theo Quyết định 2422/QĐ-BGDĐT):}
+\begin{itemize}[leftmargin=1.5em]
+    \item \textbf{Mã 11.A1.2 (Hiểu biết về nguyên lí và giới hạn của thị giác máy tính AI):} Học sinh phân tích hạn chế của camera 2D AI khi dễ nhầm lẫn hai đường thẳng chéo nhau thành cắt nhau do góc nhìn thị giác (hiệu ứng ảo ảnh thị giác phép chiếu 3D sang 2D); hiểu được sự cần thiết phải trang bị cảm biến đo chiều sâu (LiDAR, Camera Stereo RGB-D) để xe tự hành nhận diện đúng chướng ngại vật không gian.
+\end{itemize}
+
+\textbf{d) Năng lực chung \& Phẩm chất:}
+\begin{itemize}[leftmargin=1.5em]
+    \item \textbf{Năng lực chung:} Tự chủ và tự học (tự rèn luyện kĩ năng quan sát không gian đa chiều); giao tiếp và hợp tác nhóm khi cùng thảo luận xác định giao tuyến song song và thiết diện.
+    \item \textbf{Phẩm chất:} Cẩn thận, chính xác khi vẽ hình biểu diễn và lập luận; trung thực, kiên trì trong học tập.
+\end{itemize}
+
+\section*{II. THIẾT BỊ DẠY HỌC VÀ HỌC LIỆU}
+\begin{itemize}[leftmargin=1.5em]
+    \item \textbf{Giáo viên:} Kế hoạch bài dạy chuẩn CV 5512; bài trình chiếu PowerPoint trực quan; mô hình khung không gian (khung hình lập phương, hình hộp chữ nhật bằng nhựa trong hoặc dây thép); phần mềm hình học động GeoGebra 3D; Phiếu học tập số 1, 2, 3; Rubric đánh giá.
+    \item \textbf{Học sinh:} Vở ghi bài, SGK Toán 11; thước thẳng có chia vạch; bút chì, tẩy; điện thoại thông minh/máy tính có kết nối Internet để chạy GeoGebra 3D.
+\end{itemize}
+
+\section*{III. TIẾN TRÌNH DẠY HỌC (TRỌN VẸN 03 TIẾT)}
+
+\begin{center}
+    \framebox[1.0\textwidth]{\parbox{0.96\textwidth}{
+        \textbf{CẤU TRÚC PHÂN PHỐI 03 TIẾT DẠY HỌC (TIẾT 28, 29, 30 THEO PPCT):}\\[0.3em]
+        $\bullet$ \textbf{Tiết 1 (Tiết 28 PPCT):} Vị trí tương đối của hai đường thẳng trong không gian (trùng nhau, song song, cắt nhau, chéo nhau) --- Năng lực số GeoGebra 3D (Mã 3.1NC1b) --- Năng lực AI (Mã 11.A1.2).\\[0.3em]
+        $\bullet$ \textbf{Tiết 2 (Tiết 29 PPCT):} Các tính chất của hai đường thẳng song song (tiên đề song song, tính chất bắc cầu, định lí giao tuyến của ba mặt phẳng và hệ quả).\\[0.3em]
+        $\bullet$ \textbf{Tiết 3 (Tiết 30 PPCT):} Phương pháp chứng minh hai đường thẳng song song \& Tìm giao tuyến song song --- Bài toán thiết diện song song với đường thẳng --- Luyện tập tổng hợp.
+    }}
+\end{center}
+
+\vspace{0.8em}
+\hrule
+\vspace{0.8em}
+
+{\large \textbf{TIẾT 1 (TIẾT 28 THEO PHÂN PHỐI CHƯƠNG TRÌNH)}}\\[0.3em]
+\textbf{Nội dung:} Vị trí tương đối của hai đường thẳng trong không gian --- Năng lực số (Mã 3.1NC1b) --- Năng lực AI (Mã 11.A1.2).
+
+\subsubsection*{1. Hoạt động 1: Mở đầu / Khởi động (05 phút)}
+\textbf{Chủ đề:} \textit{Chiếc cầu vượt bộ hành và đường quốc lộ bên dưới}
+\begin{itemize}
+    \item \textbf{a) Mục tiêu:} Tạo tình huống có vấn đề để học sinh nhận thấy trong không gian có những đường thẳng không có điểm chung nhưng không hề song song với nhau (khái niệm hai đường thẳng chéo nhau).
+    \item \textbf{b) Nội dung:} Giáo viên chiếu hình ảnh cầu vượt dành cho người đi bộ bắc ngang qua một đại lộ:
+    \begin{itemize}
+        \item Đường thẳng thứ nhất $a$ là lan can của cầu vượt. Đường thẳng thứ hai $b$ là dải phân cách làn xe chạy trên đường quốc lộ bên dưới.
+        \item Hai đường thẳng $a$ và $b$ này có điểm chung nào hay không? Chúng có song song với nhau hay không? Chúng có cùng nằm trên một mặt phẳng không?
+    \end{itemize}
+    \item \textbf{c) Sản phẩm:} Học sinh trả lời: Hai đường thẳng $a$ và $b$ không có điểm chung, nhưng chúng không song song vì chúng nằm ở hai độ cao khác nhau và phương chạy cắt chéo nhau. Chúng không cùng nằm trong bất kì một mặt phẳng nào.
+    \item \textbf{d) Tổ chức thực hiện:} GV đặt vấn đề $\to$ HS quan sát và trả lời $\to$ GV dẫn dắt: Trong hình học phẳng, hai đường thẳng không cắt nhau thì chắc chắn song song. Nhưng trong không gian, điều này còn đúng không? Chúng ta cùng bước vào Bài 11.
+\end{itemize}
+
+\subsubsection*{2. Hoạt động 2: Hình thành kiến thức mới (25 phút)}
+
+\paragraph{Mục 1: Vị trí tương đối của hai đường thẳng trong không gian (12 phút)}
+Cho hai đường thẳng $a$ và $b$ trong không gian. Có hai khả năng xảy ra đối với mặt phẳng chứa chúng:
+\begin{enumerate}[label=\textbf{\arabic*.}]
+    \item \textbf{Trường hợp 1: Có một mặt phẳng cùng chứa $a$ và $b$ ($a$ và $b$ đồng phẳng)}
+    Khi đó, vị trí tương đối giữa $a$ và $b$ tuân theo các quan hệ của hình học phẳng:
+    \begin{itemize}
+        \item $a$ và $b$ \textbf{trùng nhau}: Có vô số điểm chung ($a \equiv b$).
+        \item $a$ và $b$ \textbf{cắt nhau}: Có duy nhất một điểm chung ($a \cap b = \{M\}$).
+        \item $a$ và $b$ \textbf{song song}: Cùng nằm trong một mặt phẳng và không có điểm chung ($a \parallel b$).
+    \end{itemize}
+    \item \textbf{Trường hợp 2: Không có mặt phẳng nào cùng chứa $a$ và $b$ ($a$ và $b$ không đồng phẳng)}
+    \begin{itemize}
+        \item Khi đó, ta nói $a$ và $b$ là \textbf{hai đường thẳng chéo nhau}.
+        \item Hai đường thẳng chéo nhau thì không có điểm chung.
+    \end{itemize}
+\end{enumerate}
+
+\begin{scaffoldbox}[Giàn giáo sư phạm cho HS TB - Yếu: Mẹo nhận diện chéo nhau vs song song]
+    $\bullet$ \textbf{Câu hỏi then chốt:}\\
+    ``Hai đường thẳng không có điểm chung thì có chắc chắn song song không?''\\
+    $\implies$ \textbf{TRẢ LỜI: KHÔNG!} Trong không gian, hai đường thẳng không có điểm chung có thể \textbf{song song} (nếu đồng phẳng) hoặc \textbf{chéo nhau} (nếu không đồng phẳng).\\
+    $\bullet$ \textbf{Mô hình trực quan ngay trong phòng học:}\\
+    - Hãy nhìn mép trần nhà bên trái và mép sàn nhà bên phải: Chúng không cắt nhau, không song song, mà chúng \textbf{chéo nhau}!
+\end{scaffoldbox}
+
+\begin{center}
+\begin{tikzpicture}[scale=0.85]
+    % Cắt nhau
+    \draw[thick, blue] (0,0) -- (3,2) node[above right] {$a$};
+    \draw[thick, red] (0,2) -- (3,0) node[below right] {$b$};
+    \fill (1.5,1) circle (2pt) node[below=2pt] {$M$};
+    \node at (1.5,-0.6) {\textbf{a) Cắt nhau} ($a \cap b = \{M\}$)};
+
+    % Song song
+    \begin{scope}[xshift=5cm]
+    \draw[thick] (-0.2,-0.2) -- (3.2,-0.2) -- (4.2,1.8) -- (0.8,1.8) -- cycle;
+    \node at (1.0,1.5) {$(P)$};
+    \draw[thick, blue] (0.5,0.4) -- (3.5,0.4) node[right] {$a$};
+    \draw[thick, red] (1.0,1.2) -- (4.0,1.2) node[right] {$b$};
+    \node at (2,-0.6) {\textbf{b) Song song} ($a \parallel b$)};
+    \end{scope}
+
+    % Chéo nhau
+    \begin{scope}[xshift=11.5cm]
+    \draw[thick] (-0.2,-0.2) -- (3.2,-0.2) -- (4.2,1.8) -- (0.8,1.8) -- cycle;
+    \node at (1.0,1.5) {$(P)$};
+    \draw[thick, blue] (0.5,0.5) -- (3.5,0.5) node[right] {$a \subset (P)$};
+    \draw[thick, red] (2.2,2.2) -- (2.2,1.0);
+    \draw[dashed, thick, red] (2.2,1.0) -- (2.2,0.5);
+    \draw[thick, red] (2.2,0.5) -- (2.2,-0.5) node[below] {$b \cap (P) = I \notin a$};
+    \fill[red] (2.2,0.8) circle (1.5pt);
+    \node at (2,-0.6) {\textbf{c) Chéo nhau} ($a$ và $b$ chéo nhau)};
+    \end{scope}
+\end{tikzpicture}
+\end{center}
+
+\paragraph{Mục 2: Tích hợp Năng lực số (Mã 3.1NC1b) (07 phút)}
+
+\begin{pedabox}[Năng lực số (Mã 3.1NC1b): Trực quan hóa đường thẳng chéo nhau trên GeoGebra 3D]
+    $\bullet$ \textbf{Nhiệm vụ:}\\
+    1. Học sinh mở ứng dụng GeoGebra 3D trên điện thoại hoặc máy tính bảng.\\
+    2. Dựng một hình tứ diện $ABCD$.\\
+    3. Chọn hai đường thẳng $AB$ và $CD$. Xoay góc nhìn 3D quanh các trục khác nhau:\\
+    - Có góc nhìn nào khiến $AB$ và $CD$ dường như giao nhau trên màn hình không?\\
+    - Khi xoay sang góc nhìn khác, em có thấy chúng cách xa nhau trong không gian thực không?\\
+    $\bullet$ \textbf{Kết luận số:} Hình chiếu 2D phẳng của hai đường thẳng chéo nhau có thể cắt nhau trên màn hình, nhưng khoảng cách giữa chúng trong không gian 3D luôn lớn hơn $0$.
+\end{pedabox}
+
+\paragraph{Mục 3: Tích hợp Năng lực AI (Mã 11.A1.2) (06 phút)}
+
+\begin{aibox}[Tích hợp Năng lực AI (QĐ 2422/QĐ-BGDĐT --- Mã 11.A1.2): Ảo ảnh thị giác của Camera 2D AI]
+    $\bullet$ \textbf{Giới hạn của AI thị giác máy tính với camera đơn (Monocular Camera 2D):}\\
+    Khi camera 2D chụp một bức ảnh giao thông, một đường dây điện trên cao (đường thẳng $a$) và một chiếc xe chạy dưới đường (quỹ đạo $b$) có thể bị hệ thống AI nhận diện hình ảnh dự đoán là ``va chạm/cắt nhau'' do mất thông tin về trục sâu ($z$-axis).\\
+    $\bullet$ \textbf{Giải pháp kĩ thuật:}\\
+    Để tránh sai lầm chết người này trong xe tự hành (Tesla, Waymo) và drone tự bay, các kĩ sư AI phải tích hợp thêm cảm biến \textbf{LiDAR} hoặc \textbf{Stereo Camera} (camera thị giác hai mắt đo chiều sâu) nhằm xác định chính xác quan hệ \textbf{chéo nhau trong không gian 3D}, bảo đảm phương tiện vận hành an toàn.
+\end{aibox}
+
+\subsubsection*{3. Hoạt động 3: Luyện tập (10 phút)}
+\begin{itemize}
+    \item \textbf{Bài tập 1:} Cho hình chóp $S.ABCD$ có đáy $ABCD$ là hình bình hành. Hãy chỉ ra:
+    \begin{itemize}
+        \item a) Một cặp đường thẳng song song.
+        \item b) Một cặp đường thẳng cắt nhau.
+        \item c) Một cặp đường thẳng chéo nhau.
+    \end{itemize}
+    \item \textit{Lời giải chi tiết:}\\
+    a) Cặp đường thẳng song song: $AB \parallel CD$ (vì $ABCD$ là hình bình hành) hoặc $AD \parallel BC$.\\
+    b) Cặp đường thẳng cắt nhau: $SA$ và $AB$ cắt nhau tại $A$; hoặc $AC$ và $BD$ cắt nhau tại tâm $O$ của đáy.\\
+    c) Cặp đường thẳng chéo nhau: $SA$ và $BC$ (vì $SA$ nằm trong $(SAB)$, điểm $C$ không thuộc $(SAB)$ và đường thẳng $BC$ cắt $(SAB)$ tại $B \notin SA$). Tương tự, $SD$ và $AB$, $SB$ và $CD$ cũng là các cặp đường thẳng chéo nhau.
+    \item \textbf{Bài tập 2 (Trắc nghiệm nhanh):} Trong không gian, mệnh đề nào sau đây là \textbf{đúng}?
+    \begin{itemize}
+        \item (A) Hai đường thẳng không có điểm chung thì song song với nhau.
+        \item (B) Hai đường thẳng không có điểm chung thì chéo nhau.
+        \item (C) Hai đường thẳng chéo nhau thì không có điểm chung.
+        \item (D) Hai đường thẳng phân biệt không cắt nhau thì song song.
+    \end{itemize}
+    \item \textit{Đáp án:} Chọn \textbf{(C)}. Vì hai đường thẳng chéo nhau là hai đường thẳng không cùng thuộc bất kì mặt phẳng nào, do đó chúng không bao giờ có điểm chung. Các phương án A, B, D sai vì thiếu trường hợp chéo nhau hoặc song song.
+\end{itemize}
+
+\subsubsection*{4. Hoạt động 4: Vận dụng (05 phút)}
+\textbf{Quan sát thực tế trong lớp học:}\\
+Học sinh đứng tại chỗ, dùng tay chỉ vào:
+\begin{itemize}
+    \item Hai mép bảng trên và dưới: Đại diện cho hai đường thẳng song song.
+    \item Mép tường thẳng đứng và mép bảng ngang: Đại diện cho hai đường thẳng cắt nhau.
+    \item Mép bảng ngang và mép chân tường phía đối diện: Đại diện cho hai đường thẳng chéo nhau.
+\end{itemize}
+
+\newpage
+
+{\large \textbf{TIẾT 2 (TIẾT 29 THEO PHÂN PHỐI CHƯƠNG TRÌNH)}}\\[0.3em]
+\textbf{Nội dung:} Các tính chất của hai đường thẳng song song (tiên đề song song, tính chất bắc cầu, định lí giao tuyến của ba mặt phẳng và hệ quả).
+
+\subsubsection*{1. Hoạt động 1: Mở đầu / Khởi động (05 phút)}
+\textbf{Chủ đề:} \textit{Mái nhà dốc và các đường xà gồ song song}
+\begin{itemize}
+    \item \textbf{a) Mục tiêu:} Giúp học sinh thấy được hình ảnh giao tuyến song song trong kết cấu xây dựng mái nhà dốc (vì kèo).
+    \item \textbf{b) Nội dung:} Trong một ngôi nhà mái dốc, hai mặt phẳng mái nhà gặp nhau tại đường nóc nhà (đòn dông). Các thanh xà gồ đặt trên mái nhà đều song song với đòn dông. Tính chất hình học nào bảo đảm các thanh xà gồ này luôn song song với nhau và song song với đòn dông?
+    \item \textbf{c) Sản phẩm:} Học sinh suy đoán: Có định lí về giao tuyến của các mặt phẳng khi có các đường thẳng song song.
+    \item \textbf{d) Tổ chức thực hiện:} GV gợi mở $\to$ HS phát biểu ý kiến $\to$ GV dẫn dắt vào bài học về các tính chất và định lí giao tuyến song song.
+\end{itemize}
+
+\subsubsection*{2. Hoạt động 2: Hình thành kiến thức mới (22 phút)}
+
+\paragraph{Mục 1: Tiên đề về đường thẳng song song (05 phút)}
+\begin{itemize}
+    \item \textbf{Tính chất 1 (Tiên đề Euclid trong không gian):} Trong không gian, qua một điểm không nằm trên một đường thẳng cho trước, có một và chỉ một đường thẳng song song với đường thẳng đã cho.
+    \item \textbf{Ý nghĩa:} Với điểm $M$ và đường thẳng $d$ ($M \notin d$), tồn tại duy nhất một đường thẳng $d'$ đi qua $M$ sao cho $d' \parallel d$. Mặt phẳng xác định bởi $M$ và $d$ chính là mặt phẳng chứa cả $d$ và $d'$.
+\end{itemize}
+
+\paragraph{Mục 2: Tính chất bắc cầu của quan hệ song song (05 phút)}
+\begin{itemize}
+    \item \textbf{Tính chất 2 (Tính chất bắc cầu):} Hai đường thẳng phân biệt cùng song song với một đường thẳng thứ ba thì song song với nhau.
+    $$\begin{cases} a \parallel c \\ b \parallel c \\ a \neq b \end{cases} \implies a \parallel b.$$
+\end{itemize}
+
+\paragraph{Mục 3: Định lí giao tuyến của ba mặt phẳng (Định lí giao tuyến song song) (12 phút)}
+\begin{itemize}
+    \item \textbf{Định lí 1:} Nếu ba mặt phẳng phân biệt đôi một cắt nhau theo ba giao tuyến phân biệt thì ba giao tuyến đó hoặc đồng quy, hoặc đôi một song song.
+    $$\begin{cases} (P) \cap (Q) = a \\ (Q) \cap (R) = b \\ (R) \cap (P) = c \end{cases} \implies \text{Hoặc } a, b, c \text{ đồng quy tại một điểm } O, \text{ hoặc } a \parallel b \parallel c.$$
+\end{itemize}
+
+\begin{center}
+\begin{tikzpicture}[scale=0.9]
+    % Đồng quy
+    \coordinate (O) at (2,2);
+    \draw[thick, blue] (-0.5, 0.5) -- (4, 3.2) node[right] {$a$};
+    \draw[thick, red] (0.5, 3.5) -- (3.5, 0.5) node[below right] {$b$};
+    \draw[thick, green!60!black] (2, -0.5) -- (2, 4) node[above] {$c$};
+    \fill (O) circle (2.5pt) node[above left] {$O$};
+    \node at (2,-1) {\textbf{Trường hợp 1: Đồng quy}};
+
+    % Song song
+    \begin{scope}[xshift=7cm]
+    \draw[thick, blue] (0, 0.5) -- (4, 0.5) node[right] {$a$};
+    \draw[thick, red] (0, 1.8) -- (4, 1.8) node[right] {$b$};
+    \draw[thick, green!60!black] (0, 3.1) -- (4, 3.1) node[right] {$c$};
+    \node at (2,-1) {\textbf{Trường hợp 2: Đôi một song song}};
+    \end{scope}
+\end{tikzpicture}
+\end{center}
+
+\begin{itemize}
+    \item \textbf{Hệ quả (Phương pháp tìm giao tuyến song song --- Cực kì quan trọng):}
+    Nếu hai mặt phẳng phân biệt lần lượt chứa hai đường thẳng song song thì giao tuyến của chúng (nếu có) cũng song song với hai đường thẳng đó (hoặc trùng với một trong hai đường thẳng đó).
+    $$\begin{cases} a \subset (P) \\ b \subset (Q) \\ a \parallel b \\ d = (P) \cap (Q) \end{cases} \implies d \parallel a \parallel b.$$
+\end{itemize}
+
+\begin{scaffoldbox}[Giàn giáo sư phạm cho HS TB - Yếu: Các bước tìm giao tuyến song song]
+    Khi bài toán yêu cầu tìm giao tuyến của hai mặt phẳng $(P)$ và $(Q)$:\\
+    $\bullet$ \textbf{Bước 1:} Tìm \textbf{MỘT điểm chung} $S$: $\begin{cases} S \in (P) \\ S \in (Q) \end{cases} \implies S \in (P) \cap (Q)$.\\
+    $\bullet$ \textbf{Bước 2:} Phát hiện trong $(P)$ có đường thẳng $a$, trong $(Q)$ có đường thẳng $b$ mà $a \parallel b$.\\
+    $\bullet$ \textbf{Bước 3:} Kết luận: Giao tuyến là đường thẳng $d$ \textbf{đi qua điểm chung $S$ và song song với cả $a$ và $b$} ($d \parallel a \parallel b$).\\
+    \textit{Lưu ý: Ta không cần tìm điểm chung thứ hai!}
+\end{scaffoldbox}
+
+\subsubsection*{3. Hoạt động 3: Luyện tập (13 phút)}
+\begin{itemize}
+    \item \textbf{Bài toán luyện tập:} Cho hình chóp $S.ABCD$ có đáy $ABCD$ là hình bình hành.
+    \begin{itemize}
+        \item a) Tìm giao tuyến của hai mặt phẳng $(SAB)$ và $(SCD)$.
+        \item b) Tìm giao tuyến của hai mặt phẳng $(SAD)$ và $(SBC)$.
+    \end{itemize}
+    \item \textit{Lời giải chi tiết:}\\
+    a) Tìm $(SAB) \cap (SCD)$:\\
+    - Điểm chung thứ nhất: Rõ ràng $S \in (SAB)$ và $S \in (SCD) \implies S \in (SAB) \cap (SCD)$.\\
+    - Mặt khác, trong $(SAB)$ có đường thẳng $AB$, trong $(SCD)$ có đường thẳng $CD$.\\
+    Vì $ABCD$ là hình bình hành nên $AB \parallel CD$.\\
+    - Áp dụng hệ quả của định lí giao tuyến song song, giao tuyến của $(SAB)$ và $(SCD)$ là đường thẳng $d_1$ đi qua $S$ và song song với $AB$ và $CD$ ($d_1 \parallel AB \parallel CD$).\\
+    b) Tìm $(SAD) \cap (SBC)$:\\
+    - Ta có $S \in (SAD) \cap (SBC)$.\\
+    - Trong $(SAD)$ có đường thẳng $AD$, trong $(SBC)$ có đường thẳng $BC$.\\
+    Vì $ABCD$ là hình bình hành nên $AD \parallel BC$.\\
+    - Do đó, giao tuyến của $(SAD)$ và $(SBC)$ là đường thẳng $d_2$ đi qua $S$ và song song với $AD$ và $BC$ ($d_2 \parallel AD \parallel BC$).
+\end{itemize}
+
+\subsubsection*{4. Hoạt động 4: Vận dụng (05 phút)}
+\textbf{Ứng dụng trong xây dựng giàn giáo:}\\
+Các cột trụ thẳng đứng của giàn giáo xây dựng được dựng song song với nhau. Hai thanh giằng chéo của hai khung giàn giáo kề nhau xác định các mặt phẳng giao nhau theo một đường thẳng song song với các cột trụ, bảo đảm toàn bộ hệ thống giàn giáo chịu lực phân bố đều, chống sụp đổ.
+
+\newpage
+
+{\large \textbf{TIẾT 3 (TIẾT 30 THEO PHÂN PHỐI CHƯƠNG TRÌNH)}}\\[0.3em]
+\textbf{Nội dung:} Phương pháp chứng minh hai đường thẳng song song \& Tìm giao tuyến song song --- Bài toán thiết diện song song với đường thẳng --- Luyện tập tổng hợp.
+
+\subsubsection*{1. Hoạt động 1: Mở đầu / Khởi động (05 phút)}
+\textbf{Chủ đề:} \textit{Cắt lát khối phô mai hoặc lát cắt bánh mì sandwich}
+\begin{itemize}
+    \item \textbf{a) Mục tiêu:} Dẫn dắt học sinh vào bài toán tìm thiết diện của một khối chóp khi mặt phẳng cắt song song với một đường thẳng cho trước.
+    \item \textbf{b) Nội dung:} Một khối phô mai hình chóp tứ giác $S.ABCD$. Ta dùng dao cắt khối phô mai theo một mặt phẳng đi qua một điểm trên cạnh bên và song song với một cạnh đáy. Hỏi hình dạng của lát cắt thu được là hình gì?
+    \item \textbf{c) Sản phẩm:} Học sinh dự đoán: Lát cắt sẽ có các cạnh song song với cạnh đáy, tạo thành hình thang hoặc hình bình hành.
+    \item \textbf{d) Tổ chức thực hiện:} GV vào bài: Vận dụng tính chất hai đường thẳng song song để giải quyết bài toán thiết diện trong không gian.
+\end{itemize}
+
+\subsubsection*{2. Hoạt động 2: Hình thành kiến thức mới (18 phút)}
+
+\paragraph{Mục 1: Hệ thống hai phương pháp chứng minh hai đường thẳng song song (08 phút)}
+Để chứng minh $a \parallel b$ trong không gian, ta thường dùng các cách sau:
+\begin{itemize}
+    \item \textbf{Phương pháp 1 (Chứng minh đồng phẳng rồi dùng định lí hình học phẳng):}
+    Chứng minh $a$ và $b$ cùng nằm trong một mặt phẳng $(P)$, sau đó dùng một trong các dấu hiệu:
+    \begin{itemize}
+        \item Đường trung bình của tam giác hoặc hình thang.
+        \item Định lí Thalès đảo trong tam giác: $\dfrac{AM}{AB} = \dfrac{AN}{AC} \implies MN \parallel BC$.
+        \item Cạnh đối của hình bình hành, hình chữ nhật, hình thoi, hình vuông.
+        \item Hai góc đồng vị hoặc so le trong bằng nhau.
+    \end{itemize}
+    \item \textbf{Phương pháp 2 (Dùng tính chất bắc cầu):}
+    Chứng minh $a$ và $b$ cùng song song với một đường thẳng thứ ba $c$:
+    $$\begin{cases} a \parallel c \\ b \parallel c \end{cases} \implies a \parallel b.$$
+    \item \textbf{Phương pháp 3 (Dùng định lí giao tuyến của ba mặt phẳng hoặc hệ quả):}
+    Chứng minh $a$ và $b$ là hai trong ba giao tuyến của ba mặt phẳng cắt nhau đôi một hoặc giao tuyến song song.
+\end{itemize}
+
+\paragraph{Mục 2: Phương pháp xác định thiết diện song song với đường thẳng (10 phút)}
+\begin{itemize}
+    \item \textbf{Bài toán:} Cho hình chóp $S.A_1A_2\dots A_n$ và một đường thẳng $d$. Xác định thiết diện của hình chóp cắt bởi mặt phẳng $(\alpha)$ đi qua điểm $M$ và song song với đường thẳng $d$.
+    \item \textbf{Quy trình dựng thiết diện:}
+    \begin{itemize}
+        \item \textbf{Bước 1:} Tìm các mặt của hình chóp chứa điểm $M$ (hoặc chứa điểm đã biết của mặt phẳng $(\alpha)$).
+        \item \textbf{Bước 2:} Qua điểm đó, kẻ đường thẳng song song với $d$ (dựa vào hệ quả giao tuyến song song: Nếu mặt phẳng chứa đường thẳng song song với $d$ thì giao tuyến phải song song với $d$).
+        \item \textbf{Bước 3:} Tìm giao điểm của đường thẳng vừa kẻ với các cạnh của hình chóp để mở rộng mặt phẳng $(\alpha)$ sang các mặt kề tiếp.
+        \item \textbf{Bước 4:} Lặp lại quy trình cho đến khi thu được đa giác khép kín giới hạn bởi các đoạn giao tuyến trên các mặt của hình chóp $\implies$ Kết luận đó là thiết diện.
+    \end{itemize}
+\end{itemize}
+
+\begin{center}
+\begin{tikzpicture}[scale=0.95]
+    % Hình chóp S.ABCD và thiết diện MNPQ
+    \coordinate (S) at (2, 4);
+    \coordinate (A) at (0, 1);
+    \coordinate (B) at (1.5, 0);
+    \coordinate (C) at (4.5, 0.5);
+    \coordinate (D) at (3, 1.5);
+
+    % Điểm trên các cạnh
+    \coordinate (M) at ($(S)!0.5!(A)$);
+    \coordinate (N) at ($(S)!0.5!(B)$);
+    \coordinate (P) at ($(C)!0.5!(B)$);
+    \coordinate (Q) at ($(D)!0.5!(A)$);
+
+    \draw[thick] (S) -- (A) -- (B) -- (C) -- (S);
+    \draw[thick] (S) -- (B);
+    \draw[dashed, thick] (A) -- (D) -- (C);
+    \draw[dashed, thick] (S) -- (D);
+
+    % Thiết diện (MN song song AB)
+    \coordinate (M1) at ($(S)!0.6!(A)$);
+    \coordinate (N1) at ($(S)!0.6!(B)$);
+    \coordinate (P1) at ($(B)!0.4!(C)$);
+    \coordinate (Q1) at ($(A)!0.4!(D)$);
+
+    \draw[thick, blue] (M1) -- (N1);
+    \fill[blue!20, opacity=0.5] (M1) -- (N1) -- ($(C)!0.4!(S)$) -- ($(D)!0.4!(S)$) -- cycle;
+    \draw[thick, red] (M1) -- ($(D)!0.4!(S)$);
+    \draw[thick, red] (N1) -- ($(C)!0.4!(S)$);
+    \draw[dashed, thick, red] ($(D)!0.4!(S)$) -- ($(C)!0.4!(S)$);
+
+    \node[above] at (S) {$S$};
+    \node[left] at (A) {$A$};
+    \node[below] at (B) {$B$};
+    \node[right] at (C) {$C$};
+    \node[above right] at (D) {$D$};
+    \node[left, blue] at (M1) {$M$};
+    \node[above right, blue] at (N1) {$N$};
+    \node at (2,-0.8) {\textbf{Thiết diện cắt bởi mặt phẳng song song với cạnh đáy $AB$}};
+\end{tikzpicture}
+\end{center}
+
+\subsubsection*{3. Hoạt động 3: Luyện tập (16 phút)}
+\begin{itemize}
+    \item \textbf{Bài toán trọng tâm:} Cho tứ diện $ABCD$. Gọi $M, N, P, Q$ lần lượt là trung điểm của các cạnh $AB, BC, CD, DA$.
+    \begin{itemize}
+        \item a) Chứng minh rằng tứ giác $MNPQ$ là hình bình hành.
+        \item b) Gọi $I$ là giao điểm của $MP$ và $NQ$. Chứng minh rằng $I$ là trung điểm của mỗi đoạn thẳng đó.
+    \end{itemize}
+    \item \textit{Lời giải chi tiết:}\\
+    a) Chứng minh $MNPQ$ là hình bình hành:\\
+    - Xét tam giác $ABC$: Vì $M$ là trung điểm của $AB$ và $N$ là trung điểm của $BC$ nên $MN$ là đường trung bình của tam giác $ABC$.\\
+    Suy ra: $MN \parallel AC$ và $MN = \dfrac{1}{2}AC$ (1).\\
+    - Xét tam giác $ADC$: Vì $Q$ là trung điểm của $AD$ và $P$ là trung điểm của $CD$ nên $QP$ là đường trung bình của tam giác $ADC$.\\
+    Suy ra: $QP \parallel AC$ và $QP = \dfrac{1}{2}AC$ (2).\\
+    - Từ (1) và (2) suy ra: $\begin{cases} MN \parallel QP \\ MN = QP \end{cases}$\\
+    - Tứ giác $MNPQ$ có một cặp cạnh đối song song và bằng nhau nên $MNPQ$ là một hình bình hành.\\
+    b) Tính chất giao điểm $I$:\\
+    - Trong hình bình hành $MNPQ$, hai đường chéo là $MP$ và $NQ$ cắt nhau tại trung điểm của mỗi đường.\\
+    - Vì $I = MP \cap NQ$ nên $I$ chính là trung điểm của $MP$ và cũng là trung điểm của $NQ$ (đpcm).
+\end{itemize}
+
+\subsubsection*{4. Hoạt động 4: Vận dụng (06 phút)}
+\textbf{Bài toán thực tiễn: Thiết kế giàn hoa leo sân vườn (Pergola):}\\
+Một giàn hoa ngoài sân vườn có khung hình chữ nhật với các thanh xà ngang được gắn song song cách đều nhau. Học sinh giải thích tại sao khi một thanh xà ngang song song với thanh xà đối diện thì theo tính chất giao tuyến song song, toàn bộ các điểm gác trên hai bức tường đỡ luôn tạo thành các mặt phẳng chịu lực ổn định, không bị vặn xoắn cấu trúc.
+
+\newpage
+
+\section*{IV. PHỤ LỤC HỌC LIỆU BỔ TRỢ}
+
+\subsection*{Phụ lục 1: Phiếu học tập số 1 (Tiết 28) --- Vị trí tương đối của hai đường thẳng}
+\noindent\textbf{Họ và tên:} .................................................................... \textbf{Lớp:} 11A....... \textbf{Nhóm:} ..........
+
+\begin{pedabox}[Nhiệm vụ 1: Phân loại vị trí tương đối của hai đường thẳng trong không gian]
+Điền vào chỗ trống $(\dots)$ để hoàn thành bảng phân loại:
+\begin{center}
+\begin{tabularx}{0.95\linewidth}{|p{3.5cm}|X|X|}
+\hline
+\textbf{Vị trí tương đối} & \textbf{Số điểm chung} & \textbf{Quan hệ đồng phẳng} \\
+\hline
+Hai đường thẳng trùng nhau & Có \dots\dots\dots\dots\dots\dots điểm chung & Cùng thuộc một mặt phẳng \\
+\hline
+Hai đường thẳng cắt nhau & Có \dots\dots\dots\dots\dots\dots điểm chung & Cùng thuộc một mặt phẳng \\
+\hline
+Hai đường thẳng song song & Có \dots\dots\dots\dots\dots\dots điểm chung & Cùng thuộc một mặt phẳng \\
+\hline
+Hai đường thẳng chéo nhau & Có \dots\dots\dots\dots\dots\dots điểm chung & \dots\dots\dots\dots\dots\dots thuộc mặt phẳng nào \\
+\hline
+\end{tabularx}
+\end{center}
+\end{pedabox}
+
+\subsection*{Phụ lục 2: Phiếu học tập số 2 (Tiết 29 \& 30) --- Giao tuyến song song \& Thiết diện}
+\noindent\textbf{Họ và tên:} .................................................................... \textbf{Lớp:} 11A....... \textbf{Nhóm:} ..........
+
+\begin{pedabox}[Nhiệm vụ 2: Điền khuyết quy tắc tìm giao tuyến song song]
+$\bullet$ Cho hai mặt phẳng $(P)$ và $(Q)$.\\
+Nếu:
+$\begin{cases}
+M \in (P) \cap (Q) \\
+a \subset (P), b \subset (Q) \\
+a \parallel b
+\end{cases}$\\
+Thì giao tuyến của $(P)$ và $(Q)$ là đường thẳng $d$ đi qua điểm \dots\dots\dots và \dots\dots\dots\dots\dots\dots với hai đường thẳng $a$ và $b$.\\[0.3em]
+$\bullet$ \textbf{Bài tập trắc nghiệm nhanh:}\\
+Cho hình chóp $S.ABCD$ có đáy là hình thang với đáy lớn $AB$, đáy nhỏ $CD$. Giao tuyến của hai mặt phẳng $(SAB)$ và $(SCD)$ là:\\
+A. Đường thẳng $SO$ ($O$ là giao điểm $AC$ và $BD$).\\
+B. Đường thẳng đi qua $S$ và song song với $AB$ và $CD$.\\
+C. Đường thẳng $SI$ ($I$ là giao điểm $AD$ và $BC$).\\
+D. Đường thẳng $SA$.
+\end{pedabox}
+
+\subsection*{Phụ lục 3: Bảng Rubric đánh giá năng lực tích hợp trong Bài 11}
+
+\begin{center}
+\begin{tabularx}{\linewidth}{|p{3.2cm}|X|X|X|X|}
+\hline
+\textbf{Tiêu chí} & \textbf{Mức 1 (Chưa đạt)} & \textbf{Mức 2 (Đạt)} & \textbf{Mức 3 (Khá)} & \textbf{Mức 4 (Tốt)} \\
+\hline
+\textbf{1. Nhận biết vị trí tương đối} & Nhầm lẫn giữa hai đường thẳng song song và chéo nhau. & Phân biệt được 4 vị trí tương đối trong các hình quen thuộc (hình hộp, tứ diện). & Xác định chính xác vị trí tương đối trong các khối chóp phức tạp. & Tư duy không gian sắc bén, chỉ ra ngay các cặp đường thẳng chéo nhau và giải thích thuyết phục. \\
+\hline
+\textbf{2. Tìm giao tuyến \& Thiết diện} & Không nhận ra yếu tố song song; cố tìm điểm chung thứ hai không tồn tại. & Dựng được giao tuyến đi qua 1 điểm và song song với 2 đường thẳng có sẵn. & Thành thạo phương pháp chứng minh hai đường thẳng song song và dựng thiết diện cơ bản. & Dựng thiết diện phức tạp, biện luận hình dạng thiết diện (hình thang, hình bình hành) chuẩn xác. \\
+\hline
+\textbf{3. Năng lực số \& AI (Mã 3.1NC1b \& 11.A1.2)} & Chưa biết thao tác GeoGebra 3D; chưa liên hệ kiến thức với công nghệ. & Biết xoay hình 3D trên GeoGebra để quan sát đường chéo nhau. & Phân tích được tại sao camera 2D AI nhầm lẫn hai đường chéo nhau thành cắt nhau. & Đề xuất giải pháp tích hợp cảm biến đo sâu 3D (LiDAR) trong hệ thống xe tự hành thông minh. \\
+\hline
+\end{tabularx}
+\end{center}
+
+\end{document}
