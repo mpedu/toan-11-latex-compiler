@@ -1,0 +1,703 @@
+\documentclass[12pt, a4paper]{article}  
+% --- 1. Cấu hình Tiếng Việt và Font chữ chuẩn ---  
+\usepackage[utf8]{inputenc}  
+\usepackage[T5]{fontenc}  
+\usepackage[vietnamese]{babel}  
+\usepackage{mathptmx} % Font Times New Roman đồng bộ cả chữ và công thức toán, không gây xung đột gói  
+  
+\makeatletter  
+\renewcommand{\normalsize}{\@setfontsize\normalsize{13pt}{16pt}}  
+\makeatother  
+\normalsize  
+  
+% --- 2. Gói Toán học & Ký hiệu bổ trợ ---  
+\usepackage{amsmath, amssymb, amsfonts, mathrsfs, amsthm}  
+\usepackage{graphicx}  
+\usepackage{fontawesome}  
+\usepackage{booktabs, tabularx, array, multirow}  
+\usepackage{enumitem}  
+  
+% --- 3. Đồ họa TikZ, Bảng biến thiên & Hình không gian ---  
+\usepackage{tikz}  
+\usetikzlibrary{calc, intersections, angles, quotes, patterns, arrows.meta, 3d}  
+\usepackage{pgfplots}  
+\pgfplotsset{compat=1.18}  
+\usepackage{tkz-euclide}  
+\usepackage{tkz-tab}  
+  
+\renewcommand{\vec}[1]{\overrightarrow{#1}}  
+  
+% --- 4. Hộp sư phạm (Tcolorbox) ---  
+\usepackage[many]{tcolorbox}  
+\tcbuselibrary{skins, breakable}  
+  
+% --- 5. Căn lề chuẩn văn bản giáo án ---  
+\usepackage{geometry}  
+\geometry{  
+    a4paper,  
+    left=25mm,  
+    right=15mm,  
+    top=20mm,  
+    bottom=20mm  
+}  
+  
+% --- 6. Header / Footer chuẩn hóa ---  
+\usepackage{fancyhdr}  
+\usepackage{lastpage}  
+\pagestyle{fancy}  
+\fancyhf{}  
+  
+\fancyhead[L]{\small \textit{Kế hoạch bài dạy Toán 11}}  
+\fancyhead[R]{\textbf{Trang \thepage/\pageref{LastPage}}}  
+\fancyfoot[L]{\small \textit{Tổ Toán - Tin}}  
+\fancyfoot[R]{\small \textit{Trường THCS\&THPT Hồng Vân}}  
+\renewcommand{\headrulewidth}{0.4pt}  
+\renewcommand{\footrulewidth}{0.4pt}  
+  
+% --- 7. Giãn dòng & Giãn đoạn theo chuẩn Nghị định 30/2020/NĐ-CP ---  
+\usepackage{setspace}  
+\setstretch{1.15}  
+\setlength{\parindent}{1.0cm}  
+\setlength{\parskip}{5pt}  
+  
+% Định nghĩa hộp sư phạm chuyên dụng  
+\newtcolorbox{pedabox}[2][]{  
+    enhanced,  
+    breakable,  
+    colback=blue!3!white,  
+    colframe=blue!65!black,  
+    fonttitle=\bfseries\small,  
+    title={#2},  
+    arc=2mm,  
+    boxrule=0.6pt,  
+    left=3mm, right=3mm, top=2mm, bottom=2mm,  
+    #1  
+}  
+  
+\newtcolorbox{aibox}[2][]{  
+    enhanced,  
+    breakable,  
+    colback=teal!4!white,  
+    colframe=teal!70!black,  
+    fonttitle=\bfseries\small,  
+    title={#2},  
+    arc=2mm,  
+    boxrule=0.6pt,  
+    left=3mm, right=3mm, top=2mm, bottom=2mm,  
+    #1  
+}  
+  
+\newtcolorbox{scaffoldbox}[2][]{  
+    enhanced,  
+    breakable,  
+    colback=orange!4!white,  
+    colframe=orange!80!black,  
+    fonttitle=\bfseries\small,  
+    title={#2},  
+    arc=2mm,  
+    boxrule=0.6pt,  
+    left=3mm, right=3mm, top=2mm, bottom=2mm,  
+    #1  
+}  
+  
+\begin{document}  
+  
+\begin{center}  
+    {\fontsize{14pt}{17pt}\selectfont \textbf{KẾ HOẠCH BÀI DẠY MÔN TOÁN LỚP 11}}\\[6pt]  
+    {\fontsize{16pt}{19pt}\selectfont \textbf{BÀI 4. PHƯƠNG TRÌNH LƯỢNG GIÁC CƠ BẢN}}\\[4pt]  
+    {\fontsize{12pt}{15pt}\selectfont \textbf{Môn học: Toán 11} \ \textbar \ \textbf{Thời lượng: 2 tiết (Tiết 8 và Tiết 9 theo PPCT)}}  
+\end{center}  
+  
+\vspace{5pt}  
+  
+\section*{I. MỤC TIÊU}  
+  
+\subsection*{1. Kiến thức, Năng lực}  
+  
+\begin{itemize}[leftmargin=1.2cm]  
+    \item \textbf{Yêu cầu cần đạt (Nguyên văn CT GDPT 2018):}  
+    \begin{itemize}[leftmargin=0.6cm]  
+        \item Nhận biết được công thức nghiệm của phương trình lượng giác cơ bản: $\sin x = m$; $\cos x = m$; $\tan x = m$; $\cot x = m$ bằng cách vận dụng đồ thị hàm số lượng giác tương ứng.  
+        \item Tính được nghiệm gần đúng của phương trình lượng giác cơ bản bằng máy tính cầm tay.  
+        \item Giải được phương trình lượng giác ở dạng vận dụng trực tiếp phương trình lượng giác cơ bản.  
+        \item Giải quyết được một số vấn đề thực tiễn gắn với phương trình lượng giác (ví dụ: dao động điều hoà trong Vật lí,...).  
+    \end{itemize}  
+  
+    \item \textbf{Năng lực Toán học đặc thù:}  
+    \begin{itemize}[leftmargin=0.6cm]  
+        \item \textit{Năng lực tư duy và lập luận toán học:} So sánh và đối chiếu điều kiện có nghiệm của phương trình $\sin x = m$, $\cos x = m$ (điều kiện $|m| \le 1$) với phương trình $\tan x = m$, $\cot x = m$ (luôn có nghiệm với mọi $m \in \mathbb{R}$); phân tích tính đối xứng và tính tuần hoàn của đồ thị hàm số lượng giác hoặc đường tròn lượng giác để giải thích tại sao họ nghiệm của $\sin$ có nghiệm bù ($\pi - \alpha$), họ nghiệm của $\cos$ có nghiệm đối ($\pm\alpha$), và vì sao chu kì nghiệm là $+ k2\pi$ (với $\sin, \cos$) và $+ k\pi$ (với $\tan, \cot$).  
+        \item \textit{Năng lực mô hình hóa toán học:} Thiết lập phương trình lượng giác cơ bản để mô tả các bài toán thực tiễn: xác định thời điểm vật dao động điều hòa qua vị trí li độ cho trước ($x(t) = A\cos(\omega t + \varphi) = x_0$), tính thời điểm cabin vòng quay Mặt Trời đạt độ cao quy định, tính góc nghiêng bóng nắng của công trình kiến trúc.  
+        \item \textit{Năng lực giải quyết vấn đề toán học:} Biến đổi phương trình lượng giác đưa về dạng cơ bản; xử lý thành thạo việc chuyển đổi giữa đơn vị radian và độ; biểu diễn chính xác các họ nghiệm lượng giác trên đường tròn lượng giác; kết hợp điều kiện xác định để loại nghiệm ngoại lai đối với phương trình chứa $\tan, \cot$.  
+        \item \textit{Năng lực giao tiếp toán học:} Trình bày lời giải phương trình lượng giác một cách logic, mạch lạc; sử dụng chuẩn xác các ký hiệu toán học ($k \in \mathbb{Z}$, $\arcsin, \arccos, \arctan, \text{arccot}$); lắng nghe và phản biện ý kiến của bạn học trong thảo luận nhóm.  
+        \item \textit{Năng lực sử dụng công cụ, phương tiện học toán:} Sử dụng thành thạo máy tính cầm tay (MTCT) Casio fx-580VN X để tìm nghiệm góc cung (các phím \texttt{SHIFT} $\to$ \texttt{sin}, \texttt{SHIFT} $\to$ \texttt{cos}, \texttt{SHIFT} $\to$ \texttt{tan}); khai thác phần mềm hình học động GeoGebra để khảo sát sự tương giao giữa đồ thị hàm số lượng giác và đường thẳng $y = m$.  
+    \end{itemize}  
+  
+    \item \textbf{Năng lực số (Theo Thông tư 02/2025/TT-BGDĐT):}  
+    \begin{itemize}[leftmargin=0.6cm]  
+        \item \textit{Mã 1.1NC1a (Khai thác công cụ số và tính toán khoa học):} Học sinh sử dụng thành thạo máy tính cầm tay (35 MTCT) với tổ hợp phím \texttt{SHIFT} $\to$ \texttt{MENU} $\to$ \texttt{2} $\to$ \texttt{2} (chuyển đổi đơn vị sang Radian), tra cứu nhanh góc $\alpha$ khi biết giá trị lượng giác tương ứng.  
+        \item \textit{Mã 3.1NC1a (Sáng tạo và mô phỏng trên nền tảng số):} Học sinh thao tác trên phần mềm GeoGebra, nhập phương trình đồ thị $y = \sin x$ (hoặc $y = \cos x$) và đường thẳng $y = m$ với thanh trượt slider $m \in [-2; 2]$, từ đó trực tiếp quan sát sự thay đổi số lượng giao điểm khi $m$ vượt ra ngoài đoạn $[-1; 1]$.  
+    \end{itemize}  
+  
+    \item \textbf{Năng lực AI (Theo Quyết định 2422/QĐ-BGDĐT):}  
+    \begin{itemize}[leftmargin=0.6cm]  
+        \item \textit{Mã 11.B2.1 (Đánh giá và nhận diện rủi ro công nghệ AI):} Học sinh nhận biết và phân loại được các rủi ro, sai sót tiềm ẩn khi sao chép toàn bộ bài giải phương trình từ các ứng dụng giải toán tự động (Photomath, ChatGPT,...), đặc biệt là lỗi AI thường bỏ quên họ nghiệm thứ hai của hàm $\sin$, quên chu kì $+ k2\pi$, hoặc không đặt điều kiện xác định cho $\tan$ và $\cot$.  
+        \item \textit{Mã 11.C3.1 (Kỹ thuật đặt câu lệnh prompt và kiểm chứng):} Học sinh thực hành kỹ thuật đặt câu lệnh (prompt) chuẩn mực để yêu cầu trợ lý AI giải thích chi tiết từng bước chuyển đổi từ phương trình lượng giác tổng quát về dạng phương trình lượng giác cơ bản, sau đó chủ động kiểm chứng lại nghiệm bằng MTCT.  
+    \end{itemize}  
+  
+    \item \textbf{Năng lực chung:}  
+    \begin{itemize}[leftmargin=0.6cm]  
+        \item \textit{Tự chủ và tự học:} Chủ động tìm tòi mối liên hệ giữa bảng giá trị lượng giác đã học với việc giải phương trình cơ bản; tự giác hoàn thành các nhiệm vụ trong phiếu học tập.  
+        \item \textit{Giao tiếp và hợp tác:} Tương tác tích cực với bạn cùng bàn, thảo luận và phân chia nhiệm vụ giải toán trong nhóm học tập.  
+    \end{itemize}  
+\end{itemize}  
+  
+\subsection*{2. Phẩm chất}  
+\begin{itemize}[leftmargin=1.2cm]  
+    \item \textbf{Chăm chỉ:} Kiên trì luyện tập các bước giải phương trình, cẩn thận ghi chép đầy đủ đuôi nghiệm $+ k2\pi$ hoặc $+ k\pi$ và điều kiện $k \in \mathbb{Z}$.  
+    \item \textbf{Trung thực:} Nghiêm túc thực hiện nhiệm vụ cá nhân, không sao chép máy móc bài giải của bạn hoặc các ứng dụng AI; tự giác báo cáo kết quả thực hành.  
+    \item \textbf{Trách nhiệm:} Có trách nhiệm hỗ trợ các bạn học sinh trung bình - yếu trong nhóm ghi nhớ công thức nghiệm; cẩn trọng trong các phép biến đổi toán học.  
+\end{itemize}  
+  
+\section*{II. THIẾT BỊ DẠY HỌC VÀ HỌC LIỆU}  
+\begin{itemize}[leftmargin=1.2cm]  
+    \item \textbf{Giáo viên:}  
+    \begin{itemize}[leftmargin=0.6cm]  
+        \item Kế hoạch bài dạy chi tiết, bài giảng trình chiếu đa phương tiện (PowerPoint/Canva) tương tác cao.  
+        \item Tệp mô phỏng số GeoGebra: Tương giao đồ thị hàm số lượng giác và đường thẳng $y = m$ với thanh trượt (slider).  
+        \item Hệ thống Phiếu học tập phân tầng bậc thang (Worksheet 1, Worksheet 2) và Bảng Rubric đánh giá năng lực 4 mức độ.  
+        \item Thiết bị trình chiếu (Tivi/Máy chiếu), bảng phụ hoạt động nhóm.  
+    \end{itemize}  
+    \item \textbf{Học sinh:}  
+    \begin{itemize}[leftmargin=0.6cm]  
+        \item SGK Toán 11, vở ghi bài, thước kẻ, bút màu.  
+        \item Máy tính cầm tay (MTCT) Casio fx-580VN X.  
+        \item Điện thoại thông minh/máy tính bảng có kết nối mạng (dành cho hoạt động thực hành kiểm chứng AI và phần mềm GeoGebra).  
+    \end{itemize}  
+\end{itemize}  
+  
+\section*{III. TIẾN TRÌNH DẠY HỌC}  
+  
+% =========================================================================
+% TIẾT 1 (TIẾT 8 THEO PPCT)
+% =========================================================================
+\begin{center}  
+    {\fontsize{13pt}{16pt}\selectfont \textbf{TIẾT 1. PHƯƠNG TRÌNH $\sin x = m$ VÀ $\cos x = m$}}\\[2pt]  
+    \textit{(Tiết 8 theo PPCT \ \textbar \ Tuần 3)}  
+\end{center}  
+  
+\subsection*{1. Hoạt động 1: Khởi động (Mở đầu)}  
+  
+\noindent \textbf{a) Mục tiêu:}  
+\begin{itemize}[leftmargin=0.8cm]  
+    \item Tạo tình huống thực tiễn gắn liền với môn Vật lí (dao động điều hòa), khơi gợi nhu cầu tìm kiếm thời điểm vật ở vị trí xác định, dẫn dắt tự nhiên vào bài toán giải phương trình lượng giác dạng $\cos u = m$ hoặc $\sin u = m$.  
+    \item Kích thích tư duy toán học và tinh thần hợp tác của học sinh.  
+\end{itemize}  
+  
+\noindent \textbf{b) Nội dung:}  
+Giáo viên trình chiếu hình ảnh hoặc video ngắn về một vật nhỏ dao động điều hòa trên trục $Ox$ với phương trình li độ:  
+$$x(t) = 4\cos\left(2\pi t - \dfrac{\pi}{3}\right) \quad (\text{cm})$$  
+trong đó $t$ là thời gian tính bằng giây ($t \ge 0$).  
+\textbf{Câu hỏi khởi động:} Hãy tìm các thời điểm $t$ mà vật đi qua vị trí có li độ $x = 2\text{ cm}$?  
+Việc giải quyết câu hỏi trên dẫn đến phương trình:  
+$$4\cos\left(2\pi t - \dfrac{\pi}{3}\right) = 2 \iff \cos\left(2\pi t - \dfrac{\pi}{3}\right) = \dfrac{1}{2}$$  
+Làm thế nào để tìm được tất cả các giá trị của $t$ thỏa mãn đẳng thức lượng giác trên?  
+  
+\noindent \textbf{c) Sản phẩm:}  
+\begin{itemize}[leftmargin=0.8cm]  
+    \item Học sinh nhận diện được phương trình quy về dạng $\cos\alpha = \dfrac{1}{2}$.  
+    \item Bằng kinh nghiệm bảng giá trị đã học, học sinh phát hiện góc $\dfrac{\pi}{3}$ có cosin bằng $\dfrac{1}{2}$, tuy nhiên học sinh băn khoăn liệu còn giá trị nào khác nữa không và làm sao để viết công thức cho vô số thời điểm tiếp theo.  
+\end{itemize}  
+  
+\noindent \textbf{d) Tổ chức thực hiện:}  
+\begin{itemize}[leftmargin=0.8cm]  
+    \item \textit{Chuyển giao nhiệm vụ:} Giáo viên trình chiếu tình huống dao động cơ học, đặt câu hỏi cho toàn lớp suy nghĩ độc lập trong 2 phút, sau đó trao đổi nhanh theo cặp đôi bàn.  
+    \item \textit{Thực hiện nhiệm vụ:} Học sinh quan sát, phân tích công thức, thay $x = 2$ vào phương trình li độ và rút gọn thành $\cos\left(2\pi t - \dfrac{\pi}{3}\right) = \dfrac{1}{2}$.  
+    \item \textit{Báo cáo, thảo luận:} Đại diện 1 học sinh trả lời: "Em bấm máy tính ra góc $\dfrac{\pi}{3}$, nhưng dao động lặp đi lặp lại nên chắc chắn có rất nhiều thời điểm $t$".  
+    \item \textit{Kết luận, nhận định:} Giáo viên nhận xét, phân tích: Một phương trình chứa ẩn dưới dấu hàm số lượng giác như $\cos X = m$ hay $\sin X = m$ được gọi là phương trình lượng giác cơ bản. Để giải quyết triệt để bài toán tìm tất cả các nghiệm, chúng ta cùng nghiên cứu Bài 4.  
+\end{itemize}  
+  
+% -------------------------------------------------------------------------
+\subsection*{2. Hoạt động 2: Hình thành kiến thức}  
+  
+\subsubsection*{2.1. Phương trình $\sin x = m$}  
+  
+\noindent \textbf{a) Mục tiêu:}  
+\begin{itemize}[leftmargin=0.8cm]  
+    \item Nhận biết phương trình $\sin x = m$ và giải thích điều kiện có nghiệm $|m| \le 1$ thông qua tương giao đồ thị và tập giá trị của hàm số sin.  
+    \item Thiết lập và ghi nhớ công thức nghiệm tổng quát của phương trình $\sin x = \sin\alpha$.  
+    \item Nắm vững các trường hợp đặc biệt ($m = 0, \pm 1$) và cách viết nghiệm theo đơn vị độ hoặc ký hiệu $\arcsin$.  
+    \item Rèn luyện kỹ năng bấm MTCT Casio fx-580VN X.  
+\end{itemize}  
+  
+\noindent \textbf{b) Nội dung:}  
+\begin{enumerate}[leftmargin=0.6cm]  
+    \item Quan sát hình vẽ tương giao giữa đồ thị hàm số $y = \sin x$ và đường thẳng nằm ngang $y = m$. Nhận xét số giao điểm khi $|m| > 1$ và khi $|m| \le 1$.  
+    \item Khi $|m| \le 1$, giải thích tại sao luôn tồn tại góc $\alpha \in \left[-\dfrac{\pi}{2}; \dfrac{\pi}{2}\right]$ sao cho $\sin\alpha = m$. Từ đó rút ra công thức nghiệm.  
+    \item Khảo sát các trường hợp đặc biệt khi $m \in \{-1; 0; 1\}$.  
+\end{enumerate}  
+  
+\noindent \textbf{c) Sản phẩm:}  
+Toàn bộ hệ thống kiến thức trọng tâm được học sinh ghi nhận:  
+  
+\begin{pedabox}{KIẾN THỨC TRỌNG TÂM: PHƯƠNG TRÌNH $\sin x = m$}  
+\begin{itemize}[leftmargin=0.6cm]  
+    \item \textbf{Điều kiện có nghiệm:}  
+    \begin{itemize}  
+        \item Nếu $|m| > 1$: Phương trình $\sin x = m$ \textbf{vô nghiệm} (do $-1 \le \sin x \le 1, \forall x \in \mathbb{R}$).  
+        \item Nếu $|m| \le 1$: Phương trình luôn có nghiệm.  
+    \end{itemize}  
+    \item \textbf{Công thức nghiệm tổng quát:}  
+    Nếu $\sin\alpha = m$ thì:  
+    $$\sin x = \sin\alpha \iff \left[\begin{aligned} x &= \alpha + k2\pi \\ x &= \pi - \alpha + k2\pi \end{aligned}\right. \quad (k \in \mathbb{Z})$$  
+    \item \textbf{Trường hợp số đo góc tính theo đơn vị độ ($^\circ$):}  
+    $$\sin x = \sin\alpha^\circ \iff \left[\begin{aligned} x &= \alpha^\circ + k360^\circ \\ x &= 180^\circ - \alpha^\circ + k360^\circ \end{aligned}\right. \quad (k \in \mathbb{Z})$$  
+    \item \textbf{Trường hợp giá trị $m$ không đặc biệt ($|m| \le 1$):}  
+    Sử dụng ký hiệu $\arcsin m$ (đọc là ác-sin của $m$):  
+    $$\sin x = m \iff \left[\begin{aligned} x &= \arcsin m + k2\pi \\ x &= \pi - \arcsin m + k2\pi \end{aligned}\right. \quad (k \in \mathbb{Z})$$  
+    \item \textbf{Các trường hợp đặc biệt (chỉ có một họ nghiệm):}  
+    \begin{align*}  
+        \sin x = 0 &\iff x = k\pi \quad (k \in \mathbb{Z}) \\  
+        \sin x = 1 &\iff x = \dfrac{\pi}{2} + k2\pi \quad (k \in \mathbb{Z}) \\  
+        \sin x = -1 &\iff x = -\dfrac{\pi}{2} + k2\pi \quad (k \in \mathbb{Z})  
+    \end{align*}  
+\end{itemize}  
+\end{pedabox}  
+  
+\begin{scaffoldbox}{GIÀN GIÁO SƯ PHẠM CHO HỌC SINH TRUNG BÌNH - YẾU}  
+\begin{itemize}[leftmargin=0.6cm]  
+    \item \textbf{Khẩu quyết ghi nhớ:} "Sin bù" $\to$ Nghiệm thứ nhất là $\alpha$, nghiệm thứ hai là góc bù $\pi - \alpha$ (hoặc $180^\circ - \alpha^\circ$).  
+    \item \textbf{Lỗi sai kinh điển:} Học sinh rất hay quên họ nghiệm thứ hai $\pi - \alpha$ và quên cộng đuôi chu kì $+ k2\pi$, hoặc viết nhầm đuôi $+ k\pi$.  
+    \item \textbf{Quy trình 3 bước giải phương trình $\sin x = m$:}  
+    \begin{itemize}  
+        \item \textit{Bước 1 (Kiểm tra):} Xem $|m| \le 1$ hay không? Nếu $|m| > 1 \implies$ Kết luận phương trình vô nghiệm ngay.  
+        \item \textit{Bước 2 (Tìm góc $\alpha$):} Bấm MTCT: \texttt{SHIFT} $\to$ \texttt{sin} $\to$ nhập số $m$ $\to$ bấm \texttt{=} ra góc $\alpha$.  
+        \item \textit{Bước 3 (Ráp công thức):} Viết hai nhánh nghiệm $x = \alpha + k2\pi$ và $x = \pi - \alpha + k2\pi$ ($k \in \mathbb{Z}$).  
+    \end{itemize}  
+\end{itemize}  
+\end{scaffoldbox}  
+  
+\noindent \textbf{d) Tổ chức thực hiện:}  
+\begin{itemize}[leftmargin=0.8cm]  
+    \item \textit{Chuyển giao nhiệm vụ:}  
+    GV trình chiếu mô phỏng GeoGebra đường tròn lượng giác và đồ thị hình sin $y = \sin x$ cắt đường thẳng $y = m$. Yêu cầu học sinh thảo luận cặp đôi trả lời 2 câu hỏi:  
+    1) Khi cho đường thẳng $y = m$ chạy từ $-2$ đến $2$, đường thẳng cắt đồ thị khi nào?  
+    2) Khi cắt đồ thị trong một chu kì $[0; 2\pi]$, có mấy giao điểm? Hai giao điểm đó có mối liên hệ đối xứng gì?  
+    \item \textit{Thực hiện nhiệm vụ:}  
+    HS quan sát màn hình, nhận thấy đường thẳng chỉ cắt đồ thị khi $-1 \le m \le 1$. Trong đoạn $[0; \pi]$, có 2 điểm biểu diễn trên đường tròn có cùng tung độ, đó là hai góc bù nhau: $\alpha$ và $\pi - \alpha$.  
+    GV hướng dẫn học sinh thao tác bấm MTCT tìm góc $\alpha$: Bấm \texttt{SHIFT} \texttt{MENU} \texttt{2} \texttt{2} để chọn đơn vị Radian, sau đó bấm \texttt{SHIFT} \texttt{sin} \texttt{1/2} $\to$ hiển thị $\dfrac{\pi}{6}$.  
+    \item \textit{Báo cáo, thảo luận:} Đại diện các nhóm báo cáo. GV mời 1 học sinh trung bình lên bảng thao tác bấm máy tính và viết công thức nghiệm.  
+    \item \textit{Kết luận, nhận định:} GV chuẩn hóa công thức nghiệm tổng quát và các trường hợp đặc biệt, nhấn mạnh đuôi $+ k2\pi$ đại diện cho việc quay thêm các vòng tròn khép kín.  
+\end{itemize}  
+  
+% -------------------------------------------------------------------------
+\subsubsection*{2.2. Phương trình $\cos x = m$}  
+  
+\noindent \textbf{a) Mục tiêu:}  
+\begin{itemize}[leftmargin=0.8cm]  
+    \item Nhận biết phương trình $\cos x = m$ và điều kiện có nghiệm $|m| \le 1$.  
+    \item Thiết lập công thức nghiệm tổng quát $\cos x = \cos\alpha \iff x = \pm\alpha + k2\pi$.  
+    \item Nắm các trường hợp đặc biệt của cosin và ký hiệu $\arccos m$.  
+\end{itemize}  
+  
+\noindent \textbf{b) Nội dung:}  
+\begin{enumerate}[leftmargin=0.6cm]  
+    \item Tương tự hàm sin, quan sát tương giao của đồ thị hàm số $y = \cos x$ với đường thẳng $y = m$.  
+    \item Sử dụng tính chất hàm số chẵn (đối xứng qua trục tung $Oy$) và góc đối trên đường tròn lượng giác ($\cos(-\alpha) = \cos\alpha$) để suy ra cấu trúc nghiệm đối xứng $\pm\alpha$.  
+    \item Khảo sát các trường hợp đặc biệt $m \in \{0; 1; -1\}$.  
+\end{enumerate}  
+  
+\noindent \textbf{c) Sản phẩm:}  
+Kiến thức trọng tâm phương trình $\cos x = m$:  
+  
+\begin{pedabox}{KIẾN THỨC TRỌNG TÂM: PHƯƠNG TRÌNH $\cos x = m$}  
+\begin{itemize}[leftmargin=0.6cm]  
+    \item \textbf{Điều kiện có nghiệm:}  
+    \begin{itemize}  
+        \item Nếu $|m| > 1$: Phương trình $\cos x = m$ \textbf{vô nghiệm}.  
+        \item Nếu $|m| \le 1$: Phương trình luôn có nghiệm.  
+    \end{itemize}  
+    \item \textbf{Công thức nghiệm tổng quát:}  
+    Nếu $\cos\alpha = m$ thì:  
+    $$\cos x = \cos\alpha \iff \left[\begin{aligned} x &= \alpha + k2\pi \\ x &= -\alpha + k2\pi \end{aligned}\right. \iff x = \pm\alpha + k2\pi \quad (k \in \mathbb{Z})$$  
+    \item \textbf{Trường hợp số đo góc tính theo đơn vị độ ($^\circ$):}  
+    $$\cos x = \cos\alpha^\circ \iff x = \pm\alpha^\circ + k360^\circ \quad (k \in \mathbb{Z})$$  
+    \item \textbf{Trường hợp $m$ không đặc biệt ($|m| \le 1$):} Dùng ký hiệu $\arccos m$:  
+    $$\cos x = m \iff x = \pm\arccos m + k2\pi \quad (k \in \mathbb{Z})$$  
+    \item \textbf{Các trường hợp đặc biệt:}  
+    \begin{align*}  
+        \cos x = 0 &\iff x = \dfrac{\pi}{2} + k\pi \quad (k \in \mathbb{Z}) \\  
+        \cos x = 1 &\iff x = k2\pi \quad (k \in \mathbb{Z}) \\  
+        \cos x = -1 &\iff x = \pi + k2\pi \quad (k \in \mathbb{Z})  
+    \end{align*}  
+\end{itemize}  
+\end{pedabox}  
+  
+\begin{aibox}{NĂNG LỰC AI: PHÂN TÍCH VÀ KIỂM CHỨNG BẰNG CÂU LỆNH PROMPT (QĐ 2422)}  
+\begin{itemize}[leftmargin=0.6cm]  
+    \item \textbf{Tình huống:} Học sinh dùng AI giải phương trình $\cos\left(2x - \dfrac{\pi}{4}\right) = \dfrac{\sqrt{2}}{2}$.  
+    \item \textbf{Mẫu prompt chuẩn mực (Kỹ thuật đặt lệnh rõ ràng, mạch lạc):}  
+    \textit{"Bạn là trợ lý giải toán THPT. Hãy giải phương trình $\cos\left(2x - \dfrac{\pi}{4}\right) = \dfrac{\sqrt{2}}{2}$ theo chuẩn chương trình GDPT 2018. Trình bày chi tiết từng bước: tìm góc cơ bản bằng hàm arccos, viết hai nhánh nghiệm đối xứng $\pm$, rút gọn tìm $x$ và chỉ rõ $k \in \mathbb{Z}$."}  
+    \item \textbf{Cảnh báo sai lệch của AI:} Một số chatbot AI có thể gộp nghiệm bằng số thập phân hoặc dùng đơn vị độ lẫn lộn với radian; học sinh cần có năng lực kiểm tra lại nghiệm bằng tính năng thử nghiệm trực tiếp trên MTCT Casio.  
+\end{itemize}  
+\end{aibox}  
+  
+\noindent \textbf{d) Tổ chức thực hiện:}  
+\begin{itemize}[leftmargin=0.8cm]  
+    \item \textit{Chuyển giao nhiệm vụ:} GV yêu cầu học sinh làm việc cá nhân, đối chiếu tính chất "Cos đối" để dự đoán hai họ nghiệm của phương trình $\cos x = \cos\alpha$.  
+    \item \textit{Thực hiện nhiệm vụ:} HS suy luận: Vì $\cos(-\alpha) = \cos\alpha$ nên hai họ nghiệm là $x = \alpha + k2\pi$ và $x = -\alpha + k2\pi$. Viết gọn thành $x = \pm\alpha + k2\pi$.  
+    \item \textit{Báo cáo, thảo luận:} Học sinh so sánh sự khác nhau cơ bản giữa công thức nghiệm của $\sin$ (nghiệm bù) và $\cos$ (nghiệm đối).  
+    \item \textit{Kết luận, nhận định:} GV nhấn mạnh cách viết gọn dấu $\pm$ và lưu ý trường hợp đặc biệt $\cos x = 0$ chỉ có một ngọn nghiệm trên đường tròn (2 điểm cực trị trên trục tung cách nhau chu kì $\pi$).  
+\end{itemize}  
+  
+% -------------------------------------------------------------------------
+\subsection*{3. Hoạt động 3: Luyện tập}  
+  
+\noindent \textbf{a) Mục tiêu:}  
+\begin{itemize}[leftmargin=0.8cm]  
+    \item Học sinh vận dụng trực tiếp công thức nghiệm giải các phương trình $\sin u(x) = m$ và $\cos u(x) = m$.  
+    \item Rèn kỹ năng chuyển vế, biến đổi đại số cơ bản, bấm MTCT và trình bày bài giải tự luận chính xác.  
+\end{itemize}  
+  
+\noindent \textbf{b) Nội dung:}  
+Thực hiện các bài toán trong Phiếu học tập số 1 (Worksheet 1):  
+\begin{itemize}[leftmargin=0.6cm]  
+    \item \textbf{Bài 1:} Giải các phương trình sau:  
+    a) $\sin x = \dfrac{\sqrt{3}}{2}$ \qquad b) $2\cos x + \sqrt{2} = 0$  
+    \item \textbf{Bài 2:} Giải các phương trình sau:  
+    a) $\sin\left(2x - \dfrac{\pi}{3}\right) = \sin\left(x + \dfrac{\pi}{6}\right)$ \qquad b) $\cos\left(3x + 20^\circ\right) = \dfrac{1}{2}$  
+    \item \textbf{Bài 3 (Mở rộng):} Giải phương trình $\sin x = \dfrac{1}{3}$ trên khoảng $(0; \pi)$.  
+\end{itemize}  
+  
+\noindent \textbf{c) Sản phẩm: Lời giải chi tiết}  
+\begin{enumerate}[leftmargin=0.6cm]  
+    \item \textbf{Bài 1a:} Vì $\dfrac{\sqrt{3}}{2} = \sin\dfrac{\pi}{3}$, nên:  
+    $$\sin x = \sin\dfrac{\pi}{3} \iff \left[\begin{aligned} x &= \dfrac{\pi}{3} + k2\pi \\ x &= \pi - \dfrac{\pi}{3} + k2\pi \end{aligned}\right. \iff \left[\begin{aligned} x &= \dfrac{\pi}{3} + k2\pi \\ x &= \dfrac{2\pi}{3} + k2\pi \end{aligned}\right. \quad (k \in \mathbb{Z})$$  
+    \item \textbf{Bài 1b:} $2\cos x + \sqrt{2} = 0 \iff \cos x = -\dfrac{\sqrt{2}}{2}$.  
+    Bấm máy tính: $\cos\dfrac{3\pi}{4} = -\dfrac{\sqrt{2}}{2}$.  
+    $$\cos x = \cos\dfrac{3\pi}{4} \iff x = \pm\dfrac{3\pi}{4} + k2\pi \quad (k \in \mathbb{Z})$$  
+    \item \textbf{Bài 2a:} $\sin\left(2x - \dfrac{\pi}{3}\right) = \sin\left(x + \dfrac{\pi}{6}\right)$  
+    $$\iff \left[\begin{aligned} 2x - \dfrac{\pi}{3} &= x + \dfrac{\pi}{6} + k2\pi \\ 2x - \dfrac{\pi}{3} &= \pi - \left(x + \dfrac{\pi}{6}\right) + k2\pi \end{aligned}\right. \iff \left[\begin{aligned} x &= \dfrac{\pi}{2} + k2\pi \\ 3x &= \dfrac{7\pi}{6} + k2\pi \end{aligned}\right. \iff \left[\begin{aligned} x &= \dfrac{\pi}{2} + k2\pi \\ x &= \dfrac{7\pi}{18} + k\dfrac{2\pi}{3} \end{aligned}\right. \quad (k \in \mathbb{Z})$$  
+    \item \textbf{Bài 2b:} Vì đề bài cho đơn vị độ ($^\circ$), ta đổi $\dfrac{1}{2} = \cos 60^\circ$:  
+    $$\cos\left(3x + 20^\circ\right) = \cos 60^\circ \iff \left[\begin{aligned} 3x + 20^\circ &= 60^\circ + k360^\circ \\ 3x + 20^\circ &= -60^\circ + k360^\circ \end{aligned}\right. \iff \left[\begin{aligned} 3x &= 40^\circ + k360^\circ \\ 3x &= -80^\circ + k360^\circ \end{aligned}\right. \iff \left[\begin{aligned} x &= \dfrac{40^\circ}{3} + k120^\circ \\ x &= -\dfrac{80^\circ}{3} + k120^\circ \end{aligned}\right. \quad (k \in \mathbb{Z})$$  
+    \item \textbf{Bài 3:} Vì $\dfrac{1}{3}$ không là giá trị lượng giác của góc đặc biệt và $\left|\dfrac{1}{3}\right| \le 1$, nên:  
+    $$\sin x = \dfrac{1}{3} \iff \left[\begin{aligned} x &= \arcsin\dfrac{1}{3} + k2\pi \\ x &= \pi - \arcsin\dfrac{1}{3} + k2\pi \end{aligned}\right. \quad (k \in \mathbb{Z})$$  
+    Vì $x \in (0; \pi)$ và $\arcsin\dfrac{1}{3} \approx 0{,}34 \in \left(0; \dfrac{\pi}{2}\right)$, nên ta chọn $k = 0$. Phương trình có đúng 2 nghiệm trên $(0; \pi)$ là $x_1 = \arcsin\dfrac{1}{3}$ và $x_2 = \pi - \arcsin\dfrac{1}{3}$.  
+\end{enumerate}  
+  
+\noindent \textbf{d) Tổ chức thực hiện:}  
+\begin{itemize}[leftmargin=0.8cm]  
+    \item \textit{Chuyển giao nhiệm vụ:} Chia lớp thành 4 dãy, mỗi dãy làm một bài tương ứng. Riêng bài 2a và bài 3 giao cho các nhóm học sinh khá hỗ trợ bạn yếu.  
+    \item \textit{Thực hiện nhiệm vụ:} HS làm việc độc lập 5 phút, sau đó kiểm tra chéo đáp án với bạn bên cạnh. GV bao quát lớp, trực tiếp hướng dẫn học sinh yếu cách biến đổi đại số ở Bài 2a (chuyển vế đổi dấu).  
+    \item \textit{Báo cáo, thảo luận:} Gọi 3 học sinh lên bảng trình bày. Các học sinh dưới lớp nhận xét, chỉ ra các lỗi sai về dấu hoặc thiếu $k \in \mathbb{Z}$.  
+    \item \textit{Kết luận, nhận định:} GV nhận xét, chốt điểm số và lưu ý: Tuyệt đối không viết lẫn lộn giữa độ và radian trong cùng một công thức (ví dụ: $x = 20^\circ + k2\pi$ là SAI).  
+\end{itemize}  
+  
+% -------------------------------------------------------------------------
+\subsection*{4. Hoạt động 4: Vận dụng}  
+  
+\noindent \textbf{a) Mục tiêu:}  
+Vận dụng giải phương trình $\cos$ vào việc giải quyết trọn vẹn tình huống thực tiễn dao động điều hòa đã đặt ra ở Hoạt động khởi động.  
+  
+\noindent \textbf{b) Nội dung:}  
+Giải bài toán khởi động: Tìm tất cả các thời điểm $t \ge 0$ để vật dao động có li độ $x = 2\text{ cm}$, biết phương trình li độ là $x(t) = 4\cos\left(2\pi t - \dfrac{\pi}{3}\right)$. Xác định thời điểm đầu tiên vật đi qua vị trí này.  
+  
+\noindent \textbf{c) Sản phẩm: Lời giải chi tiết}  
+Ta có:  
+$$4\cos\left(2\pi t - \dfrac{\pi}{3}\right) = 2 \iff \cos\left(2\pi t - \dfrac{\pi}{3}\right) = \dfrac{1}{2} = \cos\dfrac{\pi}{3}$$  
+$$\iff \left[\begin{aligned} 2\pi t - \dfrac{\pi}{3} &= \dfrac{\pi}{3} + k2\pi \\ 2\pi t - \dfrac{\pi}{3} &= -\dfrac{\pi}{3} + k2\pi \end{aligned}\right. \iff \left[\begin{aligned} 2\pi t &= \dfrac{2\pi}{3} + k2\pi \\ 2\pi t &= k2\pi \end{aligned}\right. \iff \left[\begin{aligned} t &= \dfrac{1}{3} + k \\ t &= k \end{aligned}\right. \quad (k \in \mathbb{Z})$$  
+Vì thời gian $t \ge 0$ nên:  
+\begin{itemize}  
+    \item Với họ nghiệm $t = k$: Để $t \ge 0 \implies k \in \{0, 1, 2, 3, \dots\}$.  
+    \item Với họ nghiệm $t = \dfrac{1}{3} + k$: Để $t \ge 0 \implies k \in \{0, 1, 2, 3, \dots\}$.  
+\end{itemize}  
+Thời điểm đầu tiên vật đi qua vị trí li độ $x = 2\text{ cm}$ là tại $t = 0\text{ s}$ (ứng với $k = 0$ ở họ nghiệm thứ hai).  
+Thời điểm thứ hai là tại $t = \dfrac{1}{3}\text{ s} \approx 0{,}33\text{ s}$ (ứng với $k = 0$ ở họ nghiệm thứ nhất).  
+  
+\noindent \textbf{d) Tổ chức thực hiện:}  
+\begin{itemize}[leftmargin=0.8cm]  
+    \item \textit{Chuyển giao nhiệm vụ:} GV yêu cầu cả lớp thực hiện bài toán vào vở, tìm $t$ và giải thích ý nghĩa vật lí của thời điểm $t = 0$.  
+    \item \textit{Thực hiện nhiệm vụ:} HS giải phương trình, đặt điều kiện $t \ge 0$ và chọn giá trị $k$ nguyên nhỏ nhất.  
+    \item \textit{Báo cáo, thảo luận:} 1 HS giải thích: Tại thời điểm ban đầu khi bắt đầu bấm giờ ($t = 0$), thay vào ta thấy ngay $x(0) = 4\cos\left(-\dfrac{\pi}{3}\right) = 4 \cdot \dfrac{1}{2} = 2\text{ cm}$.  
+    \item \textit{Kết luận, nhận định:} GV khen ngợi sự liên hệ thực tế xuất sắc của học sinh, nhấn mạnh phương trình lượng giác là công cụ toán học không thể thiếu của môn Vật lí 11.  
+\end{itemize}  
+  
+% =========================================================================
+% TIẾT 2 (TIẾT 9 THEO PPCT)
+% =========================================================================
+\vspace{10pt}  
+\begin{center}  
+    {\fontsize{13pt}{16pt}\selectfont \textbf{TIẾT 2. PHƯƠNG TRÌNH $\tan x = m$, $\cot x = m$ VÀ ỨNG DỤNG THỰC TIỄN}}\\[2pt]  
+    \textit{(Tiết 9 theo PPCT \ \textbar \ Tuần 3)}  
+\end{center}  
+  
+\subsection*{1. Hoạt động 1: Khởi động (Mở đầu)}  
+  
+\noindent \textbf{a) Mục tiêu:}  
+Tạo tình huống thực tế về đo đạc khoảng cách và góc nâng bóng nắng, khơi gợi nhu cầu tìm góc khi biết giá trị tan hoặc cotan, dẫn dắt vào bài học mới.  
+  
+\noindent \textbf{b) Nội dung:}  
+Giáo viên chiếu hình ảnh cột cờ trường THCS\&THPT Hồng Vân có chiều cao $h = 12\text{ m}$. Vào một buổi sáng đầy nắng, bóng của cột cờ in trên mặt đất có chiều dài đo được là $L = 12\sqrt{3}\text{ m}$.  
+\textbf{Câu hỏi:} Gọi $\alpha$ là góc nâng của ánh nắng mặt trời so với mặt đất ($0^\circ < \alpha < 90^\circ$).  
+1) Hãy thiết lập hệ thức lượng giác liên hệ giữa $h, L$ và góc $\alpha$?  
+2) Tìm số đo của góc nâng $\alpha$?  
+  
+\noindent \textbf{c) Sản phẩm:}  
+\begin{itemize}[leftmargin=0.8cm]  
+    \item Hệ thức: $\tan\alpha = \dfrac{h}{L} = \dfrac{12}{12\sqrt{3}} = \dfrac{1}{\sqrt{3}}$.  
+    \item Dựa vào bảng giá trị lượng giác, học sinh suy ra góc $\alpha = 30^\circ$ (hay $\alpha = \dfrac{\pi}{6}\text{ rad}$).  
+    \item Vấn đề nảy sinh: Nếu một phương trình có dạng $\tan x = m$ với giá trị $m$ bất kì thì công thức nghiệm tổng quát được thiết lập như thế nào? Chu kì của nó có giống $\sin$ và $\cos$ hay không?  
+\end{itemize}  
+  
+\noindent \textbf{d) Tổ chức thực hiện:}  
+\begin{itemize}[leftmargin=0.8cm]  
+    \item \textit{Chuyển giao nhiệm vụ:} GV nêu bài toán thực tiễn gần gũi ngay tại sân trường. Yêu cầu học sinh vẽ tam giác vuông minh họa và tính $\tan\alpha$.  
+    \item \textit{Thực hiện nhiệm vụ:} Cả lớp tính nhanh tỉ số cạnh đối trên cạnh kề, tìm ra $\tan\alpha = \dfrac{1}{\sqrt{3}}$.  
+    \item \textit{Báo cáo, thảo luận:} HS trả lời nhanh kết quả góc $30^\circ$.  
+    \item \textit{Kết luận, nhận định:} GV dẫn dắt: Với góc nhọn hình học thì chỉ có 1 góc $30^\circ$. Nhưng trong lượng giác, góc lượng giác có thể nhận số đo tùy ý. Ta sẽ tìm hiểu công thức tổng quát cho $\tan x = m$ và $\cot x = m$.  
+\end{itemize}  
+  
+% -------------------------------------------------------------------------
+\subsection*{2. Hoạt động 2: Hình thành kiến thức}  
+  
+\subsubsection*{2.1. Phương trình $\tan x = m$}  
+  
+\noindent \textbf{a) Mục tiêu:}  
+\begin{itemize}[leftmargin=0.8cm]  
+    \item Nhận biết phương trình $\tan x = m$ luôn có nghiệm với mọi $m \in \mathbb{R}$ và xác định đúng điều kiện xác định $x \neq \dfrac{\pi}{2} + k\pi$.  
+    \item Thiết lập và vận dụng công thức nghiệm $\tan x = \tan\alpha \iff x = \alpha + k\pi$ ($k \in \mathbb{Z}$) với chu kì $\pi$.  
+    \item Nắm vững ký hiệu $\arctan m$ và cách sử dụng MTCT.  
+\end{itemize}  
+  
+\noindent \textbf{b) Nội dung:}  
+\begin{enumerate}[leftmargin=0.6cm]  
+    \item Quan sát đồ thị hàm số $y = \tan x$ và trục tan trên đường tròn lượng giác. Nhận xét số giao điểm giữa đồ thị $y = \tan x$ với đường thẳng $y = m$ khi $m$ thay đổi trên $\mathbb{R}$.  
+    \item Rút ra kết luận về sự tồn tại duy nhất của góc $\alpha \in \left(-\dfrac{\pi}{2}; \dfrac{\pi}{2}\right)$ sao cho $\tan\alpha = m$.  
+    \item Xây dựng công thức nghiệm tổng quát và giải thích tại sao đuôi nghiệm là $+ k\pi$ thay vì $+ k2\pi$.  
+\end{enumerate}  
+  
+\noindent \textbf{c) Sản phẩm:}  
+  
+\begin{pedabox}{KIẾN THỨC TRỌNG TÂM: PHƯƠNG TRÌNH $\tan x = m$}  
+\begin{itemize}[leftmargin=0.6cm]  
+    \item \textbf{Điều kiện xác định:} $x \neq \dfrac{\pi}{2} + k\pi \quad (k \in \mathbb{Z})$.  
+    \item \textbf{Điều kiện có nghiệm:} Phương trình $\tan x = m$ \textbf{luôn có nghiệm với mọi $m \in \mathbb{R}$}.  
+    \item \textbf{Công thức nghiệm tổng quát:}  
+    Với mọi $m \in \mathbb{R}$, luôn tồn tại duy nhất $\alpha \in \left(-\dfrac{\pi}{2}; \dfrac{\pi}{2}\right)$ sao cho $\tan\alpha = m$. Khi đó:  
+    $$\tan x = \tan\alpha \iff x = \alpha + k\pi \quad (k \in \mathbb{Z})$$  
+    \item \textbf{Trường hợp đơn vị độ ($^\circ$):}  
+    $$\tan x = \tan\alpha^\circ \iff x = \alpha^\circ + k180^\circ \quad (k \in \mathbb{Z})$$  
+    \item \textbf{Trường hợp $m$ không đặc biệt:} Sử dụng ký hiệu $\arctan m$ (đọc là ác-tan của $m$):  
+    $$\tan x = m \iff x = \arctan m + k\pi \quad (k \in \mathbb{Z})$$  
+\end{itemize}  
+\end{pedabox}  
+  
+\begin{scaffoldbox}{GIÀN GIÁO SƯ PHẠM: SO SÁNH ĐUÔI CHU KÌ NGHIỆM}  
+\begin{itemize}[leftmargin=0.6cm]  
+    \item \textbf{Sự khác biệt cốt lõi:}  
+    \begin{itemize}  
+        \item Phương trình $\sin$ và $\cos$: Chu kì tuần hoàn của hàm số là $2\pi \implies$ Đuôi nghiệm là $+ k2\pi$ (và có \textbf{2 họ nghiệm}).  
+        \item Phương trình $\tan$ và $\cot$: Chu kì tuần hoàn của hàm số là $\pi \implies$ Đuôi nghiệm là $+ k\pi$ (và chỉ có \textbf{1 họ nghiệm duy nhất}).  
+    \end{itemize}  
+    \item \textbf{Cảnh báo lỗi học sinh yếu:} Rất nhiều học sinh theo quán tính của tiết trước viết $x = \alpha + k2\pi$ là SAI. Hãy nhớ: \textbf{Tan và Cot chỉ cộng đuôi $k\pi$!}  
+\end{itemize}  
+\end{scaffoldbox}  
+  
+\noindent \textbf{d) Tổ chức thực hiện:}  
+\begin{itemize}[leftmargin=0.8cm]  
+    \item \textit{Chuyển giao nhiệm vụ:} GV yêu cầu học sinh mở SGK, quan sát trục số tan trên đường tròn lượng giác. Tại sao đường thẳng $y = m$ luôn cắt nhánh đồ thị $y = \tan x$ tại đúng 1 điểm trên mỗi khoảng $\left(-\dfrac{\pi}{2}; \dfrac{\pi}{2}\right)$?  
+    \item \textit{Thực hiện nhiệm vụ:} HS nhận định: Do tập giá trị của hàm tan là $\mathbb{R}$ và hàm số đồng biến trên từng khoảng xác định, nên phương trình luôn có nghiệm duy nhất trên mỗi chu kì $\pi$.  
+    \item \textit{Báo cáo, thảo luận:} 1 HS phát biểu công thức nghiệm. GV yêu cầu cả lớp đồng thanh nhắc lại: "Tan x bằng tan alpha tương đương x bằng alpha cộng k pi".  
+    \item \textit{Kết luận, nhận định:} GV chốt công thức, hướng dẫn bấm MTCT phím \texttt{SHIFT} $\to$ \texttt{tan}.  
+\end{itemize}  
+  
+% -------------------------------------------------------------------------
+\subsubsection*{2.2. Phương trình $\cot x = m$}  
+  
+\noindent \textbf{a) Mục tiêu:}  
+\begin{itemize}[leftmargin=0.8cm]  
+    \item Nhận biết phương trình $\cot x = m$ luôn có nghiệm với mọi $m \in \mathbb{R}$, điều kiện xác định $x \neq k\pi$.  
+    \item Thiết lập công thức nghiệm $\cot x = \cot\alpha \iff x = \alpha + k\pi$ ($k \in \mathbb{Z}$).  
+    \item Nắm phương pháp bấm MTCT để giải phương trình chứa cotan thông qua hàm nghịch đảo của tan.  
+\end{itemize}  
+  
+\noindent \textbf{b) Nội dung:}  
+\begin{enumerate}[leftmargin=0.6cm]  
+    \item Khảo sát tính chất của phương trình $\cot x = m$.  
+    \item Xây dựng công thức nghiệm tổng quát với góc $\alpha \in (0; \pi)$ và ký hiệu $\text{arccot}\, m$.  
+    \item Hướng dẫn thao tác MTCT: Vì MTCT Casio không có phím \texttt{COT} riêng biệt, hướng dẫn học sinh bấm tìm góc bằng cách lấy nghịch đảo: $\cot\alpha = m \iff \tan\alpha = \dfrac{1}{m}$ (với $m \neq 0$).  
+\end{enumerate}  
+  
+\noindent \textbf{c) Sản phẩm:}  
+  
+\begin{pedabox}{KIẾN THỨC TRỌNG TÂM: PHƯƠNG TRÌNH $\cot x = m$}  
+\begin{itemize}[leftmargin=0.6cm]  
+    \item \textbf{Điều kiện xác định:} $x \neq k\pi \quad (k \in \mathbb{Z})$.  
+    \item \textbf{Điều kiện có nghiệm:} Luôn có nghiệm với mọi $m \in \mathbb{R}$.  
+    \item \textbf{Công thức nghiệm tổng quát:}  
+    Với mọi $m \in \mathbb{R}$, luôn tồn tại duy nhất $\alpha \in (0; \pi)$ sao cho $\cot\alpha = m$. Khi đó:  
+    $$\cot x = \cot\alpha \iff x = \alpha + k\pi \quad (k \in \mathbb{Z})$$  
+    \item \textbf{Trường hợp đơn vị độ ($^\circ$):}  
+    $$\cot x = \cot\alpha^\circ \iff x = \alpha^\circ + k180^\circ \quad (k \in \mathbb{Z})$$  
+    \item \textbf{Trường hợp $m$ không đặc biệt:} Sử dụng ký hiệu $\text{arccot}\, m$:  
+    $$\cot x = m \iff x = \text{arccot}\, m + k\pi \quad (k \in \mathbb{Z})$$  
+    \item \textbf{Mẹo bấm MTCT Casio fx-580VN X giải $\cot x = m$ ($m \neq 0$):}  
+    Chuyển về $\tan x = \dfrac{1}{m}$, bấm: \texttt{SHIFT} $\to$ \texttt{tan} $\to$ nhập $\dfrac{1}{m}$ $\to$ \texttt{=}.  
+    Riêng khi $m = 0$: $\cot x = 0 \iff x = \dfrac{\pi}{2} + k\pi \ (k \in \mathbb{Z})$.  
+\end{itemize}  
+\end{pedabox}  
+  
+\begin{aibox}{NĂNG LỰC AI: NHẬN DIỆN LỖI SAI ĐIỀU KIỆN KHI DÙNG PHẦN MỀM TỰ ĐỘNG (QĐ 2422)}  
+\begin{itemize}[leftmargin=0.6cm]  
+    \item \textbf{Phân tích rủi ro:} Khi học sinh chụp ảnh bài toán chứa $\tan$ hoặc $\cot$ đưa vào các ứng dụng giải toán AI tự động, hệ thống thường giải ra nghiệm ngay mà bỏ qua bước đối chiếu điều kiện xác định ($x \neq \dfrac{\pi}{2} + k\pi$ hoặc $x \neq k\pi$).  
+    \item \textbf{Bài học sư phạm:} Học sinh phải rèn luyện năng lực tư duy phản biện, luôn kiểm tra xem nghiệm tìm được có làm cho mẫu số triệt tiêu hay không, không phụ thuộc mù quáng vào kết quả của AI.  
+\end{itemize}  
+\end{aibox}  
+  
+\noindent \textbf{d) Tổ chức thực hiện:}  
+\begin{itemize}[leftmargin=0.8cm]  
+    \item \textit{Chuyển giao nhiệm vụ:} GV hướng dẫn học sinh so sánh bảng tóm tắt 4 phương trình lượng giác cơ bản. Cho cả lớp thực hành bấm máy tính tìm góc $\alpha$ thỏa mãn $\cot\alpha = \sqrt{3}$.  
+    \item \textit{Thực hiện nhiệm vụ:} HS bấm \texttt{SHIFT} \texttt{tan} $(1/\sqrt{3}) \to \dfrac{\pi}{6}$.  
+    \item \textit{Báo cáo, thảo luận:} HS nêu cách giải: $\cot x = \sqrt{3} \iff \cot x = \cot\dfrac{\pi}{6} \iff x = \dfrac{\pi}{6} + k\pi$ ($k \in \mathbb{Z}$).  
+    \item \textit{Kết luận, nhận định:} GV nhấn mạnh tính tương đồng giữa $\tan$ và $\cot$ trong cấu trúc họ nghiệm.  
+\end{itemize}  
+  
+% -------------------------------------------------------------------------
+\subsection*{3. Hoạt động 3: Luyện tập}  
+  
+\noindent \textbf{a) Mục tiêu:}  
+Học sinh củng cố và thành thạo kỹ năng giải các phương trình lượng giác đưa về dạng cơ bản của $\tan$ và $\cot$.  
+  
+\noindent \textbf{b) Nội dung:}  
+Thực hiện các bài toán trong Phiếu học tập số 2 (Worksheet 2):  
+\begin{itemize}[leftmargin=0.6cm]  
+    \item \textbf{Bài 1:} Giải các phương trình sau:  
+    a) $\tan\left(x - \dfrac{\pi}{3}\right) = \sqrt{3}$ \qquad b) $\cot(2x) = -\dfrac{\sqrt{3}}{3}$  
+    \item \textbf{Bài 2:} Giải phương trình $\tan(3x) = \tan\left(x + \dfrac{\pi}{4}\right)$.  
+    \item \textbf{Bài 3:} Tìm nghiệm của phương trình $\cot\left(x + 30^\circ\right) = 1$ trên đoạn $[0^\circ; 360^\circ]$.  
+\end{itemize}  
+  
+\noindent \textbf{c) Sản phẩm: Lời giải chi tiết}  
+\begin{enumerate}[leftmargin=0.6cm]  
+    \item \textbf{Bài 1a:} Vì $\sqrt{3} = \tan\dfrac{\pi}{3}$, phương trình tương đương:  
+    $$\tan\left(x - \dfrac{\pi}{3}\right) = \tan\dfrac{\pi}{3} \iff x - \dfrac{\pi}{3} = \dfrac{\pi}{3} + k\pi \iff x = \dfrac{2\pi}{3} + k\pi \quad (k \in \mathbb{Z})$$  
+    \item \textbf{Bài 1b:} Ta có $-\dfrac{\sqrt{3}}{3} = \cot\left(-\dfrac{\pi}{3}\right) = \cot\dfrac{2\pi}{3}$, phương trình tương đương:  
+    $$\cot(2x) = \cot\dfrac{2\pi}{3} \iff 2x = \dfrac{2\pi}{3} + k\pi \iff x = \dfrac{\pi}{3} + k\dfrac{\pi}{2} \quad (k \in \mathbb{Z})$$  
+    \item \textbf{Bài 2:} Điều kiện xác định: $3x \neq \dfrac{\pi}{2} + m\pi$ và $x + \dfrac{\pi}{4} \neq \dfrac{\pi}{2} + n\pi$ ($m, n \in \mathbb{Z}$).  
+    $$\tan(3x) = \tan\left(x + \dfrac{\pi}{4}\right) \iff 3x = x + \dfrac{\pi}{4} + k\pi \iff 2x = \dfrac{\pi}{4} + k\pi \iff x = \dfrac{\pi}{8} + k\dfrac{\pi}{2} \quad (k \in \mathbb{Z})$$  
+    Kiểm tra điều kiện xác định: Các giá trị $x = \dfrac{\pi}{8} + k\dfrac{\pi}{2}$ đều thỏa mãn điều kiện. Vậy nghiệm là $x = \dfrac{\pi}{8} + k\dfrac{\pi}{2}$ ($k \in \mathbb{Z}$).  
+    \item \textbf{Bài 3:} Vì $1 = \cot 45^\circ$, ta có:  
+    $$\cot\left(x + 30^\circ\right) = \cot 45^\circ \iff x + 30^\circ = 45^\circ + k180^\circ \iff x = 15^\circ + k180^\circ \quad (k \in \mathbb{Z})$$  
+    Để $x \in [0^\circ; 360^\circ]$:  
+    $$0^\circ \le 15^\circ + k180^\circ \le 360^\circ \iff -15^\circ \le k180^\circ \le 345^\circ \iff -\dfrac{1}{12} \le k \le \dfrac{23}{12}$$  
+    Vì $k \in \mathbb{Z} \implies k \in \{0; 1\}$.  
+    \begin{itemize}  
+        \item Với $k = 0 \implies x = 15^\circ$.  
+        \item Với $k = 1 \implies x = 195^\circ$.  
+    \end{itemize}  
+    Vậy phương trình có 2 nghiệm trên $[0^\circ; 360^\circ]$ là $15^\circ$ và $195^\circ$.  
+\end{enumerate}  
+  
+\noindent \textbf{d) Tổ chức thực hiện:}  
+\begin{itemize}[leftmargin=0.8cm]  
+    \item \textit{Chuyển giao nhiệm vụ:} GV chia lớp thành các nhóm 4 học sinh, giao nhiệm vụ hoàn thành 3 bài tập trên bảng nhóm trong 8 phút.  
+    \item \textit{Thực hiện nhiệm vụ:} Các nhóm phân công thành viên giải bài, hỗ trợ các bạn học lực yếu thực hiện các bước cộng trừ phân số và chặn giá trị $k$ nguyên.  
+    \item \textit{Báo cáo, thảo luận:} Đại diện 2 nhóm treo bảng nhóm lên bảng lớp. Cả lớp cùng chấm chéo và nhận xét.  
+    \item \textit{Kết luận, nhận định:} GV biểu dương các nhóm làm đúng, lưu ý phương pháp chặn $k$ nguyên để tìm nghiệm thuộc khoảng/đoạn cho trước.  
+\end{itemize}  
+  
+% -------------------------------------------------------------------------
+\subsection*{4. Hoạt động 4: Vận dụng (Giáo dục STEM)}  
+  
+\noindent \textbf{a) Mục tiêu:}  
+Tích hợp kiến thức phương trình lượng giác vào mô hình toán học giải quyết bài toán chu kì chuyển động của vòng quay khổng lồ (Ferris Wheel), phát triển năng lực mô hình hóa toán học và giải quyết vấn đề thực tiễn.  
+  
+\noindent \textbf{b) Nội dung: Bài toán vòng đu quay Sun Wheel}  
+Một vòng đu quay khổng lồ có bán kính $R = 25\text{ m}$, trục quay cách mặt đất $30\text{ m}$. Vòng quay quay đều với chu kì quay hết 1 vòng là 60 giây. Giả sử tại thời điểm $t = 0$ (giây), cabin của bạn An ở vị trí thấp nhất (cách mặt đất $5\text{ m}$).  
+Khi đó, độ cao $h(t)$ (tính bằng mét) của cabin sau $t$ giây kể từ lúc bắt đầu quay được mô hình hóa bởi công thức:  
+$$h(t) = 30 - 25\cos\left(\dfrac{\pi}{30}t\right)$$  
+\textbf{Yêu cầu:}  
+1) Trong một vòng quay đầu tiên ($0 \le t \le 60$), hãy tìm các thời điểm cabin đạt độ cao đúng bằng $42{,}5\text{ m}$ so với mặt đất?  
+2) Trong khoảng thời gian nào của vòng quay đầu tiên, cabin ở độ cao trên $42{,}5\text{ m}$ để bạn An có thể ngắm toàn cảnh thành phố rõ nhất?  
+  
+\noindent \textbf{c) Sản phẩm: Lời giải chi tiết}  
+\begin{enumerate}[leftmargin=0.6cm]  
+    \item Để cabin ở độ cao $42{,}5\text{ m}$, ta giải phương trình:  
+    $$30 - 25\cos\left(\dfrac{\pi}{30}t\right) = 42{,}5 \iff 25\cos\left(\dfrac{\pi}{30}t\right) = -12{,}5 \iff \cos\left(\dfrac{\pi}{30}t\right) = -\dfrac{1}{2}$$  
+    Vì $-\dfrac{1}{2} = \cos\dfrac{2\pi}{3}$, ta có:  
+    $$\cos\left(\dfrac{\pi}{30}t\right) = \cos\dfrac{2\pi}{3} \iff \left[\begin{aligned} \dfrac{\pi}{30}t &= \dfrac{2\pi}{3} + k2\pi \\ \dfrac{\pi}{30}t &= -\dfrac{2\pi}{3} + k2\pi \end{aligned}\right. \iff \left[\begin{aligned} t &= 20 + 60k \\ t &= -20 + 60k \end{aligned}\right. \quad (k \in \mathbb{Z})$$  
+    Vì xét trong 1 vòng quay đầu tiên ($0 \le t \le 60$):  
+    \begin{itemize}  
+        \item Với $t = 20 + 60k$, chọn $k = 0 \implies t_1 = 20\text{ s}$.  
+        \item Với $t = -20 + 60k$, chọn $k = 1 \implies t_2 = 40\text{ s}$.  
+    \end{itemize}  
+    Vậy trong vòng quay đầu tiên, cabin đạt độ cao $42{,}5\text{ m}$ tại thời điểm $t = 20\text{ s}$ (lúc đi lên) và $t = 40\text{ s}$ (lúc đi xuống).  
+    \item Để cabin ở độ cao trên $42{,}5\text{ m}$ thì $h(t) > 42{,}5$, tương ứng với khoảng thời gian cabin đi từ điểm đạt độ cao lúc lên đến lúc xuống:  
+    $$20 < t < 40\text{ (giây)}$$  
+    Như vậy, bạn An có tổng cộng $40 - 20 = 20\text{ giây}$ ngắm toàn cảnh thành phố ở độ cao trên $42{,}5\text{ m}$ trong mỗi vòng quay.  
+\end{enumerate}  
+  
+\noindent \textbf{d) Tổ chức thực hiện:}  
+\begin{itemize}[leftmargin=0.8cm]  
+    \item \textit{Chuyển giao nhiệm vụ:} GV chiếu video mô phỏng vòng quay và đồ thị độ cao theo thời gian. Giao nhiệm vụ cho các nhóm giải quyết 2 câu hỏi.  
+    \item \textit{Thực hiện nhiệm vụ:} Học sinh đưa bài toán thực tế về phương trình $\cos$ cơ bản, tìm nghiệm và đối chiếu điều kiện thời gian.  
+    \item \textit{Báo cáo, thảo luận:} Nhóm 1 trình bày bài giải. Nhóm 3 đặt câu hỏi phản biện: "Tại sao thời điểm 40 giây ứng với $k = 1$ mà không phải $k = 0$?". Nhóm 1 giải thích rõ ràng vì nếu $k = 0$ thì $t = -20$ là thời gian âm trước khi bắt đầu quay.  
+    \item \textit{Kết luận, nhận định:} GV tổng kết toàn bài, nhấn mạnh vai trò của toán học trong thiết kế trò chơi mạo hiểm và kỹ thuật công viên giải trí. Hướng dẫn học sinh tự ôn tập chuẩn bị cho tiết Bài tập cuối chương.  
+\end{itemize}  
+  
+% =========================================================================
+% PHẦN IV. PHỤ LỤC HỌC LIỆU BỔ TRỢ
+% =========================================================================
+\section*{IV. PHỤ LỤC HỌC LIỆU BỔ TRỢ}  
+  
+\subsection*{1. Bảng tóm tắt công thức 4 phương trình lượng giác cơ bản}  
+  
+\begin{center}  
+\small  
+\begin{tabularx}{\textwidth}{|l|l|X|}  
+\hline  
+\textbf{Phương trình} & \textbf{Điều kiện có nghiệm} & \textbf{Công thức nghiệm tổng quát} ($k \in \mathbb{Z}$) \\ \hline  
+$\sin x = m$ & $|m| \le 1$ & $\sin x = \sin\alpha \iff \left[\begin{aligned} x &= \alpha + k2\pi \\ x &= \pi - \alpha + k2\pi \end{aligned}\right.$ \\ \hline  
+$\cos x = m$ & $|m| \le 1$ & $\cos x = \cos\alpha \iff x = \pm\alpha + k2\pi$ \\ \hline  
+$\tan x = m$ & Luôn có nghiệm $\forall m \in \mathbb{R}$ & $\tan x = \tan\alpha \iff x = \alpha + k\pi$ \ (ĐK: $x \neq \dfrac{\pi}{2} + k\pi$) \\ \hline  
+$\cot x = m$ & Luôn có nghiệm $\forall m \in \mathbb{R}$ & $\cot x = \cot\alpha \iff x = \alpha + k\pi$ \ (ĐK: $x \neq k\pi$) \\ \hline  
+\end{tabularx}  
+\end{center}  
+  
+\subsection*{2. Phiếu học tập phân tầng bậc thang}  
+  
+\noindent \textbf{PHIẾU HỌC TẬP SỐ 1 (Tiết 1: $\sin$ và $\cos$)}  
+\begin{itemize}[leftmargin=0.6cm]  
+    \item \textbf{Tầng 1 (Nhận biết - Dành cho HS TB-Yếu):}  
+    Giải phương trình: a) $\sin x = \dfrac{1}{2}$ \qquad b) $\cos x = 0$ \qquad c) $\sin x = 2$ (phương trình có nghiệm không?).  
+    \item \textbf{Tầng 2 (Thông hiểu):}  
+    Giải phương trình: a) $\cos\left(2x - \dfrac{\pi}{4}\right) = \dfrac{\sqrt{2}}{2}$ \qquad b) $\sin(3x) + \cos x = 0$.  
+    \item \textbf{Tầng 3 (Vận dụng):}  
+    Tìm số nghiệm thuộc đoạn $[-\pi; \pi]$ của phương trình $\cos\left(2x + \dfrac{\pi}{3}\right) = -\dfrac{1}{2}$.  
+\end{itemize}  
+  
+\vspace{5pt}  
+\noindent \textbf{PHIẾU HỌC TẬP SỐ 2 (Tiết 2: $\tan$ và $\cot$)}  
+\begin{itemize}[leftmargin=0.6cm]  
+    \item \textbf{Tầng 1 (Nhận biết - Dành cho HS TB-Yếu):}  
+    Giải phương trình: a) $\tan x = 1$ \qquad b) $\cot x = -\sqrt{3}$ \qquad c) $\tan x = 0$.  
+    \item \textbf{Tầng 2 (Thông hiểu):}  
+    Giải phương trình: a) $\tan\left(2x + \dfrac{\pi}{6}\right) = \sqrt{3}$ \qquad b) $\cot\left(x - 45^\circ\right) = -1$.  
+    \item \textbf{Tầng 3 (Vận dụng):}  
+    Giải phương trình $\tan x \cdot \tan(2x) = 1$.  
+\end{itemize}  
+  
+\subsection*{3. Bảng Rubric đánh giá năng lực học sinh (4 mức độ)}  
+  
+\begin{center}  
+\small  
+\begin{tabularx}{\textwidth}{|p{2.8cm}|X|X|X|X|}  
+\hline  
+\textbf{Tiêu chí} & \textbf{Chưa đạt (Mức 1)} & \textbf{Đạt (Mức 2)} & \textbf{Khá (Mức 3)} & \textbf{Tốt (Mức 4)} \\ \hline  
+\textbf{Nhận biết công thức nghiệm} & Chưa nhớ công thức, nhầm lẫn giữa nghiệm của $\sin$ và $\cos$. & Nhớ công thức nhưng hay quên đuôi $+ k2\pi$ hoặc $+ k\pi$. & Thuộc đúng công thức nghiệm của 4 phương trình cơ bản. & Thuộc và giải thích được bản chất nghiệm trên đường tròn lượng giác. \\ \hline  
+\textbf{Kỹ năng giải bài toán cơ bản} & Không giải được hoặc sai sót trong biến đổi đại số cơ bản. & Giải được phương trình trực tiếp dạng $\sin x = \sin\alpha$. & Giải thành thạo phương trình có biểu thức góc bậc nhất $\sin(ax+b)=m$. & Giải nhanh, chính xác và tìm đúng số nghiệm trên khoảng cho trước. \\ \hline  
+\textbf{Ứng dụng MTCT \& Năng lực số} & Chưa biết bấm máy tính tìm góc lượng giác. & Bấm được góc đặc biệt nhưng chưa biết chuyển đơn vị Radian/Độ. & Sử dụng thành thạo MTCT Casio tìm góc và nghiệm xấp xỉ. & Tận dụng tốt MTCT và phần mềm GeoGebra để kiểm chứng nghiệm. \\ \hline  
+\textbf{Hợp tác nhóm \& Phẩm chất} & Thụ động, chưa tham gia thảo luận cùng bạn. & Có tham gia nhưng còn ỷ lại vào bạn cùng bàn. & Tích cực trao đổi, hoàn thành đúng nhiệm vụ được giao. & Chủ động dẫn dắt, hỗ trợ các bạn học lực yếu hoàn thành tốt nhiệm vụ. \\ \hline  
+\end{tabularx}  
+\end{center}  
+  
+\end{document}
