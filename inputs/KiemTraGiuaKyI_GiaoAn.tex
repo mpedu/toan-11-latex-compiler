@@ -1,0 +1,549 @@
+\documentclass[12pt, a4paper]{article}
+% --- 1. Cấu hình Tiếng Việt và Font chữ chuẩn ---
+\usepackage[utf8]{inputenc}
+\usepackage[T5]{fontenc}
+\usepackage[vietnamese]{babel}
+\usepackage{mathptmx} % Font Times New Roman đồng bộ cả chữ và công thức toán, không gây xung đột gói
+
+\makeatletter
+\renewcommand{\normalsize}{\@setfontsize\normalsize{13pt}{16pt}}
+\makeatother
+\normalsize
+
+% --- 2. Gói Toán học & Ký hiệu bổ trợ ---
+\usepackage{amsmath, amssymb, amsfonts, mathrsfs, amsthm}
+\usepackage{graphicx}
+\usepackage{fontawesome}
+\usepackage{booktabs, tabularx, array, multirow}
+\usepackage{enumitem}
+
+% --- 3. Đồ họa TikZ, Bảng biến thiên & Hình không gian ---
+\usepackage{tikz}
+\usetikzlibrary{calc, intersections, angles, quotes, patterns, arrows.meta, 3d}
+\usepackage{pgfplots}
+\pgfplotsset{compat=1.18}
+\usepackage{tkz-euclide}
+\usepackage{tkz-tab}
+
+\renewcommand{\vec}[1]{\overrightarrow{#1}}
+
+% --- 4. Hộp sư phạm (Tcolorbox) ---
+\usepackage[many]{tcolorbox}
+\tcbuselibrary{skins, breakable}
+
+% --- 5. Căn lề chuẩn văn bản giáo án ---
+\usepackage{geometry}
+\geometry{
+    a4paper,
+    left=25mm,
+    right=15mm,
+    top=20mm,
+    bottom=20mm
+}
+
+% --- 6. Header / Footer chuẩn hóa ---
+\usepackage{fancyhdr}
+\usepackage{lastpage}
+\pagestyle{fancy}
+\fancyhf{}
+
+\fancyhead[L]{\small \textit{Kế hoạch bài dạy Toán 11}}
+\fancyhead[R]{\textbf{Trang \thepage/\pageref{LastPage}}}
+\fancyfoot[L]{\small \textit{Tổ Toán - Tin}}
+\fancyfoot[R]{\small \textit{Trường THCS\&THPT Hồng Vân}}
+\renewcommand{\headrulewidth}{0.4pt}
+\renewcommand{\footrulewidth}{0.4pt}
+
+% --- 7. Giãn dòng & Giãn đoạn theo chuẩn Nghị định 30/2020/NĐ-CP ---
+\usepackage{setspace}
+\setstretch{1.15}
+\setlength{\parindent}{1.0cm}
+\setlength{\parskip}{5pt}
+
+% Định nghĩa hộp sư phạm chuyên dụng
+\newtcolorbox{pedabox}[2][]{
+    enhanced,
+    breakable,
+    colback=blue!3!white,
+    colframe=blue!65!black,
+    fonttitle=\bfseries\small,
+    title={#2},
+    arc=2mm,
+    boxrule=0.6pt,
+    left=3mm, right=3mm, top=2mm, bottom=2mm,
+    #1
+}
+
+\newtcolorbox{aibox}[2][]{
+    enhanced,
+    breakable,
+    colback=teal!4!white,
+    colframe=teal!70!black,
+    fonttitle=\bfseries\small,
+    title={#2},
+    arc=2mm,
+    boxrule=0.6pt,
+    left=3mm, right=3mm, top=2mm, bottom=2mm,
+    #1
+}
+
+\newtcolorbox{scaffoldbox}[2][]{
+    enhanced,
+    breakable,
+    colback=orange!4!white,
+    colframe=orange!80!black,
+    fonttitle=\bfseries\small,
+    title={#2},
+    arc=2mm,
+    boxrule=0.6pt,
+    left=3mm, right=3mm, top=2mm, bottom=2mm,
+    #1
+}
+
+\begin{document}
+
+\begin{center}
+    {\fontsize{14pt}{17pt}\selectfont \textbf{KẾ HOẠCH BÀI DẠY MÔN TOÁN LỚP 11}}\\[6pt]
+    {\fontsize{16pt}{19pt}\selectfont \textbf{KIỂM TRA GIỮA KỲ I}}\\[4pt]
+    {\fontsize{12pt}{15pt}\selectfont \textbf{Môn học: Toán 11} \ \textbar \ \textbf{Thời lượng: 2 tiết (Tiết 23, 24 theo PPCT | Tuần 8)}}
+\end{center}
+
+\vspace{5pt}
+
+\section*{I. MỤC TIÊU}
+
+\subsection*{1. Kiến thức, Năng lực}
+
+\begin{itemize}[leftmargin=1.2cm]
+    \item \textbf{Yêu cầu cần đạt (Nguyên văn CT GDPT 2018):}
+    \begin{itemize}[leftmargin=0.6cm]
+        \item Đánh giá toàn diện chuẩn kiến thức, kỹ năng toán học của học sinh từ đầu năm học đến hết Chương III theo Chương trình Giáo dục phổ thông 2018:
+        \begin{itemize}
+            \item \textit{Chương I (Hàm số lượng giác và phương trình lượng giác):} Giá trị lượng giác của góc lượng giác; công thức lượng giác; tập xác định, tính chẵn lẻ, chu kỳ, đồ thị của hàm số lượng giác; phương trình lượng giác cơ bản.
+            \item \textit{Chương II (Dãy số. Cấp số cộng và cấp số nhân):} Dãy số (tăng, giảm, bị chặn); định nghĩa, số hạng tổng quát, tính chất, tổng $n$ số hạng đầu của cấp số cộng và cấp số nhân.
+            \item \textit{Chương III (Các số đặc trưng đo xu thế trung tâm của mẫu số liệu ghép nhóm):} Ý nghĩa và cách tính số trung bình cộng ($\bar{x}$), trung vị ($M_e$), tứ phân vị ($Q_1, Q_2, Q_3$), mốt ($M_o$) của mẫu số liệu ghép nhóm.
+        \end{itemize}
+        \item Cung cấp thông tin phản hồi định lượng và định tính chính xác giúp giáo viên điều chỉnh kế hoạch giảng dạy, phát hiện lỗ hổng kiến thức của học sinh để có biện pháp phụ đạo kịp thời trong nửa sau học kỳ I.
+    \end{itemize}
+
+    \item \textbf{Năng lực Toán học đặc thù:}
+    \begin{itemize}[leftmargin=0.6cm]
+        \item \textit{Năng lực tư duy và lập luận toán học:} Khả năng phân tích câu hỏi trắc nghiệm, nhận diện quy luật toán học, suy luận logic khi biến đổi biểu thức lượng giác, lập luận tính số hạng và tổng cấp số, phân tích xu thế dữ liệu thống kê.
+        \item \textit{Năng lực mô hình hóa toán học:} Vận dụng kiến thức cấp số cộng, cấp số nhân và thống kê ghép nhóm để giải quyết các tình huống thực tiễn (tài chính, tăng trưởng dân số, phân tích bảng khảo sát).
+        \item \textit{Năng lực giải quyết vấn đề toán học:} Xây dựng chiến thuật làm bài thi 90 phút hiệu quả: phân bổ thời gian hợp lý giữa phần trắc nghiệm khách quan (70\%) và tự luận (30\%); kiểm soát tốt tốc độ làm bài, biết kiểm chứng kết quả bằng phương pháp thử ngược hoặc loại trừ.
+        \item \textit{Năng lực giao tiếp toán học:} Trình bày bài tự luận rõ ràng, mạch lạc, đúng chuẩn mực ký hiệu toán học; diễn đạt chính xác lập luận toán học, đơn vị đo lường và kết luận của bài toán.
+        \item \textit{Năng lực sử dụng công cụ, phương tiện học toán:} Sử dụng thành thạo và chuẩn xác máy tính cầm tay (MTCT) Casio fx-580VN X để hỗ trợ tính toán, kiểm tra nghiệm phương trình lượng giác và kiểm tra số đặc trưng thống kê.
+    \end{itemize}
+
+    \item \textbf{Năng lực số (Theo Thông tư 02/2025/TT-BGDĐT):}
+    \begin{itemize}[leftmargin=0.6cm]
+        \item \textit{Mã 2.6NC1a (Quản lý danh tính và bảo vệ thông tin cá nhân trong kỳ khảo thí số):} Học sinh có ý thức và kỹ năng bảo vệ thông tin định danh cá nhân (Số báo danh, Mã học sinh, Mã đề thi) trên phiếu trả lời trắc nghiệm quét tự động bằng máy chấm và hệ thống cơ sở dữ liệu điểm điện tử; tôn trọng quy trình số hóa điểm số học đường.
+    \end{itemize}
+
+    \item \textbf{Năng lực AI (Theo Quyết định 2422/QĐ-BGDĐT):}
+    \begin{itemize}[leftmargin=0.6cm]
+        \item \textit{Mã 11.B2.1 (Đạo đức học thuật và Tính trung thực trong khảo thí thời đại số):} Học sinh nhận thức sâu sắc về sự liêm chính học thuật; nghiêm chỉnh chấp hành quy chế kiểm tra, tuyệt đối không sử dụng thiết bị thông minh, tai nghe thu phát sóng hoặc các ứng dụng trợ lý AI để gian lận; hiểu rõ kiểm tra là thước đo năng lực tự thân của người học.
+    \end{itemize}
+
+    \item \textbf{Năng lực chung:}
+    \begin{itemize}[leftmargin=0.6cm]
+        \item \textit{Tự chủ và tự học:} Tự lực hoàn thành trọn vẹn bài kiểm tra trong 90 phút mà không trông chờ vào sự trợ giúp bên ngoài.
+        \item \textit{Giải quyết vấn đề và sáng tạo:} Linh hoạt lựa chọn hướng giải toán tối ưu cho các câu hỏi phân hóa vận dụng cao.
+    \end{itemize}
+\end{itemize}
+
+\subsection*{2. Phẩm chất}
+
+\begin{itemize}[leftmargin=1.2cm]
+    \item \textbf{Trung thực:} Tự giác làm bài, trung thực tuyệt đối trong quá trình kiểm tra, không quay cóp, không trao đổi bài.
+    \item \textbf{Chăm chỉ:} Tập trung cao độ trong suốt 90 phút, kiên trì giải quyết các bài toán phân hóa đến phút cuối cùng.
+    \item \textbf{Trách nhiệm:} Chấp hành nghiêm chỉnh nội quy phòng thi, có trách nhiệm với kết quả rèn luyện và học tập của bản thân.
+\end{itemize}
+
+\section*{II. HÌNH THỨC, THỜI GIAN VÀ CẤU TRÚC ĐỀ KIỂM TRA}
+
+\begin{itemize}[leftmargin=1.2cm]
+    \item \textbf{Hình thức kiểm tra:} Kiểm tra viết trên giấy, kết hợp giữa Trắc nghiệm khách quan ($70\%$) và Tự luận ($30\%$).
+    \begin{itemize}[leftmargin=0.6cm]
+        \item \textit{Phần I (Trắc nghiệm khách quan):} $28$ câu hỏi nhiều lựa chọn ($7{,}0$ điểm, mỗi câu $0{,}25$ điểm).
+        \item \textit{Phần II (Tự luận):} $3$ bài toán phân hóa ($3{,}0$ điểm): 1 câu Lượng giác ($1{,}0$ điểm), 1 câu Cấp số ($1{,}0$ điểm), 1 câu Thống kê ghép nhóm ($1{,}0$ điểm).
+    \end{itemize}
+    \item \textbf{Thời gian làm bài:} $90$ phút (Tiết 23, 24 theo PPCT | Tuần 8).
+    \item \textbf{Khung ma trận đề kiểm tra theo 4 mức độ nhận thức:}
+    \begin{center}
+    \small
+    \begin{tabularx}{\textwidth}{|X|c|c|c|c|c|}
+    \hline
+    \textbf{Chủ đề nội dung} & \textbf{Nhận biết} & \textbf{Thông hiểu} & \textbf{Vận dụng} & \textbf{Vận dụng cao} & \textbf{Tổng điểm} \\ \hline
+    \textbf{Chương I: Lượng giác} & 6 câu TN & 5 câu TN & 1 bài TL ($1{,}0$ đ) & -- & $3{,}75$ điểm \\ \hline
+    \textbf{Chương II: Dãy số, CSC, CSN} & 6 câu TN & 4 câu TN & 1 bài TL ($1{,}0$ đ) & -- & $3{,}50$ điểm \\ \hline
+    \textbf{Chương III: Thống kê ghép nhóm} & 4 câu TN & 3 câu TN & -- & 1 bài TL ($1{,}0$ đ) & $2{,}75$ điểm \\ \hline
+    \textbf{Tổng số câu / điểm} & \textbf{16 câu TN} & \textbf{12 câu TN} & \textbf{2 bài TL} & \textbf{1 bài TL} & \textbf{10,0 điểm} \\ \hline
+    \textbf{Tỉ lệ phần trăm} & \textbf{40\%} & \textbf{30\%} & \textbf{20\%} & \textbf{10\%} & \textbf{100\%} \\ \hline
+    \end{tabularx}
+    \end{center}
+\end{itemize}
+
+\section*{III. TIẾN TRÌNH TỔ CHỨC KIỂM TRA ĐÁNH GIÁ (TIẾT 23, 24 | 90 PHÚT)}
+
+\subsection*{1. Hoạt động 1: Ổn định tổ chức, phổ biến quy chế \& Đạo đức khảo thí số (10 phút)}
+
+\noindent \textbf{a) Mục tiêu:}
+Kiểm tra sĩ số, số báo danh; quán triệt nghiêm túc nội quy phòng thi; giáo dục đạo đức học thuật và ý thức bảo vệ tài khoản định danh khảo thí số.
+
+\noindent \textbf{b) Nội dung công việc:}
+\begin{pedabox}{Quy trình ổn định và quán triệt quy chế phòng thi}
+\begin{enumerate}[leftmargin=0.6cm]
+    \item \textbf{Kiểm diện \& Sắp xếp chỗ ngồi:} Gọi học sinh vào phòng theo danh sách số báo danh (mỗi bàn ngồi $1$ đến $2$ học sinh sole).
+    \item \textbf{Quán triệt Quy chế thi \& Đạo đức học thuật (Mã 11.B2.1):}
+    \begin{itemize}
+        \item Học sinh tắt nguồn và nộp toàn bộ điện thoại di động, đồng hồ thông minh, tai nghe thu phát sóng lên bàn giáo viên trước khi phát đề.
+        \item Nghiêm cấm mọi hành vi gian lận công nghệ cao hoặc nhờ AI giải hộ bài. Bất kỳ học sinh nào sử dụng thiết bị thu phát sóng sẽ bị lập biên bản đình chỉ thi ngay lập tức.
+        \item Chỉ được sử dụng các dụng cụ học tập được phép: Bút viết (một màu mực, không dùng mực đỏ), thước kẻ, compa, MTCT Casio fx-580VN X trong danh mục cho phép của Bộ GD\&ĐT.
+    \end{itemize}
+    \item \textbf{Hướng dẫn điền thông tin số hóa (Mã 2.6NC1a):}
+    \begin{itemize}
+        \item Hướng dẫn học sinh tô đúng Số báo danh (SBD) và Mã đề thi bằng bút chì 2B trên Phiếu trả lời trắc nghiệm quét quang học (OMR).
+        \item Ghi rõ ràng Họ tên, Lớp trên cả Phiếu trắc nghiệm và Giấy thi tự luận.
+    \end{itemize}
+\end{enumerate}
+\end{pedabox}
+
+\noindent \textbf{c) Sản phẩm:}
+$100\%$ học sinh ổn định đúng vị trí số báo danh, mặt bàn sạch sẽ; điền đầy đủ và chính xác thông tin cá nhân vào giấy thi và phiếu trắc nghiệm.
+
+\noindent \textbf{d) Tổ chức thực hiện:}
+Giáo viên gọi tên học sinh theo danh sách, phát giấy thi và phiếu trắc nghiệm; kiểm tra dụng cụ học tập trên bàn; nhắc nhở giữ trật tự và tinh thần trung thực.
+
+\subsection*{2. Hoạt động 2: Phát đề và tổ chức học sinh làm bài thi (70 phút)}
+
+\noindent \textbf{a) Mục tiêu:}
+Đánh giá chính xác, khách quan năng lực toán học của từng cá nhân học sinh; tạo môi trường thi cử nghiêm túc, công bằng.
+
+\noindent \textbf{b) Nội dung công việc:}
+\begin{itemize}[leftmargin=0.8cm]
+    \item \textbf{Phát đề kiểm tra:} Giáo viên kiểm tra tính nguyên vẹn của túi đề thi, phát đề cho học sinh theo thứ tự ziczac đảm bảo hai học sinh ngồi cạnh nhau có mã đề khác nhau.
+    \item \textbf{Bắt đầu tính giờ làm bài:} Giáo viên ghi rõ thời gian bắt đầu và thời gian kết thúc lên bảng.
+    \item \textbf{Giám sát phòng thi:}
+    \begin{itemize}
+        \item Giám thị bao quát toàn bộ phòng thi, không làm việc riêng, không giải thích nội dung đề thi ngoài việc đính chính lỗi in ấn (nếu có).
+        \item Quan sát, nhắc nhở kịp thời các biểu hiện mất trật tự hoặc có ý định nhìn bài bạn.
+        \item Thông báo thời gian còn lại ở các mốc: 45 phút, 15 phút và 5 phút cuối để học sinh chủ động phân bổ và rà soát bài làm.
+    \end{itemize}
+\end{itemize}
+
+\noindent \textbf{c) Sản phẩm:}
+Bài làm hoàn chỉnh của học sinh gồm:
+\begin{itemize}[leftmargin=0.6cm]
+    \item Phiếu trả lời trắc nghiệm: Các ô trả lời được tô đậm, sạch sẽ, không tẩy xóa bừa bãi.
+    \item Giấy thi tự luận: Lời giải toán được trình bày tuần tự, mạch lạc, lập luận logic, kết quả chính xác và có kết luận rõ ràng.
+\end{itemize}
+
+\noindent \textbf{d) Tổ chức thực hiện:}
+Học sinh tập trung độc lập làm bài thi. Giáo viên bao quát phòng thi nghiêm túc, công tâm.
+
+\subsection*{3. Hoạt động 3: Thu bài, kiểm đếm và nhận xét thái độ làm bài (7 phút)}
+
+\noindent \textbf{a) Mục tiêu:}
+Thu nhận toàn bộ bài làm của học sinh đầy đủ, an toàn, chính xác theo danh sách; nhận xét sơ bộ ý thức làm bài của lớp.
+
+\noindent \textbf{b) Nội dung công việc:}
+\begin{enumerate}[leftmargin=0.6cm]
+    \item \textbf{Hiệu lệnh hết giờ:} Giáo viên yêu cầu tất cả học sinh dừng bút, đặt bút xuống bàn ngay khi hết giờ.
+    \item \textbf{Quy trình thu bài:}
+    \begin{itemize}
+        \item Thu riêng phần Phiếu trả lời trắc nghiệm và Giấy thi tự luận theo thứ tự số báo danh.
+        \item Học sinh ký tên xác nhận vào danh sách dự thi (ghi rõ số tờ giấy thi tự luận đã nộp).
+    \end{itemize}
+    \item \textbf{Kiểm đếm:} Giáo viên đếm số bài thi trắc nghiệm và số tờ tự luận, đối chiếu khớp $100\%$ với sĩ số dự thi thực tế.
+    \item \textbf{Nhận xét giờ kiểm tra:} Đánh giá tinh thần, thái độ làm bài, tính nghiêm túc và trung thực của tập thể lớp trong suốt 90 phút.
+\end{enumerate}
+
+\noindent \textbf{c) Sản phẩm:}
+Túi bài thi được niêm phong gồm đầy đủ bài làm trắc nghiệm, bài tự luận, danh sách học sinh có đủ chữ ký và biên bản phòng thi.
+
+\noindent \textbf{d) Tổ chức thực hiện:}
+Giáo viên điều hành thu bài trật tự, học sinh ký xác nhận lần lượt; giáo viên kiểm đếm và cất vào túi bảo quản.
+
+\subsection*{4. Hoạt động 4: Hướng dẫn tự học \& Chuẩn bị bài học tiếp theo (3 phút)}
+
+\noindent \textbf{a) Mục tiêu:}
+Định hướng học sinh tự đối chiếu lại phương pháp giải các bài toán khó; chuẩn bị tâm thế và học liệu cho bài học mở đầu Chương IV: Hình học không gian.
+
+\noindent \textbf{b) Nội dung công việc:}
+\begin{pedabox}{Dặn dò và chuẩn bị bài học mới}
+\begin{enumerate}[leftmargin=0.6cm]
+    \item \textbf{Tự đánh giá sau bài kiểm tra:} Học sinh tự ghi lại những câu hỏi mình còn lúng túng hoặc chưa chắc chắn để đối chiếu lại kiến thức khi giáo viên trả bài.
+    \item \textbf{Chuẩn bị bài học tiếp theo (Tuần 9 - Tiết 25):}
+    \begin{itemize}
+        \item Chuẩn bị sách vở và đồ dùng học tập môn Hình học không gian: Thước kẻ dài, compa, thước đo góc, bút chì.
+        \item Đọc trước nội dung: \textbf{Bài 10. Đường thẳng và mặt phẳng trong không gian} (SGK Toán 11).
+        \item Tìm kiếm và quan sát các hình ảnh thực tế về mặt phẳng trong đời sống: Mặt bàn, mặt sàn nhà, mặt kính cửa sổ, trần nhà.
+    \end{itemize}
+\end{enumerate}
+\end{pedabox}
+
+\noindent \textbf{c) Sản phẩm:}
+Học sinh ghi chép đầy đủ nội dung dặn dò vào sổ tay học tập.
+
+\noindent \textbf{d) Tổ chức thực hiện:}
+Giáo viên dặn dò ngắn gọn, cho học sinh thu dọn đồ dùng và tan lớp.
+
+---
+
+\section*{IV. BẢN ĐẶC TẢ, ĐỀ KIỂM TRA MINH HỌA \& ĐÁP ÁN - THANG ĐIỂM (10 ĐIỂM)}
+
+\subsection*{1. Đề kiểm tra chuẩn hóa minh họa (Thời gian làm bài: 90 phút)}
+
+\noindent \textbf{PHẦN I: TRẮC NGHIỆM KHÁCH QUAN (7,0 ĐIỂM - GỒM 28 CÂU)}
+
+\begin{enumerate}[leftmargin=0.6cm]
+    \item (NB) Khẳng định nào sau đây là đúng?
+    \begin{itemize}[leftmargin=0.6cm]
+        \item[A.] $\sin(-x) = \sin x$. \quad \textbf{B.} $\cos(-x) = \cos x$. \quad C. $\tan(-x) = \tan x$. \quad D. $\cot(-x) = \cot x$.
+    \end{itemize}
+
+    \item (NB) Đổi góc có số đo $60^\circ$ sang đơn vị radian ta được:
+    \begin{itemize}[leftmargin=0.6cm]
+        \item[A.] $\dfrac{\pi}{6}$. \quad \textbf{B.} $\dfrac{\pi}{3}$. \quad C. $\dfrac{\pi}{4}$. \quad D. $\dfrac{\pi}{2}$.
+    \end{itemize}
+
+    \item (NB) Công thức lượng giác nào sau đây là SAI?
+    \begin{itemize}[leftmargin=0.6cm]
+        \item[A.] $\sin(a + b) = \sin a \cos b + \cos a \sin b$. \quad \textbf{B.} $\cos(a + b) = \cos a \cos b + \sin a \sin b$.
+        \item[C.] $\sin 2a = 2\sin a \cos a$. \quad D. $\cos 2a = \cos^2 a - \sin^2 a$.
+    \end{itemize}
+
+    \item (NB) Tập xác định của hàm số $y = \cos x$ là:
+    \begin{itemize}[leftmargin=0.6cm]
+        \item[\textbf{A.}] $D = \mathbb{R}$. \quad B. $D = [-1; 1]$. \quad C. $D = \mathbb{R} \setminus \{0\}$. \quad D. $D = \mathbb{R} \setminus \left\{\dfrac{\pi}{2} + k\pi\right\}$.
+    \end{itemize}
+
+    \item (NB) Hàm số nào sau đây là hàm số lẻ?
+    \begin{itemize}[leftmargin=0.6cm]
+        \item[\textbf{A.}] $y = \sin x$. \quad B. $y = \cos x$. \quad C. $y = \cos 2x$. \quad D. $y = \sin^2 x$.
+    \end{itemize}
+
+    \item (NB) Phương trình $\sin x = 1$ có nghiệm là:
+    \begin{itemize}[leftmargin=0.6cm]
+        \item[A.] $x = k2\pi$. \quad \textbf{B.} $x = \dfrac{\pi}{2} + k2\pi$. \quad C. $x = \pi + k2\pi$. \quad D. $x = -\dfrac{\pi}{2} + k2\pi$.
+    \end{itemize}
+
+    \item (TH) Cho $\cos \alpha = \dfrac{3}{5}$ với $0 < \alpha < \dfrac{\pi}{2}$. Giá trị của $\sin \alpha$ bằng:
+    \begin{itemize}[leftmargin=0.6cm]
+        \item[\textbf{A.}] $\dfrac{4}{5}$. \quad B. $-\dfrac{4}{5}$. \quad C. $\dfrac{16}{25}$. \quad D. $\dfrac{\sqrt{2}}{5}$.
+    \end{itemize}
+
+    \item (TH) Giá trị của biểu thức $P = \sin\dfrac{\pi}{12}\cos\dfrac{\pi}{12}$ bằng:
+    \begin{itemize}[leftmargin=0.6cm]
+        \item[A.] $\dfrac{1}{2}$. \quad \textbf{B.} $\dfrac{1}{4}$. \quad C. $\dfrac{\sqrt{3}}{4}$. \quad D. $1$.
+    \end{itemize}
+
+    \item (TH) Tập xác định của hàm số $y = \tan x$ là:
+    \begin{itemize}[leftmargin=0.6cm]
+        \item[A.] $D = \mathbb{R}$. \quad B. $D = \mathbb{R} \setminus \{k\pi\}$. \quad \textbf{C.} $D = \mathbb{R} \setminus \left\{\dfrac{\pi}{2} + k\pi\right\}$. \quad D. $D = \mathbb{R} \setminus \left\{\dfrac{\pi}{2} + k2\pi\right\}$.
+    \end{itemize}
+
+    \item (TH) Nghiệm của phương trình $\cos x = -\dfrac{1}{2}$ là:
+    \begin{itemize}[leftmargin=0.6cm]
+        \item[\textbf{A.}] $x = \pm \dfrac{2\pi}{3} + k2\pi$. \quad B. $x = \pm \dfrac{\pi}{3} + k2\pi$. \quad C. $x = \pm \dfrac{\pi}{6} + k2\pi$. \quad D. $x = \pm \dfrac{5\pi}{6} + k2\pi$.
+    \end{itemize}
+
+    \item (TH) Nghiệm của phương trình $\tan x = \sqrt{3}$ là:
+    \begin{itemize}[leftmargin=0.6cm]
+        \item[\textbf{A.}] $x = \dfrac{\pi}{3} + k\pi$. \quad B. $x = \dfrac{\pi}{6} + k\pi$. \quad C. $x = \dfrac{\pi}{3} + k2\pi$. \quad D. $x = -\dfrac{\pi}{3} + k\pi$.
+    \end{itemize}
+
+    \item (NB) Dãy số nào sau đây là dãy số tăng?
+    \begin{itemize}[leftmargin=0.6cm]
+        \item[A.] $u_n = \dfrac{1}{n}$. \quad \textbf{B.} $u_n = 2n + 1$. \quad C. $u_n = (-1)^n$. \quad D. $u_n = 5 - n$.
+    \end{itemize}
+
+    \item (NB) Cho cấp số cộng $(u_n)$ có số hạng đầu $u_1$ và công sai $d$. Công thức số hạng tổng quát $u_n$ ($n \ge 2$) là:
+    \begin{itemize}[leftmargin=0.6cm]
+        \item[A.] $u_n = u_1 + nd$. \quad \textbf{B.} $u_n = u_1 + (n-1)d$. \quad C. $u_n = u_1 \cdot d^{n-1}$. \quad D. $u_n = u_1 - (n-1)d$.
+    \end{itemize}
+
+    \item (NB) Cho cấp số nhân $(u_n)$ có số hạng đầu $u_1$ và công bội $q$. Khẳng định nào sau đây đúng?
+    \begin{itemize}[leftmargin=0.6cm]
+        \item[A.] $u_{n} = u_{n-1} + q$. \quad \textbf{B.} $u_n = u_{n-1} \cdot q$. \quad C. $u_n = u_1 \cdot q^n$. \quad D. $u_n = u_1 + (n-1)q$.
+    \end{itemize}
+
+    \item (NB) Cho cấp số cộng có $u_1 = 3$ và công sai $d = 2$. Số hạng $u_2$ bằng:
+    \begin{itemize}[leftmargin=0.6cm]
+        \item[\textbf{A.}] $5$. \quad B. $6$. \quad C. $1$. \quad D. $9$.
+    \end{itemize}
+
+    \item (NB) Cho cấp số nhân có $u_1 = 2$ và công bội $q = 3$. Số hạng $u_2$ bằng:
+    \begin{itemize}[leftmargin=0.6cm]
+        \item[A.] $5$. \quad \textbf{B.} $6$. \quad C. $8$. \quad D. $9$.
+    \end{itemize}
+
+    \item (NB) Ba số nào sau đây theo thứ tự lập thành một cấp số cộng?
+    \begin{itemize}[leftmargin=0.6cm]
+        \item[A.] $1; 3; 9$. \quad \textbf{B.} $2; 5; 8$. \quad C. $1; 2; 4$. \quad D. $3; 6; 12$.
+    \end{itemize}
+
+    \item (TH) Cho cấp số cộng $(u_n)$ có $u_1 = -3$ và $d = 4$. Số hạng $u_7$ bằng:
+    \begin{itemize}[leftmargin=0.6cm]
+        \item[\textbf{A.}] $21$. \quad B. $25$. \quad C. $-27$. \quad D. $18$.
+    \end{itemize}
+
+    \item (TH) Cho cấp số cộng $(u_n)$ có $u_1 = 2$ và $u_2 = 8$. Tổng $10$ số hạng đầu tiên $S_{10}$ bằng:
+    \begin{itemize}[leftmargin=0.6cm]
+        \item[\textbf{A.}] $290$. \quad B. $310$. \quad C. $580$. \quad D. $280$.
+    \end{itemize}
+
+    \item (TH) Cho cấp số nhân $(u_n)$ có $u_1 = 3$ và $u_2 = -6$. Công bội $q$ của cấp số nhân bằng:
+    \begin{itemize}[leftmargin=0.6cm]
+        \item[A.] $2$. \quad \textbf{B.} $-2$. \quad C. $-3$. \quad D. $-\dfrac{1}{2}$.
+    \end{itemize}
+
+    \item (TH) Cho cấp số nhân $(u_n)$ có $u_1 = 2, q = 3$. Tổng $5$ số hạng đầu $S_5$ bằng:
+    \begin{itemize}[leftmargin=0.6cm]
+        \item[\textbf{A.}] $242$. \quad B. $486$. \quad C. $243$. \quad D. $121$.
+    \end{itemize}
+
+    \item (NB) Giá trị đại diện của nhóm số liệu $[20; 30)$ là:
+    \begin{itemize}[leftmargin=0.6cm]
+        \item[A.] $20$. \quad B. $30$. \quad \textbf{C.} $25$. \quad D. $10$.
+    \end{itemize}
+
+    \item (NB) Độ dài của nhóm số liệu $[15; 25)$ bằng:
+    \begin{itemize}[leftmargin=0.6cm]
+        \item[\textbf{A.}] $10$. \quad B. $20$. \quad C. $40$. \quad D. $15$.
+    \end{itemize}
+
+    \item (NB) Trong mẫu số liệu ghép nhóm, nhóm chứa mốt là nhóm có:
+    \begin{itemize}[leftmargin=0.6cm]
+        \item[A.] Giá trị đại diện lớn nhất. \quad \textbf{B.} Tần số lớn nhất.
+        \item[C.] Độ dài nhóm lớn nhất. \quad D. Tần số tích lũy lớn nhất.
+    \end{itemize}
+
+    \item (NB) Trong mẫu số liệu ghép nhóm có cỡ mẫu $n = 60$. Nhóm chứa trung vị là nhóm đầu tiên có tần số tích lũy thỏa mãn:
+    \begin{itemize}[leftmargin=0.6cm]
+        \item[A.] $cf_i \ge 15$. \quad \textbf{B.} $cf_i \ge 30$. \quad C. $cf_i \ge 45$. \quad D. $cf_i \ge 60$.
+    \end{itemize}
+
+    \item (TH) Cho bảng phân bố tần số ghép nhóm có các nhóm $[10; 20), [20; 30), [30; 40)$ với tần số tương ứng là $4, 10, 6$. Cỡ mẫu $n$ bằng:
+    \begin{itemize}[leftmargin=0.6cm]
+        \item[\textbf{A.}] $20$. \quad B. $30$. \quad C. $40$. \quad D. $10$.
+    \end{itemize}
+
+    \item (TH) Cho bảng số liệu ghép nhóm: $[0; 4)$ có tần số $2$; $[4; 8)$ có tần số $6$; $[8; 12)$ có tần số $2$. Số trung bình cộng $\bar{x}$ của mẫu số liệu bằng:
+    \begin{itemize}[leftmargin=0.6cm]
+        \item[\textbf{A.}] $6{,}0$. \quad B. $5{,}6$. \quad C. $6{,}4$. \quad D. $7{,}0$.
+    \end{itemize}
+
+    \item (TH) Trong mẫu số liệu ghép nhóm có $n = 40$. Nhóm đầu tiên có tần số tích lũy $cf_i \ge 30$ là nhóm chứa:
+    \begin{itemize}[leftmargin=0.6cm]
+        \item[A.] Trung vị $M_e$. \quad B. Tứ phân vị $Q_1$. \quad \textbf{C.} Tứ phân vị $Q_3$. \quad D. Mốt $M_o$.
+    \end{itemize}
+\end{enumerate}
+
+\vspace{5pt}
+
+\noindent \textbf{PHẦN II: TỰ LUẬN (3,0 ĐIỂM - GỒM 3 CÂU)}
+
+\begin{enumerate}[leftmargin=0.6cm]
+    \item \textbf{Bài 1 (1,0 điểm - Vận dụng Lượng giác):}
+    Giải phương trình lượng giác sau:
+    $$\cos 2x - 3\cos x + 2 = 0$$
+
+    \item \textbf{Bài 2 (1,0 điểm - Vận dụng Cấp số cộng / Cấp số nhân):}
+    Một xưởng mộc nhận hợp đồng đóng bàn ghế. Trong tuần đầu tiên xưởng đóng được $120$ bộ. Kể từ tuần thứ hai trở đi, nhờ cải tiến kỹ thuật nên mỗi tuần xưởng đóng được nhiều hơn tuần liền trước đó $15$ bộ bàn ghế.
+    \begin{itemize}[leftmargin=0.6cm]
+        \item[a)] Hỏi ở tuần thứ $10$, xưởng đóng được bao nhiêu bộ bàn ghế?
+        \item[b)] Sau $12$ tuần hoàn thành dự án, xưởng đã đóng được tổng cộng bao nhiêu bộ bàn ghế?
+    \end{itemize}
+
+    \item \textbf{Bài 3 (1,0 điểm - Vận dụng cao Thống kê ghép nhóm):}
+    Khảo sát thời gian xem ti vi mỗi ngày (đơn vị: phút) của $50$ người cao tuổi tại một khu dân cư thu được bảng số liệu ghép nhóm sau:
+    \begin{center}
+    \small
+    \begin{tabular}{|c|c|c|c|c|c|}
+    \hline
+    \textbf{Thời gian (phút)} & $[0; 30)$ & $[30; 60)$ & $[60; 90)$ & $[90; 120)$ & $[120; 150]$ \\ \hline
+    \textbf{Số người ($m_i$)} & $5$ & $12$ & $18$ & $10$ & $5$ \\ \hline
+    \end{tabular}
+    \end{center}
+    \begin{itemize}[leftmargin=0.6cm]
+        \item[a)] Tính số trung bình cộng $\bar{x}$ và trung vị $M_e$ của mẫu số liệu ghép nhóm trên.
+        \item[b)] Tìm khoảng tứ phân vị $\Delta_Q = Q_3 - Q_1$ và nêu nhận xét về mức độ phân tán thời gian xem ti vi của $50\%$ số người ở giữa mẫu số liệu.
+    \end{itemize}
+\end{enumerate}
+
+\subsection*{2. Đáp án và Hướng dẫn chấm chi tiết}
+
+\noindent \textbf{A. ĐÁP ÁN PHẦN TRẮC NGHIỆM (7,0 ĐIỂM - Mỗi câu đúng 0,25 điểm)}
+\begin{center}
+\small
+\begin{tabular}{|c|c|c|c|c|c|c|c|c|c|}
+\hline
+\textbf{Câu} & \textbf{Đ/án} & \textbf{Câu} & \textbf{Đ/án} & \textbf{Câu} & \textbf{Đ/án} & \textbf{Câu} & \textbf{Đ/án} & \textbf{Câu} & \textbf{Đ/án} \\ \hline
+1 & \textbf{B} & 7 & \textbf{A} & 13 & \textbf{B} & 19 & \textbf{A} & 25 & \textbf{B} \\ \hline
+2 & \textbf{B} & 8 & \textbf{B} & 14 & \textbf{B} & 20 & \textbf{B} & 26 & \textbf{A} \\ \hline
+3 & \textbf{B} & 9 & \textbf{C} & 15 & \textbf{A} & 21 & \textbf{A} & 27 & \textbf{A} \\ \hline
+4 & \textbf{A} & 10 & \textbf{A} & 16 & \textbf{B} & 22 & \textbf{C} & 28 & \textbf{C} \\ \hline
+5 & \textbf{A} & 11 & \textbf{A} & 17 & \textbf{B} & 23 & \textbf{A} & -- & -- \\ \hline
+6 & \textbf{B} & 12 & \textbf{B} & 18 & \textbf{A} & 24 & \textbf{B} & -- & -- \\ \hline
+\end{tabular}
+\end{center}
+
+\vspace{5pt}
+
+\noindent \textbf{B. ĐÁP ÁN VÀ THANG ĐIỂM TỰ LUẬN (3,0 ĐIỂM)}
+
+\begin{center}
+\small
+\begin{tabularx}{\textwidth}{|p{1.2cm}|X|c|}
+\hline
+\textbf{Bài} & \textbf{Nội dung bước giải chi tiết} & \textbf{Điểm} \\ \hline
+\textbf{Bài 1} & Ta có công thức nhân đôi: $\cos 2x = 2\cos^2 x - 1$. \newline
+Phương trình đã cho trở thành:
+$$2\cos^2 x - 1 - 3\cos x + 2 = 0 \iff 2\cos^2 x - 3\cos x + 1 = 0$$ & $0{,}25$ \\ \cline{2-3}
+(1,0 đ) & Đặt $t = \cos x$ (điều kiện $-1 \le t \le 1$). \newline
+Phương trình trở thành $2t^2 - 3t + 1 = 0 \iff \left[\begin{array}{l} t = 1 \text{ (thỏa mãn)} \\ t = \dfrac{1}{2} \text{ (thỏa mãn)} \end{array}\right.$ & $0{,}25$ \\ \cline{2-3}
+& $\bullet$ Với $\cos x = 1 \iff x = k2\pi$ ($k \in \mathbb{Z}$). & $0{,}25$ \\ \cline{2-3}
+& $\bullet$ Với $\cos x = \dfrac{1}{2} \iff \cos x = \cos \dfrac{\pi}{3} \iff x = \pm \dfrac{\pi}{3} + k2\pi$ ($k \in \mathbb{Z}$). \newline
+Vậy tập nghiệm của phương trình là $S = \left\{k2\pi; \, \pm \dfrac{\pi}{3} + k2\pi \ \middle|\ k \in \mathbb{Z}\right\}$. & $0{,}25$ \\ \hline
+
+\textbf{Bài 2} & a) Số bộ bàn ghế xưởng đóng qua các tuần lập thành cấp số cộng $(u_n)$ có số hạng đầu $u_1 = 120$ và công sai $d = 15$. & $0{,}25$ \\ \cline{2-3}
+(1,0 đ) & Ở tuần thứ $10$, số bộ bàn ghế xưởng đóng được là:
+$$u_{10} = u_1 + (10 - 1)d = 120 + 9 \cdot 15 = 120 + 135 = 255 \text{ (bộ)}$$ & $0{,}25$ \\ \cline{2-3}
+& b) Tổng số bộ bàn ghế đóng được sau $12$ tuần là tổng của $12$ số hạng đầu $S_{12}$:
+$$S_{12} = \dfrac{12 \cdot [2u_1 + (12 - 1)d]}{2} = 6 \cdot [2 \cdot 120 + 11 \cdot 15]$$ & $0{,}25$ \\ \cline{2-3}
+& Ta có: $S_{12} = 6 \cdot [240 + 165] = 6 \cdot 405 = 2430 \text{ (bộ bàn ghế)}$. \newline
+Vậy sau $12$ tuần, xưởng đóng được tổng cộng $2430$ bộ bàn ghế. & $0{,}25$ \\ \hline
+
+\textbf{Bài 3} & a) Cỡ mẫu $n = 5 + 12 + 18 + 10 + 5 = 50$. \newline
+Giá trị đại diện các nhóm lần lượt là: $c_1 = 15, c_2 = 45, c_3 = 75, c_4 = 105, c_5 = 135$. \newline
+Số trung bình:
+$$\bar{x} = \dfrac{5 \cdot 15 + 12 \cdot 45 + 18 \cdot 75 + 10 \cdot 105 + 5 \cdot 135}{50} = \dfrac{75 + 540 + 1350 + 1050 + 675}{50} = \dfrac{3690}{50} = 73{,}8 \text{ (phút)}$$ & $0{,}25$ \\ \cline{2-3}
+(1,0 đ) & Tần số tích lũy: $cf_1 = 5, cf_2 = 17, cf_3 = 35, cf_4 = 45, cf_5 = 50$. \newline
+Mốc $\dfrac{n}{2} = 25$. Vì $cf_2 = 17 < 25 \le cf_3 = 35$ nên nhóm chứa $M_e$ là $[60; 90)$. \newline
+$$M_e = 60 + \dfrac{25 - 17}{18} \cdot 30 = 60 + \dfrac{8 \cdot 30}{18} = 60 + \dfrac{40}{3} \approx 60 + 13{,}33 = 73{,}33 \text{ (phút)}$$ & $0{,}25$ \\ \cline{2-3}
+& b) $\bullet$ Mốc $\dfrac{n}{4} = 12{,}5$. Vì $cf_1 = 5 < 12{,}5 \le cf_2 = 17 \implies Q_1 \in [30; 60)$.
+$$Q_1 = 30 + \dfrac{12{,}5 - 5}{12} \cdot 30 = 30 + \dfrac{7{,}5 \cdot 30}{12} = 30 + 18{,}75 = 48{,}75 \text{ (phút)}$$
+$\bullet$ Mốc $\dfrac{3n}{4} = 37{,}5$. Vì $cf_3 = 35 < 37{,}5 \le cf_4 = 45 \implies Q_3 \in [90; 120)$.
+$$Q_3 = 90 + \dfrac{37{,}5 - 35}{10} \cdot 30 = 90 + \dfrac{2{,}5 \cdot 30}{10} = 90 + 7{,}5 = 97{,}5 \text{ (phút)}$$ & $0{,}25$ \\ \cline{2-3}
+& Khoảng tứ phân vị: $\Delta_Q = Q_3 - Q_1 = 97{,}5 - 48{,}75 = 48{,}75 \text{ (phút)}$. \newline
+\textit{Nhận xét:} $50\%$ số người cao tuổi có thời gian xem ti vi ở mức độ trung bình nằm trong khoảng từ $48{,}75$ phút đến $97{,}5$ phút mỗi ngày (độ chênh lệch giữa hai mốc phân vị là $48{,}75$ phút). & $0{,}25$ \\ \hline
+\end{tabularx}
+\end{center}
+
+\section*{V. BẢNG RUBRIC ĐÁNH GIÁ NĂNG LỰC VÀ PHẨM CHẤT HỌC SINH TRONG KỲ KIỂM TRA}
+
+\begin{center}
+\small
+\begin{tabularx}{\textwidth}{|p{2.8cm}|X|X|X|X|}
+\hline
+\textbf{Tiêu chí} & \textbf{Chưa đạt (Mức 1)} & \textbf{Đạt (Mức 2)} & \textbf{Khá (Mức 3)} & \textbf{Tốt (Mức 4)} \\ \hline
+\textbf{Năng lực Toán học} & Điểm bài kiểm tra dưới $5{,}0$; sai nhiều câu nhận biết cơ bản. & Điểm kiểm tra từ $5{,}0$ đến $6{,}9$; giải đúng trắc nghiệm nhận biết, thông hiểu. & Điểm kiểm tra từ $7{,}0$ đến $8{,}9$; làm tốt trắc nghiệm và câu hỏi tự luận vận dụng. & Điểm kiểm tra từ $9{,}0$ đến $10{,}0$; xuất sắc giải quyết bài toán vận dụng cao, trình bày bài mẫu mực. \\ \hline
+\textbf{Kỹ năng trình bày tự luận} & Trình bày cẩu thả, tẩy xóa, thiếu điều kiện nghiệm hoặc thiếu kết luận. & Trình bày được các bước chính nhưng lập luận còn sơ sài, sót bước nhỏ. & Lời giải rõ ràng, đúng ký hiệu toán học, tính toán chuẩn xác. & Trình bày chặt chẽ, mạch lạc, câu từ sư phạm chuẩn mực, logic tuyệt đối. \\ \hline
+\textbf{Năng lực số \& Định danh} & Tô sai số báo danh hoặc mã đề thi, để bài thi bị lỗi khi quét máy. & Tô đúng SBD và mã đề nhưng còn mờ nhạt, phải can thiệp sửa tay. & Điền và tô chuẩn xác $100\%$ SBD, mã đề thi; giữ phiếu thi phẳng sạch. & Ý thức định danh xuất sắc, hoàn thành nhanh chóng, hỗ trợ bạn kiểm tra đúng thông tin. \\ \hline
+\textbf{Phẩm chất trung thực \& Kỷ luật} & Vi phạm quy chế thi, có ý định trao đổi bài hoặc sử dụng tài liệu. & Chấp hành quy chế thi sau khi giáo viên giám thị nhắc nhở. & Nghiêm túc làm bài độc lập từ đầu đến cuối giờ thi. & Gương mẫu, tuyệt đối trung thực, tập trung tư duy cao độ, tác phong văn minh. \\ \hline
+\end{tabularx}
+\end{center}
+
+\end{document}
