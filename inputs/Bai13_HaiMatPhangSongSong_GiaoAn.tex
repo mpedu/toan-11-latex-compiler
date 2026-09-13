@@ -1,0 +1,981 @@
+\documentclass[12pt, a4paper]{article}
+% --- 1. Cấu hình Tiếng Việt và Font chữ chuẩn ---
+\usepackage[utf8]{inputenc}
+\usepackage[T5]{fontenc}
+\usepackage[vietnamese]{babel}
+\usepackage{mathptmx} % Font Times New Roman đồng bộ cả chữ và công thức toán, không gây xung đột gói
+
+\makeatletter
+\renewcommand{\normalsize}{\@setfontsize\normalsize{13pt}{16pt}}
+\makeatother
+\normalsize
+
+% --- 2. Gói Toán học & Ký hiệu bổ trợ ---
+\usepackage{amsmath, amssymb, amsfonts, mathrsfs, amsthm}
+\usepackage{graphicx}
+\usepackage{fontawesome}
+\usepackage{booktabs, tabularx, array, multirow}
+\usepackage{enumitem}
+
+% --- 3. Đồ họa TikZ, Bảng biến thiên & Hình không gian ---
+\usepackage{tikz}
+\usetikzlibrary{calc, intersections, angles, quotes, patterns, arrows.meta, 3d}
+\usepackage{pgfplots}
+\pgfplotsset{compat=1.18}
+\usepackage{tkz-euclide}
+\usepackage{tkz-tab}
+
+\renewcommand{\vec}[1]{\overrightarrow{#1}}
+
+% --- 4. Hộp sư phạm (Tcolorbox) ---
+\usepackage[many]{tcolorbox}
+\tcbuselibrary{skins, breakable}
+
+% --- 5. Căn lề chuẩn văn bản giáo án ---
+\usepackage{geometry}
+\geometry{
+    a4paper,
+    left=25mm,
+    right=15mm,
+    top=20mm,
+    bottom=20mm
+}
+
+% --- 6. Header / Footer chuẩn hóa ---
+\usepackage{fancyhdr}
+\usepackage{lastpage}
+\pagestyle{fancy}
+\fancyhf{}
+
+\fancyhead[L]{\small \textit{Kế hoạch bài dạy Toán 11}}
+\fancyhead[R]{\textbf{Trang \thepage/\pageref{LastPage}}}
+\fancyfoot[L]{\small \textit{Tổ Toán - Tin}}
+\fancyfoot[R]{\small \textit{Trường THCS\&THPT Hồng Vân}}
+\renewcommand{\headrulewidth}{0.4pt}
+\renewcommand{\footrulewidth}{0.4pt}
+
+% --- 7. Giãn dòng & Giãn đoạn theo chuẩn Nghị định 30/2020/NĐ-CP ---
+\usepackage{setspace}
+\setstretch{1.15}
+\setlength{\parindent}{1.0cm}
+\setlength{\parskip}{5pt}
+
+% Định nghĩa hộp sư phạm chuyên dụng
+\newtcolorbox{pedabox}[2][]{
+    enhanced,
+    breakable,
+    colback=blue!3!white,
+    colframe=blue!65!black,
+    fonttitle=\bfseries\small,
+    title={#2},
+    arc=2mm,
+    boxrule=0.6pt,
+    left=3mm, right=3mm, top=2mm, bottom=2mm,
+    #1
+}
+
+\newtcolorbox{aibox}[2][]{
+    enhanced,
+    breakable,
+    colback=teal!4!white,
+    colframe=teal!70!black,
+    fonttitle=\bfseries\small,
+    title={#2},
+    arc=2mm,
+    boxrule=0.6pt,
+    left=3mm, right=3mm, top=2mm, bottom=2mm,
+    #1
+}
+
+\newtcolorbox{scaffoldbox}[2][]{
+    enhanced,
+    breakable,
+    colback=orange!4!white,
+    colframe=orange!80!black,
+    fonttitle=\bfseries\small,
+    title={#2},
+    arc=2mm,
+    boxrule=0.6pt,
+    left=3mm, right=3mm, top=2mm, bottom=2mm,
+    #1
+}
+
+\newtcolorbox{stembox}[2][]{
+    enhanced,
+    breakable,
+    colback=purple!4!white,
+    colframe=purple!75!black,
+    fonttitle=\bfseries\small,
+    title={#2},
+    arc=2mm,
+    boxrule=0.6pt,
+    left=3mm, right=3mm, top=2mm, bottom=2mm,
+    #1
+}
+
+\begin{document}
+
+\begin{center}
+    {\fontsize{14pt}{17pt}\selectfont \textbf{KẾ HOẠCH BÀI DẠY MÔN TOÁN LỚP 11}}\\[6pt]
+    {\fontsize{16pt}{19pt}\selectfont \textbf{BÀI 13. HAI MẶT PHẲNG SONG SONG}}\\[4pt]
+    {\fontsize{12pt}{15pt}\selectfont \textbf{Môn học: Toán 11} \ \textbar \ \textbf{Thời lượng: 4 tiết (Tiết 33 đến 36 theo PPCT | Tuần 11, 12)}}
+\end{center}
+
+\vspace{5pt}
+
+\section*{I. MỤC TIÊU}
+
+\subsection*{1. Kiến thức, Năng lực}
+
+\begin{itemize}[leftmargin=1.2cm]
+    \item \textbf{Yêu cầu cần đạt (Nguyên văn CT GDPT 2018):}
+    \begin{itemize}[leftmargin=0.6cm]
+        \item Nhận biết được hai mặt phẳng song song trong không gian.
+        \item Giải thích được điều kiện để hai mặt phẳng song song.
+        \item Giải thích được các tính chất cơ bản về hai mặt phẳng song song.
+        \item Giải thích được định lí Thalès trong không gian.
+        \item Giải thích được tính chất cơ bản của hình lăng trụ và hình hộp.
+        \item Vận dụng được kiến thức về quan hệ song song để giải quyết các bài toán tìm giao tuyến, xác định thiết diện, tính tỉ số đoạn thẳng và mô tả một số hình ảnh trong thực tiễn.
+    \end{itemize}
+
+    \item \textbf{Năng lực Toán học đặc thù:}
+    \begin{itemize}[leftmargin=0.6cm]
+        \item \textit{Năng lực tư duy và lập luận toán học:} Khả năng so sánh, phân biệt sự khác nhau giữa hai mặt phẳng song song (không có điểm chung) và hai mặt phẳng cắt nhau (giao nhau theo một đường thẳng); lập luận logic chuyển hóa việc chứng minh hai mặt phẳng song song thành chứng minh hai đường thẳng cắt nhau trong mặt phẳng này cùng song song với mặt phẳng kia; vận dụng định lí Thalès trong không gian và tính chất hình hộp để phân tích các tỉ số đoạn thẳng.
+        \item \textit{Năng lực mô hình hóa toán học:} Mô tả và chuyển hóa các cấu trúc vật thể trong đời sống thực tế (các tầng nhà song song, các ngăn kệ sách nhiều tầng, lát cắt song song CT-scanner trong y học) thành mô hình toán học hai mặt phẳng song song.
+        \item \textit{Năng lực giải quyết vấn đề toán học:} Thiết lập và thực hiện thành thạo thuật toán chứng minh $(\alpha) \parallel (\beta)$; vận dụng tính chất hai mặt phẳng song song bị cắt bởi mặt phẳng thứ ba để xác định thiết diện; vận dụng định lí Thalès không gian để tính độ dài các đoạn thẳng bị chắn.
+        \item \textit{Năng lực giao tiếp toán học:} Trình bày rõ ràng, mạch lạc các bước chứng minh hình học không gian; sử dụng chuẩn xác các ký hiệu toán học ($\parallel, \subset, \not\subset, \cap, \emptyset$); vẽ hình biểu diễn của hình lăng trụ, hình hộp đúng quy ước nét thấy/nét đứt.
+        \item \textit{Năng lực sử dụng công cụ, phương tiện học toán:} Khai thác phần mềm GeoGebra 3D để quan sát hai mặt phẳng song song không có điểm chung, xoay các góc nhìn trực quan để kiểm chứng; dựng hình lăng trụ và hình hộp trên không gian 3 chiều.
+    \end{itemize}
+
+    \item \textbf{Năng lực số (Theo Thông tư 02/2025/TT-BGDĐT):}
+    \begin{itemize}[leftmargin=0.6cm]
+        \item \textit{Mã 5.2NC1b (Sử dụng phần mềm chuyên dụng trong biểu diễn và quan sát không gian 3D):} Học sinh sử dụng phần mềm GeoGebra 3D để quan sát hai mặt phẳng song song không có điểm chung, thao tác xoay hệ trục tọa độ và đổi góc nhìn trong không gian ảo để kiểm chứng tính chất hình học.
+        \item \textit{Mã 3.1NC1a (Sáng tạo và chia sẻ mô hình số 3D):} Học sinh sử dụng phần mềm hình học dựng mô hình không gian hình lăng trụ tam giác và hình hộp chữ nhật, trích xuất hình ảnh hoặc chia sẻ tệp thiết kế 3D trong nhóm học tập.
+    \end{itemize}
+
+    \item \textbf{Năng lực AI (Theo Quyết định 2422/QĐ-BGDĐT):}
+    \begin{itemize}[leftmargin=0.6cm]
+        \item \textit{Mã 11.C2.1 (Nhận thức về ứng dụng AI trong xử lý dữ liệu không gian):} Học sinh tìm hiểu và trình bày cách AI trong y tế xử lý các lớp cắt song song từ phim chụp cắt lớp vi tính CT-scanner để tái tạo mô hình 3D giải phẫu nội tạng và phát hiện tổn thương.
+        \item \textit{Mã 11.D2.1 (Ứng dụng AI mô phỏng kết cấu kỹ thuật):} Học sinh trình bày cách các phần mềm AI kiến trúc mô phỏng kết cấu khung dầm các tầng nhà song song trong xây dựng để tối ưu hóa khả năng chịu lực và chống động đất.
+    \end{itemize}
+
+    \item \textbf{Năng lực chung:}
+    \begin{itemize}[leftmargin=0.6cm]
+        \item \textit{Tự chủ và tự học:} Tự giác tìm tòi, hệ thống hóa các định lý và tính chất của hai mặt phẳng song song, hình lăng trụ và hình hộp; chủ động giải quyết các bài tập phân tầng.
+        \item \textit{Giao tiếp và hợp tác:} Tích cực phối hợp trong nhóm để giải quyết các bài toán thiết diện, thảo luận dự án STEM thiết kế kệ sách nhiều tầng.
+    \end{itemize}
+\end{itemize}
+
+\subsection*{2. Phẩm chất}
+
+\begin{itemize}[leftmargin=1.2cm]
+    \item \textbf{Chăm chỉ:} Kiên trì vẽ hình không gian chính xác, cẩn thận kiểm tra từng điều kiện cắt nhau của hai đường thẳng khi chứng minh song song.
+    \item \textbf{Trung thực:} Báo cáo kết quả thảo luận nhóm và sản phẩm học tập chính xác, khách quan.
+    \item \textbf{Trách nhiệm:} Nghiêm túc hoàn thành nhiệm vụ được phân công trong nhóm, đảm bảo an toàn khi chế tạo sản phẩm STEM.
+\end{itemize}
+
+\section*{II. THIẾT BỊ DẠY HỌC VÀ HỌC LIỆU}
+
+\begin{itemize}[leftmargin=1.2cm]
+    \item \textbf{Giáo viên:}
+    \begin{itemize}[leftmargin=0.6cm]
+        \item Kế hoạch bài dạy, bài giảng điện tử tương tác Canva/PowerPoint.
+        \item Mô hình trực quan bằng mica/thép: Khung hình chóp tứ giác, khung hình hộp chữ nhật, mô hình hai mặt phẳng song song.
+        \item Các tệp GeoGebra 3D mô phỏng trực quan: Hai mặt phẳng song song, định lí Thalès không gian, hình lăng trụ và hình hộp.
+        \item Phiếu học tập phân tầng bậc thang (Worksheet) và Bảng Rubric đánh giá kết quả học tập của học sinh.
+    \end{itemize}
+    \item \textbf{Học sinh:}
+    \begin{itemize}[leftmargin=0.6cm]
+        \item SGK Toán 11, vở ghi chép, dụng cụ vẽ hình (thước kẻ, compa, bút chì màu).
+        \item Điện thoại thông minh/máy tính bảng hoặc phòng máy tính truy cập Internet để thực hành GeoGebra 3D.
+        \item Vật liệu thực hành STEM: Que tre/que kem gỗ, keo dán/keo nến, súng bắn keo, bìa các-tông cứng.
+    \end{itemize}
+\end{itemize}
+
+\section*{III. TIẾN TRÌNH DẠY HỌC (BAO QUÁT 4 TIẾT)}
+
+\subsection*{TIẾT 1 (TIẾT 33 THEO PPCT): HAI MẶT PHẲNG SONG SONG \& ĐIỀU KIỆN NHẬN BIẾT}
+
+\subsubsection*{1. Hoạt động 1: Mở đầu (Khởi động) (5 phút)}
+
+\noindent \textbf{a) Mục tiêu:}
+Kích hoạt hứng thú và huy động hiểu biết thực tế của học sinh về hình ảnh hai mặt phẳng không bao giờ gặp nhau trong đời sống hàng ngày.
+
+\noindent \textbf{b) Nội dung: Tình huống trực quan ``Trần nhà và Mặt sàn''}
+\begin{pedabox}{Khởi động: Vị trí tương đối của hai mặt phẳng trong thực tế}
+Quan sát phòng học của chúng ta:
+\begin{enumerate}[leftmargin=0.6cm]
+    \item Mặt trần bê tông và mặt sàn gạch men có điểm chung nào không?
+    \item Nếu kéo dài vô tận cả mặt trần và mặt sàn về mọi phía, chúng có thể cắt nhau được không? Vì sao?
+    \item Trong hình học không gian, ta nói hai mặt phẳng trần và sàn có vị trí tương đối như thế nào?
+\end{enumerate}
+\end{pedabox}
+
+\noindent \textbf{c) Sản phẩm: Câu trả lời của học sinh}
+\begin{enumerate}[leftmargin=0.6cm]
+    \item Mặt trần và mặt sàn không có bất kỳ điểm chung nào.
+    \item Dù kéo dài vô tận thì trần và sàn cũng không cắt nhau vì khoảng cách giữa chúng tại mọi vị trí cột trụ đều bằng nhau.
+    \item Trong hình học không gian, trần nhà và sàn nhà là hình ảnh trực quan của hai mặt phẳng \textbf{song song} với nhau.
+\end{enumerate}
+
+\noindent \textbf{d) Tổ chức thực hiện:}
+Giáo viên nêu câu hỏi; học sinh quan sát phòng học và trả lời nhanh; giáo viên nhận xét và dẫn dắt: Trong không gian, hai mặt phẳng có những vị trí tương đối nào và làm thế nào để chứng minh hai mặt phẳng song song với nhau một cách chặt chẽ mà không cần kiểm tra vô số điểm?
+
+\subsubsection*{2. Hoạt động 2: Hình thành kiến thức mới (20 phút)}
+
+\noindent \textbf{a) Mục tiêu:}
+- Nhận biết ba vị trí tương đối của hai mặt phẳng trong không gian.
+- Nắm vững định nghĩa hai mặt phẳng song song.
+- Nắm vững Định lý 1 (Điều kiện để hai mặt phẳng song song) và quy tắc 4 dòng vàng chứng minh.
+
+\noindent \textbf{b) Nội dung: Vị trí tương đối \& Định lý 1}
+\begin{pedabox}{Nội dung 1: Định nghĩa hai mặt phẳng song song}
+Cho hai mặt phẳng $(\alpha)$ và $(\beta)$ trong không gian:
+\begin{center}
+\small
+\begin{tabularx}{\textwidth}{|p{3.8cm}|X|c|}
+\hline
+\textbf{Vị trí tương đối} & \textbf{Đặc điểm số điểm chung} & \textbf{Ký hiệu toán học} \\ \hline
+$(\alpha)$ \textbf{cắt} $(\beta)$ & Cắt nhau theo một đường thẳng (giao tuyến) & $(\alpha) \cap (\beta) = d$ \\ \hline
+$(\alpha)$ \textbf{trùng} $(\beta)$ & Có vô số điểm chung (mọi điểm đều chung) & $(\alpha) \equiv (\beta)$ \\ \hline
+$(\alpha)$ \textbf{song song với} $(\beta)$ & \textbf{Không có điểm chung nào} & $(\alpha) \parallel (\beta)$ \\ \hline
+\end{tabularx}
+\end{center}
+\textbf{Định nghĩa:} Hai mặt phẳng được gọi là \textbf{song song} với nhau nếu chúng không có điểm chung nào.
+$$(\alpha) \parallel (\beta) \iff (\alpha) \cap (\beta) = \emptyset$$
+\end{pedabox}
+
+\begin{pedabox}{Nội dung 2: Định lý 1 (Điều kiện để hai mặt phẳng song song)}
+\textbf{Định lý 1 (Dấu hiệu nhận biết then chốt):}
+Nếu mặt phẳng $(\alpha)$ chứa hai đường thẳng cắt nhau $a, b$ và hai đường thẳng này cùng song song với mặt phẳng $(\beta)$ thì mặt phẳng $(\alpha)$ song song với mặt phẳng $(\beta)$.
+\begin{center}
+\begin{tikzpicture}[scale=0.85]
+    % Mặt phẳng (beta)
+    \draw[thick, fill=blue!5] (0,0) -- (4.8,0) -- (6.0,2.0) -- (1.2,2.0) -- cycle;
+    \node at (0.8, 0.4) {$(\beta)$};
+
+    % Mặt phẳng (alpha) ở trên
+    \draw[thick, fill=orange!8] (0,2.8) -- (4.8,2.8) -- (6.0,4.8) -- (1.2,4.8) -- cycle;
+    \node at (0.8, 3.2) {$(\alpha)$};
+
+    % Hai đường thẳng a và b cắt nhau trong (alpha)
+    \coordinate (I) at (3.2, 3.8);
+    \draw[thick, red] (1.8, 3.4) -- (4.6, 4.2) node[right] {$a$};
+    \draw[thick, teal] (2.4, 4.5) -- (4.0, 3.1) node[right] {$b$};
+    \fill[red!80!black] (I) circle (1.8pt) node[above left] {$I$};
+\end{tikzpicture}
+\end{center}
+$$\left.\begin{array}{l} a \subset (\alpha), \, b \subset (\alpha) \\ a \cap b = \{I\} \\ a \parallel (\beta) \\ b \parallel (\beta) \end{array}\right\} \implies (\alpha) \parallel (\beta)$$
+\end{pedabox}
+
+\begin{scaffoldbox}{Hộp hỗ trợ sư phạm: Nhấn mạnh từ khóa ``CẮT NHAU'' cho học sinh TB-Yếu}
+\begin{itemize}[leftmargin=0.6cm]
+    \item \textbf{Lỗi ngộ nhận nghiêm trọng:} Nếu bỏ sót điều kiện $a$ và $b$ cắt nhau (tức là $a \parallel b$) thì $(\alpha)$ CHƯA CHẮC song song với $(\beta)$!
+    \item \textit{Phản ví dụ trực quan:} Lấy hai mặt phẳng $(\alpha)$ và $(\beta)$ cắt nhau theo giao tuyến $d$. Lấy $a \subset (\alpha)$ sao cho $a \parallel d$, lấy $b \subset (\alpha)$ sao cho $b \parallel d$. Khi đó $a \parallel (\beta)$ và $b \parallel (\beta)$, nhưng rõ ràng $(\alpha)$ cắt $(\beta)$ theo giao tuyến $d$!
+    \item \textbf{Quy tắc 4 dòng vàng chứng minh $(\alpha) \parallel (\beta)$:}
+    \begin{enumerate}
+        \item Dòng 1: Chỉ ra hai đường thẳng $a, b$ cùng nằm trong mặt phẳng $(\alpha)$: $a \subset (\alpha), b \subset (\alpha)$.
+        \item Dòng 2: Khẳng định hai đường thẳng đó cắt nhau: $a \cap b = \{I\}$.
+        \item Dòng 3: Chứng minh đường thẳng thứ nhất song song với $(\beta)$: $a \parallel (\beta)$.
+        \item Dòng 4: Chứng minh đường thẳng thứ hai song song với $(\beta)$: $b \parallel (\beta)$.
+        \item $\implies$ Kết luận: $(\alpha) \parallel (\beta)$.
+    \end{enumerate}
+\end{itemize}
+\end{scaffoldbox}
+
+\noindent \textbf{c) Sản phẩm: Bảng hệ thống hóa kiến thức trong vở học sinh}
+Học sinh hoàn thiện định nghĩa, sơ đồ vị trí tương đối và quy tắc 4 dòng vàng vào vở.
+
+\noindent \textbf{d) Tổ chức thực hiện:}
+\begin{itemize}[leftmargin=0.8cm]
+    \item \textit{Chuyển giao nhiệm vụ:} Giáo viên trình bày bảng phân loại, phát biểu Định lý 1; yêu cầu học sinh giải thích tại sao phải có điều kiện hai đường thẳng cắt nhau.
+    \item \textit{Thực hiện nhiệm vụ:} Học sinh lắng nghe, vẽ hình minh họa vào vở và thảo luận cặp đôi về phản ví dụ khi $a \parallel b$.
+    \item \textit{Báo cáo, thảo luận:} 1 học sinh trung bình nhắc lại quy tắc 4 dòng vàng; 1 học sinh khá phân tích phản ví dụ.
+    \item \textit{Kết luận, nhận định:} Giáo viên chốt lại phương pháp: Bản chất chứng minh hai mặt phẳng song song là chuyển về \textbf{hai bài toán chứng minh đường thẳng song song mặt phẳng} của Bài 12.
+\end{itemize}
+
+\subsubsection*{3. Hoạt động 3: Luyện tập (15 phút)}
+
+\noindent \textbf{a) Mục tiêu:}
+Vận dụng quy tắc 4 dòng vàng để chứng minh hai mặt phẳng song song trong bài toán hình chóp tứ giác.
+
+\noindent \textbf{b) Nội dung: Bài toán hình chóp và mặt phẳng qua các trung điểm}
+\begin{pedabox}{Luyện tập 1: Chứng minh hai mặt phẳng song song}
+Cho hình chóp $S.ABCD$ có đáy $ABCD$ là hình bình hành. Gọi $M, N, P$ lần lượt là trung điểm của các cạnh $SA, SB, SC$.
+\begin{enumerate}[leftmargin=0.6cm]
+    \item Chứng minh rằng mặt phẳng $(MNP)$ song song với mặt phẳng đáy $(ABCD)$.
+    \item Gọi $Q$ là trung điểm của cạnh $SD$. Chứng minh rằng bốn điểm $M, N, P, Q$ đồng phẳng và mặt phẳng $(MNPQ)$ song song với mặt phẳng $(ABCD)$.
+\end{enumerate}
+\end{pedabox}
+
+\noindent \textbf{c) Sản phẩm: Lời giải chi tiết và hình vẽ TikZ chuẩn mực}
+\begin{center}
+\begin{tikzpicture}[scale=1.1]
+    \coordinate (A) at (0,0);
+    \coordinate (B) at (4.0,0);
+    \coordinate (D) at (1.4,-1.4);
+    \coordinate (C) at ($(B)+(D)-(A)$);
+    \coordinate (S) at (1.7,3.4);
+
+    \draw[thick] (S) -- (A) -- (D) -- (C) -- (B) -- (S) -- (C);
+    \draw[thick] (S) -- (D);
+    \draw[dashed, thick] (A) -- (B);
+
+    % Trung điểm
+    \coordinate (M) at ($(S)!0.5!(A)$);
+    \coordinate (N) at ($(S)!0.5!(B)$);
+    \coordinate (P) at ($(S)!0.5!(C)$);
+    \coordinate (Q) at ($(S)!0.5!(D)$);
+
+    \draw[thick, red] (M) -- (Q) -- (P);
+    \draw[dashed, thick, red] (M) -- (N) -- (P);
+
+    \fill (S) circle (1.5pt) node[above] {$S$};
+    \fill (A) circle (1.5pt) node[left] {$A$};
+    \fill (B) circle (1.5pt) node[right] {$B$};
+    \fill (C) circle (1.5pt) node[below right] {$C$};
+    \fill (D) circle (1.5pt) node[below left] {$D$};
+    \fill (M) circle (1.5pt) node[left] {$M$};
+    \fill (N) circle (1.5pt) node[above right] {$N$};
+    \fill (P) circle (1.5pt) node[right] {$P$};
+    \fill (Q) circle (1.5pt) node[below left] {$Q$};
+\end{tikzpicture}
+\end{center}
+
+\textbf{Lời giải chi tiết:}
+\begin{enumerate}[leftmargin=0.6cm]
+    \item \textbf{Chứng minh $(MNP) \parallel (ABCD)$:}
+    \begin{itemize}
+        \item Xét tam giác $SAB$, $MN$ là đường trung bình nên $MN \parallel AB$.
+        Mà $AB \subset (ABCD)$ và $MN \not\subset (ABCD)$, suy ra $MN \parallel (ABCD)$ (1).
+        \item Xét tam giác $SBC$, $NP$ là đường trung bình nên $NP \parallel BC$.
+        Mà $BC \subset (ABCD)$ và $NP \not\subset (ABCD)$, suy ra $NP \parallel (ABCD)$ (2).
+        \item Trong mặt phẳng $(MNP)$, hai đường thẳng $MN$ và $NP$ cắt nhau tại điểm $N$ (3).
+        \item Từ (1), (2), (3), theo Định lý 1 ta suy ra: $(MNP) \parallel (ABCD)$.
+    \end{itemize}
+
+    \item \textbf{Chứng minh $M, N, P, Q$ đồng phẳng và $(MNPQ) \parallel (ABCD)$:}
+    \begin{itemize}
+        \item Trong tam giác $SAD$, $MQ$ là đường trung bình nên $MQ \parallel AD$. Mà đáy $ABCD$ là hình bình hành nên $AD \parallel BC$. Mặt khác $NP \parallel BC$. Suy ra $MQ \parallel NP$.
+        \item Do $MQ \parallel NP$ nên bốn điểm $M, N, P, Q$ cùng thuộc một mặt phẳng. Tứ giác $MNPQ$ là hình bình hành.
+        \item Vì mặt phẳng $(MNPQ)$ chính là mặt phẳng $(MNP)$ nên từ kết quả câu 1 ta có $(MNPQ) \parallel (ABCD)$.
+    \end{itemize}
+\end{enumerate}
+
+\noindent \textbf{d) Tổ chức thực hiện:}
+\begin{itemize}[leftmargin=0.8cm]
+    \item \textit{Chuyển giao nhiệm vụ:} Giáo viên giao bài toán luyện tập, yêu cầu học sinh làm việc cá nhân 5 phút, sau đó thảo luận cặp đôi kiểm tra 4 dòng điều kiện.
+    \item \textit{Thực hiện nhiệm vụ:} Học sinh vẽ hình, trình bày lời giải vào vở; giáo viên quan sát hỗ trợ các học sinh trung bình - yếu ở bước tìm hai đường cắt nhau.
+    \item \textit{Báo cáo, thảo luận:} 1 học sinh lên bảng trình bày câu 1, 1 học sinh khá trình bày câu 2; lớp nhận xét và chấm chéo.
+    \item \textit{Kết luận, nhận định:} Giáo viên đánh giá bài làm trên bảng, chuẩn hóa các bước trình bày logic.
+\end{itemize}
+
+\subsubsection*{4. Hoạt động 4: Vận dụng thực tiễn & Năng lực số - AI (5 phút)}
+
+\noindent \textbf{a) Mục tiêu:}
+Tích hợp Năng lực số (Mã 5.2NC1b) và Năng lực AI (Mã 11.C2.1): Thao tác GeoGebra 3D quan sát hai mặt phẳng song song và tìm hiểu công nghệ AI y tế dựng lát cắt song song CT-scanner.
+
+\noindent \textbf{b) Nội dung: Trải nghiệm số 3D \& Ứng dụng AI y tế}
+\begin{aibox}{Nhiệm vụ số & Trí tuệ nhân tạo: Lát cắt song song trong y học}
+\begin{enumerate}[leftmargin=0.6cm]
+    \item \textbf{Năng lực số 5.2NC1b:} Học sinh mở ứng dụng GeoGebra 3D Calculator trên điện thoại hoặc máy tính: Nhập phương trình hai mặt phẳng song song: $z = 2$ và $z = -1$. Dùng ngón tay xoay không gian 3D để quan sát: Dù xoay theo bất kỳ hướng nào, hai mặt phẳng cũng không bao giờ có điểm chung.
+    \item \textbf{Năng lực AI 11.C2.1:} Tìm hiểu ứng dụng AI trong chụp cắt lớp vi tính (CT-Scanner):
+    \begin{itemize}
+        \item Máy CT quét cơ thể người theo hàng trăm \textbf{mặt phẳng song song} cách đều nhau chỉ vài milimét.
+        \item Trí tuệ nhân tạo (AI Computer Vision) tự động phân tích từng lát cắt song song này, ghép nối dữ liệu không gian để tái tạo mô hình 3D hoàn chỉnh của tim, phổi hoặc não bộ, giúp bác sĩ phát hiện sớm các khối u siêu nhỏ.
+    \end{itemize}
+\end{enumerate}
+\end{aibox}
+
+\noindent \textbf{c) Sản phẩm: Báo cáo ngắn của học sinh}
+Học sinh thực hiện xoay mô hình trên GeoGebra 3D; nêu được ý nghĩa thực tiễn: Các lát cắt song song trong CT-scanner giúp số hóa chính xác từng lớp cắt cơ thể mà không làm biến dạng hình học.
+
+\noindent \textbf{d) Tổ thực hiện:}
+Giáo viên trình chiếu video/hình ảnh ngắn 1 phút về chụp CT-scanner; đại diện học sinh phát biểu cảm nhận; giáo viên tổng kết Tiết 1.
+
+\subsection*{TIẾT 2 (TIẾT 34 THEO PPCT): CÁC TÍNH CHẤT CƠ BẢN CỦA HAI MẶT PHẲNG SONG SONG}
+
+\subsubsection*{1. Hoạt động 1: Mở đầu (Khởi động) (5 phút)}
+
+\noindent \textbf{a) Mục tiêu:}
+Khơi gợi tư duy khám phá về sự duy nhất của mặt phẳng song song và quy luật vết cắt (giao tuyến) trên hai mặt phẳng song song.
+
+\noindent \textbf{b) Nội dung: Thử thách chiếc thước kẻ và mặt bàn}
+\begin{pedabox}{Khởi động: Vết cắt trên hai mặt phẳng song song}
+Cho hai mặt phẳng song song $(\alpha)$ và $(\beta)$ (như mặt trần và mặt sàn). Ta dùng một mặt phẳng thứ ba $(\gamma)$ (như bức tường thẳng đứng) cắt cả trần nhà và sàn nhà:
+\begin{enumerate}[leftmargin=0.6cm]
+    \item Giao tuyến của tường với trần là đường thẳng $a$. Giao tuyến của tường với sàn là đường thẳng $b$.
+    \item Hai đường thẳng $a$ và $b$ cùng nằm trong mặt phẳng tường $(\gamma)$. Liệu $a$ và $b$ có thể cắt nhau được không? Vì sao?
+    \item Từ đó em có dự đoán gì về mối quan hệ vị trí giữa hai giao tuyến $a$ và $b$?
+\end{enumerate}
+\end{pedabox}
+
+\noindent \textbf{c) Sản phẩm: Câu trả lời của học sinh}
+\begin{enumerate}[leftmargin=0.6cm]
+    \item Hai đường thẳng $a$ và $b$ không thể cắt nhau, vì nếu chúng cắt nhau tại điểm $M$ thì $M$ vừa thuộc trần $(\alpha)$, vừa thuộc sàn $(\beta)$, điều này mâu thuẫn với giả thiết trần và sàn song song (không có điểm chung).
+    \item Vì $a$ và $b$ cùng nằm trong mặt phẳng tường $(\gamma)$ và không có điểm chung nên bắt buộc $a \parallel b$.
+\end{enumerate}
+
+\noindent \textbf{d) Tổ chức thực hiện:}
+Giáo viên đặt vấn đề; học sinh suy luận phản chứng nhanh; giáo viên chuẩn hóa và dẫn vào bài học về các định lý tính chất.
+
+\subsubsection*{2. Hoạt động 2: Hình thành kiến thức mới (20 phút)}
+
+\noindent \textbf{a) Mục tiêu:}
+- Nắm vững Định lý 2 (Sự tồn tại và duy nhất của mặt phẳng song song qua một điểm).
+- Nắm vững các hệ quả quan trọng.
+- Nắm vững Định lý 3 (Tính chất giao tuyến của hai mặt phẳng song song với mặt phẳng thứ ba) và tính chất các đoạn thẳng song song bị chắn.
+
+\noindent \textbf{b) Nội dung: Các định lý tính chất}
+\begin{pedabox}{Nội dung 1: Định lý 2 \& Các hệ quả}
+\textbf{Định lý 2 (Tính duy nhất):}
+Qua một điểm nằm ngoài một mặt phẳng cho trước có một và chỉ một mặt phẳng song song với mặt phẳng đã cho.
+\begin{itemize}[leftmargin=0.6cm]
+    \item \textbf{Hệ quả 1:} Nếu đường thẳng $d$ song song với mặt phẳng $(\alpha)$ thì qua $d$ có duy nhất một mặt phẳng song song với $(\alpha)$.
+    \item \textbf{Hệ quả 2:} Hai mặt phẳng phân biệt cùng song song với một mặt phẳng thứ ba thì song song với nhau:
+    $$\left.\begin{array}{l} (\alpha) \parallel (\gamma) \\ (\beta) \parallel (\gamma) \end{array}\right\} \implies (\alpha) \parallel (\beta)$$
+\end{itemize}
+\end{pedabox}
+
+\begin{pedabox}{Nội dung 2: Định lý 3 (Định lý giao tuyến) \& Tính chất đoạn chắn}
+\textbf{Định lý 3 (Tính chất giao tuyến then chốt):}
+Cho hai mặt phẳng song song. Nếu một mặt phẳng thứ ba cắt hai mặt phẳng đã cho thì hai giao tuyến đó song song với nhau.
+\begin{center}
+\begin{tikzpicture}[scale=0.85]
+    % Mặt phẳng (beta) ở dưới
+    \draw[thick, fill=blue!5] (0,0) -- (4.8,0) -- (6.0,1.8) -- (1.2,1.8) -- cycle;
+    \node at (0.8, 0.4) {$(\beta)$};
+
+    % Mặt phẳng (alpha) ở trên
+    \draw[thick, fill=orange!8] (0,2.6) -- (4.8,2.6) -- (6.0,4.4) -- (1.2,4.4) -- cycle;
+    \node at (0.8, 3.0) {$(\alpha)$};
+
+    % Mặt phẳng (gamma) cắt cả hai
+    \draw[thick, fill=green!10, fill opacity=0.7] (2.2, -0.4) -- (4.2, 0.8) -- (4.2, 5.0) -- (2.2, 3.8) -- cycle;
+    \node at (2.0, 4.8) {$(\gamma)$};
+
+    % Giao tuyến a trên (alpha)
+    \draw[very thick, red] (2.7, 3.2) -- (4.2, 4.1) node[right] {$a$};
+    % Giao tuyến b trên (beta)
+    \draw[very thick, blue] (2.7, 0.6) -- (4.2, 1.5) node[right] {$b$};
+\end{tikzpicture}
+\end{center}
+$$\left.\begin{array}{l} (\alpha) \parallel (\beta) \\ (\gamma) \cap (\alpha) = a \\ (\gamma) \cap (\beta) = b \end{array}\right\} \implies a \parallel b$$
+
+\textbf{Định lý 4 (Đoạn chắn song song bằng nhau):}
+Hai mặt phẳng song song chắn trên hai cát tuyến song song những đoạn thẳng bằng nhau.
+$$\left.\begin{array}{l} (\alpha) \parallel (\beta) \\ a \parallel b \\ a \cap (\alpha) = A, \, a \cap (\beta) = B \\ b \cap (\alpha) = C, \, b \cap (\beta) = D \end{array}\right\} \implies AB = CD$$
+\end{pedabox}
+
+\begin{scaffoldbox}{Hộp hỗ trợ sư phạm: Ứng dụng Định lý 3 để xác định thiết diện song song}
+Khi tìm thiết diện của hình chóp cắt bởi mặt phẳng $(\alpha)$ song song với mặt phẳng $(P)$ cho trước:
+\begin{itemize}[leftmargin=0.6cm]
+    \item Ta biết rằng mặt phẳng $(\alpha)$ sẽ cắt các mặt của hình chóp theo các giao tuyến \textbf{song song với các giao tuyến tương ứng của mặt phẳng $(P)$}.
+    \item Chỉ cần từ một điểm đã biết trên mỗi mặt, ta \textbf{kẻ đường thẳng song song với cạnh tương ứng} của mặt kia là tìm được toàn bộ các đỉnh của thiết diện.
+\end{itemize}
+\end{scaffoldbox}
+
+\noindent \textbf{c) Sản phẩm: Kiến thức chuẩn hóa trong vở học sinh}
+Học sinh vẽ hình minh họa Định lý 3, ghi công thức định lý và khung phương pháp xác định thiết diện vào vở.
+
+\noindent \textbf{d) Tổ chức thực hiện:}
+Giáo viên trình bày hệ thống định lý; yêu cầu học sinh đối chiếu với định lý giao tuyến ở Bài 12; học sinh ghi chép và củng cố phương pháp.
+
+\subsubsection*{3. Hoạt động 3: Luyện tập giải toán phân hóa (15 phút)}
+
+\noindent \textbf{a) Mục tiêu:}
+Vận dụng Định lý 3 để xác định thiết diện của hình chóp cắt bởi mặt phẳng song song với một mặt bên của hình chóp.
+
+\noindent \textbf{b) Nội dung: Bài toán xác định thiết diện song song}
+\begin{pedabox}{Luyện tập 2: Xác định thiết diện song song với mặt bên}
+Cho hình chóp $S.ABCD$ có đáy $ABCD$ là hình bình hành. Lấy điểm $M$ trên cạnh $SA$ sao cho $SM = 2MA$. Mặt phẳng $(\alpha)$ đi qua điểm $M$ và song song với mặt phẳng $(SBC)$.
+\begin{enumerate}[leftmargin=0.6cm]
+    \item Tìm giao tuyến của mặt phẳng $(\alpha)$ với các mặt phẳng $(SAB), (ABCD), (SAD), (SCD)$.
+    \item Xác định thiết diện của hình chóp cắt bởi mặt phẳng $(\alpha)$ và cho biết thiết diện là hình gì?
+\end{enumerate}
+\end{pedabox}
+
+\noindent \textbf{c) Sản phẩm: Lời giải chi tiết và hình vẽ TikZ chuẩn mực}
+\begin{center}
+\begin{tikzpicture}[scale=1.1]
+    \coordinate (A) at (0,0);
+    \coordinate (B) at (4.0,0);
+    \coordinate (D) at (1.4,-1.4);
+    \coordinate (C) at ($(B)+(D)-(A)$);
+    \coordinate (S) at (1.8,3.4);
+
+    \draw[thick] (S) -- (A) -- (D) -- (C) -- (B) -- (S) -- (C);
+    \draw[thick] (S) -- (D);
+    \draw[dashed, thick] (A) -- (B);
+
+    % M trên SA: SM = 2 MA => M = A + 1/3 (S-A)
+    \coordinate (M) at ($(A)!0.333!(S)$);
+    % Qua M kẻ MN // SB (N in AB)
+    \coordinate (N) at ($(A)!0.333!(B)$);
+    % Qua N kẻ NP // BC // AD (P in CD)
+    \coordinate (P) at ($(D)!0.333!(C)$);
+    % Qua M kẻ MQ // AD // BC (Q in SD)
+    \coordinate (Q) at ($(D)!0.333!(S)$);
+
+    \draw[thick, red] (M) -- (Q) -- (P);
+    \draw[dashed, thick, red] (M) -- (N) -- (P);
+
+    \fill (S) circle (1.5pt) node[above] {$S$};
+    \fill (A) circle (1.5pt) node[left] {$A$};
+    \fill (B) circle (1.5pt) node[right] {$B$};
+    \fill (C) circle (1.5pt) node[below right] {$C$};
+    \fill (D) circle (1.5pt) node[below left] {$D$};
+    \fill (M) circle (1.5pt) node[left] {$M$};
+    \fill (N) circle (1.5pt) node[below left] {$N$};
+    \fill (P) circle (1.5pt) node[below] {$P$};
+    \fill (Q) circle (1.5pt) node[above right] {$Q$};
+\end{tikzpicture}
+\end{center}
+
+\textbf{Lời giải chi tiết:}
+\begin{enumerate}[leftmargin=0.6cm]
+    \item \textbf{Tìm các đoạn giao tuyến:}
+    \begin{itemize}
+        \item Xét mặt phẳng $(SAB)$: Ta có $M \in (\alpha) \cap (SAB)$. Vì $(\alpha) \parallel (SBC)$ và $(SAB) \cap (SBC) = SB$, nên theo Định lý 3, giao tuyến của $(\alpha)$ với $(SAB)$ là đường thẳng đi qua $M$ và song song với $SB$. Đường thẳng này cắt $AB$ tại $N \implies (\alpha) \cap (SAB) = MN$ với $MN \parallel SB$.
+        \item Xét mặt phẳng đáy $(ABCD)$: Ta có $N \in (\alpha) \cap (ABCD)$. Vì $(\alpha) \parallel (SBC)$ và $(ABCD) \cap (SBC) = BC$, nên giao tuyến của $(\alpha)$ với $(ABCD)$ là đường thẳng đi qua $N$ và song song với $BC$ (cũng song song với $AD$). Đường thẳng này cắt $CD$ tại $P \implies (\alpha) \cap (ABCD) = NP$ với $NP \parallel BC \parallel AD$.
+        \item Xét mặt phẳng $(SAD)$: Ta có $M \in (\alpha) \cap (SAD)$. Vì $(\alpha) \parallel (SBC)$ mà $BC \parallel AD \implies (\alpha) \parallel AD$. Do đó giao tuyến của $(\alpha)$ với $(SAD)$ là đường thẳng qua $M$ song song với $AD$. Đường thẳng này cắt $SD$ tại $Q \implies (\alpha) \cap (SAD) = MQ$ với $MQ \parallel AD$.
+        \item Đoạn giao tuyến cuối cùng trên mặt phẳng $(SCD)$ chính là đoạn $QP$.
+    \end{itemize}
+
+    \item \textbf{Hình dạng thiết diện:}
+    Thiết diện là tứ giác $MNPQ$.
+    Vì $MQ \parallel AD$ và $NP \parallel AD \implies MQ \parallel NP$.
+    Do đó, thiết diện $MNPQ$ là một \textbf{hình thang} (có hai đáy là $MQ$ và $NP$).
+\end{enumerate}
+
+\noindent \textbf{d) Tổ chức thực hiện:}
+\begin{itemize}[leftmargin=0.8cm]
+    \item \textit{Chuyển giao nhiệm vụ:} Giáo viên yêu cầu học sinh làm bài tập vào phiếu học tập; chia 4 tổ thi đua tìm từng giao tuyến.
+    \item \textit{Thực hiện nhiệm vụ:} Học sinh vẽ hình, lần lượt áp dụng Định lý 3 để kẻ các đường thẳng song song.
+    \item \textit{Báo cáo, thảo luận:} Nhóm 3 cử đại diện lên bảng vẽ hình và trình bày; các nhóm khác phản biện.
+    \item \textit{Kết luận, nhận định:} Giáo viên nhận xét, nhấn mạnh: Mấu chốt tìm thiết diện song song là luôn xuất phát từ các điểm đã có và kẻ đường song song với giao tuyến của mặt đối diện.
+\end{itemize}
+
+\subsubsection*{4. Hoạt động 4: Vận dụng (5 phút)}
+
+\noindent \textbf{a) Mục tiêu:}
+Liên hệ thực tiễn về kỹ thuật lắp đặt cốp pha đổ sàn bê tông trong ngành xây dựng.
+
+\noindent \textbf{b) Nội dung: Ứng dụng xây dựng}
+Học sinh quan sát hình ảnh kỹ sư dùng máy cân bằng laser để kiểm tra mặt phẳng sàn tầng 2 song song với mặt phẳng sàn tầng 1: Hai chùm tia laser vuông góc quét ngang tạo thành hai đường thẳng cắt nhau song song với sàn dưới. Nhờ đó, thợ xây dựng đảm bảo độ phẳng và song song tuyệt đối giữa các tầng nhà.
+
+\noindent \textbf{c) Sản phẩm: Ghi nhớ của học sinh}
+Học sinh hiểu được nguyên lý máy laser vận dụng chính xác Định lý 1: Tạo ra 2 đường thẳng cắt nhau cùng song song với mặt sàn chuẩn.
+
+\noindent \textbf{d) Tổ chức thực hiện:}
+Giáo viên giải thích ngắn gọn, khép lại Tiết 2.
+
+\subsection*{TIẾT 3 (TIẾT 35 THEO PPCT): ĐỊNH LÍ THALÈS TRONG KHÔNG GIAN}
+
+\subsubsection*{1. Hoạt động 1: Mở đầu (Khởi động) (5 phút)}
+
+\noindent \textbf{a) Mục tiêu:}
+Tái hiện định lí Thalès trong hình học phẳng và mở rộng trực giác sang không gian ba chiều.
+
+\noindent \textbf{b) Nội dung: Cầu nối từ 2D sang 3D}
+\begin{pedabox}{Khởi động: Nhắc lại định lí Thalès phẳng}
+Trong mặt phẳng, nếu ba đường thẳng song song $a, b, c$ cắt hai cát tuyến $d$ và $d'$ lần lượt tại $A, B, C$ và $A', B', C'$ thì ta có tỉ số:
+$$\dfrac{AB}{A'B'} = \dfrac{BC}{B'C'} = \dfrac{AC}{A'C'}$$
+Nếu trong không gian, ta thay ba đường thẳng song song bằng \textbf{ba mặt phẳng song song} $(\alpha), (\beta), (\gamma)$ thì các tỉ số trên có còn đúng đối với hai đường thẳng bất kì trong không gian hay không?
+\end{pedabox}
+
+\noindent \textbf{c) Sản phẩm: Dự đoán của học sinh}
+Học sinh dự đoán: Tỉ số giữa các đoạn thẳng chắn trên hai cát tuyến vẫn bằng nhau.
+
+\noindent \textbf{d) Tổ chức thực hiện:}
+Giáo viên đặt câu hỏi; học sinh phát biểu dự đoán; giáo viên khẳng định điều này hoàn toàn chính xác và giới thiệu Định lí Thalès trong không gian.
+
+\subsubsection*{2. Hoạt động 2: Hình thành kiến thức mới (20 phút)}
+
+\noindent \textbf{a) Mục tiêu:}
+- Phát biểu và hiểu rõ Định lí Thalès trong không gian.
+- Nắm vững phương pháp dựng đường thẳng phụ trợ song song để quy bài toán không gian về định lí Thalès phẳng.
+
+\noindent \textbf{b) Nội dung: Định lí Thalès không gian}
+\begin{pedabox}{Nội dung: Định lí Thalès trong không gian}
+\textbf{Định lí Thalès:}
+Ba mặt phẳng đôi một song song chắn trên hai cát tuyến bất kì những đoạn thẳng tương ứng tỉ lệ.
+\begin{center}
+\begin{tikzpicture}[scale=0.85]
+    % Ba mặt phẳng song song
+    \draw[thick, fill=blue!5] (0,0) -- (5,0) -- (6.2,1.6) -- (1.2,1.6) -- cycle;
+    \node at (0.8, 0.4) {$(\gamma)$};
+
+    \draw[thick, fill=orange!5] (0,2.2) -- (5,2.2) -- (6.2,3.8) -- (1.2,3.8) -- cycle;
+    \node at (0.8, 2.6) {$(\beta)$};
+
+    \draw[thick, fill=teal!5] (0,4.4) -- (5,4.4) -- (6.2,6.0) -- (1.2,6.0) -- cycle;
+    \node at (0.8, 4.8) {$(\alpha)$};
+
+    % Cát tuyến d
+    \draw[thick, red] (2.0, 6.4) -- (2.6, -0.4) node[below] {$d$};
+    \fill[red] (2.12, 5.2) circle (2pt) node[left] {$A$};
+    \fill[red] (2.35, 3.0) circle (2pt) node[left] {$B$};
+    \fill[red] (2.55, 0.8) circle (2pt) node[left] {$C$};
+
+    % Cát tuyến d'
+    \draw[thick, purple] (4.0, 6.4) -- (5.2, -0.4) node[below] {$d'$};
+    \fill[purple] (4.18, 5.2) circle (2pt) node[right] {$A'$};
+    \fill[purple] (4.62, 3.0) circle (2pt) node[right] {$B'$};
+    \fill[purple] (5.02, 0.8) circle (2pt) node[right] {$C'$};
+\end{tikzpicture}
+\end{center}
+Nếu ba mặt phẳng đôi một song song $(\alpha), (\beta), (\gamma)$ cắt cát tuyến $d$ lần lượt tại $A, B, C$ và cắt cát tuyến $d'$ lần lượt tại $A', B', C'$ thì:
+$$\dfrac{AB}{A'B'} = \dfrac{BC}{B'C'} = \dfrac{AC}{A'C'} \quad \text{hay} \quad \dfrac{AB}{BC} = \dfrac{A'B'}{B'C'}$$
+\end{pedabox}
+
+\begin{scaffoldbox}{Hộp hỗ trợ sư phạm: Chứng minh bằng phương pháp tịnh tiến cát tuyến}
+\begin{itemize}[leftmargin=0.6cm]
+    \item \textbf{Trường hợp 1:} Nếu $d \parallel d'$, theo tính chất đoạn chắn song song ta có $AB = A'B', BC = B'C' \implies$ tỉ số bằng 1 (hiển nhiên).
+    \item \textbf{Trường hợp 2:} Nếu $d$ và $d'$ cắt nhau hoặc chéo nhau: Qua điểm $A'$, kẻ đường thẳng $d'' \parallel d$, cắt $(\beta)$ tại $B''$ và cắt $(\gamma)$ tại $C''$.
+    \begin{itemize}
+        \item Vì $d'' \parallel d$ nên theo tính chất đoạn chắn: $A'B'' = AB$ và $B''C'' = BC$.
+        \item Hai đường thẳng cắt nhau $d'$ và $d''$ cùng nằm trong mặt phẳng $(d', d'')$. Theo định lí Thalès phẳng áp dụng trong tam giác $A'C'C''$ có $B'B'' \parallel C'C''$, ta có:
+        $$\dfrac{A'B''}{A'B'} = \dfrac{B''C''}{B'C'} \implies \dfrac{AB}{A'B'} = \dfrac{BC}{B'C'}$$
+    \end{itemize}
+\end{itemize}
+\end{scaffoldbox}
+
+\noindent \textbf{c) Sản phẩm: Công thức và sơ đồ chứng minh trong vở học sinh}
+Học sinh ghi công thức tổng quát và các biến thể tỉ lệ thức của định lí Thalès vào vở.
+
+\noindent \textbf{d) Tổ chức thực hiện:}
+Giáo viên vẽ hình trực quan; hướng dẫn học sinh phương pháp dựng đường phụ trợ $d''$; học sinh ghi nhận cách quy bài toán không gian về bài toán phẳng quen thuộc.
+
+\subsubsection*{3. Hoạt động 3: Luyện tập (15 phút)}
+
+\noindent \textbf{a) Mục tiêu:}
+Rèn luyện kỹ năng tính toán độ dài đoạn thẳng và xác định vị trí điểm bằng định lí Thalès không gian.
+
+\noindent \textbf{b) Nội dung: Bài toán tính độ dài đoạn chắn}
+\begin{pedabox}{Luyện tập 3: Vận dụng định lí Thalès tính độ dài}
+Cho ba mặt phẳng đôi một song song $(\alpha), (\beta), (\gamma)$. Hai đường thẳng phân biệt $d$ và $d'$ cắt ba mặt phẳng trên lần lượt tại các điểm $A, B, C$ và $A', B', C'$.
+\begin{enumerate}[leftmargin=0.6cm]
+    \item Cho biết $AB = 4\text{ cm}, BC = 6\text{ cm}$ và $A'C' = 15\text{ cm}$. Hãy tính độ dài các đoạn thẳng $A'B'$ và $B'C'$.
+    \item Giả sử điểm $M$ nằm giữa $A$ và $B$ sao cho $AM = 1\text{ cm}$. Mặt phẳng $(P)$ đi qua $M$ và song song với $(\alpha)$ cắt $d'$ tại $M'$. Tính độ dài đoạn thẳng $A'M'$.
+\end{enumerate}
+\end{pedabox}
+
+\noindent \textbf{c) Sản phẩm: Lời giải chi tiết}
+\textbf{Lời giải:}
+\begin{enumerate}[leftmargin=0.6cm]
+    \item Ta có: $AC = AB + BC = 4 + 6 = 10\text{ cm}$.
+    Áp dụng định lí Thalès trong không gian cho ba mặt phẳng song song $(\alpha), (\beta), (\gamma)$ cắt hai cát tuyến $d$ và $d'$, ta có:
+    $$\dfrac{AB}{A'B'} = \dfrac{BC}{B'C'} = \dfrac{AC}{A'C'}$$
+    Thay số:
+    $$\dfrac{4}{A'B'} = \dfrac{6}{B'C'} = \dfrac{10}{15} = \dfrac{2}{3}$$
+    Từ đó suy ra:
+    $$A'B' = \dfrac{4 \cdot 3}{2} = 6\text{ cm}$$
+    $$B'C' = \dfrac{6 \cdot 3}{2} = 9\text{ cm}$$
+    Kiểm tra lại: $A'B' + B'C' = 6 + 9 = 15\text{ cm} = A'C'$ (chính xác).
+
+    \item Mặt phẳng $(P)$ qua $M$ song song với $(\alpha)$ và $(\beta)$. Áp dụng định lí Thalès cho các mặt phẳng song song $(\alpha), (P), (\beta)$, ta có:
+    $$\dfrac{AM}{A'M'} = \dfrac{AB}{A'B'}$$
+    Thay số:
+    $$\dfrac{1}{A'M'} = \dfrac{4}{6} = \dfrac{2}{3} \implies A'M' = \dfrac{1 \cdot 3}{2} = 1{,}5\text{ cm}$$
+\end{enumerate}
+
+\noindent \textbf{d) Tổ chức thực hiện:}
+\begin{itemize}[leftmargin=0.8cm]
+    \item \textit{Chuyển giao nhiệm vụ:} Học sinh làm bài độc lập vào vở trong 7 phút.
+    \item \textit{Thực hiện nhiệm vụ:} Học sinh áp dụng công thức tỉ số; giáo viên nhắc nhở kiểm tra tổng độ dài đoạn thẳng.
+    \item \textit{Báo cáo, thảo luận:} 1 học sinh trung bình lên bảng làm câu 1, 1 học sinh khá làm câu 2; lớp đối chiếu kết quả.
+    \item \textit{Kết luận, nhận định:} Giáo viên chốt phương pháp: Khi áp dụng định lí Thalès, luôn nhớ lập tỉ số giữa đoạn con trên đoạn tổng để giải nhanh nhất.
+\end{itemize}
+
+\subsubsection*{4. Hoạt động 4: Vận dụng thực tiễn & Tích hợp Năng lực AI (5 phút)}
+
+\noindent \textbf{a) Mục tiêu:}
+Tích hợp Năng lực AI (Mã 11.D2.1): Trình bày cách AI mô phỏng kết cấu dầm chịu lực các tầng nhà song song trong kiến trúc xây dựng.
+
+\noindent \textbf{b) Nội dung: Ứng dụng AI kiến trúc xây dựng}
+\begin{aibox}{Năng lực AI: Mô phỏng kết cấu sàn nhà song song (Mã 11.D2.1)}
+Trong các phần mềm kỹ thuật xây dựng hiện đại tích hợp AI (như Revit AI, SAP2000 AI):
+\begin{itemize}[leftmargin=0.6cm]
+    \item Hệ thống AI mô hình hóa các tầng nhà cao ốc là các \textbf{mặt phẳng song song} cách nhau theo các tỉ lệ độ cao tính toán nghiêm ngặt.
+    \item Khi có tải trọng gió bão hoặc động đất, các cột trụ chịu lực đóng vai trò là các cát tuyến xiên. AI sử dụng các thuật toán dựa trên nguyên lý tỉ số hình học (tương tự Định lí Thalès) để tự động tính toán độ võng, mô phỏng lực nén tại từng điểm giao cắt $A, B, C$ và $A', B', C'$, từ đó cảnh báo nguy cơ nứt vỡ kết cấu trước khi thi công thực tế.
+\end{itemize}
+\end{aibox}
+
+\noindent \textbf{c) Sản phẩm: Báo cáo nhận thức của học sinh}
+Học sinh hiểu được: Toán học không gian và định lí Thalès là nền tảng hình học cốt lõi để các mô hình AI mô phỏng an toàn kết cấu công trình.
+
+\noindent \textbf{d) Tổ chức thực hiện:}
+Giáo viên giới thiệu hình ảnh mô phỏng 3D chịu lực của tòa nhà; học sinh lắng nghe và kết thúc Tiết 3.
+
+\subsection*{TIẾT 4 (TIẾT 36 THEO PPCT): HÌNH LĂNG TRỤ, HÌNH HỘP \& CHỦ ĐỀ STEM}
+
+\subsubsection*{1. Hoạt động 1: Mở đầu (Khởi động) (5 phút)}
+
+\noindent \textbf{a) Mục tiêu:}
+Tạo sự chú ý và liên kết trực quan từ các đồ vật quen thuộc đến khái niệm hình lăng trụ và hình hộp.
+
+\noindent \textbf{b) Nội dung: Nhận diện vật thể}
+\begin{pedabox}{Khởi động: Hình khối trong đời sống}
+Quan sát các đồ vật giáo viên mang đến lớp:
+\begin{itemize}[leftmargin=0.6cm]
+    \item Hộp đựng phấn viết bảng, hộp quà khối Rubik, bao diêm.
+    \item Hộp bánh socola hình tam giác Toblerone, lăng kính quang học trong phòng thí nghiệm Vật lí.
+\end{itemize}
+\textbf{Câu hỏi:} Các đồ vật trên có đặc điểm chung gì về hai mặt đáy và các mặt bên xung quanh?
+\end{pedabox}
+
+\noindent \textbf{c) Sản phẩm: Câu trả lời của học sinh}
+Học sinh nhận xét: Các hình này đều có hai mặt đáy là hai đa giác bằng nhau nằm trên hai mặt phẳng song song; các mặt bên xung quanh đều là các hình bình hành (hoặc hình chữ nhật); các cạnh bên song song với nhau.
+
+\noindent \textbf{d) Tổ chức thực hiện:}
+Giáo viên cho học sinh chuyền tay nhau sờ và quan sát mô hình hộp mica; tổng hợp ý kiến và dẫn dắt vào khái niệm hình lăng trụ và hình hộp.
+
+\subsubsection*{2. Hoạt động 2: Hình thành kiến thức mới (20 phút)}
+
+\noindent \textbf{a) Mục tiêu:}
+- Nắm vững định nghĩa và các yếu tố của hình lăng trụ.
+- Nắm vững các tính chất cơ bản của hình lăng trụ: Cạnh bên, mặt bên, hai mặt đáy.
+- Nắm vững định nghĩa hình hộp, các mặt đối diện và tâm của hình hộp.
+
+\noindent \textbf{b) Nội dung: Hình lăng trụ và hình hộp}
+\begin{pedabox}{Nội dung 1: Định nghĩa và tính chất của hình lăng trụ}
+Cho hai mặt phẳng song song $(\alpha)$ và $(\alpha')$. Trên $(\alpha)$ cho đa giác lồi $A_1A_2\dots A_n$. Qua các đỉnh $A_1, A_2, \dots, A_n$ ta vẽ các đường thẳng song song với nhau và cắt $(\alpha')$ lần lượt tại $A'_1, A'_2, \dots, A'_n$.
+Hình gồm hai đa giác $A_1A_2\dots A_n$, $A'_1A'_2\dots A'_n$ và các tứ giác $A_1A'_1A'_2A_2, \dots, A_nA'_nA'_1A_1$ được gọi là \textbf{hình lăng trụ}, ký hiệu: $A_1A_2\dots A_n.A'_1A'_2\dots A'_n$.
+\begin{center}
+\begin{tikzpicture}[scale=0.9]
+    % Đáy dưới ABC
+    \coordinate (A) at (0,0);
+    \coordinate (B) at (3.2,-0.8);
+    \coordinate (C) at (1.6,-1.6);
+    % Đáy trên A'B'C'
+    \coordinate (shift) at (0.6, 2.8);
+    \coordinate (A1) at ($(A)+(shift)$);
+    \coordinate (B1) at ($(B)+(shift)$);
+    \coordinate (C1) at ($(C)+(shift)$);
+
+    \draw[dashed, thick] (A) -- (B);
+    \draw[thick] (B) -- (C) -- (A);
+    \draw[thick] (A1) -- (B1) -- (C1) -- cycle;
+    \draw[dashed, thick] (A) -- (A1);
+    \draw[thick] (B) -- (B1);
+    \draw[thick] (C) -- (C1);
+
+    \fill (A) circle (1.5pt) node[left] {$A$};
+    \fill (B) circle (1.5pt) node[right] {$B$};
+    \fill (C) circle (1.5pt) node[below] {$C$};
+    \fill (A1) circle (1.5pt) node[left] {$A'$};
+    \fill (B1) circle (1.5pt) node[right] {$B'$};
+    \fill (C1) circle (1.5pt) node[above] {$C'$};
+\end{tikzpicture}
+\end{center}
+\textbf{Các tính chất cơ bản của hình lăng trụ:}
+\begin{enumerate}[leftmargin=0.6cm]
+    \item Các cạnh bên \textbf{song song và bằng nhau}: $A_1A'_1 \parallel A_2A'_2 \dots$ và $A_1A'_1 = A_2A'_2 = \dots$
+    \item Các mặt bên là các \textbf{hình bình hành}.
+    \item Hai đáy là hai đa giác \textbf{bằng nhau} và nằm trên hai mặt phẳng song song: $(A_1A_2\dots A_n) \parallel (A'_1A'_2\dots A'_n)$.
+\end{enumerate}
+\end{pedabox}
+
+\begin{pedabox}{Nội dung 2: Định nghĩa và tính chất của hình hộp}
+\textbf{Định nghĩa:} Hình lăng trụ có đáy là hình bình hành được gọi là \textbf{hình hộp}.
+Ký hiệu: $ABCD.A'B'C'D'$.
+\begin{center}
+\begin{tikzpicture}[scale=0.95]
+    \coordinate (A) at (0,0);
+    \coordinate (B) at (3.0,0);
+    \coordinate (D) at (1.2,-1.0);
+    \coordinate (C) at ($(B)+(D)-(A)$);
+
+    \coordinate (shift) at (0.6, 2.5);
+    \coordinate (A1) at ($(A)+(shift)$);
+    \coordinate (B1) at ($(B)+(shift)$);
+    \coordinate (C1) at ($(C)+(shift)$);
+    \coordinate (D1) at ($(D)+(shift)$);
+
+    \draw[dashed, thick] (A) -- (B);
+    \draw[thick] (B) -- (C) -- (D) -- (A);
+    \draw[thick] (A1) -- (B1) -- (C1) -- (D1) -- cycle;
+
+    \draw[dashed, thick] (A) -- (A1);
+    \draw[thick] (B) -- (B1);
+    \draw[thick] (C) -- (C1);
+    \draw[thick] (D) -- (D1);
+
+    % Đường chéo AC' và A'C
+    \draw[dashed, red] (A) -- (C1);
+    \draw[dashed, blue] (A1) -- (C);
+    \coordinate (O) at ($(A)!0.5!(C1)$);
+    \fill[black] (O) circle (1.8pt) node[above left] {$O$};
+
+    \fill (A) circle (1.5pt) node[left] {$A$};
+    \fill (B) circle (1.5pt) node[right] {$B$};
+    \fill (C) circle (1.5pt) node[below right] {$C$};
+    \fill (D) circle (1.5pt) node[below left] {$D$};
+    \fill (A1) circle (1.5pt) node[left] {$A'$};
+    \fill (B1) circle (1.5pt) node[right] {$B'$};
+    \fill (C1) circle (1.5pt) node[above right] {$C'$};
+    \fill (D1) circle (1.5pt) node[above left] {$D'$};
+\end{tikzpicture}
+\end{center}
+\textbf{Các tính chất của hình hộp:}
+\begin{itemize}[leftmargin=0.6cm]
+    \item Tất cả 6 mặt của hình hộp đều là \textbf{hình bình hành}.
+    \item Hai mặt đối diện bất kỳ là hai hình bình hành bằng nhau và nằm trên hai mặt phẳng song song: $(ABCD) \parallel (A'B'C'D')$, $(ABB'A') \parallel (CDD'C')$, $(ADD'A') \parallel (BCC'B')$.
+    \item Bốn đường chéo ($AC', BD', CA', DB'$) cắt nhau tại trung điểm $O$ của mỗi đường. Điểm $O$ được gọi là \textbf{tâm của hình hộp}.
+\end{itemize}
+\end{pedabox}
+
+\begin{scaffoldbox}{Hộp hỗ trợ sư phạm: Phân biệt lăng trụ và hình chóp}
+Học sinh TB-Yếu rất dễ nhầm giữa hình lăng trụ và hình chóp:
+\begin{itemize}[leftmargin=0.6cm]
+    \item \textbf{Hình chóp:} Chỉ có \textbf{1 đỉnh chóp $S$}, các cạnh bên quy tụ về đỉnh $S$, các mặt bên là các \textbf{hình tam giác}.
+    \item \textbf{Hình lăng trụ:} Có \textbf{2 đáy song song}, các cạnh bên \textbf{song song và bằng nhau}, các mặt bên là các \textbf{hình bình hành}.
+\end{itemize}
+\end{scaffoldbox}
+
+\noindent \textbf{c) Sản phẩm: Bảng so sánh và hình vẽ trong vở học sinh}
+Học sinh hoàn thiện hình vẽ lăng trụ tam giác, hình hộp chữ nhật và tính chất 4 đường chéo đồng quy vào vở.
+
+\noindent \textbf{d) Tổ chức thực hiện:}
+Giáo viên dùng mô hình trực quan phân tích các yếu tố; học sinh vẽ hình theo quy tắc nét đứt nét liền; giáo viên sửa các nét vẽ sai cho học sinh.
+
+\subsubsection*{3. Hoạt động 3: Luyện tập (10 phút)}
+
+\noindent \textbf{a) Mục tiêu:}
+Vận dụng tính chất của hình hộp để chứng minh hai mặt phẳng song song và tìm tính chất giao điểm của đường chéo với các mặt phẳng.
+
+\noindent \textbf{b) Nội dung: Bài toán hình hộp}
+\begin{pedabox}{Luyện tập 4: Bài toán hình hộp $ABCD.A'B'C'D'$}
+Cho hình hộp $ABCD.A'B'C'D'$.
+\begin{enumerate}[leftmargin=0.6cm]
+    \item Chứng minh rằng mặt phẳng $(BDA')$ song song với mặt phẳng $(B'D'C)$.
+    \item Chứng minh rằng đường chéo $AC'$ đi qua trọng tâm $G_1, G_2$ lần lượt của hai tam giác $BDA'$ và $B'D'C$.
+\end{enumerate}
+\end{pedabox}
+
+\noindent \textbf{c) Sản phẩm: Lời giải chi tiết}
+\textbf{Lời giải:}
+\begin{enumerate}[leftmargin=0.6cm]
+    \item \textbf{Chứng minh $(BDA') \parallel (B'D'C)$:}
+    \begin{itemize}
+        \item Xét tứ giác $BDD'B'$, ta có $BB' \parallel DD'$ và $BB' = DD'$ (do các cạnh bên hình hộp song song và bằng nhau). Do đó $BDD'B'$ là hình bình hành $\implies BD \parallel B'D'$.
+        Mà $B'D' \subset (B'D'C)$ và $BD \not\subset (B'D'C)$, suy ra $BD \parallel (B'D'C)$ (1).
+        \item Xét tứ giác $ADC'B'$, ta có $AB' \parallel DC'$ và $A'B \parallel D'C$. Tương tự tứ giác $A'D'CB$ là hình bình hành vì có $A'D' \parallel BC$ và $A'D' = BC$ (cùng bằng $AD$).
+        Suy ra $A'B \parallel D'C$. Mà $D'C \subset (B'D'C)$ nên $A'B \parallel (B'D'C)$ (2).
+        \item Trong mặt phẳng $(BDA')$, hai đường thẳng $BD$ và $A'B$ cắt nhau tại điểm $B$ (3).
+        \item Từ (1), (2), (3), theo Định lý 1 ta có: $(BDA') \parallel (B'D'C)$.
+    \end{itemize}
+
+    \item \textbf{Tính chất đường chéo $AC'$:}
+    Trong mặt phẳng chéo $(AA'C'C)$ (là hình bình hành), gọi $O$ là giao điểm của $AC$ và $BD$, $O'$ là giao điểm của $A'C'$ và $B'D'$.
+    Đoạn thẳng $A'O$ cắt đường chéo $AC'$ tại $G_1$. Trong tam giác $AA'C$, $A'O$ là trung tuyến và $AC'$ cắt $A'O$ tại điểm $G_1$ thỏa mãn $AG_1 = \dfrac{2}{3} AO' \implies G_1$ chính là trọng tâm tam giác $BDA'$. Tương tự $AC'$ cắt $CO'$ tại trọng tâm $G_2$ của $\triangle B'D'C$. Hơn nữa: $AG_1 = G_1G_2 = G_2C' = \dfrac{1}{3} AC'$.
+\end{enumerate}
+
+\noindent \textbf{d) Tổ chức thực hiện:}
+Giáo viên gợi ý bằng cách xét mặt phẳng phụ $(AA'C'C)$; học sinh thảo luận cặp đôi hoàn thành chứng minh; giáo viên chuẩn hóa bài toán kinh điển của hình hộp.
+
+\subsubsection*{4. Hoạt động 4: Vận dụng thực tiễn & Chủ đề STEM (10 phút)}
+
+\noindent \textbf{a) Mục tiêu:}
+Tích hợp Năng lực số (Mã 3.1NC1a) và Giáo dục STEM: Dựng mô hình 3D trên GeoGebra và thiết kế chế tạo mô hình kệ sách mini nhiều tầng đảm bảo các mặt phẳng song song.
+
+\noindent \textbf{b) Nội dung: Chủ đề STEM chế tạo giá sách nhiều tầng}
+\begin{stembox}{Chủ đề STEM: Thiết kế và lắp ráp kệ sách nhiều tầng bằng que tre}
+\textbf{1. Nhiệm vụ kỹ thuật:}
+Mỗi nhóm (6 học sinh) sử dụng các thanh que tre/que kem gỗ, dây buộc và keo nến để thiết kế một mô hình kệ sách 3 tầng mini:
+\begin{itemize}[leftmargin=0.6cm]
+    \item Các tầng kệ sách phải là các \textbf{mặt phẳng song song} với nhau và song song với mặt bàn.
+    \item Khi đặt một viên bi lên bất kỳ vị trí nào trên các ngăn tầng, viên bi không được tự ý lăn đi (đảm bảo độ phẳng và thăng bằng song song).
+\end{itemize}
+\textbf{2. Kiến thức toán học ứng dụng:}
+\begin{itemize}[leftmargin=0.6cm]
+    \item Áp dụng Định lý 4: Để các tầng song song nhau, độ dài các đoạn cột chống giữa tầng 1 và tầng 2, giữa tầng 2 và tầng 3 tại 4 góc cột phải \textbf{hoàn toàn bằng nhau} ($A_1A_2 = B_1B_2 = C_1C_2 = D_1D_2$).
+    \item Áp dụng tính chất hình hộp chữ nhật: Gia cố các thanh giằng chéo để giữ các mặt bên luôn là hình bình hành vững chắc.
+\end{itemize}
+\textbf{3. Năng lực số 3.1NC1a:} Các nhóm sử dụng GeoGebra 3D thiết kế trước bản vẽ phối cảnh 3D của kệ sách trước khi cắt dán que tre thực tế.
+\end{stembox}
+
+\noindent \textbf{c) Sản phẩm: Bản thiết kế 3D và sản phẩm mô hình kệ sách}
+Bản thiết kế trên GeoGebra 3D của các nhóm; sản phẩm kệ sách 3 tầng bằng que tre vững chãi, kiểm tra viên bi thăng bằng thành công.
+
+\noindent \textbf{d) Tổ chức thực hiện:}
+\begin{itemize}[leftmargin=0.8cm]
+    \item \textit{Chuyển giao nhiệm vụ:} Giáo viên phát tiêu chí đánh giá sản phẩm STEM; giao nhiệm vụ các nhóm hoàn thiện mô hình và quay clip ngắn giới thiệu.
+    \item \textit{Thực hiện nhiệm vụ:} Các nhóm phân công đo đạc que tre, dán keo và kiểm tra thăng bằng.
+    \item \textit{Báo cáo, thảo luận:} 2 nhóm lên bàn giáo viên đặt mô hình thử tải trọng bằng 3 cuốn sách giáo khoa và kiểm tra thăng bằng viên bi.
+    \item \textit{Kết luận, nhận định:} Giáo viên đánh giá cao sự sáng tạo, tinh thần làm việc nhóm và ứng dụng chính xác toán học vào đời sống.
+\end{itemize}
+
+\section*{IV. PHỤ LỤC HỌC LIỆU BỔ TRỢ}
+
+\subsection*{1. Phiếu học tập phân tầng bậc thang (Worksheet)}
+
+\noindent \textbf{A. PHẦN TRẮC NGHIỆM NHANH (Khắc sâu lý thuyết cốt lõi)}
+\begin{enumerate}[leftmargin=0.6cm]
+    \item Khẳng định nào sau đây là ĐÚNG về điều kiện để hai mặt phẳng song song?
+    \begin{itemize}[leftmargin=0.6cm]
+        \item[A.] Nếu hai mặt phẳng cùng song song với một đường thẳng thì chúng song song với nhau.
+        \item[\textbf{B.}] Nếu mặt phẳng $(\alpha)$ chứa hai đường thẳng cắt nhau cùng song song với mặt phẳng $(\beta)$ thì $(\alpha) \parallel (\beta)$.
+        \item[C.] Nếu mặt phẳng $(\alpha)$ chứa hai đường thẳng phân biệt cùng song song với mặt phẳng $(\beta)$ thì $(\alpha) \parallel (\beta)$.
+        \item[D.] Nếu hai mặt phẳng không cắt nhau thì chúng trùng nhau.
+    \end{itemize}
+
+    \item Cho hai mặt phẳng song song $(\alpha)$ và $(\beta)$. Một mặt phẳng $(\gamma)$ cắt $(\alpha)$ và $(\beta)$ lần lượt theo các giao tuyến $a$ và $b$. Vị trí tương đối của $a$ và $b$ là:
+    \begin{itemize}[leftmargin=0.6cm]
+        \item[A.] $a$ cắt $b$. \quad \textbf{B.} $a \parallel b$. \quad C. $a$ chéo $b$. \quad D. $a \equiv b$.
+    \end{itemize}
+
+    \item Trong các mệnh đề sau về hình lăng trụ, mệnh đề nào SAI?
+    \begin{itemize}[leftmargin=0.6cm]
+        \item[A.] Các cạnh bên của hình lăng trụ song song và bằng nhau.
+        \item[B.] Các mặt bên của hình lăng trụ là các hình bình hành.
+        \item[\textbf{C.}] Các mặt bên của hình lăng trụ luôn là các hình chữ nhật.
+        \item[D.] Hai mặt đáy của hình lăng trụ là hai đa giác bằng nhau nằm trên hai mặt phẳng song song.
+    \end{itemize}
+
+    \item Cho ba mặt phẳng song song $(\alpha), (\beta), (\gamma)$ cắt hai cát tuyến $d, d'$ lần lượt tại $A, B, C$ và $A', B', C'$. Biết $AB = 3, BC = 6, A'B' = 2$. Độ dài đoạn $B'C'$ bằng:
+    \begin{itemize}[leftmargin=0.6cm]
+        \item[A.] $3$. \quad \textbf{B.} $4$. \quad C. $6$. \quad D. $1$.
+    \end{itemize}
+\end{enumerate}
+
+\noindent \textbf{B. PHẦN TỰ LUẬN PHÂN TẦNG BẬC THANG}
+\begin{itemize}[leftmargin=0.6cm]
+    \item \textbf{Tầng 1 (Cơ bản dành cho HS TB-Yếu):}
+    Cho hình chóp $S.ABC$. Gọi $M, N, P$ lần lượt là trung điểm của các cạnh $SA, SB, SC$.
+    \begin{enumerate}[leftmargin=0.5cm]
+        \item Chứng minh rằng đường thẳng $MN$ song song với mặt phẳng $(ABC)$.
+        \item Chứng minh rằng mặt phẳng $(MNP)$ song song với mặt phẳng $(ABC)$.
+    \end{enumerate}
+
+    \item \textbf{Tầng 2 (Thông hiểu):}
+    Cho hai hình bình hành $ABCD$ và $ABEF$ không cùng nằm trong một mặt phẳng.
+    \begin{enumerate}[leftmargin=0.5cm]
+        \item Chứng minh rằng mặt phẳng $(BCE)$ song song với mặt phẳng $(ADF)$.
+        \item Gọi $M$ là một điểm thuộc đoạn thẳng $AC$, $N$ là điểm thuộc đoạn thẳng $BF$ sao cho $\dfrac{AM}{AC} = \dfrac{BN}{BF} = \dfrac{1}{3}$. Chứng minh rằng đường thẳng $MN$ song song với mặt phẳng $(CDEF)$.
+    \end{enumerate}
+
+    \item \textbf{Tầng 3 (Vận dụng cao):}
+    Cho hình lăng trụ tam giác $ABC.A'B'C'$. Gọi $M, N$ lần lượt là trung điểm của $A'B'$ và $CC'$. Mặt phẳng $(\alpha)$ đi qua $MN$ và song song với $B'C$.
+    \begin{enumerate}[leftmargin=0.5cm]
+        \item Xác định thiết diện của hình lăng trụ cắt bởi mặt phẳng $(\alpha)$.
+        \item Tính tỉ số diện tích giữa thiết diện và mặt phẳng đáy $(ABC)$.
+    \end{enumerate}
+\end{itemize}
+
+\subsection*{2. Bảng Rubric đánh giá năng lực học sinh trong bài học}
+
+\begin{center}
+\small
+\begin{tabularx}{\textwidth}{|p{2.8cm}|X|X|X|X|}
+\hline
+\textbf{Tiêu chí} & \textbf{Chưa đạt (Mức 1)} & \textbf{Đạt (Mức 2)} & \textbf{Khá (Mức 3)} & \textbf{Tốt (Mức 4)} \\ \hline
+\textbf{Kỹ năng chứng minh $(\alpha) \parallel (\beta)$} & Quên điều kiện 2 đường cắt nhau; không chỉ ra được 2 đường thẳng song song. & Chỉ ra được 2 đường song song nhưng lập luận cắt nhau chưa rõ ràng. & Thực hiện đúng quy tắc 4 dòng vàng, chứng minh song song chính xác. & Trình bày bài giải mẫu mực, tìm được các đường phụ trợ khéo léo và nhanh chóng. \\ \hline
+\textbf{Thiết diện \& Định lí Thalès} & Không áp dụng được tính chất giao tuyến; tính tỉ số Thalès sai. & Xác định được một số đoạn giao tuyến nhưng chưa khép kín thiết diện. & Xác định chính xác toàn bộ thiết diện; tính đúng tỉ số Thalès không gian. & Lập luận thiết diện xuất sắc; giải quyết trọn vẹn bài toán vận dụng cao về tỉ số diện tích. \\ \hline
+\textbf{Năng lực số \& Năng lực AI} & Chưa thao tác được GeoGebra 3D; chưa hiểu ứng dụng AI. & Dựng được hình 3D cơ bản trên GeoGebra nhưng chưa xoay quan sát. & Dựng hình 3D thành thạo; trình bày được ứng dụng AI trong y tế và xây dựng. & Khai thác sáng tạo mô hình 3D để kiểm chứng hình học; hiểu sâu sắc cơ chế AI mô phỏng kết cấu. \\ \hline
+\textbf{Chủ đề STEM \& Hợp tác nhóm} & Thụ động, không tham gia đo đạc que tre làm sản phẩm STEM. & Có tham gia lắp ráp nhưng sản phẩm kệ sách chưa song song, bị cập kênh. & Chế tạo được mô hình kệ sách các tầng song song, chịu được tải trọng sách. & Chế tạo mô hình thẩm mỹ cao, thăng bằng tuyệt đối; thuyết trình tự tin, xuất sắc. \\ \hline
+\end{tabularx}
+\end{center}
+
+\end{document}
