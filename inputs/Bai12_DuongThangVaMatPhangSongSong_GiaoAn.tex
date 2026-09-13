@@ -1,0 +1,600 @@
+\documentclass[12pt, a4paper]{article}
+% --- 1. Cấu hình Tiếng Việt và Font chữ chuẩn ---
+\usepackage[utf8]{inputenc}
+\usepackage[T5]{fontenc}
+\usepackage[vietnamese]{babel}
+\usepackage{mathptmx} % Font Times New Roman đồng bộ cả chữ và công thức toán, không gây xung đột gói
+
+\makeatletter
+\renewcommand{\normalsize}{\@setfontsize\normalsize{13pt}{16pt}}
+\makeatother
+\normalsize
+
+% --- 2. Gói Toán học & Ký hiệu bổ trợ ---
+\usepackage{amsmath, amssymb, amsfonts, mathrsfs, amsthm}
+\usepackage{graphicx}
+\usepackage{fontawesome}
+\usepackage{booktabs, tabularx, array, multirow}
+\usepackage{enumitem}
+
+% --- 3. Đồ họa TikZ, Bảng biến thiên & Hình không gian ---
+\usepackage{tikz}
+\usetikzlibrary{calc, intersections, angles, quotes, patterns, arrows.meta, 3d}
+\usepackage{pgfplots}
+\pgfplotsset{compat=1.18}
+\usepackage{tkz-euclide}
+\usepackage{tkz-tab}
+
+\renewcommand{\vec}[1]{\overrightarrow{#1}}
+
+% --- 4. Hộp sư phạm (Tcolorbox) ---
+\usepackage[many]{tcolorbox}
+\tcbuselibrary{skins, breakable}
+
+% --- 5. Căn lề chuẩn văn bản giáo án ---
+\usepackage{geometry}
+\geometry{
+    a4paper,
+    left=25mm,
+    right=15mm,
+    top=20mm,
+    bottom=20mm
+}
+
+% --- 6. Header / Footer chuẩn hóa ---
+\usepackage{fancyhdr}
+\usepackage{lastpage}
+\pagestyle{fancy}
+\fancyhf{}
+
+\fancyhead[L]{\small \textit{Kế hoạch bài dạy Toán 11}}
+\fancyhead[R]{\textbf{Trang \thepage/\pageref{LastPage}}}
+\fancyfoot[L]{\small \textit{Tổ Toán - Tin}}
+\fancyfoot[R]{\small \textit{Trường THCS\&THPT Hồng Vân}}
+\renewcommand{\headrulewidth}{0.4pt}
+\renewcommand{\footrulewidth}{0.4pt}
+
+% --- 7. Giãn dòng & Giãn đoạn theo chuẩn Nghị định 30/2020/NĐ-CP ---
+\usepackage{setspace}
+\setstretch{1.15}
+\setlength{\parindent}{1.0cm}
+\setlength{\parskip}{5pt}
+
+% Định nghĩa hộp sư phạm chuyên dụng
+\newtcolorbox{pedabox}[2][]{
+    enhanced,
+    breakable,
+    colback=blue!3!white,
+    colframe=blue!65!black,
+    fonttitle=\bfseries\small,
+    title={#2},
+    arc=2mm,
+    boxrule=0.6pt,
+    left=3mm, right=3mm, top=2mm, bottom=2mm,
+    #1
+}
+
+\newtcolorbox{aibox}[2][]{
+    enhanced,
+    breakable,
+    colback=teal!4!white,
+    colframe=teal!70!black,
+    fonttitle=\bfseries\small,
+    title={#2},
+    arc=2mm,
+    boxrule=0.6pt,
+    left=3mm, right=3mm, top=2mm, bottom=2mm,
+    #1
+}
+
+\newtcolorbox{scaffoldbox}[2][]{
+    enhanced,
+    breakable,
+    colback=orange!4!white,
+    colframe=orange!80!black,
+    fonttitle=\bfseries\small,
+    title={#2},
+    arc=2mm,
+    boxrule=0.6pt,
+    left=3mm, right=3mm, top=2mm, bottom=2mm,
+    #1
+}
+
+\begin{document}
+
+\begin{center}
+    {\fontsize{14pt}{17pt}\selectfont \textbf{KẾ HOẠCH BÀI DẠY MÔN TOÁN LỚP 11}}\\[6pt]
+    {\fontsize{16pt}{19pt}\selectfont \textbf{BÀI 12. ĐƯỜNG THẲNG VÀ MẶT PHẲNG SONG SONG}}\\[4pt]
+    {\fontsize{12pt}{15pt}\selectfont \textbf{Môn học: Toán 11} \ \textbar \ \textbf{Thời lượng: 2 tiết (Tiết 31, 32 theo PPCT | Tuần 11)}}
+\end{center}
+
+\vspace{5pt}
+
+\section*{I. MỤC TIÊU}
+
+\subsection*{1. Kiến thức, Năng lực}
+
+\begin{itemize}[leftmargin=1.2cm]
+    \item \textbf{Yêu cầu cần đạt (Nguyên văn CT GDPT 2018):}
+    \begin{itemize}[leftmargin=0.6cm]
+        \item Nhận biết được đường thẳng song song với mặt phẳng thông qua khái niệm và hình ảnh thực tế.
+        \item Giải thích được điều kiện để đường thẳng song song với mặt phẳng (dấu hiệu nhận biết: đường thẳng không nằm trong mặt phẳng và song song với một đường thẳng nằm trong mặt phẳng đó).
+        \item Giải thích được tính chất cơ bản về đường thẳng song song với mặt phẳng (định lý giao tuyến với mặt phẳng phụ, tính chất hai mặt phẳng cùng chứa đường thẳng song song).
+        \item Vận dụng được kiến thức về đường thẳng song song với mặt phẳng để chứng minh quan hệ song song, tìm giao tuyến, xác định thiết diện và mô tả một số hình ảnh trong thực tiễn.
+    \end{itemize}
+
+    \item \textbf{Năng lực Toán học đặc thù:}
+    \begin{itemize}[leftmargin=0.6cm]
+        \item \textit{Năng lực tư duy và lập luận toán học:} Khả năng chuyển hóa bài toán quan hệ song song giữa đường thẳng và mặt phẳng thành bài toán song song giữa hai đường thẳng; lập luận logic chặt chẽ trong chứng minh hình học không gian, tránh lỗi ngộ nhận khi bỏ sót điều kiện $d \not\subset (P)$.
+        \item \textit{Năng lực mô hình hóa toán học:} Mô tả các đồ vật và cấu trúc thực tế (thanh xà ngang thể dục song song với mặt sàn, đường ống thông gió gắn trần nhà, tay vịn cầu thang song song với mặt sàn) thành mô hình toán học đường thẳng song song mặt phẳng.
+        \item \textit{Năng lực giải quyết vấn đề toán học:} Nắm vững phương pháp then chốt: Muốn chứng minh $d \parallel (P)$, ta tìm trong $(P)$ một đường thẳng $d'$ sao cho $d \parallel d'$ và khẳng định $d \not\subset (P)$; vận dụng tính chất giao tuyến để giải các bài toán xác định thiết diện song song với một đường thẳng cho trước.
+        \item \textit{Năng lực giao tiếp toán học:} Trình bày chứng minh hình học rõ ràng, sử dụng chuẩn xác các ký hiệu toán học ($\parallel, \subset, \not\subset, \cap$); vẽ hình biểu diễn chính xác, thể hiện đúng các yếu tố song song và quy ước nét thấy/nét đứt.
+        \item \textit{Năng lực sử dụng công cụ, phương tiện học toán:} Sử dụng mô hình hình học không gian trực quan; khai thác các ứng dụng trình chiếu và phần mềm GeoGebra 3D để kiểm chứng tính song song trong không gian ảo.
+    \end{itemize}
+
+    \item \textbf{Năng lực số (Theo Thông tư 02/2025/TT-BGDĐT):}
+    \begin{itemize}[leftmargin=0.6cm]
+        \item \textit{Mã 2.2NC1a (Chia sẻ và trình chiếu nội dung số trong môi trường cộng tác):} Học sinh sử dụng điện thoại thông minh chụp ảnh các hình ảnh thực tế minh họa đường thẳng song song với mặt phẳng trong khuôn viên trường học, sau đó sử dụng tính năng phản chiếu màn hình (Screen Mirroring / AirPlay) hoặc tải lên nhóm học tập trực tuyến để trình chiếu báo cáo trước lớp.
+    \end{itemize}
+
+    \item \textbf{Năng lực AI (Theo Quyết định 2422/QĐ-BGDĐT):}
+    \begin{itemize}[leftmargin=0.6cm]
+        \item \textit{Mã 11.C3.1 (Kỹ thuật thiết kế câu lệnh Prompt và khai thác AI có định hướng):} Học sinh biết cách xây dựng câu lệnh Prompt chuẩn xác (gồm bối cảnh, giả thiết, yêu cầu sư phạm) để yêu cầu trợ lý AI đóng vai trò gia sư gợi ý sơ đồ tư duy phân tích ngược các bước chứng minh đường thẳng song song mặt phẳng; nhận diện được các bước giải AI suy luận thiếu căn cứ tiên đề để phản biện và chỉnh sửa.
+    \end{itemize}
+
+    \item \textbf{Năng lực chung:}
+    \begin{itemize}[leftmargin=0.6cm]
+        \item \textit{Tự chủ và tự học:} Chủ động tìm tòi, hệ thống hóa các định lý và dấu hiệu nhận biết, tự giác hoàn thành phiếu học tập.
+        \item \textit{Giao tiếp và hợp tác:} Tích cực thảo luận nhóm, phân công nhiệm vụ vẽ hình, tìm đường thẳng phụ trợ và báo cáo kết quả.
+    \end{itemize}
+\end{itemize}
+
+\subsection*{2. Phẩm chất}
+
+\begin{itemize}[leftmargin=1.2cm]
+    \item \textbf{Chăm chỉ:} Cẩn thận khi vẽ hình không gian, kiên trì suy luận tìm kiếm đường thẳng phụ trợ $d' \subset (P)$.
+    \item \textbf{Trung thực:} Báo cáo số liệu và kết quả thảo luận nhóm trung thực, không sao chép máy móc lời giải từ AI.
+    \item \textbf{Trách nhiệm:} Có trách nhiệm trong việc quản lý và chia sẻ hình ảnh số an toàn trên mạng lớp học.
+\end{itemize}
+
+\section*{II. THIẾT BỊ DẠY HỌC VÀ HỌC LIỆU}
+
+\begin{itemize}[leftmargin=1.2cm]
+    \item \textbf{Giáo viên:}
+    \begin{itemize}[leftmargin=0.6cm]
+        \item Kế hoạch bài dạy, bài giảng điện tử PowerPoint/Canva tương tác.
+        \item Mô hình khung tứ diện và hình chóp bằng thép/mica có lắp sẵn các que chỉ đường thẳng song song mặt phẳng.
+        \item Phiếu học tập phân tầng bậc thang (Worksheet) và Bảng Rubric đánh giá năng lực học sinh.
+        \item Màn hình tivi/máy chiếu có kết nối không dây phục vụ học sinh trình chiếu sản phẩm ảnh số.
+    \end{itemize}
+    \item \textbf{Học sinh:}
+    \begin{itemize}[leftmargin=0.6cm]
+        \item SGK Toán 11, vở ghi chép, thước kẻ, ê-ke, bút chì.
+        \item Điện thoại thông minh (mỗi nhóm 1 máy) để chụp ảnh thực tế và gửi bài.
+    \end{itemize}
+\end{itemize}
+
+\section*{III. TIẾN TRÌNH DẠY HỌC (TIẾT 31 VÀ TIẾT 32 THEO PPCT)}
+
+% ==============================================================================
+% TIẾT 1 (TIẾT 31 THEO PPCT)
+% ==============================================================================
+\subsection*{TIẾT 1 (TIẾT 31 THEO PPCT): ĐƯỜNG THẲNG SONG SONG VỚI MẶT PHẲNG \& ĐIỀU KIỆN NHẬN BIẾT}
+
+\subsubsection*{1. Hoạt động 1: Mở đầu (Khởi động) (5 phút)}
+
+\noindent \textbf{a) Mục tiêu:}
+Kích hoạt nhận thức của học sinh về vị trí tương đối giữa một đường thẳng và một mặt phẳng trong không gian thực tế đời sống.
+
+\noindent \textbf{b) Nội dung: Thử thách trực quan ``Cây xà đơn và mặt sàn''}
+\begin{pedabox}{Khởi động: Cây xà đơn trong giờ thể dục}
+Quan sát cây xà đơn ở sân thể dục trường ta:
+\begin{enumerate}[leftmargin=0.6cm]
+    \item Thanh xà ngang mà học sinh nắm tay vào để đu lên có điểm chung nào với mặt sân đất không?
+    \item Khoảng cách từ các điểm trên thanh xà ngang đến mặt sân đất có thay đổi không nếu thanh xà được lắp chuẩn kỹ thuật?
+    \item Ta nói thanh xà ngang có mối quan hệ vị trí như thế nào đối với mặt sân?
+\end{enumerate}
+\end{pedabox}
+
+\noindent \textbf{c) Sản phẩm: Câu trả lời của học sinh}
+\begin{enumerate}[leftmargin=0.6cm]
+    \item Thanh xà ngang và mặt đất hoàn toàn không có điểm chung.
+    \item Khoảng cách từ mọi điểm trên thanh xà ngang đến mặt đất đều bằng nhau (bằng chiều cao hai cột trụ).
+    \item Thanh xà ngang \textbf{song song} với mặt sân đất.
+\end{enumerate}
+
+\noindent \textbf{d) Tổ chức thực hiện:}
+Giáo viên đặt câu hỏi gợi mở; học sinh trao đổi cặp đôi và trả lời; giáo viên kết nối: Trong không gian, giữa một đường thẳng và một mặt phẳng có những vị trí tương đối nào và khi nào chúng song song với nhau?
+
+\subsubsection*{2. Hoạt động 2: Hình thành kiến thức mới (25 phút)}
+
+\noindent \textbf{a) Mục tiêu:}
+- Nhận biết 3 vị trí tương đối của đường thẳng và mặt phẳng.
+- Nắm vững định nghĩa đường thẳng song song với mặt phẳng.
+- Nắm vững Định lý 1 (Điều kiện để đường thẳng song song với mặt phẳng) và phương pháp chứng minh cơ bản.
+
+\noindent \textbf{b) Nội dung: Vị trí tương đối \& Định lý nhận biết}
+\begin{pedabox}{Nội dung 1: Ba vị trí tương đối của đường thẳng $d$ và mặt phẳng $(\alpha)$}
+Cho đường thẳng $d$ và mặt phẳng $(\alpha)$ trong không gian:
+\begin{center}
+\small
+\begin{tabularx}{\textwidth}{|p{4.2cm}|X|c|}
+\hline
+\textbf{Vị trí tương đối} & \textbf{Đặc điểm số điểm chung} & \textbf{Ký hiệu toán học} \\ \hline
+$d$ \textbf{cắt} mặt phẳng $(\alpha)$ & Có duy nhất một điểm chung & $d \cap (\alpha) = \{M\}$ \\ \hline
+$d$ \textbf{nằm trong} mặt phẳng $(\alpha)$ & Có vô số điểm chung (mọi điểm của $d$ đều thuộc $(\alpha)$) & $d \subset (\alpha)$ \\ \hline
+$d$ \textbf{song song với} $(\alpha)$ & \textbf{Không có điểm chung nào} & $d \parallel (\alpha)$ hoặc $(\alpha) \parallel d$ \\ \hline
+\end{tabularx}
+\end{center}
+\end{pedabox}
+
+\begin{pedabox}{Nội dung 2: Định lý 1 (Điều kiện để đường thẳng song song với mặt phẳng)}
+\textbf{Định lý 1 (Dấu hiệu nhận biết then chốt):}
+Nếu đường thẳng $d$ không nằm trong mặt phẳng $(\alpha)$ và $d$ song song với một đường thẳng $d'$ nằm trong $(\alpha)$ thì $d$ song song với $(\alpha)$.
+\begin{center}
+\begin{tikzpicture}[scale=0.9]
+    \draw[thick, fill=blue!5] (0,0) -- (4.5,0) -- (5.5,2.2) -- (1,2.2) -- cycle;
+    \node at (0.7, 0.4) {$(\alpha)$};
+
+    % Đường thẳng d' nằm trong (alpha)
+    \draw[thick, blue] (1.5,1.2) -- (4.8,1.2) node[right] {$d'$};
+    \fill (2.2,1.2) circle (1.5pt) node[below] {$A$};
+    \fill (4.0,1.2) circle (1.5pt) node[below] {$B$};
+
+    % Đường thẳng d nằm ngoài (alpha) song song d'
+    \draw[thick, red] (1.5,3.0) -- (4.8,3.0) node[right] {$d$};
+
+    % Mũi tên ký hiệu song song
+    \draw[-{Latex[length=2mm]}, red] (3.0,3.0) -- (3.2,3.0);
+    \draw[-{Latex[length=2mm]}, blue] (3.0,1.2) -- (3.2,1.2);
+\end{tikzpicture}
+\end{center}
+$$\left.\begin{array}{l} d \not\subset (\alpha) \\ d' \subset (\alpha) \\ d \parallel d' \end{array}\right\} \implies d \parallel (\alpha)$$
+\end{pedabox}
+
+\begin{scaffoldbox}{Hộp hỗ trợ sư phạm: Khắc phục sai lầm kinh điển của học sinh TB-Yếu}
+\begin{itemize}[leftmargin=0.6cm]
+    \item \textbf{Lỗi bỏ quên điều kiện $d \not\subset (\alpha)$:} Nhiều học sinh chỉ ghi: ``Vì $d \parallel d'$ mà $d' \subset (\alpha)$ nên $d \parallel (\alpha)$''. $\implies$ \textbf{THIẾU ĐIỀU KIỆN}! Bởi vì nếu $d$ cũng nằm trong $(\alpha)$ thì $d$ và $d'$ chỉ là hai đường thẳng song song cùng nằm trong $(\alpha)$, chứ $d$ không hề song song với $(\alpha)$.
+    \item \textbf{Quy tắc 3 dòng vàng chứng minh $d \parallel (\alpha)$:}
+    \begin{enumerate}
+        \item Dòng 1: Chỉ ra đường thẳng $d'$ nằm trong $(\alpha)$: $d' \subset (\alpha)$.
+        \item Dòng 2: Chứng minh $d$ song song với $d'$: $d \parallel d'$.
+        \item Dòng 3: Khẳng định $d$ không nằm trong $(\alpha)$: $d \not\subset (\alpha)$.
+        \item $\implies$ Kết luận: $d \parallel (\alpha)$.
+    \end{enumerate}
+\end{itemize}
+\end{scaffoldbox}
+
+\noindent \textbf{c) Sản phẩm: Bảng hệ thống hóa kiến thức trong vở học sinh}
+Học sinh hoàn thiện bảng 3 vị trí tương đối, công thức Định lý 1 và quy tắc 3 dòng vàng vào vở.
+
+\noindent \textbf{d) Tổ chức thực hiện:}
+\begin{itemize}[leftmargin=0.8cm]
+    \item \textit{Chuyển giao nhiệm vụ:} Giáo viên trình chiếu hình ảnh vị trí tương đối và Định lý 1; hướng dẫn học sinh phân tích 3 điều kiện của định lý.
+    \item \textit{Thực hiện nhiệm vụ:} Học sinh lắng nghe, ghi chép và nhắc lại 3 điều kiện cần có.
+    \item \textit{Báo cáo, thảo luận:} 1 học sinh giải thích tại sao bắt buộc phải có điều kiện $d \not\subset (\alpha)$; cả lớp thảo luận.
+    \item \textit{Kết luận, nhận định:} Giáo viên nhấn mạnh: Cốt lõi của việc chứng minh đường thẳng song song mặt phẳng là \textbf{tìm ra một đường thẳng trung gian $d'$ nằm trong mặt phẳng đó song song với $d$}.
+\end{itemize}
+
+\subsubsection*{3. Hoạt động 3: Luyện tập (10 phút)}
+
+\noindent \textbf{a) Mục tiêu:}
+Rèn luyện kỹ năng vận dụng quy tắc 3 dòng vàng để giải bài toán chứng minh đường thẳng song song với mặt phẳng trong hình chóp.
+
+\noindent \textbf{b) Nội dung: Bài toán hình chóp tứ giác}
+\begin{pedabox}{Luyện tập 1: Chứng minh đường thẳng song song mặt phẳng}
+Cho hình chóp $S.ABCD$ có đáy $ABCD$ là hình bình hành. Gọi $M, N$ lần lượt là trung điểm của các cạnh $SA$ và $SD$.
+\begin{enumerate}[leftmargin=0.6cm]
+    \item Chứng minh rằng đường thẳng $MN$ song song với mặt phẳng $(ABCD)$.
+    \item Chứng minh rằng đường thẳng $MN$ song song với mặt phẳng $(SBC)$.
+\end{enumerate}
+\end{pedabox}
+
+\noindent \textbf{c) Sản phẩm: Lời giải chi tiết và hình vẽ TikZ chuẩn mực}
+\begin{center}
+\begin{tikzpicture}[scale=1.1]
+    \coordinate (A) at (0,0);
+    \coordinate (B) at (3.8,0);
+    \coordinate (D) at (1.4,-1.4);
+    \coordinate (C) at ($(B)+(D)-(A)$);
+    \coordinate (S) at (1.6,3.2);
+
+    \draw[thick] (S) -- (A) -- (D) -- (C) -- (S) -- (C);
+    \draw[thick] (S) -- (D);
+    \draw[dashed, thick] (A) -- (B) -- (C);
+    \draw[dashed, thick] (S) -- (B);
+
+    \coordinate (M) at ($(S)!0.5!(A)$);
+    \coordinate (N) at ($(S)!0.5!(D)$);
+    \draw[thick, red] (M) -- (N);
+
+    \fill (S) circle (1.5pt) node[above] {$S$};
+    \fill (A) circle (1.5pt) node[left] {$A$};
+    \fill (B) circle (1.5pt) node[right] {$B$};
+    \fill (C) circle (1.5pt) node[below right] {$C$};
+    \fill (D) circle (1.5pt) node[below left] {$D$};
+    \fill (M) circle (1.5pt) node[left] {$M$};
+    \fill (N) circle (1.5pt) node[above right] {$N$};
+\end{tikzpicture}
+\end{center}
+
+\textbf{Lời giải chi tiết:}
+\begin{enumerate}[leftmargin=0.6cm]
+    \item \textbf{Chứng minh $MN \parallel (ABCD)$:}
+    \begin{itemize}
+        \item Xét tam giác $SAD$, vì $M, N$ lần lượt là trung điểm của $SA$ và $SD$ nên $MN$ là đường trung bình của tam giác $SAD$. Suy ra $MN \parallel AD$.
+        \item Ta có:
+        $$\left.\begin{array}{l} MN \parallel AD \\ AD \subset (ABCD) \\ MN \not\subset (ABCD) \end{array}\right\} \implies MN \parallel (ABCD) \quad (\text{theo Định lý 1})$$
+    \end{itemize}
+
+    \item \textbf{Chứng minh $MN \parallel (SBC)$:}
+    \begin{itemize}
+        \item Vì $ABCD$ là hình bình hành nên $AD \parallel BC$.
+        \item Mặt khác, theo câu a ta có $MN \parallel AD$.
+        \item Do đó, theo tính chất bắc cầu: $MN \parallel BC$.
+        \item Ta có:
+        $$\left.\begin{array}{l} MN \parallel BC \\ BC \subset (SBC) \\ MN \not\subset (SBC) \end{array}\right\} \implies MN \parallel (SBC) \quad (\text{theo Định lý 1})$$
+    \end{itemize}
+\end{enumerate}
+
+\noindent \textbf{d) Tổ chức thực hiện:}
+\begin{itemize}[leftmargin=0.8cm]
+    \item \textit{Chuyển giao nhiệm vụ:} Giáo viên yêu cầu học sinh làm bài cá nhân vào vở, 1 học sinh khá lên bảng làm câu 1, 1 học sinh trung bình lên bảng làm câu 2.
+    \item \textit{Thực hiện nhiệm vụ:} Học sinh vẽ hình vào vở, đối chiếu 3 dòng điều kiện.
+    \item \textit{Báo cáo, thảo luận:} Hai học sinh trình bày lời giải trên bảng; cả lớp nhận xét các bước lập luận.
+    \item \textit{Kết luận, nhận định:} Giáo viên biểu dương cách trình bày chuẩn mực, nhắc nhở cả lớp ghi nhớ cách tìm đường trung gian $AD$ và $BC$.
+\end{itemize}
+
+\subsubsection*{4. Hoạt động 4: Vận dụng thực tiễn & Năng lực số (5 phút)}
+
+\noindent \textbf{a) Mục tiêu:}
+Tích hợp Năng lực số (Mã 2.2NC1a): Học sinh sử dụng điện thoại thông minh chụp ảnh các vật thể thực tế minh họa cho đường thẳng song song mặt phẳng và trình chiếu lên màn hình lớp học.
+
+\noindent \textbf{b) Nội dung: Nhiệm vụ số chia sẻ hình ảnh}
+\begin{aibox}{Nhiệm vụ số: Săn lùng đường thẳng song song mặt phẳng (Mã 2.2NC1a)}
+\begin{enumerate}[leftmargin=0.6cm]
+    \item Đại diện mỗi tổ dùng điện thoại thông minh chụp nhanh $1$ bức ảnh trong phòng học hoặc ngoài hành lang:
+    \begin{itemize}
+        \item Tổ 1: Mép trên của bảng viết và mặt sàn lớp học.
+        \item Tổ 2: Ống đèn tuýp LED trên trần và mặt sàn nhà.
+        \item Tổ 3: Tay vịn lan can hành lang và mặt nền hành lang.
+        \item Tổ 4: Khung cửa sổ trên và mặt sàn lớp học.
+    \end{itemize}
+    \item Sử dụng tính năng chiếu màn hình không dây (Screen Mirroring) hoặc gửi nhanh vào nhóm Zalo/Google Classroom của lớp để trình chiếu lên màn hình lớn.
+    \item Hãy chỉ ra đường thẳng $d'$ trên mặt phẳng sàn song song với đường thẳng trong ảnh để chứng minh quan hệ song song đó.
+\end{enumerate}
+\end{aibox}
+
+\noindent \textbf{c) Sản phẩm: Hình ảnh thực tế được trình chiếu của 4 tổ}
+Học sinh trình chiếu ảnh trực tiếp; giải thích ngắn gọn: Mép trên của bảng song song với mép chân tường (đường $d'$ nằm trên mặt sàn), do đó mép trên của bảng song song với mặt sàn lớp học.
+
+\noindent \textbf{d) Tổ chức thực hiện:}
+GV kết nối tivi không dây; các tổ cử đại diện bấm chiếu ảnh và thuyết minh ngắn 30 giây; GV nhận xét tinh thần ứng dụng công nghệ số và kết thúc Tiết 1.
+
+% ==============================================================================
+% TIẾT 2 (TIẾT 32 THEO PPCT)
+% ==============================================================================
+\newpage
+\subsection*{TIẾT 2 (TIẾT 32 THEO PPCT): TÍNH CHẤT CƠ BẢN \& TÍCH HỢP KỸ THUẬT PROMPT AI}
+
+\subsubsection*{1. Hoạt động 1: Khởi động (Mở đầu) (5 phút)}
+
+\noindent \textbf{a) Mục tiêu:}
+Dẫn dắt học sinh khám phá tính chất giao tuyến khi một mặt phẳng cắt một mặt phẳng khác theo đường thẳng song song với đường thẳng đã cho.
+
+\noindent \textbf{b) Nội dung: Tình huống cắt khối giò chả / chiếc bánh}
+\begin{pedabox}{Khởi động: Lát cắt song song}
+Cho một đường thẳng $d$ song song với mặt bàn $(P)$. Một lưỡi dao phẳng $(\beta)$ đi qua đường thẳng $d$ và cắt mặt bàn $(P)$ theo một vết cắt $d'$.
+\begin{enumerate}[leftmargin=0.6cm]
+    \item Vết cắt $d'$ trên mặt bàn có thể cắt đường thẳng $d$ của sống dao không? Vì sao?
+    \item Hai đường thẳng $d$ và $d'$ cùng nằm trong mặt phẳng lưỡi dao $(\beta)$. Vậy chúng có vị trí tương đối như thế nào với nhau?
+\end{enumerate}
+\end{pedabox}
+
+\noindent \textbf{c) Sản phẩm: Câu trả lời của học sinh}
+\begin{enumerate}[leftmargin=0.6cm]
+    \item Vết cắt $d'$ không thể cắt $d$, vì nếu cắt nhau tại điểm $M$ thì $M \in d$ và $M \in (P)$, mâu thuẫn với giả thiết $d \parallel (P)$ (không có điểm chung).
+    \item Vì $d$ và $d'$ cùng nằm trong mặt phẳng $(\beta)$ và không có điểm chung nên bắt buộc $d \parallel d'$.
+\end{enumerate}
+
+\noindent \textbf{d) Tổ chức thực hiện:}
+Giáo viên dùng quyển sách và mặt bàn minh họa; học sinh quan sát, rút ra kết luận; giáo viên chính thức giới thiệu Định lý 2.
+
+\subsubsection*{2. Hoạt động 2: Hình thành kiến thức mới (20 phút)}
+
+\noindent \textbf{a) Mục tiêu:}
+- Nắm vững Định lý 2 (tính chất giao tuyến của mặt phẳng chứa đường thẳng song song).
+- Nắm vững Hệ quả về giao tuyến của hai mặt phẳng cùng song song với một đường thẳng.
+- Nắm vững Định lý 3 (sự tồn tại duy nhất của mặt phẳng chứa một đường thẳng và song song với một đường thẳng chéo nhau).
+
+\noindent \textbf{b) Nội dung: Các định lý tính chất}
+\begin{pedabox}{Nội dung 1: Định lý 2 (Định lý giao tuyến quan trọng)}
+\textbf{Định lý 2:} Cho đường thẳng $d$ song song với mặt phẳng $(\alpha)$. Nếu mặt phẳng $(\beta)$ chứa $d$ và cắt $(\alpha)$ theo giao tuyến $d'$ thì $d'$ song song với $d$.
+\begin{center}
+\begin{tikzpicture}[scale=0.9]
+    % Mặt phẳng (alpha)
+    \draw[thick, fill=blue!5] (0,0) -- (4.5,0) -- (5.5,2.0) -- (1,2.0) -- cycle;
+    \node at (0.7, 0.4) {$(\alpha)$};
+
+    % Mặt phẳng (beta) cắt (alpha) theo giao tuyến d'
+    \draw[thick, fill=orange!10, fill opacity=0.7] (1.5,1.0) -- (4.8,1.0) -- (4.8,3.2) -- (1.5,3.2) -- cycle;
+    \node at (1.2, 2.8) {$(\beta)$};
+
+    % Giao tuyến d'
+    \draw[thick, blue] (1.5,1.0) -- (4.8,1.0) node[right] {$d'$};
+
+    % Đường thẳng d nằm trên (beta)
+    \draw[thick, red] (1.5,3.2) -- (4.8,3.2) node[right] {$d$};
+\end{tikzpicture}
+\end{center}
+$$\left.\begin{array}{l} d \parallel (\alpha) \\ d \subset (\beta) \\ (\alpha) \cap (\beta) = d' \end{array}\right\} \implies d' \parallel d$$
+\end{pedabox}
+
+\begin{pedabox}{Nội dung 2: Hệ quả & Định lý 3}
+\begin{itemize}[leftmargin=0.6cm]
+    \item \textbf{Hệ quả:} Nếu hai mặt phẳng phân biệt cùng song song với một đường thẳng thì giao tuyến của chúng (nếu có) cũng song song với đường thẳng đó.
+    $$\left.\begin{array}{l} (\alpha) \parallel d \\ (\beta) \parallel d \\ (\alpha) \cap (\beta) = a \end{array}\right\} \implies a \parallel d$$
+    \item \textbf{Định lý 3 (Tồn tại mặt phẳng song song đường thẳng):} Cho hai đường thẳng chéo nhau. Có một và chỉ một mặt phẳng chứa đường thẳng này và song song với đường thẳng kia.
+\end{itemize}
+\end{pedabox}
+
+\begin{scaffoldbox}{Hộp hỗ trợ sư phạm: Ứng dụng Định lý 2 để tìm giao tuyến và thiết diện}
+Khi tìm giao tuyến của mặt phẳng $(\beta)$ với mặt phẳng $(\alpha)$ mà trong $(\beta)$ có đường thẳng $d \parallel (\alpha)$:
+\begin{itemize}[leftmargin=0.6cm]
+    \item \textit{Bước 1:} Tìm một điểm chung $M \in (\alpha) \cap (\beta)$.
+    \item \textit{Bước 2:} Khẳng định giao tuyến đi qua $M$ và song song với $d$:
+    $$(\alpha) \cap (\beta) = d' \quad (d' \parallel d, \, M \in d')$$
+\end{itemize}
+\end{scaffoldbox}
+
+\noindent \textbf{c) Sản phẩm: Kiến thức chuẩn hóa và sơ đồ giải toán}
+Học sinh hoàn thành định lý, hệ quả và khung phương pháp tìm giao tuyến vào vở ghi chép.
+
+\noindent \textbf{d) Tổ chức thực hiện:}
+GV giảng giải, liên hệ với định lý giao tuyến ở Bài 11; HS ghi nhận sự liên kết logic giữa các bài học.
+
+\subsubsection*{3. Hoạt động 3: Luyện tập giải toán phân hóa (15 phút)}
+
+\noindent \textbf{a) Mục tiêu:}
+Vận dụng Định lý 2 để xác định thiết diện của hình chóp cắt bởi mặt phẳng song song với một đường thẳng cho trước.
+
+\noindent \textbf{b) Nội dung: Bài toán thiết diện song song}
+\begin{pedabox}{Luyện tập 2: Xác định thiết diện của hình chóp $S.ABCD$}
+Cho hình chóp $S.ABCD$ có đáy $ABCD$ là hình thang với hai đáy là $AB$ và $CD$ ($AB \parallel CD, AB > CD$). Lấy điểm $M$ nằm trên cạnh $SA$ ($M$ không trùng với $S$ và $A$). Mặt phẳng $(\alpha)$ đi qua $M$ và song song với hai đường thẳng $AB$ và $SC$.
+\begin{enumerate}[leftmargin=0.6cm]
+    \item Tìm giao tuyến của mặt phẳng $(\alpha)$ với các mặt $(SAB), (ABCD), (SCD), (SBC)$.
+    \item Thiết diện của hình chóp cắt bởi mặt phẳng $(\alpha)$ là hình gì?
+\end{enumerate}
+\end{pedabox}
+
+\noindent \textbf{c) Sản phẩm: Lời giải chi tiết và hình vẽ TikZ chuẩn mực}
+\begin{center}
+\begin{tikzpicture}[scale=1.1]
+    \coordinate (A) at (0,0);
+    \coordinate (B) at (4.5,0);
+    \coordinate (D) at (1.2,-1.4);
+    \coordinate (C) at (3.2,-1.4);
+    \coordinate (S) at (1.8,3.2);
+
+    \draw[thick] (S) -- (A) -- (D) -- (C) -- (B) -- (S) -- (C);
+    \draw[thick] (S) -- (D);
+    \draw[dashed, thick] (A) -- (B);
+
+    \coordinate (M) at ($(S)!0.4!(A)$);
+    % Qua M kẻ song song AB cắt SB tại N
+    \coordinate (N) at ($(S)!0.4!(B)$);
+    % Qua N kẻ song song SC cắt BC tại P
+    \coordinate (P) at ($(B)!0.6!(C)$);
+    % Qua P kẻ song song AB (song song CD) cắt AD tại Q
+    \coordinate (Q) at ($(A)!0.6!(D)$);
+
+    \draw[thick, red] (M) -- (N) -- (P) -- (Q) -- cycle;
+    \draw[dashed, thick, red] (M) -- (Q);
+
+    \fill (S) circle (1.5pt) node[above] {$S$};
+    \fill (A) circle (1.5pt) node[left] {$A$};
+    \fill (B) circle (1.5pt) node[right] {$B$};
+    \fill (C) circle (1.5pt) node[below right] {$C$};
+    \fill (D) circle (1.5pt) node[below left] {$D$};
+    \fill (M) circle (1.5pt) node[left] {$M$};
+    \fill (N) circle (1.5pt) node[above right] {$N$};
+    \fill (P) circle (1.5pt) node[below right] {$P$};
+    \fill (Q) circle (1.5pt) node[left] {$Q$};
+\end{tikzpicture}
+\end{center}
+
+\textbf{Lời giải chi tiết:}
+\begin{enumerate}[leftmargin=0.6cm]
+    \item \textbf{Tìm các đoạn giao tuyến:}
+    \begin{itemize}
+        \item Xét mặt phẳng $(SAB)$: Điểm $M \in (\alpha) \cap (SAB)$. Vì $(\alpha) \parallel AB$ nên theo Định lý 2, giao tuyến của $(\alpha)$ với $(SAB)$ là đường thẳng đi qua $M$ và song song với $AB$. Đường thẳng này cắt $SB$ tại điểm $N \implies (\alpha) \cap (SAB) = MN$ với $MN \parallel AB$.
+        \item Xét mặt phẳng $(SBC)$: Điểm $N \in (\alpha) \cap (SBC)$. Vì $(\alpha) \parallel SC$ nên theo Định lý 2, giao tuyến của $(\alpha)$ với $(SBC)$ là đường thẳng qua $N$ song song với $SC$. Đường thẳng này cắt $BC$ tại điểm $P \implies (\alpha) \cap (SBC) = NP$ với $NP \parallel SC$.
+        \item Xét mặt phẳng đáy $(ABCD)$: Điểm $P \in (\alpha) \cap (ABCD)$. Vì $(\alpha) \parallel AB$ nên theo Định lý 2, giao tuyến của $(\alpha)$ với $(ABCD)$ là đường thẳng qua $P$ song song với $AB$ (và song song với $CD$). Đường thẳng này cắt $AD$ tại điểm $Q \implies (\alpha) \cap (ABCD) = PQ$ với $PQ \parallel AB \parallel CD$.
+        \item Đoạn giao tuyến cuối cùng khép kín là $QM$ trên mặt phẳng $(SAD)$.
+    \end{itemize}
+
+    \item \textbf{Kết luận thiết diện:}
+    Thiết diện cắt bởi mặt phẳng $(\alpha)$ là tứ giác $MNPQ$.
+    Vì $MN \parallel AB$ và $PQ \parallel AB \implies MN \parallel PQ$.
+    Do đó, thiết diện $MNPQ$ là một \textbf{hình thang} (có đáy $MN$ và $PQ$).
+\end{enumerate}
+
+\noindent \textbf{d) Tổ chức thực hiện:}
+\begin{itemize}[leftmargin=0.8cm]
+    \item \textit{Chuyển giao nhiệm vụ:} Giáo viên chia lớp thành các nhóm 4 em, giao nhiệm vụ tìm 4 đoạn giao tuyến và xác định hình dạng thiết diện trong 8 phút.
+    \item \textit{Thực hiện nhiệm vụ:} Các nhóm phân công vẽ hình, lần lượt áp dụng Định lý 2 cho từng mặt phẳng.
+    \item \textit{Báo cáo, thảo luận:} Nhóm 2 treo bảng phụ; đại diện nhóm thuyết trình lập luận; các nhóm khác nhận xét.
+    \item \textit{Kết luận, nhận định:} Giáo viên chốt lại phương pháp: Khi mặt phẳng song song với đường thẳng, vết cắt trên các mặt chứa đường thẳng đó luôn song song với chính đường thẳng đó.
+\end{itemize}
+
+\subsubsection*{4. Hoạt động 4: Vận dụng thực tiễn & Tích hợp Năng lực AI (5 phút)}
+
+\noindent \textbf{a) Mục tiêu:}
+Tích hợp Năng lực AI (Mã 11.C3.1): Hướng dẫn học sinh thiết kế câu lệnh Prompt chuẩn mực để sử dụng trợ lý AI như một người gia sư hỗ trợ phân tích các bước chứng minh hình học không gian.
+
+\noindent \textbf{b) Nội dung: Kỹ thuật Prompting hình học}
+\begin{aibox}{Tích hợp AI: Kỹ thuật đặt câu lệnh Prompt học hình học không gian (Mã 11.C3.1)}
+\textbf{Tình huống học tập:}
+Khi làm bài tập hình học không gian ở nhà gặp bài toán khó, nhiều bạn thường nhập vào AI câu lệnh rất ngắn: ``Giải bài này hộ mình: Cho hình chóp $S.ABCD$...'' dẫn đến AI giải tắt, dùng kiến thức lớp 12 (tọa độ Oxyz) hoặc đưa ra lập luận sai.
+\begin{enumerate}[leftmargin=0.6cm]
+    \item \textbf{Cấu trúc Prompt chuẩn 3 phần:}
+    \begin{itemize}
+        \item \textit{Vai trò (Role):} Bạn là một giáo viên dạy Toán 11 giàu kinh nghiệm sư phạm.
+        \item \textit{Nhiệm vụ \& Giới hạn (Task \& Constraint):} Hãy gợi ý sơ đồ tư duy phân tích ngược để chứng minh $d \parallel (\alpha)$ bằng kiến thức thuần túy lớp 11 (không dùng tọa độ Oxyz). Không giải hộ đáp số ngay, hãy đặt câu hỏi gợi ý để tôi tự tư duy.
+        \item \textit{Dữ liệu đầu vào (Context):} Cung cấp chính xác giả thiết của bài toán.
+    \end{itemize}
+    \item \textbf{Nhiệm vụ học sinh:} Hãy viết một câu lệnh Prompt hoàn chỉnh để nhờ AI hướng dẫn bài toán: ``Chứng minh đường thẳng đi qua hai trọng tâm của hai tam giác thì song song với một mặt phẳng''.
+\end{enumerate}
+\end{aibox}
+
+\noindent \textbf{c) Sản phẩm: Câu lệnh Prompt mẫu của học sinh}
+``Em đang học bài Đường thẳng song song mặt phẳng (Toán 11). Thầy/cô AI hãy đóng vai gia sư hướng dẫn em: Để chứng minh đường thẳng $MN$ nối hai trọng tâm của $\triangle SAB$ và $\triangle SBC$ song song với mặt phẳng đáy $(ABCD)$, em cần tìm đường thẳng $d'$ nào nằm trong $(ABCD)$? Tỉ số Ta-lét nào giúp chứng minh $MN \parallel d'$? Xin hãy gợi ý từng bước, không viết lời giải sẵn.''
+
+\noindent \textbf{d) Tổ chức thực hiện:}
+Giáo viên trình chiếu mẫu Prompt; 1 học sinh đọc câu lệnh của mình; giáo viên nhận xét tính hiệu quả của kỹ thuật câu lệnh và dặn dò bài tập về nhà.
+
+---
+
+\section*{IV. PHỤ LỤC HỌC LIỆU BỔ TRỢ}
+
+\subsection*{1. Phiếu học tập phân tầng bậc thang (Worksheet)}
+
+\noindent \textbf{A. PHẦN TRẮC NGHIỆM NHANH (Khắc sâu lý thuyết)}
+\begin{enumerate}[leftmargin=0.6cm]
+    \item Cho đường thẳng $a$ không nằm trong mặt phẳng $(P)$ và song song với đường thẳng $b$ nằm trong $(P)$. Khẳng định nào sau đây là ĐÚNG?
+    \begin{itemize}[leftmargin=0.6cm]
+        \item[A.] $a$ cắt $(P)$. \quad \textbf{B.} $a \parallel (P)$. \quad C. $a \subset (P)$. \quad D. $a$ chéo với $(P)$.
+    \end{itemize}
+    \item Cho đường thẳng $d \parallel (P)$. Nếu mặt phẳng $(Q)$ chứa $d$ và cắt $(P)$ theo giao tuyến $c$ thì:
+    \begin{itemize}[leftmargin=0.6cm]
+        \item[A.] $c$ cắt $d$. \quad \textbf{B.} $c \parallel d$. \quad C. $c$ chéo với $d$. \quad D. $c \perp d$.
+    \end{itemize}
+    \item Cho hai đường thẳng chéo nhau $a$ và $b$. Có bao nhiêu mặt phẳng chứa $a$ và song song với $b$?
+    \begin{itemize}[leftmargin=0.6cm]
+        \item[\textbf{A.}] Có duy nhất 1 mặt phẳng. \quad B. Có 2 mặt phẳng.
+        \item[C.] Có vô số mặt phẳng. \quad D. Không có mặt phẳng nào.
+    \end{itemize}
+\end{enumerate}
+
+\noindent \textbf{B. PHẦN TỰ LUẬN PHÂN TẦNG BẬC THANG}
+\begin{itemize}[leftmargin=0.6cm]
+    \item \textbf{Tầng 1 (Cơ bản dành cho HS TB-Yếu):} Cho hình chóp $S.ABCD$ có đáy $ABCD$ là hình bình hành tâm $O$. Gọi $I$ là trung điểm của cạnh $SC$. Chứng minh rằng đường thẳng $OI$ song song với mặt phẳng $(SAB)$ và mặt phẳng $(SAD)$.
+    \item \textbf{Tầng 2 (Thông hiểu):} Cho tứ diện $ABCD$. Gọi $G$ là trọng tâm của tam giác $ABD$, lấy điểm $M$ trên cạnh $BC$ sao cho $BM = 2MC$. Chứng minh rằng đường thẳng $MG$ song song với mặt phẳng $(ACD)$.
+    \item \textbf{Tầng 3 (Vận dụng cao):} Cho hình chóp $S.ABCD$ có đáy $ABCD$ là hình bình hành. Mặt phẳng $(\alpha)$ đi qua cạnh $AB$ và cắt cạnh $SC$ tại điểm $K$ sao cho $\dfrac{SK}{SC} = \dfrac{1}{3}$. Mặt phẳng $(\alpha)$ cắt cạnh $SD$ tại $L$. Tính tỉ số $\dfrac{SL}{SD}$ và xác định hình dạng thiết diện của hình chóp cắt bởi mặt phẳng $(\alpha)$.
+\end{itemize}
+
+\subsection*{2. Bảng Rubric đánh giá năng lực học sinh trong bài học}
+
+\begin{center}
+\small
+\begin{tabularx}{\textwidth}{|p{2.8cm}|X|X|X|X|}
+\hline
+\textbf{Tiêu chí} & \textbf{Chưa đạt (Mức 1)} & \textbf{Đạt (Mức 2)} & \textbf{Khá (Mức 3)} & \textbf{Tốt (Mức 4)} \\ \hline
+\textbf{Kỹ năng chứng minh $d \parallel (P)$} & Quên điều kiện $d \not\subset (P)$; không tìm được đường thẳng trung gian $d'$. & Tìm được đường trung gian $d'$ nhưng lập luận song song chưa chặt chẽ. & Vận dụng đúng quy tắc 3 dòng vàng; chứng minh song song chính xác. & Trình bày bài giải mẫu mực, tìm được đường phụ trợ khéo léo trong các bài toán trọng tâm. \\ \hline
+\textbf{Xác định giao tuyến \& thiết diện} & Không vẽ được vết cắt song song; ngộ nhận giao tuyến cắt lung tung. & Nêu được hướng kẻ đường song song nhưng vẽ thiết diện còn sót cạnh. & Xác định đầy đủ các đoạn giao tuyến; chứng minh đúng hình dạng thiết diện. & Lập luận thiết diện xuất sắc, tính toán chính xác tỉ số thiết diện trong bài toán vận dụng cao. \\ \hline
+\textbf{Năng lực số \& Kỹ thuật Prompt AI} & Chưa biết chụp ảnh minh họa; prompt AI sơ sài, chỉ chép đề bài. & Chụp được ảnh thực tế nhưng chưa chỉ ra được đường thẳng song song. & Trình chiếu ảnh số thành thạo; viết được prompt AI 3 phần để định hướng học tập. & Khai thác AI thông minh như gia sư cá nhân; phân tích và phản biện sắc sảo các bước giải của AI. \\ \hline
+\textbf{Hợp tác nhóm \& Phẩm chất} & Thụ động, ỷ lại, không tham gia thảo luận nhóm. & Có tham gia thảo luận khi giáo viên đôn đốc, nhắc nhở. & Tích cực đóng góp ý kiến, hợp tác nhịp nhàng với các thành viên. & Gương mẫu, điều hành nhóm xuất sắc, tận tình hướng dẫn các bạn yếu nắm vững phương pháp. \\ \hline
+\end{tabularx}
+\end{center}
+
+\end{document}
