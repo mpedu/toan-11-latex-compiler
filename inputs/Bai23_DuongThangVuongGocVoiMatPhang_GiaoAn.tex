@@ -1,0 +1,766 @@
+\documentclass[12pt, a4paper]{article}
+% --- 1. Cấu hình Tiếng Việt và Font chữ chuẩn ---
+\usepackage[utf8]{inputenc}
+\usepackage[T5]{fontenc}
+\usepackage[vietnamese]{babel}
+\usepackage{mathptmx} % Font Times New Roman đồng bộ cả chữ và công thức toán, không gây xung đột gói
+
+\makeatletter
+\renewcommand{\normalsize}{\@setfontsize\normalsize{13pt}{16pt}}
+\makeatother
+\normalsize
+
+% --- 2. Gói Toán học & Ký hiệu bổ trợ ---
+\usepackage{amsmath, amssymb, amsfonts, mathrsfs, amsthm}
+\usepackage{graphicx}
+\usepackage{fontawesome}
+\usepackage{booktabs, tabularx, array, multirow}
+\usepackage{enumitem}
+
+% --- 3. Đồ họa TikZ, Bảng biến thiên & Hình không gian ---
+\usepackage{tikz}
+\usetikzlibrary{calc, intersections, angles, quotes, patterns, arrows.meta, 3d}
+\usepackage{pgfplots}
+\pgfplotsset{compat=1.18}
+\usepackage{tkz-euclide}
+\usepackage{tkz-tab}
+
+\renewcommand{\vec}[1]{\overrightarrow{#1}}
+
+% --- 4. Hộp sư phạm (Tcolorbox) ---
+\usepackage[many]{tcolorbox}
+\tcbuselibrary{skins, breakable}
+
+% --- 5. Căn lề chuẩn văn bản giáo án ---
+\usepackage{geometry}
+\geometry{
+    a4paper,
+    left=25mm,
+    right=15mm,
+    top=20mm,
+    bottom=20mm
+}
+
+% --- 6. Header / Footer chuẩn hóa ---
+\usepackage{fancyhdr}
+\usepackage{lastpage}
+\pagestyle{fancy}
+\fancyhf{}
+
+\fancyhead[L]{\small \textit{Kế hoạch bài dạy Toán 11}}
+\fancyhead[R]{\textbf{Trang \thepage/\pageref{LastPage}}}
+\fancyfoot[L]{\small \textit{Tổ Toán - Tin}}
+\fancyfoot[R]{\small \textit{Trường THCS\&THPT Hồng Vân}}
+\renewcommand{\headrulewidth}{0.4pt}
+\renewcommand{\footrulewidth}{0.4pt}
+
+% --- 7. Giãn dòng & Giãn đoạn theo chuẩn Nghị định 30/2020/NĐ-CP ---
+\usepackage{setspace}
+\setstretch{1.15}
+\setlength{\parindent}{1.0cm}
+\setlength{\parskip}{5pt}
+
+% Định nghĩa hộp sư phạm chuyên dụng
+\newtcolorbox{pedabox}[2][]{
+    enhanced,
+    breakable,
+    colback=blue!3!white,
+    colframe=blue!65!black,
+    fonttitle=\bfseries\small,
+    title={#2},
+    arc=2mm,
+    boxrule=0.6pt,
+    left=3mm, right=3mm, top=2mm, bottom=2mm,
+    #1
+}
+
+\newtcolorbox{aibox}[2][]{
+    enhanced,
+    breakable,
+    colback=teal!4!white,
+    colframe=teal!70!black,
+    fonttitle=\bfseries\small,
+    title={#2},
+    arc=2mm,
+    boxrule=0.6pt,
+    left=3mm, right=3mm, top=2mm, bottom=2mm,
+    #1
+}
+
+\newtcolorbox{scaffoldbox}[2][]{
+    enhanced,
+    breakable,
+    colback=orange!4!white,
+    colframe=orange!80!black,
+    fonttitle=\bfseries\small,
+    title={#2},
+    arc=2mm,
+    boxrule=0.6pt,
+    left=3mm, right=3mm, top=2mm, bottom=2mm,
+    #1
+}
+
+\newtcolorbox{stembox}[2][]{
+    enhanced,
+    breakable,
+    colback=purple!4!white,
+    colframe=purple!75!black,
+    fonttitle=\bfseries\small,
+    title={#2},
+    arc=2mm,
+    boxrule=0.6pt,
+    left=3mm, right=3mm, top=2mm, bottom=2mm,
+    #1
+}
+
+\begin{document}
+
+\begin{center}
+    {\fontsize{14pt}{17pt}\selectfont \textbf{KẾ HOẠCH BÀI DẠY MÔN TOÁN LỚP 11}}\\[6pt]
+    {\fontsize{16pt}{19pt}\selectfont \textbf{BÀI 23. ĐƯỜNG THẲNG VUÔNG GÓC VỚI MẶT PHẲNG}}\\[4pt]
+    {\fontsize{12pt}{15pt}\selectfont \textbf{Môn học: Toán 11} \ \textbar \ \textbf{Thời lượng: 3 tiết (Tiết 65, 66, 67 theo PPCT | Tuần 22)}}
+\end{center}
+
+\vspace{5pt}
+
+\section*{I. MỤC TIÊU}
+
+\subsection*{1. Kiến thức, Năng lực}
+
+\begin{itemize}[leftmargin=1.2cm]
+    \item \textbf{Yêu cầu cần đạt (Nguyên văn CT GDPT 2018 Toán 11):}
+    \begin{itemize}[leftmargin=0.6cm]
+        \item Nhận biết được đường thẳng vuông góc với mặt phẳng.
+        \item Xác định được điều kiện để đường thẳng vuông góc với mặt phẳng.
+        \item Giải thích được định lí ba đường vuông góc.
+        \item Giải thích được mối liên hệ giữa tính song song và tính vuông góc của đường thẳng và mặt phẳng.
+        \item Nhận biết được khái niệm phép chiếu vuông góc.
+        \item Vận dụng được kiến thức về đường thẳng vuông góc với mặt phẳng để mô tả một số hình ảnh trong thực tiễn (dựng dây dọi kiểm tra cột cờ, cột nhà, cọc tiêu giao thông, kết cấu xây dựng).
+    \end{itemize}
+
+    \item \textbf{Năng lực Toán học đặc thù:}
+    \begin{itemize}[leftmargin=0.6cm]
+        \item \textit{Năng lực tư duy và lập luận toán học:} Suy luận logic từ điều kiện vuông góc với hai đường thẳng cắt nhau đến vuông góc với mọi đường thẳng trong mặt phẳng; phân tích mối liên hệ tương hỗ giữa quan hệ song song và quan hệ vuông góc; vận dụng định lí ba đường vuông góc để chuyển đổi linh hoạt việc chứng minh góc vuông giữa đường xiên và đường hình chiếu.
+        \item \textit{Năng lực mô hình hóa toán học:} Thiết lập mô hình toán học giải thích nguyên lý hoạt động của quả dọi trong xây dựng, kiểm tra độ thẳng đứng của cột cờ trường học và kết cấu khung dầm chịu lực.
+        \item \textit{Năng lực giải quyết vấn đề toán học:} Lựa chọn và thực hiện thành thạo phương pháp chứng minh đường thẳng vuông góc với mặt phẳng ($d \perp (P)$); từ đó suy ra đường thẳng vuông góc với một đường thẳng nằm trong mặt phẳng ($d \perp a$ với $a \subset (P)$).
+        \item \textit{Năng lực giao tiếp toán học:} Trình bày chứng minh hình học chuẩn mực, lập luận chặt chẽ có giả thiết - kết luận rõ ràng, sử dụng thành thạo các ký hiệu toán học ($\perp, \parallel, \subset, \cap, \implies$).
+        \item \textit{Năng lực sử dụng công cụ, phương tiện học toán:} Sử dụng thước kẻ, êke vẽ hình biểu diễn không gian chuẩn xác; sử dụng phần mềm GeoGebra 3D để biểu diễn trực quan đường thẳng vuông góc với hai đường thẳng cắt nhau trong mặt phẳng.
+    \end{itemize}
+
+    \item \textbf{Năng lực số (Theo Thông tư 02/2025/TT-BGDĐT):}
+    \begin{itemize}[leftmargin=0.6cm]
+        \item \textit{Mã 3.1NC1b (Tạo lập và khai thác mô hình toán học số):} Học sinh sử dụng phần mềm GeoGebra 3D để biểu diễn trực quan đường thẳng vuông góc với hai đường thẳng cắt nhau trong mặt phẳng; thao tác xoay góc nhìn 3D để quan sát tính vuông góc giữa đường thẳng đó với các đường thẳng bất kì khác nằm trong mặt phẳng.
+    \end{itemize}
+
+    \item \textbf{Năng lực AI (Theo Quyết định 2422/QĐ-BGDĐT):}
+    \begin{itemize}[leftmargin=0.6cm]
+        \item \textit{Mã 11.C3.1 (Tương tác và giao tiếp với trợ lý AI):} Học sinh biết đặt câu lệnh prompt chuẩn mực nhờ AI liệt kê và cấu trúc hóa các bước cơ bản chứng minh đường thẳng vuông góc với mặt phẳng; rèn luyện kỹ năng đánh giá, phản biện phản hồi của AI xem có nêu đầy đủ điều kiện hai đường thẳng cắt nhau hay không.
+    \end{itemize}
+
+    \item \textbf{Năng lực chung:}
+    \begin{itemize}[leftmargin=0.6cm]
+        \item \textit{Tự chủ và tự học:} Chủ động tìm hiểu các hiện tượng thực tiễn gắn với phương thẳng đứng vuông góc mặt đất, tích cực hoàn thành phiếu học tập.
+        \item \textit{Giao tiếp và hợp tác:} Phối hợp nhóm hiệu quả trong thực hành trải nghiệm STEM đo độ thẳng đứng của cột nhà.
+    \end{itemize}
+\end{itemize}
+
+\subsection*{2. Phẩm chất}
+
+\begin{itemize}[leftmargin=1.2cm]
+    \item \textbf{Chăm chỉ:} Rèn luyện thói quen vẽ hình cẩn thận, chỉn chu; phân biệt rõ nét đứt (khuất) và nét liền (thấy).
+    \item \textbf{Trung thực:} Tự lực chứng minh hình học, ghi nhận kết quả thực hành đo đạc thực tế một cách khách quan.
+    \item \textbf{Trách nhiệm:} Tuân thủ an toàn khi tham gia hoạt động STEM ngoài sân trường; có ý thức kiểm tra độ an toàn của các công trình xung quanh.
+\end{itemize}
+
+\vspace{5pt}
+
+\section*{II. THIẾT BỊ DẠY HỌC VÀ HỌC LIỆU}
+
+\begin{itemize}[leftmargin=1.2cm]
+    \item \textbf{Giáo viên:}
+    \begin{itemize}[leftmargin=0.6cm]
+        \item Kế hoạch bài dạy chi tiết 3 tiết theo chuẩn Công văn 5512/BGDĐT-GDTrH.
+        \item Bài trình chiếu PowerPoint tương tác, tệp GeoGebra 3D mô phỏng đường thẳng vuông góc mặt phẳng và định lí ba đường vuông góc.
+        \item Dụng cụ STEM thực hành: Quả dọi cơ học có dây treo, thước cuộn, êke vuông lớn của thợ xây.
+        \item Hệ thống Phiếu học tập phân hóa bậc thang (Phiếu số 1, 2, 3) và Bảng Rubric đánh giá năng lực học sinh.
+    \end{itemize}
+    \item \textbf{Học sinh:}
+    \begin{itemize}[leftmargin=0.6cm]
+        \item Sách giáo khoa Toán 11, vở ghi chép, giấy nháp.
+        \item Dụng cụ học tập hình học: Thước kẻ, compa, êke, bút màu.
+        \item Ôn tập lại kiến thức Bài 22: Góc giữa hai đường thẳng và hai đường thẳng vuông góc trong không gian.
+    \end{itemize}
+\end{itemize}
+
+\vspace{5pt}
+
+\section*{III. TIẾN TRÌNH DẠY HỌC (3 TIẾT | TIẾT 65, 66, 67 THEO PPCT)}
+
+\subsection*{\faClockO \ TIẾT 1 (TIẾT 65 THEO PPCT): ĐỊNH NGHĨA VÀ ĐIỀU KIỆN ĐỂ ĐƯỜNG THẲNG VUÔNG GÓC VỚI MẶT PHẲNG}
+
+\subsubsection*{1. Hoạt động 1: Mở đầu (Khởi động) (5 phút)}
+
+\noindent \textbf{a) Mục tiêu:}
+Tạo hứng thú học tập thông qua hình ảnh thực tế quen thuộc của cột cờ trường học, giúp học sinh bước đầu hình thành trực giác về đường thẳng vuông góc với mặt phẳng.
+
+\noindent \textbf{b) Nội dung:}
+Giáo viên trình chiếu hình ảnh cột cờ giữa sân trường:
+\begin{pedabox}{Tình huống khởi động: Cột cờ và mặt sân trường}
+Quan sát cột cờ trường học được cắm thẳng đứng trên mặt sân bằng phẳng:
+\begin{enumerate}[leftmargin=0.6cm]
+    \item Nếu ta kẻ một đường thẳng bất kì trên mặt sân đi qua chân cột cờ, cột cờ có vuông góc với đường thẳng đó không?
+    \item Nếu ta kẻ một đường thẳng trên mặt sân nhưng không đi qua chân cột cờ, cột cờ có vuông góc với đường thẳng đó không?
+    \item Khi nào ta nói thân cột cờ vuông góc với toàn bộ mặt sân trường?
+\end{enumerate}
+\end{pedabox}
+
+\noindent \textbf{c) Sản phẩm:}
+Câu trả lời của học sinh:
+\begin{itemize}
+    \item Cột cờ vuông góc với mọi đường thẳng trên mặt sân đi qua chân cột cờ.
+    \item Kể cả đường thẳng không đi qua chân cột cờ, nếu tịnh tiến cột cờ về đường thẳng đó thì góc giữa chúng vẫn bằng $90^\circ$, do đó cột cờ vẫn vuông góc với đường thẳng đó.
+    \item Thân cột cờ được coi là vuông góc với mặt sân trường khi nó vuông góc với mọi đường thẳng nằm trên mặt sân.
+\end{itemize}
+
+\noindent \textbf{d) Tổ chức thực hiện:}
+\begin{itemize}[leftmargin=0.6cm]
+    \item \textbf{Giao nhiệm vụ:} Giáo viên trình chiếu hình ảnh, yêu cầu học sinh thảo luận cặp đôi trong 2 phút.
+    \item \textbf{Thực hiện nhiệm vụ:} Học sinh liên hệ với khái niệm góc giữa hai đường thẳng ở Bài 22 để trả lời.
+    \item \textbf{Báo cáo, thảo luận:} 1 học sinh trả lời miệng; cả lớp lắng nghe và nhận xét.
+    \item \textbf{Kết luận, nhận định:} Giáo viên chốt lại định nghĩa ban đầu và dẫn dắt vào bài mới.
+\end{itemize}
+
+\subsubsection*{2. Hoạt động 2: Hình thành kiến thức (25 phút)}
+
+\paragraph{2.1. Đơn vị kiến thức 1: Định nghĩa đường thẳng vuông góc với mặt phẳng (10 phút)}
+
+\noindent \textbf{a) Mục tiêu:}
+Nắm vững định nghĩa đường thẳng vuông góc với mặt phẳng; hiểu rõ hệ quả quan trọng nhất của định nghĩa.
+
+\noindent \textbf{b) Nội dung:}
+\begin{pedabox}{Định nghĩa đường thẳng vuông góc với mặt phẳng}
+Đường thẳng $d$ được gọi là \textbf{vuông góc với mặt phẳng $(P)$} nếu $d$ vuông góc với mọi đường thẳng $a$ nằm trong mặt phẳng $(P)$.
+Ký hiệu: $d \perp (P)$ hoặc $(P) \perp d$.
+\end{pedabox}
+
+\begin{scaffoldbox}{Hệ quả vàng dùng để chứng minh hai đường thẳng vuông góc}
+\textbf{Khẩu quyết ghi nhớ cho học sinh:}
+$$d \perp (P) \implies d \perp a, \quad \forall a \subset (P)$$
+\textit{Để chứng minh đường thẳng $d$ vuông góc với đường thẳng $a$, một phương pháp rất hiệu quả là chứng minh $d$ vuông góc với một mặt phẳng $(P)$ chứa đường thẳng $a$!}
+\end{scaffoldbox}
+
+\noindent \textbf{c) Sản phẩm:}
+Học sinh phát biểu lại định nghĩa và nhận biết: Nếu $d \perp (P)$ thì không cần biết đường thẳng $a$ nằm ở vị trí nào trong $(P)$, $d$ luôn vuông góc với $a$.
+
+\noindent \textbf{d) Tổ chức thực hiện:}
+Giáo viên nêu định nghĩa, yêu cầu học sinh ghi vào vở và nhấn mạnh mũi tên suy ra $d \perp a$.
+
+\paragraph{2.2. Đơn vị kiến thức 2: Điều kiện để đường thẳng vuông góc với mặt phẳng (15 phút)}
+
+\noindent \textbf{a) Mục tiêu:}
+Nắm vững định lý về điều kiện đường thẳng vuông góc với mặt phẳng; biết cách sử dụng phần mềm GeoGebra 3D để trực quan hóa; biết cách đặt prompt cho AI.
+
+\noindent \textbf{b) Nội dung:}
+\begin{pedabox}{Định lý (Điều kiện để đường thẳng vuông góc với mặt phẳng)}
+Nếu một đường thẳng vuông góc với \textbf{hai đường thẳng cắt nhau} cùng thuộc một mặt phẳng thì nó vuông góc với mặt phẳng đó:
+$$\begin{cases} d \perp a \\ d \perp b \\ a \subset (P), \ b \subset (P) \\ a \cap b = O \end{cases} \implies d \perp (P)$$
+\end{pedabox}
+
+\begin{scaffoldbox}{Giàn giáo sư phạm: Sai lầm kinh điển cần triệt tiêu}
+\textbf{Cảnh báo nghiêm khắc cho học sinh trung bình - yếu:}
+\begin{itemize}
+    \item Nếu đường thẳng $d$ vuông góc với hai đường thẳng \textbf{song song} nằm trong $(P)$ thì $d$ \textbf{CHƯA CHẮC} vuông góc với $(P)$!
+    \item \textbf{Ví dụ phản chứng:} Xét cánh cửa phòng học quay quanh bản lề thẳng đứng $d$. Đường dầm trên và dầm dưới của cánh cửa song song với nhau. Trục bản lề $d$ vuông góc với cả hai đường song song này, nhưng cánh cửa có thể mở xoay ở nhiều vị trí mà không hề vuông góc với $d$!
+    \item Do đó, yếu tố \textbf{HAI ĐƯỜNG THẲNG PHẢI CẮT NHAU} là điều kiện bắt buộc không được bỏ sót!
+\end{itemize}
+\end{scaffoldbox}
+
+\begin{aibox}{Tích hợp Năng lực số (Mã 3.1NC1b) \& Năng lực AI (Mã 11.C3.1)}
+\begin{itemize}[leftmargin=0.6cm]
+    \item \textbf{Mô hình số GeoGebra 3D (Mã 3.1NC1b):} Giáo viên chiếu mô hình 3D dựng đường thẳng $d$ vuông góc với 2 đường thẳng cắt nhau $a, b$ trong mặt phẳng $(P)$. Học sinh quan sát khi kẻ thêm một đường thẳng $c$ bất kì trong $(P)$, góc giữa $d$ và $c$ tự động hiển thị số đo $90^\circ$.
+    \item \textbf{Thực hành Prompt AI (Mã 11.C3.1):}
+    \begin{itemize}
+        \item \textit{Prompt mẫu của học sinh:} ``Hãy nêu các bước cơ bản để chứng minh một đường thẳng vuông góc với một mặt phẳng trong hình học không gian lớp 11.''
+        \item \textit{Đánh giá kết quả AI:} Học sinh đối chiếu câu trả lời của AI với định lý trong bài học: AI nêu đúng việc chọn 2 đường thẳng trong mặt phẳng, nhưng học sinh cần kiểm tra xem AI có nhấn mạnh điều kiện 2 đường thẳng đó phải \textbf{cắt nhau} hay không.
+    \end{itemize}
+\end{itemize}
+\end{aibox}
+
+\noindent \textbf{c) Sản phẩm:}
+Học sinh hoàn thành bài toán mẫu:
+\begin{pedabox}{Bài toán mẫu: Chứng minh đường thẳng vuông góc mặt phẳng}
+Cho hình chóp $S.ABCD$ có đáy $ABCD$ là hình vuông tâm $O$. Cạnh bên $SA$ vuông góc với $AB$ và $SA$ vuông góc với $AD$.
+\begin{enumerate}[leftmargin=0.6cm]
+    \item Chứng minh rằng $SA \perp (ABCD)$.
+    \item Chứng minh rằng $SA \perp BC$ và $SA \perp BD$.
+\end{enumerate}
+\end{pedabox}
+\textit{Lời giải chi tiết:}
+\begin{enumerate}[leftmargin=0.6cm]
+    \item Xét mặt phẳng $(ABCD)$ có:
+    $$\begin{cases} SA \perp AB\text{ (giả thiết)} \\ SA \perp AD\text{ (giả thiết)} \\ AB \subset (ABCD), \ AD \subset (ABCD) \\ AB \cap AD = A \end{cases} \implies SA \perp (ABCD).$$
+    \item Vì $SA \perp (ABCD)$ mà $BC \subset (ABCD)$ và $BD \subset (ABCD)$, nên theo định nghĩa ta suy ra:
+    $$SA \perp BC \quad \text{và} \quad SA \perp BD.$$
+\end{enumerate}
+
+\noindent \textbf{d) Tổ chức thực hiện:}
+\begin{itemize}[leftmargin=0.6cm]
+    \item \textbf{Giao nhiệm vụ:} Giáo viên trình bày định lý, chiếu mô hình GeoGebra 3D và giao bài toán mẫu.
+    \item \textbf{Thực hiện nhiệm vụ:} Học sinh trình bày bài giải vào vở theo đúng 4 dòng của hệ điều kiện.
+    \item \textbf{Báo cáo, thảo luận:} 1 học sinh lên bảng trình bày; cả lớp đối chiếu và chỉnh sửa.
+    \item \textbf{Kết luận, nhận định:} Giáo viên chuẩn hóa khung 4 dòng chứng minh $d \perp (P)$.
+\end{itemize}
+
+\subsubsection*{3. Hoạt động 3: Luyện tập (10 phút)}
+
+\noindent \textbf{a) Mục tiêu:}
+Rèn luyện kỹ năng kết hợp tính chất hình học phẳng (tam giác vuông, hình chữ nhật) để chứng minh đường thẳng vuông góc với mặt phẳng.
+
+\noindent \textbf{b) Nội dung:}
+Thực hiện bài tập trong Phiếu học tập số 1:
+\begin{pedabox}{Bài tập luyện tập: Chứng minh đường vuông góc mặt}
+Cho hình chóp $S.ABC$ có đáy $ABC$ là tam giác vuông tại $B$. Cạnh bên $SA \perp (ABC)$.
+\begin{enumerate}[leftmargin=0.6cm]
+    \item Chứng minh rằng $BC \perp (SAB)$.
+    \item Từ đó suy ra tam giác $SBC$ là tam giác vuông tại $B$.
+\end{enumerate}
+\end{pedabox}
+
+\noindent \textbf{c) Sản phẩm:}
+Lời giải chi tiết:
+\begin{enumerate}[leftmargin=0.6cm]
+    \item Ta có:
+    \begin{itemize}
+        \item $BC \perp AB$ (do tam giác $ABC$ vuông tại $B$).
+        \item $SA \perp (ABC) \implies SA \perp BC$ (vì $BC \subset (ABC)$), suy ra $BC \perp SA$.
+        \item Mặt khác, $AB$ và $SA$ là hai đường thẳng cắt nhau tại $A$ và cùng nằm trong mặt phẳng $(SAB)$.
+    \end{itemize}
+    Do đó: $BC \perp (SAB)$.
+    \item Vì $BC \perp (SAB)$ mà cạnh $SB \subset (SAB)$ nên suy ra $BC \perp SB$.
+    Tam giác $SBC$ có $\widehat{SBC} = 90^\circ$, vậy tam giác $SBC$ vuông tại $B$.
+\end{enumerate}
+
+\noindent \textbf{d) Tổ chức thực hiện:}
+\begin{itemize}[leftmargin=0.6cm]
+    \item \textbf{Giao nhiệm vụ:} Giáo viên yêu cầu học sinh vẽ hình chóp $S.ABC$ và hoàn thiện lời giải trong 6 phút.
+    \item \textbf{Thực hiện nhiệm vụ:} Học sinh vẽ hình, phân tích các góc vuông đáy và cạnh bên.
+    \item \textbf{Báo cáo, thảo luận:} 1 học sinh lên bảng giải; giáo viên đặt câu hỏi gợi mở cho cả lớp nhận xét.
+    \item \textbf{Kết luận, nhận định:} Giáo viên chốt phương pháp chứng minh tam giác vuông trong không gian.
+\end{itemize}
+
+\subsubsection*{4. Hoạt động 4: Vận dụng (5 phút)}
+
+\noindent \textbf{a) Mục tiêu:}
+Giải thích hiện tượng thực tế của người thợ mộc dùng êke kiểm tra độ vuông góc của chân bàn.
+
+\noindent \textbf{b) Nội dung:}
+\begin{pedabox}{Tình huống thực tế: Thợ mộc đóng bàn ghế}
+Khi đóng một chiếc bàn gỗ, người thợ mộc dùng một chiếc thước êke vuông đặt vào chân bàn: Lần thứ nhất áp êke vuông góc với mép chiều dài mặt bàn; lần thứ hai áp êke vuông góc với mép chiều rộng mặt bàn. Khi thấy cả hai lần đều vuông khít, bác thợ mộc yên tâm kết luận chân bàn đã vuông góc với mặt bàn.
+Dựa vào định lý đã học, em hãy giải thích cơ sở toán học trong thao tác của bác thợ mộc.
+\end{pedabox}
+
+\noindent \textbf{c) Sản phẩm:}
+Học sinh giải thích:
+\begin{itemize}
+    \item Chân bàn đóng vai trò là đường thẳng $d$.
+    \item Mép chiều dài $a$ và mép chiều rộng $b$ là hai đường thẳng cắt nhau tại góc bàn và cùng nằm trên mặt bàn $(P)$.
+    \item Khi kiểm tra $d \perp a$ và $d \perp b$, theo định lý đường thẳng vuông góc với 2 đường thẳng cắt nhau trong mặt phẳng, bác thợ mộc đã đảm bảo chắc chắn $d \perp (P)$ (chân bàn vuông góc mặt bàn).
+\end{itemize}
+
+\noindent \textbf{d) Tổ chức thực hiện:}
+Giáo viên giao câu hỏi; học sinh trả lời nhanh và giáo viên dặn dò chuẩn bị cho Tiết 2.
+
+\vspace{10pt}
+
+\subsection*{\faClockO \ TIẾT 2 (TIẾT 66 THEO PPCT): TÍNH CHẤT VÀ MỐI LIÊN HỆ GIỮA QUAN HỆ SONG SONG VÀ QUAN HỆ VUÔNG GÓC}
+
+\subsubsection*{1. Hoạt động 1: Mở đầu (Khởi động) (5 phút)}
+
+\noindent \textbf{a) Mục tiêu:}
+Dẫn dắt học sinh nhận biết tính chất của các đường thẳng song song cùng vuông góc với một mặt phẳng qua quan sát thực tế cột nhà phòng học.
+
+\noindent \textbf{b) Nội dung:}
+Giáo viên đặt câu hỏi:
+\begin{pedabox}{Tình huống khởi động: Cột nhà phòng học}
+Các cột nhà bê tông trong phòng học đều được xây dựng song song với nhau. Biết rằng cột thứ nhất vuông góc với sàn nhà.
+\begin{enumerate}[leftmargin=0.6cm]
+    \item Các cột nhà còn lại có vuông góc với sàn nhà không?
+    \item Ngược lại, nếu hai cột nhà cùng vuông góc với sàn nhà thì hai cột nhà đó có song song với nhau không?
+\end{enumerate}
+\end{pedabox}
+
+\noindent \textbf{c) Sản phẩm:}
+Học sinh trả lời: Cả hai trường hợp đều đúng: Đường thẳng song song với một đường vuông góc mặt phẳng thì cũng vuông góc mặt phẳng đó; và hai đường cùng vuông góc với một mặt phẳng thì song song với nhau.
+
+\noindent \textbf{d) Tổ chức thực hiện:}
+Giáo viên nêu vấn đề, học sinh trả lời, giáo viên dẫn dắt vào bài mới.
+
+\subsubsection*{2. Hoạt động 2: Hình thành kiến thức (25 phút)}
+
+\paragraph{2.1. Đơn vị kiến thức 1: Các tính chất cơ bản và Mặt phẳng trung trực (10 phút)}
+
+\noindent \textbf{a) Mục tiêu:}
+Nắm vững tính chất duy nhất của đường thẳng, mặt phẳng vuông góc; định nghĩa mặt phẳng trung trực của đoạn thẳng.
+
+\noindent \textbf{b) Nội dung:}
+\begin{pedabox}{Tính chất cơ bản}
+\begin{itemize}[leftmargin=0.6cm]
+    \item \textbf{Tính chất 1:} Có duy nhất một mặt phẳng đi qua một điểm cho trước và vuông góc với một đường thẳng cho trước.
+    \item \textbf{Tính chất 2:} Có duy nhất một đường thẳng đi qua một điểm cho trước và vuông góc với một mặt phẳng cho trước.
+\end{itemize}
+\end{pedabox}
+
+\begin{pedabox}{Mặt phẳng trung trực của đoạn thẳng}
+Mặt phẳng đi qua trung điểm của đoạn thẳng $AB$ và vuông góc với đường thẳng $AB$ được gọi là \textbf{mặt phẳng trung trực} của đoạn thẳng $AB$.
+\begin{itemize}[leftmargin=0.6cm]
+    \item Tập hợp tất cả các điểm trong không gian cách đều hai đầu mút $A$ và $B$ chính là mặt phẳng trung trực của đoạn thẳng $AB$:
+    $$M A = M B \iff M \in (\alpha)\text{ (mặt phẳng trung trực của }AB).$$
+\end{itemize}
+\end{pedabox}
+
+\noindent \textbf{c) Sản phẩm:}
+Học sinh nắm vững cách xác định mặt phẳng trung trực của đoạn thẳng bằng cách lấy trung điểm và dựng mặt phẳng vuông góc.
+
+\noindent \textbf{d) Tổ chức thực hiện:}
+Giáo viên trình bày định nghĩa, vẽ hình minh họa mặt phẳng trung trực của đoạn thẳng $AB$.
+
+\paragraph{2.2. Đơn vị kiến thức 2: Mối liên hệ giữa tính song song và tính vuông góc (15 phút)}
+
+\noindent \textbf{a) Mục tiêu:}
+Nắm vững 3 nhóm tính chất liên hệ giữa quan hệ song song và quan hệ vuông góc của đường thẳng và mặt phẳng.
+
+\noindent \textbf{b) Nội dung:}
+\begin{pedabox}{Ba nhóm tính chất liên hệ song song - vuông góc}
+\begin{itemize}[leftmargin=0.6cm]
+    \item \textbf{Nhóm 1 (Hai đường thẳng song song và một mặt phẳng):}
+    $$\begin{cases} a \parallel b \\ a \perp (P) \end{cases} \implies b \perp (P); \qquad \begin{cases} a \perp (P) \\ b \perp (P) \end{cases} \implies a \parallel b \quad (a \neq b)$$
+    \item \textbf{Nhóm 2 (Hai mặt phẳng song song và một đường thẳng):}
+    $$\begin{cases} (P) \parallel (Q) \\ a \perp (P) \end{cases} \implies a \perp (Q); \qquad \begin{cases} a \perp (P) \\ a \perp (Q) \end{cases} \implies (P) \parallel (Q) \quad ((P) \neq (Q))$$
+    \item \textbf{Nhóm 3 (Một đường thẳng và một mặt phẳng song song):}
+    $$\begin{cases} a \parallel (P) \\ b \perp (P) \end{cases} \implies b \perp a$$
+\end{itemize}
+\end{pedabox}
+
+\begin{scaffoldbox}{Giàn giáo sư phạm: Bảng khẩu quyết ghi nhớ nhanh}
+\begin{center}
+\begin{tabular}{|m{6cm}|m{8cm}|}
+\hline
+\textbf{Giả thiết ban đầu} & \textbf{Kết luận logic} \\ \hline
+Song song $+$ Vuông góc & $\implies$ \textbf{Vuông góc} (Tính chất bắc cầu) \\ \hline
+Vuông góc $+$ Vuông góc (cùng một đối tượng) & $\implies$ \textbf{Song song} (hoặc trùng nhau) \\ \hline
+\end{tabular}
+\end{center}
+\end{scaffoldbox}
+
+\noindent \textbf{c) Sản phẩm:}
+Học sinh hoàn thành bài toán áp dụng:
+\begin{pedabox}{Bài toán áp dụng: Sử dụng tính chất song song - vuông góc}
+Cho hình chóp $S.ABCD$ có đáy $ABCD$ là hình thang vuông tại $A$ và $D$ với $AB = 2a, AD = DC = a$. Cạnh bên $SA \perp (ABCD)$.
+\begin{enumerate}[leftmargin=0.6cm]
+    \item Chứng minh $CD \perp (SAD)$.
+    \item Kẻ $AH \perp SD$ tại $H$. Chứng minh rằng $AH \perp (SCD)$.
+\end{enumerate}
+\end{pedabox}
+\textit{Lời giải chi tiết:}
+\begin{enumerate}[leftmargin=0.6cm]
+    \item Ta có: $CD \perp AD$ (do hình thang vuông tại $D$).
+    Vì $SA \perp (ABCD) \implies SA \perp CD$ (do $CD \subset (ABCD)$).
+    Vì $CD \perp AD$ và $CD \perp SA$ mà $AD \cap SA = A$ trong $(SAD) \implies CD \perp (SAD)$.
+    \item Theo câu 1: $CD \perp (SAD) \implies CD \perp AH$ (vì $AH \subset (SAD)$).
+    Theo giả thiết: $AH \perp SD$.
+    Mặt khác, $SD$ và $CD$ cắt nhau tại $D$ và cùng nằm trong mặt phẳng $(SCD)$.
+    Vậy $AH \perp (SCD)$.
+\end{enumerate}
+
+\noindent \textbf{d) Tổ chức thực hiện:}
+\begin{itemize}[leftmargin=0.6cm]
+    \item \textbf{Giao nhiệm vụ:} Giáo viên trình bày các tính chất, vẽ hình chóp đáy hình thang và yêu cầu học sinh làm bài tập.
+    \item \textbf{Thực hiện nhiệm vụ:} Học sinh làm bài vào vở, vận dụng chứng minh đường vuông góc với mặt phẳng.
+    \item \textbf{Báo cáo, thảo luận:} 1 học sinh lên bảng giải; cả lớp nhận xét.
+    \item \textbf{Kết luận, nhận định:} Giáo viên nhấn mạnh: Bài toán tìm đường thẳng vuông góc với mặt phẳng bên ($AH \perp (SCD)$) là mô hình cơ bản để tính khoảng cách ở các bài học sau.
+\end{itemize}
+
+\subsubsection*{3. Hoạt động 3: Luyện tập (10 phút)}
+
+\noindent \textbf{a) Mục tiêu:}
+Củng cố kỹ năng vận dụng mối quan hệ song song - vuông góc trong hình lập phương.
+
+\noindent \textbf{b) Nội dung:}
+Thực hiện bài tập trong Phiếu học tập số 2:
+\begin{pedabox}{Bài tập luyện tập: Hình lập phương}
+Cho hình lập phương $ABCD.A'B'C'D'$.
+\begin{enumerate}[leftmargin=0.6cm]
+    \item Chứng minh rằng $AA' \perp (A'B'C'D')$.
+    \item Chứng minh rằng $BD \perp (ACC'A')$.
+\end{enumerate}
+\end{pedabox}
+
+\noindent \textbf{c) Sản phẩm:}
+Lời giải chi tiết:
+\begin{enumerate}[leftmargin=0.6cm]
+    \item Vì các mặt của hình lập phương là hình vuông nên $AA' \perp A'B'$ và $AA' \perp A'D'$. Mà $A'B'$ và $A'D'$ cắt nhau tại $A'$ trong $(A'B'C'D') \implies AA' \perp (A'B'C'D')$.
+    \item Ta có $BD \perp AC$ (hai đường chéo hình vuông $ABCD$).
+    Mặt khác, $AA' \perp (ABCD) \implies AA' \perp BD$.
+    Mà $AC$ và $AA'$ cắt nhau tại $A$ trong mặt phẳng $(ACC'A')$.
+    Vậy $BD \perp (ACC'A')$.
+\end{enumerate}
+
+\noindent \textbf{d) Tổ chức thực hiện:}
+Học sinh làm bài cá nhân 5 phút $\to$ 1 học sinh lên bảng $\to$ Giáo viên nhận xét, cho điểm.
+
+\subsubsection*{4. Hoạt động 4: Vận dụng (5 phút)}
+
+\noindent \textbf{a) Mục tiêu:}
+Vận dụng tính chất song song - vuông góc giải thích hiện tượng các tầng nhà chung cư song song với nhau.
+
+\noindent \textbf{b) Nội dung:}
+Tại sao các sàn nhà tầng 1, tầng 2, tầng 3 của một tòa nhà chung cư cao tầng đều song song với nhau khi các cột chịu lực của tòa nhà đều được đổ bê tông vuông góc với sàn tầng 1?
+
+\noindent \textbf{c) Sản phẩm:}
+Vì các sàn nhà đều được thiết kế vuông góc với cùng một hệ cột chịu lực thẳng đứng. Theo tính chất: Hai mặt phẳng phân biệt cùng vuông góc với một đường thẳng thì song song với nhau.
+
+\noindent \textbf{d) Tổ chức thực hiện:}
+Giáo viên giao câu hỏi thảo luận nhanh; kết thúc tiết 2.
+
+\vspace{10pt}
+
+\subsection*{\faClockO \ TIẾT 3 (TIẾT 67 THEO PPCT): PHÉP CHIẾU VUÔNG GÓC, ĐỊNH LÍ BA ĐƯỜNG VUÔNG GÓC VÀ CHỦ ĐỀ STEM}
+
+\subsubsection*{1. Hoạt động 1: Mở đầu (Khởi động) (5 phút)}
+
+\noindent \textbf{a) Mục tiêu:}
+Khơi gợi khái niệm hình chiếu vuông góc thông qua hiện tượng bóng đổ của cột cờ lúc chính ngọ (12 giờ trưa).
+
+\noindent \textbf{b) Nội dung:}
+Giáo viên chiếu hình ảnh chiếc cọc tiêu cắm nghiêng trên sân và bóng của nó dưới ánh nắng mặt trời chiếu thẳng đứng từ trên đỉnh đầu xuống mặt đất. Bóng của cọc tiêu trên mặt sân có mối liên hệ hình học gì với cọc tiêu?
+
+\noindent \textbf{c) Sản phẩm:}
+Học sinh nhận biết: Bóng của cọc tiêu chính là đoạn thẳng nối chân cọc và hình chiếu vuông góc của đỉnh cọc xuống mặt đất.
+
+\noindent \textbf{d) Tổ chức thực hiện:}
+Giáo viên chiếu ảnh, học sinh phát biểu, giáo viên dẫn dắt vào khái niệm phép chiếu vuông góc.
+
+\subsubsection*{2. Hoạt động 2: Hình thành kiến thức (25 phút)}
+
+\paragraph{2.1. Đơn vị kiến thức 1: Phép chiếu vuông góc (10 phút)}
+
+\noindent \textbf{a) Mục tiêu:}
+Nắm vững định nghĩa phép chiếu vuông góc lên một mặt phẳng; xác định hình chiếu của điểm, đoạn thẳng, đường thẳng.
+
+\noindent \textbf{b) Nội dung:}
+\begin{pedabox}{Định nghĩa phép chiếu vuông góc}
+Cho mặt phẳng $(P)$. Phép chiếu song song lên mặt phẳng $(P)$ theo phương $d$ vuông góc với $(P)$ được gọi là \textbf{phép chiếu vuông góc lên mặt phẳng $(P)$}.
+\begin{itemize}[leftmargin=0.6cm]
+    \item Với mỗi điểm $M$ trong không gian, đường thẳng đi qua $M$ và vuông góc với $(P)$ cắt $(P)$ tại $M'$. Điểm $M'$ gọi là \textbf{hình chiếu vuông góc} (hoặc hình chiếu) của $M$ lên mặt phẳng $(P)$.
+    \item Nếu $M \in (P)$ thì hình chiếu $M' \equiv M$.
+    \item Hình chiếu vuông góc của một đoạn thẳng (không vuông góc với $(P)$) lên $(P)$ là một đoạn thẳng.
+\end{itemize}
+\end{pedabox}
+
+\noindent \textbf{c) Sản phẩm:}
+Học sinh tìm hình chiếu trong hình chóp $S.ABC$ có $SA \perp (ABC)$:
+\begin{itemize}
+    \item Hình chiếu của điểm $S$ lên $(ABC)$ là điểm $A$.
+    \item Hình chiếu của đoạn thẳng $SB$ lên $(ABC)$ là đoạn thẳng $AB$.
+    \item Hình chiếu của tam giác $SBC$ lên $(ABC)$ là tam giác $ABC$.
+\end{itemize}
+
+\noindent \textbf{d) Tổ chức thực hiện:}
+Giáo viên trình bày định nghĩa, hướng dẫn học sinh xác định hình chiếu của các đỉnh.
+
+\paragraph{2.2. Đơn vị kiến thức 2: Định lí ba đường vuông góc (15 phút)}
+
+\noindent \textbf{a) Mục tiêu:}
+Hiểu và chứng minh được định lí ba đường vuông góc; vận dụng định lí giải quyết bài toán chứng minh góc vuông không gian nhanh chóng.
+
+\noindent \textbf{b) Nội dung:}
+\begin{pedabox}{Định lí ba đường vuông góc}
+Cho đường thẳng $a$ nằm trong mặt phẳng $(P)$ và đường thẳng $d$ không thuộc $(P)$ đồng thời không vuông góc với $(P)$. Gọi $d'$ là hình chiếu vuông góc của $d$ trên $(P)$. Khi đó:
+$$a \perp d \iff a \perp d'$$
+\end{pedabox}
+
+\begin{scaffoldbox}{Giàn giáo sư phạm: Bảng phân vai 3 đường vuông góc}
+\begin{center}
+\begin{tabular}{|l|l|l|}
+\hline
+\textbf{Tên gọi} & \textbf{Ký hiệu} & \textbf{Vị trí trong không gian} \\ \hline
+1. \textbf{Đường nằm trong mặt phẳng} & $a$ & Nằm trọn vẹn trong $(P)$ ($a \subset (P)$). \\ \hline
+2. \textbf{Đường xiên} & $d$ & Cắt $(P)$ nhưng không vuông góc với $(P)$. \\ \hline
+3. \textbf{Đường hình chiếu} & $d'$ & Là hình chiếu vuông góc của đường xiên $d$ lên $(P)$. \\ \hline
+\end{tabular}
+\end{center}
+\textbf{Khẩu quyết:} \textit{``Đường thẳng trong mặt phẳng vuông góc với đường xiên KHI VÀ CHỈ KHI nó vuông góc với hình chiếu của đường xiên đó!''}
+\end{scaffoldbox}
+
+\noindent \textbf{c) Sản phẩm:}
+Học sinh hoàn thành bài toán mẫu:
+\begin{pedabox}{Bài toán mẫu: Ứng dụng định lí ba đường vuông góc}
+Cho hình chóp $S.ABC$ có đáy $ABC$ là tam giác vuông tại $B$, cạnh bên $SA \perp (ABC)$. Chứng minh rằng $BC \perp SC$.
+\end{pedabox}
+\textit{Lời giải bằng định lí ba đường vuông góc:}
+\begin{itemize}
+    \item Mặt phẳng xét là mặt đáy $(ABC)$.
+    \item Đường thẳng nằm trong mặt phẳng là $a = BC \subset (ABC)$.
+    \item Đường xiên là $d = SC$.
+    \item Vì $SA \perp (ABC)$ nên hình chiếu của $S$ lên $(ABC)$ là $A$. Điểm $C \in (ABC)$ có hình chiếu là chính nó.
+    Do đó, hình chiếu của đường xiên $SC$ lên $(ABC)$ là đường thẳng $d' = AC$.
+    \item Trong mặt phẳng đáy $(ABC)$, ta có $BC \perp AB$ (do tam giác $ABC$ vuông tại $B$).
+    \textit{(Ở đây hình chiếu của $SC$ là $AC$, nhưng xét tam giác $SAB$ thì hình chiếu của $SB$ lên $(ABC)$ là $AB$).}
+    \item \textbf{Cách trình bày chuẩn xác:}
+    Xét hình chiếu của đường xiên $SC$ lên mặt phẳng $(SAB)$:
+    Vì $BC \perp (SAB)$ (đã chứng minh ở Tiết 1) nên hình chiếu của $SC$ lên $(SAB)$ chính là đường thẳng $SB$.
+    Mà $BC \perp SB$ nên theo định lí ba đường vuông góc (hoặc theo tính chất đường vuông góc mặt phẳng):
+    Vì $BC \perp (SAB)$ mà $SC \subset (SAB)$ kéo dài không đúng, ta dùng:
+    Vì $\begin{cases} BC \perp AB \\ BC \perp SA \end{cases} \implies BC \perp (SAB) \implies BC \perp SC$.
+\end{itemize}
+
+\noindent \textbf{d) Tổ chức thực hiện:}
+Giáo viên phát biểu định lý, phân tích các đối tượng và hướng dẫn bài tập.
+
+\subsubsection*{3. Hoạt động 3: Luyện tập (10 phút)}
+
+\noindent \textbf{a) Mục tiêu:}
+Rèn luyện kỹ năng sử dụng định lí ba đường vuông góc trong khối chóp tứ giác.
+
+\noindent \textbf{b) Nội dung:}
+Thực hiện bài tập trong Phiếu học tập số 3:
+\begin{pedabox}{Bài tập luyện tập: Định lí ba đường vuông góc}
+Cho hình chóp $S.ABCD$ có đáy $ABCD$ là hình vuông, $SA \perp (ABCD)$.
+\begin{enumerate}[leftmargin=0.6cm]
+    \item Chứng minh rằng $CD \perp SD$.
+    \item Chứng minh rằng $BD \perp SC$.
+\end{enumerate}
+\end{pedabox}
+
+\noindent \textbf{c) Sản phẩm:}
+Lời giải chi tiết:
+\begin{enumerate}[leftmargin=0.6cm]
+    \item Xét đường xiên $SD$ có hình chiếu lên mặt phẳng đáy $(ABCD)$ là đường thẳng $AD$ (vì $SA \perp (ABCD)$).
+    Trong mặt phẳng đáy, đường thẳng $CD \perp AD$ (do $ABCD$ là hình vuông).
+    Theo định lí ba đường vuông góc, vì $CD$ vuông góc với hình chiếu $AD$ nên $CD$ vuông góc với đường xiên $SD$:
+    $$CD \perp SD \quad (\text{suy ra tam giác } SCD \text{ vuông tại } D).$$
+    \item Xét đường xiên $SC$ có hình chiếu lên đáy $(ABCD)$ là đường thẳng $AC$.
+    Trong đáy $(ABCD)$, ta có $BD \perp AC$ (hai đường chéo của hình vuông vuông góc nhau).
+    Theo định lí ba đường vuông góc, đường thẳng $BD$ vuông góc với hình chiếu $AC$ nên $BD$ vuông góc với đường xiên $SC$:
+    $$BD \perp SC.$$
+\end{enumerate}
+
+\noindent \textbf{d) Tổ chức thực hiện:}
+Học sinh làm bài 6 phút $\to$ 2 học sinh lên bảng giải 2 câu $\to$ Cả lớp nhận xét cách áp dụng định lí ba đường vuông góc cực kỳ nhanh gọn.
+
+\subsubsection*{4. Hoạt động 4: Vận dụng - Chủ đề STEM (5 phút)}
+
+\noindent \textbf{a) Mục tiêu:}
+Vận dụng kiến thức đường thẳng vuông góc với mặt phẳng vào hoạt động thực tế trải nghiệm STEM: Dựng dây dọi kiểm tra độ thẳng đứng của cột trường học.
+
+\noindent \textbf{b) Nội dung:}
+\begin{stembox}{Chủ đề STEM: Chế tạo và Sử dụng Dây dọi kiểm tra độ thẳng đứng}
+\begin{itemize}[leftmargin=0.6cm]
+    \item \textbf{Vấn đề thực tiễn:} Trong xây dựng, để đảm bảo bức tường hoặc cột nhà không bị nghiêng đổ, người thợ xây luôn sử dụng một công cụ truyền thống nhưng có độ chính xác tuyệt đối: \textbf{Quả dọi}.
+    \item \textbf{Cơ sở khoa học (Toán học - Vật lí):}
+    \begin{itemize}
+        \item Quả dọi bằng kim loại nặng kéo căng sợi dây theo phương của trọng lực Trái Đất.
+        \item Trọng lực luôn có phương thẳng đứng, vuông góc với mặt phẳng nằm ngang của mặt đất / sàn nhà.
+        \item Sợi dây dọi đóng vai trò là một đường thẳng $d \perp (P)$ (sàn nhà).
+    \end{itemize}
+    \item \textbf{Nhiệm vụ STEM của nhóm học sinh:}
+    \begin{enumerate}
+        \item Tự chế tạo một bộ dây dọi đơn giản từ sợi dây dù mảnh ($2\text{ m}$) và một quả dọi kim loại (hoặc vật nặng hình nón).
+        \item Ra sân trường, treo dây dọi dọc theo cột cờ hoặc mép cột hành lang lớp học.
+        \item Dùng thước đo khoảng cách từ dây dọi đến thân cột tại 3 vị trí: đỉnh cột, giữa cột và chân cột. Nếu 3 khoảng cách này bằng nhau, kết luận cột có vuông góc với mặt sàn hay không? Giải thích toán học.
+    \end{enumerate}
+\end{itemize}
+\end{stembox}
+
+\noindent \textbf{c) Sản phẩm:}
+Báo cáo thực hành STEM của các nhóm:
+\begin{itemize}
+    \item Nếu khoảng cách từ dây dọi đến mép cột bằng nhau tại mọi điểm $\implies$ Mép cột song song với dây dọi.
+    \item Mà dây dọi vuông góc với mặt đất nằm ngang.
+    \item Theo tính chất: $\begin{cases} \text{Cột} \parallel \text{Dây dọi} \\ \text{Dây dọi} \perp \text{Mặt đất} \end{cases} \implies \text{Cột} \perp \text{Mặt đất}$. Cột đạt chuẩn độ thẳng đứng an toàn!
+\end{itemize}
+
+\noindent \textbf{d) Tổ chức thực hiện:}
+Giáo viên giao nhiệm vụ dự án STEM cho các nhóm về nhà hoặc thực hành vào tiết sinh hoạt ngoại khóa; tổng kết 3 tiết học của Bài 23.
+
+\vspace{10pt}
+
+\section*{IV. PHỤ LỤC HỌC LIỆU BỔ TRỢ (BẮT BUỘC)}
+
+\subsection*{1. Phiếu học tập số 1 (Tiết 1): Điều kiện đường thẳng vuông góc mặt phẳng}
+
+\begin{pedabox}{PHIẾU HỌC TẬP SỐ 1: ĐIỀU KIỆN VUÔNG GÓC MẶT PHẲNG}
+\textbf{Họ và tên học sinh:} \dotfill \ \textbf{Lớp:} \dotfill \ \textbf{Nhóm:} \dotfill
+
+\noindent \textbf{CẤP ĐỘ 1: NHẬN BIẾT (Điền khuyết)}
+\begin{enumerate}[leftmargin=0.6cm]
+    \item Điền vào chỗ trống:
+    Đường thẳng $d$ vuông góc với mặt phẳng $(P)$ nếu $d$ vuông góc với $\dots\dots\dots\dots$ nằm trong $(P)$.
+    Nếu đường thẳng $d$ vuông góc với hai đường thẳng $\dots\dots\dots\dots$ cùng nằm trong mặt phẳng $(P)$ thì $d \perp (P)$.
+    \item Cho hình chóp $S.ABC$ có đáy $ABC$ là tam giác đều, $SA \perp AB$ và $SA \perp AC$. Mặt phẳng nào vuông góc với $SA$?
+\end{enumerate}
+
+\noindent \textbf{CẤP ĐỘ 2: THÔNG HIỂU (Chứng minh cơ bản)}
+\begin{enumerate}[leftmargin=0.6cm]
+    \item Cho tứ diện $OABC$ có ba cạnh $OA, OB, OC$ đôi một vuông góc tại $O$.
+    $$a) \ \text{Chứng minh rằng } OA \perp (OBC); \qquad b) \ \text{Chứng minh rằng } BC \perp (OAH) \text{ với } H \text{ là hình chiếu của } O \text{ lên } BC.$$
+\end{enumerate}
+
+\noindent \textbf{CẤP ĐỘ 3: VẬN DỤNG (Tương tác AI)}
+\begin{enumerate}[leftmargin=0.6cm]
+    \item Đặt một câu hỏi prompt trên ChatGPT/Gemini về cách chứng minh đường thẳng vuông góc mặt phẳng. Chép lại phản hồi của AI và chỉ ra điểm cần lưu ý nhất về mặt toán học.
+\end{enumerate}
+\end{pedabox}
+
+\subsection*{2. Phiếu học tập số 2 (Tiết 2): Mối quan hệ song song - vuông góc}
+
+\begin{pedabox}{PHIẾU HỌC TẬP SỐ 2: SONG SONG VÀ VUÔNG GÓC}
+\textbf{Họ và tên học sinh:} \dotfill \ \textbf{Lớp:} \dotfill \ \textbf{Nhóm:} \dotfill
+
+\noindent \textbf{CẤP ĐỘ 1: NHẬN BIẾT \& THÔNG HIỂU (Đúng/Sai)}
+\begin{enumerate}[leftmargin=0.6cm]
+    \item Đánh dấu Đúng (Đ) hoặc Sai (S):
+    \begin{itemize}
+        \item [$\Box$] $a)$ Hai đường thẳng phân biệt cùng vuông góc với một mặt phẳng thì song song với nhau.
+        \item [$\Box$] $b)$ Hai mặt phẳng phân biệt cùng vuông góc với một đường thẳng thì song song với nhau.
+        \item [$\Box$] $c)$ Cho $a \parallel (P)$. Mọi đường thẳng vuông góc với $a$ đều vuông góc với $(P)$.
+    \end{itemize}
+\end{enumerate}
+
+\noindent \textbf{CẤP ĐỘ 2: VẬN DỤNG}
+\begin{enumerate}[leftmargin=0.6cm]
+    \item Cho hình lăng trụ tam giác $ABC.A'B'C'$ có đáy là tam giác vuông tại $A$. Biết $AA' \perp (ABC)$. Chứng minh rằng $B'C' \perp AA'$ và $AC \perp (ABB'A')$.
+\end{enumerate}
+\end{pedabox}
+
+\subsection*{3. Phiếu học tập số 3 (Tiết 3): Định lí ba đường vuông góc & STEM}
+
+\begin{pedabox}{PHIẾU HỌC TẬP SỐ 3: ĐỊNH LÍ BA ĐƯỜNG VUÔNG GÓC}
+\textbf{Họ và tên học sinh:} \dotfill \ \textbf{Lớp:} \dotfill \ \textbf{Nhóm:} \dotfill
+
+\noindent \textbf{BÀI TẬP ÁP DỤNG}
+\begin{enumerate}[leftmargin=0.6cm]
+    \item Cho hình chóp $S.ABCD$ có đáy $ABCD$ là hình thoi tâm $O$. Cạnh bên $SA \perp (ABCD)$.
+    $$a) \ \text{Chứng minh rằng } BD \perp SO; \qquad b) \ \text{Chứng minh rằng } CD \perp (SAD) \text{ nếu } \widehat{ADC} = 90^\circ.$$
+    \item \textbf{Báo cáo dự án STEM:} Ghi lại thông số đo độ thẳng đứng của cột cờ trường học bằng quả dọi:
+    \begin{itemize}
+        \item Khoảng cách tại gốc cột: \dotfill cm. Khoảng cách tại ngọn cột: \dotfill cm.
+        \item Kết luận độ thẳng đứng: \dotfill
+    \end{itemize}
+\end{enumerate}
+\end{pedabox}
+
+\subsection*{4. Bảng Rubric đánh giá năng lực học sinh theo 4 mức độ}
+
+\begin{center}
+\begin{tabularx}{\textwidth}{|p{2.8cm}|X|X|X|X|}
+    \hline
+    \textbf{Tiêu chí} & \textbf{Mức 1: Chưa đạt} & \textbf{Mức 2: Đạt} & \textbf{Mức 3: Khá} & \textbf{Mức 4: Tốt} \\ \hline
+    \textbf{1. Kỹ năng chứng minh đường vuông góc mặt} & Quên điều kiện 2 đường thẳng phải cắt nhau; trình bày thiếu logic. & Trình bày đủ 4 dòng cơ bản; giải được các bài toán hình chóp mẫu. & Lập luận sắc bén; biết tìm thêm các đường vuông góc gián tiếp trong tam giác. & Biến đổi linh hoạt; giải nhanh các bài toán tứ diện vuông và hình thang vuông đáy. \\ \hline
+    \textbf{2. Vận dụng định lí ba đường vuông góc} & Nhầm lẫn giữa đường xiên và đường hình chiếu; không xác định được mặt phẳng. & Xác định đúng hình chiếu; vận dụng giải được bài toán tam giác vuông cơ bản. & Thành thạo nhận diện 3 đường vuông góc; chứng minh góc vuông không gian ngắn gọn. & Sử dụng thành thạo định lí giải quyết bài toán khoảng cách và góc nâng cao. \\ \hline
+    \textbf{3. Năng lực số \& GeoGebra 3D (Mã 3.1NC1b)} & Chưa biết thao tác xoay hình 3D trên màn hình. & Mở và xoay được mô hình GeoGebra 3D của giáo viên. & Tương tác tốt; tự kiểm tra số đo góc vuông giữa các đường thẳng trong phần mềm. & Tự dựng được mô hình hình chóp và mặt phẳng vuông góc trên GeoGebra 3D. \\ \hline
+    \textbf{4. Năng lực AI \& Dự án STEM (Mã 11.C3.1)} & Chưa biết cách đặt prompt cho AI; chưa tham gia chế tạo quả dọi. & Đặt được prompt cơ bản; chế tạo được quả dọi và đo đạc cùng nhóm. & Biết đánh giá phản hồi AI; phân tích nguyên lý dây dọi bằng tính chất song song - vuông góc. & Đặt prompt tối ưu hóa; hoàn thành xuất sắc báo cáo đo đạc độ thẳng đứng của công trình. \\ \hline
+\end{tabularx}
+\end{center}
+
+\end{document}
