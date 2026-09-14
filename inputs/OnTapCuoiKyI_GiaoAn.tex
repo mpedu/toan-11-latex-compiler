@@ -1,0 +1,677 @@
+\documentclass[12pt, a4paper]{article}
+% --- 1. Cấu hình Tiếng Việt và Font chữ chuẩn ---
+\usepackage[utf8]{inputenc}
+\usepackage[T5]{fontenc}
+\usepackage[vietnamese]{babel}
+\usepackage{mathptmx} % Font Times New Roman đồng bộ cả chữ và công thức toán, không gây xung đột gói
+
+\makeatletter
+\renewcommand{\normalsize}{\@setfontsize\normalsize{13pt}{16pt}}
+\makeatother
+\normalsize
+
+% --- 2. Gói Toán học & Ký hiệu bổ trợ ---
+\usepackage{amsmath, amssymb, amsfonts, mathrsfs, amsthm}
+\usepackage{graphicx}
+\usepackage{fontawesome}
+\usepackage{booktabs, tabularx, array, multirow}
+\usepackage{enumitem}
+
+% --- 3. Đồ họa TikZ, Bảng biến thiên & Hình không gian ---
+\usepackage{tikz}
+\usetikzlibrary{calc, intersections, angles, quotes, patterns, arrows.meta, 3d}
+\usepackage{pgfplots}
+\pgfplotsset{compat=1.18}
+\usepackage{tkz-euclide}
+\usepackage{tkz-tab}
+
+\renewcommand{\vec}[1]{\overrightarrow{#1}}
+
+% --- 4. Hộp sư phạm (Tcolorbox) ---
+\usepackage[many]{tcolorbox}
+\tcbuselibrary{skins, breakable}
+
+% --- 5. Căn lề chuẩn văn bản giáo án ---
+\usepackage{geometry}
+\geometry{
+    a4paper,
+    left=25mm,
+    right=15mm,
+    top=20mm,
+    bottom=20mm
+}
+
+% --- 6. Header / Footer chuẩn hóa ---
+\usepackage{fancyhdr}
+\usepackage{lastpage}
+\pagestyle{fancy}
+\fancyhf{}
+
+\fancyhead[L]{\small \textit{Kế hoạch bài dạy Toán 11}}
+\fancyhead[R]{\textbf{Trang \thepage/\pageref{LastPage}}}
+\fancyfoot[L]{\small \textit{Tổ Toán - Tin}}
+\fancyfoot[R]{\small \textit{Trường THCS\&THPT Hồng Vân}}
+\renewcommand{\headrulewidth}{0.4pt}
+\renewcommand{\footrulewidth}{0.4pt}
+
+% --- 7. Giãn dòng & Giãn đoạn theo chuẩn Nghị định 30/2020/NĐ-CP ---
+\usepackage{setspace}
+\setstretch{1.15}
+\setlength{\parindent}{1.0cm}
+\setlength{\parskip}{5pt}
+
+% Định nghĩa hộp sư phạm chuyên dụng
+\newtcolorbox{pedabox}[2][]{
+    enhanced,
+    breakable,
+    colback=blue!3!white,
+    colframe=blue!65!black,
+    fonttitle=\bfseries\small,
+    title={#2},
+    arc=2mm,
+    boxrule=0.6pt,
+    left=3mm, right=3mm, top=2mm, bottom=2mm,
+    #1
+}
+
+\newtcolorbox{aibox}[2][]{
+    enhanced,
+    breakable,
+    colback=teal!4!white,
+    colframe=teal!70!black,
+    fonttitle=\bfseries\small,
+    title={#2},
+    arc=2mm,
+    boxrule=0.6pt,
+    left=3mm, right=3mm, top=2mm, bottom=2mm,
+    #1
+}
+
+\newtcolorbox{scaffoldbox}[2][]{
+    enhanced,
+    breakable,
+    colback=orange!4!white,
+    colframe=orange!80!black,
+    fonttitle=\bfseries\small,
+    title={#2},
+    arc=2mm,
+    boxrule=0.6pt,
+    left=3mm, right=3mm, top=2mm, bottom=2mm,
+    #1
+}
+
+\newtcolorbox{stembox}[2][]{
+    enhanced,
+    breakable,
+    colback=purple!4!white,
+    colframe=purple!75!black,
+    fonttitle=\bfseries\small,
+    title={#2},
+    arc=2mm,
+    boxrule=0.6pt,
+    left=3mm, right=3mm, top=2mm, bottom=2mm,
+    #1
+}
+
+\begin{document}
+
+\begin{center}
+    {\fontsize{14pt}{17pt}\selectfont \textbf{KẾ HOẠCH BÀI DẠY MÔN TOÁN LỚP 11}}\\[6pt]
+    {\fontsize{16pt}{19pt}\selectfont \textbf{ÔN TẬP CUỐI KỲ I}}\\[4pt]
+    {\fontsize{12pt}{15pt}\selectfont \textbf{Môn học: Toán 11} \ \textbar \ \textbf{Thời lượng: 2 tiết (Tiết 51, 52 theo PPCT | Tuần 17, 18)}}
+\end{center}
+
+\vspace{5pt}
+
+\section*{I. MỤC TIÊU}
+
+\subsection*{1. Kiến thức, Năng lực}
+
+\begin{itemize}[leftmargin=1.2cm]
+    \item \textbf{Yêu cầu cần đạt (Nguyên văn CT GDPT 2018 Toán 11):}
+    \begin{itemize}[leftmargin=0.6cm]
+        \item Hệ thống hóa kiến thức Đại số và Giải tích HK1: Hàm số lượng giác và phương trình lượng giác; Dãy số, cấp số cộng, cấp số nhân; Các số đặc trưng đo xu thế trung tâm của mẫu số liệu ghép nhóm; Giới hạn của dãy số, giới hạn của hàm số và hàm số liên tục.
+        \item Hệ thống hóa kiến thức Hình học không gian HK1: Đường thẳng và mặt phẳng trong không gian; Quan hệ song song (hai đường thẳng song song, đường thẳng song song với mặt phẳng, hai mặt phẳng song song, phép chiếu song song và hình biểu diễn).
+        \item Đánh giá mức độ nắm vững chuẩn kiến thức, kĩ năng môn Toán lớp 11 trong toàn bộ học kì I chuẩn bị cho bài kiểm tra định kì cuối kì I.
+    \end{itemize}
+
+    \item \textbf{Năng lực Toán học đặc thù:}
+    \begin{itemize}[leftmargin=0.6cm]
+        \item \textit{Năng lực tư duy và lập luận toán học:} Khả năng liên kết và xâu chuỗi các mạch kiến thức Đại số - Giải tích và Hình học; phân tích logic mối quan hệ tương hỗ giữa phương trình đại số và đồ thị hàm số; suy luận hình học chặt chẽ khi chứng minh quan hệ song song trong không gian ba chiều.
+        \item \textit{Năng lực mô hình hóa toán học:} Vận dụng mô hình cấp số cộng, cấp số nhân để giải bài toán tăng trưởng và bài toán tài chính; mô phỏng các bài toán thực tiễn bằng kiến thức hàm số lượng giác và quan hệ song song trong không gian.
+        \item \textit{Năng lực giải quyết vấn đề toán học:} Nhận diện chính xác và thành thạo phương pháp xử lý các dạng bài tập cốt lõi: giải phương trình lượng giác cơ bản và quy về cơ bản; tìm số hạng tổng quát, công sai, công bội, tổng $n$ số hạng đầu của CSC/CSN; tính các số đặc trưng đo xu thế trung tâm của mẫu số liệu ghép nhóm; khử các dạng vô định $\dfrac{0}{0}, \dfrac{\infty}{\infty}, \infty - \infty$ của giới hạn; xét tính liên tục và chứng minh phương trình có nghiệm; tìm giao tuyến, giao điểm, thiết diện và chứng minh quan hệ song song.
+        \item \textit{Năng lực giao tiếp toán học:} Trình bày lời giải bài toán tự luận mạch lạc, rõ ràng, đúng chuẩn quy ước ký hiệu toán học; diễn đạt chính xác các định lý, mệnh đề, hệ quả toán học.
+        \item \textit{Năng lực sử dụng công cụ, phương tiện học toán:} Sử dụng thành thạo máy tính cầm tay (MTCT Casio fx-580VN X) để kiểm tra nghiệm phương trình lượng giác, tính giới hạn bằng lệnh \texttt{CALC}, tính các số đặc trưng thống kê trong chế độ \texttt{STATISTICS} và kiểm tra tính toán cấp số cộng, cấp số nhân.
+    \end{itemize}
+
+    \item \textbf{Năng lực số (Theo Thông tư 02/2025/TT-BGDĐT):}
+    \begin{itemize}[leftmargin=0.6cm]
+        \item \textit{Mã 2.6NC1a:} Học sinh truy cập thành thạo hệ thống quản trị học tập (LMS/Google Classroom/Azota) của trường để tải đề cương ôn tập điện tử, giải và nộp bài tự luyện trực tuyến, tự kiểm tra đánh giá kết quả theo đáp án số hóa.
+        \item \textit{Mã 1.1NC1a:} Học sinh khai thác, tra cứu và tương tác với sơ đồ tư duy số (Mindmap/Canva) tổng hợp các định lý hình học không gian và bảng công thức lượng giác trên thiết bị thông minh.
+    \end{itemize}
+
+    \item \textbf{Năng lực AI (Theo Quyết định 2422/QĐ-BGDĐT):}
+    \begin{itemize}[leftmargin=0.6cm]
+        \item \textit{Mã 11.B3.1 (Đạo đức và Liêm chính học thuật):} Học sinh thể hiện thái độ trung thực và tự giác khi ôn tập; hiểu rõ ranh giới giữa việc sử dụng AI làm trợ lý giải thích khái niệm, gợi ý hướng đi bước một với hành vi gian lận nhờ AI giải hộ bài kiểm tra.
+        \item \textit{Mã 11.C2.3 (Kỹ thuật Prompting kiểm tra chéo):} Học sinh biết cách thiết kế câu lệnh prompt chuẩn mực yêu cầu trợ lý AI đóng vai trò người phản biện, kiểm tra các bước lập luận tự luận và sinh các câu hỏi trắc nghiệm khách quan đa lựa chọn (MCQ) bám sát ma trận đề thi cuối kì I để tự luyện tập.
+    \end{itemize}
+
+    \item \textbf{Năng lực chung:}
+    \begin{itemize}[leftmargin=0.6cm]
+        \item \textit{Tự chủ và tự học:} Tự giác rà soát lại các lỗ hổng kiến thức sau toàn bộ học kì I; tự lập kế hoạch phân bổ thời gian ôn tập hợp lí giữa các chương.
+        \item \textit{Giao tiếp và hợp tác:} Tích cực thảo luận nhóm, giải thích và sửa lỗi sai cho bạn trong quá trình chữa đề cương ôn tập.
+    \end{itemize}
+\end{itemize}
+
+\subsection*{2. Phẩm chất}
+
+\begin{itemize}[leftmargin=1.2cm]
+    \item \textbf{Chăm chỉ:} Tự giác hoàn thành đầy đủ các bài tập trong đề cương ôn tập; kiên trì rèn luyện các dạng bài tập vận dụng.
+    \item \textbf{Trung thực:} Nghiêm túc làm bài ôn tập, tự đánh giá đúng năng lực của bản thân, kiên quyết bài trừ tiêu cực trong kiểm tra thi cử.
+    \item \textbf{Trách nhiệm:} Có trách nhiệm với kết quả học tập của bản thân và phong trào thi đua của lớp; cẩn thận, chỉn chu trong từng bước tính toán và vẽ hình.
+\end{itemize}
+
+\vspace{5pt}
+
+\section*{II. THIẾT BỊ DẠY HỌC VÀ HỌC LIỆU}
+
+\begin{itemize}[leftmargin=1.2cm]
+    \item \textbf{Giáo viên:}
+    \begin{itemize}[leftmargin=0.6cm]
+        \item Kế hoạch bài dạy chi tiết 2 tiết theo chuẩn Công văn 5512/BGDĐT-GDTrH.
+        \item Bài trình chiếu PowerPoint/Canva tương tác tổng kết toàn bộ 5 chương kiến thức học kì I.
+        \item Đề cương ôn tập cuối kì I môn Toán 11 (bao gồm tóm tắt lý thuyết, hệ thống câu hỏi trắc nghiệm và bài tập tự luận có phân hóa 4 mức độ).
+        \item Hệ thống Phiếu học tập phân tầng (PHT số 1: Đại số \& Giải tích; PHT số 2: Hình học không gian).
+        \item Ma trận và Bản đặc tả đề kiểm tra cuối kì I theo quy chuẩn của Bộ GD\&ĐT.
+        \item Bảng Rubric đánh giá năng lực học sinh trong đợt ôn tập cuối học kì.
+    \end{itemize}
+
+    \item \textbf{Học sinh:}
+    \begin{itemize}[leftmargin=0.6cm]
+        \item SGK Toán 11, vở ghi chép, đề cương ôn tập đã chuẩn bị trước ở nhà.
+        \item Dụng cụ học tập: Thước thẳng có vạch chia, compa, bút màu làm nổi bật các đường trong hình không gian.
+        \item Máy tính cầm tay Casio fx-580VN X (hoặc tương đương).
+        \item Thiết bị thông minh (nếu được phép) để truy cập hệ thống LMS làm bài tập trực tuyến.
+    \end{itemize}
+\end{itemize}
+
+\vspace{5pt}
+
+\section*{III. TIẾN TRÌNH DẠY HỌC}
+
+% =========================================================================
+% TIẾT 1 (TIẾT 51 THEO PPCT)
+% =========================================================================
+\begin{center}
+    {\fontsize{13pt}{16pt}\selectfont \textbf{TIẾT 1. ÔN TẬP ĐẠI SỐ VÀ GIẢI TÍCH HỌC KÌ I}}\\[2pt]
+    \textit{(Tiết 51 theo PPCT \ \textbar \ Tuần 17)}
+\end{center}
+
+\subsection*{1. Hoạt động 1: Khởi động (Mở đầu)}
+
+\noindent \textbf{a) Mục tiêu:}
+\begin{itemize}[leftmargin=0.6cm]
+    \item Kích hoạt không khí học tập sôi nổi, kiểm tra nhanh trí nhớ và phản xạ toán học của học sinh về các công thức cốt lõi phần Đại số và Giải tích HK1.
+    \item Giúp học sinh nhận diện ngay các lỗ hổng kiến thức cá nhân cần bù đắp trước kì kiểm tra.
+\end{itemize}
+
+\noindent \textbf{b) Nội dung: Trò chơi ``Vòng quay công thức may mắn''}
+Giáo viên trình chiếu 4 câu hỏi trắc nghiệm nhanh phản xạ công thức:
+\begin{enumerate}
+    \item \textit{Câu 1 (Lượng giác):} Nghiệm của phương trình $\sin x = \sin \alpha$ là gì?
+    \item \textit{Câu 2 (CSC \& CSN):} Công thức tính số hạng tổng quát $u_n$ của một cấp số cộng có số hạng đầu $u_1$, công sai $d$ và của một cấp số nhân có số hạng đầu $u_1$, công bội $q$ là gì?
+    \item \textit{Câu 3 (Thống kê):} Công thức tính số trung bình $\bar{x}$ của mẫu số liệu ghép nhóm?
+    \item \textit{Câu 4 (Giới hạn):} Cho $k \in \mathbb{N}^*$ và $|q| < 1$, giá trị của $\lim \dfrac{1}{n^k}$ và $\lim q^n$ bằng bao nhiêu?
+\end{enumerate}
+
+\noindent \textbf{c) Sản phẩm:}
+Học sinh trả lời nhanh và chính xác:
+\begin{enumerate}
+    \item $\sin x = \sin \alpha \iff \left[\begin{array}{l} x = \alpha + k2\pi \\ x = \pi - \alpha + k2\pi \end{array}\right. (k \in \mathbb{Z})$.
+    \item Cấp số cộng: $u_n = u_1 + (n-1)d$; Cấp số nhân: $u_n = u_1 \cdot q^{n-1}$ ($n \ge 2$).
+    \item Số trung bình: $\bar{x} = \dfrac{m_1 c_1 + m_2 c_2 + \dots + m_k c_k}{n}$, với $c_i$ là giá trị đại diện và $m_i$ là tần số của nhóm thứ $i$.
+    \item $\lim \dfrac{1}{n^k} = 0$ và $\lim q^n = 0$.
+\end{enumerate}
+
+\noindent \textbf{d) Tổ chức thực hiện:}
+GV cho học sinh giơ bảng nhóm hoặc dùng thẻ A-B-C-D phản hồi trong 3 phút. GV biểu dương các học sinh nhớ chính xác và dẫn dắt vào phần hệ thống hóa toàn diện.
+
+\subsection*{2. Hoạt động 2: Hệ thống hóa kiến thức Đại số và Giải tích}
+
+\noindent \textbf{a) Mục tiêu:}
+\begin{itemize}
+    \item Giúp học sinh nắm một cách có hệ thống 4 mạch kiến thức trọng tâm: Lượng giác, Cấp số, Thống kê ghép nhóm, Giới hạn và Tính liên tục.
+    \item Rèn luyện kỹ năng phân biệt các dạng toán và lựa chọn phương pháp giải tối ưu.
+\end{itemize}
+
+\noindent \textbf{b) Nội dung:}
+Giáo viên trình chiếu bảng hệ thống hóa 4 mạch kiến thức then chốt:
+
+\begin{pedabox}{Hệ thống kiến thức trọng tâm Đại số và Giải tích Học kì I}
+    \begin{enumerate}
+        \item \textbf{Chương I: Hàm số lượng giác và Phương trình lượng giác}
+        \begin{itemize}
+            \item Bốn hàm số lượng giác cơ bản: $y = \sin x$ (lẻ, tuần hoàn $T=2\pi$); $y = \cos x$ (chẵn, tuần hoàn $T=2\pi$); $y = \tan x$ (lẻ, $T=\pi$, ĐKXĐ: $x \neq \dfrac{\pi}{2} + k\pi$); $y = \cot x$ (lẻ, $T=\pi$, ĐKXĐ: $x \neq k\pi$).
+            \item Phương trình lượng giác cơ bản:
+            $$\sin x = m \ (|m| \le 1) \iff x = \alpha + k2\pi \text{ hoặc } x = \pi - \alpha + k2\pi \ (k \in \mathbb{Z})$$
+            $$\cos x = m \ (|m| \le 1) \iff x = \pm \alpha + k2\pi \ (k \in \mathbb{Z})$$
+            $$\tan x = m \iff x = \alpha + k\pi; \quad \cot x = m \iff x = \alpha + k\pi \ (k \in \mathbb{Z})$$
+        \end{itemize}
+
+        \item \textbf{Chương II: Dãy số, Cấp số cộng, Cấp số nhân}
+        \begin{itemize}
+            \item \textit{Cấp số cộng:} $u_{n+1} = u_n + d \implies u_n = u_1 + (n-1)d$; $S_n = \dfrac{n(u_1 + u_n)}{2} = \dfrac{n[2u_1 + (n-1)d]}{2}$.
+            \item \textit{Cấp số nhân:} $u_{n+1} = u_n \cdot q \implies u_n = u_1 \cdot q^{n-1}$; $S_n = u_1 \cdot \dfrac{q^n - 1}{q - 1}$ ($q \neq 1$).
+        \end{itemize}
+
+        \item \textbf{Chương III: Các số đặc trưng đo xu thế trung tâm của mẫu số liệu ghép nhóm}
+        \begin{itemize}
+            \item Giá trị đại diện của nhóm $[a_i; a_{i+1})$ là $c_i = \dfrac{a_i + a_{i+1}}{2}$.
+            \item Số trung vị: $M_e = a_p + \dfrac{\dfrac{n}{2} - C}{m_p} \cdot (a_{p+1} - a_p)$ (với $[a_p; a_{p+1})$ là nhóm đầu tiên có tần số tích lũy $\ge \dfrac{n}{2}$).
+            \item Mốt: $M_o = a_j + \dfrac{m_j - m_{j-1}}{(m_j - m_{j-1}) + (m_j - m_{j+1})} \cdot (a_{j+1} - a_j)$.
+        \end{itemize}
+
+        \item \textbf{Chương V: Giới hạn của dãy số, hàm số và tính liên tục}
+        \begin{itemize}
+            \item Quy tắc tính giới hạn: Tổng, hiệu, tích, thương; tổng CSN lùi vô hạn $S = \dfrac{u_1}{1 - q}$ ($|q| < 1$).
+            \item Các dạng vô định: $\dfrac{0}{0}$ (phân tích nhân tử rút gọn hoặc nhân liên hợp), $\dfrac{\infty}{\infty}$ (chia bậc cao nhất).
+            \item Hàm số liên tục tại $x_0 \iff \lim_{x \to x_0} f(x) = f(x_0)$.
+            \item Định lý giá trị trung gian: $f(x)$ liên tục trên $[a; b]$ và $f(a) \cdot f(b) < 0 \implies \exists c \in (a; b): f(c) = 0$.
+        \end{itemize}
+    \end{enumerate}
+\end{pedabox}
+
+\begin{scaffoldbox}{Giàn giáo sư phạm: Các lỗi sai kinh điển học sinh trung bình - yếu thường gặp}
+    \begin{enumerate}
+        \item \textbf{Lỗi quên nghiệm thứ hai của phương trình lượng giác:} Với $\sin x = m$, HS yếu thường chỉ ghi $x = \alpha + k2\pi$ mà quên họ nghiệm $x = \pi - \alpha + k2\pi$; với $\cos x = m$, quên dấu trừ $\pm \alpha$.
+        \item \textbf{Lỗi nhầm chu kì của tan và cot:} Nhầm $k2\pi$ thay vì $k\pi$.
+        \item \textbf{Lỗi nhầm lẫn giữa CSC và CSN:} Nhầm công thức số hạng tổng quát $u_n = u_1 + (n-1)d$ thành $u_1 + nd$; nhầm $u_n = u_1 \cdot q^{n-1}$ thành $u_1 \cdot q^n$.
+        \item \textbf{Lỗi nhân lượng liên hợp sai dấu:} $(\sqrt{A} - B)(\sqrt{A} + B) = A - B^2$ (HS thường quên bình phương số $B$ hoặc quên đổi dấu khi phá ngoặc).
+    \end{enumerate}
+\end{scaffoldbox}
+
+\noindent \textbf{c) Sản phẩm:}
+Học sinh hoàn thiện sơ đồ bảng tổng hợp kiến thức vào vở ghi chép.
+
+\noindent \textbf{d) Tổ chức thực hiện:}
+GV trình chiếu sơ đồ mindmap, phân tích các điểm nhấn -> HS lắng nghe, ghi chú các lưu ý quan trọng vào vở -> GV đặt câu hỏi khắc sâu sự khác biệt giữa các dạng toán.
+
+\subsection*{3. Hoạt động 3: Luyện tập phân hóa (Chữa bài tập đề cương điển hình)}
+
+\noindent \textbf{a) Mục tiêu:}
+\begin{itemize}
+    \item Rèn luyện kỹ năng giải các bài toán trọng tâm tự luận và trắc nghiệm xuất hiện trong đề thi học kì I.
+    \item Rèn kỹ năng trình bày lời giải tự luận chặt chẽ, không bị trừ điểm bước biến đổi.
+\end{itemize}
+
+\noindent \textbf{b) Nội dung:}
+Học sinh thực hiện 4 bài toán tự luận tiêu biểu trong đề cương ôn tập:
+
+\begin{pedabox}{Hệ thống bài tập luyện tập Tiết 1}
+    \textbf{Bài 1 (Lượng giác):} Giải phương trình lượng giác:
+    $$2\sin\left(2x - \dfrac{\pi}{3}\right) - \sqrt{3} = 0$$
+    \textbf{Bài 2 (Cấp số cộng):} Cho cấp số cộng $(u_n)$ thỏa mãn hệ điều kiện:
+    $$\begin{cases} u_2 + u_5 = 19 \\ u_3 + u_7 = 27 \end{cases}$$
+    a) Tìm số hạng đầu $u_1$ và công sai $d$ của cấp số cộng.\\
+    b) Tính tổng của 20 số hạng đầu tiên $S_{20}$.\\
+    \textbf{Bài 3 (Giới hạn hàm số):} Tính các giới hạn sau:
+    $$I_1 = \lim_{x \to 2} \dfrac{x^2 - 5x + 6}{x - 2}; \qquad I_2 = \lim_{x \to 3} \dfrac{\sqrt{x+1} - 2}{x - 3}$$
+    \textbf{Bài 4 (Hàm số liên tục):} Xét tính liên tục của hàm số sau tại điểm $x_0 = 1$:
+    $$f(x) = \begin{cases} \dfrac{x^2 - 1}{x - 1} & \text{khi } x \neq 1 \\ 3 & \text{khi } x = 1 \end{cases}$$
+\end{pedabox}
+
+\noindent \textbf{c) Sản phẩm: Lời giải chi tiết}
+
+\noindent \textbf{Lời giải Bài 1:}
+Ta có:
+$$2\sin\left(2x - \dfrac{\pi}{3}\right) - \sqrt{3} = 0 \iff \sin\left(2x - \dfrac{\pi}{3}\right) = \dfrac{\sqrt{3}}{2}$$
+Vì $\sin\dfrac{\pi}{3} = \dfrac{\sqrt{3}}{2}$, nên phương trình tương đương:
+$$\sin\left(2x - \dfrac{\pi}{3}\right) = \sin\dfrac{\pi}{3} \iff \left[\begin{array}{l} 2x - \dfrac{\pi}{3} = \dfrac{\pi}{3} + k2\pi \\ 2x - \dfrac{\pi}{3} = \pi - \dfrac{\pi}{3} + k2\pi \end{array}\right. \iff \left[\begin{array}{l} 2x = \dfrac{2\pi}{3} + k2\pi \\ 2x = \pi + k2\pi \end{array}\right. \iff \left[\begin{array}{l} x = \dfrac{\pi}{3} + k\pi \\ x = \dfrac{\pi}{2} + k\pi \end{array}\right. (k \in \mathbb{Z})$$
+Vậy tập nghiệm của phương trình là $S = \left\{ \dfrac{\pi}{3} + k\pi; \ \dfrac{\pi}{2} + k\pi \ \middle| \ k \in \mathbb{Z} \right\}$.
+
+\noindent \textbf{Lời giải Bài 2:}
+a) Gọi $u_1$ là số hạng đầu và $d$ là công sai của cấp số cộng. Biểu diễn các số hạng theo $u_1$ và $d$:
+$$u_2 = u_1 + d; \quad u_3 = u_1 + 2d; \quad u_5 = u_1 + 4d; \quad u_7 = u_1 + 6d$$
+Thay vào hệ phương trình:
+$$\begin{cases} (u_1 + d) + (u_1 + 4d) = 19 \\ (u_1 + 2d) + (u_1 + 6d) = 27 \end{cases} \iff \begin{cases} 2u_1 + 5d = 19 \\ 2u_1 + 8d = 27 \end{cases}$$
+Lấy phương trình thứ hai trừ phương trình thứ nhất vế theo vế:
+$$3d = 8 \implies d = \dfrac{8}{3} \quad (\text{hoặc nếu } d = 3 \text{ với số liệu } 2u_1+5d=19, 2u_1+7d=25)$$
+Giải hệ:
+$$\begin{cases} 2u_1 + 5d = 19 \\ 3d = 8 \end{cases} \iff \begin{cases} d = \dfrac{8}{3} \\ u_1 = \dfrac{19 - 5 \cdot \dfrac{8}{3}}{2} = \dfrac{17}{6} \end{cases}$$
+b) Tổng 20 số hạng đầu tiên:
+$$S_{20} = \dfrac{20 \cdot [2u_1 + (20 - 1)d]}{2} = 10 \cdot \left[ 2 \cdot \dfrac{17}{6} + 19 \cdot \dfrac{8}{3} \right] = 10 \cdot \left[ \dfrac{17}{3} + \dfrac{152}{3} \right] = 10 \cdot \dfrac{169}{3} = \dfrac{1690}{3}$$
+
+\noindent \textbf{Lời giải Bài 3:}
+\begin{itemize}
+    \item Với $I_1 = \lim_{x \to 2} \dfrac{x^2 - 5x + 6}{x - 2}$:
+    Đây là dạng vô định $\dfrac{0}{0}$. Phân tích đa thức ở tử số: $x^2 - 5x + 6 = (x - 2)(x - 3)$.
+    Do đó:
+    $$I_1 = \lim_{x \to 2} \dfrac{(x - 2)(x - 3)}{x - 2} = \lim_{x \to 2} (x - 3) = 2 - 3 = -1$$
+    \item Với $I_2 = \lim_{x \to 3} \dfrac{\sqrt{x+1} - 2}{x - 3}$:
+    Đây là dạng vô định $\dfrac{0}{0}$ chứa căn bậc hai. Ta nhân cả tử và mẫu với lượng liên hợp $(\sqrt{x+1} + 2)$:
+    $$I_2 = \lim_{x \to 3} \dfrac{(\sqrt{x+1} - 2)(\sqrt{x+1} + 2)}{(x - 3)(\sqrt{x+1} + 2)} = \lim_{x \to 3} \dfrac{(x+1) - 4}{(x - 3)(\sqrt{x+1} + 2)} = \lim_{x \to 3} \dfrac{x - 3}{(x - 3)(\sqrt{x+1} + 2)}$$
+    $$I_2 = \lim_{x \to 3} \dfrac{1}{\sqrt{x+1} + 2} = \dfrac{1}{\sqrt{3+1} + 2} = \dfrac{1}{2 + 2} = \dfrac{1}{4}$$
+\end{itemize}
+
+\noindent \textbf{Lời giải Bài 4:}
+Tập xác định của hàm số là $D = \mathbb{R}$. Điểm $x_0 = 1 \in D$.
+Ta có: $f(1) = 3$.
+Xét giới hạn của hàm số khi $x \to 1$:
+$$\lim_{x \to 1} f(x) = \lim_{x \to 1} \dfrac{x^2 - 1}{x - 1} = \lim_{x \to 1} \dfrac{(x - 1)(x + 1)}{x - 1} = \lim_{x \to 1} (x + 1) = 1 + 1 = 2$$
+Vì $\lim_{x \to 1} f(x) = 2 \neq 3 = f(1)$, nên hàm số không liên tục tại $x_0 = 1$ (hàm số gián đoạn tại $x_0 = 1$).
+
+\noindent \textbf{d) Tổ chức thực hiện:}
+\begin{itemize}
+    \item \textbf{Bước 1:} GV phát PHT số 1, phân công 4 nhóm giải 4 bài toán trong 8 phút.
+    \item \textbf{Bước 2:} HS thảo luận nhóm, giải bài vào bảng phụ. GV quan sát và uốn nắn các lỗi sai bước khử dạng vô định.
+    \item \textbf{Bước 3:} Đại diện 4 nhóm dán bảng phụ lên bảng chính, thuyết minh lời giải.
+    \item \textbf{Bước 4:} GV chuẩn hóa, hướng dẫn HS bấm máy tính Casio fx-580VN X bằng lệnh \texttt{CALC} với $x = 1{,}999999$ hoặc $x = 3{,}000001$ để kiểm tra lại giới hạn.
+\end{itemize}
+
+\subsection*{4. Hoạt động 4: Vận dụng & Tích hợp Năng lực AI (Liêm chính học thuật)}
+
+\noindent \textbf{a) Mục tiêu:}
+\begin{itemize}
+    \item Học sinh vận dụng công cụ AI một cách có đạo đức, xây dựng kỹ năng tự kiểm tra bài tập về nhà bằng AI.
+    \item Quán triệt quy định liêm chính học thuật trong kiểm tra định kì (Mã 11.B3.1).
+\end{itemize}
+
+\noindent \textbf{b) Nội dung:}
+\begin{aibox}{Năng lực AI & Liêm chính học thuật: Sử dụng AI làm trợ lý ôn tập thông minh}
+    \textbf{1. Nguyên tắc đạo đức số (Mã 11.B3.1):}
+    Tuyệt đối không sử dụng công cụ AI (ChatGPT, Gemini, Photomath) để giải hộ bài tập kiểm tra hoặc sao chép nguyên văn lời giải nộp cho giáo viên. Sử dụng AI có trách nhiệm: Tự giải trước, sau đó dùng AI đối chiếu và giải thích bước giải khó hiểu.
+    
+    \textbf{2. Câu lệnh Prompt mẫu giúp AI phát hiện lỗi sai trong bài giải của học sinh:}
+    \begin{quote}
+        \small \texttt{"Em hãy đóng vai giáo viên chấm thi môn Toán 11. Tôi vừa giải phương trình lượng giác: $2\sin(2x - \pi/3) - \sqrt{3} = 0$ ra kết quả là $x = \pi/3 + k\pi$. Hãy: (1) Kiểm tra xem bài làm của tôi đúng hay thiếu sót ở đâu; (2) Chỉ ra nguyên nhân vì sao tôi bị thiếu một họ nghiệm; (3) Cho tôi một câu hỏi tương tự để tôi tự làm lại."}
+    \end{quote}
+\end{aibox}
+
+\noindent \textbf{c) Sản phẩm:}
+Học sinh hiểu rõ phương pháp học tập cùng AI và cam kết làm bài kiểm tra học kì trung thực.
+
+\noindent \textbf{d) Tổ chức thực hiện:}
+GV phân tích thông điệp về liêm chính học thuật -> Hướng dẫn HS lưu mẫu prompt để tự ôn tập tại nhà.
+
+% =========================================================================
+% TIẾT 2 (TIẾT 52 THEO PPCT)
+% =========================================================================
+\vspace{10pt}
+\begin{center}
+    {\fontsize{13pt}{16pt}\selectfont \textbf{TIẾT 2. ÔN TẬP HÌNH HỌC KHÔNG GIAN HỌC KÌ I}}\\[2pt]
+    \textit{(Tiết 52 theo PPCT \ \textbar \ Tuần 18)}
+\end{center}
+
+\subsection*{1. Hoạt động 1: Khởi động (Mở đầu)}
+
+\noindent \textbf{a) Mục tiêu:}
+\begin{itemize}
+    \item Tái hiện nhanh các hình ảnh không gian và các vị trí tương đối giữa đường thẳng và mặt phẳng.
+    \item Tạo tâm thế sẵn sàng tư duy hình học không gian 3D.
+\end{itemize}
+
+\noindent \textbf{b) Nội dung: Trò chơi ``Hộp quà không gian''}
+Học sinh bốc thăm ngẫu nhiên một câu hỏi định lý:
+\begin{itemize}
+    \item \textit{Hộp quà 1:} Nêu điều kiện để đường thẳng $d$ song song với mặt phẳng $(\alpha)$.
+    \item \textit{Hộp quà 2:} Nêu điều kiện để hai mặt phẳng $(\alpha)$ và $(\beta)$ song song với nhau.
+    \item \textit{Hộp quà 3:} Định lý giao tuyến của 3 mặt phẳng cắt nhau từng đôi một?
+\end{itemize}
+
+\noindent \textbf{c) Sản phẩm:}
+Học sinh phát biểu chuẩn xác:
+\begin{itemize}
+    \item $d \not\subset (\alpha), d \parallel a, a \subset (\alpha) \implies d \parallel (\alpha)$.
+    \item $(\alpha)$ chứa 2 đường thẳng cắt nhau $a, b$ và $a \parallel (\beta), b \parallel (\beta) \implies (\alpha) \parallel (\beta)$.
+    \item Ba mặt phẳng cắt nhau từng đôi một theo ba giao tuyến phân biệt thì ba giao tuyến đó hoặc đồng quy hoặc đôi một song song.
+\end{itemize}
+
+\noindent \textbf{d) Tổ chức thực hiện:}
+GV điều hành trò chơi trong 4 phút, tạo không khí học tập hào hứng, chốt ý chuyển tiếp sang hệ thống hóa kiến thức hình học.
+
+\subsection*{2. Hoạt động 2: Hệ thống hóa kiến thức Hình học không gian}
+
+\noindent \textbf{a) Mục tiêu:}
+\begin{itemize}
+    \item Hệ thống hóa trọn vẹn mạch kiến thức Chương IV: Đại cương HHKG, Quan hệ song song và Phép chiếu song song.
+    \item Khắc sâu phương pháp tìm giao tuyến, giao điểm, thiết diện và chứng minh song song.
+\end{itemize}
+
+\noindent \textbf{b) Nội dung:}
+Giáo viên trình chiếu sơ đồ khối kiến thức Hình học không gian:
+
+\begin{pedabox}{Hệ thống phương pháp giải toán Hình học không gian Học kì I}
+    \begin{enumerate}
+        \item \textbf{Phương pháp tìm giao tuyến của hai mặt phẳng $(\alpha)$ và $(\beta)$:}
+        \begin{itemize}
+            \item \textit{Cách 1 (Tìm 2 điểm chung):} Tìm hai điểm chung phân biệt $A, B$ của $(\alpha)$ và $(\beta)$. Khi đó giao tuyến là đường thẳng $AB$.
+            \item \textit{Cách 2 (Sử dụng quan hệ song song):} Nếu $(\alpha)$ và $(\beta)$ có một điểm chung $S$ và lần lượt chứa hai đường thẳng song song $a \subset (\alpha), b \subset (\beta)$ ($a \parallel b$) thì giao tuyến là đường thẳng $d$ đi qua $S$ và $d \parallel a \parallel b$.
+        \end{itemize}
+
+        \item \textbf{Phương pháp tìm giao điểm của đường thẳng $d$ và mặt phẳng $(\alpha)$:}
+        \begin{itemize}
+            \item Chọn mặt phẳng phụ $(\beta)$ chứa $d$.
+            \item Tìm giao tuyến $a = (\alpha) \cap (\beta)$.
+            \item Trong $(\beta)$, gọi $I = d \cap a$. Khi đó $I = d \cap (\alpha)$.
+        \end{itemize}
+
+        \item \textbf{Phương pháp chứng minh đường thẳng song song mặt phẳng ($d \parallel (\alpha)$):}
+        \begin{itemize}
+            \item Tìm trong $(\alpha)$ một đường thẳng $a$ sao cho $a \parallel d$ và chứng minh $d \not\subset (\alpha)$.
+        \end{itemize}
+
+        \item \textbf{Phương pháp chứng minh hai mặt phẳng song song ($(\alpha) \parallel (\beta)$):}
+        \begin{itemize}
+            \item Chứng minh $(\alpha)$ chứa hai đường thẳng cắt nhau $a, b$ sao cho $a \parallel (\beta)$ và $b \parallel (\beta)$.
+        \end{itemize}
+
+        \item \textbf{Phương pháp xác định thiết diện bằng quan hệ song song:}
+        \begin{itemize}
+            \item Xuất phát từ các điểm đã cho, dựng các đoạn giao tuyến song song với các đường thẳng có sẵn theo định lý giao tuyến.
+        \end{itemize}
+    \end{enumerate}
+\end{pedabox}
+
+\begin{scaffoldbox}{Giàn giáo sư phạm: Kỹ năng vẽ hình không gian và mẹo tránh ngộ nhận}
+    \begin{enumerate}
+        \item \textbf{Quy tắc nét vẽ bắt buộc:} Nét nhìn thấy vẽ bằng nét liền (\textbf{---}), nét bị che khuất bắt buộc vẽ bằng nét đứt (\textbf{- - -}).
+        \item \textbf{Mẹo chọn mặt phẳng phụ tìm giao điểm:} Ưu tiên chọn mặt phẳng phụ đi qua các đỉnh sẵn có và chứa các đường thẳng cắt được các cạnh của mặt phẳng cần tìm giao điểm.
+        \item \textbf{Tránh lỗi ngộ nhận đồng phẳng:} Hai đường thẳng nhìn trên hình vẽ có vẻ cắt nhau nhưng thực chất chúng nằm trong hai mặt phẳng khác nhau (hai đường thẳng chéo nhau).
+    \end{enumerate}
+\end{scaffoldbox}
+
+\noindent \textbf{c) Sản phẩm:}
+Học sinh ghi nhớ sơ đồ tư duy phương pháp giải và quy tắc dựng hình.
+
+\noindent \textbf{d) Tổ chức thực hiện:}
+GV phân tích từng phương pháp kèm hình vẽ minh họa -> HS ghi tóm tắt các bước chuẩn vào vở.
+
+\subsection*{3. Hoạt động 3: Luyện tập (Bài toán hình học tổng hợp)}
+
+\noindent \textbf{a) Mục tiêu:}
+\begin{itemize}
+    \item Rèn luyện kỹ năng giải một bài toán hình học không gian hoàn chỉnh bao quát đầy đủ các yêu cầu: Tìm giao tuyến, chứng minh song song, tìm giao điểm và xác định thiết diện.
+    \item Rèn tư duy hình học không gian và kỹ năng lập luận chặt chẽ.
+\end{itemize}
+
+\noindent \textbf{b) Nội dung:}
+Học sinh thực hiện bài toán tổng hợp trọng tâm:
+
+\begin{pedabox}{Bài toán hình học tổng hợp: Cho hình chóp $S.ABCD$}
+    Cho hình chóp $S.ABCD$ có đáy $ABCD$ là hình bình hành tâm $O$. Gọi $M$ là trung điểm của cạnh bên $SA$, $N$ là trung điểm của cạnh bên $SC$.
+    \begin{enumerate}
+        \item Tìm giao tuyến của hai mặt phẳng $(SAB)$ và $(SCD)$.
+        \item Chứng minh đường thẳng $MN$ song song với mặt phẳng đáy $(ABCD)$.
+        \item Tìm giao điểm $I$ của đường thẳng $SO$ với mặt phẳng $(BMD)$ và chứng minh điểm $I$ là trọng tâm của tam giác $SBD$.
+        \item Xác định thiết diện của hình chóp $S.ABCD$ cắt bởi mặt phẳng $(\alpha)$ đi qua điểm $M$, song song với đường thẳng $BD$ và song song với đường thẳng $SC$. Thiết diện là hình gì?
+    \end{enumerate}
+\end{pedabox}
+
+\noindent \textbf{c) Sản phẩm: Lời giải chi tiết}
+
+\noindent \textbf{Lời giải câu 1 (Tìm giao tuyến $(SAB) \cap (SCD)$):}
+\begin{itemize}
+    \item Ta có: Điểm $S \in (SAB) \cap (SCD)$, do đó $S$ là điểm chung thứ nhất.
+    \item Mặt khác: $\begin{cases} AB \subset (SAB) \\ CD \subset (SCD) \\ AB \parallel CD \ (\text{do } ABCD \text{ là hình bình hành}) \end{cases}$
+    \item Theo định lý về giao tuyến của hai mặt phẳng lần lượt chứa hai đường thẳng song song, giao tuyến của $(SAB)$ và $(SCD)$ là đường thẳng $d_x$ đi qua $S$ và song song với $AB$ và $CD$.
+\end{itemize}
+
+\noindent \textbf{Lời giải câu 2 (Chứng minh $MN \parallel (ABCD)$):}
+\begin{itemize}
+    \item Xét tam giác $SAC$: Ta có $M$ là trung điểm của $SA$, $N$ là trung điểm của $SC$.
+    \item Do đó, $MN$ là đường trung bình của tam giác $SAC$, suy ra:
+    $$MN \parallel AC$$
+    \item Ta có: $\begin{cases} MN \parallel AC \\ AC \subset (ABCD) \\ MN \not\subset (ABCD) \end{cases} \implies MN \parallel (ABCD)$.
+\end{itemize}
+
+\noindent \textbf{Lời giải câu 3 (Tìm giao điểm $I = SO \cap (BMD)$ và chứng minh trọng tâm):}
+\begin{itemize}
+    \item Xét mặt phẳng trung gian $(SAC)$ chứa đường thẳng $SO$:
+    \begin{itemize}
+        \item Ta có $M \in SA \subset (SAC)$ và $M \in (BMD) \implies M \in (SAC) \cap (BMD)$.
+        \item Lại có $O = AC \cap BD$, mà $AC \subset (SAC)$ và $BD \subset (BMD)$ nên $O \in (SAC) \cap (BMD)$.
+        \item Vậy giao tuyến của $(SAC)$ và $(BMD)$ chính là đường thẳng $MO$.
+    \end{itemize}
+    \item Trong mặt phẳng $(SAC)$, gọi $I$ là giao điểm của $SO$ và $MO$:
+    $$I = SO \cap MO$$
+    Vì $MO \subset (BMD)$ nên $I = SO \cap (BMD)$.
+    \item \textit{Chứng minh $I$ là trọng tâm tam giác $SBD$:}
+    \begin{itemize}
+        \item Xét tam giác $SAC$: $SO$ là đường trung tuyến (vì $O$ là trung điểm của $AC$). $MO$ cắt $SO$ tại $I$.
+        \item Kẻ đường trung tuyến $AM$ của tam giác $SAC$, ta thấy $SO$ và $AM$ cắt nhau tại trọng tâm $G$ của tam giác $SAC$. Mặt khác, trong tam giác $SBD$, $O$ là trung điểm của $BD$ nên $SO$ là đường trung tuyến của tam giác $SBD$.
+        \item Xét mặt phẳng $(SBD)$: Gọi giao điểm của $MO$ và $SO$ là $I$. Trong tam giác $SAC$, $O$ là trung điểm của $AC$, $M$ là trung điểm của $SA$, đoạn $MO$ nối trung điểm hai cạnh nên $MO \parallel SC$ và $MO = \dfrac{1}{2}SC$.
+        \item Xét tam giác $SOC$: Do $MI \parallel SC$ (với $M \in SA$), theo định lý Ta-lét trong tam giác $SAO$ hoặc tỉ số đoạn thẳng: $I$ chia đoạn $SO$ theo tỉ số $\dfrac{SI}{SO} = \dfrac{2}{3}$.
+        \item Vì $SO$ là đường trung tuyến của tam giác $SBD$ và $\dfrac{SI}{SO} = \dfrac{2}{3}$, nên $I$ chính là trọng tâm của tam giác $SBD$.
+    \end{itemize}
+\end{itemize}
+
+\noindent \textbf{Lời giải câu 4 (Xác định thiết diện):}
+\begin{itemize}
+    \item Mặt phẳng $(\alpha)$ đi qua $M$ và song song với $BD$ và $SC$.
+    \item Vì $(\alpha) \parallel BD$ và $M \in (\alpha) \cap (SAD)$:
+    Trong mặt phẳng $(SAD)$, qua $M$ kẻ đường thẳng song song với $AD$ hoặc qua $M$ kẻ song song với các đường phụ. Cụ thể:
+    \begin{itemize}
+        \item Điểm $M \in (\alpha)$. Do $(\alpha) \parallel BD$, trong mặt phẳng $(SBD)$ ta có quan hệ song song. Thuận tiện hơn, xét mặt phẳng $(SAB)$: Qua $M$ dựng đường thẳng song song với $SB$...
+        \item Xét mặt phẳng $(SAC)$: Vì $(\alpha) \parallel SC$ và $M \in (\alpha)$, trong $(SAC)$ kẻ đường thẳng qua $M$ song song với $SC$. Đường thẳng này cắt $AC$ tại $K$. Vì $M$ là trung điểm của $SA$ nên $K$ là trung điểm của $AO$.
+        \item Xét mặt phẳng $(ABCD)$: Vì $(\alpha) \parallel BD$ và $K \in (\alpha)$, qua $K$ kẻ đường thẳng song song với $BD$, cắt $AB$ tại $P$ và cắt $AD$ tại $Q$.
+        \item Xét mặt phẳng $(SAB)$: Nối $P$ với $M$, ta có đoạn giao tuyến $PM$.
+        \item Xét mặt phẳng $(SAD)$: Nối $Q$ với $M$, ta có đoạn giao tuyến $QM$.
+        \item Xét mặt phẳng $(SBC)$ và $(SCD)$: Từ $P$ kẻ đường thẳng song song với $SC$, cắt $BC$ tại $E$ (nếu có) hoặc cắt $SB$ tại điểm tương ứng.
+    \end{itemize}
+    \item Kết luận: Thiết diện cắt bởi mặt phẳng $(\alpha)$ là một ngũ giác (hoặc hình thang) tùy thuộc vào vị trí giao điểm, được xác định hoàn toàn bởi các đoạn thẳng song song với $BD$ và $SC$.
+\end{itemize}
+
+\noindent \textbf{d) Tổ chức thực hiện:}
+GV hướng dẫn HS vẽ hình không gian chuẩn mực lên bảng -> Gọi lần lượt các học sinh lên bảng giải từng câu 1, 2, 3 -> Cả lớp nhận xét, bổ sung và hoàn thiện lời giải mẫu.
+
+\subsection*{4. Hoạt động 4: Vận dụng & Hướng dẫn tự học chuẩn bị kiểm tra cuối kì I}
+
+\noindent \textbf{a) Mục tiêu:}
+\begin{itemize}
+    \item Hướng dẫn học sinh phương pháp tự ôn tập hệ thống hóa kiến thức tại nhà.
+    \item Hướng dẫn sử dụng AI (Mã 11.C2.3) để tạo đề trắc nghiệm tự luyện bám sát ma trận đề thi cuối kì I.
+\end{itemize}
+
+\noindent \textbf{b) Nội dung:}
+\begin{aibox}{Năng lực AI: Kỹ thuật Prompting tự tạo đề kiểm tra ôn tập cuối kì I}
+    \textbf{Câu lệnh Prompt mẫu cho học sinh gửi đến Trợ lý AI:}
+    \begin{quote}
+        \small \texttt{"Em hãy đóng vai chuyên gia khảo thí môn Toán THPT. Dựa trên ma trận đề thi cuối kì I môn Toán lớp 11 gồm 70\% trắc nghiệm và 30\% tự luận bao quát các mạch kiến thức: Lượng giác, Cấp số cộng - Cấp số nhân, Thống kê ghép nhóm, Giới hạn và Quan hệ song song trong không gian. Hãy tạo cho tôi: (1) Một đề thi thử gồm 12 câu hỏi trắc nghiệm nhiều lựa chọn; (2) 2 câu hỏi trắc nghiệm Đúng/Sai; (3) Cung cấp đáp án và lời giải chi tiết cho từng câu để tôi tự chấm điểm."}
+    \end{quote}
+\end{aibox}
+
+\noindent \textbf{c) Sản phẩm:}
+Học sinh nắm vững cấu trúc ma trận đề thi 90 phút (Tiết 53, 54), có kế hoạch tự ôn tập và làm bài thi thử trên hệ thống số.
+
+\noindent \textbf{d) Tổ chức thực hiện:}
+GV công bố ma trận đề thi cuối kì I -> Dặn dò HS ôn tập kĩ năng bấm máy tính và rèn chữ viết tự luận cẩn thận.
+
+\vspace{5pt}
+
+\section*{IV. PHỤ LỤC HỌC LIỆU BỔ TRỢ}
+
+\subsection*{1. Bảng ma trận kiến thức trọng tâm kiểm tra học kì I môn Toán 11}
+
+\begin{center}
+\renewcommand{\arraystretch}{1.25}
+\begin{tabularx}{\textwidth}{|p{4.2cm}|X|X|X|X|c|}
+    \hline
+    \textbf{Chủ đề kiến thức} & \textbf{Nhận biết} & \textbf{Thông hiểu} & \textbf{Vận dụng} & \textbf{Vận dụng cao} & \textbf{Tổng} \\
+    \hline
+    \textbf{1. Hàm số \& PT Lượng giác} & 2 câu TN & 2 câu TN & 1 câu TL & 1 ý TL & \textbf{25\%} \\
+    \hline
+    \textbf{2. Dãy số, CSC, CSN} & 2 câu TN & 2 câu TN & 1 câu TL & 1 ý TL & \textbf{20\%} \\
+    \hline
+    \textbf{3. Thống kê ghép nhóm} & 2 câu TN & 1 câu TN & 1 ý TL & 0 & \textbf{15\%} \\
+    \hline
+    \textbf{4. Giới hạn \& Tính liên tục} & 2 câu TN & 2 câu TN & 1 câu TL & 0 & \textbf{20\%} \\
+    \hline
+    \textbf{5. Quan hệ song song HHKG} & 2 câu TN & 2 câu TN & 1 câu TL & 1 ý TL & \textbf{20\%} \\
+    \hline
+    \textbf{Tổng tỉ lệ điểm} & \textbf{30\%} & \textbf{35\%} & \textbf{25\%} & \textbf{10\%} & \textbf{100\%} \\
+    \hline
+\end{tabularx}
+\end{center}
+
+\subsection*{2. Phiếu học tập phân tầng bậc thang (Worksheet)}
+
+\begin{center}
+    \textbf{PHIẾU HỌC TẬP ÔN TẬP TỔNG HỢP CUỐI KỲ I}\\
+    \textit{Họ và tên học sinh: \dots\dots\dots\dots\dots\dots\dots\dots\dots\dots\dots\dots \ \textbar \ Lớp: 11\dots}
+\end{center}
+
+\noindent \textbf{MỨC ĐỘ 1: NHẬN BIẾT VÀ THÔNG HIỂU (Dành cho toàn thể học sinh)}
+\begin{enumerate}
+    \item Tìm tập xác định của hàm số $y = \tan\left(x - \dfrac{\pi}{4}\right)$.
+    \begin{itemize}
+        \item \textit{Đáp số:} ĐKXĐ: $x - \dfrac{\pi}{4} \neq \dfrac{\pi}{2} + k\pi \iff x \neq \dfrac{3\pi}{4} + k\pi \ (k \in \mathbb{Z})$.
+    \end{itemize}
+    \item Cho cấp số nhân $(u_n)$ có $u_1 = 3$, công bội $q = 2$. Tính số hạng thứ 6 của cấp số nhân.
+    \begin{itemize}
+        \item \textit{Đáp số:} $u_6 = u_1 \cdot q^5 = 3 \cdot 2^5 = 3 \cdot 32 = 96$.
+    \end{itemize}
+    \item Cho tứ diện $ABCD$. Gọi $I, J$ lần lượt là trung điểm của $AB$ và $AC$. Vị trí tương đối của đường thẳng $IJ$ và mặt phẳng $(BCD)$ là gì?
+    \begin{itemize}
+        \item \textit{Đáp số:} $IJ \parallel BC \subset (BCD) \implies IJ \parallel (BCD)$.
+    \end{itemize}
+\end{enumerate}
+
+\noindent \textbf{MỨC ĐỘ 2: VẬN DỤNG (Rèn luyện kỹ năng giải toán)}
+\begin{enumerate}
+    \item Giải phương trình: $\cos 2x - 3\cos x + 2 = 0$.
+    \begin{itemize}
+        \item \textit{Hướng dẫn:} Đưa về phương trình bậc hai: $2\cos^2 x - 3\cos x + 1 = 0 \iff \cos x = 1$ hoặc $\cos x = \dfrac{1}{2}$.
+        \item \textit{Nghiệm:} $x = k2\pi$ hoặc $x = \pm \dfrac{\pi}{3} + k2\pi \ (k \in \mathbb{Z})$.
+    \end{itemize}
+    \item Tính giới hạn: $\lim_{x \to 1} \dfrac{\sqrt{2x+2} - 2}{x^2 - 1}$.
+    \begin{itemize}
+        \item \textit{Hướng dẫn:} Nhân liên hợp: $\lim_{x \to 1} \dfrac{2(x-1)}{(x-1)(x+1)(\sqrt{2x+2}+2)} = \dfrac{2}{2 \times 4} = \dfrac{1}{4}$.
+    \end{itemize}
+\end{enumerate}
+
+\noindent \textbf{MỨC ĐỘ 3: VẬN DỤNG CAO (Phát triển năng lực tư duy điểm 9 - 10)}
+\begin{enumerate}
+    \item Chứng minh rằng phương trình $x^5 - 3x^4 + 5x - 2 = 0$ có ít nhất 3 nghiệm phân biệt thuộc khoảng $(-1; 3)$.
+    \item Cho hình chóp $S.ABCD$ có đáy $ABCD$ là hình bình hành. Gọi $G$ là trọng tâm tam giác $SAB$ và $M$ là điểm trên cạnh $AD$ sao cho $AM = \dfrac{1}{3}AD$. Chứng minh $MG \parallel (SCD)$.
+\end{enumerate}
+
+\subsection*{3. Bảng Rubric đánh giá năng lực học sinh trong đợt ôn tập}
+
+\begin{center}
+\renewcommand{\arraystretch}{1.25}
+\begin{tabularx}{\textwidth}{|p{2.8cm}|X|X|X|X|}
+    \hline
+    \textbf{Tiêu chí đánh giá} & \textbf{Mức 1 (Chưa đạt)} & \textbf{Mức 2 (Đạt)} & \textbf{Mức 3 (Khá)} & \textbf{Mức 4 (Tốt)} \\
+    \hline
+    \textbf{1. Hệ thống hóa kiến thức} & Chưa nhớ công thức cơ bản; nhầm lẫn giữa các chương. & Nêu được các công thức chính nhưng chưa hệ thống được sơ đồ tư duy. & Hệ thống hóa tốt kiến thức 5 chương, hiểu mối liên hệ liên môn. & Xây dựng sơ đồ tư duy hoàn chỉnh, khái quát kiến thức xuất sắc. \\
+    \hline
+    \textbf{2. Kỹ năng giải toán tự luận} & Trình bày tắt, thiếu bước biến đổi, hay sai dấu và điều kiện. & Giải đúng các bài toán nhận biết - thông hiểu; trình bày cơ bản rõ ràng. & Lập luận chặt chẽ, giải tốt các bài toán vận dụng, vẽ hình đúng nét. & Lập luận sắc bén, giải được bài toán vận dụng cao, trình bày tự luận mẫu mực. \\
+    \hline
+    \textbf{3. Năng lực số \& MTCT} & Bấm máy tính chậm, chưa biết dùng lệnh \texttt{CALC} kiểm tra. & Sử dụng được MTCT tính toán cơ bản; tra cứu được tài liệu số. & Sử dụng thành thạo MTCT kiểm tra nghiệm và giới hạn; khai thác tốt LMS. & Làm chủ công cụ MTCT và các nền tảng học tập số, quản lý học tập thông minh. \\
+    \hline
+    \textbf{4. Năng lực AI \& Liêm chính} & Không biết cách dùng AI hoặc có biểu hiện ỷ lại nhờ AI làm hộ. & Hiểu nguyên tắc liêm chính; biết dùng prompt cơ bản hỏi AI. & Vận dụng prompt hiệu quả để AI rà soát lỗi sai và giải thích bước khó. & Khai thác AI như người bạn đồng hành phản biện, tuyệt đối trung thực trong học tập. \\
+    \hline
+\end{tabularx}
+\end{center}
+
+\end{document}
