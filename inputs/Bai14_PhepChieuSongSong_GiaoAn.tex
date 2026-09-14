@@ -1,0 +1,669 @@
+\documentclass[12pt, a4paper]{article}
+% --- 1. Cấu hình Tiếng Việt và Font chữ chuẩn ---
+\usepackage[utf8]{inputenc}
+\usepackage[T5]{fontenc}
+\usepackage[vietnamese]{babel}
+\usepackage{mathptmx} % Font Times New Roman đồng bộ cả chữ và công thức toán, không gây xung đột gói
+
+\makeatletter
+\renewcommand{\normalsize}{\@setfontsize\normalsize{13pt}{16pt}}
+\makeatother
+\normalsize
+
+% --- 2. Gói Toán học & Ký hiệu bổ trợ ---
+\usepackage{amsmath, amssymb, amsfonts, mathrsfs, amsthm}
+\usepackage{graphicx}
+\usepackage{fontawesome}
+\usepackage{booktabs, tabularx, array, multirow}
+\usepackage{enumitem}
+
+% --- 3. Đồ họa TikZ, Bảng biến thiên & Hình không gian ---
+\usepackage{tikz}
+\usetikzlibrary{calc, intersections, angles, quotes, patterns, arrows.meta, 3d}
+\usepackage{pgfplots}
+\pgfplotsset{compat=1.18}
+\usepackage{tkz-euclide}
+\usepackage{tkz-tab}
+
+\renewcommand{\vec}[1]{\overrightarrow{#1}}
+
+% --- 4. Hộp sư phạm (Tcolorbox) ---
+\usepackage[many]{tcolorbox}
+\tcbuselibrary{skins, breakable}
+
+% --- 5. Căn lề chuẩn văn bản giáo án ---
+\usepackage{geometry}
+\geometry{
+    a4paper,
+    left=25mm,
+    right=15mm,
+    top=20mm,
+    bottom=20mm
+}
+
+% --- 6. Header / Footer chuẩn hóa ---
+\usepackage{fancyhdr}
+\usepackage{lastpage}
+\pagestyle{fancy}
+\fancyhf{}
+
+\fancyhead[L]{\small \textit{Kế hoạch bài dạy Toán 11}}
+\fancyhead[R]{\textbf{Trang \thepage/\pageref{LastPage}}}
+\fancyfoot[L]{\small \textit{Tổ Toán - Tin}}
+\fancyfoot[R]{\small \textit{Trường THCS\&THPT Hồng Vân}}
+\renewcommand{\headrulewidth}{0.4pt}
+\renewcommand{\footrulewidth}{0.4pt}
+
+% --- 7. Giãn dòng & Giãn đoạn theo chuẩn Nghị định 30/2020/NĐ-CP ---
+\usepackage{setspace}
+\setstretch{1.15}
+\setlength{\parindent}{1.0cm}
+\setlength{\parskip}{5pt}
+
+% Định nghĩa hộp sư phạm chuyên dụng
+\newtcolorbox{pedabox}[2][]{
+    enhanced,
+    breakable,
+    colback=blue!3!white,
+    colframe=blue!65!black,
+    fonttitle=\bfseries\small,
+    title={#2},
+    arc=2mm,
+    boxrule=0.6pt,
+    left=3mm, right=3mm, top=2mm, bottom=2mm,
+    #1
+}
+
+\newtcolorbox{aibox}[2][]{
+    enhanced,
+    breakable,
+    colback=teal!4!white,
+    colframe=teal!70!black,
+    fonttitle=\bfseries\small,
+    title={#2},
+    arc=2mm,
+    boxrule=0.6pt,
+    left=3mm, right=3mm, top=2mm, bottom=2mm,
+    #1
+}
+
+\newtcolorbox{scaffoldbox}[2][]{
+    enhanced,
+    breakable,
+    colback=orange!4!white,
+    colframe=orange!80!black,
+    fonttitle=\bfseries\small,
+    title={#2},
+    arc=2mm,
+    boxrule=0.6pt,
+    left=3mm, right=3mm, top=2mm, bottom=2mm,
+    #1
+}
+
+\newtcolorbox{stembox}[2][]{
+    enhanced,
+    breakable,
+    colback=purple!4!white,
+    colframe=purple!75!black,
+    fonttitle=\bfseries\small,
+    title={#2},
+    arc=2mm,
+    boxrule=0.6pt,
+    left=3mm, right=3mm, top=2mm, bottom=2mm,
+    #1
+}
+
+\begin{document}
+
+\begin{center}
+    {\fontsize{14pt}{17pt}\selectfont \textbf{KẾ HOẠCH BÀI DẠY MÔN TOÁN LỚP 11}}\\[6pt]
+    {\fontsize{16pt}{19pt}\selectfont \textbf{BÀI 14. PHÉP CHIẾU SONG SONG. HÌNH BIỂU DIỄN CỦA MỘT HÌNH KHÔNG GIAN}}\\[4pt]
+    {\fontsize{12pt}{15pt}\selectfont \textbf{Môn học: Toán 11} \ \textbar \ \textbf{Thời lượng: 2 tiết (Tiết 37, 38 theo PPCT | Tuần 13)}}
+\end{center}
+
+\vspace{5pt}
+
+\section*{I. MỤC TIÊU}
+
+\subsection*{1. Kiến thức, Năng lực}
+
+\begin{itemize}[leftmargin=1.2cm]
+    \item \textbf{Yêu cầu cần đạt (Nguyên văn CT GDPT 2018):}
+    \begin{itemize}[leftmargin=0.6cm]
+        \item Nhận biết được khái niệm và các tính chất cơ bản về phép chiếu song song.
+        \item Xác định được ảnh của một điểm, một đoạn thẳng, một tam giác, một đường tròn qua một phép chiếu song song.
+        \item Vẽ được hình biểu diễn của một số hình khối đơn giản trong không gian.
+        \item Sử dụng được kiến thức về phép chiếu song song để mô tả một số hình ảnh trong thực tiễn.
+    \end{itemize}
+
+    \item \textbf{Năng lực Toán học đặc thù:}
+    \begin{itemize}[leftmargin=0.6cm]
+        \item \textit{Năng lực tư duy và lập luận toán học:} Khả năng trừu tượng hóa quá trình chiếu một vật thể 3D lên mặt phẳng 2D; phân tích các tính chất hình học được bảo toàn (tính thẳng hàng, thứ tự điểm, tính song song, tỉ số độ dài cùng phương) và các tính chất KHÔNG được bảo toàn (độ dài đoạn thẳng, độ lớn góc, khoảng cách, diện tích); lập luận logic trong việc xác định hình dạng hình biểu diễn.
+        \item \textit{Năng lực mô hình hóa toán học:} Mô tả các hiện tượng quang học tự nhiên (bóng của cọc tiêu, bóng cây cột cờ dưới ánh nắng mặt trời chiếu song song) và các bản vẽ kỹ thuật, kiến trúc thành mô hình toán học phép chiếu song song.
+        \item \textit{Năng lực giải quyết vấn đề toán học:} Nắm vững phương pháp dựng ảnh của điểm, đường thẳng, đa giác qua phép chiếu song song; giải quyết thành thạo bài toán xác định vết bóng đổ và vẽ hình biểu diễn của các khối đa diện quen thuộc (hình chóp, hình lăng trụ, hình hộp).
+        \item \textit{Năng lực giao tiếp toán học:} Trình bày rõ ràng các bước dựng ảnh hình chiếu; sử dụng đúng quy ước nét vẽ hình học không gian (nét liền cho đoạn nhìn thấy, nét đứt đoạn cho đoạn bị che khuất); phân tích và giải thích được lý do hình vuông được biểu diễn bởi hình bình hành, hình tròn được biểu diễn bởi hình elip.
+        \item \textit{Năng lực sử dụng công cụ, phương tiện học toán:} Khai thác phần mềm GeoGebra 3D để tạo mô hình chiếu song song tương tác; sử dụng thước kẻ, compa để vẽ hình biểu diễn chuẩn xác trên giấy.
+    \end{itemize}
+
+    \item \textbf{Năng lực số (Theo Thông tư 02/2025/TT-BGDĐT):}
+    \begin{itemize}[leftmargin=0.6cm]
+        \item \textit{Mã 3.1NC1a (Sáng tạo và chia sẻ mô hình số 3D):} Học sinh sử dụng phần mềm GeoGebra 3D / công cụ đồ họa hình học tạo hình biểu diễn của hình chóp và hình hộp chữ nhật, xuất file ảnh số (.png) hoặc đường dẫn tương tác để chia sẻ lên bảng học tập số của lớp.
+    \end{itemize}
+
+    \item \textbf{Năng lực AI (Theo Quyết định 2422/QĐ-BGDĐT):}
+    \begin{itemize}[leftmargin=0.6cm]
+        \item \textit{Mã 11.C3.2 (Nhận thức về ứng dụng AI trong đồ họa máy tính và thị giác máy tính):} Học sinh tìm hiểu và trình bày cách các thuật toán AI đồ họa máy tính (Computer Vision, Ray-tracing, Shadow mapping) ứng dụng phép chiếu song song để tính toán bóng đổ tự động của nhân vật trong trò chơi 3D và tái tạo không gian 3D từ các bức ảnh chụp 2D.
+    \end{itemize}
+
+    \item \textbf{Năng lực chung:}
+    \begin{itemize}[leftmargin=0.6cm]
+        \item \textit{Tự chủ và tự học:} Chủ động tìm tòi, hệ thống hóa các tính chất bất biến của phép chiếu song song, tự giác rèn luyện kỹ năng vẽ hình biểu diễn.
+        \item \textit{Giao tiếp và hợp tác:} Tích cực phối hợp trong nhóm để giải quyết các thử thách vẽ hình biểu diễn, kiểm tra chéo nét vẽ nét đứt/nét liền.
+    \end{itemize}
+\end{itemize}
+
+\subsection*{2. Phẩm chất}
+
+\begin{itemize}[leftmargin=1.2cm]
+    \item \textbf{Chăm chỉ:} Kiên trì rèn luyện kỹ năng dựng hình, cẩn thận từng nét vẽ kỹ thuật, không vẽ tùy tiện.
+    \item \textbf{Trung thực:} Khách quan, trung thực trong việc báo cáo sản phẩm vẽ hình và đánh giá sản phẩm của bạn.
+    \item \textbf{Trách nhiệm:} Tuân thủ nghiêm ngặt các quy ước vẽ hình kỹ thuật, có ý thức giữ gìn sự chuẩn mực của bản vẽ toán học.
+\end{itemize}
+
+\section*{II. THIẾT BỊ DẠY HỌC VÀ HỌC LIỆU}
+
+\begin{itemize}[leftmargin=1.2cm]
+    \item \textbf{Giáo viên:}
+    \begin{itemize}[leftmargin=0.6cm]
+        \item Kế hoạch bài dạy, bài giảng điện tử trình chiếu tương tác Canva/PowerPoint.
+        \item Đèn pin tạo chùm sáng song song, mô hình khung tam giác, hình vuông, đường tròn bằng dây thép để làm thí nghiệm chiếu bóng lên bảng.
+        \item Tệp mô phỏng GeoGebra 3D trực quan về phép chiếu song song và biến đổi hình chiếu khi thay đổi phương chiếu.
+        \item Phiếu học tập phân tầng bậc thang (Worksheet) và Bảng Rubric đánh giá kỹ năng vẽ hình biểu diễn.
+    \end{itemize}
+    \item \textbf{Học sinh:}
+    \begin{itemize}[leftmargin=0.6cm]
+        \item SGK Toán 11, vở ghi chép, bộ đồ dùng vẽ hình (thước thẳng chia vạch, compa, ê-ke, bút chì, gôm tẩy).
+        \item Điện thoại thông minh/máy tính bảng hoặc phòng máy tính truy cập Internet để thao tác GeoGebra 3D.
+    \end{itemize}
+\end{itemize}
+
+\section*{III. TIẾN TRÌNH DẠY HỌC (2 TIẾT)}
+
+\subsection*{TIẾT 1 (TIẾT 37 THEO PPCT): PHÉP CHIẾU SONG SONG \& CÁC TÍNH CHẤT CƠ BẢN}
+
+\subsubsection*{1. Hoạt động 1: Mở đầu (Khởi động) (5 phút)}
+
+\noindent \textbf{a) Mục tiêu:}
+Tạo hứng thú và gợi mở trực giác của học sinh về hiện tượng tạo bóng của vật thể dưới ánh nắng mặt trời.
+
+\noindent \textbf{b) Nội dung: Tình huống trực quan ``Bóng cọc tiêu trên sân trường''}
+\begin{pedabox}{Khởi động: Chiếc bóng dưới ánh nắng mặt trời}
+Vào một ngày trời nắng, quan sát các cọc tiêu thẳng đứng trên sân trường:
+\begin{enumerate}[leftmargin=0.6cm]
+    \item Vì Mặt Trời ở rất xa Trái Đất, các tia nắng chiếu xuống mặt đất được xem là các đường thẳng có vị trí tương đối như thế nào với nhau?
+    \item Chiếc bóng của đỉnh cọc tiêu in trên mặt đất được xác định như thế nào qua tia nắng đi qua đỉnh cọc?
+    \item Nếu đặt một chiếc thước thẳng nằm nghiêng trong không gian, bóng của nó in trên mặt sân có phải là một đoạn thẳng không?
+\end{enumerate}
+\end{pedabox}
+
+\noindent \textbf{c) Sản phẩm: Câu trả lời của học sinh}
+\begin{enumerate}[leftmargin=0.6cm]
+    \item Vì Mặt Trời ở rất xa nên các tia sáng mặt trời chiếu xuống mặt đất được xem là \textbf{song song} với nhau.
+    \item Bóng của đỉnh cọc tiêu chính là giao điểm của tia nắng đi qua đỉnh cọc với mặt đất.
+    \item Bóng của một chiếc thước thẳng trên mặt đất vẫn là một \textbf{đoạn thẳng}.
+\end{enumerate}
+
+\noindent \textbf{d) Tổ chức thực hiện:}
+Giáo viên chiếu hình ảnh bóng cột cờ/cọc tiêu; học sinh quan sát thảo luận nhanh; giáo viên tổng hợp và dẫn dắt: Mô hình toán học hóa của hiện tượng tạo bóng bởi các tia sáng song song chính là \textbf{Phép chiếu song song}.
+
+\subsubsection*{2. Hoạt động 2: Hình thành kiến thức mới (20 phút)}
+
+\noindent \textbf{a) Mục tiêu:}
+- Nắm vững định nghĩa phép chiếu song song: Mặt phẳng chiếu, phương chiếu, điểm chiếu, hình chiếu.
+- Nắm vững 4 tính chất cơ bản của phép chiếu song song (các yếu tố bất biến).
+- Phân biệt rõ các yếu tố được bảo toàn và các yếu tố KHÔNG được bảo toàn qua phép chiếu song song.
+
+\noindent \textbf{b) Nội dung: Khái niệm \& Tính chất}
+\begin{pedabox}{Nội dung 1: Khái niệm phép chiếu song song}
+Trong không gian, cho mặt phẳng $(\alpha)$ và một đường thẳng $\Delta$ cắt $(\alpha)$.
+\begin{center}
+\begin{tikzpicture}[scale=0.85]
+    % Mặt phẳng chiếu (alpha)
+    \draw[thick, fill=blue!5] (0,0) -- (5.5,0) -- (7.0,2.2) -- (1.5,2.2) -- cycle;
+    \node at (0.8, 0.4) {$(\alpha)$};
+
+    % Phương chiếu Delta
+    \draw[thick, dashed, gray] (6.0, 3.5) -- (6.5, 1.0) node[right, black] {$\Delta$};
+    \draw[-{Latex[length=2mm]}, gray] (6.0, 3.5) -- (6.3, 2.0);
+
+    % Điểm M và ảnh M'
+    \coordinate (M) at (3.0, 3.2);
+    \coordinate (M1) at (3.8, 1.1);
+    \draw[thick, red, dashed] (M) -- (M1);
+    \fill[red] (M) circle (2pt) node[above left] {$M$};
+    \fill[red] (M1) circle (2pt) node[below] {$M'$};
+    \draw[-{Latex[length=2mm]}, red] (M) -- ($(M)!0.6!(M1)$);
+
+    % Điểm N và ảnh N'
+    \coordinate (N) at (4.5, 2.8);
+    \coordinate (N1) at (5.3, 0.7);
+    \draw[thick, blue, dashed] (N) -- (N1);
+    \fill[blue] (N) circle (2pt) node[above right] {$N$};
+    \fill[blue] (N1) circle (2pt) node[below] {$N'$};
+    \draw[-{Latex[length=2mm]}, blue] (N) -- ($(N)!0.6!(N1)$);
+
+    \draw[thick, purple] (M) -- (N);
+    \draw[thick, purple] (M1) -- (N1);
+\end{tikzpicture}
+\end{center}
+\begin{itemize}[leftmargin=0.6cm]
+    \item Với mỗi điểm $M$ trong không gian, đường thẳng đi qua $M$ song song với $\Delta$ (hoặc trùng với $\Delta$) cắt mặt phẳng $(\alpha)$ tại một điểm $M'$ xác định. Điểm $M'$ gọi là \textbf{hình chiếu song song} của điểm $M$ lên mặt phẳng $(\alpha)$ theo \textbf{phương chiếu} $\Delta$.
+    \item Phép đặt tương ứng mỗi điểm $M$ với hình chiếu $M'$ của nó gọi là \textbf{phép chiếu song song} lên mặt phẳng $(\alpha)$ theo phương $\Delta$.
+    \item Mặt phẳng $(\alpha)$ gọi là \textbf{mặt phẳng chiếu}, đường thẳng $\Delta$ gọi là \textbf{phương chiếu}.
+    \item Cho hình $\mathscr{H}$. Tập hợp các hình chiếu $M'$ của mọi điểm $M \in \mathscr{H}$ gọi là \textbf{hình chiếu song song} của hình $\mathscr{H}$ trên mặt phẳng $(\alpha)$, ký hiệu: $\mathscr{H}'$.
+\end{itemize}
+\end{pedabox}
+
+\begin{pedabox}{Nội dung 2: Các tính chất cơ bản của phép chiếu song song}
+Giả sử phương chiếu $\Delta$ không song song với các đường thẳng được xét:
+\begin{enumerate}[leftmargin=0.6cm]
+    \item Phép chiếu song song biến ba điểm thẳng hàng thành ba điểm thẳng hàng và \textbf{không làm thay đổi thứ tự} của ba điểm đó.
+    \item Phép chiếu song song biến đường thẳng thành đường thẳng, biến tia thành tia, biến đoạn thẳng thành đoạn thẳng.
+    \item Phép chiếu song song biến hai đường thẳng song song thành \textbf{hai đường thẳng song song hoặc trùng nhau}.
+    \item Phép chiếu song song \textbf{bảo toàn tỉ số độ dài} của hai đoạn thẳng cùng nằm trên một đường thẳng hoặc nằm trên hai đường thẳng song song.
+    $$\text{Nếu } AB \parallel CD \text{ thì } \dfrac{A'B'}{C'D'} = \dfrac{AB}{CD}; \quad \text{Đặc biệt: Nếu } M \text{ là trung điểm } AB \implies M' \text{ là trung điểm } A'B'.$$
+\end{enumerate}
+\end{pedabox}
+
+\begin{scaffoldbox}{Hộp hỗ trợ sư phạm: Các yếu tố KHÔNG ĐƯỢC BẢO TOÀN (Cần khắc sâu cho HS TB-Yếu)}
+Học sinh rất hay nhầm lẫn giữa hình thật và hình chiếu:
+\begin{center}
+\small
+\begin{tabularx}{\textwidth}{|X|X|}
+\hline
+\textbf{ĐƯỢC BẢO TOÀN (BẤT BIẾN)} & \textbf{KHÔNG ĐƯỢC BẢO TOÀN (BỊ THAY ĐỔI)} \\ \hline
+1. Tính thẳng hàng và thứ tự các điểm. & 1. \textbf{Độ dài đoạn thẳng} (thường bị co/giãn). \\ \hline
+2. Tính song song của hai đường thẳng. & 2. \textbf{Độ lớn của góc} (góc vuông biến thành góc nhọn hoặc góc tù). \\ \hline
+3. Tỉ số độ dài giữa 2 đoạn thẳng song song hoặc cùng thuộc một đường thẳng (trung điểm, trọng tâm). & 3. \textbf{Quan hệ vuông góc} (hai đường vuông góc chiếu xuống chưa chắc vuông góc). \\ \hline
+4. Tỉ số diện tích hai tam giác cùng đáy. & 4. \textbf{Hình dạng đặc biệt}: Tam giác đều/vuông biến thành tam giác thường; hình vuông/chữ nhật biến thành hình bình hành. \\ \hline
+\end{tabularx}
+\end{center}
+\end{scaffoldbox}
+
+\noindent \textbf{c) Sản phẩm: Bảng hệ thống hóa tính chất trong vở học sinh}
+Học sinh ghi chép định nghĩa, vẽ hình minh họa và ghi nhớ bảng phân loại các yếu tố được bảo toàn / không được bảo toàn vào vở.
+
+\noindent \textbf{d) Tổ chức thực hiện:}
+\begin{itemize}[leftmargin=0.8cm]
+    \item \textit{Chuyển giao nhiệm vụ:} Giáo viên trình bày định nghĩa, lấy ví dụ thực tế; yêu cầu học sinh làm rõ tính chất bảo toàn tỉ số.
+    \item \textit{Thực hiện nhiệm vụ:} Học sinh lắng nghe, vẽ hình, phân tích trường hợp trung điểm của đoạn thẳng.
+    \item \textit{Báo cáo, thảo luận:} 1 học sinh giải thích vì sao hình chiếu của trung điểm vẫn là trung điểm; 1 học sinh lấy ví dụ góc vuông bị biến dạng.
+    \item \textit{Kết luận, nhận định:} Giáo viên nhấn mạnh: Phép chiếu song song giữ nguyên tính song song và tỉ số cùng phương, nhưng làm biến dạng hoàn toàn góc và độ dài.
+\end{itemize}
+
+\subsubsection*{3. Hoạt động 3: Luyện tập (15 phút)}
+
+\noindent \textbf{a) Mục tiêu:}
+Vận dụng định nghĩa và tính chất của phép chiếu song song để xác định ảnh của các điểm, các cạnh trong hình chóp tứ giác.
+
+\noindent \textbf{b) Nội dung: Bài toán xác định hình chiếu song song}
+\begin{pedabox}{Luyện tập 1: Xác định hình chiếu trong hình chóp}
+Cho hình chóp $S.ABCD$ có đáy $ABCD$ là hình bình hành tâm $O$.
+\begin{enumerate}[leftmargin=0.6cm]
+    \item Tìm hình chiếu song song của các đỉnh $S, B, C, D$ lên mặt phẳng đáy $(ABCD)$ theo phương chiếu $SA$.
+    \item Tìm hình chiếu song song của tam giác $SBD$ lên mặt phẳng đáy $(ABCD)$ theo phương chiếu $SA$.
+    \item Gọi $M$ là trung điểm của $SC$. Tìm hình chiếu song song của điểm $M$ lên mặt phẳng $(ABCD)$ theo phương chiếu $SA$.
+\end{enumerate}
+\end{pedabox}
+
+\noindent \textbf{c) Sản phẩm: Lời giải chi tiết và hình vẽ TikZ chuẩn mực}
+\begin{center}
+\begin{tikzpicture}[scale=1.1]
+    \coordinate (A) at (0,0);
+    \coordinate (B) at (4.0,0);
+    \coordinate (D) at (1.4,-1.4);
+    \coordinate (C) at ($(B)+(D)-(A)$);
+    \coordinate (S) at (0.8,3.2);
+
+    \draw[thick] (S) -- (A) -- (D) -- (C) -- (B) -- (S) -- (C);
+    \draw[thick] (S) -- (D);
+    \draw[dashed, thick] (A) -- (B);
+    \draw[dashed, thick] (A) -- (C);
+    \draw[dashed, thick] (B) -- (D);
+
+    \coordinate (O) at ($(A)!0.5!(C)$);
+    \coordinate (M) at ($(S)!0.5!(C)$);
+    % Hình chiếu của M theo phương SA: Kẻ qua M // SA cắt AC tại M'
+    \coordinate (M1) at ($(A)!0.5!(C)$); % Trong tam giác SAC, M là trung điểm SC, kẻ // SA đi qua trung điểm AC là O!
+
+    \fill (S) circle (1.5pt) node[above] {$S$};
+    \fill (A) circle (1.5pt) node[left] {$A$};
+    \fill (B) circle (1.5pt) node[right] {$B$};
+    \fill (C) circle (1.5pt) node[below right] {$C$};
+    \fill (D) circle (1.5pt) node[below left] {$D$};
+    \fill (O) circle (1.5pt) node[below] {$O \equiv M'$};
+    \fill (M) circle (1.5pt) node[above right] {$M$};
+
+    \draw[thick, red, dashed] (M) -- (O);
+\end{tikzpicture}
+\end{center}
+
+\textbf{Lời giải chi tiết:}
+\begin{enumerate}[leftmargin=0.6cm]
+    \item \textbf{Tìm hình chiếu của các đỉnh theo phương $SA$ lên $(ABCD)$:}
+    \begin{itemize}
+        \item Vì đường thẳng $SA$ đi qua $S$ và có phương $SA$, cắt $(ABCD)$ tại $A$ nên hình chiếu của đỉnh $S$ là điểm $A$.
+        \item Vì các điểm $B, C, D$ đều thuộc mặt phẳng chiếu $(ABCD)$ nên hình chiếu song song của chúng là chính nó:
+        Hình chiếu của $B$ là $B$; hình chiếu của $C$ là $C$; hình chiếu của $D$ là $D$.
+    \end{itemize}
+
+    \item \textbf{Hình chiếu của tam giác $SBD$:}
+    \begin{itemize}
+        \item Hình chiếu của $S$ là $A$.
+        \item Hình chiếu của $B$ là $B$.
+        \item Hình chiếu của $D$ là $D$.
+        \item Do đó, hình chiếu song song của tam giác $SBD$ lên mặt phẳng $(ABCD)$ theo phương chiếu $SA$ chính là tam giác $ABD$.
+    \end{itemize}
+
+    \item \textbf{Hình chiếu của trung điểm $M$ trên cạnh $SC$:}
+    \begin{itemize}
+        \item Xét tam giác $SAC$. Trong tam giác $SAC$, đường thẳng qua $M$ song song với phương chiếu $SA$ chính là đường trung bình của tam giác $SAC$ ứng với cạnh $SA$.
+        \item Đường thẳng này đi qua trung điểm của cạnh đáy $AC$. Vì $ABCD$ là hình bình hành nên trung điểm của $AC$ chính là tâm $O$ của đáy.
+        \item Do đó, hình chiếu song song của điểm $M$ lên mặt phẳng $(ABCD)$ theo phương chiếu $SA$ chính là tâm $O$ của hình bình hành $ABCD$.
+    \end{itemize}
+\end{enumerate}
+
+\noindent \textbf{d) Tổ chức thực hiện:}
+\begin{itemize}[leftmargin=0.8cm]
+    \item \textit{Chuyển giao nhiệm vụ:} Giáo viên yêu cầu học sinh làm bài tập cá nhân trong 5 phút, sau đó thảo luận cặp đôi câu 3.
+    \item \textit{Thực hiện nhiệm vụ:} Học sinh vẽ hình, lần lượt chiếu từng điểm; chú ý vị trí điểm $M$.
+    \item \textit{Báo cáo, thảo luận:} 1 học sinh khá lên bảng trình bày và vẽ đường trung bình $MO \parallel SA$; cả lớp nhận xét.
+    \item \textit{Kết luận, nhận định:} Giáo viên khen ngợi học sinh đã biết vận dụng tính chất đường trung bình để tìm hình chiếu của trung điểm.
+\end{itemize}
+
+\subsubsection*{4. Hoạt động 4: Vận dụng thực tiễn & Năng lực AI (5 phút)}
+
+\noindent \textbf{a) Mục tiêu:}
+Tích hợp Năng lực AI (Mã 11.C3.2): Tìm hiểu ứng dụng phép chiếu song song trong thuật toán dựng bóng tự động (Ray-tracing) và thị giác máy tính của trí tuệ nhân tạo.
+
+\noindent \textbf{b) Nội dung: Ứng dụng AI đồ họa \& Thị giác máy tính}
+\begin{aibox}{Năng lực AI: Phép chiếu song song trong Đồ họa máy tính \& AI (Mã 11.C3.2)}
+\begin{enumerate}[leftmargin=0.6cm]
+    \item \textbf{Thuật toán đổ bóng tự động (Directional Light \& Ray-tracing):}
+    Trong các game 3D và phim hoạt hình, nguồn sáng mặt trời được các kỹ sư AI mô hình hóa thành nguồn sáng định hướng (các tia sáng song song). Thuật toán AI áp dụng chính xác công thức của \textbf{phép chiếu song song} để tính toán tọa độ từng điểm bóng đổ của nhân vật lên mặt đất theo thời gian thực (Real-time shadow mapping).
+    \item \textbf{Thị giác máy tính (Computer Vision - 3D Reconstruction):}
+    Các mô hình AI hiện đại (như NeRF, Gaussian Splatting) học cách phân tích các hình chiếu song song từ nhiều góc chụp 2D khác nhau, giải ngược bài toán phép chiếu để phục dựng lại mô hình 3D hoàn chỉnh của đồ vật và di tích lịch sử.
+\end{enumerate}
+\end{aibox}
+
+\noindent \textbf{c) Sản phẩm: Báo cáo nhận thức của học sinh}
+Học sinh hiểu được nguyên lý: Phép chiếu song song là công cụ toán học nền tảng để máy tính và AI xử lý bóng đổ và không gian 3D.
+
+\noindent \textbf{d) Tổ chức thực hiện:}
+Giáo viên trình chiếu một hình ảnh minh họa so sánh bóng đổ 3D trong game; học sinh theo dõi và kết thúc Tiết 1.
+
+\subsection*{TIẾT 2 (TIẾT 38 THEO PPCT): HÌNH BIỂU DIỄN CỦA MỘT HÌNH KHÔNG GIAN}
+
+\subsubsection*{1. Hoạt động 1: Mở đầu (Khởi động) (5 phút)}
+
+\noindent \textbf{a) Mục tiêu:}
+Tạo mâu thuẫn nhận thức giữa hình dạng hình học thực tế và hình vẽ trên mặt giấy phẳng, dẫn dắt học sinh khám phá các quy tắc vẽ hình biểu diễn.
+
+\noindent \textbf{b) Nội dung: Thử thách quan sát ``Hình vuông trên trang giấy''}
+\begin{pedabox}{Khởi động: Nghịch lý hình biểu diễn}
+Mở sách giáo khoa hoặc quan sát hình vẽ hình hộp chữ nhật trên bảng:
+\begin{enumerate}[leftmargin=0.6cm]
+    \item Mặt đáy của chiếc hộp phấn là hình chữ nhật (có 4 góc vuông). Nhưng tại sao khi thầy/cô vẽ lên mặt bảng phẳng, mặt đáy đó lại được vẽ thành một \textbf{hình bình hành} (có các góc nhọn và góc tù)?
+    \item Miệng của một chiếc cốc hình trụ là một đường tròn. Nhưng tại sao khi vẽ lên tranh vẽ, miệng cốc lại được vẽ thành một \textbf{đường elip}?
+    \item Nếu ta cứ khăng khăng vẽ đúng 4 góc vuông và vẽ đúng đường tròn thì bức vẽ hình khối không gian sẽ trông như thế nào?
+\end{enumerate}
+\end{pedabox}
+
+\noindent \textbf{c) Sản phẩm: Câu trả lời của học sinh}
+\begin{enumerate}[leftmargin=0.6cm]
+    \item Vẽ thành hình bình hành vì phép chiếu song song không bảo toàn góc vuông, mắt ta nhìn phối cảnh thấy các cạnh đáy nghiêng đi.
+    \item Miệng cốc vẽ thành elip vì hình chiếu song song của đường tròn là đường elip.
+    \item Nếu vẽ đúng góc vuông và đường tròn thì hình vẽ sẽ bị bẹp phẳng, không tạo được cảm giác không gian ba chiều (chiều sâu).
+\end{enumerate}
+
+\noindent \textbf{d) Tổ chức thực hiện:}
+Giáo viên nêu vấn đề; học sinh trao đổi sôi nổi; giáo viên chuẩn hóa: Để vẽ một vật thể 3D lên mặt phẳng 2D mà vẫn nhận biết được cấu trúc của nó, ta phải tuân thủ các quy tắc của \textbf{Hình biểu diễn}.
+
+\subsubsection*{2. Hoạt động 2: Hình thành kiến thức mới (20 phút)}
+
+\noindent \textbf{a) Mục tiêu:}
+- Nắm vững định nghĩa hình biểu diễn của một hình không gian.
+- Nắm vững các quy tắc vàng vẽ hình biểu diễn của các hình phẳng thông dụng (tam giác, hình vuông, hình chữ nhật, hình thang, hình tròn).
+- Nắm vững quy tắc nét vẽ kỹ thuật (nét thấy - nét liền, nét khuất - nét đứt).
+
+\noindent \textbf{b) Nội dung: Quy tắc vàng vẽ hình biểu diễn}
+\begin{pedabox}{Nội dung 1: Khái niệm hình biểu diễn}
+\textbf{Định nghĩa:} Hình biểu diễn của một hình không gian $\mathscr{H}$ là hình chiếu song song của hình $\mathscr{H}$ trên một mặt phẳng hoặc hình đồng dạng với hình chiếu đó.
+\end{pedabox}
+
+\begin{pedabox}{Nội dung 2: Quy tắc vàng vẽ hình biểu diễn các hình phẳng}
+Căn cứ vào các tính chất bất biến của phép chiếu song song:
+\begin{center}
+\small
+\begin{tabularx}{\textwidth}{|p{4.2cm}|p{5.5cm}|X|}
+\hline
+\textbf{Hình trong thực tế ($\mathscr{H}$)} & \textbf{Hình biểu diễn ($\mathscr{H}'$)} & \textbf{Lưu ý sư phạm} \\ \hline
+Tam giác (thường, vuông, cân, đều) & \textbf{Một tam giác tùy ý} & Không được vẽ góc vuông/cân trừ khi đặc biệt cần thiết. \\ \hline
+Hình bình hành, hình chữ nhật, hình vuông, hình thoi & \textbf{Một hình bình hành} & Bảo toàn tính song song của các cặp cạnh đối diện. \\ \hline
+Hình thang & \textbf{Một hình thang} & \textbf{Bắt buộc bảo toàn tỉ số} độ dài của hai đáy: $\dfrac{A'B'}{C'D'} = \dfrac{AB}{CD}$. \\ \hline
+Hình tròn & \textbf{Một đường elip} & Tâm hình tròn biến thành tâm đối xứng của elip. \\ \hline
+\end{tabularx}
+\end{center}
+\end{pedabox}
+
+\begin{scaffoldbox}{Hộp hỗ trợ sư phạm: Quy tắc nét vẽ vàng cho học sinh TB-Yếu}
+Để vẽ hình không gian chuẩn mực, không bị trừ điểm:
+\begin{enumerate}[leftmargin=0.6cm]
+    \item \textbf{Đường nhìn thấy (nét thấy):} Vẽ bằng \textbf{nét liền} (solid line: \tikz \draw[thick] (0,0) -- (0.8,0);).
+    \item \textbf{Đường bị che khuất (nét khuất):} Vẽ bằng \textbf{nét đứt đoạn} (dashed line: \tikz \draw[thick, dashed] (0,0) -- (0.8,0);).
+    \item \textbf{Quy tắc thứ tự dựng hình:}
+    \begin{itemize}
+        \item Luôn vẽ \textbf{mặt đáy trước}, xác định cạnh nằm khuất phía sau vẽ nét đứt.
+        \item Dựng các đỉnh và các cạnh bên sau, kiểm tra kỹ cạnh nào bị các mặt phẳng phía trước che khuất để chuyển thành nét đứt.
+    \end{itemize}
+\end{enumerate}
+\end{scaffoldbox}
+
+\noindent \textbf{c) Sản phẩm: Bảng quy tắc và hình mẫu chuẩn trong vở học sinh}
+Học sinh hoàn thiện bảng quy tắc vẽ hình và vẽ các hình biểu diễn mẫu vào vở.
+
+\noindent \textbf{d) Tổ chức thực hiện:}
+Giáo viên hướng dẫn từng bước vẽ trên bảng; học sinh thực hành vẽ thước kẻ; giáo viên đi quanh lớp quan sát và uốn nắn các nét vẽ bị sai quy ước.
+
+\subsubsection*{3. Hoạt động 3: Luyện tập (15 phút)}
+
+\noindent \textbf{a) Mục tiêu:}
+Thực hành vẽ hình biểu diễn của hình chóp tứ giác, hình chóp tam giác và hình hộp chữ nhật theo đúng chuẩn kỹ thuật nét thấy/nét khuất.
+
+\noindent \textbf{b) Nội dung: Bài tập thực hành dựng hình biểu diễn}
+\begin{pedabox}{Luyện tập 2: Vẽ hình biểu diễn các khối đa diện}
+Thực hiện vẽ vào vở hình biểu diễn chuẩn xác của các hình không gian sau:
+\begin{enumerate}[leftmargin=0.6cm]
+    \item Hình chóp tứ giác $S.ABCD$ có đáy $ABCD$ là hình vuông.
+    \item Hình lăng trụ tam giác $ABC.A'B'C'$.
+    \item Hình chóp $S.ABCD$ có đáy $ABCD$ là hình thang ($AB \parallel CD, AB = 2CD$).
+\end{enumerate}
+\end{pedabox}
+
+\noindent \textbf{c) Sản phẩm: Bản vẽ hình học chuẩn mực bằng TikZ}
+\begin{center}
+\begin{tikzpicture}[scale=0.95]
+    % Hình chóp tứ giác S.ABCD
+    \begin{scope}[shift={(0,0)}]
+        \coordinate (A) at (0,0);
+        \coordinate (B) at (3.2,0);
+        \coordinate (D) at (1.2,-1.2);
+        \coordinate (C) at ($(B)+(D)-(A)$);
+        \coordinate (S) at (1.4,2.8);
+
+        \draw[thick] (S) -- (A) -- (D) -- (C) -- (B) -- (S) -- (C);
+        \draw[thick] (S) -- (D);
+        \draw[dashed, thick] (A) -- (B);
+
+        \fill (S) circle (1.2pt) node[above] {$S$};
+        \fill (A) circle (1.2pt) node[left] {$A$};
+        \fill (B) circle (1.2pt) node[right] {$B$};
+        \fill (C) circle (1.2pt) node[below right] {$C$};
+        \fill (D) circle (1.2pt) node[below left] {$D$};
+        \node at (1.8, -1.8) {\small \textbf{Hình a:} Hình chóp đáy hình vuông};
+    \end{scope}
+
+    % Hình lăng trụ tam giác ABC.A'B'C'
+    \begin{scope}[shift={(5.5,0)}]
+        \coordinate (A) at (0,0);
+        \coordinate (B) at (3.0,-0.6);
+        \coordinate (C) at (1.4,-1.4);
+        \coordinate (shift) at (0.4, 2.5);
+        \coordinate (A1) at ($(A)+(shift)$);
+        \coordinate (B1) at ($(B)+(shift)$);
+        \coordinate (C1) at ($(C)+(shift)$);
+
+        \draw[dashed, thick] (A) -- (B);
+        \draw[thick] (B) -- (C) -- (A);
+        \draw[thick] (A1) -- (B1) -- (C1) -- cycle;
+        \draw[dashed, thick] (A) -- (A1);
+        \draw[thick] (B) -- (B1);
+        \draw[thick] (C) -- (C1);
+
+        \fill (A) circle (1.2pt) node[left] {$A$};
+        \fill (B) circle (1.2pt) node[right] {$B$};
+        \fill (C) circle (1.2pt) node[below] {$C$};
+        \fill (A1) circle (1.2pt) node[left] {$A'$};
+        \fill (B1) circle (1.2pt) node[right] {$B'$};
+        \fill (C1) circle (1.2pt) node[above] {$C'$};
+        \node at (1.6, -1.8) {\small \textbf{Hình b:} Lăng trụ tam giác};
+    \end{scope}
+
+    % Hình chóp đáy hình thang AB = 2CD
+    \begin{scope}[shift={(11.0,0)}]
+        \coordinate (A) at (0,0);
+        \coordinate (B) at (3.6,0);
+        \coordinate (D) at (0.8,-1.2);
+        \coordinate (C) at ($(D)!0.5!(B)$); % C sao cho DC // AB và DC = 1/2 AB
+        \coordinate (C) at (2.6,-1.2);
+        \coordinate (S) at (1.5,2.8);
+
+        \draw[thick] (S) -- (A) -- (D) -- (C) -- (B) -- (S) -- (C);
+        \draw[thick] (S) -- (D);
+        \draw[dashed, thick] (A) -- (B);
+
+        \fill (S) circle (1.2pt) node[above] {$S$};
+        \fill (A) circle (1.2pt) node[left] {$A$};
+        \fill (B) circle (1.2pt) node[right] {$B$};
+        \fill (C) circle (1.2pt) node[below right] {$C$};
+        \fill (D) circle (1.2pt) node[below left] {$D$};
+        \node at (1.8, -1.8) {\small \textbf{Hình c:} Đáy hình thang ($AB=2CD$)};
+    \end{scope}
+\end{tikzpicture}
+\end{center}
+
+\textbf{Quy trình vẽ chuẩn:}
+\begin{itemize}[leftmargin=0.6cm]
+    \item \textbf{Với hình chóp tứ giác (Hình a):} Đáy $ABCD$ là hình vuông được biểu diễn bằng hình bình hành $ABCD$. Đoạn $AB$ nằm ở phía trong nên bị các mặt bên che khuất $\implies$ vẽ nét đứt. Các cạnh $SA, SB, SC, SD, AD, DC, CB$ đều nhìn thấy $\implies$ vẽ nét liền.
+    \item \textbf{Với hình lăng trụ tam giác (Hình b):} Đáy dưới $ABC$, cạnh $AB$ nằm phía sau vẽ nét đứt; cạnh bên $AA'$ nằm phía sau vẽ nét đứt; các cạnh còn lại vẽ nét liền.
+    \item \textbf{Với hình chóp đáy hình thang (Hình c):} Bắt buộc đáy $AB$ phải vẽ dài gấp đôi đáy $CD$ để bảo toàn tỉ số song song. Cạnh $AB$ nằm sau vẽ nét đứt.
+\end{itemize}
+
+\noindent \textbf{d) Tổ chức thực hiện:}
+\begin{itemize}[leftmargin=0.8cm]
+    \item \textit{Chuyển giao nhiệm vụ:} Học sinh tự vẽ 3 hình vào vở trong 8 phút; yêu cầu dùng thước kẻ cẩn thận.
+    \item \textit{Thực hiện nhiệm vụ:} Học sinh thực hành vẽ; giáo viên quan sát kiểm tra tỉ số đáy hình thang ở câu 3.
+    \item \textit{Báo cáo, thảo luận:} 3 học sinh lên bảng vẽ 3 hình; cả lớp soi lỗi nét đứt và tỉ lệ đoạn thẳng.
+    \item \textit{Kết luận, nhận định:} Giáo viên chốt các lỗi thường gặp: Quên nét đứt đoạn bị che khuất; vẽ đáy hình thang sai tỉ số 1:2.
+\end{itemize}
+
+\subsubsection*{4. Hoạt động 4: Vận dụng thực tiễn & Năng lực số (5 phút)}
+
+\noindent \textbf{a) Mục tiêu:}
+Tích hợp Năng lực số (Mã 3.1NC1a): Sử dụng phần mềm GeoGebra 3D tạo lập mô hình hình biểu diễn và xuất tệp ảnh số chia sẻ trong nhóm học tập.
+
+\noindent \textbf{b) Nội dung: Thực hành phần mềm vẽ hình 3D}
+\begin{aibox}{Nhiệm vụ số: Sáng tạo mô hình số 3D trên GeoGebra (Mã 3.1NC1a)}
+\begin{enumerate}[leftmargin=0.6cm]
+    \item Học sinh mở GeoGebra 3D trên điện thoại hoặc máy tính:
+    \begin{itemize}
+        \item Dùng công cụ \textbf{Pyramid (Hình chóp)} để tạo một hình chóp tứ giác.
+        \item Dùng công cụ \textbf{Prism (Hình lăng trụ)} để tạo một hình lăng trụ tam giác.
+    \end{itemize}
+    \item Sử dụng tính năng xoay không gian 3D: Quan sát hình chiếu của các khối này khi nhìn từ trên xuống (Top View), nhìn chính diện (Front View) và nhìn phối cảnh (Isometric View).
+    \item Chụp màn hình ảnh phối cảnh đẹp nhất, tải lên nhóm Zalo/Google Classroom của lớp để nộp bài tập số.
+\end{enumerate}
+\end{aibox}
+
+\noindent \textbf{c) Sản phẩm: Ảnh chụp màn hình mô hình 3D của học sinh}
+Học sinh nộp tệp ảnh chụp mô hình hình chóp và hình lăng trụ được dựng chính xác trên GeoGebra 3D.
+
+\noindent \textbf{d) Tổ chức thực hiện:}
+Giáo viên hướng dẫn nhanh thao tác công cụ trên màn hình tivi; học sinh thao tác cá nhân hoặc theo cặp; giáo viên tổng kết bài học và hướng dẫn chuẩn bị cho tiết Ôn tập cuối chương IV.
+
+\section*{IV. PHỤ LỤC HỌC LIỆU BỔ TRỢ}
+
+\subsection*{1. Phiếu học tập phân tầng bậc thang (Worksheet)}
+
+\noindent \textbf{A. PHẦN TRẮC NGHIỆM NHANH (Khắc sâu lý thuyết cốt lõi)}
+\begin{enumerate}[leftmargin=0.6cm]
+    \item Qua phép chiếu song song, tính chất nào sau đây KHÔNG ĐƯỢC BẢO TOÀN?
+    \begin{itemize}[leftmargin=0.6cm]
+        \item[A.] Tính thẳng hàng của ba điểm.
+        \item[B.] Thứ tự của ba điểm thẳng hàng.
+        \item[\textbf{C.}] \textbf{Độ lớn của góc.}
+        \item[D.] Tính song song của hai đường thẳng.
+    \end{itemize}
+
+    \item Hình biểu diễn của một hình chữ nhật qua phép chiếu song song là:
+    \begin{itemize}[leftmargin=0.6cm]
+        \item[A.] Luôn là một hình chữ nhật.
+        \item[\textbf{B.}] \textbf{Một hình bình hành.}
+        \item[C.] Một hình thang.
+        \item[D.] Một hình vuông.
+    \end{itemize}
+
+    \item Hình biểu diễn của một hình tròn qua phép chiếu song song là:
+    \begin{itemize}[leftmargin=0.6cm]
+        \item[A.] Một hình tròn có bán kính gấp đôi.
+        \item[B.] Một hình tam giác.
+        \item[\textbf{C.}] \textbf{Một đường elip (hoặc hình elip).}
+        \item[D.] Một đoạn thẳng luôn luôn.
+    \end{itemize}
+
+    \item Cho đoạn thẳng $AB$ có trung điểm $I$. Gọi $A', B', I'$ lần lượt là hình chiếu song song của $A, B, I$ lên mặt phẳng $(\alpha)$ theo phương $\Delta$ không song song với $AB$. Khẳng định nào sau đây ĐÚNG?
+    \begin{itemize}[leftmargin=0.6cm]
+        \item[\textbf{A.}] \textbf{$I'$ là trung điểm của đoạn thẳng $A'B'$.}
+        \item[B.] $I'$ nằm ngoài đoạn thẳng $A'B'$.
+        \item[C.] $A'B' = AB$ trong mọi trường hợp.
+        \item[D.] $I'$ trùng với $A'$.
+    \end{itemize}
+\end{enumerate}
+
+\noindent \textbf{B. PHẦN TỰ LUẬN PHÂN TẦNG BẬC THANG}
+\begin{itemize}[leftmargin=0.6cm]
+    \item \textbf{Tầng 1 (Cơ bản dành cho HS TB-Yếu):}
+    Cho tam giác $ABC$. Hãy vẽ hình biểu diễn của tam giác $ABC$ cùng với trung tuyến $AM$ và trọng tâm $G$ của tam giác đó trên mặt phẳng giấy. Nêu rõ cách xác định điểm $M'$ và $G'$ trên hình biểu diễn.
+
+    \item \textbf{Tầng 2 (Thông hiểu):}
+    Cho hình chóp $S.ABCD$ có đáy $ABCD$ là hình vuông. Lấy điểm $M$ trên cạnh $SA$ sao cho $SM = 2MA$. Hãy vẽ hình biểu diễn của hình chóp và xác định thiết diện của hình chóp cắt bởi mặt phẳng $(\alpha)$ đi qua $M$ và song song với mặt phẳng đáy $(ABCD)$. Thiết diện đó là hình gì?
+
+    \item \textbf{Tầng 3 (Vận dụng cao):}
+    Cho hình hộp chữ nhật $ABCD.A'B'C'D'$. Vẽ hình biểu diễn của hình hộp chữ nhật. Trên hình biểu diễn đó, hãy xác định thiết diện của hình hộp cắt bởi mặt phẳng đi qua ba điểm $M, N, P$ lần lượt là trung điểm của các cạnh $AB, BC$ và $C'D'$. Thiết diện thu được là đa giác gì?
+\end{itemize}
+
+\subsection*{2. Bảng Rubric đánh giá năng lực học sinh trong bài học}
+
+\begin{center}
+\small
+\begin{tabularx}{\textwidth}{|p{2.8cm}|X|X|X|X|}
+\hline
+\textbf{Tiêu chí} & \textbf{Chưa đạt (Mức 1)} & \textbf{Đạt (Mức 2)} & \textbf{Khá (Mức 3)} & \textbf{Tốt (Mức 4)} \\ \hline
+\textbf{Nhận biết tính chất phép chiếu song song} & Nhầm lẫn các yếu tố bảo toàn; cho rằng góc vuông luôn được bảo toàn. & Nêu được các tính chất cơ bản nhưng còn lúng túng khi giải thích tỉ số đoạn thẳng. & Phân biệt chính xác các yếu tố bất biến và biến dạng; vận dụng đúng tỉ số trung điểm. & Lập luận sắc sảo các tính chất bảo toàn; giải thích thấu đáo các biến dạng hình học không gian. \\ \hline
+\textbf{Kỹ năng vẽ hình biểu diễn} & Vẽ tùy tiện góc vuông ở đáy; vẽ sai quy ước nét đứt nét liền. & Vẽ đúng dạng hình bình hành ở đáy nhưng đôi chỗ còn nhầm nét thấy/khuất. & Vẽ hình biểu diễn chuẩn xác, đúng tỉ lệ đáy hình thang; nét vẽ rõ ràng, chuẩn quy ước. & Bản vẽ kỹ thuật mẫu mực, thẩm mỹ cao; dựng hình biểu diễn thiết diện phức tạp chính xác. \\ \hline
+\textbf{Năng lực số (GeoGebra 3D)} & Chưa mở được ứng dụng GeoGebra 3D; không thao tác được công cụ. & Dựng được hình chóp đơn giản nhưng chưa biết cách xoay góc nhìn. & Dựng hình chóp, lăng trụ thành thạo; trích xuất ảnh số sắc nét nộp bài. & Khai thác sáng tạo công cụ 3D, tạo hiệu ứng chuyển động trực quan chia sẻ cho cả lớp. \\ \hline
+\textbf{Năng lực AI \& Thái độ học tập} & Chưa hiểu ứng dụng AI trong bóng đổ; thụ động trong giờ học. & Nêu được khái niệm bóng đổ máy tính nhưng chưa hiểu vai trò phép chiếu. & Trình bày rõ ràng ứng dụng phép chiếu song song trong AI đồ họa (Ray-tracing). & Hiểu sâu sắc mối quan hệ giữa toán học giải tích/hình học và thuật toán AI thị giác máy tính. \\ \hline
+\end{tabularx}
+\end{center}
+
+\end{document}
