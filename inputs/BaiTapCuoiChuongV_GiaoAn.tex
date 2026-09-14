@@ -1,0 +1,449 @@
+\documentclass[12pt, a4paper]{article}
+% --- 1. Cấu hình Tiếng Việt và Font chữ chuẩn ---
+\usepackage[utf8]{inputenc}
+\usepackage[T5]{fontenc}
+\usepackage[vietnamese]{babel}
+\usepackage{mathptmx} % Font Times New Roman đồng bộ cả chữ và công thức toán, không gây xung đột gói
+
+\makeatletter
+\renewcommand{\normalsize}{\@setfontsize\normalsize{13pt}{16pt}}
+\makeatother
+\normalsize
+
+% --- 2. Gói Toán học & Ký hiệu bổ trợ ---
+\usepackage{amsmath, amssymb, amsfonts, mathrsfs, amsthm}
+\usepackage{graphicx}
+\usepackage{fontawesome}
+\usepackage{booktabs, tabularx, array, multirow}
+\usepackage{enumitem}
+
+% --- 3. Đồ họa TikZ, Bảng biến thiên & Hình không gian ---
+\usepackage{tikz}
+\usetikzlibrary{calc, intersections, angles, quotes, patterns, arrows.meta, 3d}
+\usepackage{pgfplots}
+\pgfplotsset{compat=1.18}
+\usepackage{tkz-euclide}
+\usepackage{tkz-tab}
+
+\renewcommand{\vec}[1]{\overrightarrow{#1}}
+
+% --- 4. Hộp sư phạm (Tcolorbox) ---
+\usepackage[many]{tcolorbox}
+\tcbuselibrary{skins, breakable}
+
+% --- 5. Căn lề chuẩn văn bản giáo án ---
+\usepackage{geometry}
+\geometry{
+    a4paper,
+    left=25mm,
+    right=15mm,
+    top=20mm,
+    bottom=20mm
+}
+
+% --- 6. Header / Footer chuẩn hóa ---
+\usepackage{fancyhdr}
+\usepackage{lastpage}
+\pagestyle{fancy}
+\fancyhf{}
+
+\fancyhead[L]{\small \textit{Kế hoạch bài dạy Toán 11}}
+\fancyhead[R]{\textbf{Trang \thepage/\pageref{LastPage}}}
+\fancyfoot[L]{\small \textit{Tổ Toán - Tin}}
+\fancyfoot[R]{\small \textit{Trường THCS\&THPT Hồng Vân}}
+\renewcommand{\headrulewidth}{0.4pt}
+\renewcommand{\footrulewidth}{0.4pt}
+
+% --- 7. Giãn dòng & Giãn đoạn theo chuẩn Nghị định 30/2020/NĐ-CP ---
+\usepackage{setspace}
+\setstretch{1.15}
+\setlength{\parindent}{1.0cm}
+\setlength{\parskip}{5pt}
+
+% Định nghĩa hộp sư phạm chuyên dụng
+\newtcolorbox{pedabox}[2][]{
+    enhanced,
+    breakable,
+    colback=blue!3!white,
+    colframe=blue!65!black,
+    fonttitle=\bfseries\small,
+    title={#2},
+    arc=2mm,
+    boxrule=0.6pt,
+    left=3mm, right=3mm, top=2mm, bottom=2mm,
+    #1
+}
+
+\newtcolorbox{aibox}[2][]{
+    enhanced,
+    breakable,
+    colback=teal!4!white,
+    colframe=teal!70!black,
+    fonttitle=\bfseries\small,
+    title={#2},
+    arc=2mm,
+    boxrule=0.6pt,
+    left=3mm, right=3mm, top=2mm, bottom=2mm,
+    #1
+}
+
+\newtcolorbox{scaffoldbox}[2][]{
+    enhanced,
+    breakable,
+    colback=orange!4!white,
+    colframe=orange!80!black,
+    fonttitle=\bfseries\small,
+    title={#2},
+    arc=2mm,
+    boxrule=0.6pt,
+    left=3mm, right=3mm, top=2mm, bottom=2mm,
+    #1
+}
+
+\begin{document}
+
+\begin{center}
+    {\fontsize{14pt}{17pt}\selectfont \textbf{KẾ HOẠCH BÀI DẠY MÔN TOÁN LỚP 11}}\\[6pt]
+    {\fontsize{16pt}{19pt}\selectfont \textbf{BÀI TẬP CUỐI CHƯƠNG V}}\\[4pt]
+    {\fontsize{12pt}{15pt}\selectfont \textbf{Môn học: Toán 11} \ \textbar \ \textbf{Thời lượng: 1 tiết (Tiết 46 theo PPCT | Tuần 16)}}
+\end{center}
+
+\vspace{5pt}
+
+\section*{I. MỤC TIÊU}
+
+\subsection*{1. Kiến thức, Năng lực}
+
+\begin{itemize}[leftmargin=1.2cm]
+    \item \textbf{Yêu cầu cần đạt (Nguyên văn CT GDPT 2018 Toán 11):}
+    \begin{itemize}[leftmargin=0.6cm]
+        \item Hệ thống hóa và củng cố vững chắc các kiến thức cốt lõi của Chương V: Giới hạn của dãy số, giới hạn của hàm số và tính liên tục của hàm số.
+        \item Vận dụng thành thạo các quy tắc và định lý tính giới hạn hữu hạn, giới hạn vô cực của dãy số và hàm số.
+        \item Khử thành thạo các dạng vô định kinh điển: Dạng phân thức $\dfrac{0}{0}$, dạng vô cùng trừ vô cùng ($\infty - \infty$), dạng tỉ số đa thức tại vô cực ($\dfrac{\infty}{\infty}$).
+        \item Vận dụng định lý về tính liên tục của hàm số và định lý giá trị trung gian để chứng minh phương trình có nghiệm trên một khoảng cho trước.
+    \end{itemize}
+
+    \item \textbf{Năng lực Toán học đặc thù:}
+    \begin{itemize}[leftmargin=0.6cm]
+        \item \textit{Năng lực tư duy và lập luận toán học:} Khả năng so sánh và phân biệt sự tương đồng cũng như khác biệt bản chất giữa giới hạn của dãy số ($n \in \mathbb{N}^*$, $n \to +\infty$) và giới hạn của hàm số ($x \in \mathbb{R}$, $x \to x_0$ hoặc $x \to \pm\infty$); lập luận logic chặt chẽ trong các bài toán chứng minh phương trình chứa tham số luôn có nghiệm.
+        \item \textit{Năng lực mô hình hóa toán học:} Vận dụng tổng cấp số nhân lùi vô hạn và giới hạn tiệm cận để giải quyết các bài toán chuyển động, bài toán hình học phân dạng (fractal) và bài toán kinh tế theo quy mô.
+        \item \textit{Năng lực giải quyết vấn đề toán học:} Thành thạo các thuật toán trọng tâm của giải tích lớp 11: kỹ thuật chia lũy thừa bậc cao nhất, kỹ thuật nhân lượng liên hợp bậc hai và bậc ba, kỹ thuật phân tích tam thức bậc hai thành nhân tử để triệt tiêu nhân tử vô định, kỹ thuật chọn các mút đổi dấu $f(a) \cdot f(b) < 0$.
+        \item \textit{Năng lực giao tiếp toán học:} Trình bày bài giải tự luận giải tích chuẩn mực, mạch lạc; sử dụng chính xác các ký hiệu toán học; tránh các lỗi ngộ nhận ký hiệu hình thức khi khử dạng vô định.
+        \item \textit{Năng lực sử dụng công cụ, phương tiện học toán:} Sử dụng máy tính cầm tay (Casio fx-580VN X) kết hợp chức năng CALC và chức năng bảng giá trị TABLE (Menu 8) để kiểm tra tính đúng đắn của giới hạn và dò tìm nghiệm.
+    \end{itemize}
+
+    \item \textbf{Năng lực số (Theo Thông tư 02/2025/TT-BGDĐT):}
+    \begin{itemize}[leftmargin=0.6cm]
+        \item \textit{Mã 2.4NC1b (Hợp tác và chia sẻ tài nguyên học tập số):} Học sinh biết cách cộng tác nhóm, trao đổi lời giải và chia sẻ sơ đồ tư duy tổng hợp kiến thức Chương V trên nền tảng nhóm học tập số (Padlet / Zalo / Google Drive lớp học).
+    \end{itemize}
+
+    \item \textbf{Năng lực AI (Theo Quyết định 2422/QĐ-BGDĐT):}
+    \begin{itemize}[leftmargin=0.6cm]
+        \item \textit{Mã 11.A1.1 (Đánh giá và kiểm chứng tính hợp lý của kết quả do AI tạo ra):} Học sinh có khả năng đối chiếu, so sánh và kiểm chứng kết quả tính giới hạn giữa phương pháp giải tự luận toán học với kết quả do các công cụ giải toán tự động và mô hình Chatbot AI tạo sinh; phát hiện được lỗi ngộ nhận khi AI "ngắt bỏ bậc thấp" sai quy tắc trong dạng vô định $\infty - \infty$.
+    \end{itemize}
+
+    \item \textbf{Năng lực chung:}
+    \begin{itemize}[leftmargin=0.6cm]
+        \item \textit{Tự chủ và tự học:} Tự giác rà soát lại các dạng bài tập chưa thành thạo trong chương; chủ động hoàn thành các mức độ bài tập trong phiếu học tập.
+        \item \textit{Giao tiếp và hợp tác:} Tích cực tương tác trong thảo luận nhóm, biết phản biện và giải thích rõ ràng các bước biến đổi cho bạn học.
+    \end{itemize}
+\end{itemize}
+
+\subsection*{2. Phẩm chất}
+
+\begin{itemize}[leftmargin=1.2cm]
+    \item \textbf{Chăm chỉ:} Kiên trì luyện tập, rèn luyện thói quen kiểm tra lại từng bước rút gọn đại số và nhân lượng liên hợp.
+    \item \textbf{Trung thực:} Tự lực làm bài tập, thẳng thắn chỉ ra các lỗi sai của bản thân và của câu trả lời AI.
+    \item \textbf{Trách nhiệm:} Tích cực đóng góp vào sản phẩm học tập của nhóm, có ý thức giúp đỡ các bạn học sinh có học lực trung bình - yếu.
+\end{itemize}
+
+\section*{II. THIẾT BỊ DẠY HỌC VÀ HỌC LIỆU}
+
+\begin{itemize}[leftmargin=1.2cm]
+    \item \textbf{Giáo viên:}
+    \begin{itemize}[leftmargin=0.6cm]
+        \item Kế hoạch bài dạy, bài giảng điện tử PowerPoint/Canva tương tác tổng kết Chương V.
+        \item Sơ đồ tư duy tổng hợp kiến thức Chương V dạng bảng biểu số hóa.
+        \item Hệ thống Phiếu học tập phân tầng bậc thang (Worksheet), bảng Rubric đánh giá năng lực học sinh.
+        \item Máy chiếu, máy tính cầm tay Casio fx-580VN X kết nối màn hình hiển thị trực quan các thao tác bấm phím.
+    \end{itemize}
+    \item \textbf{Học sinh:}
+    \begin{itemize}[leftmargin=0.6cm]
+        \item Sách giáo khoa Toán 11, vở ghi chép, đề cương ôn tập Chương V.
+        \item Máy tính cầm tay Casio fx-580VN X đã sẵn sàng cho thao tác CALC và TABLE.
+    \end{itemize}
+\end{itemize}
+
+\section*{III. TIẾN TRÌNH DẠY HỌC (TIẾT 46 THEO PPCT | TUẦN 16)}
+
+\subsubsection*{1. Hoạt động 1: Mở đầu (Khởi động) (5 phút)}
+
+\noindent \textbf{a) Mục tiêu:}
+Tái hiện và củng cố nhanh các định lý, công thức và quy tắc then chốt của toàn bộ Chương V thông qua trò chơi trắc nghiệm phản xạ.
+
+\noindent \textbf{b) Nội dung: Trò chơi ``Vòng quay giải tích - Phản xạ nhanh Chương V''}
+\begin{pedabox}{Khởi động: 4 câu hỏi trắc nghiệm phản xạ nhanh}
+Học sinh trả lời nhanh Đúng / Sai và giải thích ngắn gọn:
+\begin{enumerate}[leftmargin=0.6cm]
+    \item \textit{Câu 1:} Cấp số nhân vô hạn có số hạng đầu $u_1$ và công bội $q$ bất kì luôn có tổng là $S = \dfrac{u_1}{1 - q}$.
+    \item \textit{Câu 2:} Nếu $\lim_{x \to x_0^+} f(x) = L$ và $\lim_{x \to x_0^-} f(x) = L$ thì $\lim_{x \to x_0} f(x) = L$.
+    \item \textit{Câu 3:} Hàm số phân thức hữu tỉ $y = \dfrac{P(x)}{Q(x)}$ liên tục trên toàn bộ tập số thực $\mathbb{R}$.
+    \item \textit{Câu 4:} Nếu hàm số $y = f(x)$ liên tục trên đoạn $[a; b]$ và $f(a) \cdot f(b) < 0$ thì phương trình $f(x) = 0$ có ít nhất một nghiệm thuộc $(a; b)$.
+\end{enumerate}
+\end{pedabox}
+
+\noindent \textbf{c) Sản phẩm: Câu trả lời và giải thích của học sinh}
+\begin{enumerate}[leftmargin=0.6cm]
+    \item \textbf{Sai!} Chỉ áp dụng công thức $S = \dfrac{u_1}{1 - q}$ khi cấp số nhân là \textbf{lùi vô hạn}, tức là điều kiện công bội $|q| < 1$.
+    \item \textbf{Đúng!} Đây là định lý về mối liên hệ giữa giới hạn hai phía và giới hạn một phía.
+    \item \textbf{Sai!} Hàm phân thức hữu tỉ chỉ liên tục trên \textbf{từng khoảng xác định} của nó (tại những điểm làm mẫu số bằng 0 thì hàm số gián đoạn).
+    \item \textbf{Đúng!} Đây là hệ quả của định lý giá trị trung gian Bolzano - Cauchy.
+\end{enumerate}
+
+\noindent \textbf{d) Tổ chức thực hiện:}
+Giáo viên trình chiếu từng câu; học sinh giơ thẻ Đúng/Sai; giáo viên gọi học sinh giải thích các bẫy lý thuyết kinh điển; chốt lại sự cần thiết phải hệ thống hóa toàn bộ phương pháp giải toán Chương V.
+
+\subsubsection*{2. Hoạt động 2: Hệ thống hóa kiến thức \& Năng lực số (10 phút)}
+
+\noindent \textbf{a) Mục tiêu:}
+\begin{itemize}[leftmargin=0.6cm]
+    \item Hệ thống hóa toàn diện mạng lưới kiến thức Chương V: Giới hạn dãy số $\to$ Giới hạn hàm số $\to$ Hàm số liên tục.
+    \item Nhận diện và phân loại thành thạo các dạng vô định: $\dfrac{0}{0}, \dfrac{\infty}{\infty}, \infty - \infty$.
+    \item Tích hợp Năng lực số (Mã 2.4NC1b): Học sinh chia sẻ, thảo luận sơ đồ tư duy giải tích trên không gian số của lớp học.
+\end{itemize}
+
+\noindent \textbf{b) Nội dung: Bản đồ phương pháp giải toán Chương V}
+
+\begin{pedabox}{Hệ thống hóa: Bảng tổng kết các phương pháp then chốt Chương V}
+\small
+\begin{tabularx}{\textwidth}{|p{3.5cm}|p{6.2cm}|X|}
+\hline
+\textbf{Chủ đề trọng tâm} & \textbf{Dạng toán \& Phương pháp xử lý} & \textbf{Công thức / Kỹ thuật} \\ \hline
+\textbf{1. Giới hạn dãy số} & Dạng phân thức đa thức khi $n \to +\infty$: Chia cả tử và mẫu cho lũy thừa bậc cao nhất của mẫu. & $\lim \dfrac{1}{n^k} = 0$ ($k \in \mathbb{N}^*$); $\lim q^n = 0$ ($|q| < 1$). \\ \cline{2-3}
+& Tổng cấp số nhân lùi vô hạn ($|q| < 1$). & $S = \dfrac{u_1}{1 - q}$. \\ \hline
+\textbf{2. Giới hạn hàm số tại điểm} & Dạng xác định: Thay trực tiếp $x = x_0$. & $\lim_{x \to x_0} f(x) = f(x_0)$. \\ \cline{2-3}
+& Dạng vô định $\dfrac{0}{0}$ đa thức: Phân tích thành nhân tử chứa $(x - x_0)$ rồi rút gọn. & $\dfrac{P(x)}{Q(x)} = \dfrac{(x - x_0)P_1(x)}{(x - x_0)Q_1(x)}$. \\ \cline{2-3}
+& Dạng vô định $\dfrac{0}{0}$ chứa căn: Nhân lượng liên hợp tạo nhân tử $(x - x_0)$. & $(\sqrt{A} - B)(\sqrt{A} + B) = A - B^2$. \\ \hline
+\textbf{3. Giới hạn một phía \& Vô cực} & Xét giới hạn trái/phải đối với hàm phân nhánh; xét dấu thương $\dfrac{L}{0}$. & $\lim_{x \to x_0} f(x) = L \iff \lim_{x \to x_0^+} = \lim_{x \to x_0^-} = L$. \\ \hline
+\textbf{4. Hàm số liên tục \& Nghiệm} & Xét tính liên tục tại $x_0$: So sánh $\lim_{x \to x_0} f(x)$ với $f(x_0)$. & $\lim_{x \to x_0} f(x) = f(x_0)$. \\ \cline{2-3}
+& Chứng minh phương trình $f(x) = 0$ có nghiệm trên khoảng $(a; b)$. & $f(x)$ liên tục trên $[a; b]$ và $f(a) \cdot f(b) < 0$. \\ \hline
+\end{tabularx}
+\end{pedabox}
+
+\begin{scaffoldbox}{Hộp hỗ trợ sư phạm: Cẩm nang chống mất điểm tự luận cho học sinh TB-Yếu}
+\begin{itemize}[leftmargin=0.6cm]
+    \item \textbf{Lỗi sai số 1: Bỏ chữ $\lim$ quá sớm.} Trong quá trình biến đổi rút gọn biểu thức, \textbf{bắt buộc phải giữ nguyên ký hiệu $\lim$} ở phía trước cho đến bước thay số cuối cùng.
+    \item \textbf{Lỗi sai số 2: Nhân liên hợp sai dấu.} Cần nhớ: Biểu thức dạng $(\sqrt{A} - B)$ phải nhân với $(\sqrt{A} + B)$ để được $A - B^2$; tuyệt đối không đổi dấu bên trong dấu căn.
+    \item \textbf{Lỗi sai số 3: Quên khẳng định tính liên tục trên đoạn.} Khi chứng minh phương trình có nghiệm, bước đầu tiên bắt buộc phải khẳng định: "Hàm số $f(x)$ liên tục trên đoạn $[a; b]$". Nếu thiếu bước này sẽ bị trừ điểm nặng.
+\end{itemize}
+\end{scaffoldbox}
+
+\noindent \textbf{c) Sản phẩm: Sơ đồ tư duy số được lưu trữ và chia sẻ (Mã 2.4NC1b)}
+Học sinh truy cập liên kết Padlet lớp học, đăng tải hình ảnh sơ đồ tư duy cá nhân đã chuẩn bị trước ở nhà; bình luận và trao đổi công thức với các bạn trong tổ.
+
+\noindent \textbf{d) Tổ chức thực hiện:}
+Giáo viên trình chiếu bảng hệ thống hóa; nhấn mạnh các lưu ý sư phạm trong hộp cẩm nang; kiểm tra hoạt động chia sẻ tài liệu số của 2 nhóm học sinh trên Padlet.
+
+\subsubsection*{3. Hoạt động 3: Luyện tập giải toán tổng hợp phân hóa (23 phút)}
+
+\noindent \textbf{a) Mục tiêu:}
+Rèn luyện kỹ năng tổng hợp giải quyết 3 bài toán điển hình bao quát toàn bộ chương:
+\begin{itemize}[leftmargin=0.6cm]
+    \item Bài toán 1: Giới hạn dãy số và cấp số nhân lùi vô hạn (Mức độ Nhận biết - Thông hiểu).
+    \item Bài toán 2: Giới hạn hàm số khử dạng vô định chứa căn và tìm tham số để hàm liên tục (Mức độ Thông hiểu - Vận dụng).
+    \item Bài toán 3: Ứng dụng định lý giá trị trung gian chứng minh phương trình chứa tham số luôn có nghiệm (Mức độ Vận dụng cao).
+\end{itemize}
+
+\noindent \textbf{b) Nội dung: Các bài toán luyện tập trọng tâm}
+
+\begin{pedabox}{Bài toán 1: Giới hạn dãy số \& Tổng cấp số nhân lùi vô hạn}
+\begin{enumerate}[leftmargin=0.6cm]
+    \item Tính giới hạn dãy số: $I_1 = \lim \dfrac{3n^2 - 2n + 5}{2n^2 + 1}$.
+    \item Tính tổng của cấp số nhân lùi vô hạn sau:
+    $$S = 3 - 1 + \dfrac{1}{3} - \dfrac{1}{9} + \dots + 3 \cdot \left(-\dfrac{1}{3}\right)^{n-1} + \dots$$
+\end{enumerate}
+\end{pedabox}
+
+\noindent \textbf{c) Sản phẩm: Lời giải chi tiết Bài toán 1}
+\begin{enumerate}[leftmargin=0.6cm]
+    \item \textbf{Tính $I_1$:}
+    Chia cả tử và mẫu cho $n^2$ (bậc cao nhất của mẫu):
+    $$I_1 = \lim \dfrac{\dfrac{3n^2}{n^2} - \dfrac{2n}{n^2} + \dfrac{5}{n^2}}{\dfrac{2n^2}{n^2} + \dfrac{1}{n^2}} = \lim \dfrac{3 - \dfrac{2}{n} + \dfrac{5}{n^2}}{2 + \dfrac{1}{n^2}} = \dfrac{3 - 0 + 0}{2 + 0} = \dfrac{3}{2}.$$
+    \item \textbf{Tính $S$:}
+    Dãy số đã cho là cấp số nhân lùi vô hạn có số hạng đầu $u_1 = 3$ và công bội $q = -\dfrac{1}{3}$ thỏa mãn $|q| = \left|-\dfrac{1}{3}\right| = \dfrac{1}{3} < 1$.
+    Áp dụng công thức tính tổng cấp số nhân lùi vô hạn:
+    $$S = \dfrac{u_1}{1 - q} = \dfrac{3}{1 - \left(-\dfrac{1}{3}\right)} = \dfrac{3}{1 + \dfrac{1}{3}} = \dfrac{3}{\dfrac{4}{3}} = 3 \cdot \dfrac{3}{4} = \dfrac{9}{4}.$$
+\end{enumerate}
+
+\begin{pedabox}{Bài toán 2: Khử dạng vô định $\dfrac{0}{0}$ chứa căn thức \& Hàm số liên tục}
+\begin{enumerate}[leftmargin=0.6cm]
+    \item Tính giới hạn hàm số: $I_2 = \lim_{x \to 2} \dfrac{\sqrt{4x + 1} - 3}{x^2 - 4}$.
+    \item Cho hàm số:
+    $$f(x) = \begin{cases} \dfrac{x^2 - 3x + 2}{x - 2} & \text{khi } x > 2 \\ mx + 1 & \text{khi } x \le 2 \end{cases}$$
+    Tìm tất cả các giá trị của tham số $m$ để hàm số $f(x)$ liên tục tại điểm $x_0 = 2$.
+\end{enumerate}
+\end{pedabox}
+
+\noindent \textbf{Lời giải chi tiết Bài toán 2:}
+\begin{enumerate}[leftmargin=0.6cm]
+    \item \textbf{Tính $I_2$:}
+    \begin{itemize}
+        \item Khi thay $x = 2$: Tử thức bằng $\sqrt{9} - 3 = 0$, mẫu thức bằng $2^2 - 4 = 0$ (dạng vô định $\dfrac{0}{0}$).
+        \item Nhân cả tử và mẫu với lượng liên hợp $(\sqrt{4x + 1} + 3)$, đồng thời phân tích mẫu $x^2 - 4 = (x - 2)(x + 2)$:
+        $$I_2 = \lim_{x \to 2} \dfrac{(\sqrt{4x + 1} - 3)(\sqrt{4x + 1} + 3)}{(x - 2)(x + 2)(\sqrt{4x + 1} + 3)} = \lim_{x \to 2} \dfrac{(4x + 1) - 9}{(x - 2)(x + 2)(\sqrt{4x + 1} + 3)}.$$
+        \item Tử thức: $4x - 8 = 4(x - 2)$. Rút gọn nhân tử chung $(x - 2)$:
+        $$I_2 = \lim_{x \to 2} \dfrac{4(x - 2)}{(x - 2)(x + 2)(\sqrt{4x + 1} + 3)} = \lim_{x \to 2} \dfrac{4}{(x + 2)(\sqrt{4x + 1} + 3)}.$$
+        \item Thay $x = 2$ vào biểu thức đã rút gọn:
+        $$I_2 = \dfrac{4}{(2 + 2)(\sqrt{4(2) + 1} + 3)} = \dfrac{4}{4 \cdot (3 + 3)} = \dfrac{4}{4 \cdot 6} = \dfrac{1}{6}.$$
+    \end{itemize}
+    \item \textbf{Tìm tham số $m$ để hàm số liên tục tại $x_0 = 2$:}
+    \begin{itemize}
+        \item \textit{Bước 1:} Tính giá trị hàm số tại điểm: $f(2) = m(2) + 1 = 2m + 1$.
+        \item \textit{Bước 2:} Tính các giới hạn một phía:
+        \begin{itemize}
+            \item Khi $x \to 2^+$ thì $x > 2$, do đó:
+            $$\lim_{x \to 2^+} f(x) = \lim_{x \to 2^+} \dfrac{x^2 - 3x + 2}{x - 2} = \lim_{x \to 2^+} \dfrac{(x - 1)(x - 2)}{x - 2} = \lim_{x \to 2^+} (x - 1) = 2 - 1 = 1.$$
+            \item Khi $x \to 2^-$ thì $x < 2$, do đó:
+            $$\lim_{x \to 2^-} f(x) = \lim_{x \to 2^-} (mx + 1) = 2m + 1.$$
+        \end{itemize}
+        \item \textit{Bước 3:} Hàm số $f(x)$ liên tục tại $x_0 = 2$ khi và chỉ khi:
+        $$\lim_{x \to 2^+} f(x) = \lim_{x \to 2^-} f(x) = f(2) \iff 1 = 2m + 1 \iff 2m = 0 \iff m = 0.$$
+        \item Kết luận: Vậy $m = 0$ là giá trị duy nhất cần tìm.
+    \end{itemize}
+\end{enumerate}
+
+\begin{pedabox}{Bài toán 3: Ứng dụng Định lý giá trị trung gian (Phân hóa Vận dụng cao)}
+Chứng minh rằng phương trình sau luôn có ít nhất một nghiệm thực với mọi giá trị của tham số $m$:
+$$(1 - m^2)x^5 - 3x - 1 = 0.$$
+\end{pedabox}
+
+\noindent \textbf{Lời giải chi tiết Bài toán 3:}
+\begin{itemize}[leftmargin=0.6cm]
+    \item \textit{Bước 1:} Xét hàm số $f(x) = (1 - m^2)x^5 - 3x - 1$.
+    Vì $f(x)$ là hàm đa thức theo biến $x$ nên $f(x)$ liên tục trên toàn bộ tập số thực $\mathbb{R}$, do đó liên tục trên mọi đoạn con thuộc $\mathbb{R}$.
+    \item \textit{Bước 2:} Ta tìm hai giá trị của $x$ sao cho khi thay vào hàm số, biểu thức chứa tham số $m$ bị triệt tiêu hoặc dễ dàng xét dấu:
+    \begin{itemize}
+        \item Cho $x = 0 \implies f(0) = (1 - m^2) \cdot 0^5 - 3(0) - 1 = -1 < 0$ (với mọi giá trị của $m$).
+        \item Cho $x = -1 \implies f(-1) = (1 - m^2)(-1)^5 - 3(-1) - 1 = -(1 - m^2) + 3 - 1 = m^2 - 1 + 2 = m^2 + 1$.
+    \end{itemize}
+    \item \textit{Bước 3:} Vì $m^2 \ge 0$ với mọi $m \in \mathbb{R}$ nên $f(-1) = m^2 + 1 \ge 1 > 0$ với mọi $m$.
+    Do đó:
+    $$f(-1) \cdot f(0) = (m^2 + 1) \cdot (-1) = -(m^2 + 1) \le -1 < 0 \quad (\forall m \in \mathbb{R}).$$
+    \item \textit{Bước 4:} Theo hệ quả của Định lý giá trị trung gian, hàm số $f(x)$ liên tục trên đoạn $[-1; 0]$ và $f(-1) \cdot f(0) < 0$ nên phương trình $f(x) = 0$ luôn có ít nhất một nghiệm $c \in (-1; 0)$ với mọi tham số $m$. (đpcm)
+\end{itemize}
+
+\noindent \textbf{d) Tổ chức thực hiện:}
+\begin{itemize}[leftmargin=0.8cm]
+    \item \textit{Chuyển giao nhiệm vụ:} Học sinh làm Bài 1 theo cặp đôi trong 5 phút; sau đó làm Bài 2 độc lập trong 7 phút; giáo viên gợi ý cách triệt tiêu tham số $m$ ở Bài 3 cho học sinh khá giỏi.
+    \item \textit{Thực hiện nhiệm vụ:} 3 học sinh lên bảng giải 3 bài toán; các học sinh dưới lớp làm bài vào vở; giáo viên quan sát hỗ trợ học sinh yếu ở khâu nhân liên hợp.
+    \item \textit{Báo cáo, thảo luận:} Cả lớp nhận xét bài làm trên bảng; thảo luận về cách chọn điểm $x = 0$ và $x = -1$ ở Bài 3.
+    \item \textit{Kết luận, nhận định:} Giáo viên chuẩn hóa lời giải; nhấn mạnh mẹo giải bài toán chứa tham số $m$: Luôn ưu tiên thử các giá trị $x = 0, \pm 1$ để triệt tiêu hoặc đưa tham số về dạng bình phương không âm ($m^2 \ge 0$).
+\end{itemize}
+
+\subsubsection*{4. Hoạt động 4: Vận dụng \& Năng lực AI (7 phút)}
+
+\noindent \textbf{a) Mục tiêu:}
+Tích hợp Năng lực AI (Mã 11.A1.1): Rèn luyện năng lực đánh giá và kiểm chứng tính hợp lý của kết quả do AI tạo ra; phát hiện sai lầm kinh điển của các mô hình AI khi tùy tiện ngắt bỏ số hạng bậc thấp trong dạng vô định $\infty - \infty$.
+
+\noindent \textbf{b) Nội dung: Phản biện phương pháp ``ngắt bỏ bậc thấp'' sai lầm của AI}
+
+\begin{aibox}{Năng lực AI 11.A1.1: Đối chiếu lời giải tự luận và phát hiện lỗi sai của AI}
+\textbf{Tình huống thực tế:} Một học sinh sử dụng ứng dụng Chatbot AI để giải bài toán giới hạn:
+\begin{quote}
+\textit{«Hãy tính giới hạn vô cực: $L = \lim_{x \to +\infty} \left(\sqrt{x^2 + 2x} - \sqrt{x^2 - 4x}\right)$.»}
+\end{quote}
+\textbf{Lời giải của Chatbot AI trả về:}
+\begin{quote}
+\textit{«Khi $x \to +\infty$, số hạng $x^2$ chiếm ưu thế hoàn toàn so với $2x$ và $-4x$. Do đó ta có thể ngắt bỏ các số hạng bậc thấp:\\
+$\sqrt{x^2 + 2x} \approx \sqrt{x^2} = x$ và $\sqrt{x^2 - 4x} \approx \sqrt{x^2} = x$.\\
+Suy ra: $L = \lim_{x \to +\infty} (x - x) = 0$!»}
+\end{quote}
+\textbf{Nhiệm vụ của học sinh:}
+\begin{enumerate}[leftmargin=0.6cm]
+    \item Hãy tính giới hạn $L$ bằng phương pháp nhân lượng liên hợp toán học chuẩn mực để tìm kết quả đúng.
+    \item Chỉ ra sai lầm nghiêm trọng trong suy luận giải tích của AI.
+    \item Sử dụng máy tính cầm tay Casio fx-580VN X bấm CALC với $X = 10^6$ để kiểm chứng lại kết quả thực tế.
+\end{enumerate}
+\end{aibox}
+
+\noindent \textbf{c) Sản phẩm: Lời giải toán học và phản biện của học sinh}
+\begin{enumerate}[leftmargin=0.6cm]
+    \item \textbf{Lời giải chuẩn xác bằng phương pháp nhân lượng liên hợp:}
+    Biểu thức có dạng vô định $\infty - \infty$. Ta nhân và chia với biểu thức liên hợp $(\sqrt{x^2 + 2x} + \sqrt{x^2 - 4x})$:
+    \begin{align*}
+        L &= \lim_{x \to +\infty} \dfrac{\left(\sqrt{x^2 + 2x} - \sqrt{x^2 - 4x}\right)\left(\sqrt{x^2 + 2x} + \sqrt{x^2 - 4x}\right)}{\sqrt{x^2 + 2x} + \sqrt{x^2 - 4x}} \\
+        &= \lim_{x \to +\infty} \dfrac{(x^2 + 2x) - (x^2 - 4x)}{\sqrt{x^2 + 2x} + \sqrt{x^2 - 4x}} = \lim_{x \to +\infty} \dfrac{6x}{\sqrt{x^2\left(1 + \dfrac{2}{x}\right)} + \sqrt{x^2\left(1 - \dfrac{4}{x}\right)}}.
+    \end{align*}
+    Vì $x \to +\infty$ nên $\sqrt{x^2} = x$. Chia cả tử và mẫu cho $x$:
+    $$L = \lim_{x \to +\infty} \dfrac{6x}{x\sqrt{1 + \dfrac{2}{x}} + x\sqrt{1 - \dfrac{4}{x}}} = \lim_{x \to +\infty} \dfrac{6}{\sqrt{1 + \dfrac{2}{x}} + \sqrt{1 - \dfrac{4}{x}}} = \dfrac{6}{\sqrt{1 + 0} + \sqrt{1 - 0}} = \dfrac{6}{1 + 1} = 3.$$
+    \item \textbf{Vạch trần sai lầm của AI:}
+    AI đã phạm lỗi ngộ nhận khi áp dụng phép xấp xỉ vô cùng bé / ngắt bỏ bậc thấp một cách tùy tiện vào \textbf{hiệu của hai đại lượng cùng tiến ra vô cực có hệ số bậc cao nhất bằng nhau}. Việc ngắt bỏ số hạng bậc nhất ($2x$ và $-4x$) đã làm triệt tiêu mất phần sai số thực sự tạo nên giá trị giới hạn của bài toán (hiệu số bằng $6x$, có cùng bậc với mẫu số sau khi liên hợp).
+    \item \textbf{Kiểm chứng bằng MTCT Casio fx-580VN X:}
+    Nhập biểu thức $\sqrt{X^2 + 2X} - \sqrt{X^2 - 4X}$ vào máy tính $\to$ Bấm \fbox{\textbf{CALC}} $\to$ Nhập $X = 10^6$ ($1\,000\,000$) $\to$ Màn hình hiển thị kết quả: \texttt{3.000001}. Kết quả máy tính hoàn toàn khớp với lời giải tự luận ($L = 3$) và bác bỏ hoàn toàn đáp án sai $0$ của AI.
+\end{enumerate}
+
+\noindent \textbf{d) Tổ chức thực hiện:}
+Giáo viên trình chiếu đoạn văn bản giải toán của AI; học sinh thảo luận cặp đôi bấm máy tính kiểm chứng; một học sinh lên bảng trình bày phép nhân liên hợp; giáo viên nhấn mạnh thông điệp: \textit{Học sinh phải làm chủ bản chất giải tích, không phụ thuộc mù quáng vào các công cụ AI giải toán tự động}.
+
+\section*{IV. PHỤ LỤC HỌC LIỆU BỔ TRỢ}
+
+\subsection*{1. Phiếu học tập phân tầng bậc thang (Worksheet)}
+
+\noindent \textbf{A. PHẦN TRẮC NGHIỆM KHÁCH QUAN TỔNG HỢP CHƯƠNG V}
+\begin{enumerate}[leftmargin=0.6cm]
+    \item Giá trị của $\lim \dfrac{2n^2 - 3n + 1}{1 - n^2}$ bằng:
+    \begin{itemize}[leftmargin=0.6cm]
+        \item[A.] $2$. \quad \textbf{B.} $-2$. \quad C. $1$. \quad D. $+\infty$.
+    \end{itemize}
+    \item Cho $\lim_{x \to 1} \dfrac{f(x) - 3}{x - 1} = 2$. Khi đó $\lim_{x \to 1} f(x)$ bằng:
+    \begin{itemize}[leftmargin=0.6cm]
+        \item[A.] $2$. \quad \textbf{B.} $3$. \quad C. $5$. \quad D. $0$.
+    \end{itemize}
+    \item Giá trị của giới hạn $\lim_{x \to -2} \dfrac{x^2 - 4}{x + 2}$ bằng:
+    \begin{itemize}[leftmargin=0.6cm]
+        \item[A.] $4$. \quad \textbf{B.} $-4$. \quad C. $0$. \quad D. Không tồn tại.
+    \end{itemize}
+    \item Hàm số nào sau đây liên tục trên toàn bộ tập số thực $\mathbb{R}$?
+    \begin{itemize}[leftmargin=0.6cm]
+        \item[A.] $y = \dfrac{x}{x - 1}$. \quad \textbf{B.} $y = x^3 - 3x + 2$. \quad C. $y = \tan x$. \quad D. $y = \sqrt{x - 1}$.
+    \end{itemize}
+\end{enumerate}
+
+\noindent \textbf{B. PHẦN TỰ LUẬN PHÂN TẦNG BẬC THANG}
+\begin{itemize}[leftmargin=0.6cm]
+    \item \textbf{Tầng 1 (Cơ bản dành cho học sinh trung bình - yếu):}
+    \begin{enumerate}[leftmargin=0.5cm]
+        \item Tính giới hạn dãy số: $A = \lim \dfrac{5n^3 - 2n + 1}{2n^3 + 3n^2}$.
+        \item Tính giới hạn hàm số dạng xác định và dạng $\dfrac{0}{0}$ đơn giản:
+        $$B_1 = \lim_{x \to 1} (2x^2 - 3x + 5); \quad B_2 = \lim_{x \to 3} \dfrac{x^2 - 9}{x - 3}.$$
+    \end{enumerate}
+
+    \item \textbf{Tầng 2 (Thông hiểu):}
+    \begin{enumerate}[leftmargin=0.5cm]
+        \item Tính giới hạn khử dạng vô định chứa căn thức: $C = \lim_{x \to 0} \dfrac{\sqrt{1 + 4x} - 1}{x}$.
+        \item Cho hàm số $g(x) = \begin{cases} \dfrac{x^2 - x - 2}{x - 2} & \text{khi } x \neq 2 \\ a & \text{khi } x = 2 \end{cases}$. Tìm giá trị của $a$ để hàm số liên tục tại điểm $x_0 = 2$.
+    \end{enumerate}
+
+    \item \textbf{Tầng 3 (Vận dụng cao):}
+    \begin{enumerate}[leftmargin=0.5cm]
+        \item Tính giới hạn khử dạng vô định chứa hai căn thức khác bậc:
+        $$D = \lim_{x \to 1} \dfrac{\sqrt{2x - 1} - \sqrt[3]{3x - 2}}{x - 1}.$$
+        \item Chứng minh rằng phương trình $x^4 + ax^3 + bx^2 + cx - 1 = 0$ luôn có ít nhất hai nghiệm thực trái dấu với mọi giá trị của các tham số thực $a, b, c$.
+    \end{enumerate}
+\end{itemize}
+
+\subsection*{2. Bảng Rubric đánh giá năng lực học sinh trong bài học}
+
+\begin{center}
+\small
+\begin{tabularx}{\textwidth}{|p{2.8cm}|X|X|X|X|}
+\hline
+\textbf{Tiêu chí} & \textbf{Chưa đạt (Mức 1)} & \textbf{Đạt (Mức 2)} & \textbf{Khá (Mức 3)} & \textbf{Tốt (Mức 4)} \\ \hline
+\textbf{Hệ thống kiến thức \& Nhận diện dạng toán} & Nhầm lẫn giữa giới hạn dãy số và hàm số; chưa nhận ra dạng vô định $\dfrac{0}{0}$. & Nêu được các công thức cơ bản; nhận dạng đúng dạng vô định phân thức. & Hệ thống hóa kiến thức logic; phân loại chính xác các dạng vô định trong đề bài. & Khái quát kiến thức xuất sắc; xây dựng sơ đồ tư duy giải tích toàn diện, khoa học. \\ \hline
+\textbf{Kỹ năng biến đổi \& Khử dạng vô định} & Tính sai các bước rút gọn đại số; nhân lượng liên hợp sai dấu hằng đẳng thức. & Khử được dạng vô định $\dfrac{0}{0}$ đa thức bậc hai; tính đúng giới hạn phân thức. & Thành thạo nhân liên hợp bậc hai chứa căn thức; trình bày tự luận chuẩn mực. & Điêu luyện trong kỹ thuật tách số hạng khử đồng thời căn bậc hai và căn bậc ba. \\ \hline
+\textbf{Ứng dụng Định lý giá trị trung gian} & Quên khẳng định tính liên tục trên đoạn; tính nhầm dấu $f(a)f(b)$. & Trình bày đủ 4 bước chứng minh phương trình cụ thể có nghiệm. & Biết cách triệt tiêu tham số $m$ để chứng minh phương trình có nghiệm với mọi $m$. & Giải quyết hoàn hảo bài toán phương trình bậc cao chứa nhiều tham số $a, b, c$. \\ \hline
+\textbf{Năng lực số \& Phản biện AI} & Chưa biết dùng CALC kiểm tra nghiệm; tin tưởng tuyệt đối vào kết quả sai của AI. & Sử dụng được MTCT tính xấp xỉ; phát hiện được AI làm sai nhưng chưa sửa được. & Thao tác CALC và TABLE thành thạo; chỉ ra chính xác lỗi ngắt bỏ bậc thấp của AI. & Làm chủ công cụ số; phản biện sắc bén, phân tích sâu sắc bản chất toán học đối lập với AI. \\ \hline
+\end{tabularx}
+\end{center}
+
+\end{document}
