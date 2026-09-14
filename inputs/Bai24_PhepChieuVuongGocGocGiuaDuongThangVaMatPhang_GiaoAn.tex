@@ -1,0 +1,670 @@
+\documentclass[12pt, a4paper]{article}
+% --- 1. Cấu hình Tiếng Việt và Font chữ chuẩn ---
+\usepackage[utf8]{inputenc}
+\usepackage[T5]{fontenc}
+\usepackage[vietnamese]{babel}
+\usepackage{mathptmx} % Font Times New Roman đồng bộ cả chữ và công thức toán, không gây xung đột gói
+
+\makeatletter
+\renewcommand{\normalsize}{\@setfontsize\normalsize{13pt}{16pt}}
+\makeatother
+\normalsize
+
+% --- 2. Gói Toán học & Ký hiệu bổ trợ ---
+\usepackage{amsmath, amssymb, amsfonts, mathrsfs, amsthm}
+\usepackage{graphicx}
+\usepackage{fontawesome}
+\usepackage{booktabs, tabularx, array, multirow}
+\usepackage{enumitem}
+
+% --- 3. Đồ họa TikZ, Bảng biến thiên & Hình không gian ---
+\usepackage{tikz}
+\usetikzlibrary{calc, intersections, angles, quotes, patterns, arrows.meta, 3d}
+\usepackage{pgfplots}
+\pgfplotsset{compat=1.18}
+\usepackage{tkz-euclide}
+\usepackage{tkz-tab}
+
+\renewcommand{\vec}[1]{\overrightarrow{#1}}
+
+% --- 4. Hộp sư phạm (Tcolorbox) ---
+\usepackage[many]{tcolorbox}
+\tcbuselibrary{skins, breakable}
+
+% --- 5. Căn lề chuẩn văn bản giáo án ---
+\usepackage{geometry}
+\geometry{
+    a4paper,
+    left=25mm,
+    right=15mm,
+    top=20mm,
+    bottom=20mm
+}
+
+% --- 6. Header / Footer chuẩn hóa ---
+\usepackage{fancyhdr}
+\usepackage{lastpage}
+\pagestyle{fancy}
+\fancyhf{}
+
+\fancyhead[L]{\small \textit{Kế hoạch bài dạy Toán 11}}
+\fancyhead[R]{\textbf{Trang \thepage/\pageref{LastPage}}}
+\fancyfoot[L]{\small \textit{Tổ Toán - Tin}}
+\fancyfoot[R]{\small \textit{Trường THCS\&THPT Hồng Vân}}
+\renewcommand{\headrulewidth}{0.4pt}
+\renewcommand{\footrulewidth}{0.4pt}
+
+% --- 7. Giãn dòng & Giãn đoạn theo chuẩn Nghị định 30/2020/NĐ-CP ---
+\usepackage{setspace}
+\setstretch{1.15}
+\setlength{\parindent}{1.0cm}
+\setlength{\parskip}{5pt}
+
+% Định nghĩa hộp sư phạm chuyên dụng
+\newtcolorbox{pedabox}[2][]{
+    enhanced,
+    breakable,
+    colback=blue!3!white,
+    colframe=blue!65!black,
+    fonttitle=\bfseries\small,
+    title={#2},
+    arc=2mm,
+    boxrule=0.6pt,
+    left=3mm, right=3mm, top=2mm, bottom=2mm,
+    #1
+}
+
+\newtcolorbox{aibox}[2][]{
+    enhanced,
+    breakable,
+    colback=teal!4!white,
+    colframe=teal!70!black,
+    fonttitle=\bfseries\small,
+    title={#2},
+    arc=2mm,
+    boxrule=0.6pt,
+    left=3mm, right=3mm, top=2mm, bottom=2mm,
+    #1
+}
+
+\newtcolorbox{scaffoldbox}[2][]{
+    enhanced,
+    breakable,
+    colback=orange!4!white,
+    colframe=orange!80!black,
+    fonttitle=\bfseries\small,
+    title={#2},
+    arc=2mm,
+    boxrule=0.6pt,
+    left=3mm, right=3mm, top=2mm, bottom=2mm,
+    #1
+}
+
+\newtcolorbox{stembox}[2][]{
+    enhanced,
+    breakable,
+    colback=purple!4!white,
+    colframe=purple!75!black,
+    fonttitle=\bfseries\small,
+    title={#2},
+    arc=2mm,
+    boxrule=0.6pt,
+    left=3mm, right=3mm, top=2mm, bottom=2mm,
+    #1
+}
+
+\begin{document}
+
+\begin{center}
+    {\fontsize{14pt}{17pt}\selectfont \textbf{KẾ HOẠCH BÀI DẠY MÔN TOÁN LỚP 11}}\\[6pt]
+    {\fontsize{16pt}{19pt}\selectfont \textbf{BÀI 24. PHÉP CHIẾU VUÔNG GÓC. GÓC GIỮA ĐƯỜNG THẲNG VÀ MẶT PHẲNG}}\\[4pt]
+    {\fontsize{12pt}{15pt}\selectfont \textbf{Môn học: Toán 11} \ \textbar \ \textbf{Thời lượng: 2 tiết (Tiết 68, 69 theo PPCT | Tuần 23)}}
+\end{center}
+
+\vspace{5pt}
+
+\section*{I. MỤC TIÊU}
+
+\subsection*{1. Kiến thức, Năng lực}
+
+\begin{itemize}[leftmargin=1.2cm]
+    \item \textbf{Yêu cầu cần đạt (Nguyên văn CT GDPT 2018 Toán 11):}
+    \begin{itemize}[leftmargin=0.6cm]
+        \item Nhận biết được khái niệm phép chiếu vuông góc.
+        \item Xác định được hình chiếu vuông góc của một điểm, một đường thẳng, một tam giác.
+        \item Nhận biết được khái niệm góc giữa đường thẳng và mặt phẳng.
+        \item Xác định và tính được góc giữa đường thẳng và mặt phẳng trong những trường hợp đơn giản (ví dụ: đã biết hình chiếu vuông góc của đường thẳng lên mặt phẳng).
+        \item Sử dụng được kiến thức về góc giữa đường thẳng và mặt phẳng để mô tả một số hình ảnh trong thực tiễn (góc nghiêng của dốc cầu, mái nhà, góc đặt thang an toàn, bóng đổ của các công trình kiến trúc).
+    \end{itemize}
+
+    \item \textbf{Năng lực Toán học đặc thù:}
+    \begin{itemize}[leftmargin=0.6cm]
+        \item \textit{Năng lực tư duy và lập luận toán học:} Phân tích bản chất góc giữa đường thẳng và mặt phẳng thông qua góc phẳng giữa đường thẳng và hình chiếu vuông góc của nó; lập luận chặt chẽ trong việc xác định điểm hình chiếu vuông góc; hiểu rõ tính chặn trên và chặn dưới của góc: $0^\circ \le (d, (P)) \le 90^\circ$.
+        \item \textit{Năng lực mô hình hóa toán học:} Chuyển đổi các bài toán thực tiễn (độ dốc của mái nhà, góc nâng của cầu thang, góc chiếu sáng của tia nắng mặt trời) thành mô hình góc giữa đường thẳng và mặt phẳng để tính toán các đại lượng hình học liên quan.
+        \item \textit{Năng lực giải quyết vấn đề toán học:} Nắm vững và thực hiện thành thạo \textbf{``Quy trình 3 bước vàng''} xác định góc giữa đường thẳng và mặt phẳng: (1) Tìm giao điểm; (2) Tìm hình chiếu vuông góc của một điểm trên đường thẳng; (3) Xác định góc tại đỉnh giao điểm và sử dụng các hệ thức lượng trong tam giác vuông ($\tan, \sin, \cos$) để tính số đo góc.
+        \item \textit{Năng lực giao tiếp toán học:} Trình bày chứng minh và tính toán mạch lạc, chính xác theo chuẩn mực ký hiệu ($\angle(d, (P)), \text{h/c}_{(P)}(d), \perp$); đọc hiểu và diễn đạt chính xác kết quả số đo góc bằng độ hoặc giá trị lượng giác.
+        \item \textit{Năng lực sử dụng công cụ, phương tiện học toán:} Sử dụng thước kẻ, êke vẽ hình biểu diễn không gian chuẩn xác; sử dụng phần mềm GeoGebra 3D thiết kế mô phỏng hướng chiếu sáng vuông góc tạo bóng trên mặt phẳng đất.
+    \end{itemize}
+
+    \item \textbf{Năng lực số (Theo Thông tư 02/2025/TT-BGDĐT):}
+    \begin{itemize}[leftmargin=0.6cm]
+        \item \textit{Mã 3.2NC1a (Sáng tạo nội dung và mô phỏng số):} Học sinh thiết kế mô phỏng hướng chiếu sáng vuông góc tạo bóng của các thanh cọc thẳng trên mặt phẳng đất bằng phần mềm GeoGebra 3D; quan sát sự biến thiên của độ dài bóng đổ khi thay đổi góc nghiêng của thanh cọc so với mặt đất.
+    \end{itemize}
+
+    \item \textbf{Năng lực AI (Theo Quyết định 2422/QĐ-BGDĐT):}
+    \begin{itemize}[leftmargin=0.6cm]
+        \item \textit{Mã 11.C2.3 (Hiểu biết ứng dụng AI trong kỹ thuật đồ họa và không gian):} Học sinh tìm hiểu ứng dụng AI dựng hình ảnh bóng đổ thực tế (thuật toán Ray Tracing và Neural Rendering) trong trò chơi điện tử và phim hoạt hình 3D; hiểu được AI sử dụng góc giữa tia sáng (đường thẳng) và mặt phẳng bề mặt vật thể để tính toán độ tương phản và hình dạng bóng chiếu chân thực.
+    \end{itemize}
+
+    \item \textbf{Năng lực chung:}
+    \begin{itemize}[leftmargin=0.6cm]
+        \item \textit{Tự chủ và tự học:} Chủ động tìm tòi, hoàn thành phiếu học tập bậc thang; tự giác kiểm tra lại các bước dựng góc.
+        \item \textit{Giao tiếp và hợp tác:} Thảo luận cặp đôi và làm việc nhóm hiệu quả khi xác định hình chiếu của các đường thẳng lên mặt phẳng bên.
+    \end{itemize}
+\end{itemize}
+
+\subsection*{2. Phẩm chất}
+
+\begin{itemize}[leftmargin=1.2cm]
+    \item \textbf{Chăm chỉ:} Rèn luyện kỹ năng dựng hình phụ cẩn thận, chỉn chu trong các bài toán không gian; kiên trì tính toán các tỉ số lượng giác.
+    \item \textbf{Trung thực:} Tự lực vẽ hình và tính toán, khách quan trong tự đánh giá và đánh giá chéo bài làm của bạn học.
+    \item \textbf{Trách nhiệm:} Nghiêm túc, cẩn trọng trong từng bước lập luận hình học; có ý thức áp dụng góc nghiêng an toàn vào đời sống thực tế (leo thang an toàn, chống trượt).
+\end{itemize}
+
+\vspace{5pt}
+
+\section*{II. THIẾT BỊ DẠY HỌC VÀ HỌC LIỆU}
+
+\begin{itemize}[leftmargin=1.2cm]
+    \item \textbf{Giáo viên:}
+    \begin{itemize}[leftmargin=0.6cm]
+        \item Kế hoạch bài dạy chi tiết 2 tiết theo chuẩn Công văn 5512/BGDĐT-GDTrH.
+        \item Bài trình chiếu PowerPoint tương tác, tệp GeoGebra 3D mô phỏng góc giữa đường thẳng và mặt phẳng, bóng đổ 3D.
+        \item Mô hình khung không gian bằng nhựa / gỗ (hình chóp đáy vuông, tam giác vuông).
+        \item Phiếu học tập phân hóa bậc thang: Phiếu học tập số 1 (Tiết 1) và Phiếu học tập số 2 (Tiết 2).
+        \item Bảng Rubric đánh giá năng lực học sinh theo chuẩn Thông tư 02/2025 và QĐ 2422.
+    \end{itemize}
+    \item \textbf{Học sinh:}
+    \begin{itemize}[leftmargin=0.6cm]
+        \item Sách giáo khoa Toán 11, vở ghi chép, giấy nháp.
+        \item Dụng cụ học tập hình học: Thước kẻ, compa, êke, máy tính cầm tay Casio fx-580VN X.
+        \item Ôn tập lại kiến thức Bài 23: Đường thẳng vuông góc với mặt phẳng và các tỉ số lượng giác trong tam giác vuông ($\sin, \cos, \tan$).
+    \end{itemize}
+\end{itemize}
+
+\vspace{5pt}
+
+\section*{III. TIẾN TRÌNH DẠY HỌC (2 TIẾT | TIẾT 68, 69 THEO PPCT)}
+
+\subsection*{\faClockO \ TIẾT 1 (TIẾT 68 THEO PPCT): PHÉP CHIẾU VUÔNG GÓC VÀ GÓC GIỮA ĐƯỜNG THẲNG VÀ MẶT PHẲNG}
+
+\subsubsection*{1. Hoạt động 1: Mở đầu (Khởi động) (5 phút)}
+
+\noindent \textbf{a) Mục tiêu:}
+Tạo hứng thú học tập và nhu cầu nhận thức về việc đo góc nghiêng của một đoạn thẳng so với mặt phẳng nằm ngang trong đời sống thực tế (chiếc thang dựa tường, độ dốc mái nhà).
+
+\noindent \textbf{b) Nội dung:}
+Giáo viên trình chiếu hình ảnh một chiếc thang dài $4\text{ m}$ được bắc dựa vào bức tường thẳng đứng, chân thang đặt trên sàn nhà nằm ngang:
+\begin{pedabox}{Tình huống khởi động: Góc nghiêng an toàn của chiếc thang}
+Khi bắc một chiếc thang tựa vào tường nhà, người thợ xây cần chú ý góc nghiêng giữa thân thang và mặt sàn nhà.
+\begin{enumerate}[leftmargin=0.6cm]
+    \item Nếu góc giữa chiếc thang và sàn nhà quá dốc (gần $90^\circ$), điều gì sẽ xảy ra khi người trèo lên?
+    \item Nếu góc giữa chiếc thang và sàn nhà quá thoai thoải (quá nhỏ), điều gì nguy hiểm có thể xảy ra?
+    \item Trong hình học không gian, góc giữa thân thang (đoạn thẳng) và sàn nhà (mặt phẳng) được xác định như thế nào?
+\end{enumerate}
+\end{pedabox}
+
+\noindent \textbf{c) Sản phẩm:}
+Câu trả lời của học sinh:
+\begin{itemize}
+    \item Thang quá dốc thì dễ bị ngửa ra sau ngã; thang quá thoai thoải thì chân thang dễ bị trượt ngang dẫn đến đổ thang. Theo tiêu chuẩn an toàn lao động, góc nghiêng chuẩn là khoảng $70^\circ - 75^\circ$.
+    \item Để xác định góc đó trong hình học, ta lấy hình chiếu của đỉnh thang vuông góc xuống sàn nhà, nối với chân thang ta được một đoạn thẳng trên sàn. Góc giữa thân thang và đoạn thẳng trên sàn đó chính là góc giữa chiếc thang và mặt sàn!
+\end{itemize}
+
+\noindent \textbf{d) Tổ chức thực hiện:}
+\begin{itemize}[leftmargin=0.6cm]
+    \item \textbf{Giao nhiệm vụ:} Giáo viên trình chiếu hình ảnh, đặt câu hỏi cho học sinh suy nghĩ trong 2 phút.
+    \item \textbf{Thực hiện nhiệm vụ:} Học sinh quan sát hình ảnh, thảo luận cặp đôi.
+    \item \textbf{Báo cáo, thảo luận:} 1 học sinh trả lời miệng; cả lớp lắng nghe và nhận xét.
+    \item \textbf{Kết luận, nhận định:} Giáo viên dẫn dắt vào bài học: Khái niệm góc giữa đường thẳng và mặt phẳng chính là sự trừu tượng hóa toán học của góc nghiêng thực tế thông qua phép chiếu vuông góc.
+\end{itemize}
+
+\subsubsection*{2. Hoạt động 2: Hình thành kiến thức (25 phút)}
+
+\paragraph{2.1. Đơn vị kiến thức 1: Phép chiếu vuông góc lên mặt phẳng (8 phút)}
+
+\noindent \textbf{a) Mục tiêu:}
+Củng cố khái niệm phép chiếu vuông góc; xác định chính xác hình chiếu vuông góc của một điểm, một đoạn thẳng, một tam giác lên mặt phẳng.
+
+\noindent \textbf{b) Nội dung:}
+\begin{pedabox}{Khái niệm phép chiếu vuông góc}
+Cho mặt phẳng $(P)$. Phép chiếu song song lên mặt phẳng $(P)$ theo phương vuông góc với $(P)$ được gọi là \textbf{phép chiếu vuông góc lên mặt phẳng $(P)$}.
+\begin{itemize}[leftmargin=0.6cm]
+    \item Điểm $M'$ là hình chiếu vuông góc của điểm $M$ lên $(P)$ nếu $MM' \perp (P)$ tại $M'$.
+    \item Nếu $M \in (P)$ thì hình chiếu $M' \equiv M$.
+    \item Hình chiếu vuông góc của đường thẳng $d$ lên $(P)$ là đường thẳng $d'$ đi qua hình chiếu của các điểm thuộc $d$. (Đặc biệt, nếu $d \perp (P)$ thì hình chiếu của $d$ là một điểm giao điểm).
+\end{itemize}
+\end{pedabox}
+
+\begin{aibox}{Tích hợp Năng lực số (Theo Thông tư 02/2025/TT-BGDĐT - Mã 3.2NC1a)}
+\textbf{Mô phỏng nguồn sáng tạo bóng đổ trên GeoGebra 3D:}
+\begin{itemize}[leftmargin=0.6cm]
+    \item Giáo viên trình chiếu mô hình GeoGebra 3D mô phỏng một que cọc $AB$ cắm trên mặt phẳng đất $(P)$.
+    \item Kéo thanh trượt điều chỉnh nguồn sáng mặt trời chiếu thẳng đứng từ trên cao (vuông góc mặt đất): Học sinh quan sát hình chiếu $A'B'$ (bóng của que cọc) trên mặt phẳng. Khi que cọc dựng đứng thẳng ($AB \perp (P)$), bóng của nó thu gọn thành một điểm duy nhất.
+\end{itemize}
+\end{aibox}
+
+\noindent \textbf{c) Sản phẩm:}
+Học sinh thực hiện xác định hình chiếu trong hình chóp $S.ABC$ có $SA \perp (ABC)$:
+\begin{itemize}
+    \item Hình chiếu của đỉnh $S$ lên $(ABC)$ là điểm $A$.
+    \item Hình chiếu của cạnh bên $SB$ lên $(ABC)$ là đoạn thẳng $AB$.
+    \item Hình chiếu của cạnh bên $SC$ lên $(ABC)$ là đoạn thẳng $AC$.
+\end{itemize}
+
+\noindent \textbf{d) Tổ chức thực hiện:}
+Giáo viên chiếu mô hình, học sinh trả lời nhanh về hình chiếu; giáo viên chốt kiến thức nền tảng để chuyển sang định nghĩa góc.
+
+\paragraph{2.2. Đơn vị kiến thức 2: Định nghĩa và Quy trình xác định góc giữa đường thẳng và mặt phẳng (17 phút)}
+
+\noindent \textbf{a) Mục tiêu:}
+Nắm vững định nghĩa góc giữa đường thẳng và mặt phẳng; thành thạo ``Quy trình 3 bước vàng'' xác định góc; biết cách tính góc bằng tỉ số lượng giác.
+
+\noindent \textbf{b) Nội dung:}
+\begin{pedabox}{Định nghĩa góc giữa đường thẳng và mặt phẳng}
+Cho đường thẳng $d$ và mặt phẳng $(P)$.
+\begin{itemize}[leftmargin=0.6cm]
+    \item Nếu $d \perp (P)$ thì góc giữa đường thẳng $d$ và mặt phẳng $(P)$ bằng $90^\circ$.
+    \item Nếu $d$ không vuông góc với $(P)$ thì góc giữa đường thẳng $d$ và mặt phẳng $(P)$ là \textbf{góc giữa đường thẳng $d$ và hình chiếu vuông góc $d'$ của nó trên mặt phẳng $(P)$}.
+\end{itemize}
+\textbf{Ký hiệu:} $(d, (P))$ hoặc $\widehat{(d, (P))}$. \\
+\textbf{Quy ước số đo góc:} $0^\circ \le (d, (P)) \le 90^\circ$. \\
+\textit{Đặc biệt:} Nếu $d \parallel (P)$ hoặc $d \subset (P)$ thì góc giữa $d$ và $(P)$ bằng $0^\circ$.
+\end{pedabox}
+
+\begin{scaffoldbox}{Giàn giáo sư phạm: Quy trình 3 bước vàng tìm góc giữa đường thẳng và mặt phẳng}
+\textbf{Khẩu quyết 3 bước cho học sinh trung bình - yếu:}
+Khi đường thẳng $d$ cắt mặt phẳng $(P)$ tại $O$ và $d \not\perp (P)$:
+\begin{enumerate}[leftmargin=0.8cm]
+    \item[\textbf{Bước 1:}] \textbf{Tìm giao điểm:} Xác định điểm chung $O = d \cap (P)$ $\implies O$ chính là \textbf{ĐỈNH CỦA GÓC}!
+    \item[\textbf{Bước 2:}] \textbf{Tìm hình chiếu vuông góc:} Chọn một điểm $S \in d$ ($S \neq O$), tìm điểm $H \in (P)$ sao cho $SH \perp (P)$. Khi đó đoạn $OH$ chính là hình chiếu của $SO$ trên $(P)$.
+    \item[\textbf{Bước 3:}] \textbf{Kết luận và Tính toán:}
+    $$\text{Góc cần tìm là: } (d, (P)) = (SO, OH) = \widehat{SOH}$$
+    Tam giác $SHO$ luôn luôn là \textbf{tam giác vuông tại $H$}. Sử dụng công thức:
+    $$\tan \widehat{SOH} = \dfrac{SH}{OH} = \dfrac{\text{Cạnh đối}}{\text{Cạnh kề}}; \qquad \sin \widehat{SOH} = \dfrac{SH}{SO} = \dfrac{\text{Cạnh đối}}{\text{Cạnh huyền}}$$
+\end{enumerate}
+\end{scaffoldbox}
+
+\noindent \textbf{c) Sản phẩm:}
+Học sinh hoàn thành bài toán mẫu:
+\begin{pedabox}{Bài toán mẫu: Tính góc trong hình chóp có cạnh bên vuông góc đáy}
+Cho hình chóp $S.ABCD$ có đáy $ABCD$ là hình vuông cạnh $a$. Cạnh bên $SA \perp (ABCD)$ và $SA = a\sqrt{2}$.
+\begin{enumerate}[leftmargin=0.6cm]
+    \item Xác định và tính góc giữa cạnh bên $SB$ và mặt phẳng đáy $(ABCD)$.
+    \item Xác định và tính góc giữa cạnh bên $SC$ và mặt phẳng đáy $(ABCD)$.
+\end{enumerate}
+\end{pedabox}
+\textit{Lời giải chi tiết:}
+\begin{enumerate}[leftmargin=0.6cm]
+    \item \textbf{Tìm góc giữa $SB$ và $(ABCD)$:}
+    \begin{itemize}
+        \item Bước 1: Tìm giao điểm: $SB \cap (ABCD) = B$ (Đỉnh góc là $B$).
+        \item Bước 2: Tìm hình chiếu của $S$: Vì $SA \perp (ABCD)$ tại $A$ nên hình chiếu của $S$ lên $(ABCD)$ là $A$.
+        Do đó hình chiếu của $SB$ lên $(ABCD)$ là đường thẳng $AB$.
+        \item Bước 3: Góc giữa $SB$ và $(ABCD)$ là góc giữa $SB$ và $AB$, tức là góc $\widehat{SBA}$.
+        Tam giác $SAB$ vuông tại $A$ có $SA = a\sqrt{2}$ và $AB = a$.
+        $$\tan \widehat{SBA} = \dfrac{SA}{AB} = \dfrac{a\sqrt{2}}{a} = \sqrt{2} \implies \widehat{SBA} \approx 54^\circ 44'.$$
+    \end{itemize}
+    \item \textbf{Tìm góc giữa $SC$ và $(ABCD)$:}
+    \begin{itemize}
+        \item Giao điểm: $SC \cap (ABCD) = C$.
+        \item Vì $SA \perp (ABCD)$ tại $A$ nên hình chiếu của $SC$ lên $(ABCD)$ là đường thẳng $AC$.
+        \item Góc giữa $SC$ và $(ABCD)$ là góc $\widehat{SCA}$.
+        Xét đáy $ABCD$ là hình vuông cạnh $a \implies$ đường chéo $AC = a\sqrt{2}$.
+        Tam giác $SAC$ vuông tại $A$ có $SA = a\sqrt{2}$ và $AC = a\sqrt{2}$.
+        Nhận thấy $SA = AC \implies$ Tam giác $SAC$ vuông cân tại $A$!
+        Suy ra $\widehat{SCA} = 45^\circ$.
+        Vậy góc giữa $SC$ và $(ABCD)$ bằng $45^\circ$.
+    \end{itemize}
+\end{enumerate}
+
+\noindent \textbf{d) Tổ chức thực hiện:}
+\begin{itemize}[leftmargin=0.6cm]
+    \item \textbf{Giao nhiệm vụ:} Giáo viên trình bày lý thuyết, chiếu khung 3 bước vàng và yêu cầu học sinh làm câu 1 và câu 2 vào vở.
+    \item \textbf{Thực hiện nhiệm vụ:} Học sinh vẽ hình, thực hiện tuần tự 3 bước để chỉ ra đỉnh góc và tam giác vuông chứa góc.
+    \item \textbf{Báo cáo, thảo luận:} 2 học sinh lên bảng trình bày 2 câu; cả lớp đối chiếu kết quả bấm máy tính tính góc.
+    \item \textbf{Kết luận, nhận định:} Giáo viên chuẩn hóa: Luôn kiểm tra tam giác vuông chứa góc có đặc biệt (vuông cân, nửa tam giác đều) hay không trước khi bấm máy tính.
+\end{itemize}
+
+\subsubsection*{3. Hoạt động 3: Luyện tập (10 phút)}
+
+\noindent \textbf{a) Mục tiêu:}
+Rèn luyện kỹ năng tính góc giữa đường thẳng và mặt phẳng trong khối chóp có đáy là tam giác đều.
+
+\noindent \textbf{b) Nội dung:}
+Thực hiện bài tập trong Phiếu học tập số 1:
+\begin{pedabox}{Bài tập luyện tập: Góc trong hình chóp tam giác}
+Cho hình chóp $S.ABC$ có đáy $ABC$ là tam giác đều cạnh $a$. Cạnh bên $SA \perp (ABC)$ và $SA = \dfrac{a\sqrt{3}}{2}$.
+Gọi $M$ là trung điểm của cạnh $BC$.
+\begin{enumerate}[leftmargin=0.6cm]
+    \item Tính góc giữa cạnh bên $SC$ và mặt phẳng đáy $(ABC)$.
+    \item Tính góc giữa đường thẳng $SM$ và mặt phẳng đáy $(ABC)$.
+\end{enumerate}
+\end{pedabox}
+
+\noindent \textbf{c) Sản phẩm:}
+Lời giải chi tiết:
+\begin{enumerate}[leftmargin=0.6cm]
+    \item \textbf{Góc giữa $SC$ và $(ABC)$:}
+    Hình chiếu của $SC$ lên $(ABC)$ là $AC$. Góc cần tìm là $\widehat{SCA}$.
+    Tam giác $SAC$ vuông tại $A$:
+    $$\tan \widehat{SCA} = \dfrac{SA}{AC} = \dfrac{\dfrac{a\sqrt{3}}{2}}{a} = \dfrac{\sqrt{3}}{2} \implies \widehat{SCA} \approx 40^\circ 54'.$$
+    \item \textbf{Góc giữa $SM$ và $(ABC)$:}
+    Vì $SA \perp (ABC)$ nên hình chiếu của $SM$ lên $(ABC)$ là $AM$. Góc cần tìm là $\widehat{SMA}$.
+    Xét tam giác đều $ABC$ cạnh $a$, đường trung tuyến $AM = \dfrac{a\sqrt{3}}{2}$.
+    Tam giác $SAM$ vuông tại $A$ có $SA = \dfrac{a\sqrt{3}}{2}$ và $AM = \dfrac{a\sqrt{3}}{2}$.
+    Nhận thấy $SA = AM \implies$ Tam giác $SAM$ vuông cân tại $A$.
+    Suy ra $\widehat{SMA} = 45^\circ$.
+    Vậy góc giữa $SM$ và $(ABC)$ bằng $45^\circ$.
+\end{enumerate}
+
+\noindent \textbf{d) Tổ chức thực hiện:}
+\begin{itemize}[leftmargin=0.6cm]
+    \item \textbf{Giao nhiệm vụ:} Học sinh làm bài độc lập trong 6 phút.
+    \item \textbf{Thực hiện nhiệm vụ:} Giáo viên theo dõi, hướng dẫn học sinh trung bình cách tính độ dài đường cao tam giác đều $AM = \dfrac{a\sqrt{3}}{2}$.
+    \item \textbf{Báo cáo, thảo luận:} 2 học sinh lên bảng giải; lớp nhận xét.
+    \item \textbf{Kết luận, nhận định:} Giáo viên củng cố công thức đường cao tam giác đều cạnh $a$.
+\end{itemize}
+
+\subsubsection*{4. Hoạt động 4: Vận dụng (5 phút)}
+
+\noindent \textbf{a) Mục tiêu:}
+Vận dụng góc giữa đường thẳng và mặt phẳng giải bài toán thực tiễn về đặt thang an toàn trong phòng cháy chữa cháy và xây dựng.
+
+\noindent \textbf{b) Nội dung:}
+\begin{pedabox}{Bài toán Thực tiễn: Tiêu chuẩn an toàn đặt thang}
+Theo khuyến nghị của Viện Quốc gia về An toàn và Sức khỏe Lao động (NIOSH), một chiếc thang di động dựa vào tường được xem là an toàn khi góc tạo bởi thân thang và mặt đất nằm ngang xấp xỉ $75^\circ$ (quy tắc tỉ lệ $4:1$, tức là khoảng cách từ chân tường đến chân thang bằng $\dfrac{1}{4}$ chiều cao thang tựa vào tường).
+Một người cần trèo lên sửa bóng đèn ở độ cao $3{,}8\text{ m}$. Hỏi người đó cần đặt chân thang cách chân tường một khoảng bằng bao nhiêu mét và chiếc thang cần có chiều dài tối thiểu là bao nhiêu mét để đạt góc nghiêng an toàn $75^\circ$?
+\end{pedabox}
+
+\noindent \textbf{c) Sản phẩm:}
+Mô hình hóa tam giác vuông $ABC$ tại $A$ (chân tường):
+Chiều cao $AC = 3{,}8\text{ m}$, góc nghiêng tại chân thang $B$ là $\widehat{ABC} = 75^\circ$.
+\begin{itemize}
+    \item Khoảng cách từ chân tường đến chân thang:
+    $$AB = \dfrac{AC}{\tan 75^\circ} = \dfrac{3{,}8}{\tan 75^\circ} \approx \dfrac{3{,}8}{3{,}732} \approx 1{,}02\text{ m}.$$
+    \item Chiều dài tối thiểu của thang:
+    $$BC = \dfrac{AC}{\sin 75^\circ} = \dfrac{3{,}8}{\sin 75^\circ} \approx \dfrac{3{,}8}{0{,}9659} \approx 3{,}93\text{ m}.$$
+\end{itemize}
+
+\noindent \textbf{d) Tổ chức thực hiện:}
+Giáo viên giao bài toán, gợi ý cách quy về tam giác vuông và dùng hàm $\tan, \sin$; học sinh tính toán trên MTCT và giáo viên dặn dò chuẩn bị cho Tiết 2.
+
+\vspace{10pt}
+
+\subsection*{\faClockO \ TIẾT 2 (TIẾT 69 THEO PPCT): RÈN LUYỆN KỸ NĂNG TÍNH GÓC VÀ ỨNG DỤNG ĐỒ HỌA AI}
+
+\subsubsection*{1. Hoạt động 1: Mở đầu (Khởi động) (5 phút)}
+
+\noindent \textbf{a) Mục tiêu:}
+Kích hoạt kiến thức cũ, tạo tâm thế chuyển từ tính góc với mặt phẳng đáy (đã biết sẵn đường cao) sang tính góc với mặt phẳng bên (cần kẻ thêm đường vuông góc).
+
+\noindent \textbf{b) Nội dung:}
+Giáo viên đặt vấn đề:
+\begin{pedabox}{Tình huống khởi động: So sánh vị trí hình chiếu}
+Cho hình chóp $S.ABC$ có $SA \perp (ABC)$.
+\begin{enumerate}[leftmargin=0.6cm]
+    \item Để tính góc giữa $SC$ và mặt đáy $(ABC)$, hình chiếu của đỉnh $S$ lên đáy là điểm nào? Điểm đó có sẵn chưa?
+    \item Để tính góc giữa đường thẳng $SC$ và mặt phẳng bên $(SAB)$, hình chiếu của điểm $C$ lên mặt phẳng $(SAB)$ là điểm nào? Điểm đó đã có sẵn hay cần phải chứng minh?
+\end{enumerate}
+\end{pedabox}
+
+\noindent \textbf{c) Sản phẩm:}
+Học sinh trả lời:
+\begin{itemize}
+    \item Góc với mặt đáy $(ABC)$: Hình chiếu của $S$ là $A$ (đã có sẵn do $SA \perp (ABC)$).
+    \item Góc với mặt phẳng bên $(SAB)$: Cần tìm một đường thẳng đi qua $C$ và vuông góc với mặt phẳng $(SAB)$. Ta phải dựa vào tính chất đáy (ví dụ $CA \perp AB$ hoặc kẻ $CH \perp AB$) để chứng minh $CH \perp (SAB)$.
+\end{itemize}
+
+\noindent \textbf{d) Tổ chức thực hiện:}
+Giáo viên dẫn dắt: Đây là dạng toán phân hóa đòi hỏi học sinh phải biết vận dụng kỹ năng chứng minh đường vuông góc mặt phẳng đã học ở Bài 23.
+
+\subsubsection*{2. Hoạt động 2: Hình thành kiến thức (25 phút)}
+
+\paragraph{2.1. Đơn vị kiến thức 1: Phương pháp tìm hình chiếu lên mặt phẳng bên (13 phút)}
+
+\noindent \textbf{a) Mục tiêu:}
+Nắm vững phương pháp tìm hình chiếu của một điểm lên mặt phẳng bên chứa đường cao hình chóp; xác định chính xác góc giữa đường thẳng và mặt phẳng bên.
+
+\noindent \textbf{b) Nội dung:}
+\begin{pedabox}{Phương pháp xác định góc giữa đường thẳng $d$ và mặt phẳng bên $(P)$}
+Mô hình chuẩn: Cho hình chóp có đường cao $SA \perp (ABC)$. Tìm góc giữa đường thẳng $SC$ và mặt phẳng $(SAB)$:
+\begin{itemize}[leftmargin=0.6cm]
+    \item \textbf{Bước 1: Tìm giao điểm:} $SC \cap (SAB) = S$ $\implies S$ là đỉnh của góc!
+    \item \textbf{Bước 2: Tìm hình chiếu của điểm $C$ lên $(SAB)$:}
+    Trong mặt phẳng đáy $(ABC)$, từ $C$ kẻ đường thẳng $CH \perp AB$ tại $H$.
+    Khi đó:
+    $$\begin{cases} CH \perp AB\text{ (cách dựng)} \\ CH \perp SA\text{ (vì } SA \perp (ABC)) \end{cases} \implies CH \perp (SAB)\text{ tại } H!$$
+    Vậy hình chiếu của điểm $C$ lên $(SAB)$ chính là điểm $H$.
+    \item \textbf{Bước 3: Xác định góc:}
+    Hình chiếu của $SC$ lên $(SAB)$ là đường thẳng $SH$.
+    Góc giữa $SC$ và $(SAB)$ là góc giữa $SC$ và $SH$, tức là góc $\widehat{CSH}$.
+    Tam giác $SCH$ luôn vuông tại $H$ (vì $CH \perp (SAB) \implies CH \perp SH$).
+\end{itemize}
+\end{pedabox}
+
+\begin{scaffoldbox}{Giàn giáo sư phạm: Khắc phục sai lầm về đỉnh góc vuông}
+\textbf{Lưu ý sống còn cho học sinh trung bình - yếu:}
+\begin{itemize}
+    \item Rất nhiều học sinh nhầm góc $\widehat{CSH}$ là góc vuông $\implies$ \textbf{SAI}!
+    \item Góc vuông \textbf{LUÔN NẰM TẠI ĐIỂM HÌNH CHIẾU $H$}! Tức là tam giác $SCH$ vuông tại $H$.
+    \item Do đó, cạnh $SC$ là \textbf{CẠNH HUYỀN}, cạnh $CH$ là \textbf{CẠNH ĐỐI} của góc $\widehat{CSH}$.
+    \item Ta dùng công thức:
+    $$\sin \widehat{CSH} = \dfrac{CH}{SC} \quad \text{hoặc} \quad \tan \widehat{CSH} = \dfrac{CH}{SH}$$
+\end{itemize}
+\end{scaffoldbox}
+
+\noindent \textbf{c) Sản phẩm:}
+Học sinh giải bài toán áp dụng:
+\begin{pedabox}{Bài toán áp dụng: Góc với mặt phẳng bên}
+Cho hình chóp $S.ABC$ có đáy $ABC$ là tam giác vuông tại $B$. Cạnh bên $SA \perp (ABC)$. Biết $AB = a, BC = a, SA = a\sqrt{2}$.
+Xác định và tính góc giữa đường thẳng $SC$ và mặt phẳng bên $(SAB)$.
+\end{pedabox}
+\textit{Lời giải chi tiết:}
+\begin{itemize}
+    \item Giao điểm của $SC$ và $(SAB)$ là điểm $S$.
+    \item Tìm hình chiếu của $C$ lên $(SAB)$:
+    Ta có: $BC \perp AB$ (do tam giác $ABC$ vuông tại $B$) và $BC \perp SA$ (do $SA \perp (ABC)$).
+    Vì $AB \cap SA = A$ trong $(SAB) \implies BC \perp (SAB)$ tại $B$!
+    Do đó hình chiếu của điểm $C$ lên $(SAB)$ chính là điểm $B$.
+    \item Suy ra hình chiếu của $SC$ lên $(SAB)$ là đường thẳng $SB$.
+    \item Góc giữa $SC$ và $(SAB)$ chính là góc giữa $SC$ và $SB$, tức là góc $\widehat{CSB}$.
+    \item Tính số đo góc:
+    Vì $BC \perp (SAB) \implies BC \perp SB$, tam giác $SBC$ vuông tại $B$.
+    Trong tam giác vuông $SAB$: $SB = \sqrt{SA^2 + AB^2} = \sqrt{(a\sqrt{2})^2 + a^2} = a\sqrt{3}$.
+    Trong tam giác vuông $SBC$:
+    $$\tan \widehat{CSB} = \dfrac{BC}{SB} = \dfrac{a}{a\sqrt{3}} = \dfrac{1}{\sqrt{3}} = \dfrac{\sqrt{3}}{3}.$$
+    Suy ra: $\widehat{CSB} = 30^\circ$.
+    Vậy góc giữa $SC$ và mặt phẳng $(SAB)$ bằng $30^\circ$.
+\end{itemize}
+
+\noindent \textbf{d) Tổ chức thực hiện:}
+\begin{itemize}[leftmargin=0.6cm]
+    \item \textbf{Giao nhiệm vụ:} Giáo viên trình bày phương pháp, phân tích góc vuông tại $H$ và giao bài toán áp dụng.
+    \item \textbf{Thực hiện nhiệm vụ:} Học sinh vẽ hình, nhận biết $BC \perp (SAB)$ đã có sẵn và giải vào vở.
+    \item \textbf{Báo cáo, thảo luận:} 1 học sinh lên bảng trình bày; cả lớp theo dõi từng bước lập luận.
+    \item \textbf{Kết luận, nhận định:} Giáo viên nhấn mạnh: Khi đáy có góc vuông tại $B$, ta tận dụng ngay cạnh $BC \perp (SAB)$ mà không cần kẻ thêm đường phụ.
+\end{itemize}
+
+\paragraph{2.2. Đơn vị kiến thức 2: Ứng dụng AI và Đồ họa 3D tính góc chiếu sáng (12 phút)}
+
+\noindent \textbf{a) Mục tiêu:}
+Hiểu được cách thức thuật toán Trí tuệ nhân tạo và công nghệ mô phỏng 3D ứng dụng góc giữa đường thẳng và mặt phẳng để xử lý ánh sáng và bóng đổ.
+
+\noindent \textbf{b) Nội dung:}
+\begin{aibox}{Tích hợp Năng lực AI (Theo QĐ 2422/QĐ-BGDĐT - Mã 11.C2.3)}
+\textbf{Nguyên lý AI và Đồ họa máy tính: Thuật toán dò tia (Ray Tracing) \& Bóng đổ chân thực}
+\begin{itemize}[leftmargin=0.6cm]
+    \item \textbf{Bản chất công nghệ:} Trong các trò chơi điện tử thế hệ mới (PS5, PC đồ họa cao) và kỹ xảo điện ảnh 3D (Pixar, Marvel), việc tạo ra bóng đổ chân thực của nhân vật đòi hỏi máy tính phải tính toán hàng triệu tia sáng mỗi giây.
+    \item \textbf{Toán học không gian trong AI:}
+    \begin{itemize}
+        \item Mỗi tia sáng phát ra từ nguồn sáng được biểu diễn bằng một đường thẳng $d$ có vectơ chỉ phương $\vec{L}$.
+        \item Bề mặt đất hoặc mặt tường được biểu diễn bằng một mặt phẳng $(P)$ có vectơ pháp tuyến $\vec{n}$.
+        \item Góc $\varphi$ giữa tia sáng và mặt phẳng quyết định trực tiếp:
+        \begin{enumerate}
+            \item \textbf{Chiều dài bóng đổ:} Độ dài bóng trên mặt đất tỉ lệ nghịch với $\tan \varphi$ ($L_{\text{bóng}} = \dfrac{h}{\tan \varphi}$). Khi mặt trời lên cao ($\varphi \to 90^\circ$), bóng ngắn lại; khi hoàng hôn ($\varphi \to 0^\circ$), bóng trải dài vô tận.
+            \item \textbf{Cường độ sáng (Định luật Lambert):} Độ sáng của bề mặt tỉ lệ thuận với $\sin \varphi$.
+        \end{enumerate}
+        \item Các mô hình Trí tuệ nhân tạo (Neural Rendering / NeRF) học cách dự đoán góc nghiêng $\varphi$ này để tái tạo hình ảnh 3D siêu thực từ các bức ảnh 2D thông thường.
+    \end{itemize}
+\end{itemize}
+\end{aibox}
+
+\noindent \textbf{c) Sản phẩm:}
+Học sinh hiểu và viết được công thức liên hệ giữa góc nghiêng ánh sáng $\varphi$, chiều cao vật thể $h$ và chiều dài bóng đổ $L = \dfrac{h}{\tan \varphi}$.
+
+\noindent \textbf{d) Tổ chức thực hiện:}
+Giáo viên trình chiếu video ngắn minh họa công nghệ Ray Tracing trong game 3D, liên hệ với bài toán góc giữa tia sáng và mặt phẳng; học sinh thảo luận hào hứng.
+
+\subsubsection*{3. Hoạt động 3: Luyện tập (10 phút)}
+
+\noindent \textbf{a) Mục tiêu:}
+Rèn luyện kỹ năng kẻ thêm đường phụ vuông góc để tính góc giữa đường thẳng và mặt phẳng bên trong hình chóp tam giác đều.
+
+\noindent \textbf{b) Nội dung:}
+Thực hiện bài tập trong Phiếu học tập số 2:
+\begin{pedabox}{Bài tập luyện tập: Kẻ đường phụ tính góc với mặt bên}
+Cho hình chóp $S.ABC$ có đáy $ABC$ là tam giác đều cạnh $a$. Cạnh bên $SA \perp (ABC)$ và $SA = a$.
+\begin{enumerate}[leftmargin=0.6cm]
+    \item Kẻ đường cao $CH$ của tam giác $ABC$ ($H \in AB$). Chứng minh rằng $CH \perp (SAB)$.
+    \item Tính số đo góc giữa đường thẳng $SC$ và mặt phẳng $(SAB)$.
+\end{enumerate}
+\end{pedabox}
+
+\noindent \textbf{c) Sản phẩm:}
+Lời giải chi tiết:
+\begin{enumerate}[leftmargin=0.6cm]
+    \item Ta có:
+    \begin{itemize}
+        \item $CH \perp AB$ (do tam giác đều $ABC$ có đường cao $CH$).
+        \item $SA \perp (ABC) \implies SA \perp CH$ (vì $CH \subset (ABC)$).
+        \item $AB$ và $SA$ cắt nhau tại $A$ trong mặt phẳng $(SAB)$.
+    \end{itemize}
+    Do đó: $CH \perp (SAB)$.
+    \item \textbf{Tính góc giữa $SC$ và $(SAB)$:}
+    \begin{itemize}
+        \item Giao điểm: $SC \cap (SAB) = S$.
+        \item Vì $CH \perp (SAB)$ tại $H$ nên hình chiếu của $SC$ lên $(SAB)$ là đường thẳng $SH$.
+        \item Góc giữa $SC$ và $(SAB)$ là góc $\widehat{CSH}$.
+        \item Tam giác $SCH$ vuông tại $H$.
+        Độ dài đường cao tam giác đều: $CH = \dfrac{a\sqrt{3}}{2}$.
+        Trong tam giác vuông $SAC$: $SC = \sqrt{SA^2 + AC^2} = \sqrt{a^2 + a^2} = a\sqrt{2}$.
+        Xét tam giác vuông $SCH$ tại $H$:
+        $$\sin \widehat{CSH} = \dfrac{CH}{SC} = \dfrac{\dfrac{a\sqrt{3}}{2}}{a\sqrt{2}} = \dfrac{\sqrt{3}}{2\sqrt{2}} = \dfrac{\sqrt{6}}{4} \approx 0{,}6124.$$
+        Bấm máy tính: $\widehat{CSH} \approx 37^\circ 45'$.
+        Vậy góc giữa $SC$ và $(SAB)$ xấp xỉ $37^\circ 45'$.
+    \end{itemize}
+\end{enumerate}
+
+\noindent \textbf{d) Tổ chức thực hiện:}
+\begin{itemize}[leftmargin=0.6cm]
+    \item \textbf{Giao nhiệm vụ:} Giáo viên giao bài tập, gợi ý học sinh kẻ đường cao $CH$ trong tam giác đều.
+    \item \textbf{Thực hiện nhiệm vụ:} Học sinh vẽ hình, kẻ đường $CH$ và chứng minh $CH \perp (SAB)$.
+    \item \textbf{Báo cáo, thảo luận:} 1 học sinh khá lên bảng giải; giáo viên hướng dẫn cả lớp cách tính qua tỉ số $\sin$.
+    \item \textbf{Kết luận, nhận định:} Giáo viên chuẩn hóa dạng toán kẻ đường phụ tìm hình chiếu.
+\end{itemize}
+
+\subsubsection*{4. Hoạt động 4: Vận dụng (5 phút)}
+
+\noindent \textbf{a) Mục tiêu:}
+Vận dụng góc giữa đường thẳng và mặt phẳng giải quyết bài toán kỹ thuật cứu hỏa trong đô thị.
+
+\noindent \textbf{b) Nội dung:}
+\begin{stembox}{Bài toán Kỹ thuật Cứu nạn Cứu hộ: Góc nâng vòi rồng xe chữa cháy}
+Một xe cứu hỏa đỗ trên mặt đường bằng phẳng cách chân một tòa nhà chung cư $15\text{ m}$. Cần phun nước dập tắt đám cháy tại ban công tầng 3 ở độ cao $12\text{ m}$ so với mặt đường. Biết đầu vòi phun nước đặt cách mặt đường $1{,}5\text{ m}$.
+Hỏi người lính cứu hỏa cần điều chỉnh góc nâng $\varphi$ của vòi rồng (góc giữa nòng vòi phun nước và mặt phẳng nằm ngang) bằng bao nhiêu độ để dòng nước hướng thẳng vào tâm đám cháy?
+\end{stembox}
+
+\noindent \textbf{c) Sản phẩm:}
+Mô hình hóa tam giác vuông tại ban công:
+\begin{itemize}
+    \item Độ cao chênh lệch từ đầu vòi phun đến tâm đám cháy: $h = 12 - 1{,}5 = 10{,}5\text{ m}$.
+    \item Khoảng cách nằm ngang từ xe đến chân tòa nhà: $d = 15\text{ m}$.
+    \item Góc nâng $\varphi$ thỏa mãn:
+    $$\tan \varphi = \dfrac{h}{d} = \dfrac{10{,}5}{15} = 0{,}7 \implies \varphi \approx 35^\circ.$$
+    Người lính cứu hỏa cần điều chỉnh góc nâng của vòi rồng bằng khoảng $35^\circ$.
+\end{itemize}
+
+\noindent \textbf{d) Tổ chức thực hiện:}
+Giáo viên giao bài toán, học sinh bấm máy tính trả lời nhanh; giáo viên tổng kết toàn bài 24 và dặn dò chuẩn bị cho Bài 25: Hai mặt phẳng vuông góc.
+
+\vspace{10pt}
+
+\section*{IV. PHỤ LỤC HỌC LIỆU BỔ TRỢ (BẮT BUỘC)}
+
+\subsection*{1. Phiếu học tập số 1 (Tiết 1): Phép chiếu vuông góc \& Góc với mặt phẳng đáy}
+
+\begin{pedabox}{PHIẾU HỌC TẬP SỐ 1: GÓC GIỮA ĐƯỜNG THẲNG VÀ MẶT ĐÁY}
+\textbf{Họ và tên học sinh:} \dotfill \ \textbf{Lớp:} \dotfill \ \textbf{Nhóm:} \dotfill
+
+\noindent \textbf{CẤP ĐỘ 1: NHẬN BIẾT (Điền khuyết \& Xác định góc)}
+\begin{enumerate}[leftmargin=0.6cm]
+    \item Điền vào chỗ trống:
+    Góc giữa đường thẳng $d$ và mặt phẳng $(P)$ có số đo từ $\dots\dots^\circ$ đến $\dots\dots^\circ$.
+    Nếu $d \perp (P)$ thì góc giữa $d$ và $(P)$ bằng $\dots\dots^\circ$.
+    Nếu $d \parallel (P)$ thì góc giữa $d$ và $(P)$ bằng $\dots\dots^\circ$.
+    \item Cho hình chóp $S.ABC$ có $SA \perp (ABC)$. Điền tên góc tương ứng với mặt phẳng $(ABC)$:
+    $$a) \ (SB, (ABC)) = \widehat{\dots\dots\dots}; \qquad b) \ (SC, (ABC)) = \widehat{\dots\dots\dots}$$
+\end{enumerate}
+
+\noindent \textbf{CẤP ĐỘ 2: THÔNG HIỂU (Tính góc cơ bản)}
+\begin{enumerate}[leftmargin=0.6cm]
+    \item Cho hình lập phương $ABCD.A'B'C'D'$ cạnh $a$.
+    $$a) \ \text{Tính góc giữa đường thẳng } A'C \text{ và mặt phẳng đáy } (ABCD).$$
+    $$b) \ \text{Tính góc giữa đường chéo } A'B \text{ và mặt phẳng đáy } (ABCD).$$
+\end{enumerate}
+
+\noindent \textbf{CẤP ĐỘ 3: VẬN DỤNG (Khai thác GeoGebra 3D)}
+\begin{enumerate}[leftmargin=0.6cm]
+    \item Dựng mô hình hình chóp tứ giác đều $S.ABCD$ trên GeoGebra 3D. Dùng công cụ đo góc của phần mềm để kiểm tra góc giữa cạnh bên $SA$ và mặt phẳng đáy $(ABCD)$.
+\end{enumerate}
+\end{pedabox}
+
+\subsection*{2. Phiếu học tập số 2 (Tiết 2): Góc giữa đường thẳng và mặt phẳng bên}
+
+\begin{pedabox}{PHIẾU HỌC TẬP SỐ 2: GÓC VỚI MẶT PHẲNG BÊN \& ỨNG DỤNG AI}
+\textbf{Họ và tên học sinh:} \dotfill \ \textbf{Lớp:} \dotfill \ \textbf{Nhóm:} \dotfill
+
+\noindent \textbf{CẤP ĐỘ 1: NHẬN BIẾT \& THÔNG HIỂU (Xác định hình chiếu)}
+\begin{enumerate}[leftmargin=0.6cm]
+    \item Cho hình chóp $S.ABCD$ có đáy $ABCD$ là hình vuông, $SA \perp (ABCD)$.
+    $$a) \ \text{Hình chiếu của điểm } C \text{ lên mặt phẳng } (SAB) \text{ là điểm nào? Vì sao?}$$
+    $$b) \ \text{Xác định góc giữa đường thẳng } SC \text{ và mặt phẳng } (SAD).$$
+\end{enumerate}
+
+\noindent \textbf{CẤP ĐỘ 2: VẬN DỤNG (Tính số đo góc)}
+\begin{enumerate}[leftmargin=0.6cm]
+    \item Cho hình chóp $S.ABCD$ có đáy $ABCD$ là hình vuông cạnh $a$, $SA \perp (ABCD)$ và $SA = a$.
+    Tính góc giữa đường thẳng $SD$ và mặt phẳng $(SBC)$.
+\end{enumerate}
+
+\noindent \textbf{CẤP ĐỘ 3: VẬN DỤNG CAO (Ứng dụng AI đồ họa)}
+\begin{enumerate}[leftmargin=0.6cm]
+    \item Một nhà phát triển game thiết kế một cột cờ cao $5\text{ m}$. Thuật toán AI cần tính độ dài bóng đổ của cột cờ trên mặt đất khi góc nghiêng của tia sáng mặt trời so với mặt đất lần lượt là $30^\circ, 45^\circ, 60^\circ$. Em hãy tính toán các độ dài bóng đổ này để kiểm tra thuật toán của AI.
+\end{enumerate}
+\end{pedabox}
+
+\subsection*{3. Bảng Rubric đánh giá năng lực học sinh theo 4 mức độ}
+
+\begin{center}
+\begin{tabularx}{\textwidth}{|p{2.8cm}|X|X|X|X|}
+    \hline
+    \textbf{Tiêu chí} & \textbf{Mức 1: Chưa đạt} & \textbf{Mức 2: Đạt} & \textbf{Mức 3: Khá} & \textbf{Mức 4: Tốt} \\ \hline
+    \textbf{1. Xác định góc đường thẳng và mặt phẳng} & Nhầm lẫn đỉnh của góc; không tìm được hình chiếu vuông góc. & Xác định đúng góc trong trường hợp cơ bản với mặt phẳng đáy. & Thực hiện thuần thục 3 bước vàng; xác định đúng góc với mặt phẳng bên. & Nhận diện cực nhanh góc trong các khối đa diện phức tạp (lăng trụ xiên, chóp cụt). \\ \hline
+    \textbf{2. Kỹ năng tính toán lượng giác} & Nhầm lẫn các công thức $\sin, \cos, \tan$; bấm máy tính sai đơn vị đo độ. & Tính đúng các tỉ số lượng giác trong tam giác vuông đơn giản. & Tính chính xác độ dài cạnh đáy và cạnh bên; suy ra số đo góc chuẩn xác. & Biến đổi linh hoạt; kết hợp định lý Pytago và hệ thức lượng giải bài toán chứa tham số $a$. \\ \hline
+    \textbf{3. Năng lực số \& GeoGebra 3D (Mã 3.2NC1a)} & Chưa biết mở phần mềm GeoGebra 3D. & Quan sát và xoay được mô hình bóng đổ 3D do giáo viên chuẩn bị. & Tự thao tác thanh trượt nguồn sáng để quan sát sự thay đổi của bóng chiếu. & Tự dựng được mô hình đường thẳng cắt mặt phẳng và xuất tệp mô phỏng số hoàn chỉnh. \\ \hline
+    \textbf{4. Hiểu biết ứng dụng AI (Mã 11.C2.3)} & Chưa liên hệ được góc toán học với ánh sáng trong game/phim 3D. & Nêu được vai trò của góc nghiêng trong việc tính độ dài bóng đổ. & Giải thích được nguyên lý thuật toán Ray Tracing sử dụng góc đường thẳng và mặt phẳng. & Phân tích sâu sắc cách AI tái tạo đồ họa chân thực; giải quyết xuất sắc bài toán thực tế. \\ \hline
+\end{tabularx}
+\end{center}
+
+\end{document}
