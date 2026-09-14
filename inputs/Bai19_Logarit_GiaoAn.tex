@@ -1,0 +1,686 @@
+\documentclass[12pt, a4paper]{article}
+% --- 1. Cấu hình Tiếng Việt và Font chữ chuẩn ---
+\usepackage[utf8]{inputenc}
+\usepackage[T5]{fontenc}
+\usepackage[vietnamese]{babel}
+\usepackage{mathptmx} % Font Times New Roman đồng bộ cả chữ và công thức toán, không gây xung đột gói
+
+\makeatletter
+\renewcommand{\normalsize}{\@setfontsize\normalsize{13pt}{16pt}}
+\makeatother
+\normalsize
+
+% --- 2. Gói Toán học & Ký hiệu bổ trợ ---
+\usepackage{amsmath, amssymb, amsfonts, mathrsfs, amsthm}
+\usepackage{graphicx}
+\usepackage{fontawesome}
+\usepackage{booktabs, tabularx, array, multirow}
+\usepackage{enumitem}
+
+% --- 3. Đồ họa TikZ, Bảng biến thiên & Hình không gian ---
+\usepackage{tikz}
+\usetikzlibrary{calc, intersections, angles, quotes, patterns, arrows.meta, 3d}
+\usepackage{pgfplots}
+\pgfplotsset{compat=1.18}
+\usepackage{tkz-euclide}
+\usepackage{tkz-tab}
+
+\renewcommand{\vec}[1]{\overrightarrow{#1}}
+
+% --- 4. Hộp sư phạm (Tcolorbox) ---
+\usepackage[many]{tcolorbox}
+\tcbuselibrary{skins, breakable}
+
+% --- 5. Căn lề chuẩn văn bản giáo án ---
+\usepackage{geometry}
+\geometry{
+    a4paper,
+    left=25mm,
+    right=15mm,
+    top=20mm,
+    bottom=20mm
+}
+
+% --- 6. Header / Footer chuẩn hóa ---
+\usepackage{fancyhdr}
+\usepackage{lastpage}
+\pagestyle{fancy}
+\fancyhf{}
+
+\fancyhead[L]{\small \textit{Kế hoạch bài dạy Toán 11}}
+\fancyhead[R]{\textbf{Trang \thepage/\pageref{LastPage}}}
+\fancyfoot[L]{\small \textit{Tổ Toán - Tin}}
+\fancyfoot[R]{\small \textit{Trường THCS\&THPT Hồng Vân}}
+\renewcommand{\headrulewidth}{0.4pt}
+\renewcommand{\footrulewidth}{0.4pt}
+
+% --- 7. Giãn dòng & Giãn đoạn theo chuẩn Nghị định 30/2020/NĐ-CP ---
+\usepackage{setspace}
+\setstretch{1.15}
+\setlength{\parindent}{1.0cm}
+\setlength{\parskip}{5pt}
+
+% Định nghĩa hộp sư phạm chuyên dụng
+\newtcolorbox{pedabox}[2][]{
+    enhanced,
+    breakable,
+    colback=blue!3!white,
+    colframe=blue!65!black,
+    fonttitle=\bfseries\small,
+    title={#2},
+    arc=2mm,
+    boxrule=0.6pt,
+    left=3mm, right=3mm, top=2mm, bottom=2mm,
+    #1
+}
+
+\newtcolorbox{aibox}[2][]{
+    enhanced,
+    breakable,
+    colback=teal!4!white,
+    colframe=teal!70!black,
+    fonttitle=\bfseries\small,
+    title={#2},
+    arc=2mm,
+    boxrule=0.6pt,
+    left=3mm, right=3mm, top=2mm, bottom=2mm,
+    #1
+}
+
+\newtcolorbox{scaffoldbox}[2][]{
+    enhanced,
+    breakable,
+    colback=orange!4!white,
+    colframe=orange!80!black,
+    fonttitle=\bfseries\small,
+    title={#2},
+    arc=2mm,
+    boxrule=0.6pt,
+    left=3mm, right=3mm, top=2mm, bottom=2mm,
+    #1
+}
+
+\newtcolorbox{stembox}[2][]{
+    enhanced,
+    breakable,
+    colback=purple!4!white,
+    colframe=purple!75!black,
+    fonttitle=\bfseries\small,
+    title={#2},
+    arc=2mm,
+    boxrule=0.6pt,
+    left=3mm, right=3mm, top=2mm, bottom=2mm,
+    #1
+}
+
+\begin{document}
+
+\begin{center}
+    {\fontsize{14pt}{17pt}\selectfont \textbf{KẾ HOẠCH BÀI DẠY MÔN TOÁN LỚP 11}}\\[6pt]
+    {\fontsize{16pt}{19pt}\selectfont \textbf{BÀI 19. LÔGARIT}}\\[4pt]
+    {\fontsize{12pt}{15pt}\selectfont \textbf{Môn học: Toán 11} \ \textbar \ \textbf{Thời lượng: 2 tiết (Tiết 57, 58 theo PPCT | Tuần 19)}}
+\end{center}
+
+\vspace{5pt}
+
+\section*{I. MỤC TIÊU}
+
+\subsection*{1. Kiến thức, Năng lực}
+
+\begin{itemize}[leftmargin=1.2cm]
+    \item \textbf{Yêu cầu cần đạt (Nguyên văn CT GDPT 2018 Toán 11):}
+    \begin{itemize}[leftmargin=0.6cm]
+        \item Nhận biết được khái niệm lôgarit cơ số $a$ ($a > 0, a \neq 1$) của một số thực dương.
+        \item Giải thích được các tính chất của phép tính lôgarit nhờ sử dụng định nghĩa hoặc các tính chất của phép tính luỹ thừa đã biết trước đó.
+        \item Sử dụng được tính chất của phép tính lôgarit trong tính toán các biểu thức số và rút gọn các biểu thức chứa biến.
+        \item Tính được giá trị (đúng hoặc gần đúng) của lôgarit bằng cách sử dụng máy tính cầm tay.
+        \item Giải quyết được một số vấn đề có liên quan đến môn học khác hoặc có liên quan đến thực tiễn gắn với phép tính lôgarit (ví dụ: độ pH trong Hoá học, thang đo Richter trong Địa chất, mức cường độ âm trong Vật lí).
+    \end{itemize}
+
+    \item \textbf{Năng lực Toán học đặc thù:}
+    \begin{itemize}[leftmargin=0.6cm]
+        \item \textit{Năng lực tư duy và lập luận toán học:} Nhận thức rõ lôgarit là phép toán ngược của phép nâng lên lũy thừa; suy luận logic từ tính chất của hàm mũ để thiết lập các quy tắc tính lôgarit của một tích, một thương, một lũy thừa và công thức đổi cơ số; phân tích tính chặt chẽ của điều kiện tồn tại cơ số và biểu thức dưới dấu lôgarit.
+        \item \textit{Năng lực mô hình hóa toán học:} Thiết lập mô hình tính độ pH trong Hóa học qua công thức $\text{pH} = -\log[\text{H}^+]$ và các mô hình đo lường phi tuyến trong khoa học thực nghiệm.
+        \item \textit{Năng lực giải quyết vấn đề toán học:} Phân tích cấu trúc biểu thức lôgarit nhiều tầng, lựa chọn cơ số trung gian thích hợp trong công thức đổi cơ số để biểu diễn một lôgarit phức tạp qua các lôgarit đã cho trước; cô lập và rút gọn các đại lượng chứa biến.
+        \item \textit{Năng lực giao tiếp toán học:} Sử dụng chuẩn xác các ký hiệu toán học $\log_a b$, $\lg b$, $\log b$, $\ln b$; diễn đạt gãy gọn các quy tắc biến đổi: ``Lôgarit của một tích bằng tổng các lôgarit'', ``Lôgarit của một thương bằng hiệu các lôgarit''.
+        \item \textit{Năng lực sử dụng công cụ, phương tiện học toán:} Sử dụng thành thạo và chuẩn xác các phím chức năng trên máy tính cầm tay (MTCT) Casio fx-580VN X: phím lôgarit cơ số tùy ý \fbox{$\log_\blacksquare\blacksquare$}, phím lôgarit thập phân \fbox{$\log$}, phím lôgarit tự nhiên \fbox{$\ln$}.
+    \end{itemize}
+
+    \item \textbf{Năng lực số (Theo Thông tư 02/2025/TT-BGDĐT):}
+    \begin{itemize}[leftmargin=0.6cm]
+        \item \textit{Mã 3.1NC1a (Xử lý dữ liệu và tính toán bằng phần mềm chuyên dụng):} Học sinh thao tác thành thạo hàm \texttt{LOG} và hàm \texttt{LN} trên máy tính cầm tay Casio fx-580VN X và bảng tính điện tử Microsoft Excel/Google Sheets để tính toán độ pH dung dịch, quy đổi nồng độ mol ion $\text{H}^+$ và phân tích bảng số liệu thực nghiệm.
+    \end{itemize}
+
+    \item \textbf{Năng lực AI (Theo Quyết định 2422/QĐ-BGDĐT):}
+    \begin{itemize}[leftmargin=0.6cm]
+        \item \textit{Mã 11.C4.1 (Ứng dụng toán học trong phân tích dữ liệu và Học máy AI):} Học sinh hiểu và phân tích được kỹ thuật Log-Transform (chuyển đổi thang đo lôgarit) trong tiền xử lý dữ liệu của các mô hình AI để co giãn các đặc trưng có độ lệch chuẩn quá lớn (chống phân phối lệch phải Skewed Data) và vai trò của hàm mất mát Negative Log-Likelihood (Cross-Entropy Loss) trong huấn luyện mô hình mạng nơ-ron phân loại ảnh, văn bản.
+    \end{itemize}
+
+    \item \textbf{Năng lực chung:}
+    \begin{itemize}[leftmargin=0.6cm]
+        \item \textit{Tự chủ và tự học:} Chủ động hoàn thành các phiếu học tập phân tầng; tự giác phát hiện và sửa chữa sai lầm về điều kiện xác định của biểu thức lôgarit.
+        \item \textit{Giao tiếp và hợp tác:} Tích cực phối hợp cặp đôi và nhóm để tìm ra lời giải tối ưu cho các bài toán đổi cơ số.
+    \end{itemize}
+\end{itemize}
+
+\subsection*{2. Phẩm chất}
+
+\begin{itemize}[leftmargin=1.2cm]
+    \item \textbf{Chăm chỉ:} Kiên trì thực hiện các phép biến đổi đại số phức tạp, tỉ mỉ đối chiếu từng điều kiện của cơ số và số lấy lôgarit.
+    \item \textbf{Trung thực:} Tự lực biến đổi bài toán, không chép bài hoặc lạm dụng máy tính cầm tay thay thế tư duy suy luận tự thân.
+    \item \textbf{Trách nhiệm:} Tích cực đóng góp ý kiến trong thảo luận nhóm, cẩn thận kiểm tra kết quả tính toán trước khi báo cáo.
+\end{itemize}
+
+\vspace{5pt}
+
+\section*{II. THIẾT BỊ DẠY HỌC VÀ HỌC LIỆU}
+
+\begin{itemize}[leftmargin=1.2cm]
+    \item \textbf{Giáo viên:}
+    \begin{itemize}[leftmargin=0.6cm]
+        \item Kế hoạch bài dạy chi tiết 2 tiết theo chuẩn Công văn 5512/BGDĐT-GDTrH.
+        \item Hệ thống Slide bài giảng tương tác đa phương tiện, tích hợp phần mềm giả lập MTCT Casio fx-580VN X trên màn hình máy chiếu.
+        \item Hệ thống Phiếu học tập phân hóa bậc thang: Phiếu học tập số 1 (Tiết 1) và Phiếu học tập số 2 (Tiết 2).
+        \item Bảng Rubric đánh giá năng lực học sinh theo chuẩn Thông tư 02/2025 và QĐ 2422.
+    \end{itemize}
+    \item \textbf{Học sinh:}
+    \begin{itemize}[leftmargin=0.6cm]
+        \item Sách giáo khoa Toán 11, vở ghi chép, giấy nháp.
+        \item Máy tính cầm tay Casio fx-580VN X (hoặc tương đương).
+        \item Ôn tập lại các tính chất của lũy thừa với số mũ thực đã học ở Bài 18.
+    \end{itemize}
+\end{itemize}
+
+\vspace{5pt}
+
+\section*{III. TIẾN TRÌNH DẠY HỌC (2 TIẾT | TIẾT 57, 58 THEO PPCT)}
+
+\subsection*{\faClockO \ TIẾT 1 (TIẾT 57 THEO PPCT): KHÁI NIỆM LÔGARIT VÀ CÁC TÍNH CHẤT CƠ BẢN}
+
+\subsubsection*{1. Hoạt động 1: Mở đầu (Khởi động) (5 phút)}
+
+\noindent \textbf{a) Mục tiêu:}
+Tạo tình huống có vấn đề về việc tìm số mũ trong phương trình lũy thừa, từ đó dẫn dắt nhu cầu hình thành khái niệm lôgarit như một phép toán ngược của phép nâng lên lũy thừa.
+
+\noindent \textbf{b) Nội dung:}
+Giáo viên trình chiếu nhiệm vụ khởi động:
+\begin{pedabox}{Tình huống khởi động: Đi tìm số mũ ẩn giấu}
+Tìm số thực $x$ thỏa mãn mỗi phương trình sau:
+\begin{enumerate}[leftmargin=0.6cm]
+    \item $2^x = 8 \implies x = ?$
+    \item $3^x = \dfrac{1}{9} \implies x = ?$
+    \item $2^x = 5 \implies x = ?$
+\end{enumerate}
+\textit{Câu hỏi gợi mở:} Với phương trình thứ ba $2^x = 5$, ta biết $2^2 = 4 < 5 < 8 = 2^3$, do đó tồn tại một số thực $x \in (2; 3)$ thỏa mãn $2^x = 5$. Làm thế nào để biểu diễn chính xác số $x$ đó dưới dạng ký hiệu toán học?
+\end{pedabox}
+
+\noindent \textbf{c) Sản phẩm:}
+Câu trả lời của học sinh:
+\begin{itemize}
+    \item $2^x = 8 = 2^3 \implies x = 3$.
+    \item $3^x = \dfrac{1}{9} = 3^{-2} \implies x = -2$.
+    \item Với $2^x = 5$: Học sinh nhận thấy không thể biểu diễn $5$ thành lũy thừa cơ số $2$ với số mũ nguyên hay hữu tỉ quen thuộc. Xuất hiện nhu cầu đặt tên cho phép toán tìm số mũ: Phép lấy lôgarit! Ký hiệu $x = \log_2 5$.
+\end{itemize}
+
+\noindent \textbf{d) Tổ chức thực hiện:}
+\begin{itemize}[leftmargin=0.6cm]
+    \item \textbf{Giao nhiệm vụ:} Giáo viên giao tình huống, yêu cầu học sinh suy nghĩ cá nhân trong 2 phút rồi thảo luận cặp đôi.
+    \item \textbf{Thực hiện nhiệm vụ:} Học sinh tính nhẩm nhanh 2 câu đầu, lúng túng ở câu thứ 3 và thảo luận sôi nổi về cách biểu diễn nghiệm.
+    \item \textbf{Báo cáo, thảo luận:} Giáo viên gọi 1 học sinh trả lời miệng; các học sinh khác nhận xét.
+    \item \textbf{Kết luận, nhận định:} Giáo viên dẫn dắt: Giống như phép khai căn là phép toán ngược để tìm cơ số (ví dụ $x^2 = 5 \implies x = \sqrt{5}$), phép lấy lôgarit chính là phép toán ngược để tìm số mũ trong biểu thức lũy thừa!
+\end{itemize}
+
+\subsubsection*{2. Hoạt động 2: Hình thành kiến thức (25 phút)}
+
+\paragraph{2.1. Đơn vị kiến thức 1: Khái niệm Lôgarit (10 phút)}
+
+\noindent \textbf{a) Mục tiêu:}
+Nhận biết chính xác định nghĩa lôgarit cơ số $a$ của một số thực dương; hiểu rõ điều kiện của cơ số và số lấy lôgarit.
+
+\noindent \textbf{b) Nội dung:}
+Giáo viên trình bày định nghĩa chuẩn hóa:
+\begin{pedabox}{Định nghĩa Lôgarit}
+Cho hai số thực dương $a, b$ với $a \neq 1$.
+Số $\alpha$ thỏa mãn đẳng thức $a^\alpha = b$ được gọi là \textbf{lôgarit cơ số $a$ của $b$}, ký hiệu là $\log_a b$.
+$$\alpha = \log_a b \iff a^\alpha = b$$
+\end{pedabox}
+
+\begin{scaffoldbox}{Giàn giáo sư phạm: Khắc sâu điều kiện tồn tại của Lôgarit (Scaffolding)}
+\textbf{Lưu ý cốt tử cho học sinh trung bình - yếu:}
+\begin{itemize}
+    \item Biểu thức $\log_a b$ CHỈ XÁC ĐỊNH khi đồng thời thỏa mãn 2 điều kiện:
+    \begin{enumerate}[leftmargin=0.6cm]
+        \item \textbf{Cơ số $a$:} Bắt buộc phải \textbf{DƯƠNG và KHÁC 1} ($a > 0, a \neq 1$).
+        \item \textbf{Biểu thức dưới dấu lôgarit $b$:} Bắt buộc phải \textbf{DƯƠNG} ($b > 0$).
+    \end{enumerate}
+    \item \textbf{Khẩu quyết ghi nhớ:} \textit{``Cơ số dương khác 1; biểu thức dưới dấu luôn luôn dương''}.
+    \item \textbf{Cảnh báo sai lầm:} Tuyệt đối \textbf{KHÔNG CÓ} lôgarit của số âm hoặc số $0$ (ví dụ: $\log_2 (-4)$, $\log_3 0$ là hoàn toàn vô nghĩa!).
+\end{itemize}
+\end{scaffoldbox}
+
+\noindent \textbf{c) Sản phẩm:}
+Học sinh hoàn thành bảng tính giá trị dựa theo định nghĩa:
+\begin{center}
+\begin{tabular}{|c|c|c|}
+    \hline
+    \textbf{Đẳng thức lũy thừa} & \textbf{Đẳng thức lôgarit tương đương} & \textbf{Giá trị lôgarit} \\ \hline
+    $2^4 = 16$ & $\log_2 16 = 4$ & $\log_2 16 = 4$ \\ \hline
+    $3^{-3} = \dfrac{1}{27}$ & $\log_3 \left(\dfrac{1}{27}\right) = -3$ & $\log_3 \left(\dfrac{1}{27}\right) = -3$ \\ \hline
+    $5^0 = 1$ & $\log_5 1 = 0$ & $\log_5 1 = 0$ \\ \hline
+    $10^3 = 1000$ & $\log_{10} 1000 = 3$ & $\log_{10} 1000 = 3$ \\ \hline
+    $(\sqrt{2})^2 = 2$ & $\log_{\sqrt{2}} 2 = 2$ & $\log_{\sqrt{2}} 2 = 2$ \\ \hline
+\end{tabular}
+\end{center}
+
+\noindent \textbf{d) Tổ chức thực hiện:}
+\begin{itemize}[leftmargin=0.6cm]
+    \item \textbf{Giao nhiệm vụ:} Giáo viên yêu cầu học sinh điền các ô trống trong bảng trên vào vở.
+    \item \textbf{Thực hiện nhiệm vụ:} Học sinh làm việc cá nhân trong 3 phút; giáo viên quan sát hỗ trợ học sinh yếu chuyển đổi qua lại giữa cơ số và số mũ.
+    \item \textbf{Báo cáo, thảo luận:} 2 học sinh đọc kết quả; cả lớp nhận xét đối chiếu.
+    \item \textbf{Kết luận, nhận định:} Giáo viên chuẩn hóa định nghĩa và chuyển sang các hệ quả trực tiếp.
+\end{itemize}
+
+\paragraph{2.2. Đơn vị kiến thức 2: Các tính chất cơ bản của Lôgarit (8 phút)}
+
+\noindent \textbf{a) Mục tiêu:}
+Giải thích và vận dụng được các tính chất cơ bản trực tiếp suy ra từ định nghĩa.
+
+\noindent \textbf{b) Nội dung:}
+\begin{pedabox}{Các Tính chất cơ bản của Lôgarit}
+Với $a > 0, a \neq 1$ và $b > 0$, ta luôn có:
+\begin{enumerate}[leftmargin=0.6cm]
+    \item $\log_a 1 = 0$ (vì $a^0 = 1$).
+    \item $\log_a a = 1$ (vì $a^1 = a$).
+    \item $\log_a (a^\alpha) = \alpha$ với mọi $\alpha \in \mathbb{R}$ (vì $a^\alpha = a^\alpha$).
+    \item $a^{\log_a b} = b$ (theo đúng định nghĩa của $\log_a b$).
+\end{enumerate}
+\end{pedabox}
+
+\noindent \textbf{c) Sản phẩm:}
+Học sinh áp dụng tính nhanh các ví dụ:
+\begin{itemize}
+    \item $\log_7 1 = 0$; $\log_{\frac{1}{3}} \left(\dfrac{1}{3}\right) = 1$.
+    \item $\log_2 (2^{\sqrt{3}}) = \sqrt{3}$; $\log_3 81 = \log_3 (3^4) = 4$.
+    \item $3^{\log_3 7} = 7$; $2^{\log_2 15} = 15$; $4^{\log_2 3} = (2^2)^{\log_2 3} = (2^{\log_2 3})^2 = 3^2 = 9$.
+\end{itemize}
+
+\noindent \textbf{d) Tổ chức thực hiện:}
+\begin{itemize}[leftmargin=0.6cm]
+    \item \textbf{Giao nhiệm vụ:} Giáo viên trình bày các tính chất, yêu cầu học sinh tự chứng minh tính chất 1 và 2. Sau đó thực hiện tính nhanh các biểu thức trên.
+    \item \textbf{Thực hiện nhiệm vụ:} Học sinh làm bài vào vở; nhận diện biến đổi đưa cơ số $4 \to 2^2$ ở câu cuối.
+    \item \textbf{Báo cáo, thảo luận:} Gọi 3 học sinh lên bảng giải; giáo viên chữa bài chi tiết.
+    \item \textbf{Kết luận, nhận định:} Nhấn mạnh công thức $a^{\log_a b} = b$ là công thức “triệt tiêu” cơ số rất thường gặp trong các đề kiểm tra.
+\end{itemize}
+
+\paragraph{2.3. Đơn vị kiến thức 3: Lôgarit thập phân và Lôgarit tự nhiên (7 phút)}
+
+\noindent \textbf{a) Mục tiêu:}
+Nhận biết khái niệm, ký hiệu của lôgarit thập phân và lôgarit tự nhiên; thao tác thành thạo MTCT Casio fx-580VN X (Mã 3.1NC1a).
+
+\noindent \textbf{b) Nội dung:}
+\begin{pedabox}{Lôgarit thập phân và Lôgarit tự nhiên}
+\begin{itemize}[leftmargin=0.6cm]
+    \item \textbf{Lôgarit thập phân:} Là lôgarit cơ số $10$. Với $b > 0$, $\log_{10} b$ được viết tắt là $\log b$ hoặc $\lg b$.
+    \item \textbf{Lôgarit tự nhiên:} Là lôgarit cơ số $e$ ($e \approx 2{,}71828\dots$). Với $b > 0$, $\log_e b$ được viết tắt là $\ln b$ (đọc là \textit{lôgarit nê-pe} hoặc \textit{len của $b$}).
+\end{itemize}
+\end{pedabox}
+
+\begin{aibox}{Tích hợp Năng lực số (Mã 3.1NC1a): Thao tác bấm MTCT Casio fx-580VN X}
+\begin{itemize}[leftmargin=0.6cm]
+    \item \textbf{Phím $\log_\blacksquare\blacksquare$ (dưới màn hình bên phải):} Dùng để tính lôgarit với cơ số tùy ý.
+    \textit{Ví dụ:} Tính $\log_2 5$ $\to$ Bấm \fbox{$\log_\blacksquare\blacksquare$} $\to$ nhập \fbox{2} $\to$ phím \fbox{$\blacktriangleright$} $\to$ nhập \fbox{5} $\to$ \fbox{$=$}. Màn hình hiển thị: $2{,}321928095$.
+    \item \textbf{Phím $\log$ (ngay cạnh phím phân số):} Mặc định là lôgarit thập phân cơ số $10$.
+    \textit{Ví dụ:} Tính $\log 1000$ $\to$ Bấm \fbox{$\log$} $\to$ nhập \fbox{1000} $\to$ \fbox{$=$}. Kết quả hiển thị: $3$.
+    \item \textbf{Phím $\ln$ (dưới phím $\log_\blacksquare\blacksquare$):} Dùng để tính lôgarit tự nhiên cơ số $e$.
+    \textit{Ví dụ:} Tính $\ln e^3$ $\to$ Bấm \fbox{$\ln$} $\to$ \fbox{$\text{SHIFT}$} $\to$ \fbox{$\ln$} (phím $e^\blacksquare$) $\to$ \fbox{3} $\to$ \fbox{$=$}. Kết quả hiển thị: $3$.
+    \item \textbf{Xử lý ngoại lệ:} Bấm thử $\log(-2)$ hoặc $\ln 0$ $\to$ Máy báo \texttt{Math ERROR} do vi phạm điều kiện $b > 0$.
+\end{itemize}
+\end{aibox}
+
+\noindent \textbf{c) Sản phẩm:}
+Học sinh hoàn thành bài thực hành bấm máy và ghi kết quả làm tròn đến chữ số thập phân thứ tư:
+\begin{itemize}
+    \item $\log_3 11 \approx 2{,}1827$; $\log 0{,}02 \approx -1{,}6990$; $\ln 5 \approx 1{,}6094$.
+\end{itemize}
+
+\noindent \textbf{d) Tổ chức thực hiện:}
+\begin{itemize}[leftmargin=0.6cm]
+    \item \textbf{Giao nhiệm vụ:} Giáo viên trình chiếu phím bấm máy tính trên phần mềm giả lập, yêu cầu cả lớp thực hành trên MTCT của mình.
+    \item \textbf{Thực hiện nhiệm vụ:} Học sinh cầm máy tính thao tác, hỗ trợ bạn ngồi bên cạnh.
+    \item \textbf{Báo cáo, thảo luận:} Giáo viên kiểm tra ngẫu nhiên kết quả bấm máy của học sinh.
+    \item \textbf{Kết luận, nhận định:} Đánh giá kỹ năng thao tác công cụ số của học sinh đạt chuẩn Mã 3.1NC1a.
+\end{itemize}
+
+\subsubsection*{3. Hoạt động 3: Luyện tập (10 phút)}
+
+\noindent \textbf{a) Mục tiêu:}
+Rèn luyện kỹ năng tìm điều kiện xác định và tính giá trị của biểu thức lôgarit cơ bản.
+
+\noindent \textbf{b) Nội dung:}
+Thực hiện các bài tập trong Phiếu học tập số 1:
+\begin{enumerate}[leftmargin=0.6cm]
+    \item \textbf{Bài 1:} Tìm điều kiện của $x$ để mỗi biểu thức sau có nghĩa:
+    $$a) \ A = \log_3 (2x - 6); \qquad b) \ B = \log_{x - 1} 5; \qquad c) \ C = \log_2 (4 - x^2)$$
+    \item \textbf{Bài 2:} Tính giá trị của biểu thức không dùng MTCT:
+    $$M = \log_2 \dfrac{1}{8} + \log_{\frac{1}{3}} 9 - \ln e^2 + 5^{\log_5 3}$$
+\end{enumerate}
+
+\noindent \textbf{c) Sản phẩm:}
+Lời giải chi tiết:
+\begin{itemize}
+    \item \textbf{Bài 1:}
+    \begin{itemize}
+        \item $a)$ $A$ có nghĩa $\iff 2x - 6 > 0 \iff x > 3$.
+        \item $b)$ $B$ có nghĩa $\iff \begin{cases} x - 1 > 0 \\ x - 1 \neq 1 \end{cases} \iff \begin{cases} x > 1 \\ x \neq 2 \end{cases}$.
+        \item $c)$ $C$ có nghĩa $\iff 4 - x^2 > 0 \iff x^2 < 4 \iff -2 < x < 2$.
+    \end{itemize}
+    \item \textbf{Bài 2:}
+    \begin{align*}
+        \log_2 \dfrac{1}{8} &= \log_2 (2^{-3}) = -3; \\
+        \log_{\frac{1}{3}} 9 &= \log_{3^{-1}} (3^2) = -2; \\
+        \ln e^2 &= 2; \\
+        5^{\log_5 3} &= 3.
+    \end{align*}
+    Do đó: $M = (-3) + (-2) - 2 + 3 = -4$.
+\end{itemize}
+
+\noindent \textbf{d) Tổ chức thực hiện:}
+\begin{itemize}[leftmargin=0.6cm]
+    \item \textbf{Giao nhiệm vụ:} Học sinh làm bài độc lập trong 5 phút.
+    \item \textbf{Thực hiện nhiệm vụ:} Giáo viên theo dõi, nhắc nhở học sinh ở Bài 1b phải nhớ cả 2 điều kiện cho cơ số: $x - 1 > 0$ và $x - 1 \neq 1$.
+    \item \textbf{Báo cáo, thảo luận:} 2 học sinh lên bảng giải; cả lớp nhận xét đối chiếu kết quả.
+    \item \textbf{Kết luận, nhận định:} Giáo viên nhấn mạnh: Lỗi quên điều kiện $a \neq 1$ ở cơ số là lỗi phổ biến nhất của học sinh!
+\end{itemize}
+
+\subsubsection*{4. Hoạt động 4: Vận dụng (5 phút)}
+
+\noindent \textbf{a) Mục tiêu:}
+Ứng dụng lôgarit giải quyết bài toán xác định số chữ số của một lũy thừa rất lớn trong thực tế.
+
+\noindent \textbf{b) Nội dung:}
+\begin{pedabox}{Bài toán Ứng dụng: Xác định số chữ số của $2^{100}$}
+Ta biết rằng một số nguyên dương $N$ có $k$ chữ số trong hệ thập phân khi và chỉ khi:
+$$10^{k-1} \le N < 10^k \iff k - 1 \le \log N < k \iff k = [\log N] + 1$$
+(trong đó $[\log N]$ là phần nguyên của số thực $\log N$).
+Hãy tính xem số $N = 2^{100}$ có bao nhiêu chữ số trong hệ ghi số thập phân (biết $\log 2 \approx 0{,}30103$).
+\end{pedabox}
+
+\noindent \textbf{c) Sản phẩm:}
+Học sinh thực hiện biến đổi:
+$$\log(2^{100}) = 100 \cdot \log 2 \approx 100 \cdot 0{,}30103 = 30{,}103$$
+Vì $30 \le \log(2^{100}) < 31$, suy ra phần nguyên $[\log(2^{100})] = 30$.
+Số chữ số của $2^{100}$ là: $k = 30 + 1 = 31$ chữ số!
+(Học sinh bấm máy tính $2^{100}$ thấy máy báo tràn số dưới dạng $1{,}2676506 \times 10^{30}$, khẳng định số có đúng $31$ chữ số).
+
+\noindent \textbf{d) Tổ chức thực hiện:}
+\begin{itemize}[leftmargin=0.6cm]
+    \item \textbf{Giao nhiệm vụ:} Giáo viên hướng dẫn công thức xác định số chữ số qua lôgarit thập phân.
+    \item \textbf{Thực hiện nhiệm vụ:} Học sinh tính toán và ghi kết luận.
+    \item \textbf{Báo cáo, nhận định:} Giáo viên biểu dương học sinh và giao nhiệm vụ chuẩn bị cho Tiết 2.
+\end{itemize}
+
+\vspace{10pt}
+
+\subsection*{\faClockO \ TIẾT 2 (TIẾT 58 THEO PPCT): CÁC TÍNH CHẤT BIẾN ĐỔI LÔGARIT, ĐỔI CƠ SỐ VÀ ỨNG DỤNG STEM - AI}
+
+\subsubsection*{1. Hoạt động 1: Mở đầu (Khởi động) (5 phút)}
+
+\noindent \textbf{a) Mục tiêu:}
+Tạo mâu thuẫn nhận thức và kích thích tư duy phát hiện quy tắc tính lôgarit của một tích và một thương từ các ví dụ số cụ thể.
+
+\noindent \textbf{b) Nội dung:}
+Giáo viên đặt vấn đề:
+\begin{pedabox}{Khởi động: Dự đoán quy tắc tính Lôgarit}
+Hãy tính và so sánh giá trị của hai vế trong các biểu thức sau:
+\begin{enumerate}[leftmargin=0.6cm]
+    \item So sánh $\log_2 (4 \cdot 8)$ và $\log_2 4 + \log_2 8$.
+    \item So sánh $\log_3 \left(\dfrac{81}{3}\right)$ và $\log_3 81 - \log_3 3$.
+\end{enumerate}
+\textit{Dự đoán:} Phép nhân/chia trong dấu lôgarit chuyển thành phép toán gì bên ngoài dấu lôgarit?
+\end{pedabox}
+
+\noindent \textbf{c) Sản phẩm:}
+\begin{itemize}
+    \item $\log_2 (4 \cdot 8) = \log_2 32 = 5$. Mặt khác: $\log_2 4 + \log_2 8 = 2 + 3 = 5$. Vậy $\log_2 (4 \cdot 8) = \log_2 4 + \log_2 8$.
+    \item $\log_3 \left(\dfrac{81}{3}\right) = \log_3 27 = 3$. Mặt khác: $\log_3 81 - \log_3 3 = 4 - 1 = 3$. Vậy $\log_3 \left(\dfrac{81}{3}\right) = \log_3 81 - \log_3 3$.
+    \item Học sinh rút ra dự đoán: Lôgarit của một tích bằng tổng các lôgarit; Lôgarit của một thương bằng hiệu các lôgarit!
+\end{itemize}
+
+\noindent \textbf{d) Tổ chức thực hiện:}
+\begin{itemize}[leftmargin=0.6cm]
+    \item \textbf{Giao nhiệm vụ:} Giáo viên giao bài toán, yêu cầu học sinh tính nhanh trong 2 phút.
+    \item \textbf{Thực hiện nhiệm vụ:} Học sinh tính toán và so sánh.
+    \item \textbf{Báo cáo, nhận định:} Giáo viên dẫn dắt vào bài mới: Các quy tắc tính và biến đổi lôgarit.
+\end{itemize}
+
+\subsubsection*{2. Hoạt động 2: Hình thành kiến thức (25 phút)}
+
+\paragraph{2.1. Đơn vị kiến thức 1: Các quy tắc tính Lôgarit (12 phút)}
+
+\noindent \textbf{a) Mục tiêu:}
+Giải thích và vận dụng thành thạo quy tắc tính lôgarit của một tích, một thương, một lũy thừa.
+
+\noindent \textbf{b) Nội dung:}
+\begin{pedabox}{Quy tắc tính Lôgarit của một tích, một thương, một lũy thừa}
+Cho $a, b_1, b_2, b > 0$ với $a \neq 1$. Khi đó:
+\begin{enumerate}[leftmargin=0.6cm]
+    \item \textbf{Lôgarit của một tích:}
+    $$\log_a (b_1 \cdot b_2) = \log_a b_1 + \log_a b_2$$
+    \item \textbf{Lôgarit của một thương:}
+    $$\log_a \left(\dfrac{b_1}{b_2}\right) = \log_a b_1 - \log_a b_2$$
+    Đặc biệt: $\log_a \left(\dfrac{1}{b}\right) = -\log_a b$.
+    \item \textbf{Lôgarit của một lũy thừa:} Với mọi số thực $\alpha$:
+    $$\log_a (b^\alpha) = \alpha \log_a b$$
+    Đặc biệt: $\log_a \sqrt[n]{b} = \log_a \left(b^{\frac{1}{n}}\right) = \dfrac{1}{n} \log_a b$ ($n \in \mathbb{N}, n \ge 2$).
+\end{enumerate}
+\end{pedabox}
+
+\begin{scaffoldbox}{Giàn giáo sư phạm: Khẩu quyết vàng ghi nhớ quy tắc biến đổi}
+\textbf{Khẩu quyết khắc sâu cho học sinh trung bình - yếu:}
+\begin{center}
+\textit{``Tích thành TỔNG -- Thương thành HIỆU -- Mũ bên trong đưa ra NGOÀI LÀM HỆ SỐ''}
+\end{center}
+\textbf{Lưu ý cảnh báo sai lầm:}
+\begin{itemize}
+    \item Tuyệt đối \textbf{KHÔNG CÓ} công thức: $\log_a (b_1 + b_2) = \log_a b_1 \cdot \log_a b_2$ (sai kinh điển!).
+    \item Tuyệt đối \textbf{KHÔNG ĐƯỢC} nhầm: $\dfrac{\log_a b_1}{\log_a b_2} \neq \log_a (b_1 - b_2)$.
+\end{itemize}
+\end{scaffoldbox}
+
+\noindent \textbf{c) Sản phẩm:}
+Học sinh áp dụng tính các ví dụ:
+\begin{itemize}
+    \item $P_1 = \log_6 9 + \log_6 4 = \log_6 (9 \cdot 4) = \log_6 36 = 2$.
+    \item $P_2 = \log_2 40 - \log_2 5 = \log_2 \left(\dfrac{40}{5}\right) = \log_2 8 = 3$.
+    \item $P_3 = \log_3 \sqrt[4]{27} = \log_3 (3^{\frac{3}{4}}) = \dfrac{3}{4} \log_3 3 = \dfrac{3}{4}$.
+\end{itemize}
+
+\noindent \textbf{d) Tổ chức thực hiện:}
+\begin{itemize}[leftmargin=0.6cm]
+    \item \textbf{Giao nhiệm vụ:} Giáo viên phát biểu quy tắc, giải thích ngắn gọn chứng minh dựa vào lũy thừa ($a^{\alpha+\beta} = a^\alpha \cdot a^\beta$). Yêu cầu học sinh tính $P_1, P_2, P_3$.
+    \item \textbf{Thực hiện nhiệm vụ:} Học sinh áp dụng khẩu quyết, làm việc cá nhân.
+    \item \textbf{Báo cáo, thảo luận:} 3 học sinh đọc lời giải; cả lớp đối chiếu.
+    \item \textbf{Kết luận, nhận định:} Giáo viên nhấn mạnh: Gom nhiều lôgarit cùng cơ số thành một lôgarit duy nhất là kỹ năng tối quan trọng.
+\end{itemize}
+
+\paragraph{2.2. Đơn vị kiến thức 2: Công thức đổi cơ số (13 phút)}
+
+\noindent \textbf{a) Mục tiêu:}
+Nắm vững công thức đổi cơ số và các hệ quả; biết lựa chọn cơ số trung gian để biểu diễn lôgarit.
+
+\noindent \textbf{b) Nội dung:}
+\begin{pedabox}{Công thức Đổi cơ số và Các Hệ quả}
+Cho $a, b, c > 0$ với $a \neq 1, c \neq 1$. Khi đó:
+$$\log_a b = \dfrac{\log_c b}{\log_c a}$$
+\textbf{Các hệ quả quan trọng:}
+\begin{enumerate}[leftmargin=0.6cm]
+    \item $\log_a b \cdot \log_b c = \log_a c$ (Quy tắc chèn cơ số, với $b \neq 1$).
+    \item $\log_a b = \dfrac{1}{\log_b a}$ (Nghịch đảo cơ số, với $b \neq 1$).
+    \item $\log_{a^\alpha} b = \dfrac{1}{\alpha} \log_a b$ (với $\alpha \neq 0$).
+    \item $\log_{a^\alpha} (b^\beta) = \dfrac{\beta}{\alpha} \log_a b$ (với $\alpha \neq 0$).
+\end{enumerate}
+\end{pedabox}
+
+\noindent \textbf{c) Sản phẩm:}
+Học sinh hoàn thành ví dụ biểu diễn lôgarit theo $a, b$:
+\begin{itemize}
+    \item \textbf{Ví dụ:} Cho $\log_2 3 = a$ và $\log_2 5 = b$. Hãy biểu diễn $\log_2 45$ và $\log_{15} 30$ theo $a$ và $b$.
+    \begin{align*}
+        \log_2 45 &= \log_2 (3^2 \cdot 5) = \log_2 (3^2) + \log_2 5 = 2\log_2 3 + \log_2 5 = 2a + b. \\
+        \log_{15} 30 &= \dfrac{\log_2 30}{\log_2 15} = \dfrac{\log_2 (2 \cdot 3 \cdot 5)}{\log_2 (3 \cdot 5)} = \dfrac{\log_2 2 + \log_2 3 + \log_2 5}{\log_2 3 + \log_2 5} = \dfrac{1 + a + b}{a + b}.
+    \end{align*}
+\end{itemize}
+
+\noindent \textbf{d) Tổ chức thực hiện:}
+\begin{itemize}[leftmargin=0.6cm]
+    \item \textbf{Giao nhiệm vụ:} Giáo viên hướng dẫn công thức đổi cơ số; nhấn mạnh phương pháp: Đưa về cùng cơ số đã cho (ở đây là cơ số $2$).
+    \item \textbf{Thực hiện nhiệm vụ:} Học sinh làm bài theo cặp đôi, phân tích $30 = 2 \cdot 3 \cdot 5$ và $15 = 3 \cdot 5$.
+    \item \textbf{Báo cáo, thảo luận:} Đại diện 1 cặp học sinh lên bảng giải; các bạn khác nhận xét.
+    \item \textbf{Kết luận, nhận định:} Giáo viên chuẩn hóa kỹ thuật đổi cơ số trung gian.
+\end{itemize}
+
+\subsubsection*{3. Hoạt động 3: Luyện tập (10 phút)}
+
+\noindent \textbf{a) Mục tiêu:}
+Rèn luyện kỹ năng rút gọn biểu thức chứa biến và vận dụng công thức lũy thừa ở cơ số.
+
+\noindent \textbf{b) Nội dung:}
+Thực hiện Phiếu học tập số 2:
+\begin{enumerate}[leftmargin=0.6cm]
+    \item \textbf{Bài 1:} Rút gọn biểu thức sau với $x > 0$:
+    $$A = \log_2 (4x^3) - 3\log_4 x + \log_{\frac{1}{2}} (2x)$$
+    \item \textbf{Bài 2:} Cho $\log_3 2 = a$. Tính giá trị của biểu thức $B = \log_{12} 18$ theo $a$.
+\end{enumerate}
+
+\noindent \textbf{c) Sản phẩm:}
+\begin{itemize}
+    \item \textbf{Bài 1:}
+    Ta có:
+    $\log_2 (4x^3) = \log_2 4 + \log_2 (x^3) = 2 + 3\log_2 x$.
+    $3\log_4 x = 3\log_{2^2} x = \dfrac{3}{2} \log_2 x$.
+    $\log_{\frac{1}{2}} (2x) = \log_{2^{-1}} (2x) = -\log_2 (2x) = -(\log_2 2 + \log_2 x) = -1 - \log_2 x$.
+    Suy ra:
+    $$A = (2 + 3\log_2 x) - \dfrac{3}{2}\log_2 x - 1 - \log_2 x = (2 - 1) + \left(3 - \dfrac{3}{2} - 1\right)\log_2 x = 1 + \dfrac{1}{2}\log_2 x = 1 + \log_4 x.$$
+    \item \textbf{Bài 2:}
+    Đổi sang cơ số $3$:
+    $$B = \log_{12} 18 = \dfrac{\log_3 18}{\log_3 12} = \dfrac{\log_3 (2 \cdot 3^2)}{\log_3 (2^2 \cdot 3)} = \dfrac{\log_3 2 + 2\log_3 3}{2\log_3 2 + \log_3 3} = \dfrac{a + 2}{2a + 1}.$$
+\end{itemize}
+
+\noindent \textbf{d) Tổ chức thực hiện:}
+\begin{itemize}[leftmargin=0.6cm]
+    \item \textbf{Giao nhiệm vụ:} Học sinh làm việc cá nhân 6 phút.
+    \item \textbf{Thực hiện nhiệm vụ:} Giáo viên theo dõi, hướng dẫn học sinh cách xử lý $\log_4 x = \log_{2^2} x = \dfrac{1}{2}\log_2 x$.
+    \item \textbf{Báo cáo, thảo luận:} 2 học sinh lên bảng giải; lớp nhận xét và kiểm tra bằng MTCT (gán $a = \log_3 2$, bấm $B - \dfrac{a+2}{2a+1} = 0$).
+    \item \textbf{Kết luận, nhận định:} Giáo viên khẳng định tính chính xác của lời giải và phương pháp thử nghiệm lại bằng MTCT.
+\end{itemize}
+
+\subsubsection*{4. Hoạt động 4: Vận dụng (5 phút)}
+
+\noindent \textbf{a) Mục tiêu:}
+Tích hợp liên môn STEM Hóa học (Độ pH) và mở rộng nhận thức Năng lực AI theo QĐ 2422 (Mã 11.C4.1).
+
+\noindent \textbf{b) Nội dung:}
+\begin{stembox}{Chủ đề STEM Hóa học: Xác định độ pH của dung dịch đời sống}
+Trong Hóa học, nồng độ ion Hydrogen $[\text{H}^+]$ (tính bằng mol/L) quyết định tính axit hay bazơ của dung dịch. Do nồng độ $[\text{H}^+]$ biến thiên từ $10^{-1}$ đến $10^{-14}\text{ mol/L}$, nhà hóa học Sørensen đã dùng thang đo lôgarit gọi là chỉ số pH:
+$$\text{pH} = -\log[\text{H}^+]$$
+\begin{enumerate}[leftmargin=0.6cm]
+    \item Nước chanh tươi có $[\text{H}^+] \approx 2{,}5 \times 10^{-3}\text{ mol/L}$. Tính độ pH của nước chanh.
+    \item Xà phòng rửa tay có độ $\text{pH} = 9{,}5$. Tính nồng độ ion $[\text{H}^+]$ của xà phòng.
+\end{enumerate}
+\end{stembox}
+
+\begin{aibox}{Tích hợp Năng lực AI (Theo Quyết định 2422/QĐ-BGDĐT - Mã 11.C4.1)}
+\textbf{Ứng dụng Thang đo Lôgarit (Log-Transform) và Hàm mất mát trong Học máy AI:}
+\begin{itemize}[leftmargin=0.6cm]
+    \item \textbf{Log-Transform trong tiền xử lý dữ liệu (Feature Scaling):} Trong các tập dữ liệu huấn luyện AI (như thu nhập dân cư, giá nhà đất, số lượt tương tác mạng xã hội), các con số phân bố lệch rất mạnh (chênh lệch từ vài chục đến hàng tỷ). Nếu để nguyên, thuật toán AI sẽ bị chi phối bởi các giá trị ngoại lai (outliers). Kỹ thuật áp dụng hàm $y = \log(x + 1)$ giúp nén thang đo dữ liệu về phân phối chuẩn, giúp mô hình học máy hội tụ nhanh gấp nhiều lần.
+    \item \textbf{Hàm mất mát Lôgarit (Cross-Entropy Loss):} Khi AI nhận diện ảnh (chó hay mèo), nó đưa ra xác suất $p \in (0; 1)$. Hàm mất mát đo lường sai số của AI được định nghĩa là:
+    $$\text{Loss} = -\log(p)$$
+    Nếu AI dự đoán đúng tuyệt đối ($p = 1$), thì $\text{Loss} = -\log 1 = 0$ (không bị phạt). Nếu AI dự đoán sai nghiêm trọng ($p \to 0$), thì $\text{Loss} \to +\infty$ (mức phạt cực lớn buộc mạng nơ-ron phải cập nhật lại trọng số).
+\end{itemize}
+\end{aibox}
+
+\noindent \textbf{c) Sản phẩm:}
+\begin{enumerate}[leftmargin=0.6cm]
+    \item Với nước chanh tươi:
+    $$\text{pH} = -\log(2{,}5 \times 10^{-3}) = -(\log 2{,}5 + \log 10^{-3}) = -(0{,}3979 - 3) = 2{,}6021 \approx 2{,}6\text{ (môi trường axit mạnh)}.$$
+    \item Với xà phòng rửa tay ($\text{pH} = 9{,}5$):
+    $$-\log[\text{H}^+] = 9{,}5 \iff \log[\text{H}^+] = -9{,}5 \iff [\text{H}^+] = 10^{-9{,}5} \approx 3{,}16 \times 10^{-10}\text{ (mol/L)}.$$
+\end{enumerate}
+
+\noindent \textbf{d) Tổ chức thực hiện:}
+\begin{itemize}[leftmargin=0.6cm]
+    \item \textbf{Giao nhiệm vụ:} Giáo viên trình chiếu công thức pH và phần tích hợp AI, yêu cầu học sinh tính toán trên MTCT.
+    \item \textbf{Thực hiện nhiệm vụ:} Học sinh bấm phím $\log$ và phím $10^x$, thảo luận nhanh ý nghĩa thang đo pH trong đời sống.
+    \item \textbf{Báo cáo, nhận định:} Học sinh nêu đáp số; giáo viên tổng kết toàn bộ bài học, dặn dò học bài và đọc trước \textbf{Bài 20: Hàm số mũ và hàm số lôgarit}.
+\end{itemize}
+
+\vspace{10pt}
+
+\section*{IV. PHỤ LỤC HỌC LIỆU BỔ TRỢ (BẮT BUỘC)}
+
+\subsection*{1. Phiếu học tập số 1 (Tiết 1): Khám phá Định nghĩa và Tính chất cơ bản của Lôgarit}
+
+\begin{pedabox}{PHIẾU HỌC TẬP SỐ 1: KHÁI NIỆM VÀ TÍNH CHẤT CƠ BẢN CỦA LÔGARIT}
+\textbf{Họ và tên học sinh:} \dotfill \ \textbf{Lớp:} \dotfill \ \textbf{Nhóm:} \dotfill
+
+\noindent \textbf{CẤP ĐỘ 1: NHẬN BIẾT (Khởi động cơ bản)}
+\begin{enumerate}[leftmargin=0.6cm]
+    \item Tính giá trị các lôgarit sau theo định nghĩa:
+    $$a) \ \log_2 64 = \dots\dots\dots; \qquad b) \ \log_5 \dfrac{1}{125} = \dots\dots\dots; \qquad c) \ \log_7 \sqrt{7} = \dots\dots\dots$$
+    \item Tìm điều kiện để mỗi biểu thức sau có nghĩa:
+    $$a) \ \log_5 (3x - 9); \qquad b) \ \log_{x - 2} 10; \qquad c) \ \ln(x^2 - 1)$$
+\end{enumerate}
+
+\noindent \textbf{CẤP ĐỘ 2: THÔNG HIỂU (Vận dụng tính chất \& Thao tác MTCT)}
+\begin{enumerate}[leftmargin=0.6cm]
+    \item Tính giá trị các biểu thức sau:
+    $$A = 4^{\log_2 5} + 27^{\log_3 2} - \log_{0{,}1} 100$$
+    \item Sử dụng máy tính cầm tay Casio fx-580VN X tính và làm tròn kết quả đến $4$ chữ số thập phân:
+    $$B = \log_3 7 + \ln 12 - \log 45$$
+\end{enumerate}
+
+\noindent \textbf{CẤP ĐỘ 3: VẬN DỤNG (Thử thách phát triển tư duy)}
+\begin{enumerate}[leftmargin=0.6cm]
+    \item Cho biết $2^x = 10$. Hãy tính giá trị của $x$ và biểu diễn giá trị của biểu thức $E = 4^x + 2^{-x}$ theo cơ số $10$.
+\end{enumerate}
+\end{pedabox}
+
+\subsection*{2. Phiếu học tập số 2 (Tiết 2): Quy tắc tính Lôgarit, Đổi cơ số và Ứng dụng}
+
+\begin{pedabox}{PHIẾU HỌC TẬP SỐ 2: QUY TẮC BIẾN ĐỔI LÔGARIT VÀ ĐỔI CƠ SỐ}
+\textbf{Họ và tên học sinh:} \dotfill \ \textbf{Lớp:} \dotfill \ \textbf{Nhóm:} \dotfill
+
+\noindent \textbf{CẤP ĐỘ 1: NHẬN BIẾT \& THÔNG HIỂU (Quy tắc tính cơ bản)}
+\begin{enumerate}[leftmargin=0.6cm]
+    \item Áp dụng quy tắc tính lôgarit để rút gọn:
+    $$a) \ \log_2 12 - \log_2 3 = \dots\dots\dots; \qquad b) \ \log_3 5 \cdot \log_5 9 = \dots\dots\dots$$
+    \item Rút gọn biểu thức chứa biến ($a > 0, b > 0$):
+    $$P = \log_a (a^2 \cdot b^3) - \log_a (b^3) + 2\log_{a^2} a$$
+\end{enumerate}
+
+\noindent \textbf{CẤP ĐỘ 2: VẬN DỤNG (Đổi cơ số \& Biểu diễn biểu thức)}
+\begin{enumerate}[leftmargin=0.6cm]
+    \item Cho $\log_2 5 = a$. Hãy tính $\log_4 1250$ theo $a$.
+    \item Cho $\log_2 3 = a$ và $\log_5 3 = b$. Hãy biểu diễn $\log_6 45$ theo $a$ và $b$.
+\end{enumerate}
+
+\noindent \textbf{CẤP ĐỘ 3: VẬN DỤNG CAO (Ứng dụng liên môn)}
+\begin{enumerate}[leftmargin=0.6cm]
+    \item Dung dịch dịch vị dạ dày của người có nồng độ $[\text{H}^+] \approx 0{,}03\text{ mol/L}$. Hãy tính độ pH của dịch vị dạ dày và nhận xét tính axit của môi trường này.
+\end{enumerate}
+\end{pedabox}
+
+\subsection*{3. Bảng Rubric đánh giá năng lực học sinh theo 4 mức độ}
+
+\begin{center}
+\begin{tabularx}{\textwidth}{|p{2.8cm}|X|X|X|X|}
+    \hline
+    \textbf{Tiêu chí} & \textbf{Mức 1: Chưa đạt} & \textbf{Mức 2: Đạt} & \textbf{Mức 3: Khá} & \textbf{Mức 4: Tốt} \\ \hline
+    \textbf{1. Hiểu khái niệm \& Điều kiện tồn tại} & Nhầm lẫn cơ số âm; không nhớ điều kiện biểu thức trong lôgarit phải dương. & Nắm được điều kiện cơ bản $a > 0, a \neq 1, b > 0$; tính được lôgarit đơn giản. & Tìm đúng tập xác định của biểu thức phức tạp; giải thích được tính chất qua hàm mũ. & Nắm vững bản chất toán học của phép lấy lôgarit; phân biệt sâu sắc hàm mũ và lôgarit. \\ \hline
+    \textbf{2. Kỹ năng tính toán \& Đổi cơ số} & Áp dụng sai công thức: biến đổi $\log(a+b)$ thành tích; lúng túng khi đổi cơ số. & Nhớ và áp dụng đúng quy tắc lôgarit của tích, thương; đổi được cơ số đơn giản. & Rút gọn thành thạo biểu thức chứa biến; biểu diễn tốt lôgarit qua các tham số $a, b$. & Biến đổi linh hoạt, nhanh gọn; phát hiện cách chọn cơ số trung gian tối ưu nhất. \\ \hline
+    \textbf{3. Năng lực số \& Sử dụng MTCT (Mã 3.1NC1a)} & Chưa biết bấm phím $\log_\blacksquare\blacksquare$; không biết phân biệt phím $\log$ và $\ln$. & Bấm được các phép tính lôgarit cơ bản theo chỉ dẫn của giáo viên. & Thao tác bấm máy nhanh, chính xác; dùng MTCT kiểm tra chéo đẳng thức đổi cơ số. & Làm chủ hoàn toàn MTCT và ứng dụng bảng tính Excel tính toán chuỗi dữ liệu lôgarit. \\ \hline
+    \textbf{4. Vận dụng thực tiễn \& Năng lực AI (Mã 11.C4.1)} & Không tính được độ pH khi có công thức; không hiểu ý nghĩa thang đo logarit. & Thay số tính đúng độ pH của dung dịch theo công thức cho sẵn. & Tự giải quyết được bài toán xác định số chữ số; hiểu ứng dụng thang đo logarit. & Hiểu sâu sắc vai trò của Log-Transform và hàm mất mát Cross-Entropy trong Học máy AI. \\ \hline
+\end{tabularx}
+\end{center}
+
+\end{document}
