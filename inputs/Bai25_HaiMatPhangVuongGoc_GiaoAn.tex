@@ -1,0 +1,823 @@
+\documentclass[12pt, a4paper]{article}
+% --- 1. Cấu hình Tiếng Việt và Font chữ chuẩn ---
+\usepackage[utf8]{inputenc}
+\usepackage[T5]{fontenc}
+\usepackage[vietnamese]{babel}
+\usepackage{mathptmx} % Font Times New Roman đồng bộ cả chữ và công thức toán, không gây xung đột gói
+
+\makeatletter
+\renewcommand{\normalsize}{\@setfontsize\normalsize{13pt}{16pt}}
+\makeatother
+\normalsize
+
+% --- 2. Gói Toán học & Ký hiệu bổ trợ ---
+\usepackage{amsmath, amssymb, amsfonts, mathrsfs, amsthm}
+\usepackage{graphicx}
+\usepackage{fontawesome}
+\usepackage{booktabs, tabularx, array, multirow}
+\usepackage{enumitem}
+
+% --- 3. Đồ họa TikZ, Bảng biến thiên & Hình không gian ---
+\usepackage{tikz}
+\usetikzlibrary{calc, intersections, angles, quotes, patterns, arrows.meta, 3d}
+\usepackage{pgfplots}
+\pgfplotsset{compat=1.18}
+\usepackage{tkz-euclide}
+\usepackage{tkz-tab}
+
+\renewcommand{\vec}[1]{\overrightarrow{#1}}
+
+% --- 4. Hộp sư phạm (Tcolorbox) ---
+\usepackage[many]{tcolorbox}
+\tcbuselibrary{skins, breakable}
+
+% --- 5. Căn lề chuẩn văn bản giáo án ---
+\usepackage{geometry}
+\geometry{
+    a4paper,
+    left=25mm,
+    right=15mm,
+    top=20mm,
+    bottom=20mm
+}
+
+% --- 6. Header / Footer chuẩn hóa ---
+\usepackage{fancyhdr}
+\usepackage{lastpage}
+\pagestyle{fancy}
+\fancyhf{}
+
+\fancyhead[L]{\small \textit{Kế hoạch bài dạy Toán 11}}
+\fancyhead[R]{\textbf{Trang \thepage/\pageref{LastPage}}}
+\fancyfoot[L]{\small \textit{Tổ Toán - Tin}}
+\fancyfoot[R]{\small \textit{Trường THCS\&THPT Hồng Vân}}
+\renewcommand{\headrulewidth}{0.4pt}
+\renewcommand{\footrulewidth}{0.4pt}
+
+% --- 7. Giãn dòng & Giãn đoạn theo chuẩn Nghị định 30/2020/NĐ-CP ---
+\usepackage{setspace}
+\setstretch{1.15}
+\setlength{\parindent}{1.0cm}
+\setlength{\parskip}{5pt}
+
+% Định nghĩa hộp sư phạm chuyên dụng
+\newtcolorbox{pedabox}[2][]{
+    enhanced,
+    breakable,
+    colback=blue!3!white,
+    colframe=blue!65!black,
+    fonttitle=\bfseries\small,
+    title={#2},
+    arc=2mm,
+    boxrule=0.6pt,
+    left=3mm, right=3mm, top=2mm, bottom=2mm,
+    #1
+}
+
+\newtcolorbox{aibox}[2][]{
+    enhanced,
+    breakable,
+    colback=teal!4!white,
+    colframe=teal!70!black,
+    fonttitle=\bfseries\small,
+    title={#2},
+    arc=2mm,
+    boxrule=0.6pt,
+    left=3mm, right=3mm, top=2mm, bottom=2mm,
+    #1
+}
+
+\newtcolorbox{scaffoldbox}[2][]{
+    enhanced,
+    breakable,
+    colback=orange!4!white,
+    colframe=orange!80!black,
+    fonttitle=\bfseries\small,
+    title={#2},
+    arc=2mm,
+    boxrule=0.6pt,
+    left=3mm, right=3mm, top=2mm, bottom=2mm,
+    #1
+}
+
+\newtcolorbox{stembox}[2][]{
+    enhanced,
+    breakable,
+    colback=purple!4!white,
+    colframe=purple!75!black,
+    fonttitle=\bfseries\small,
+    title={#2},
+    arc=2mm,
+    boxrule=0.6pt,
+    left=3mm, right=3mm, top=2mm, bottom=2mm,
+    #1
+}
+
+\begin{document}
+
+\begin{center}
+    {\fontsize{14pt}{17pt}\selectfont \textbf{KẾ HOẠCH BÀI DẠY MÔN TOÁN LỚP 11}}\\[6pt]
+    {\fontsize{16pt}{19pt}\selectfont \textbf{BÀI 25. HAI MẶT PHẲNG VUÔNG GÓC}}\\[4pt]
+    {\fontsize{12pt}{15pt}\selectfont \textbf{Môn học: Toán 11} \ \textbar \ \textbf{Thời lượng: 4 tiết (Tiết 70, 71, 72, 73 theo PPCT | Tuần 23, 24)}}
+\end{center}
+
+\vspace{5pt}
+
+\section*{I. MỤC TIÊU}
+
+\subsection*{1. Kiến thức, Năng lực}
+
+\begin{itemize}[leftmargin=1.2cm]
+    \item \textbf{Yêu cầu cần đạt (Nguyên văn CT GDPT 2018 Toán 11):}
+    \begin{itemize}[leftmargin=0.6cm]
+        \item Nhận biết được hai mặt phẳng vuông góc trong không gian.
+        \item Xác định được điều kiện để hai mặt phẳng vuông góc.
+        \item Giải thích được các tính chất cơ bản về hai mặt phẳng vuông góc.
+        \item Giải thích được tính chất cơ bản của hình lăng trụ đứng, lăng trụ đều, hình hộp đứng, hình hộp chữ nhật, hình lập phương, hình chóp đều.
+        \item Nhận biết được khái niệm góc nhị diện, góc phẳng nhị diện.
+        \item Xác định và tính được số đo góc nhị diện, góc phẳng nhị diện trong những trường hợp đơn giản (ví dụ: nhận biết được mặt phẳng vuông góc với cạnh nhị diện).
+        \item Sử dụng được kiến thức về hai mặt phẳng vuông góc và góc nhị diện để mô tả một số hình ảnh trong thực tiễn (góc mở của cánh cửa, góc mở của trang sách, độ vuông góc của tường nhà và sàn nhà, thiết kế bao bì, kiến trúc Kim tự tháp).
+    \end{itemize}
+
+    \item \textbf{Năng lực Toán học đặc thù:}
+    \begin{itemize}[leftmargin=0.6cm]
+        \item \textit{Năng lực tư duy và lập luận toán học:} Lập luận chặt chẽ khi chuyển đổi bài toán chứng minh hai mặt phẳng vuông góc về bài toán chứng minh đường thẳng vuông góc với mặt phẳng; suy luận logic từ tính chất hai mặt phẳng vuông góc để xác định đường cao của khối đa diện; hiểu rõ bản chất góc nhị diện thông qua góc phẳng vuông góc với cạnh nhị diện.
+        \item \textit{Năng lực mô hình hóa toán học:} Mô tả các liên kết góc mở bản lề, góc vát mái nhà dốc, kết cấu vách ngăn chịu lực và thiết bị công nghệ gập thông minh thành mô hình góc nhị diện và các cặp mặt phẳng vuông góc.
+        \item \textit{Năng lực giải quyết vấn đề toán học:} Nắm vững và thực hiện thành thạo phương pháp chứng minh $(P) \perp (Q)$ (chứng minh một đường thẳng thuộc mặt phẳng này vuông góc với mặt phẳng kia); vận dụng định lý giao tuyến vuông góc để tìm chân đường cao hình chóp; tính số đo góc nhị diện qua 3 bước chuẩn mực.
+        \item \textit{Năng lực giao tiếp toán học:} Trình bày chứng minh hình học mạch lạc, chính xác theo chuẩn mực ký hiệu ($\perp, \parallel, \subset, \cap, \implies, [P, d, Q]$); diễn đạt rõ ràng vị trí tương đối và các yếu tố hình học trong không gian.
+        \item \textit{Năng lực sử dụng công cụ, phương tiện học toán:} Sử dụng thước kẻ, compa vẽ hình biểu diễn chuẩn xác; sử dụng phần mềm GeoGebra 3D để xoay mô hình không gian 3 chiều, mô phỏng góc mở nhị diện của trang sách và cánh cửa.
+    \end{itemize}
+
+    \item \textbf{Năng lực số (Theo Thông tư 02/2025/TT-BGDĐT):}
+    \begin{itemize}[leftmargin=0.6cm]
+        \item \textit{Mã 5.2NC1b (Tương tác với mô hình số 3D):} Học sinh xoay mô hình 3D trên màn hình quan sát góc tạo bởi hai mặt phẳng và sử dụng thanh trượt số trên GeoGebra thay đổi góc mở nhị diện của trang sách từ $0^\circ$ đến $180^\circ$.
+        \item \textit{Mã 3.1NC1a (Tạo lập và khai thác mô hình đa diện số):} Học sinh dựng hình lăng trụ đứng và hình chóp đều trên phần mềm vẽ không gian GeoGebra 3D, nhận biết tính trực giao của các mặt bên với mặt đáy.
+    \end{itemize}
+
+    \item \textbf{Năng lực AI (Theo Quyết định 2422/QĐ-BGDĐT):}
+    \begin{itemize}[leftmargin=0.6cm]
+        \item \textit{Mã 11.A2.1 (Ứng dụng AI trong đo đạc và tự động hóa xây dựng):} Học sinh phân tích cách robot xây dựng và máy quét laser 3D sử dụng thuật toán AI kiểm tra độ vuông góc giữa tường nhà và sàn nhà.
+        \item \textit{Mã 11.D1.1 (AI nhận diện thị giác không gian 3D):} Học sinh hiểu cách AI thị giác máy tính nhận diện và phân loại các khối đa diện đều, lăng trụ trong tự nhiên và kiến trúc.
+        \item \textit{Mã 11.C3.2 (Thuật toán AI cảm biến góc mở thiết bị gập):} Học sinh mô tả được cách AI xử lý dữ liệu từ cảm biến con quay hồi chuyển (gyroscope) để nhận biết cử chỉ mở góc nhị diện của các thiết bị màn hình gập thông minh (Foldable devices).
+    \end{itemize}
+
+    \item \textbf{Năng lực chung:}
+    \begin{itemize}[leftmargin=0.6cm]
+        \item \textit{Tự chủ và tự học:} Chủ động tìm tòi kiến thức, tự giác hoàn thành phiếu học tập qua 4 tiết học.
+        \item \textit{Giao tiếp và hợp tác:} Hoạt động nhóm hiệu quả trong thảo luận dựng góc phẳng nhị diện và làm việc với mô hình trực quan.
+    \end{itemize}
+\end{itemize}
+
+\subsection*{2. Phẩm chất}
+
+\begin{itemize}[leftmargin=1.2cm]
+    \item \textbf{Chăm chỉ:} Rèn luyện thói quen vẽ hình biểu diễn cẩn thận, chỉn chu; kiên trì thực hiện các bước chứng minh hình học đa diện.
+    \item \textbf{Trung thực:} Tự lực chứng minh toán học, khách quan trong kiểm tra và đánh giá kết quả học tập.
+    \item \textbf{Trách nhiệm:} Nghiêm túc, cẩn trọng trong các thao tác hình học; có ý thức liên hệ kiến thức hình học với độ an toàn của các công trình thực tiễn.
+\end{itemize}
+
+\vspace{5pt}
+
+\section*{II. THIẾT BỊ DẠY HỌC VÀ HỌC LIỆU}
+
+\begin{itemize}[leftmargin=1.2cm]
+    \item \textbf{Giáo viên:}
+    \begin{itemize}[leftmargin=0.6cm]
+        \item Kế hoạch bài dạy chi tiết 4 tiết theo chuẩn Công văn 5512/BGDĐT-GDTrH.
+        \item Bài trình chiếu PowerPoint tương tác, tích hợp sẵn các tệp mô phỏng không gian GeoGebra 3D (hai mặt phẳng vuông góc, hình lăng trụ đứng, hình chóp đều, góc nhị diện có thanh trượt).
+        \item Bộ dụng cụ mô hình hình học không gian cỡ lớn: Khối lăng trụ đứng tam giác, khối hộp chữ nhật, khối lập phương, khối chóp tứ giác đều, mô hình trang sách/cánh cửa mở.
+        \item Hệ thống Phiếu học tập phân hóa bậc thang (Phiếu số 1, 2, 3, 4) và Bảng Rubric đánh giá năng lực học sinh.
+    \end{itemize}
+    \item \textbf{Học sinh:}
+    \begin{itemize}[leftmargin=0.6cm]
+        \item Sách giáo khoa Toán 11, vở ghi bài, giấy nháp.
+        \item Dụng cụ học tập hình học: Thước kẻ, compa, êke, máy tính cầm tay Casio fx-580VN X.
+        \item Ôn tập lại kiến thức Bài 23 (Đường thẳng vuông góc với mặt phẳng) và Bài 24 (Góc giữa đường thẳng và mặt phẳng).
+    \end{itemize}
+\end{itemize}
+
+\vspace{5pt}
+
+\section*{III. TIẾN TRÌNH DẠY HỌC (4 TIẾT | TIẾT 70, 71, 72, 73 THEO PPCT)}
+
+\subsection*{\faClockO \ TIẾT 1 (TIẾT 70 THEO PPCT): ĐỊNH NGHĨA VÀ ĐIỀU KIỆN ĐỂ HAI MẶT PHẲNG VUÔNG GÓC}
+
+\subsubsection*{1. Hoạt động 1: Mở đầu (Khởi động) (5 phút)}
+
+\noindent \textbf{a) Mục tiêu:}
+Khơi gợi trực giác của học sinh về hai mặt phẳng vuông góc từ hình ảnh bức tường và sàn nhà, tạo nhu cầu tìm điều kiện toán học để kiểm tra tính vuông góc.
+
+\noindent \textbf{b) Nội dung:}
+Giáo viên đặt vấn đề:
+\begin{pedabox}{Tình huống khởi động: Bức tường và Sàn lớp học}
+Quan sát góc phòng học: Bức tường thẳng đứng và mặt sàn nhà bằng phẳng.
+\begin{enumerate}[leftmargin=0.6cm]
+    \item Ta thấy mép cột thẳng đứng của bức tường vuông góc với mặt sàn. Khi đó, bức tường và mặt sàn nhà có vuông góc với nhau không?
+    \item Làm thế nào để định nghĩa góc giữa hai mặt phẳng và khi nào thì hai mặt phẳng vuông góc với nhau?
+\end{enumerate}
+\end{pedabox}
+
+\noindent \textbf{c) Sản phẩm:}
+Học sinh phát biểu: Bức tường vuông góc với sàn nhà. Ta cảm nhận được sự vuông góc vì trên bức tường có những đường thẳng đứng vuông góc với sàn nhà.
+
+\noindent \textbf{d) Tổ chức thực hiện:}
+Giáo viên trình chiếu hình ảnh góc phòng học, học sinh quan sát thảo luận nhanh; giáo viên dẫn dắt vào bài mới.
+
+\subsubsection*{2. Hoạt động 2: Hình thành kiến thức (25 phút)}
+
+\paragraph{2.1. Đơn vị kiến thức 1: Định nghĩa hai mặt phẳng vuông góc (10 phút)}
+
+\noindent \textbf{a) Mục tiêu:}
+Nắm vững định nghĩa góc giữa hai mặt phẳng và định nghĩa hai mặt phẳng vuông góc.
+
+\noindent \textbf{b) Nội dung:}
+\begin{pedabox}{Định nghĩa góc giữa hai mặt phẳng và Hai mặt phẳng vuông góc}
+\begin{itemize}[leftmargin=0.6cm]
+    \item \textbf{Góc giữa hai mặt phẳng:} Góc giữa hai mặt phẳng $(P)$ và $(Q)$ là góc giữa hai đường thẳng $n_1$ và $n_2$ lần lượt vuông góc với $(P)$ và $(Q)$.
+    Ký hiệu: $((P), (Q))$. Quy ước số đo: $0^\circ \le ((P), (Q)) \le 90^\circ$.
+    \item \textbf{Hai mặt phẳng vuông góc:} Hai mặt phẳng được gọi là \textbf{vuông góc với nhau} nếu góc giữa chúng bằng $90^\circ$.
+    Ký hiệu: $(P) \perp (Q)$ hoặc $(Q) \perp (P)$.
+\end{itemize}
+\end{pedabox}
+
+\noindent \textbf{c) Sản phẩm:}
+Học sinh ghi nhớ định nghĩa và nhận biết: Nếu $(P) \parallel (Q)$ hoặc $(P) \equiv (Q)$ thì góc giữa chúng bằng $0^\circ$.
+
+\noindent \textbf{d) Tổ chức thực hiện:}
+Giáo viên nêu định nghĩa, phân tích ý nghĩa hình học của hai vectơ pháp tuyến.
+
+\paragraph{2.2. Đơn vị kiến thức 2: Điều kiện để hai mặt phẳng vuông góc (15 phút)}
+
+\noindent \textbf{a) Mục tiêu:}
+Nắm vững định lý điều kiện để hai mặt phẳng vuông góc; giải thích được cơ chế hoạt động của robot xây dựng kiểm tra độ vuông góc.
+
+\noindent \textbf{b) Nội dung:}
+\begin{pedabox}{Định lý 1 (Điều kiện để hai mặt phẳng vuông góc)}
+Nếu một mặt phẳng chứa một đường thẳng vuông góc với mặt phẳng kia thì hai mặt phẳng đó vuông góc với nhau:
+$$\begin{cases} a \subset (P) \\ a \perp (Q) \end{cases} \implies (P) \perp (Q)$$
+\end{pedabox}
+
+\begin{scaffoldbox}{Giàn giáo sư phạm: Quy trình 2 bước chứng minh $(P) \perp (Q)$}
+\textbf{Phương pháp vàng cho học sinh trung bình - yếu:}
+Để chứng minh mặt phẳng $(P)$ vuông góc với mặt phẳng $(Q)$:
+\begin{itemize}
+    \item[\textbf{Bước 1:}] Tìm một đường thẳng $a$ nằm trong mặt phẳng $(P)$ ($a \subset (P)$).
+    \item[\textbf{Bước 2:}] Chứng minh đường thẳng $a$ vuông góc với mặt phẳng $(Q)$ ($a \perp (Q)$) bằng cách chỉ ra $a$ vuông góc với 2 đường thẳng cắt nhau trong $(Q)$ (vận dụng Bài 23).
+    \item[\textbf{Kết luận:}] $\implies (P) \perp (Q)$.
+\end{itemize}
+\end{scaffoldbox}
+
+\begin{aibox}{Tích hợp Năng lực số (Mã 5.2NC1b) \& Năng lực AI (Mã 11.A2.1)}
+\begin{itemize}[leftmargin=0.6cm]
+    \item \textbf{Tương tác mô hình số 3D (Mã 5.2NC1b):} Học sinh dùng chuột xoay mô hình 3D trên màn hình quan sát góc tạo bởi hai mặt phẳng $(P)$ và $(Q)$. Khi đường thẳng $a \subset (P)$ vuông góc với $(Q)$, mặt phẳng $(P)$ luôn vuông góc với $(Q)$ ở mọi góc nhìn xoay.
+    \item \textbf{Ứng dụng AI trong xây dựng (Mã 11.A2.1):} Trong xây dựng thông minh hiện đại, robot đo trắc địa tự hành (Autonomous Construction Robots) chiếu chùm tia laser thẳng đứng $a \perp \text{sàn nhà}$. Robot dùng camera AI quét mặt tường $(P)$ xem có chứa trọn vẹn tia laser $a$ hay không. Nếu tia laser nằm khít trên mặt phẳng tường, AI xác nhận tường và sàn đạt chuẩn vuông góc $90^\circ$ với sai số dưới $1\text{ mm}$.
+\end{itemize}
+\end{aibox}
+
+\noindent \textbf{c) Sản phẩm:}
+Học sinh hoàn thành bài toán mẫu:
+\begin{pedabox}{Bài toán mẫu: Chứng minh mặt phẳng vuông góc}
+Cho hình chóp $S.ABCD$ có đáy $ABCD$ là hình vuông, cạnh bên $SA \perp (ABCD)$.
+Chứng minh rằng:
+$$a) \ (SAB) \perp (ABCD); \qquad b) \ (SBC) \perp (SAB).$$
+\end{pedabox}
+\textit{Lời giải chi tiết:}
+\begin{itemize}
+    \item $a)$ Ta có $SA \subset (SAB)$ và $SA \perp (ABCD)$ (theo giả thiết) $\implies (SAB) \perp (ABCD)$.
+    \item $b)$ Xét đường thẳng $BC$:
+    Ta có $BC \perp AB$ (do $ABCD$ là hình vuông) và $BC \perp SA$ (do $SA \perp (ABCD)$).
+    Mà $AB$ và $SA$ cắt nhau tại $A$ trong $(SAB) \implies BC \perp (SAB)$.
+    Mặt khác, $BC \subset (SBC)$.
+    Vì mặt phẳng $(SBC)$ chứa đường thẳng $BC \perp (SAB)$, nên suy ra $(SBC) \perp (SAB)$.
+\end{itemize}
+
+\noindent \textbf{d) Tổ chức thực hiện:}
+\begin{itemize}[leftmargin=0.6cm]
+    \item \textbf{Giao nhiệm vụ:} Giáo viên trình bày định lý, hướng dẫn bài toán mẫu và yêu cầu học sinh làm vào vở.
+    \item \textbf{Thực hiện nhiệm vụ:} Học sinh vẽ hình, vận dụng quy trình 2 bước để chứng minh.
+    \item \textbf{Báo cáo, thảo luận:} 2 học sinh lên bảng trình bày câu a và b; cả lớp nhận xét.
+    \item \textbf{Kết luận, nhận định:} Giáo viên chuẩn hóa cách trình bày chứng minh hai mặt phẳng vuông góc.
+\end{itemize}
+
+\subsubsection*{3. Hoạt động 3: Luyện tập (10 phút)}
+
+\noindent \textbf{a) Mục tiêu:}
+Rèn luyện kỹ năng phát hiện đường vuông góc mặt phẳng để chứng minh hai mặt phẳng vuông góc.
+
+\noindent \textbf{b) Nội dung:}
+Thực hiện bài tập trong Phiếu học tập số 1:
+\begin{pedabox}{Bài tập luyện tập: Hình chóp đáy chữ nhật}
+Cho hình chóp $S.ABCD$ có đáy $ABCD$ là hình chữ nhật, $SA \perp (ABCD)$.
+Chứng minh rằng:
+$$a) \ (SAD) \perp (SCD); \qquad b) \ (SAC) \perp (SBD)\text{ nếu } ABCD\text{ là hình vuông}.$$
+\end{pedabox}
+
+\noindent \textbf{c) Sản phẩm:}
+Lời giải chi tiết:
+\begin{itemize}
+    \item $a)$ Ta có $CD \perp AD$ (do hình chữ nhật) và $CD \perp SA$ (do $SA \perp (ABCD)$) $\implies CD \perp (SAD)$.
+    Vì $CD \subset (SCD)$ nên $(SCD) \perp (SAD)$.
+    \item $b)$ Khi $ABCD$ là hình vuông thì hai đường chéo $BD \perp AC$.
+    Lại có $BD \perp SA \implies BD \perp (SAC)$. Mà $BD \subset (SBD)$ nên $(SBD) \perp (SAC)$.
+\end{itemize}
+
+\noindent \textbf{d) Tổ chức thực hiện:}
+Học sinh làm bài độc lập 6 phút $\to$ 2 học sinh lên bảng $\to$ Cả lớp nhận xét, chốt kiến thức.
+
+\subsubsection*{4. Hoạt động 4: Vận dụng (5 phút)}
+
+\noindent \textbf{a) Mục tiêu:}
+Giải thích thao tác của thợ nề dùng quả dọi kiểm tra độ vuông góc của tường nhà với sàn nhà.
+
+\noindent \textbf{b) Nội dung:}
+Tại sao khi thả quả dọi chạy dọc theo bề mặt bức tường, nếu sợi dây dọi áp sát mặt tường từ trên xuống dưới thì người thợ khẳng định bức tường vuông góc với sàn nhà?
+
+\noindent \textbf{c) Sản phẩm:}
+Vì sợi dây dọi luôn có phương thẳng đứng vuông góc với mặt sàn nhà nằm ngang ($a \perp (Q)$). Khi sợi dây dọi áp sát mặt tường, tức là đường thẳng $a$ nằm trọn vẹn trong mặt phẳng tường $(P)$ ($a \subset (P)$). Theo định lý 1, suy ra tường nhà vuông góc với sàn nhà ($(P) \perp (Q)$).
+
+\noindent \textbf{d) Tổ chức thực hiện:}
+Giáo viên giao câu hỏi, học sinh trả lời nhanh; kết thúc Tiết 1.
+
+\vspace{10pt}
+
+\subsection*{\faClockO \ TIẾT 2 (TIẾT 71 THEO PPCT): CÁC TÍNH CHẤT CỦA HAI MẶT PHẲNG VUÔNG GÓC}
+
+\subsubsection*{1. Hoạt động 1: Mở đầu (Khởi động) (5 phút)}
+
+\noindent \textbf{a) Mục tiêu:}
+Kích hoạt nhu cầu tìm đường cao của hình chóp có mặt bên vuông góc với đáy.
+
+\noindent \textbf{b) Nội dung:}
+Giáo viên đặt vấn đề:
+\begin{pedabox}{Tình huống khởi động: Tìm đường cao từ mặt bên vuông góc}
+Cho hình chóp $S.ABC$ có mặt bên $(SAB)$ vuông góc với đáy $(ABC)$.
+Nếu trong tam giác $SAB$, ta kẻ đường cao $SH \perp AB$ ($H \in AB$), thì đường thẳng $SH$ có tự động vuông góc với toàn bộ mặt đáy $(ABC)$ hay không?
+\end{pedabox}
+
+\noindent \textbf{c) Sản phẩm:}
+Học sinh dự đoán: Có, $SH$ sẽ vuông góc với mặt đáy $(ABC)$ vì $SH$ vuông góc với giao tuyến $AB$.
+
+\noindent \textbf{d) Tổ chức thực hiện:}
+Giáo viên ghi nhận dự đoán của học sinh và dẫn dắt vào bài học để chứng minh định lý.
+
+\subsubsection*{2. Hoạt động 2: Hình thành kiến thức (25 phút)}
+
+\paragraph{2.1. Đơn vị kiến thức 1: Định lý hạ đường cao từ mặt phẳng vuông góc (12 phút)}
+
+\noindent \textbf{a) Mục tiêu:}
+Nắm vững định lý tính chất quan trọng nhất về hai mặt phẳng vuông góc để xác định đường cao khối đa diện.
+
+\noindent \textbf{b) Nội dung:}
+\begin{pedabox}{Định lý 2 (Tính chất hạ đường cao)}
+Nếu hai mặt phẳng vuông góc với nhau thì bất kì đường thẳng nào nằm trong mặt phẳng này và vuông góc với giao tuyến thì sẽ vuông góc với mặt phẳng kia:
+$$\begin{cases} (P) \perp (Q) \\ (P) \cap (Q) = d \\ a \subset (P), \ a \perp d \end{cases} \implies a \perp (Q)$$
+\end{pedabox}
+
+\begin{scaffoldbox}{Giàn giáo sư phạm: Khắc sâu dấu hiệu nhận biết đường cao hình chóp}
+\textbf{Khẩu quyết vàng cho học sinh:}
+\begin{center}
+\textit{``Hình chóp có mặt bên $(SAB)$ vuông góc với đáy $\implies$ Đường cao của tam giác $SAB$ chính là đường cao của hình chóp!''}
+\end{center}
+Đặc biệt, nếu tam giác $SAB$ đều hoặc cân tại $S$ thì chân đường cao $H$ chính là trung điểm của cạnh giao tuyến $AB$.
+\end{scaffoldbox}
+
+\noindent \textbf{c) Sản phẩm:}
+Học sinh giải bài toán áp dụng:
+\begin{pedabox}{Bài toán áp dụng: Hình chóp có mặt bên vuông góc đáy}
+Cho hình chóp $S.ABC$ có đáy $ABC$ là tam giác đều cạnh $a$. Mặt bên $(SAB)$ là tam giác đều và vuông góc với mặt phẳng đáy $(ABC)$. Gọi $H$ là trung điểm của $AB$.
+\begin{enumerate}[leftmargin=0.6cm]
+    \item Chứng minh rằng $SH \perp (ABC)$. Tính độ dài $SH$.
+    \item Chứng minh rằng $(SHC) \perp (ABC)$.
+\end{enumerate}
+\end{pedabox}
+\textit{Lời giải chi tiết:}
+\begin{enumerate}[leftmargin=0.6cm]
+    \item Ta có:
+    $$\begin{cases} (SAB) \perp (ABC) \\ (SAB) \cap (ABC) = AB \\ SH \subset (SAB) \\ SH \perp AB\text{ (do tam giác } SAB \text{ đều cạnh } a) \end{cases} \implies SH \perp (ABC).$$
+    Độ dài đường cao tam giác đều cạnh $a$: $SH = \dfrac{a\sqrt{3}}{2}$.
+    \item Vì $SH \perp (ABC)$ mà $SH \subset (SHC)$, theo Định lý 1 ta suy ra $(SHC) \perp (ABC)$.
+\end{enumerate}
+
+\noindent \textbf{d) Tổ chức thực hiện:}
+Giáo viên phát biểu định lý, hướng dẫn vẽ hình và gọi học sinh lên bảng giải; lớp nhận xét.
+
+\paragraph{2.2. Đơn vị kiến thức 2: Định lý giao tuyến của hai mặt phẳng cùng vuông góc mặt thứ ba (13 phút)}
+
+\noindent \textbf{a) Mục tiêu:}
+Nắm vững định lý về giao tuyến của hai mặt phẳng cùng vuông góc với một mặt phẳng; nhận biết đường cao hình chóp có hai mặt bên kề nhau cùng vuông góc đáy.
+
+\noindent \textbf{b) Nội dung:}
+\begin{pedabox}{Định lý 3 (Giao tuyến của hai mặt phẳng cùng vuông góc)}
+Nếu hai mặt phẳng cắt nhau và cùng vuông góc với một mặt phẳng thứ ba thì giao tuyến của chúng vuông góc với mặt phẳng thứ ba đó:
+$$\begin{cases} (P) \perp (R) \\ (Q) \perp (R) \\ (P) \cap (Q) = d \end{cases} \implies d \perp (R)$$
+\end{pedabox}
+
+\begin{pedabox}{Hệ quả áp dụng trong hình chóp}
+Nếu hình chóp $S.ABCD$ có hai mặt bên liền kề $(SAB)$ và $(SAD)$ cùng vuông góc với đáy $(ABCD)$ thì cạnh bên chung $SA$ vuông góc với đáy:
+$$\begin{cases} (SAB) \perp (ABCD) \\ (SAD) \perp (ABCD) \\ (SAB) \cap (SAD) = SA \end{cases} \implies SA \perp (ABCD)$$
+\end{pedabox}
+
+\noindent \textbf{c) Sản phẩm:}
+Học sinh nhận biết: Giao tuyến của hai bức tường liền kề trong phòng học chính là mép cột thẳng đứng vuông góc với sàn nhà.
+
+\noindent \textbf{d) Tổ chức thực hiện:}
+Giáo viên trình bày định lý, liên hệ hình ảnh góc tường thực tế; học sinh ghi nhớ hệ quả.
+
+\subsubsection*{3. Hoạt động 3: Luyện tập (10 phút)}
+
+\noindent \textbf{a) Mục tiêu:}
+Củng cố kỹ năng vận dụng định lý 2 và định lý 3 chứng minh mặt phẳng vuông góc.
+
+\noindent \textbf{b) Nội dung:}
+Thực hiện bài tập trong Phiếu học tập số 2:
+\begin{pedabox}{Bài tập luyện tập: Tam giác đáy vuông}
+Cho hình chóp $S.ABC$ có đáy $ABC$ là tam giác vuông tại $C$. Mặt bên $(SAB)$ là tam giác cân tại $S$ và vuông góc với đáy $(ABC)$. Gọi $H$ là trung điểm của $AB$.
+\begin{enumerate}[leftmargin=0.6cm]
+    \item Chứng minh $SH \perp (ABC)$.
+    \item Chứng minh $(SAC) \perp (SBC)$ nếu tam giác $ABC$ vuông cân tại $C$.
+\end{enumerate}
+\end{pedabox}
+
+\noindent \textbf{c) Sản phẩm:}
+Lời giải:
+\begin{enumerate}[leftmargin=0.6cm]
+    \item Tam giác $SAB$ cân tại $S$ nên $SH \perp AB$. Mà $(SAB) \perp (ABC)$ theo giao tuyến $AB \implies SH \perp (ABC)$.
+    \item Kẻ các đường phụ hoặc dùng tích vô hướng để chứng minh hai mặt phẳng vuông góc.
+\end{enumerate}
+
+\noindent \textbf{d) Tổ chức thực hiện:}
+Học sinh làm bài cá nhân $\to$ Thảo luận cặp đôi $\to$ Giáo viên nhận xét.
+
+\subsubsection*{4. Hoạt động 4: Vận dụng (5 phút)}
+
+\noindent \textbf{a) Mục tiêu:}
+Vận dụng định lý tính chất vào kỹ thuật lắp dựng vách ngăn thạch cao trong xây dựng.
+
+\noindent \textbf{b) Nội dung:}
+Khi thi công vách ngăn thạch cao vuông góc với sàn nhà, người thợ chỉ cần định vị đường chân vách trên sàn và dựng các thanh xương đứng vuông góc với đường chân vách. Hãy giải thích tại sao vách thạch cao sẽ tự động vuông góc với sàn nhà.
+
+\noindent \textbf{c) Sản phẩm:}
+Áp dụng Định lý 1: Các thanh xương đứng vuông góc với đường chân vách trên sàn nên vuông góc với sàn nhà. Mặt phẳng vách thạch cao chứa các thanh xương đứng này nên vuông góc với sàn nhà.
+
+\noindent \textbf{d) Tổ chức thực hiện:}
+Giáo viên giao bài toán thực tế; học sinh trả lời nhanh; kết thúc Tiết 2.
+
+\vspace{10pt}
+
+\subsection*{\faClockO \ TIẾT 3 (TIẾT 72 THEO PPCT): HÌNH LĂNG TRỤ ĐỨNG, HÌNH HỘP CHỮ NHẬT, HÌNH LẬP PHƯƠNG VÀ HÌNH CHÓP ĐỀU}
+
+\subsubsection*{1. Hoạt động 1: Mở đầu (Khởi động) (5 phút)}
+
+\noindent \textbf{a) Mục tiêu:}
+Tạo sự chú ý và hứng thú thông qua các hình khối đa diện quen thuộc trong đời sống hàng ngày (hộp quà, viên gạch, viên rubik, kim tự tháp).
+
+\noindent \textbf{b) Nội dung:}
+Giáo viên chiếu hình ảnh các đồ vật: Hộp sữa tươi hình hộp chữ nhật, khối rubik hình lập phương, lăng kính quang học hình lăng trụ đứng tam giác, Kim tự tháp Ai Cập hình chóp đều.
+Các khối hình này có đặc điểm gì về các cạnh bên và các mặt bên so với mặt đáy?
+
+\noindent \textbf{c) Sản phẩm:}
+Học sinh trả lời: Cạnh bên của hộp sữa, khối rubik vuông góc với mặt đáy, các mặt bên là hình chữ nhật. Kim tự tháp có đỉnh nằm ngay trên tâm đáy và các mặt bên nghiêng đều nhau.
+
+\noindent \textbf{d) Tổ chức thực hiện:}
+Giáo viên chiếu hình ảnh, học sinh quan sát trả lời; giáo viên dẫn dắt vào bài mới.
+
+\subsubsection*{2. Hoạt động 2: Hình thành kiến thức (25 phút)}
+
+\paragraph{2.1. Đơn vị kiến thức 1: Hình lăng trụ đứng, hình hộp chữ nhật, hình lập phương (12 phút)}
+
+\noindent \textbf{a) Mục tiêu:}
+Nắm vững định nghĩa và tính chất cơ bản của hình lăng trụ đứng, lăng trụ đều, hình hộp đứng, hình hộp chữ nhật, hình lập phương.
+
+\noindent \textbf{b) Nội dung:}
+\begin{pedabox}{Khái niệm các khối lăng trụ đứng}
+\begin{itemize}[leftmargin=0.6cm]
+    \item \textbf{Hình lăng trụ đứng:} Là hình lăng trụ có các cạnh bên vuông góc với các mặt phẳng đáy.
+    \textit{Tính chất:} Các cạnh bên song song, bằng nhau và là các đường cao; các mặt bên là các hình chữ nhật và vuông góc với các mặt phẳng đáy.
+    \item \textbf{Hình lăng trụ đều:} Là hình lăng trụ đứng có đáy là một đa giác đều (ví dụ: lăng trụ tam giác đều có đáy là tam giác đều; lăng trụ tứ giác đều có đáy là hình vuông).
+    \item \textbf{Hình hộp đứng:} Là hình lăng trụ đứng có đáy là hình bình hành.
+    \item \textbf{Hình hộp chữ nhật:} Là hình lăng trụ đứng có đáy là hình chữ nhật (tất cả 6 mặt đều là hình chữ nhật).
+    \item \textbf{Hình lập phương:} Là hình hộp chữ nhật có tất cả các cạnh bằng nhau (tất cả 6 mặt đều là hình vuông).
+\end{itemize}
+\end{pedabox}
+
+\noindent \textbf{c) Sản phẩm:}
+Học sinh nắm vững: Trong hình hộp chữ nhật có 3 kích thước $a, b, c$, độ dài đường chéo là $d = \sqrt{a^2 + b^2 + c^2}$. Trong hình lập phương cạnh $a$, độ dài đường chéo là $d = a\sqrt{3}$.
+
+\noindent \textbf{d) Tổ chức thực hiện:}
+Giáo viên chiếu mô hình khối gỗ cầm tay, phân tích các góc vuông giữa cạnh bên và mặt đáy; học sinh ghi chép tính chất.
+
+\paragraph{2.2. Đơn vị kiến thức 2: Hình chóp đều và Hình chóp cụt đều (13 phút)}
+
+\noindent \textbf{a) Mục tiêu:}
+Nắm vững định nghĩa và tính chất của hình chóp đều; biết cách dựng hình chóp đều bằng phần mềm GeoGebra 3D; hiểu cách AI nhận diện khối đa diện.
+
+\noindent \textbf{b) Nội dung:}
+\begin{pedabox}{Khái niệm Hình chóp đều}
+Một hình chóp được gọi là \textbf{hình chóp đều} nếu nó thỏa mãn đồng thời hai điều kiện:
+\begin{enumerate}[leftmargin=0.6cm]
+    \item Đáy của hình chóp là một \textbf{đa giác đều}.
+    \item Chân đường cao của hình chóp trùng với \textbf{tâm của đa giác đáy}.
+\end{enumerate}
+\textbf{Các tính chất cơ bản:}
+\begin{itemize}[leftmargin=0.6cm]
+    \item Các cạnh bên bằng nhau ($SA = SB = SC = SD$).
+    \item Các cạnh bên tạo với mặt phẳng đáy các góc bằng nhau.
+    \item Các mặt bên là các tam giác cân bằng nhau.
+    \item Các mặt bên tạo với mặt phẳng đáy các góc bằng nhau.
+\end{itemize}
+\end{pedabox}
+
+\begin{aibox}{Tích hợp Năng lực số (Mã 3.1NC1a) \& Năng lực AI (Mã 11.D1.1)}
+\begin{itemize}[leftmargin=0.6cm]
+    \item \textbf{Dựng mô hình GeoGebra 3D (Mã 3.1NC1a):} Học sinh quan sát giáo viên thao tác trên GeoGebra 3D: Dựng đa giác đáy đều $\to$ Xác định tâm $O \to$ Dựng đường thẳng vuông góc với đáy tại $O \to$ Lấy đỉnh $S$ trên đường thẳng đó $\to$ Nối với các đỉnh đáy tạo hình chóp đều hoàn hảo.
+    \item \textbf{AI nhận diện đa diện trong kiến trúc (Mã 11.D1.1):} Hệ thống AI thị giác máy tính trong máy bay không người lái (drone) quét ảnh chụp từ trên cao của Kim tự tháp, các công trình mái chóp hoặc lăng trụ. Thuật toán AI phân tích tính đối xứng của các đỉnh và mặt bên để tự động phân loại cấu trúc hình học, phục vụ công tác số hóa di sản và kiểm định chất lượng công trình.
+\end{itemize}
+\end{aibox}
+
+\noindent \textbf{c) Sản phẩm:}
+Học sinh hoàn thành bài toán mẫu:
+\begin{pedabox}{Bài toán mẫu: Tính toán trong hình chóp tứ giác đều}
+Cho hình chóp tứ giác đều $S.ABCD$ có cạnh đáy bằng $a$, cạnh bên bằng $a\sqrt{2}$. Gọi $O$ là tâm của hình vuông $ABCD$.
+\begin{enumerate}[leftmargin=0.6cm]
+    \item Tính độ dài đường cao $SO$ của hình chóp.
+    \item Tính góc giữa cạnh bên $SA$ và mặt phẳng đáy $(ABCD)$.
+\end{enumerate}
+\end{pedabox}
+\textit{Lời giải chi tiết:}
+\begin{enumerate}[leftmargin=0.6cm]
+    \item Đáy $ABCD$ là hình vuông cạnh $a \implies AC = a\sqrt{2} \implies OA = \dfrac{AC}{2} = \dfrac{a\sqrt{2}}{2}$.
+    Vì $S.ABCD$ là hình chóp đều nên $SO \perp (ABCD)$.
+    Tam giác $SOA$ vuông tại $O$:
+    $$SO = \sqrt{SA^2 - OA^2} = \sqrt{(a\sqrt{2})^2 - \left(\dfrac{a\sqrt{2}}{2}\right)^2} = \sqrt{2a^2 - \dfrac{a^2}{2}} = \sqrt{\dfrac{3a^2}{2}} = \dfrac{a\sqrt{6}}{2}.$$
+    \item Vì $SO \perp (ABCD)$ nên hình chiếu của $SA$ lên $(ABCD)$ là đoạn thẳng $OA$.
+    Góc giữa $SA$ và $(ABCD)$ là góc $\widehat{SAO}$.
+    $$\cos \widehat{SAO} = \dfrac{OA}{SA} = \dfrac{\dfrac{a\sqrt{2}}{2}}{a\sqrt{2}} = \dfrac{1}{2} \implies \widehat{SAO} = 60^\circ.$$
+\end{enumerate}
+
+\noindent \textbf{d) Tổ chức thực hiện:}
+Giáo viên giao bài toán, học sinh tính toán trên vở; 1 học sinh lên bảng giải; lớp nhận xét.
+
+\subsubsection*{3. Hoạt động 3: Luyện tập (10 phút)}
+
+\noindent \textbf{a) Mục tiêu:}
+Rèn luyện kỹ năng tính toán trong lăng trụ tam giác đều.
+
+\noindent \textbf{b) Nội dung:}
+Thực hiện bài tập trong Phiếu học tập số 3:
+\begin{pedabox}{Bài tập luyện tập: Lăng trụ tam giác đều}
+Cho hình lăng trụ tam giác đều $ABC.A'B'C'$ có cạnh đáy bằng $a$, cạnh bên $AA' = a\sqrt{3}$.
+\begin{enumerate}[leftmargin=0.6cm]
+    \item Tính góc giữa đường thẳng $A'B$ và mặt phẳng đáy $(ABC)$.
+    \item Tính diện tích xung quanh của hình lăng trụ đó.
+\end{enumerate}
+\end{pedabox}
+
+\noindent \textbf{c) Sản phẩm:}
+\begin{enumerate}[leftmargin=0.6cm]
+    \item Vì $AA' \perp (ABC)$ nên hình chiếu của $A'B$ lên $(ABC)$ là $AB$. Góc cần tìm là $\widehat{A'BA}$.
+    Tam giác $A'AB$ vuông tại $A$: $\tan \widehat{A'BA} = \dfrac{AA'}{AB} = \dfrac{a\sqrt{3}}{a} = \sqrt{3} \implies \widehat{A'BA} = 60^\circ$.
+    \item $S_{xq} = 3 \times S_{\text{mặt bên}} = 3 \times (a \times a\sqrt{3}) = 3a^2\sqrt{3}$.
+\end{enumerate}
+
+\noindent \textbf{d) Tổ chức thực hiện:}
+Học sinh giải nhanh $\to$ Kiểm tra kết quả $\to$ Giáo viên nhận xét.
+
+\subsubsection*{4. Hoạt động 4: Vận dụng (5 phút)}
+
+\noindent \textbf{a) Mục tiêu:}
+Vận dụng kiến thức hình lập phương và hình chóp đều vào thiết kế bao bì sản phẩm.
+
+\noindent \textbf{b) Nội dung:}
+Một công ty bánh kẹo cần thiết kế hộp quà Tết có dạng hình chóp tứ giác đều cạnh đáy $20\text{ cm}$, chiều cao $15\text{ cm}$. Hãy tính độ dài cạnh bên của hộp quà để lên khuôn mẫu cắt bìa các-tông.
+
+\noindent \textbf{c) Sản phẩm:}
+$OA = \dfrac{20\sqrt{2}}{2} = 10\sqrt{2}\text{ cm}$. Cạnh bên $SA = \sqrt{SO^2 + OA^2} = \sqrt{15^2 + (10\sqrt{2})^2} = \sqrt{225 + 200} = \sqrt{425} \approx 20{,}62\text{ cm}$.
+
+\noindent \textbf{d) Tổ chức thực hiện:}
+Học sinh bấm máy tính, giáo viên chốt đáp số; kết thúc Tiết 3.
+
+\vspace{10pt}
+
+\subsection*{\faClockO \ TIẾT 4 (TIẾT 73 THEO PPCT): GÓC NHỊ DIỆN VÀ GÓC PHẲNG NHỊ DIỆN}
+
+\subsubsection*{1. Hoạt động 1: Mở đầu (Khởi động) (5 phút)}
+
+\noindent \textbf{a) Mục tiêu:}
+Hình thành trực giác về góc nhị diện qua hành động mở trang sách và mở cánh cửa lớp học.
+
+\noindent \textbf{b) Nội dung:}
+Giáo viên cầm một quyển sách giáo khoa đặt gáy sách lên bàn và mở rộng hai bìa sách:
+\begin{pedabox}{Tình huống khởi động: Độ mở của trang sách}
+Khi ta mở một cuốn sách hoặc mở một chiếc máy tính xách tay (laptop):
+\begin{enumerate}[leftmargin=0.6cm]
+    \item Hai bìa sách tạo thành một hình ảnh không gian gồm một đường thẳng chung (gáy sách) và hai nửa mặt phẳng xuất phát từ đường thẳng đó.
+    \item Làm thế nào để đo độ mở (góc) giữa hai bìa sách một cách chính xác bằng độ?
+\end{enumerate}
+\end{pedabox}
+
+\noindent \textbf{c) Sản phẩm:}
+Học sinh trả lời: Đặt thước đo góc vuông góc với gáy sách trên hai bìa để đo góc mở.
+
+\noindent \textbf{d) Tổ chức thực hiện:}
+Giáo viên thao tác trực quan mở sách; học sinh quan sát và dẫn dắt vào bài mới.
+
+\subsubsection*{2. Hoạt động 2: Hình thành kiến thức (25 phút)}
+
+\paragraph{2.1. Đơn vị kiến thức 1: Khái niệm Góc nhị diện và Góc phẳng nhị diện (12 phút)}
+
+\noindent \textbf{a) Mục tiêu:}
+Nắm vững định nghĩa nửa mặt phẳng, góc nhị diện, cạnh nhị diện, mặt nhị diện và góc phẳng nhị diện.
+
+\noindent \textbf{b) Nội dung:}
+\begin{pedabox}{Định nghĩa Góc nhị diện và Góc phẳng nhị diện}
+\begin{itemize}[leftmargin=0.6cm]
+    \item \textbf{Nửa mặt phẳng:} Một đường thẳng $d$ nằm trong mặt phẳng $(P)$ chia mặt phẳng đó thành hai phần, mỗi phần gọi là một \textbf{nửa mặt phẳng bờ $d$}.
+    \item \textbf{Góc nhị diện:} Hình gồm hai nửa mặt phẳng $(\alpha)$ và $(\beta)$ có chung bờ $d$ được gọi là một \textbf{góc nhị diện}.
+    \begin{itemize}
+        \item Đường thẳng $d$ gọi là \textbf{cạnh của góc nhị diện}.
+        \item Hai nửa mặt phẳng $(\alpha)$ và $(\beta)$ gọi là \textbf{hai mặt của góc nhị diện}.
+        \item Ký hiệu: $[\alpha, d, \beta]$ hoặc $[P, d, Q]$. Nếu trên hai mặt lần lượt lấy hai điểm $M, N$ thì có thể ký hiệu là $[M, d, N]$.
+    \end{itemize}
+    \item \textbf{Góc phẳng nhị diện:} Lấy điểm $O$ bất kì trên cạnh $d$. Trong nửa mặt phẳng $(\alpha)$, kẻ tia $Ox \perp d$; trong nửa mặt phẳng $(\beta)$, kẻ tia $Oy \perp d$.
+    Góc $\widehat{xOy}$ được gọi là \textbf{góc phẳng nhị diện} của góc nhị diện $[\alpha, d, \beta]$.
+    \item \textbf{Quy ước số đo:} Số đo của góc phẳng nhị diện $\widehat{xOy}$ được gọi là \textbf{số đo của góc nhị diện}. Số đo góc nhị diện nhận giá trị từ $0^\circ$ đến $180^\circ$.
+    (Khi góc nhị diện bằng $90^\circ$, ta nói góc nhị diện đó là \textbf{nhị diện vuông}, tương đương hai mặt phẳng vuông góc).
+\end{itemize}
+\end{pedabox}
+
+\begin{scaffoldbox}{Giàn giáo sư phạm: Quy trình 3 bước xác định góc phẳng nhị diện}
+\textbf{Phương pháp chuẩn mực cho học sinh trung bình - yếu:}
+Để xác định góc phẳng nhị diện của góc nhị diện $[P, d, Q]$:
+\begin{enumerate}[leftmargin=0.8cm]
+    \item[\textbf{Bước 1:}] Xác định \textbf{cạnh nhị diện} (giao tuyến chung) $d = (P) \cap (Q)$.
+    \item[\textbf{Bước 2:}] Chọn một điểm $O$ thích hợp trên $d$ (thường là chân đường cao hoặc trung điểm cạnh).
+    Từ $O$, kẻ tia $Ox \subset (P)$ sao cho $Ox \perp d$, và kẻ tia $Oy \subset (Q)$ sao cho $Oy \perp d$.
+    \item[\textbf{Bước 3:}] Kết luận góc phẳng nhị diện là $\widehat{xOy}$. Gắn vào tam giác để tính số đo góc bằng định lý cosin hoặc tam giác vuông.
+\end{enumerate}
+\end{scaffoldbox}
+
+\paragraph{2.2. Đơn vị kiến thức 2: Ứng dụng AI và Thanh trượt tương tác số (13 phút)}
+
+\noindent \textbf{a) Mục tiêu:}
+Biết thao tác thanh trượt số trên GeoGebra thay đổi góc mở nhị diện; hiểu thuật toán AI nhận diện cử chỉ góc mở của màn hình gập.
+
+\noindent \textbf{b) Nội dung:}
+\begin{aibox}{Tích hợp Năng lực số (Mã 5.2NC1b) \& Năng lực AI (Mã 11.C3.2)}
+\begin{itemize}[leftmargin=0.6cm]
+    \item \textbf{Thanh trượt tương tác số GeoGebra (Mã 5.2NC1b):} Học sinh sử dụng thanh trượt góc $\alpha \in [0^\circ; 180^\circ]$ trên tệp GeoGebra 3D để quan sát hai mặt của góc nhị diện mở ra từ từ: Khi $\alpha = 0^\circ$ hai mặt phẳng trùng nhau; khi $\alpha = 90^\circ$ hai mặt phẳng vuông góc; khi $\alpha = 180^\circ$ tạo thành góc nhị diện bẹt.
+    \item \textbf{AI trong thiết bị màn hình gập (Mã 11.C3.2):} Trên các dòng điện thoại màn hình gập (Samsung Galaxy Z Fold/Flip, Google Pixel Fold), hệ thống AI tích hợp trong chip xử lý liên tục đọc số liệu góc nhị diện $\alpha$ từ cảm biến Hall và con quay hồi chuyển gắn ở bản lề.
+    \begin{itemize}
+        \item Khi $\alpha \in [75^\circ; 115^\circ]$: AI tự động kích hoạt \textbf{Chế độ Flex Mode} (chia đôi màn hình: nửa trên hiển thị video/camera, nửa dưới hiển thị bảng điều khiển/bàn phím).
+        \item Khi $\alpha \approx 180^\circ$: AI mở rộng giao diện toàn màn hình máy tính bảng.
+    \end{itemize}
+\end{itemize}
+\end{aibox}
+
+\noindent \textbf{c) Sản phẩm:}
+Học sinh hoàn thành bài toán mẫu:
+\begin{pedabox}{Bài toán mẫu: Tính góc nhị diện trong hình chóp tứ giác đều}
+Cho hình chóp tứ giác đều $S.ABCD$ có tất cả các cạnh đều bằng $a$.
+Xác định và tính số đo của góc nhị diện $[S, CD, A]$ tạo bởi mặt bên $(SCD)$ và mặt đáy $(ABCD)$.
+\end{pedabox}
+\textit{Lời giải chi tiết:}
+\begin{itemize}
+    \item Cạnh nhị diện là đường thẳng $CD$.
+    \item Lấy $M$ là trung điểm của cạnh $CD$.
+    Vì tam giác $SCD$ đều cạnh $a$ nên trung tuyến $SM \perp CD$.
+    Xét đáy $ABCD$ là hình vuông cạnh $a$ tâm $O$, gọi $N$ là trung điểm của $AB$, ta có đoạn nối trung điểm $OM \perp CD$ (hoặc kẻ $MN \perp CD$).
+    Do đó, tại điểm $M \in CD$: Ta có $SM \perp CD$ trong $(SCD)$ và $OM \perp CD$ trong $(ABCD)$.
+    \item Vậy góc phẳng nhị diện của góc nhị diện $[S, CD, A]$ là góc $\widehat{SMO}$.
+    \item Tính số đo góc:
+    Tam giác $SCD$ đều cạnh $a \implies SM = \dfrac{a\sqrt{3}}{2}$.
+    Đoạn $OM = \dfrac{AD}{2} = \dfrac{a}{2}$.
+    Vì $SO \perp (ABCD) \implies SO \perp OM$, tam giác $SOM$ vuông tại $O$.
+    $$\cos \widehat{SMO} = \dfrac{OM}{SM} = \dfrac{\dfrac{a}{2}}{\dfrac{a\sqrt{3}}{2}} = \dfrac{1}{\sqrt{3}} = \dfrac{\sqrt{3}}{3} \approx 0{,}5774.$$
+    Suy ra: $\widehat{SMO} \approx 54^\circ 44'$.
+    Vậy số đo của góc nhị diện $[S, CD, A]$ xấp xỉ $54^\circ 44'$.
+\end{itemize}
+
+\noindent \textbf{d) Tổ chức thực hiện:}
+Giáo viên giao bài toán mẫu, hướng dẫn học sinh tìm trung điểm $M$ của cạnh giao tuyến; 1 học sinh lên bảng giải; lớp nhận xét.
+
+\subsubsection*{3. Hoạt động 3: Luyện tập (10 phút)}
+
+\noindent \textbf{a) Mục tiêu:}
+Rèn luyện kỹ năng xác định góc phẳng nhị diện giữa hai mặt bên kề nhau hoặc mặt bên và mặt đáy.
+
+\noindent \textbf{b) Nội dung:}
+Thực hiện bài tập trong Phiếu học tập số 4:
+\begin{pedabox}{Bài tập luyện tập: Góc nhị diện trong hình chóp có cạnh vuông góc đáy}
+Cho hình chóp $S.ABC$ có đáy $ABC$ là tam giác vuông cân tại $B$, $AB = BC = a$. Cạnh bên $SA \perp (ABC)$ và $SA = a$.
+Xác định và tính số đo của góc nhị diện $[A, SB, C]$.
+\end{pedabox}
+
+\noindent \textbf{c) Sản phẩm:}
+\begin{itemize}
+    \item Cạnh nhị diện là $SB$.
+    \item Ta có $BC \perp AB$ và $BC \perp SA \implies BC \perp (SAB) \implies BC \perp SB$.
+    Trong $(SAB)$, kẻ $AH \perp SB$ tại $H$. Vì $BC \perp (SAB) \implies BC \perp AH$.
+    Từ $H$ kẻ $HC$: Ta có $SB \perp AH$ và $SB \perp BC \implies SB \perp (AHC) \implies SB \perp HC$.
+    \item Góc phẳng nhị diện là $\widehat{AHC}$. Tam giác $AHC$ vuông tại $A$ (vì $BC \perp (SAB) \implies BC \perp AH$, hoặc $AH \perp (SBC)$).
+    Tính được: $AH = \dfrac{a\sqrt{2}}{2}$, $AC = a\sqrt{2} \implies \tan \widehat{AHC} = \dfrac{AC}{AH} = 2 \implies \widehat{AHC} \approx 63^\circ 26'$.
+\end{itemize}
+
+\noindent \textbf{d) Tổ chức thực hiện:}
+Học sinh làm bài, trao đổi cặp đôi $\to$ Giáo viên nhận xét, chốt phương pháp dựng mặt phẳng vuông góc với cạnh nhị diện.
+
+\subsubsection*{4. Hoạt động 4: Vận dụng (5 phút)}
+
+\noindent \textbf{a) Mục tiêu:}
+Vận dụng góc nhị diện giải thích góc nghiêng tối ưu của mái nhà tôn thoát nước mưa và lắp pin mặt trời.
+
+\noindent \textbf{b) Nội dung:}
+Ở các vùng có lượng mưa lớn tại miền Trung, góc nhị diện giữa mái nhà dốc và mặt phẳng trần nhà nằm ngang thường được thiết kế từ $25^\circ$ đến $35^\circ$. Hãy giải thích ý nghĩa thực tiễn của góc nhị diện này trong việc thoát nước mưa và đón bức xạ mặt trời.
+
+\noindent \textbf{c) Sản phẩm:}
+Góc nhị diện đủ lớn giúp nước mưa thoát nhanh chống thấm dột, đồng thời tạo góc nghiêng lý tưởng để các tấm pin năng lượng mặt trời hấp thụ bức xạ mặt trời hiệu quả nhất trong năm.
+
+\noindent \textbf{d) Tổ chức thực hiện:}
+Giáo viên tổng kết toàn bộ 4 tiết học của Bài 25; hướng dẫn học sinh chuẩn bị bài học tiếp theo trong phân phối chương trình.
+
+\vspace{10pt}
+
+\section*{IV. PHỤ LỤC HỌC LIỆU BỔ TRỢ (BẮT BUỘC)}
+
+\subsection*{1. Phiếu học tập số 1 (Tiết 1): Điều kiện hai mặt phẳng vuông góc}
+
+\begin{pedabox}{PHIẾU HỌC TẬP SỐ 1: HAI MẶT PHẲNG VUÔNG GÓC}
+\textbf{Họ và tên học sinh:} \dotfill \ \textbf{Lớp:} \dotfill \ \textbf{Nhóm:} \dotfill
+
+\noindent \textbf{CẤP ĐỘ 1: NHẬN BIẾT (Điền khuyết)}
+\begin{enumerate}[leftmargin=0.6cm]
+    \item Điền vào chỗ trống:
+    Nếu một mặt phẳng chứa một đường thẳng $\dots\dots\dots\dots$ với mặt phẳng kia thì hai mặt phẳng đó $\dots\dots\dots\dots$ với nhau.
+    Góc giữa hai mặt phẳng nhận giá trị trong đoạn từ $\dots\dots^\circ$ đến $\dots\dots^\circ$.
+    \item Cho hình lập phương $ABCD.A'B'C'D'$. Nêu tên 3 mặt phẳng vuông góc với mặt phẳng đáy $(ABCD)$:
+    $\dots\dots\dots\dots\dots\dots\dots\dots\dots\dots\dots\dots\dots\dots\dots\dots\dots\dots\dots\dots\dots\dots\dots\dots$
+\end{enumerate}
+
+\noindent \textbf{CẤP ĐỘ 2: THÔNG HIỂU (Chứng minh cơ bản)}
+\begin{enumerate}[leftmargin=0.6cm]
+    \item Cho tứ diện $SABC$ có $SA \perp (ABC)$ và tam giác $ABC$ vuông tại $B$.
+    Chứng minh rằng $(SAB) \perp (SBC)$.
+\end{enumerate}
+
+\noindent \textbf{CẤP ĐỘ 3: VẬN DỤNG (Liên hệ AI)}
+\begin{enumerate}[leftmargin=0.6cm]
+    \item Tìm hiểu cách thức robot xây dựng sử dụng cảm biến laser kiểm tra độ vuông góc giữa tường và sàn nhà.
+\end{enumerate}
+\end{pedabox}
+
+\subsection*{2. Phiếu học tập số 2 (Tiết 2): Tính chất hai mặt phẳng vuông góc}
+
+\begin{pedabox}{PHIẾU HỌC TẬP SỐ 2: TÍNH CHẤT HAI MẶT PHẲNG VUÔNG GÓC}
+\textbf{Họ và tên học sinh:} \dotfill \ \textbf{Lớp:} \dotfill \ \textbf{Nhóm:} \dotfill
+
+\noindent \textbf{BÀI TẬP VẬN DỤNG}
+\begin{enumerate}[leftmargin=0.6cm]
+    \item Cho hình chóp $S.ABCD$ có đáy $ABCD$ là hình vuông cạnh $a$. Mặt bên $(SAB)$ là tam giác đều và nằm trong mặt phẳng vuông góc với mặt phẳng đáy.
+    $$a) \ \text{Gọi } H \text{ là trung điểm } AB. \text{ Chứng minh rằng } SH \perp (ABCD).$$
+    $$b) \ \text{Tính thể tích khối chóp } S.ABCD \text{ theo } a.$$
+\end{enumerate}
+\end{pedabox}
+
+\subsection*{3. Phiếu học tập số 3 (Tiết 3): Hình lăng trụ đứng và Hình chóp đều}
+
+\begin{pedabox}{PHIẾU HỌC TẬP SỐ 3: KHỐI ĐA DIỆN ĐỀU VÀ LĂNG TRỤ ĐỨNG}
+\textbf{Họ và tên học sinh:} \dotfill \ \textbf{Lớp:} \dotfill \ \textbf{Nhóm:} \dotfill
+
+\noindent \textbf{BÀI TẬP ÁP DỤNG}
+\begin{enumerate}[leftmargin=0.6cm]
+    \item Cho hình chóp tam giác đều $S.ABC$ có cạnh đáy bằng $a$, góc giữa cạnh bên và mặt phẳng đáy bằng $60^\circ$.
+    Tính chiều cao $SO$ của hình chóp đó theo $a$.
+    \item Dựng mô hình hình lăng trụ đứng tam giác trên phần mềm GeoGebra 3D.
+\end{enumerate}
+\end{pedabox}
+
+\subsection*{4. Phiếu học tập số 4 (Tiết 4): Góc nhị diện và Flex Mode AI}
+
+\begin{pedabox}{PHIẾU HỌC TẬP SỐ 4: GÓC NHỊ DIỆN}
+\textbf{Họ và tên học sinh:} \dotfill \ \textbf{Lớp:} \dotfill \ \textbf{Nhóm:} \dotfill
+
+\noindent \textbf{BÀI TẬP VẬN DỤNG CAO}
+\begin{enumerate}[leftmargin=0.6cm]
+    \item Cho hình chóp $S.ABCD$ có đáy $ABCD$ là hình thoi cạnh $a$, $\widehat{BAD} = 60^\circ$. Cạnh bên $SA \perp (ABCD)$ và $SA = \dfrac{a\sqrt{3}}{2}$.
+    Tính số đo của góc nhị diện $[S, CD, A]$.
+    \item \textbf{Khám phá AI:} Mô tả thuật toán AI nhận biết góc mở màn hình gập smartphone để tự động chuyển đổi giao diện Flex Mode.
+\end{enumerate}
+\end{pedabox}
+
+\subsection*{5. Bảng Rubric đánh giá năng lực học sinh theo 4 mức độ}
+
+\begin{center}
+\begin{tabularx}{\textwidth}{|p{2.8cm}|X|X|X|X|}
+    \hline
+    \textbf{Tiêu chí} & \textbf{Mức 1: Chưa đạt} & \textbf{Mức 2: Đạt} & \textbf{Mức 3: Khá} & \textbf{Mức 4: Tốt} \\ \hline
+    \textbf{1. Chứng minh hai MP vuông góc} & Chưa tìm được đường thẳng vuông góc mặt phẳng; trình bày thiếu căn cứ. & Thực hiện đúng quy trình 2 bước với các bài toán hình chóp cơ bản. & Chứng minh nhanh và chính xác; vận dụng linh hoạt định lý giao tuyến vuông góc. & Tư duy hình học sắc sảo; xử lý điêu luyện bài toán đa diện phức tạp có yếu tố đối xứng. \\ \hline
+    \textbf{2. Xác định và tính góc nhị diện} & Nhầm lẫn góc nhị diện với góc phẳng bất kì không vuông góc cạnh nhị diện. & Thực hiện được 3 bước dựng góc phẳng nhị diện với mặt đáy. & Dựng đúng góc nhị diện với mặt phẳng bên; tính toán chính xác bằng lượng giác. & Lập luận chặt chẽ; thành thạo phương pháp dựng mặt phẳng vuông góc với cạnh nhị diện. \\ \hline
+    \textbf{3. Năng lực số \& GeoGebra 3D (Mã 5.2NC1b, 3.1NC1a)} & Chưa biết mở tệp hoặc thao tác thanh trượt trên phần mềm. & Xoay được mô hình 3D và kéo thanh trượt góc mở theo hướng dẫn. & Tự thao tác mượt mà; dựng được hình chóp đều và lăng trụ đứng trên phần mềm. & Làm chủ phần mềm; tạo lập được các mô phỏng không gian động phục vụ thuyết trình nhóm. \\ \hline
+    \textbf{4. Hiểu biết ứng dụng AI (Mã 11.A2.1, 11.D1.1, 11.C3.2)} & Chưa hiểu mối liên hệ giữa toán học và cảm biến thông minh. & Nêu được ví dụ về robot xây dựng kiểm tra tường hoặc màn hình gập. & Giải thích được nguyên lý đo góc nhị diện phục vụ chế độ Flex Mode của AI. & Phân tích sâu sắc thuật toán thị giác máy tính nhận diện đa diện; liên hệ thực tiễn xuất sắc. \\ \hline
+\end{tabularx}
+\end{center}
+
+\end{document}
