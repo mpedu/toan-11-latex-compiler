@@ -1,0 +1,751 @@
+\documentclass[12pt, a4paper]{article}
+% --- 1. Cấu hình Tiếng Việt và Font chữ chuẩn ---
+\usepackage[utf8]{inputenc}
+\usepackage[T5]{fontenc}
+\usepackage[vietnamese]{babel}
+\usepackage{mathptmx} % Font Times New Roman đồng bộ cả chữ và công thức toán, không gây xung đột gói
+
+\makeatletter
+\renewcommand{\normalsize}{\@setfontsize\normalsize{13pt}{16pt}}
+\makeatother
+\normalsize
+
+% --- 2. Gói Toán học & Ký hiệu bổ trợ ---
+\usepackage{amsmath, amssymb, amsfonts, mathrsfs, amsthm}
+\usepackage{graphicx}
+\usepackage{fontawesome}
+\usepackage{booktabs, tabularx, array, multirow}
+\usepackage{enumitem}
+
+% --- 3. Đồ họa TikZ, Bảng biến thiên & Hình không gian ---
+\usepackage{tikz}
+\usetikzlibrary{calc, intersections, angles, quotes, patterns, arrows.meta, 3d}
+\usepackage{pgfplots}
+\pgfplotsset{compat=1.18}
+\usepackage{tkz-euclide}
+\usepackage{tkz-tab}
+
+\renewcommand{\vec}[1]{\overrightarrow{#1}}
+
+% --- 4. Hộp sư phạm (Tcolorbox) ---
+\usepackage[many]{tcolorbox}
+\tcbuselibrary{skins, breakable}
+
+% --- 5. Căn lề chuẩn văn bản giáo án ---
+\usepackage{geometry}
+\geometry{
+    a4paper,
+    left=25mm,
+    right=15mm,
+    top=20mm,
+    bottom=20mm
+}
+
+% --- 6. Header / Footer chuẩn hóa ---
+\usepackage{fancyhdr}
+\usepackage{lastpage}
+\pagestyle{fancy}
+\fancyhf{}
+
+\fancyhead[L]{\small \textit{Kế hoạch bài dạy Toán 11}}
+\fancyhead[R]{\textbf{Trang \thepage/\pageref{LastPage}}}
+\fancyfoot[L]{\small \textit{Tổ Toán - Tin}}
+\fancyfoot[R]{\small \textit{Trường THCS\&THPT Hồng Vân}}
+\renewcommand{\headrulewidth}{0.4pt}
+\renewcommand{\footrulewidth}{0.4pt}
+
+% --- 7. Giãn dòng & Giãn đoạn theo chuẩn Nghị định 30/2020/NĐ-CP ---
+\usepackage{setspace}
+\setstretch{1.15}
+\setlength{\parindent}{1.0cm}
+\setlength{\parskip}{5pt}
+
+% Định nghĩa hộp sư phạm chuyên dụng
+\newtcolorbox{pedabox}[2][]{
+    enhanced,
+    breakable,
+    colback=blue!3!white,
+    colframe=blue!65!black,
+    fonttitle=\bfseries\small,
+    title={#2},
+    arc=2mm,
+    boxrule=0.6pt,
+    left=3mm, right=3mm, top=2mm, bottom=2mm,
+    #1
+}
+
+\newtcolorbox{aibox}[2][]{
+    enhanced,
+    breakable,
+    colback=teal!4!white,
+    colframe=teal!70!black,
+    fonttitle=\bfseries\small,
+    title={#2},
+    arc=2mm,
+    boxrule=0.6pt,
+    left=3mm, right=3mm, top=2mm, bottom=2mm,
+    #1
+}
+
+\newtcolorbox{scaffoldbox}[2][]{
+    enhanced,
+    breakable,
+    colback=orange!4!white,
+    colframe=orange!80!black,
+    fonttitle=\bfseries\small,
+    title={#2},
+    arc=2mm,
+    boxrule=0.6pt,
+    left=3mm, right=3mm, top=2mm, bottom=2mm,
+    #1
+}
+
+\newtcolorbox{stembox}[2][]{
+    enhanced,
+    breakable,
+    colback=purple!4!white,
+    colframe=purple!75!black,
+    fonttitle=\bfseries\small,
+    title={#2},
+    arc=2mm,
+    boxrule=0.6pt,
+    left=3mm, right=3mm, top=2mm, bottom=2mm,
+    #1
+}
+
+\begin{document}
+
+\begin{center}
+    {\fontsize{14pt}{17pt}\selectfont \textbf{KẾ HOẠCH BÀI DẠY MÔN TOÁN LỚP 11}}\\[6pt]
+    {\fontsize{16pt}{19pt}\selectfont \textbf{MỘT VÀI ÁP DỤNG CỦA TOÁN HỌC TRONG TÀI CHÍNH}}\\[4pt]
+    {\fontsize{12pt}{15pt}\selectfont \textbf{Môn học: Toán 11} \ \textbar \ \textbf{Thời lượng: 2 tiết (Tiết 47, 48 theo PPCT | Tuần 16)}}
+\end{center}
+
+\vspace{5pt}
+
+\section*{I. MỤC TIÊU}
+
+\subsection*{1. Kiến thức, Năng lực}
+
+\begin{itemize}[leftmargin=1.2cm]
+    \item \textbf{Yêu cầu cần đạt (Nguyên văn CT GDPT 2018 Toán 11):}
+    \begin{itemize}[leftmargin=0.6cm]
+        \item Vận dụng cấp số cộng, cấp số nhân giải bài toán tài chính: tính tiền gửi tiết kiệm theo kì hạn, tính tiền trả góp định kì.
+        \item Lập kế hoạch tài chính cá nhân ngắn hạn và trung hạn.
+    \end{itemize}
+
+    \item \textbf{Năng lực Toán học đặc thù:}
+    \begin{itemize}[leftmargin=0.6cm]
+        \item \textit{Năng lực tư duy và lập luận toán học:} Phân tích quy luật biến thiên của số dư tài khoản theo thời gian dưới tác động của lãi suất; nhận diện bản chất toán học của việc tích lũy lãi (lãi kép) và khấu hao dư nợ (trả góp) là sự vận động của dãy số cấp số nhân; lập luận logic chặt chẽ khi thiết lập phương trình cân bằng tài chính.
+        \item \textit{Năng lực mô hình hóa toán học:} Chuyển đổi các bài toán tài chính thực tế (gửi tiết kiệm một lần, gửi tiết kiệm tích lũy định kì hàng tháng, vay mua trả góp đồ dùng học tập/phương tiện đi lại) thành mô hình số học cấp số nhân và phương trình đại số chứa ẩn số tiền gửi/trả định kì $m$ hoặc số kì hạn $n$.
+        \item \textit{Năng lực giải quyết vấn đề toán học:} Thành thạo việc vận dụng công thức tính tổng cấp số nhân $S_n = u_1 \cdot \dfrac{q^n - 1}{q - 1}$ để giải quyết bài toán gửi tiết kiệm đều đặn và bài toán vay trả góp định kì; xử lý các biến đổi đại số chính xác để tìm số tiền phải trả mỗi kì hoặc số tháng cần thiết để hoàn tất nghĩa vụ tài chính.
+        \item \textit{Năng lực giao tiếp toán học:} Trình bày rõ ràng tiến trình lập luận toán tài chính bằng văn bản và bảng biểu; sử dụng chuẩn xác các thuật ngữ kinh tế - tài chính cơ bản trong ngôn ngữ toán học (tiền gốc, lãi suất kì hạn, lãi đơn, lãi kép, niên kim, dư nợ giảm dần).
+        \item \textit{Năng lực sử dụng công cụ, phương tiện học toán:} Sử dụng thành thạo máy tính cầm tay (MTCT Casio fx-580VN X) để thực hiện các phép lũy thừa bậc cao, tính toán giá trị biểu thức tài chính phức tạp; thao tác linh hoạt với phần mềm bảng tính điện tử (Microsoft Excel/Google Sheets) để tự động hóa bảng biểu dòng tiền.
+    \end{itemize}
+
+    \item \textbf{Năng lực số (Theo Thông tư 02/2025/TT-BGDĐT):}
+    \begin{itemize}[leftmargin=0.6cm]
+        \item \textit{Mã 3.1NC1b:} Học sinh thao tác trên phòng máy vi tính 35 máy, lập bảng tính điện tử Excel mô phỏng bảng lịch trình trả góp tiền mua xe đạp điện/laptop (Amortization Schedule); sử dụng linh hoạt các hàm số học tự tạo và hàm tài chính chuyên dụng ($=\text{PMT}$, $=\text{FV}$, $=\text{PV}$) để tính toán tự động dòng tiền dư nợ giảm dần qua từng tháng.
+        \item \textit{Mã 2.4NC1b:} Chia sẻ tệp bảng tính trực tuyến, cộng tác nhóm trên không gian đám mây để hoàn thiện dự án kế hoạch tài chính cá nhân.
+    \end{itemize}
+
+    \item \textbf{Năng lực AI (Theo Quyết định 2422/QĐ-BGDĐT):}
+    \begin{itemize}[leftmargin=0.6cm]
+        \item \textit{Mã 11.A2.1:} Học sinh tìm hiểu ứng dụng thực tiễn của công nghệ Trí tuệ nhân tạo (AI) trong lĩnh vực tài chính ngân hàng: thuật toán Machine Learning chấm điểm tín dụng cá nhân (Credit Scoring), trợ lý AI phân tích hành vi tiêu dùng và cảnh báo sớm rủi ro tài chính (bẫy nợ tín dụng đen, lãi suất bẫy, biến động lãi suất thả nổi).
+        \item \textit{Kỹ thuật Prompting:} Học sinh biết cách xây dựng câu lệnh prompt tối ưu gửi đến các mô hình ngôn ngữ lớn (LLM) để kiểm tra chéo công thức toán tài chính, yêu cầu giải thích bảng lịch trình trả nợ và phân tích các kịch bản lãi suất khác nhau.
+    \end{itemize}
+
+    \item \textbf{Năng lực chung:}
+    \begin{itemize}[leftmargin=0.6cm]
+        \item \textit{Tự chủ và tự học:} Tự giác tìm hiểu biểu lãi suất huy động và cho vay của các ngân hàng thương mại Việt Nam hiện hành; tự xây dựng kế hoạch quản lý tài chính cá nhân.
+        \item \textit{Giao tiếp và hợp tác:} Hoạt động nhóm hiệu quả trong phòng máy, phân công vai trò rõ ràng (nhập dữ liệu, kiểm tra công thức, thiết kế giao diện bảng tính).
+    \end{itemize}
+\end{itemize}
+
+\subsection*{2. Phẩm chất}
+
+\begin{itemize}[leftmargin=1.2cm]
+    \item \textbf{Chăm chỉ:} Kiên trì tính toán các bài toán tài chính nhiều bước, kiểm tra cẩn thận từng phép tính trên máy tính cầm tay và bảng tính.
+    \item \textbf{Trung thực:} Ghi nhận trung thực các số liệu tài chính, tôn trọng nguyên tắc chi tiêu thực tế, nghiêm túc trong tính toán không làm sai lệch số liệu.
+    \item \textbf{Trách nhiệm:} Nâng cao ý thức tiết kiệm, trân trọng giá trị sức lao động; có trách nhiệm với các quyết định chi tiêu và vay mượn của bản thân và gia đình trong tương lai.
+\end{itemize}
+
+\vspace{5pt}
+
+\section*{II. THIẾT BỊ DẠY HỌC VÀ HỌC LIỆU}
+
+\begin{itemize}[leftmargin=1.2cm]
+    \item \textbf{Giáo viên:}
+    \begin{itemize}[leftmargin=0.6cm]
+        \item Kế hoạch bài dạy chi tiết theo chuẩn Công văn 5512/BGDĐT-GDTrH.
+        \item Bài trình chiếu PowerPoint tương tác trực quan, tích hợp video ngắn về quản lý tài chính thông minh.
+        \item Phòng thực hành tin học (35 máy tính nối mạng Internet ổn định, cài sẵn Microsoft Excel và trình duyệt web).
+        \item Tệp biểu mẫu bảng tính Excel: \texttt{Ke\_Hoach\_Tai\_Chinh\_Mau.xlsx} chứa cấu trúc bảng trả nợ dần và bảng tiết kiệm tích lũy.
+        \item Hệ thống Phiếu học tập phân tầng bậc thang (PHT số 1, PHT số 2, PHT số 3) in sẵn cho từng nhóm học sinh.
+        \item Rubric đánh giá năng lực hoạt động trải nghiệm tài chính 4 mức độ.
+    \end{itemize}
+
+    \item \textbf{Học sinh:}
+    \begin{itemize}[leftmargin=0.6cm]
+        \item SGK Toán 11, vở ghi chép, thước kẻ, bút dạ viết bảng phụ.
+        \item Máy tính cầm tay Casio fx-580VN X (hoặc tương đương).
+        \item Dữ liệu thu thập thực tế trước ở nhà: biểu lãi suất tiền gửi/tiền vay của một ngân hàng thương mại (Agribank, Vietcombank, BIDV, VietinBank,...) và giá bán của một vật dụng thiết yếu cá nhân mong muốn sở hữu (xe đạp điện, máy tính xách tay,...).
+    \end{itemize}
+\end{itemize}
+
+\vspace{5pt}
+
+\section*{III. TIẾN TRÌNH DẠY HỌC}
+
+% =========================================================================
+% TIẾT 1 (TIẾT 47 THEO PPCT)
+% =========================================================================
+\begin{center}
+    {\fontsize{13pt}{16pt}\selectfont \textbf{TIẾT 1. BÀI TOÁN GỬI TIẾT KIỆM TÍCH LŨY VÀ TỔNG CẤP SỐ NHÂN}}\\[2pt]
+    \textit{(Tiết 47 theo PPCT \ \textbar \ Tuần 16)}
+\end{center}
+
+\subsection*{1. Hoạt động 1: Khởi động (Mở đầu)}
+
+\noindent \textbf{a) Mục tiêu:}
+\begin{itemize}[leftmargin=0.6cm]
+    \item Tạo tình huống thực tế sinh động về nhu cầu tiết kiệm tiền của học sinh và gia đình.
+    \item Kích thích tư duy: So sánh giữa việc cất tiền nhàn rỗi trong heo đất (không sinh lời) với việc gửi tiết kiệm ngân hàng (sinh lãi kép), từ đó khơi dậy nhu cầu tìm hiểu công thức toán học tính tiền lãi.
+\end{itemize}
+
+\noindent \textbf{b) Nội dung:}
+Giáo viên đặt tình huống thực tiễn:
+\begin{pedabox}{Tình huống khởi động: Heo đất hay Tài khoản ngân hàng?}
+    Bạn An hiện là học sinh lớp 11. An có kế hoạch sau 2 năm nữa (khi tốt nghiệp lớp 12) sẽ cần một khoản tiền $25\,000\,000$ đồng để đóng học phí đại học kì đầu tiên. Mẹ cho An mỗi tháng $1\,000\,000$ đồng tiền tiết kiệm.
+    \begin{itemize}
+        \item \textit{Phương án 1:} Bỏ ống heo đều đặn mỗi tháng $1\,000\,000$ đồng trong 24 tháng.
+        \item \textit{Phương án 2:} Mở tài khoản tiết kiệm tích lũy định kì tại ngân hàng với lãi suất $0{,}5\%$/tháng, đầu mỗi tháng gửi vào $1\,000\,000$ đồng.
+    \end{itemize}
+    \textbf{Câu hỏi:} Sau 24 tháng, số tiền An nhận được ở mỗi phương án là bao nhiêu? Phương án 2 mang lại lợi ích tài chính vượt trội như thế nào?
+\end{pedabox}
+
+\noindent \textbf{c) Sản phẩm:}
+\begin{itemize}
+    \item Học sinh tính được Phương án 1: Sau 24 tháng, số tiền tích lũy là $24 \times 1\,000\,000 = 24\,000\,000$ đồng (chưa đủ mục tiêu $25\,000\,000$ đồng).
+    \item Với Phương án 2: Học sinh nhận thấy tháng thứ nhất sinh lãi 24 tháng, tháng thứ hai sinh lãi 23 tháng,... Các số tiền này tạo thành một dãy số. Học sinh xuất hiện nhu cầu tìm công thức toán học để tính nhanh tổng số tiền này.
+\end{itemize}
+
+\noindent \textbf{d) Tổ chức thực hiện:}
+\begin{itemize}
+    \item \textbf{Bước 1 (Chuyển giao nhiệm vụ):} GV trình chiếu tình huống, yêu cầu HS thảo luận cặp đôi trong 3 phút để đưa ra dự đoán.
+    \item \textbf{Bước 2 (Thực hiện nhiệm vụ):} HS thảo luận sôi nổi, tính nhẩm phương án 1 và viết nháp các biểu thức của phương án 2.
+    \item \textbf{Bước 3 (Báo cáo, thảo luận):} Đại diện 2 cặp HS trả lời nhanh. Cả lớp thống nhất phương án 1 thiếu $1\,000\,000$ đồng.
+    \item \textbf{Bước 4 (Kết luận, nhận định):} GV dẫn dắt: ``Để biết chính xác phương án 2 có đạt được mục tiêu $25\,000\,000$ đồng hay không, chúng ta sẽ cùng nhau xây dựng mô hình toán học giải quyết bài toán gửi tiết kiệm tích lũy bằng kiến thức Cấp số nhân đã học''.
+\end{itemize}
+
+\subsection*{2. Hoạt động 2: Hình thành kiến thức}
+
+\noindent \textbf{a) Mục tiêu:}
+\begin{itemize}
+    \item Nhắc lại và khắc sâu công thức lãi kép khi gửi một lần: $A_n = A(1+r)^n$.
+    \item Xây dựng hoàn chỉnh công thức gửi tiết kiệm tích lũy định kì hàng tháng (niên kim tiết kiệm) dựa trên tổng $n$ số hạng đầu của cấp số nhân.
+    \item Rèn luyện kỹ năng phân tích dòng tiền và lập luận toán học.
+\end{itemize}
+
+\noindent \textbf{b) Nội dung:}
+Nghiên cứu hai bài toán cốt lõi của tiền gửi tiết kiệm:
+
+\noindent \textbf{Nội dung 1: Bài toán gửi tiết kiệm một lần (Lãi kép)}
+\begin{itemize}
+    \item Giả sử một người gửi số vốn ban đầu là $A$ đồng vào ngân hàng với lãi suất $r$ mỗi kì hạn theo thể thức lãi kép (tiền lãi của mỗi kì hạn được cộng gộp vào vốn để tính lãi cho kì hạn tiếp theo).
+    \item Sau kì hạn thứ 1: Số tiền nhận được gồm gốc và lãi là:
+    $$A_1 = A + A \cdot r = A(1+r)$$
+    \item Sau kì hạn thứ 2: Số tiền nhận được là:
+    $$A_2 = A_1 + A_1 \cdot r = A_1(1+r) = A(1+r)^2$$
+    \item Tổng quát, sau $n$ kì hạn, số tiền cả gốc lẫn lãi nhận được là:
+    \begin{equation}
+        A_n = A(1+r)^n
+    \end{equation}
+\end{itemize}
+
+\noindent \textbf{Nội dung 2: Bài toán gửi tiết kiệm tích lũy định kì hàng tháng}
+\begin{itemize}
+    \item Giả sử đầu mỗi tháng, một người gửi đều đặn vào ngân hàng một số tiền cố định là $m$ đồng với lãi suất $r$ mỗi tháng (kì hạn 1 tháng, tính lãi kép). Hỏi cuối tháng thứ $n$, người đó nhận được tổng số tiền $S_n$ (cả gốc lẫn lãi) là bao nhiêu?
+    \item \textit{Phân tích dòng tiền của từng khoản gửi:}
+    \begin{itemize}
+        \item Khoản tiền $m$ gửi ở đầu tháng 1: Được tính lãi trọn vẹn trong $n$ tháng, do đó đến cuối tháng thứ $n$ nó sinh ra giá trị: $m(1+r)^n$.
+        \item Khoản tiền $m$ gửi ở đầu tháng 2: Được tính lãi trọn vẹn trong $n-1$ tháng, đến cuối tháng thứ $n$ sinh ra giá trị: $m(1+r)^{n-1}$.
+        \item Khoản tiền $m$ gửi ở đầu tháng 3: Được tính lãi trong $n-2$ tháng, sinh ra giá trị: $m(1+r)^{n-2}$.
+        \item ...
+        \item Khoản tiền $m$ gửi ở đầu tháng thứ $n$: Được tính lãi trọn vẹn trong 1 tháng, đến cuối tháng thứ $n$ sinh ra giá trị: $m(1+r)^1 = m(1+r)$.
+    \end{itemize}
+    \item \textit{Tổng số tiền tích lũy sau $n$ tháng là:}
+    $$S_n = m(1+r) + m(1+r)^2 + m(1+r)^3 + \dots + m(1+r)^{n-1} + m(1+r)^n$$
+    \item \textit{Quy về tổng cấp số nhân:}
+    Dãy số các khoản tiền trên lập thành một cấp số nhân gồm $n$ số hạng, với:
+    \begin{itemize}
+        \item Số hạng đầu tiên: $u_1 = m(1+r)$.
+        \item Công bội: $q = 1+r$.
+    \end{itemize}
+    Áp dụng công thức tính tổng $n$ số hạng đầu tiên của cấp số nhân $S_n = u_1 \cdot \dfrac{q^n - 1}{q - 1}$, ta có:
+    $$S_n = m(1+r) \cdot \dfrac{(1+r)^n - 1}{(1+r) - 1} = m(1+r) \cdot \dfrac{(1+r)^n - 1}{r}$$
+    \begin{equation}
+        S_n = m(1+r) \cdot \dfrac{(1+r)^n - 1}{r}
+    \end{equation}
+\end{itemize}
+
+\begin{scaffoldbox}{Giàn giáo sư phạm: Dành cho học sinh trung bình - yếu}
+    \textbf{Mẹo ghi nhớ bản chất và tránh nhầm lẫn:}
+    \begin{enumerate}
+        \item \textbf{Phân biệt gửi 1 lần và gửi định kì:}
+        \begin{itemize}
+            \item Gửi 1 lần duy nhất số tiền $A$: Dùng công thức lũy thừa đơn giản $A_n = A(1+r)^n$.
+            \item Gửi nhiều lần đều đặn $m$ đồng mỗi tháng: BẮT BUỘC dùng công thức tổng cấp số nhân $S_n = m(1+r) \cdot \dfrac{(1+r)^n - 1}{r}$.
+        \end{itemize}
+        \item \textbf{Đồng nhất đơn vị thời gian và lãi suất:} Nếu lãi suất cho theo năm ($r_{\text{năm}}$) mà gửi theo tháng thì lãi suất tháng tính theo công thức: $r = \dfrac{r_{\text{năm}}}{12}$.
+        \item \textbf{Đổi phần trăm sang số thập phân:} $0{,}5\% = \dfrac{0{,}5}{100} = 0{,}005$; $6\% = 0{,}06$.
+    \end{enumerate}
+\end{scaffoldbox}
+
+\noindent \textbf{c) Sản phẩm:}
+\begin{itemize}
+    \item Vở ghi của học sinh thể hiện rõ ràng sơ đồ phân tích dòng tiền theo từng tháng.
+    \item Hệ thống công thức lãi kép (1) và công thức gửi tiết kiệm định kì (2) được đóng khung chuẩn xác.
+\end{itemize}
+
+\noindent \textbf{d) Tổ chức thực hiện:}
+\begin{itemize}
+    \item \textbf{Bước 1 (Chuyển giao nhiệm vụ):} GV phát Phiếu học tập số 1, yêu cầu HS làm việc cá nhân trong 5 phút để điền vào bảng phân tích dòng tiền từ tháng 1 đến tháng $n$.
+    \item \textbf{Bước 2 (Thực hiện nhiệm vụ):}
+    \begin{itemize}
+        \item HS theo dõi hướng dẫn trên bảng, tính toán giá trị của từng khoản tiền sau mỗi tháng.
+        \item GV đi quanh lớp, hỗ trợ nhóm học sinh trung bình - yếu nhận diện cấp số nhân, chỉ ra số hạng đầu $u_1 = m(1+r)$ và công bội $q = 1+r$.
+    \end{itemize}
+    \item \textbf{Bước 3 (Báo cáo, thảo luận):} GV gọi 1 học sinh lên bảng trình bày phép biến đổi tổng $S_n$. Các học sinh khác đối chiếu kết quả trong phiếu học tập.
+    \item \textbf{Bước 4 (Kết luận, nhận định):} GV chuẩn hóa công thức, giải thích ý nghĩa từng đại lượng ($S_n, m, r, n$).
+\end{itemize}
+
+\subsection*{3. Hoạt động 3: Luyện tập}
+
+\noindent \textbf{a) Mục tiêu:}
+\begin{itemize}
+    \item Rèn luyện kỹ năng áp dụng trực tiếp công thức lãi kép và công thức gửi tiết kiệm tích lũy định kì vào các bài toán số liệu thực tế.
+    \item Rèn luyện kỹ năng bấm máy tính cầm tay Casio fx-580VN X chuẩn xác, không làm tròn số trung gian gây sai số lớn.
+\end{itemize}
+
+\noindent \textbf{b) Nội dung:}
+Học sinh thực hiện 2 bài toán luyện tập:
+
+\begin{pedabox}{Bài toán luyện tập 1: Giải quyết trọn vẹn Tình huống khởi động của bạn An}
+    Với tình huống của bạn An ở Hoạt động Khởi động:
+    \begin{itemize}
+        \item Số tiền gửi đầu mỗi tháng: $m = 1\,000\,000$ đồng.
+        \item Lãi suất ngân hàng: $r = 0{,}5\%$/tháng ($r = 0{,}005$).
+        \item Kì hạn: $n = 24$ tháng.
+    \end{itemize}
+    \textbf{Yêu cầu:}
+    \begin{enumerate}
+        \item Tính chính xác số tiền $S_{24}$ mà bạn An nhận được sau 24 tháng.
+        \item So sánh với số tiền mục tiêu $25\,000\,000$ đồng và cho biết bạn An được lợi bao nhiêu tiền lãi so với việc bỏ ống heo?
+    \end{enumerate}
+\end{pedabox}
+
+\begin{pedabox}{Bài toán luyện tập 2: Kế hoạch tích lũy của gia đình bác Bình}
+    Bác Bình mở sổ tiết kiệm tích lũy tại ngân hàng Agribank. Vào ngày mùng 1 hàng tháng, bác gửi đều đặn $2\,000\,000$ đồng với lãi suất $0{,}45\%$/tháng.
+    \begin{enumerate}
+        \item Hỏi sau tròn 3 năm ($36$ tháng), số tiền trong sổ tiết kiệm của bác Bình là bao nhiêu?
+        \item Trong tổng số tiền nhận được, tiền gốc bác Bình đã gửi là bao nhiêu và tiền lãi ngân hàng chi trả là bao nhiêu?
+    \end{enumerate}
+\end{pedabox}
+
+\noindent \textbf{c) Sản phẩm: Lời giải chi tiết}
+
+\noindent \textbf{Lời giải Bài toán luyện tập 1:}
+\begin{enumerate}
+    \item Áp dụng công thức tính số tiền gửi tiết kiệm tích lũy định kì:
+    $$S_{24} = m(1+r) \cdot \dfrac{(1+r)^{24} - 1}{r}$$
+    Thay số: $m = 1\,000\,000$, $r = 0{,}005$, $n = 24$:
+    $$S_{24} = 1\,000\,000 \cdot (1 + 0{,}005) \cdot \dfrac{(1 + 0{,}005)^{24} - 1}{0{,}005}$$
+    $$S_{24} = 1\,000\,000 \cdot 1{,}005 \cdot \dfrac{(1{,}005)^{24} - 1}{0{,}005}$$
+    Sử dụng máy tính cầm tay Casio fx-580VN X:
+    $$(1{,}005)^{24} \approx 1{,}127159776$$
+    $$\dfrac{1{,}127159776 - 1}{0{,}005} \approx 25{,}43195525$$
+    $$S_{24} \approx 1\,000\,000 \cdot 1{,}005 \cdot 25{,}43195525 \approx 25\,559\,115\text{ đồng.}$$
+    \item Nhận xét:
+    \begin{itemize}
+        \item Số tiền $S_{24} \approx 25\,559\,115$ đồng $> 25\,000\,000$ đồng, do đó bạn An hoàn toàn đạt và vượt mục tiêu tài chính đề ra.
+        \item Tổng tiền gốc gửi vào trong 24 tháng: $24 \times 1\,000\,000 = 24\,000\,000$ đồng.
+        \item Số tiền lãi nhận được từ ngân hàng:
+        $$25\,559\,115 - 24\,000\,000 = 1\,559\,115\text{ đồng.}$$
+        Như vậy, gửi tiết kiệm ngân hàng giúp An có thêm hơn $1{,}55$ triệu đồng tiền lãi so với việc để tiền trong heo đất.
+    \end{itemize}
+\end{enumerate}
+
+\noindent \textbf{Lời giải Bài toán luyện tập 2:}
+\begin{enumerate}
+    \item Sau 3 năm, số kì hạn gửi là $n = 3 \times 12 = 36$ tháng.
+    Áp dụng công thức:
+    $$S_{36} = m(1+r) \cdot \dfrac{(1+r)^{36} - 1}{r}$$
+    Thay số: $m = 2\,000\,000$, $r = 0{,}45\% = 0{,}0045$, $n = 36$:
+    $$S_{36} = 2\,000\,000 \cdot (1 + 0{,}0045) \cdot \dfrac{(1 + 0{,}0045)^{36} - 1}{0{,}0045}$$
+    $$S_{36} = 2\,000\,000 \cdot 1{,}0045 \cdot \dfrac{(1{,}0045)^{36} - 1}{0{,}0045} \approx 78\,498\,622\text{ đồng.}$$
+    \item Tổng số tiền gốc bác Bình đã gửi là:
+    $$T_{\text{gốc}} = 36 \times 2\,000\,000 = 72\,000\,000\text{ đồng.}$$
+    Tổng số tiền lãi bác Bình nhận được là:
+    $$T_{\text{lãi}} = S_{36} - T_{\text{gốc}} = 78\,498\,622 - 72\,000\,000 = 6\,498\,622\text{ đồng.}$$
+\end{enumerate}
+
+\noindent \textbf{d) Tổ chức thực hiện:}
+\begin{itemize}
+    \item \textbf{Bước 1 (Giao nhiệm vụ):} GV chia lớp thành 4 dãy bàn, dãy 1 và 2 giải Bài 1, dãy 3 và 4 giải Bài 2 vào vở trong 6 phút.
+    \item \textbf{Bước 2 (Thực hiện):} HS thực hiện tính toán độc lập, sau đó so sánh kết quả bấm máy tính với bạn bên cạnh. GV quan sát và uốn nắn các lỗi bấm máy (quên đóng ngoặc, nhập nhầm số mũ).
+    \item \textbf{Bước 3 (Báo cáo):} GV mời 2 đại diện lên bảng ghi tóm tắt lời giải và kết quả số liệu.
+    \item \textbf{Bước 4 (Đánh giá, nhận xét):} GV nhận xét, chốt đáp số chính xác và biểu dương các học sinh tính nhanh, chuẩn xác.
+\end{itemize}
+
+\subsection*{4. Hoạt động 4: Vận dụng}
+
+\noindent \textbf{a) Mục tiêu:}
+\begin{itemize}
+    \item Vận dụng công thức toán tài chính để giải bài toán ngược: Biết trước số tiền mục tiêu cần có trong tương lai $S_n$, tính số tiền $m$ cần tiết kiệm đều đặn mỗi tháng.
+    \item Rèn luyện tư duy lập kế hoạch tài chính cá nhân ngắn hạn.
+\end{itemize}
+
+\noindent \textbf{b) Nội dung:}
+\begin{pedabox}{Bài toán vận dụng: Kế hoạch mua Laptop học tập của bạn Hoa}
+    Bạn Hoa đặt mục tiêu sau đúng 1 năm nữa (12 tháng) sẽ mua một chiếc máy tính xách tay phục vụ việc học lập trình và đồ họa trị giá $15\,000\,000$ đồng. Hoa tìm được một gói tiết kiệm tích lũy dành cho học sinh, sinh viên tại ngân hàng với lãi suất ưu đãi $0{,}4\%$/tháng.
+    \textbf{Hỏi:} Vào đầu mỗi tháng, bạn Hoa cần gửi vào tài khoản tiết kiệm ít nhất bao nhiêu tiền (làm tròn đến hàng nghìn đồng) để sau 12 tháng có đủ tiền mua chiếc máy tính đó?
+\end{pedabox}
+
+\noindent \textbf{c) Sản phẩm: Lời giải chi tiết}
+\begin{itemize}
+    \item Từ công thức $S_n = m(1+r) \cdot \dfrac{(1+r)^n - 1}{r}$, ta biến đổi đại số rút ra số tiền gửi định kì $m$:
+    \begin{equation}
+        m = \dfrac{S_n \cdot r}{(1+r) \cdot \left[(1+r)^n - 1\right]}
+    \end{equation}
+    \item Thay số: $S_{12} = 15\,000\,000$ đồng, $r = 0{,}4\% = 0{,}004$, $n = 12$ tháng:
+    $$m = \dfrac{15\,000\,000 \cdot 0{,}004}{(1 + 0{,}004) \cdot \left[(1 + 0{,}004)^{12} - 1\right]}$$
+    $$m = \dfrac{60\,000}{1{,}004 \cdot \left[(1{,}004)^{12} - 1\right]}$$
+    Tính toán trên máy tính cầm tay:
+    $$(1{,}004)^{12} \approx 1{,}0490702$$
+    $$(1{,}004)^{12} - 1 \approx 0{,}0490702$$
+    $$1{,}004 \cdot 0{,}0490702 \approx 0{,}0492665$$
+    $$m \approx \dfrac{60\,000}{0{,}0492665} \approx 1\,217\,866\text{ đồng.}$$
+    \item Làm tròn đến hàng nghìn theo hướng an toàn tài chính: Bạn Hoa cần gửi tiết kiệm ít nhất $1\,218\,000$ đồng (hoặc khoảng $1\,220\,000$ đồng) vào đầu mỗi tháng.
+\end{itemize}
+
+\noindent \textbf{d) Tổ chức thực hiện:}
+\begin{itemize}
+    \item \textbf{Bước 1:} GV giao nhiệm vụ cho HS hoạt động cá nhân trong 4 phút.
+    \item \textbf{Bước 2:} HS thực hiện biến đổi công thức tìm $m$ và thay số bấm máy.
+    \item \textbf{Bước 3:} Một HS xung phong đọc đáp số và giải thích cách biến đổi. Cả lớp phản biện về việc làm tròn lên hay làm tròn xuống trong quản lý tài chính.
+    \item \textbf{Bước 4:} GV kết luận: Trong các bài toán tích lũy tài chính, luôn luôn làm tròn LÊN để đảm bảo số tiền thực nhận không bị thiếu hụt so với mục tiêu.
+\end{itemize}
+
+% =========================================================================
+% TIẾT 2 (TIẾT 48 THEO PPCT)
+% =========================================================================
+\vspace{10pt}
+\begin{center}
+    {\fontsize{13pt}{16pt}\selectfont \textbf{TIẾT 2. BÀI TOÁN VAY TRẢ GÓP ĐỊNH KÌ VÀ DỰ ÁN STEM LẬP KẾ HOẠCH TÀI CHÍNH}}\\[2pt]
+    \textit{(Tiết 48 theo PPCT \ \textbar \ Tuần 16)}
+\end{center}
+
+\subsection*{1. Hoạt động 1: Khởi động (Mở đầu)}
+
+\noindent \textbf{a) Mục tiêu:}
+\begin{itemize}
+    \item Giúp học sinh nhận diện hình thức mua hàng trả góp rất phổ biến trong xã hội hiện đại (mua điện thoại, xe máy điện, laptop,...).
+    \item Kích thích phản biện: Liệu mua trả góp có thực sự rẻ như các lời mời chào quảng cáo? Làm sao để tính được chính xác số tiền phải trả hàng tháng và số tiền lãi thực tế phải gánh chịu?
+\end{itemize}
+
+\noindent \textbf{b) Nội dung:}
+Giáo viên chiếu một áp phích quảng cáo thực tế của một cửa hàng điện máy:
+\begin{pedabox}{Tình huống: Mua xe đạp điện trả góp}
+    Một chiếc xe đạp điện mới có giá niêm yết là $15\,000\,000$ đồng. Cửa hàng đưa ra chính sách hỗ trợ học sinh:
+    \begin{itemize}
+        \item Khách hàng trả trước $3\,000\,000$ đồng ($20\%$ giá trị xe).
+        \item Số tiền còn lại $12\,000\,000$ đồng được vay trả góp trong vòng 12 tháng với lãi suất $1\%$/tháng.
+        \item Mỗi tháng trả góp một khoản cố định như nhau vào cuối tháng.
+    \end{itemize}
+    \textbf{Vấn đề đặt ra:} Có học sinh cho rằng: ``Mỗi tháng chỉ cần lấy $12\,000\,000 : 12 = 1\,000\,000$ đồng tiền gốc rồi cộng thêm $12\,000\,000 \times 1\% = 120\,000$ đồng tiền lãi, tổng cộng trả $1\,120\,000$ đồng/tháng''. Cách tính đó có đúng theo nguyên tắc ngân hàng không? Vì sao?
+\end{pedabox}
+
+\noindent \textbf{c) Sản phẩm:}
+Học sinh nhận xét: Cách tính trên là sai vì qua từng tháng, người vay đã trả bớt tiền gốc nên số dư nợ phải giảm dần, không thể tính lãi trên toàn bộ $12\,000\,000$ đồng ban đầu cho cả 12 tháng được.
+
+\noindent \textbf{d) Tổ chức thực hiện:}
+\begin{itemize}
+    \item \textbf{Bước 1:} GV nêu vấn đề và đặt câu hỏi gợi mở cho toàn lớp.
+    \item \textbf{Bước 2:} HS suy nghĩ, trao đổi nhanh trong bàn (2 phút).
+    \item \textbf{Bước 3:} GV mời 2 ý kiến nhận xét của học sinh.
+    \item \textbf{Bước 4:} GV chốt lại: Trong giao dịch ngân hàng chuẩn mực, lãi suất được tính trên số dư nợ giảm dần, và số tiền trả định kì hàng tháng $m$ được tính toán theo một công thức toán học nghiêm ngặt mà ta sẽ khám phá ngay sau đây.
+\end{itemize}
+
+\subsection*{2. Hoạt động 2: Hình thành kiến thức}
+
+\noindent \textbf{a) Mục tiêu:}
+\begin{itemize}
+    \item Xây dựng công thức toán học tính số tiền trả góp định kì hàng tháng $m$ khi vay số tiền ban đầu $A$ với lãi suất $r$ trong $n$ tháng.
+    \item Vận dụng năng lực số: Lập bảng tính Excel mô phỏng lịch trình trả nợ dần (Amortization Schedule) trên phòng máy 35 máy tính (Thông tư 02/2025/TT-BGDĐT).
+    \item Vận dụng năng lực AI: Tìm hiểu ứng dụng của thuật toán AI trong việc chấm điểm tín dụng và quản trị rủi ro chi tiêu (Quyết định 2422/QĐ-BGDĐT).
+\end{itemize}
+
+\noindent \textbf{b) Nội dung:}
+
+\noindent \textbf{Nội dung 1: Xây dựng công thức toán học cho bài toán vay trả góp}
+\begin{itemize}
+    \item Giả sử một người vay ngân hàng số tiền ban đầu là $A$ đồng với lãi suất $r$ mỗi tháng (tính lãi kép trên dư nợ). Người đó trả nợ định kì vào cuối mỗi tháng một số tiền cố định là $m$ đồng trong $n$ tháng thì hết nợ.
+    \item Ta theo dõi số dư nợ còn lại sau từng tháng:
+    \begin{itemize}
+        \item \textit{Cuối tháng 1:} Số tiền vay ban đầu sinh lãi thành $A(1+r)$. Sau khi trả số tiền $m$, số dư nợ còn lại là:
+        $$N_1 = A(1+r) - m$$
+        \item \textit{Cuối tháng 2:} Dư nợ $N_1$ sinh lãi thành $N_1(1+r)$, người đó trả tiếp $m$, số dư nợ còn lại là:
+        $$N_2 = N_1(1+r) - m = [A(1+r) - m](1+r) - m = A(1+r)^2 - m(1+r) - m = A(1+r)^2 - m[(1+r) + 1]$$
+        \item \textit{Cuối tháng 3:} Tương tự, dư nợ còn lại là:
+        $$N_3 = N_2(1+r) - m = A(1+r)^3 - m[(1+r)^2 + (1+r) + 1]$$
+        \item ...
+        \item \textit{Cuối tháng thứ $n$:} Số dư nợ còn lại là:
+        $$N_n = A(1+r)^n - m[(1+r)^{n-1} + (1+r)^{n-2} + \dots + (1+r) + 1]$$
+    \end{itemize}
+    \item Biểu thức trong ngoặc vuông chính là tổng của một cấp số nhân gồm $n$ số hạng, với số hạng đầu là $1$, công bội là $q = 1+r$:
+    $$1 + (1+r) + (1+r)^2 + \dots + (1+r)^{n-1} = \dfrac{(1+r)^n - 1}{(1+r) - 1} = \dfrac{(1+r)^n - 1}{r}$$
+    Do đó:
+    $$N_n = A(1+r)^n - m \cdot \dfrac{(1+r)^n - 1}{r}$$
+    \item Để người vay trả hết nợ sau $n$ tháng thì số dư nợ cuối tháng thứ $n$ phải bằng $0$, tức là $N_n = 0$:
+    $$A(1+r)^n - m \cdot \dfrac{(1+r)^n - 1}{r} = 0 \iff m \cdot \dfrac{(1+r)^n - 1}{r} = A(1+r)^n$$
+    Từ đây suy ra công thức xác định số tiền $m$ phải trả đều đặn ở mỗi cuối tháng:
+    \begin{equation}
+        m = \dfrac{A \cdot r \cdot (1+r)^n}{(1+r)^n - 1}
+    \end{equation}
+    Hoặc có thể viết dưới dạng tương đương:
+    \begin{equation}
+        m = \dfrac{A \cdot r}{1 - (1+r)^{-n}}
+    \end{equation}
+\end{itemize}
+
+\noindent \textbf{Nội dung 2: Ứng dụng Năng lực số - Bảng tính Excel mô phỏng trả nợ dần}
+\begin{itemize}
+    \item Tại phòng máy vi tính 35 máy, HS mở phần mềm Microsoft Excel và thiết lập bảng tính gồm các cột chuẩn:
+    \begin{center}
+    \begin{tabular}{|c|c|c|c|c|}
+        \hline
+        \textbf{Kì (Tháng)} & \textbf{Dư nợ đầu kì} & \textbf{Lãi trong kì} & \textbf{Gốc trả trong kì} & \textbf{Dư nợ cuối kì} \\
+        \hline
+        $k$ & $D_k$ & $L_k = D_k \times r$ & $G_k = m - L_k$ & $D_{k+1} = D_k - G_k$ \\
+        \hline
+    \end{tabular}
+    \end{center}
+    \item Cài đặt công thức Excel:
+    \begin{itemize}
+        \item Ô tính số tiền trả góp hàng tháng: Sử dụng hàm tài chính chuyên dụng:
+        \texttt{=PMT(r, n, -A)}
+        \item Cột Lãi trong kì: \texttt{= Dư\_nợ\_đầu\_kì * \$r}
+        \item Cột Gốc trả trong kì: \texttt{= \$m - Lãi\_trong\_kì} (hoặc dùng hàm \texttt{=PPMT(...)})
+        \item Cột Dư nợ cuối kì: \texttt{= Dư\_nợ\_đầu\_kì - Gốc\_trả\_trong\_kì}
+    \end{itemize}
+    \item Quan sát bảng tính: Học sinh nhận thấy tiền lãi giảm dần qua từng tháng, tiền trả gốc tăng dần qua từng tháng, và ở tháng cuối cùng ($n$), dư nợ về đúng bằng $0$.
+\end{itemize}
+
+\begin{aibox}{Tích hợp Năng lực AI (Theo QĐ 2422/QĐ-BGDĐT): AI trong Quản trị Tài chính}
+    \textbf{1. Ứng dụng thực tiễn của AI:}
+    \begin{itemize}
+        \item \textit{Hệ thống chấm điểm tín dụng tự động (Credit Scoring):} Các ngân hàng số hiện nay sử dụng thuật toán học máy (Machine Learning) để phân tích hàng trăm biến số (lịch sử thanh toán hóa đơn, tần suất chi tiêu, mức độ ổn định thu nhập) để chấm điểm tín nhiệm trong vài giây, quyết định lãi suất và hạn mức cho vay tối ưu.
+        \item \textit{Trợ lý AI cảnh báo bẫy nợ:} Các ứng dụng tài chính thông minh tích hợp AI tự động quét dòng tiền cá nhân, đưa ra cảnh báo khi tỉ lệ nợ trên thu nhập (DTI) vượt ngưỡng an toàn ($>30\%$), và phát hiện các bẫy lãi suất phạt ẩn trong hợp đồng vay tiêu dùng.
+    \end{itemize}
+    \textbf{2. Kỹ thuật câu lệnh Prompt mẫu cho học sinh:}
+    \begin{quote}
+        \small \texttt{"Em hãy đóng vai chuyên gia tư vấn tài chính cá nhân. Tôi là học sinh THPT đang có thu nhập tiết kiệm 1.500.000 VNĐ/tháng. Tôi muốn mua một chiếc laptop 18.000.000 VNĐ trả góp trong 12 tháng với lãi suất 1,2\%/tháng. Hãy: (1) Tính số tiền tôi phải trả mỗi tháng; (2) Phân tích rủi ro ngân sách cá nhân nếu thu nhập của tôi giảm 30\%; (3) Đưa ra lời khuyên tối ưu giữa việc mua ngay trả góp hay tiết kiệm thêm 6 tháng nữa rồi mua trả thẳng."}
+    \end{quote}
+\end{aibox}
+
+\noindent \textbf{c) Sản phẩm:}
+\begin{itemize}
+    \item Công thức toán học (4) và (5) được ghi chép chuẩn mực vào vở.
+    \item Tệp bảng tính Excel được học sinh thiết lập hoàn chỉnh trên máy tính, chạy đúng công thức và cho dư nợ cuối cùng bằng 0.
+\end{itemize}
+
+\noindent \textbf{d) Tổ chức thực hiện:}
+\begin{itemize}
+    \item \textbf{Bước 1:} GV hướng dẫn chứng minh công thức quy nạp trên bảng, làm nổi bật bản chất cấp số nhân.
+    \item \textbf{Bước 2:} HS tại phòng máy mở tệp mẫu Excel, nhập số liệu tình huống khởi động ($A = 12\,000\,000$, $r = 0{,}01$, $n = 12$) và kiểm chứng số tiền $m$ bằng hàm \texttt{=PMT(1\%, 12, -12000000)}.
+    \item \textbf{Bước 3:} HS quan sát sự biến động của cột lãi và gốc, thảo luận về ý nghĩa của việc dư nợ giảm dần.
+    \item \textbf{Bước 4:} GV giải thích về ứng dụng AI trong quản trị rủi ro nợ nần, khuyến cáo HS luôn cẩn trọng trước các khoản vay tiêu dùng.
+\end{itemize}
+
+\subsection*{3. Hoạt động 3: Luyện tập}
+
+\noindent \textbf{a) Mục tiêu:}
+\begin{itemize}
+    \item Tính toán thành thạo số tiền trả góp hàng tháng và tổng lãi vay phải chịu bằng máy tính cầm tay Casio fx-580VN X.
+    \item So sánh và đánh giá chi phí cơ hội giữa trả thẳng và trả góp.
+\end{itemize}
+
+\noindent \textbf{b) Nội dung:}
+\begin{pedabox}{Bài toán luyện tập: Mua trả góp thiết bị học tập}
+    Bạn Tuấn mua trả góp một chiếc máy tính xách tay phục vụ việc học tập có giá bán là $20\,000\,000$ đồng.
+    \begin{itemize}
+        \item Tuấn trả trước $20\%$ giá trị máy ngay khi nhận hàng.
+        \item Số tiền còn lại được vay trả góp qua công ty tài chính với lãi suất $1{,}2\%$/tháng trong thời gian 12 tháng.
+    \end{itemize}
+    \textbf{Yêu cầu:}
+    \begin{enumerate}
+        \item Xác định số tiền gốc $A$ mà bạn Tuấn thực sự phải vay.
+        \item Tính số tiền cố định $m$ bạn Tuấn phải trả vào cuối mỗi tháng (làm tròn đến đơn vị đồng).
+        \item Tính tổng số tiền bạn Tuấn thực tế phải chi trả để sở hữu chiếc máy tính đó và tính số tiền lãi chênh lệch so với giá mua trả thẳng.
+    \end{enumerate}
+\end{pedabox}
+
+\noindent \textbf{c) Sản phẩm: Lời giải chi tiết}
+\begin{enumerate}
+    \item Số tiền bạn Tuấn trả trước ngay lúc mua là:
+    $$20\,000\,000 \times 20\% = 4\,000\,000\text{ đồng.}$$
+    Số tiền gốc bạn Tuấn phải vay trả góp là:
+    $$A = 20\,000\,000 - 4\,000\,000 = 16\,000\,000\text{ đồng.}$$
+    \item Các thông số của khoản vay trả góp:
+    \begin{itemize}
+        \item Tiền vay gốc: $A = 16\,000\,000$ đồng.
+        \item Lãi suất mỗi tháng: $r = 1{,}2\% = 0{,}012$.
+        \item Số kì hạn thanh toán: $n = 12$ tháng.
+    \end{itemize}
+    Áp dụng công thức tính tiền trả góp hàng tháng:
+    $$m = \dfrac{A \cdot r \cdot (1+r)^n}{(1+r)^n - 1} = \dfrac{16\,000\,000 \cdot 0{,}012 \cdot (1 + 0{,}012)^{12}}{(1 + 0{,}012)^{12} - 1}$$
+    Thực hiện bấm máy tính Casio fx-580VN X:
+    $$(1 + 0{,}012)^{12} = (1{,}012)^{12} \approx 1{,}153894624$$
+    $$(1{,}012)^{12} - 1 \approx 0{,}153894624$$
+    $$m = \dfrac{16\,000\,000 \cdot 0{,}012 \cdot 1{,}153894624}{0{,}153894624} = \dfrac{221\,547{,}7678}{0{,}153894624} \approx 1\,439\,607\text{ đồng.}$$
+    Như vậy, vào cuối mỗi tháng bạn Tuấn phải trả khoảng $1\,439\,607$ đồng.
+    \item Đánh giá chi phí tài chính:
+    \begin{itemize}
+        \item Tổng số tiền trả góp trong 12 tháng:
+        $$T_{\text{trả góp}} = 12 \times 1\,439\,607 = 17\,275\,284\text{ đồng.}$$
+        \item Tổng số tiền thực tế bạn Tuấn chi ra để sở hữu máy tính:
+        $$T_{\text{tổng}} = 4\,000\,000 + 17\,275\,284 = 21\,275\,284\text{ đồng.}$$
+        \item Số tiền lãi chênh lệch so với mua trả thẳng:
+        $$T_{\text{lãi}} = 21\,275\,284 - 20\,000\,000 = 1\,275\,284\text{ đồng.}$$
+    \end{itemize}
+\end{enumerate}
+
+\noindent \textbf{d) Tổ chức thực hiện:}
+\begin{itemize}
+    \item \textbf{Bước 1:} GV giao đề bài trên màn hình máy chiếu, yêu cầu HS làm bài cá nhân trong 5 phút.
+    \item \textbf{Bước 2:} HS thao tác tính toán trên máy tính cầm tay, ghi rõ từng bước biến đổi ra vở.
+    \item \textbf{Bước 3:} GV gọi 1 học sinh lên bảng trình bày, 1 học sinh dùng máy tính Excel đối chiếu bằng hàm \texttt{=PMT(1.2\%, 12, -16000000)}.
+    \item \textbf{Bước 4:} Cả lớp đối chiếu kết quả khớp hoàn toàn, GV phân tích thêm: Lãi $1{,}275$ triệu trong 1 năm là chi phí chấp nhận được nếu Tuấn thực sự cần máy tính gấp để học tập và tạo ra giá trị mới.
+\end{itemize}
+
+\subsection*{4. Hoạt động 4: Vận dụng (Dự án STEM)}
+
+\noindent \textbf{a) Mục tiêu:}
+\begin{itemize}
+    \item Vận dụng tổng hợp kiến thức cấp số cộng, cấp số nhân, hàm số mũ để lập bảng kế hoạch tài chính cá nhân tự động trong 12 tháng.
+    \item Thực hiện Chủ đề STEM gắn kết Toán học, Tin học (Excel) và Kinh tế gia đình.
+\end{itemize}
+
+\noindent \textbf{b) Nội dung:}
+\begin{stembox}{Chủ đề STEM: Xây dựng Bảng tính tự động kế hoạch tiết kiệm tiền mua dụng cụ học tập trong 12 tháng bằng Excel}
+    \textbf{Nhiệm vụ cho các nhóm học sinh (chia nhóm 4-5 em trên phòng máy):}
+    \begin{enumerate}
+        \item \textbf{Xác định mục tiêu tài chính:} Chọn 1 đồ dùng học tập thiết yếu (bộ sách chuyên khảo, máy tính cầm tay, kính thiên văn mini, máy tính bảng phục vụ học trực tuyến,...) với mức giá từ $2\,000\,000$ đến $10\,000\,000$ đồng.
+        \item \textbf{Thu thập dữ liệu thu nhập và chi tiêu:} Ước tính số tiền tiết kiệm hàng tháng của học sinh (tiền ăn sáng tiết kiệm, tiền phụ giúp gia đình, tiền thưởng học tập).
+        \item \textbf{Thiết kế bảng tính Excel thông minh:}
+        \begin{itemize}
+            \item Cột thu, chi, tiết kiệm lũy kế hàng tháng.
+            \item Lập công thức tự động tính số dư tài khoản tiết kiệm nếu gửi ngân hàng với lãi suất hiện hành.
+            \item Tạo biểu đồ cột (Column Chart) trực quan mô tả tiến độ tích lũy so với đường mục tiêu (Target Line).
+            \item Đặt công thức điều kiện (Conditional Formatting) đổi màu đỏ khi chi tiêu vượt định mức và màu xanh khi hoàn thành mục tiêu tháng.
+        \end{itemize}
+    \end{enumerate}
+\end{stembox}
+
+\noindent \textbf{c) Sản phẩm:}
+Tệp bảng tính Excel của các nhóm có cấu trúc đầy đủ, chạy công thức tự động, có biểu đồ trực quan sinh động và bản thuyết minh ngắn (3 phút) về kế hoạch tài chính của nhóm.
+
+\noindent \textbf{d) Tổ chức thực hiện:}
+\begin{itemize}
+    \item \textbf{Bước 1 (Giao nhiệm vụ):} GV phổ biến tiêu chí đánh giá theo Rubric đính kèm trong phụ lục, yêu cầu các nhóm làm việc trên máy tính trong 8 phút.
+    \item \textbf{Bước 2 (Thực hiện):} Các nhóm phân công: 1 bạn nhập số liệu, 1 bạn viết công thức toán học, 1 bạn vẽ biểu đồ. GV hỗ trợ giải đáp kỹ thuật Excel.
+    \item \textbf{Bước 3 (Báo cáo):} GV chọn 2 nhóm chiếu sản phẩm lên màn hình lớn của lớp và thuyết minh nhanh kế hoạch.
+    \item \textbf{Bước 4 (Kết luận, dặn dò):} GV đánh giá chung, tổng kết toàn bài học và hướng dẫn HS về nhà hoàn thiện thêm bảng tính để theo dõi chi tiêu thực tế của bản thân.
+\end{itemize}
+
+\vspace{5pt}
+
+\section*{IV. PHỤ LỤC HỌC LIỆU BỔ TRỢ}
+
+\subsection*{1. Bảng tóm tắt hệ thống công thức Toán tài chính}
+
+\begin{center}
+\renewcommand{\arraystretch}{1.3}
+\begin{tabularx}{\textwidth}{|p{3.5cm}|X|p{4.5cm}|}
+    \hline
+    \textbf{Mô hình tài chính} & \textbf{Ý nghĩa và Ký hiệu quy ước} & \textbf{Công thức tính toán chuẩn} \\
+    \hline
+    \textbf{1. Lãi đơn} & Tiền lãi chỉ tính trên số vốn gốc ban đầu qua các kì hạn. & $A_n = A(1 + n \cdot r)$ \\
+    \hline
+    \textbf{2. Lãi kép (Gửi 1 lần)} & Tiền lãi sau mỗi kì hạn được nhập vào vốn để tính lãi cho kì hạn tiếp theo. & $A_n = A(1 + r)^n$ \\
+    \hline
+    \textbf{3. Gửi tiết kiệm tích lũy định kì} & Đầu mỗi kì gửi đều đặn số tiền $m$ vào ngân hàng với lãi suất $r$/kì, tính lãi kép. (Tổng cấp số nhân có $u_1 = m(1+r), q = 1+r$). & $S_n = m(1+r) \cdot \dfrac{(1+r)^n - 1}{r}$ \\
+    \hline
+    \textbf{4. Vay trả góp định kì} & Vay ban đầu số tiền $A$, lãi suất $r$/kì. Cuối mỗi kì trả khoản cố định $m$ trong $n$ kì thì hết nợ. & $m = \dfrac{A \cdot r \cdot (1+r)^n}{(1+r)^n - 1} = \dfrac{A \cdot r}{1 - (1+r)^{-n}}$ \\
+    \hline
+    \textbf{5. Giá trị hiện tại của khoản vay} & Tính số tiền tối đa có thể vay ban đầu $A$ nếu mỗi kì trả được tối đa số tiền $m$. & $A = \dfrac{m}{r} \cdot \left[1 - (1+r)^{-n}\right]$ \\
+    \hline
+\end{tabularx}
+\end{center}
+
+\subsection*{2. Phiếu học tập phân tầng bậc thang (Worksheet)}
+
+\begin{center}
+    \textbf{PHIẾU HỌC TẬP: ÁP DỤNG CỦA TOÁN HỌC TRONG TÀI CHÍNH}\\
+    \textit{Họ và tên học sinh: \dots\dots\dots\dots\dots\dots\dots\dots\dots\dots\dots\dots \ \textbar \ Lớp: 11\dots}
+\end{center}
+
+\noindent \textbf{MỨC ĐỘ 1: NHẬN BIẾT VÀ THÔNG HIỂU (Dành cho toàn thể học sinh)}
+\begin{enumerate}
+    \item Một người gửi $50\,000\,000$ đồng vào ngân hàng với lãi suất kì hạn 1 năm là $6\%$/năm theo thể thức lãi kép. Hỏi sau 3 năm người đó nhận được số tiền cả gốc lẫn lãi là bao nhiêu?
+    \begin{itemize}
+        \item \textit{Hướng dẫn giải:} Xác định $A = 50\,000\,000$, $r = 0{,}06$, $n = 3$.
+        \item \textit{Đáp số:} $A_3 = 50\,000\,000 \times (1 + 0{,}06)^3 \approx 59\,550\,800$ đồng.
+    \end{itemize}
+    \item Phân biệt sự khác nhau cơ bản giữa bài toán gửi tiết kiệm tích lũy định kì và bài toán vay mua trả góp định kì về thời điểm dòng tiền phát sinh (đầu kì hay cuối kì).
+\end{enumerate}
+
+\noindent \textbf{MỨC ĐỘ 2: VẬN DỤNG (Rèn luyện kỹ năng thực hành tính toán)}
+\begin{enumerate}
+    \item Để chuẩn bị tiền mua xe máy khi vào Đại học, bắt đầu từ năm học lớp 11, mỗi đầu tháng bạn Nam đều đặn gửi tiết kiệm $800\,000$ đồng vào ngân hàng với lãi suất $0{,}48\%$/tháng. Hỏi sau 2 năm (24 tháng), bạn Nam có đủ tiền mua một chiếc xe máy giá $21\,500\,000$ đồng hay không?
+    \begin{itemize}
+        \item \textit{Hướng dẫn giải:} Áp dụng công thức $S_{24} = 800\,000 \cdot (1 + 0{,}0048) \cdot \dfrac{(1 + 0{,}0048)^{24} - 1}{0{,}0048} \approx 20\,487\,214$ đồng.
+        \item \textit{Kết luận:} Nam chưa đủ tiền (còn thiếu khoảng $1\,012\,786$ đồng).
+    \end{itemize}
+    \item Gia đình bạn Lan vay ngân hàng $100\,000\,000$ đồng để sửa nhà, trả góp đều đặn vào cuối mỗi tháng trong vòng 3 năm (36 tháng) với lãi suất cố định $0{,}8\%$/tháng. Tính số tiền gia đình Lan phải trả mỗi tháng.
+    \begin{itemize}
+        \item \textit{Hướng dẫn giải:} $A = 100\,000\,000$, $r = 0{,}008$, $n = 36$.
+        $$m = \dfrac{100\,000\,000 \cdot 0{,}008 \cdot (1 + 0{,}008)^{36}}{(1 + 0{,}008)^{36} - 1} \approx 3\,209\,047\text{ đồng/tháng.}$$
+    \end{itemize}
+\end{enumerate}
+
+\noindent \textbf{MỨC ĐỘ 3: VẬN DỤNG CAO VÀ MÔ HÌNH HÓA TOÁN HỌC (Phát triển năng lực tư duy)}
+\begin{enumerate}
+    \item Một sinh viên ra trường đi làm với mức lương khởi điểm $10\,000\,000$ đồng/tháng. Bạn dự định mua một căn hộ chung cư trả góp có khoản nợ vay là $500\,000\,000$ đồng trong 15 năm (180 tháng) với lãi suất ưu đãi $0{,}7\%$/tháng.
+    \begin{itemize}
+        \item a) Tính số tiền cố định bạn sinh viên phải trả hàng tháng.
+        \item b) Chuyên gia tài chính khuyến cáo: Số tiền trả nợ hàng tháng không được vượt quá $45\%$ tổng thu nhập. Hỏi với mức lương hiện tại, bạn sinh viên có nên vay gói trả góp này không? Cần có thu nhập tối thiểu bao nhiêu mỗi tháng để đảm bảo an toàn tài chính?
+    \end{itemize}
+\end{enumerate}
+
+\subsection*{3. Bảng Rubric đánh giá năng lực học sinh trong bài học}
+
+\begin{center}
+\renewcommand{\arraystretch}{1.25}
+\begin{tabularx}{\textwidth}{|p{2.8cm}|X|X|X|X|}
+    \hline
+    \textbf{Tiêu chí đánh giá} & \textbf{Mức 1 (Chưa đạt)} & \textbf{Mức 2 (Đạt)} & \textbf{Mức 3 (Khá)} & \textbf{Mức 4 (Tốt)} \\
+    \hline
+    \textbf{1. Thiết lập mô hình toán học} & Chưa phân biệt được lãi đơn, lãi kép và cấp số nhân. & Nhận biết được loại bài toán nhưng còn nhầm lẫn công thức gửi và vay. & Thiết lập đúng phương trình tài chính cho các bài toán cơ bản. & Thành thạo mô hình hóa bài toán tài chính phức tạp, giải bài toán ngược chuẩn xác. \\
+    \hline
+    \textbf{2. Kỹ năng tính toán \& MTCT} & Thao tác bấm máy sai, nhầm lẫn thứ tự phép tính hoặc số mũ. & Bấm máy được công thức cơ bản nhưng dễ sai sót ở biểu thức lũy thừa lớn. & Tính toán chuẩn xác, không bị sai số do làm tròn trung gian. & Tính toán cực nhanh, thành thạo các tính năng bảng (TABLE) và gán biến nhớ trên Casio fx-580VN X. \\
+    \hline
+    \textbf{3. Năng lực số (Excel)} & Không sử dụng được phần mềm bảng tính. & Nhập được số liệu nhưng chưa tự viết được công thức toán học. & Tự thiết lập được bảng tính trả nợ dần với các công thức cơ bản. & Thiết kế bảng tính chuyên nghiệp, dùng thành thạo hàm tài chính chuyên dụng ($=\text{PMT}$) và tạo biểu đồ trực quan. \\
+    \hline
+    \textbf{4. Năng lực AI \& Phản biện} & Chưa hiểu khái niệm ứng dụng AI trong tài chính. & Nêu được ví dụ đơn giản về ứng dụng AI trong chấm điểm tín dụng. & Biết đặt câu lệnh prompt hỏi AI giải thích dòng tiền và so sánh phương án. & Phân tích sâu sắc rủi ro tín dụng, phản biện được các câu trả lời của AI và đưa ra lời khuyên tài chính tối ưu. \\
+    \hline
+\end{tabularx}
+\end{center}
+
+\end{document}
