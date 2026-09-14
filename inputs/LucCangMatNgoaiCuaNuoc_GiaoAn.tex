@@ -1,0 +1,676 @@
+\documentclass[12pt, a4paper]{article}
+% --- 1. Cấu hình Tiếng Việt và Font chữ chuẩn ---
+\usepackage[utf8]{inputenc}
+\usepackage[T5]{fontenc}
+\usepackage[vietnamese]{babel}
+\usepackage{mathptmx} % Font Times New Roman đồng bộ cả chữ và công thức toán, không gây xung đột gói
+
+\makeatletter
+\renewcommand{\normalsize}{\@setfontsize\normalsize{13pt}{16pt}}
+\makeatother
+\normalsize
+
+% --- 2. Gói Toán học & Ký hiệu bổ trợ ---
+\usepackage{amsmath, amssymb, amsfonts, mathrsfs, amsthm}
+\usepackage{graphicx}
+\usepackage{fontawesome}
+\usepackage{booktabs, tabularx, array, multirow}
+\usepackage{enumitem}
+
+% --- 3. Đồ họa TikZ, Bảng biến thiên & Hình không gian ---
+\usepackage{tikz}
+\usetikzlibrary{calc, intersections, angles, quotes, patterns, arrows.meta, 3d}
+\usepackage{pgfplots}
+\pgfplotsset{compat=1.18}
+\usepackage{tkz-euclide}
+\usepackage{tkz-tab}
+
+\renewcommand{\vec}[1]{\overrightarrow{#1}}
+
+% --- 4. Hộp sư phạm (Tcolorbox) ---
+\usepackage[many]{tcolorbox}
+\tcbuselibrary{skins, breakable}
+
+% --- 5. Căn lề chuẩn văn bản giáo án ---
+\usepackage{geometry}
+\geometry{
+    a4paper,
+    left=25mm,
+    right=15mm,
+    top=20mm,
+    bottom=20mm
+}
+
+% --- 6. Header / Footer chuẩn hóa ---
+\usepackage{fancyhdr}
+\usepackage{lastpage}
+\pagestyle{fancy}
+\fancyhf{}
+
+\fancyhead[L]{\small \textit{Kế hoạch bài dạy Toán 11}}
+\fancyhead[R]{\textbf{Trang \thepage/\pageref{LastPage}}}
+\fancyfoot[L]{\small \textit{Tổ Toán - Tin}}
+\fancyfoot[R]{\small \textit{Trường THCS\&THPT Hồng Vân}}
+\renewcommand{\headrulewidth}{0.4pt}
+\renewcommand{\footrulewidth}{0.4pt}
+
+% --- 7. Giãn dòng & Giãn đoạn theo chuẩn Nghị định 30/2020/NĐ-CP ---
+\usepackage{setspace}
+\setstretch{1.15}
+\setlength{\parindent}{1.0cm}
+\setlength{\parskip}{5pt}
+
+% Định nghĩa hộp sư phạm chuyên dụng
+\newtcolorbox{pedabox}[2][]{
+    enhanced,
+    breakable,
+    colback=blue!3!white,
+    colframe=blue!65!black,
+    fonttitle=\bfseries\small,
+    title={#2},
+    arc=2mm,
+    boxrule=0.6pt,
+    left=3mm, right=3mm, top=2mm, bottom=2mm,
+    #1
+}
+
+\newtcolorbox{aibox}[2][]{
+    enhanced,
+    breakable,
+    colback=teal!4!white,
+    colframe=teal!70!black,
+    fonttitle=\bfseries\small,
+    title={#2},
+    arc=2mm,
+    boxrule=0.6pt,
+    left=3mm, right=3mm, top=2mm, bottom=2mm,
+    #1
+}
+
+\newtcolorbox{scaffoldbox}[2][]{
+    enhanced,
+    breakable,
+    colback=orange!4!white,
+    colframe=orange!80!black,
+    fonttitle=\bfseries\small,
+    title={#2},
+    arc=2mm,
+    boxrule=0.6pt,
+    left=3mm, right=3mm, top=2mm, bottom=2mm,
+    #1
+}
+
+\newtcolorbox{stembox}[2][]{
+    enhanced,
+    breakable,
+    colback=purple!4!white,
+    colframe=purple!75!black,
+    fonttitle=\bfseries\small,
+    title={#2},
+    arc=2mm,
+    boxrule=0.6pt,
+    left=3mm, right=3mm, top=2mm, bottom=2mm,
+    #1
+}
+
+\begin{document}
+
+\begin{center}
+    {\fontsize{14pt}{17pt}\selectfont \textbf{KẾ HOẠCH BÀI DẠY MÔN TOÁN LỚP 11}}\\[6pt]
+    {\fontsize{16pt}{19pt}\selectfont \textbf{LỰC CĂNG MẶT NGOÀI CỦA NƯỚC}}\\[4pt]
+    {\fontsize{12pt}{15pt}\selectfont \textbf{Môn học: Toán 11} \ \textbar \ \textbf{Thời lượng: 2 tiết (Tiết 49, 50 theo PPCT | Tuần 17)}}
+\end{center}
+
+\vspace{5pt}
+
+\section*{I. MỤC TIÊU}
+
+\subsection*{1. Kiến thức, Năng lực}
+
+\begin{itemize}[leftmargin=1.2cm]
+    \item \textbf{Yêu cầu cần đạt (Nguyên văn CT GDPT 2018 Toán 11):}
+    \begin{itemize}[leftmargin=0.6cm]
+        \item Thực hành ứng dụng các kiến thức toán học vào thực tiễn và các chủ đề liên môn (Vật lí, Hóa học).
+        \item Vận dụng kiến thức hàm số, tọa độ để đo đạc và tính toán lực căng mặt ngoài.
+    \end{itemize}
+
+    \item \textbf{Năng lực Toán học đặc thù:}
+    \begin{itemize}[leftmargin=0.6cm]
+        \item \textit{Năng lực tư duy và lập luận toán học:} Khả năng trừu tượng hóa các hiện tượng liên kết phân tử trên bề mặt chất lỏng thành các mô hình hình học (chu vi đường biên tiếp xúc $L$, diện tích tiếp xúc); suy luận logic về trạng thái cân bằng lực tĩnh học ($\vec{F} + \vec{P} + \vec{F}_c = \vec{0}$) để cô lập đại lượng lực căng mặt ngoài $F_c$; phân tích bản chất của sai số đo lường trong mô hình toán học thực nghiệm.
+        \item \textit{Năng lực mô hình hóa toán học:} Thiết lập công thức toán học liên hệ giữa lực căng mặt ngoài $F_c$ và chiều dài đường biên giới hạn $L$ qua hệ thức tuyến tính tỉ lệ thuận $F_c = \sigma \cdot L$; xác định hệ số góc $\sigma$ (hệ số căng bề mặt) thông qua phương pháp thực nghiệm và phương pháp bình phương tối thiểu trên tập dữ liệu đo đạc.
+        \item \textit{Năng lực giải quyết vấn đề toán học:} Thiết kế quy trình toán học xử lý số liệu đo lường thực nghiệm: tính giá trị trung bình $\bar{\sigma}$, sai số tuyệt đối $\Delta \sigma$, sai số tỉ đối $\delta$; quy đổi chính xác các đơn vị đo lường vật lý ($\text{mm} \to \text{m}$, $\text{g} \to \text{kg}$, $\text{mN} \to \text{N}$) trong các phép tính toán học.
+        \item \textit{Năng lực giao tiếp toán học:} Trình bày báo cáo kết quả thực nghiệm bằng các bảng biểu số liệu khoa học, đồ thị hàm số biểu diễn tương quan giữa lực căng và chiều dài đường biên; sử dụng chuẩn xác các ký hiệu toán học Hy Lạp ($\sigma, \pi, \Delta, \delta$) trong ngữ cảnh liên môn.
+        \item \textit{Năng lực sử dụng công cụ, phương tiện học toán:} Sử dụng thành thạo máy tính cầm tay (MTCT Casio fx-580VN X) với tính năng thống kê một biến (1-Variable Statistics) để tự động tính giá trị trung bình và độ lệch chuẩn của chuỗi số liệu thực nghiệm; sử dụng phần mềm GeoGebra để nhập ảnh chụp, đo đạc tọa độ pixel và đường kính hình học của giọt nước.
+    \end{itemize}
+
+    \item \textbf{Năng lực số (Theo Thông tư 02/2025/TT-BGDĐT):}
+    \begin{itemize}[leftmargin=0.6cm]
+        \item \textit{Mã 1.2NC1b:} Học sinh sử dụng Smartphone cá nhân hoặc máy tính bảng chụp ảnh macro độ phân giải cao giọt nước trên các bề mặt vật liệu khác nhau; thu thập và ghi chép dữ liệu số hóa, nhập ảnh vào phần mềm hình học động (GeoGebra/ImageJ) để đo đạc chính xác đường kính và bán kính cong của giọt nước qua hệ tọa độ pixel chuẩn hóa.
+        \item \textit{Mã 3.1NC1b:} Sử dụng phần mềm bảng tính Microsoft Excel/Google Sheets trên phòng máy vi tính 35 máy để nhập số liệu thực nghiệm từ 7 nhóm học sinh, thiết lập công thức tính toán tự động và vẽ đồ thị phân tán (Scatter Plot) tìm đường xu hướng tuyến tính (Linear Trendline) của hệ số căng bề mặt.
+    \end{itemize}
+
+    \item \textbf{Năng lực AI (Theo Quyết định 2422/QĐ-BGDĐT):}
+    \begin{itemize}[leftmargin=0.6cm]
+        \item \textit{Mã 11.C2.1:} Học sinh tìm hiểu cách thức Trí tuệ nhân tạo (AI) và học máy (Machine Learning) được ứng dụng trong các mô hình mô phỏng động lực học chất lưu tính toán (CFD - Computational Fluid Dynamics), phân tích lực liên kết phân tử và sức căng bề mặt chất lỏng trong thiết kế khí động học (cánh máy bay chống đóng băng, tàu cao tốc, công nghệ vi lưu trong vi mạch sinh học Lab-on-a-chip).
+        \item \textit{Kỹ thuật Prompting:} Học sinh biết cách xây dựng câu lệnh prompt tối ưu cho trợ lý AI để tra cứu giá trị chuẩn của hệ số căng bề mặt của các chất lỏng khác nhau ở các mức nhiệt độ, đồng thời yêu cầu AI giải thích nguyên nhân vật lí của hiện tượng giảm sức căng bề mặt khi pha xà phòng.
+    \end{itemize}
+
+    \item \textbf{Năng lực chung:}
+    \begin{itemize}[leftmargin=0.6cm]
+        \item \textit{Tự chủ và tự học:} Chủ động tìm hiểu hiện tượng mao dẫn và sức căng mặt ngoài trong tự nhiên trước buổi học; tự giác tuân thủ quy tắc an toàn trong phòng thực hành thí nghiệm.
+        \item \textit{Giao tiếp và hợp tác:} Làm việc nhóm tích cực, phân công rõ ràng các vai trò: người thao tác thí nghiệm nhấc vòng dây, người đọc chỉ số lực kế, người chụp ảnh ghi hình và người nhập dữ liệu số hóa.
+    \end{itemize}
+\end{itemize}
+
+\subsection*{2. Phẩm chất}
+
+\begin{itemize}[leftmargin=1.2cm]
+    \item \textbf{Chăm chỉ:} Nghiêm túc thực hiện nhiều lần đo đạc thực nghiệm độc lập để triệt tiêu sai số ngẫu nhiên; kiên trì xử lý dữ liệu và vẽ đồ thị chuẩn xác.
+    \item \textbf{Trung thực:} Ghi nhận trung thực các số liệu thực tế đo được từ lực kế, tuyệt đối không tự ý chỉnh sửa hay làm giả số liệu để khớp với lý thuyết.
+    \item \textbf{Trách nhiệm:} Giữ gìn cẩn thận các thiết bị thí nghiệm (lực kế nhạy, vòng dây kim loại, thước kẹp); có ý thức tiết kiệm hóa chất và dọn dẹp vệ sinh phòng thực hành sạch sẽ sau tiết học.
+\end{itemize}
+
+\vspace{5pt}
+
+\section*{II. THIẾT BỊ DẠY HỌC VÀ HỌC LIỆU}
+
+\begin{itemize}[leftmargin=1.2cm]
+    \item \textbf{Giáo viên:}
+    \begin{itemize}[leftmargin=0.6cm]
+        \item Kế hoạch bài dạy chi tiết theo khung Công văn 5512/BGDĐT-GDTrH.
+        \item Phòng thí nghiệm thực hành của trường, phân chia thành 7 khu vực thực hành cho 7 nhóm học sinh.
+        \item 7 bộ dụng cụ thí nghiệm đo lực căng mặt ngoài:
+        \begin{itemize}
+            \item 01 lực kế nhạy hiển thị vạch chia $0{,}001\text{ N}$ (hoặc cảm biến lực điện tử kỹ thuật số).
+            \item 01 vòng dây kim loại tròn bằng đồng/nhôm mỏng nhẹ có móc treo cố định (đường kính ngoài $D \approx 50\text{ mm}$, đường kính trong $d \approx 48\text{ mm}$).
+            \item 01 thước kẹp cơ khí (đo kích thước vòng kim loại với độ chính xác $0{,}05\text{ mm}$).
+            \item 01 cốc thủy tinh đáy phẳng đựng nước cất sạch, 01 cốc đựng dung dịch nước xà phòng loãng.
+            \item 01 giá đỡ thí nghiệm có vít vi chỉnh nâng hạ êm dịu, nhẹ nhàng.
+        \end{itemize}
+        \item 01 phòng máy vi tính 35 máy nối mạng Internet, cài đặt phần mềm GeoGebra và Microsoft Excel.
+        \item Hệ thống Phiếu học tập thực hành STEM số 1 và số 2.
+    \end{itemize}
+
+    \item \textbf{Học sinh:}
+    \begin{itemize}[leftmargin=0.6cm]
+        \item SGK Toán 11, vở ghi chép bài học thực hành.
+        \item Máy tính cầm tay Casio fx-580VN X.
+        \item Smartphone có camera chụp cận cảnh (macro) cài đặt sẵn ứng dụng đo đạc hoặc chụp ảnh có lưới tỉ lệ.
+        \item Giấy thấm mềm lau khô vòng dây kim loại giữa các lần đo.
+    \end{itemize}
+\end{itemize}
+
+\vspace{5pt}
+
+\section*{III. TIẾN TRÌNH DẠY HỌC}
+
+% =========================================================================
+% TIẾT 1 (TIẾT 49 THEO PPCT)
+% =========================================================================
+\begin{center}
+    {\fontsize{13pt}{16pt}\selectfont \textbf{TIẾT 1. CƠ SỞ TOÁN HỌC VÀ THỰC NGHIỆM ĐO LỰC CĂNG MẶT NGOÀI}}\\[2pt]
+    \textit{(Tiết 49 theo PPCT \ \textbar \ Tuần 17)}
+\end{center}
+
+\subsection*{1. Hoạt động 1: Khởi động (Mở đầu)}
+
+\noindent \textbf{a) Mục tiêu:}
+\begin{itemize}[leftmargin=0.6cm]
+    \item Khơi gợi sự tò mò khoa học thông qua các hiện tượng tự nhiên kỳ thú liên quan đến mặt thoáng chất lỏng.
+    \item Đặt ra vấn đề toán học: Làm thế nào để mô hình hóa và định lượng được một lực căng vô hình trên bề mặt nước?
+\end{itemize}
+
+\noindent \textbf{b) Nội dung:}
+Giáo viên trình chiếu video ngắn (1 phút) và hình ảnh độ phân giải cao về 3 hiện tượng thực tế:
+\begin{pedabox}{Hiện tượng quan sát thực tế}
+    \begin{enumerate}
+        \item Con gọng vó có thể lướt đi nhẹ nhàng trên mặt nước ao hồ mà chân không hề bị chìm xuống nước, tại mỗi vết chân mặt nước trũng xuống như một tấm màng cao su đàn hồi.
+        \item Một chiếc kim khâu bằng thép hoặc một chiếc kẹp giấy kim loại (có khối lượng riêng lớn hơn nước gần 8 lần: $D_{\text{thép}} \approx 7{,}8\text{ g/cm}^3 > D_{\text{nước}} = 1\text{ g/cm}^3$) nhưng khi đặt cẩn thận nằm ngang trên mặt nước phẳng lặng thì lại nổi bồng bềnh trên mặt nước!
+        \item Những giọt sương đọng trên lá sen, giọt nước rơi tự do luôn có xu hướng thu mình lại thành hình cầu gần như hoàn hảo.
+    \end{enumerate}
+    \textbf{Câu hỏi định hướng:} Lực nào đã nâng đỡ chiếc kẹp giấy và con gọng vó? Lực đó tác dụng theo hướng nào và độ lớn của nó phụ thuộc vào yếu tố hình học nào của vật tiếp xúc?
+\end{pedabox}
+
+\noindent \textbf{c) Sản phẩm:}
+Học sinh thảo luận và nêu được: Có một lực giữ ở bề mặt chất lỏng tác dụng tiếp tuyến với mặt thoáng, có xu hướng co rút diện tích mặt ngoài đến mức nhỏ nhất. Lực này gọi là lực căng mặt ngoài (hay lực căng bề mặt). Lực tác dụng dọc theo chu vi đường biên tiếp xúc giữa chất lỏng và vật thể.
+
+\noindent \textbf{d) Tổ chức thực hiện:}
+\begin{itemize}
+    \item \textbf{Bước 1 (Chuyển giao nhiệm vụ):} GV trình chiếu hình ảnh, yêu cầu HS quan sát và trao đổi nhanh theo cặp trong 2 phút.
+    \item \textbf{Bước 2 (Thực hiện nhiệm vụ):} HS thảo luận sôi nổi, liên hệ kiến thức Vật lí THCS về lực đẩy Ác-si-mét và nhận định lực đẩy Ác-si-mét không thể giải thích được hiện tượng chiếc kim nổi vì kim chưa hề chìm để chiếm thể tích chất lỏng.
+    \item \textbf{Bước 3 (Báo cáo, thảo luận):} Đại diện 2 học sinh phát biểu giải thích dự đoán.
+    \item \textbf{Bước 4 (Kết luận, nhận định):} GV chốt lại: Hiện tượng trên do lực căng mặt ngoài gây ra. Hôm nay chúng ta sẽ dùng công cụ Toán học THPT để định lượng chính xác độ lớn của lực này và xác định hệ số căng mặt ngoài thông qua mô hình giải tích thực nghiệm.
+\end{itemize}
+
+\subsection*{2. Hoạt động 2: Hình thành kiến thức}
+
+\noindent \textbf{a) Mục tiêu:}
+\begin{itemize}
+    \item Xây dựng mô hình toán học cho lực căng mặt ngoài: Hệ thức tuyến tính tỉ lệ thuận $F_c = \sigma \cdot L$.
+    \item Thiết lập công thức giải tích tính hệ số căng bề mặt $\sigma$ thông qua phương pháp bứt vòng dây kim loại ra khỏi mặt thoáng chất lỏng.
+    \item Nắm vững phương pháp toán học tính toán và xử lý sai số thực nghiệm.
+\end{itemize}
+
+\noindent \textbf{b) Nội dung:}
+
+\noindent \textbf{Nội dung 1: Bản chất vật lí và Mô hình toán học của lực căng mặt ngoài}
+\begin{itemize}
+    \item Các phân tử ở lớp bề mặt chất lỏng chịu một hợp lực hút hướng vào trong lòng khối chất lỏng. Vì vậy, mặt thoáng chất lỏng luôn có xu hướng co lại để diện tích bề mặt là nhỏ nhất (đối với một thể tích cố định, hình cầu là hình có diện tích bề mặt nhỏ nhất).
+    \item Lực căng mặt ngoài tác dụng lên một đoạn đường biên có chiều dài $L$ nằm trên bề mặt chất lỏng, vuông góc với đoạn đường biên đó và tiếp tuyến với mặt thoáng.
+    \item Thực nghiệm chứng minh độ lớn của lực căng mặt ngoài $F_c$ tỉ lệ thuận với chiều dài đường biên tiếp xúc $L$:
+    \begin{equation}
+        F_c = \sigma \cdot L
+    \end{equation}
+    Trong đó:
+    \begin{itemize}
+        \item $F_c$: Độ lớn của lực căng mặt ngoài (đơn vị: Newton, ký hiệu $\text{N}$).
+        \item $L$: Chiều dài đường giới hạn mặt ngoài của chất lỏng tiếp xúc với vật (đơn vị: mét, ký hiệu $\text{m}$).
+        \item $\sigma$ (hoặc $\gamma$): Hệ số căng mặt ngoài của chất lỏng (đơn vị: Newton trên mét, ký hiệu $\text{N/m}$). Đại lượng này phụ thuộc vào bản chất của chất lỏng và nhiệt độ môi trường.
+    \end{itemize}
+\end{itemize}
+
+\noindent \textbf{Nội dung 2: Phương pháp thực nghiệm đo hệ số căng mặt ngoài bằng vòng kim loại}
+\begin{itemize}
+    \item Xét một vòng dây kim loại mỏng hình tròn có đường kính ngoài $D$ và đường kính trong $d$.
+    \item Nhúng vòng dây ngập nhẹ vào nước rồi từ từ kéo vòng dây lên theo phương thẳng đứng. Khi vòng dây vừa bứt ra khỏi mặt nước, một màng nước mỏng hình ống bám dính vào vòng dây.
+    \item \textbf{Phân tích chiều dài đường biên tiếp xúc $L$:}
+    Màng nước có hai mặt: mặt ngoài (bao quanh đường tròn ngoài đường kính $D$) và mặt trong (bao quanh đường tròn trong đường kính $d$). Do đó, tổng chiều dài đường biên tiếp xúc của màng nước với vòng kim loại là:
+    \begin{equation}
+        L = L_{\text{ngoài}} + L_{\text{trong}} = \pi \cdot D + \pi \cdot d = \pi(D + d)
+    \end{equation}
+    Nếu thành vòng kim loại rất mỏng ($D \approx d$), ta có thể lấy gần đúng: $L \approx 2\pi D$.
+    \item \textbf{Phân tích cân bằng lực tại thời điểm bứt màng nước:}
+    \begin{itemize}
+        \item Khi vòng dây ở trong không khí, lực kế chỉ đúng trọng lượng của vòng kim loại: $F_1 = P$.
+        \item Khi kéo vòng dây từ từ lên khỏi mặt nước, màng nước kéo vòng dây xuống bằng lực căng mặt ngoài $F_c$. Tại thời điểm màng nước bắt đầu bứt ra, lực kéo của lực kế đạt giá trị cực đại:
+        $$F_{\text{max}} = P + F_c \implies F_c = F_{\text{max}} - P$$
+    \end{itemize}
+    \item \textbf{Công thức giải tích xác định hệ số căng mặt ngoài $\sigma$:}
+    \begin{equation}
+        \sigma = \dfrac{F_c}{L} = \dfrac{F_{\text{max}} - P}{\pi(D + d)}
+    \end{equation}
+\end{itemize}
+
+\begin{scaffoldbox}{Giàn giáo sư phạm: Dành cho học sinh trung bình - yếu}
+    \textbf{Các bẫy toán học và sai lầm thường gặp cần tránh tuyệt đối:}
+    \begin{enumerate}
+        \item \textbf{Lỗi quên nhân đôi bề mặt màng nước:} Màng nước xà phòng hoặc màng nước mỏng luôn có \textbf{2 mặt tiếp xúc} (mặt ngoài và mặt trong). Vì vậy, chiều dài đường biên bắt buộc phải là tổng chu vi của cả 2 đường tròn: $L = \pi D + \pi d$, không được chỉ lấy chu vi một đường tròn $\pi D$.
+        \item \textbf{Lỗi đổi đơn vị đo lường:}
+        \begin{itemize}
+            \item Đường kính thường cho bằng milimét ($\text{mm}$): Bắt buộc chia cho $1\,000$ để ra đơn vị mét ($\text{m}$): Ví dụ $50\text{ mm} = 0{,}05\text{ m}$.
+            \item Lực kế đọc bằng milinewton ($\text{mN}$): Chia cho $1\,000$ để ra Newton ($\text{N}$).
+        \end{itemize}
+        \item \textbf{Quy tắc tính sai số toán học trong thực nghiệm:}
+        \begin{itemize}
+            \item Giá trị trung bình: $\bar{\sigma} = \dfrac{\sigma_1 + \sigma_2 + \dots + \sigma_n}{n}$.
+            \item Sai số tuyệt đối của từng lần đo: $\Delta \sigma_i = |\bar{\sigma} - \sigma_i|$.
+            \item Sai số tuyệt đối trung bình: $\overline{\Delta \sigma} = \dfrac{\Delta \sigma_1 + \dots + \Delta \sigma_n}{n}$.
+            \item Kết quả đo biểu diễn dưới dạng khoảng tin cậy toán học: $\sigma = \bar{\sigma} \pm \Delta \sigma$.
+        \end{itemize}
+    \end{enumerate}
+\end{scaffoldbox}
+
+\noindent \textbf{c) Sản phẩm:}
+Học sinh ghi nhớ trọn vẹn sơ đồ cân bằng lực, phân tích được công thức $L = \pi(D+d)$ và đóng khung công thức tính hệ số căng mặt ngoài $\sigma = \dfrac{F_{\text{max}} - P}{\pi(D+d)}$.
+
+\noindent \textbf{d) Tổ chức thực hiện:}
+\begin{itemize}
+    \item \textbf{Bước 1 (Chuyển giao):} GV vẽ hình minh họa mặt cắt vòng dây và màng nước kéo dài lên bảng, đặt câu hỏi về số lượng mặt tiếp xúc của màng nước.
+    \item \textbf{Bước 2 (Thực hiện):} HS quan sát, trao đổi và nhận ra màng nước có bề mặt trong và bề mặt ngoài.
+    \item \textbf{Bước 3 (Báo cáo):} 1 HS lên bảng viết công thức tính chu vi $L$, giải thích tại sao có thừa số $\pi(D+d)$.
+    \item \textbf{Bước 4 (Kết luận):} GV chuẩn hóa công thức giải tích (3), giải thích quy trình thực nghiệm nhấc vòng dây.
+\end{itemize}
+
+\subsection*{3. Hoạt động 3: Luyện tập}
+
+\noindent \textbf{a) Mục tiêu:}
+\begin{itemize}
+    \item Rèn luyện kỹ năng giải bài toán định lượng tính hệ số căng mặt ngoài từ số liệu thực nghiệm.
+    \item Sử dụng thành thạo máy tính Casio fx-580VN X xử lý số thập phân và tính toán sai số thực nghiệm.
+\end{itemize}
+
+\noindent \textbf{b) Nội dung:}
+Học sinh giải quyết bài toán định lượng cụ thể:
+
+\begin{pedabox}{Bài toán luyện tập: Xử lý số liệu đo hệ số căng mặt ngoài của nước}
+    Một nhóm học sinh tiến hành đo hệ số căng mặt ngoài của nước ở nhiệt độ phòng $20^\circ\text{C}$ bằng bộ thí nghiệm vòng kim loại và lực kế nhạy.
+    \begin{itemize}
+        \item Dùng thước kẹp đo được: Đường kính ngoài $D = 50{,}0\text{ mm}$, đường kính trong $d = 48{,}0\text{ mm}$.
+        \item Khi vòng dây treo trong không khí, lực kế chỉ: $P = 0{,}060\text{ N}$.
+        \item Tiến hành nhấc vòng dây ra khỏi mặt nước trong 4 lần đo độc lập, lực kế ghi nhận các giá trị cực đại lúc màng nước bứt ra lần lượt là:
+        $$F_1 = 0{,}0825\text{ N}; \quad F_2 = 0{,}0830\text{ N}; \quad F_3 = 0{,}0820\text{ N}; \quad F_4 = 0{,}0825\text{ N}$$
+    \end{itemize}
+    \textbf{Yêu cầu:}
+    \begin{enumerate}
+        \item Tính chiều dài đường biên tiếp xúc $L$ của màng nước với vòng kim loại (lấy $\pi \approx 3{,}1416$).
+        \item Tính lực căng mặt ngoài $F_{c, i}$ và hệ số căng mặt ngoài $\sigma_i$ trong từng lần đo.
+        \item Tính giá trị trung bình $\bar{\sigma}$, sai số tuyệt đối trung bình $\overline{\Delta \sigma}$ và viết kết quả đo dưới dạng chuẩn khoa học.
+        \item So sánh với giá trị chuẩn của nước ở $20^\circ\text{C}$ là $\sigma_{\text{chuẩn}} = 0{,}0728\text{ N/m}$ và nhận xét độ chính xác của phép đo.
+    \end{enumerate}
+\end{pedabox}
+
+\noindent \textbf{c) Sản phẩm: Lời giải chi tiết}
+\begin{enumerate}
+    \item Đổi đơn vị đường kính ra mét:
+    $$D = 50{,}0\text{ mm} = 0{,}050\text{ m}; \quad d = 48{,}0\text{ mm} = 0{,}048\text{ m}$$
+    Chiều dài đường biên tiếp xúc của màng nước với vòng kim loại là:
+    $$L = \pi(D + d) = 3{,}1416 \times (0{,}050 + 0{,}048) = 3{,}1416 \times 0{,}098 \approx 0{,}30788\text{ m}$$
+    \item Tính lực căng mặt ngoài $F_{c, i} = F_i - P$ và hệ số $\sigma_i = \dfrac{F_{c, i}}{L}$ cho từng lần đo:
+    \begin{itemize}
+        \item Lần 1: $F_{c, 1} = 0{,}0825 - 0{,}0600 = 0{,}0225\text{ N} \implies \sigma_1 = \dfrac{0{,}0225}{0{,}30788} \approx 0{,}07308\text{ N/m}$.
+        \item Lần 2: $F_{c, 2} = 0{,}0830 - 0{,}0600 = 0{,}0230\text{ N} \implies \sigma_2 = \dfrac{0{,}0230}{0{,}30788} \approx 0{,}07470\text{ N/m}$.
+        \item Lần 3: $F_{c, 3} = 0{,}0820 - 0{,}0600 = 0{,}0220\text{ N} \implies \sigma_3 = \dfrac{0{,}0220}{0{,}30788} \approx 0{,}07146\text{ N/m}$.
+        \item Lần 4: $F_{c, 4} = 0{,}0825 - 0{,}0600 = 0{,}0225\text{ N} \implies \sigma_4 = \dfrac{0{,}0225}{0{,}30788} \approx 0{,}07308\text{ N/m}$.
+    \end{itemize}
+    \item Tính giá trị trung bình và sai số:
+    \begin{itemize}
+        \item Giá trị trung bình của hệ số căng mặt ngoài:
+        $$\bar{\sigma} = \dfrac{\sigma_1 + \sigma_2 + \sigma_3 + \sigma_4}{4} = \dfrac{0{,}07308 + 0{,}07470 + 0{,}07146 + 0{,}07308}{4} \approx 0{,}07308\text{ N/m}$$
+        \item Tính sai số tuyệt đối của từng lần đo:
+        $$\Delta \sigma_1 = |0{,}07308 - 0{,}07308| = 0{,}00000\text{ N/m}$$
+        $$\Delta \sigma_2 = |0{,}07308 - 0{,}07470| = 0{,}00162\text{ N/m}$$
+        $$\Delta \sigma_3 = |0{,}07308 - 0{,}07146| = 0{,}00162\text{ N/m}$$
+        $$\Delta \sigma_4 = |0{,}07308 - 0{,}07308| = 0{,}00000\text{ N/m}$$
+        \item Sai số tuyệt đối trung bình:
+        $$\overline{\Delta \sigma} = \dfrac{0 + 0{,}00162 + 0{,}00162 + 0}{4} = \dfrac{0{,}00324}{4} \approx 0{,}00081\text{ N/m}$$
+        \item Viết kết quả đo:
+        $$\sigma = (0{,}0731 \pm 0{,}0008)\text{ N/m}$$
+    \end{itemize}
+    \item So sánh với giá trị chuẩn:
+    Sai số tỉ đối so với giá trị chuẩn $\sigma_{\text{chuẩn}} = 0{,}0728\text{ N/m}$ là:
+    $$\delta = \dfrac{|\bar{\sigma} - \sigma_{\text{chuẩn}}|}{\sigma_{\text{chuẩn}}} \times 100\% = \dfrac{|0{,}07308 - 0{,}0728|}{0{,}0728} \times 100\% \approx 0{,}38\%$$
+    Nhận xét: Sai số dưới $1\%$ chứng minh mô hình toán học và phương pháp thực nghiệm đo đạc đạt độ tin cậy và độ chính xác rất cao.
+\end{enumerate}
+
+\noindent \textbf{d) Tổ chức thực hiện:}
+\begin{itemize}
+    \item \textbf{Bước 1:} GV phát phiếu bài tập, yêu cầu HS dùng MTCT Casio fx-580VN X thực hiện tính toán độc lập trong 6 phút.
+    \item \textbf{Bước 2:} HS sử dụng chế độ thống kê hoặc tính toán thông thường để tìm giá trị trung bình và sai số.
+    \item \textbf{Bước 3:} Gọi 1 HS lên bảng trình bày bảng tính các bước.
+    \item \textbf{Bước 4:} GV nhận xét kỹ năng làm tròn số thập phân, lưu ý HS giữ tối thiểu 4 chữ số thập phân đối với đơn vị $\text{N/m}$.
+\end{itemize}
+
+\subsection*{4. Hoạt động 4: Vận dụng}
+
+\noindent \textbf{a) Mục tiêu:}
+\begin{itemize}
+    \item Vận dụng mô hình toán học lực căng mặt ngoài để giải thích hiện tượng sinh học thực tế: Con gọng vó đứng và di chuyển trên mặt nước.
+    \item Tích hợp kiến thức liên môn Toán học - Vật lí - Sinh học.
+\end{itemize}
+
+\noindent \textbf{b) Nội dung:}
+\begin{pedabox}{Bài toán vận dụng: Giải mã sinh học - Tại sao con gọng vó không bị chìm?}
+    Một con gọng vó có khối lượng $m = 0{,}03\text{ g}$. Nó có 6 chân tiếp xúc với mặt nước. Phần đầu mỗi chân tiếp xúc với mặt nước có cấu tạo các sợi lông vi mô kị nước tạo thành một vết trũng tròn có bán kính tiếp xúc hiệu dụng là $r = 0{,}4\text{ mm}$.
+    Biết hệ số căng mặt ngoài của nước ao hồ là $\sigma = 0{,}072\text{ N/m}$ và gia tốc trọng trường $g = 9{,}8\text{ m/s}^2$.
+    \begin{enumerate}
+        \item Tính trọng lượng $P$ của con gọng vó.
+        \item Tính tổng lực căng mặt ngoài cực đại $F_{c,\text{max}}$ mà mặt nước có thể tác dụng lên 6 chân của con gọng vó.
+        \item So sánh $F_{c,\text{max}}$ với trọng lượng $P$ và rút ra kết luận sinh học về khả năng nổi của gọng vó.
+    \end{enumerate}
+\end{pedabox}
+
+\noindent \textbf{c) Sản phẩm: Lời giải chi tiết}
+\begin{enumerate}
+    \item Trọng lượng của con gọng vó:
+    Đổi khối lượng ra kilôgam: $m = 0{,}03\text{ g} = 0{,}03 \times 10^{-3}\text{ kg} = 3 \times 10^{-5}\text{ kg}$.
+    $$P = m \cdot g = 3 \times 10^{-5} \times 9{,}8 = 2{,}94 \times 10^{-4}\text{ N} = 0{,}000294\text{ N}$$
+    \item Tổng lực căng mặt ngoài cực đại nâng đỡ gọng vó:
+    Mỗi chân gọng vó tiếp xúc với mặt nước tạo thành đường biên tròn có bán kính $r = 0{,}4\text{ mm} = 0{,}4 \times 10^{-3}\text{ m}$.
+    Chu vi đường biên tiếp xúc của một chân là:
+    $$L_1 = 2\pi r = 2 \times 3{,}1416 \times 0{,}4 \times 10^{-3} \approx 2{,}513 \times 10^{-3}\text{ m}$$
+    Tổng chiều dài đường biên tiếp xúc của cả 6 chân là:
+    $$L_{\text{tổng}} = 6 \times L_1 = 6 \times 2{,}513 \times 10^{-3} \approx 1{,}508 \times 10^{-2}\text{ m}$$
+    Tổng lực căng mặt ngoài cực đại nâng đỡ hướng thẳng đứng lên trên là:
+    $$F_{c,\text{max}} = \sigma \cdot L_{\text{tổng}} = 0{,}072 \times 1{,}508 \times 10^{-2} \approx 1{,}086 \times 10^{-3}\text{ N} = 0{,}001086\text{ N}$$
+    \item Đánh giá và so sánh:
+    Ta lập tỉ số giữa lực nâng cực đại của sức căng bề mặt và trọng lượng của con gọng vó:
+    $$\dfrac{F_{c,\text{max}}}{P} = \dfrac{1{,}086 \times 10^{-3}}{2{,}94 \times 10^{-4}} \approx 3{,}7\text{ lần}$$
+    \textbf{Kết luận sinh học - toán học:} Lực căng mặt ngoài cực đại của nước lớn gấp gần $3{,}7$ lần trọng lượng của con gọng vó. Nhờ vậy, gọng vó không những đứng vững trên mặt thoáng mà còn có thể nhảy, mang vác con mồi nhỏ và di chuyển với tốc độ cao trên mặt nước mà không sợ bị chìm.
+\end{enumerate}
+
+\noindent \textbf{d) Tổ chức thực hiện:}
+\begin{itemize}
+    \item \textbf{Bước 1:} GV chuyển giao bài toán thú vị trên máy chiếu, khuyến khích học sinh thi đua giải nhanh.
+    \item \textbf{Bước 2:} HS tính toán, so sánh hai giá trị lực.
+    \item \textbf{Bước 3:} 1 HS giải thích kết quả trước lớp, bày tỏ sự thán phục trước cấu tạo cơ thể kỳ diệu của sinh vật thích nghi với các định luật vật lý tự nhiên.
+    \item \textbf{Bước 4:} GV kết luận tiết 1, dặn dò các nhóm chuẩn bị Smartphone cho tiết 2 thực hành đo đạc hình ảnh và thí nghiệm trực tiếp.
+\end{itemize}
+
+% =========================================================================
+% TIẾT 2 (TIẾT 50 THEO PPCT)
+% =========================================================================
+\vspace{10pt}
+\begin{center}
+    {\fontsize{13pt}{16pt}\selectfont \textbf{TIẾT 2. THỰC HÀNH STEM VÀ ỨNG DỤNG CÔNG NGHỆ SỐ - TRÍ TUỆ NHÂN TẠO}}\\[2pt]
+    \textit{(Tiết 50 theo PPCT \ \textbar \ Tuần 17)}
+\end{center}
+
+\subsection*{1. Hoạt động 1: Khởi động (Mở đầu)}
+
+\noindent \textbf{a) Mục tiêu:}
+\begin{itemize}
+    \item Đặt vấn đề thực tế về việc đo lường kích thước các vật thể siêu nhỏ trong chất lưu (kích thước giọt sương, giọt máu xét nghiệm, giọt mực in phun).
+    \item Kết nối nhu cầu ứng dụng công nghệ hình ảnh số và AI vào giải quyết bài toán hình học chất lưu.
+\end{itemize}
+
+\noindent \textbf{b) Nội dung:}
+Giáo viên chiếu hình ảnh giọt nước đọng trên mặt kính phủ màng nano chống bám nước và giọt nước trên lá cây:
+\begin{pedabox}{Vấn đề đo đạc thực tế}
+    Làm thế nào để đo được đường kính và bán kính cong của một giọt nước li ti (chỉ khoảng vài milimét) với độ chính xác cao khi không thể dùng thước kẻ áp sát vào giọt nước mà không làm nó vỡ ra?
+\end{pedabox}
+
+\noindent \textbf{c) Sản phẩm:}
+Học sinh đề xuất: Chụp ảnh phóng đại bằng Smartphone có đặt vật đối chứng (thước milimét) bên cạnh, sau đó đưa ảnh vào máy tính dùng phần mềm toán học (GeoGebra) để phóng to, xác định tọa độ và đo khoảng cách pixel.
+
+\noindent \textbf{d) Tổ chức thực hiện:}
+GV ghi nhận ý tưởng xuất sắc của học sinh và chuyển giao ngay vào hoạt động rèn luyện Năng lực số.
+
+\subsection*{2. Hoạt động 2: Hình thành kiến thức và Rèn luyện kỹ năng số}
+
+\noindent \textbf{a) Mục tiêu:}
+\begin{itemize}
+    \item Thực hành Năng lực số 1.2NC1b: Thu thập ảnh giọt nước bằng Smartphone, số hóa và đo đạc đường kính trên phần mềm GeoGebra.
+    \item Thực hành Năng lực AI 11.C2.1 (Quyết định 2422/QĐ-BGDĐT): Tìm hiểu AI phân tích lực liên kết bề mặt chất lỏng trong các mô hình khí động học và vi lưu.
+\end{itemize}
+
+\noindent \textbf{b) Nội dung:}
+
+\noindent \textbf{Nội dung 1: Quy trình số hóa và đo đạc hình học giọt nước trên GeoGebra (Mã 1.2NC1b)}
+\begin{enumerate}
+    \item \textbf{Chụp ảnh chuẩn mực:} Dùng Smartphone đặt chế độ chụp Macro hoặc quay video chậm, đặt một đoạn thước chia milimét nằm cạnh giọt nước trên mặt phẳng kính sạch.
+    \item \textbf{Chèn ảnh vào GeoGebra:}
+    \begin{itemize}
+        \item Mở phần mềm GeoGebra trên phòng máy tính 35 máy, chọn công cụ \texttt{Chèn ảnh (Image)}.
+        \item Cố định hai điểm mút của vạch chia thước kẻ trên ảnh là $A$ và $B$ (ví dụ khoảng cách $10\text{ mm}$ trên thước tương ứng với đoạn thẳng $AB$).
+    \end{itemize}
+    \item \textbf{Xác định hệ số tỉ lệ pixel sang milimét:}
+    Tính hệ số tỉ lệ: $k = \dfrac{10\text{ mm}}{\text{Độ dài } AB \text{ trên phần mềm}}$.
+    \item \textbf{Nội suy đường tròn bao quanh giọt nước:}
+    \begin{itemize}
+        \item Chấm 3 điểm $M, N, P$ nằm trên đường biên của giọt nước.
+        \item Dùng công cụ \texttt{Đường tròn đi qua 3 điểm (Circle through 3 Points)} dựng đường tròn ngoại tiếp tam giác $MNP$.
+        \item GeoGebra tự động xuất phương trình đường tròn:
+        $$(x - a)^2 + (y - b)^2 = R^2$$
+        \item Từ đó suy ra trực tiếp bán kính hình học $R$ và đường kính giọt nước: $D_{\text{giọt}} = 2R \times k$.
+    \end{itemize}
+\end{enumerate}
+
+\begin{aibox}{Tích hợp Năng lực AI (Theo QĐ 2422/QĐ-BGDĐT): AI trong Động lực học Chất lưu}
+    \textbf{1. Ứng dụng thực tiễn của Trí tuệ nhân tạo trong mô phỏng sức căng bề mặt:}
+    \begin{itemize}
+        \item \textit{Mô hình hóa khí động học tự động (CFD hỗ trợ bởi AI):} Các thuật toán Physics-Informed Neural Networks (PINNs) giúp giải các phương trình vi phân Navier-Stokes mô tả dòng chảy chất lưu nhanh hơn gấp hàng nghìn lần so với máy tính truyền thống, phân tích lực căng bề mặt trong thiết kế vỏ tàu ngầm, cánh máy bay chống bám dính hạt nước mưa.
+        \item \textit{Y sinh học vi lưu (Microfluidics \& Lab-on-a-chip):} AI tự động điều khiển việc phân tách các giọt dung dịch kích thước nano chứa tế bào ung thư hoặc ADN dựa trên lực căng mặt ngoài để xét nghiệm y khoa tự động.
+    \end{itemize}
+    \textbf{2. Kỹ thuật câu lệnh Prompt mẫu cho học sinh:}
+    \begin{quote}
+        \small \texttt{"Em hãy đóng vai chuyên gia mô phỏng khí động học chất lưu. Hãy: (1) Giải thích tại sao trong điều kiện vi trọng lực ngoài vũ trụ, giọt nước lại co thành hình cầu hoàn hảo; (2) Trình bày cách thuật toán AI (PINNs) mô phỏng lực căng bề mặt giữa nước và không khí; (3) Phân tích cơ chế giảm sức căng bề mặt của chất hoạt động bề mặt (xà phòng) ở cấp độ phân tử."}
+    \end{quote}
+\end{aibox}
+
+\noindent \textbf{c) Sản phẩm:}
+Học sinh dựng được hình ảnh đường tròn bao quanh giọt nước trên phần mềm GeoGebra, đọc được tọa độ tâm và bán kính; hoàn thành phiếu tìm hiểu ứng dụng AI.
+
+\noindent \textbf{d) Tổ chức thực hiện:}
+GV làm mẫu thị phạm trên màn hình máy chiếu phòng máy -> HS các máy thực hành chèn ảnh mẫu và đo đạc -> GV hướng dẫn HS gửi prompt truy vấn AI và phân tích kết quả trả về.
+
+\subsection*{3. Hoạt động 3: Luyện tập (Thực hành phòng thí nghiệm STEM)}
+
+\noindent \textbf{a) Mục tiêu:}
+\begin{itemize}
+    \item 7 nhóm học sinh trực tiếp thao tác bộ dụng cụ thí nghiệm, đo lực căng mặt ngoài của nước sạch và dung dịch nước xà phòng.
+    \item Nhập số liệu vào bảng tính Excel, xử lý thống kê toán học.
+\end{itemize}
+
+\noindent \textbf{b) Nội dung (Chủ đề STEM phòng thí nghiệm):}
+\begin{stembox}{Chủ đề STEM: Thực nghiệm đo và so sánh hệ số căng bề mặt của nước sạch và nước xà phòng}
+    \textbf{Quy trình thực hiện tại 7 bàn thí nghiệm:}
+    \begin{enumerate}
+        \item Dùng thước kẹp đo đường kính ngoài $D$ và đường kính trong $d$ của vòng dây kim loại (lặp lại 3 lần).
+        \item Treo vòng dây vào lực kế, ghi nhận trọng lượng $P$ trong không khí.
+        \item Nhúng vòng dây ngập vào cốc nước sạch, từ từ hạ cốc nước xuống bằng vít vi chỉnh. Quan sát màng nước căng ra và ghi nhận giá trị lực kế cực đại $F_{\text{nước}}$ ngay trước khi màng nước đứt. (Thực hiện 5 lần đo).
+        \item Lau khô vòng dây, lặp lại quy trình với cốc đựng dung dịch nước xà phòng, ghi nhận $F_{\text{xà phòng}}$ (Thực hiện 5 lần đo).
+        \item Nhập toàn bộ số liệu vào bảng tính Excel tại máy tính của nhóm để tự động tính $\sigma_{\text{nước}}$ và $\sigma_{\text{xà phòng}}$.
+    \end{enumerate}
+\end{stembox}
+
+\noindent \textbf{c) Sản phẩm: Bảng số liệu thực nghiệm mẫu của Nhóm 1}
+
+\begin{center}
+\renewcommand{\arraystretch}{1.2}
+\begin{tabular}{|c|c|c|c|c|}
+    \hline
+    \textbf{Lần đo} & \textbf{$F_{\text{nước}}$ (N)} & \textbf{$\sigma_{\text{nước}}$ (N/m)} & \textbf{$F_{\text{xà phòng}}$ (N)} & \textbf{$\sigma_{\text{xà phòng}}$ (N/m)} \\
+    \hline
+    1 & $0{,}0825$ & $0{,}0731$ & $0{,}0720$ & $0{,}0390$ \\
+    \hline
+    2 & $0{,}0828$ & $0{,}0741$ & $0{,}0725$ & $0{,}0406$ \\
+    \hline
+    3 & $0{,}0822$ & $0{,}0721$ & $0{,}0718$ & $0{,}0383$ \\
+    \hline
+    4 & $0{,}0825$ & $0{,}0731$ & $0{,}0722$ & $0{,}0396$ \\
+    \hline
+    5 & $0{,}0826$ & $0{,}0734$ & $0{,}0721$ & $0{,}0393$ \\
+    \hline
+    \textbf{Trung bình} & $\mathbf{0{,}0825}$ & $\mathbf{0{,}0732}$ & $\mathbf{0{,}0721}$ & $\mathbf{0{,}0394}$ \\
+    \hline
+\end{tabular}
+\end{center}
+
+\noindent \textbf{Kết luận thực nghiệm của nhóm:}
+$$\sigma_{\text{nước}} \approx 0{,}0732\text{ N/m}; \quad \sigma_{\text{xà phòng}} \approx 0{,}0394\text{ N/m}$$
+Hệ số căng mặt ngoài của nước xà phòng chỉ bằng khoảng $54\%$ so với nước sạch.
+
+\noindent \textbf{d) Tổ chức thực hiện:}
+\begin{itemize}
+    \item \textbf{Bước 1:} GV phân công 7 nhóm vào 7 vị trí phòng thí nghiệm, phổ biến an toàn thiết bị.
+    \item \textbf{Bước 2:} Các nhóm thực hiện thí nghiệm, ghi số liệu vào phiếu giấy rồi nhập vào file Excel của nhóm.
+    \item \textbf{Bước 3:} GV giám sát, uốn nắn thao tác vặn vít vi chỉnh nâng hạ (phải quay thật chậm để màng nước không bị rung giật đứt sớm).
+    \item \textbf{Bước 4:} Các nhóm hoàn tất bảng tính và chuẩn bị báo cáo.
+\end{itemize}
+
+\subsection*{4. Hoạt động 4: Vận dụng}
+
+\noindent \textbf{a) Mục tiêu:}
+\begin{itemize}
+    \item Vận dụng kết quả thực nghiệm giải thích ứng dụng thực tế của chất tẩy rửa trong đời sống hàng ngày.
+    \item Tổng kết toàn diện bài học thực hành trải nghiệm liên môn.
+\end{itemize}
+
+\noindent \textbf{b) Nội dung:}
+Giáo viên đặt câu hỏi liên hệ thực tiễn đời sống:
+\begin{pedabox}{Câu hỏi thực tiễn: Tại sao xà phòng lại giúp giặt sạch quần áo?}
+    Dựa vào kết quả đo thực nghiệm vừa thu được ($\sigma_{\text{xà phòng}} \approx 0{,}039\text{ N/m} < \sigma_{\text{nước}} \approx 0{,}073\text{ N/m}$), hãy giải thích tại sao khi giặt quần áo bẩn hoặc rửa bát đĩa dính dầu mỡ, nếu chỉ dùng nước sạch thông thường thì rất khó giặt sạch, nhưng khi pha thêm bột giặt hoặc nước rửa bát thì vết bẩn lại nhanh chóng bị đánh bật?
+\end{pedabox}
+
+\noindent \textbf{c) Sản phẩm: Giải thích khoa học liên môn}
+\begin{itemize}
+    \item Nước sạch có hệ số căng bề mặt rất lớn ($\approx 0{,}073\text{ N/m}$), các phân tử nước có xu hướng liên kết chặt với nhau tạo thành giọt tròn, khó len lỏi vào các khe sợi vải siêu nhỏ và không hòa tan được dầu mỡ (kị nước).
+    \item Phân tử xà phòng là chất hoạt động bề mặt (Surfactant), làm giảm mạnh sức căng bề mặt của nước (giảm gần một nửa, xuống còn khoảng $0{,}039\text{ N/m}$).
+    \item Nhờ sức căng bề mặt giảm xuống, nước xà phòng dễ dàng thấm sâu vào từng kẽ sợi vải, bao quanh các hạt dầu mỡ và chất bẩn, nhũ hóa chúng tạo thành các hạt mixen lơ lửng trong nước và bị cuốn trôi dễ dàng khi xả nước.
+\end{itemize}
+
+\noindent \textbf{d) Tổ chức thực hiện:}
+GV cho các nhóm thảo luận nhanh trong 3 phút -> Đại diện Nhóm 3 trình bày giải thích -> GV khen ngợi, chốt lại sự kết hợp hoàn hảo giữa Toán học, Vật lí, Hóa học và Đời sống.
+
+\vspace{5pt}
+
+\section*{IV. PHỤ LỤC HỌC LIỆU BỔ TRỢ}
+
+\subsection*{1. Bảng tóm tắt hệ thống công thức toán học trong bài học}
+
+\begin{center}
+\renewcommand{\arraystretch}{1.3}
+\begin{tabularx}{\textwidth}{|p{4cm}|X|p{4cm}|}
+    \hline
+    \textbf{Đại lượng / Khái niệm} & \textbf{Ý nghĩa vật lí \& Ký hiệu quy ước} & \textbf{Công thức toán học} \\
+    \hline
+    \textbf{1. Lực căng mặt ngoài} & Lực tác dụng tiếp tuyến với mặt thoáng chất lỏng, tỉ lệ thuận với chu vi đường biên. & $F_c = \sigma \cdot L$ \\
+    \hline
+    \textbf{2. Chiều dài đường biên vòng kim loại} & Tổng chu vi đường tròn ngoài và đường tròn trong của màng nước mỏng. & $L = \pi(D + d)$ \\
+    \hline
+    \textbf{3. Hệ số căng mặt ngoài} & Đại lượng đặc trưng cho sức căng bề mặt chất lỏng (đơn vị $\text{N/m}$). & $\sigma = \dfrac{F_{\text{max}} - P}{\pi(D + d)}$ \\
+    \hline
+    \textbf{4. Sai số tuyệt đối thực nghiệm} & Độ lệch tuyệt đối giữa giá trị đo và giá trị trung bình. & $\Delta \sigma_i = |\bar{\sigma} - \sigma_i|$ \\
+    \hline
+    \textbf{5. Sai số tỉ đối} & Đánh giá mức độ chính xác của phép đo so với giá trị chuẩn. & $\delta = \dfrac{|\bar{\sigma} - \sigma_{\text{chuẩn}}|}{\sigma_{\text{chuẩn}}} \times 100\%$ \\
+    \hline
+\end{tabularx}
+\end{center}
+
+\subsection*{2. Phiếu học tập phân tầng bậc thang (Worksheet)}
+
+\begin{center}
+    \textbf{PHIẾU HỌC TẬP THỰC HÀNH: LỰC CĂNG MẶT NGOÀI CỦA NƯỚC}\\
+    \textit{Nhóm thực hiện: \dots\dots\dots \ \textbar \ Lớp: 11\dots \ \textbar \ Ngày thực hành: \dots\dots/\dots\dots/2026}
+\end{center}
+
+\noindent \textbf{MỨC ĐỘ 1: NHẬN BIẾT VÀ THÔNG HIỂU (Dành cho toàn thể học sinh)}
+\begin{enumerate}
+    \item Nêu phương, chiều và điểm đặt của lực căng mặt ngoài của chất lỏng tác dụng lên một vật tiếp xúc.
+    \item Một màng nước xà phòng tạo thành trên một khung dây kim loại hình vuông cạnh $a = 4\text{ cm}$. Tính tổng chiều dài đường biên giới hạn của màng xà phòng (lưu ý màng có 2 mặt).
+    \begin{itemize}
+        \item \textit{Đáp số:} $L = 2 \times (4 \times 0{,}04) = 0{,}32\text{ m}$.
+    \end{itemize}
+\end{enumerate}
+
+\noindent \textbf{MỨC ĐỘ 2: VẬN DỤNG (Rèn luyện kỹ năng tính toán thực nghiệm)}
+\begin{enumerate}
+    \item Một vòng kim loại có đường kính $D = 60\text{ mm}$, trọng lượng $P = 0{,}08\text{ N}$ được treo vào một lực kế nhạy. Khi nhấc vòng dây ra khỏi cồn, lực kế chỉ giá trị cực đại $F = 0{,}0883\text{ N}$. Tính hệ số căng mặt ngoài của cồn (coi thành vòng dây rất mỏng).
+    \begin{itemize}
+        \item \textit{Hướng dẫn giải:} $L = 2\pi D = 2 \times 3{,}1416 \times 0{,}06 \approx 0{,}377\text{ m}$.
+        \item $F_c = F - P = 0{,}0883 - 0{,}0800 = 0{,}0083\text{ N}$.
+        \item $\sigma = \dfrac{0{,}0083}{0{,}377} \approx 0{,}022\text{ N/m}$.
+    \end{itemize}
+    \item Trình bày các bước chèn ảnh và dùng công cụ đường tròn đi qua 3 điểm trên phần mềm GeoGebra để xác định bán kính giọt nước.
+\end{enumerate}
+
+\noindent \textbf{MỨC ĐỘ 3: VẬN DỤNG CAO VÀ MÔ HÌNH HÓA (Phát triển năng lực nghiên cứu)}
+\begin{enumerate}
+    \item Một ống nhỏ giọt đặt thẳng đứng có đường kính trong của miệng ống là $d = 1{,}6\text{ mm}$. Nước từ ống nhỏ từng giọt một. Trọng lượng mỗi giọt nước khi bắt đầu rơi đúng bằng lực căng mặt ngoài của nước ở miệng ống.
+    \begin{itemize}
+        \item a) Thiết lập công thức tính khối lượng $m$ của một giọt nước theo $\sigma, d, g$.
+        \item b) Cho $\sigma = 0{,}073\text{ N/m}$, $g = 9{,}8\text{ m/s}^2$. Tính số giọt nước chứa trong $1\text{ cm}^3$ nước sạch (biết khối lượng riêng của nước là $\rho = 1\text{ g/cm}^3$).
+        \item \textit{Đáp số:} Khối lượng 1 giọt: $m = \dfrac{\pi d \sigma}{g} \approx 3{,}74 \times 10^{-5}\text{ kg} = 0{,}0374\text{ g}$. Số giọt trong $1\text{ g}$: $N = \dfrac{1}{0{,}0374} \approx 27\text{ giọt}$.
+    \end{itemize}
+\end{enumerate}
+
+\subsection*{3. Bảng Rubric đánh giá năng lực học sinh trong bài học}
+
+\begin{center}
+\renewcommand{\arraystretch}{1.25}
+\begin{tabularx}{\textwidth}{|p{2.8cm}|X|X|X|X|}
+    \hline
+    \textbf{Tiêu chí đánh giá} & \textbf{Mức 1 (Chưa đạt)} & \textbf{Mức 2 (Đạt)} & \textbf{Mức 3 (Khá)} & \textbf{Mức 4 (Tốt)} \\
+    \hline
+    \textbf{1. Thao tác thí nghiệm STEM} & Thao tác vụng về, làm đứt màng nước liên tục, rung lắc mạnh. & Thao tác đo được nhưng chưa đều tay, ghi số liệu còn chậm. & Thao tác chuẩn xác, nâng hạ êm dịu, đo đủ 5 lần số liệu tin cậy. & Thao tác điêu luyện, phối hợp nhóm nhịp nhàng, dữ liệu có độ lặp lại cực cao. \\
+    \hline
+    \textbf{2. Kỹ năng tính toán \& Sai số} & Tính sai công thức chu vi (quên nhân đôi mặt màng), sai đơn vị. & Tính được hệ số $\sigma$ nhưng chưa tính đúng sai số tuyệt đối trung bình. & Tính toán chuẩn xác giá trị trung bình và sai số thực nghiệm. & Làm chủ các phép toán thống kê sai số, phân tích sâu sắc nguyên nhân gây sai số. \\
+    \hline
+    \textbf{3. Năng lực số (GeoGebra \& Excel)} & Chưa biết chèn ảnh vào GeoGebra, không lập được bảng Excel. & Chèn được ảnh nhưng định tỉ lệ sai; nhập được số liệu thô vào Excel. & Đo đúng đường kính trên GeoGebra; lập công thức tính tự động trên Excel. & Thành thạo nội suy đường tròn trên GeoGebra; thiết kế bảng tính Excel chuyên nghiệp có đồ thị phân tán. \\
+    \hline
+    \textbf{4. Năng lực AI \& Phản biện} & Chưa hiểu ứng dụng AI trong mô phỏng cơ học chất lưu. & Nêu được ví dụ đơn giản về ứng dụng AI trong dự báo dòng chảy. & Viết prompt hỏi AI so sánh sức căng bề mặt và phân tích được câu trả lời. & Vận dụng hiểu biết về AI để đề xuất giải pháp cải tiến mô hình đo lường, phản biện sắc bén. \\
+    \hline
+\end{tabularx}
+\end{center}
+
+\end{document}
