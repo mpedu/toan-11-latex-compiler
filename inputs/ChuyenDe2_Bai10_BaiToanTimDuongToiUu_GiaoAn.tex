@@ -1,0 +1,699 @@
+\documentclass[12pt, a4paper]{article}
+% --- 1. Cấu hình Tiếng Việt và Font chữ chuẩn ---
+\usepackage[utf8]{inputenc}
+\usepackage[T5]{fontenc}
+\usepackage[vietnamese]{babel}
+\usepackage{mathptmx} % Font Times New Roman đồng bộ cả chữ và công thức toán, không gây xung đột gói
+
+\makeatletter
+\renewcommand{\normalsize}{\@setfontsize\normalsize{13pt}{16pt}}
+\makeatother
+\normalsize
+
+% --- 2. Gói Toán học & Ký hiệu bổ trợ ---
+\usepackage{amsmath, amssymb, amsfonts, mathrsfs, amsthm}
+\usepackage{graphicx}
+\usepackage{fontawesome}
+\usepackage{booktabs, tabularx, array, multirow}
+\usepackage{enumitem}
+
+% --- 3. Đồ họa TikZ, Bảng biến thiên & Hình không gian ---
+\usepackage{tikz}
+\usetikzlibrary{calc, intersections, angles, quotes, patterns, arrows.meta, 3d}
+\usepackage{pgfplots}
+\pgfplotsset{compat=1.18}
+\usepackage{tkz-euclide}
+\usepackage{tkz-tab}
+
+\renewcommand{\vec}[1]{\overrightarrow{#1}}
+
+% --- 4. Hộp sư phạm (Tcolorbox) ---
+\usepackage[many]{tcolorbox}
+\tcbuselibrary{skins, breakable}
+
+% --- 5. Căn lề chuẩn văn bản giáo án ---
+\usepackage{geometry}
+\geometry{
+    a4paper,
+    left=25mm,
+    right=15mm,
+    top=20mm,
+    bottom=20mm
+}
+
+% --- 6. Header / Footer chuẩn hóa ---
+\usepackage{fancyhdr}
+\usepackage{lastpage}
+\pagestyle{fancy}
+\fancyhf{}
+
+\fancyhead[L]{\small \textit{Kế hoạch bài dạy Toán 11}}
+\fancyhead[R]{\textbf{Trang \thepage/\pageref{LastPage}}}
+\fancyfoot[L]{\small \textit{Tổ Toán - Tin}}
+\fancyfoot[R]{\small \textit{Trường THCS\&THPT Hồng Vân}}
+\renewcommand{\headrulewidth}{0.4pt}
+\renewcommand{\footrulewidth}{0.4pt}
+
+% --- 7. Giãn dòng & Giãn đoạn theo chuẩn Nghị định 30/2020/NĐ-CP ---
+\usepackage{setspace}
+\setstretch{1.15}
+\setlength{\parindent}{1.0cm}
+\setlength{\parskip}{5pt}
+
+% Định nghĩa hộp sư phạm chuyên dụng
+\newtcolorbox{pedabox}[2][]{
+    enhanced,
+    breakable,
+    colback=blue!3!white,
+    colframe=blue!65!black,
+    fonttitle=\bfseries\small,
+    title={#2},
+    arc=2mm,
+    boxrule=0.6pt,
+    left=3mm, right=3mm, top=2mm, bottom=2mm,
+    #1
+}
+
+\newtcolorbox{aibox}[2][]{
+    enhanced,
+    breakable,
+    colback=teal!4!white,
+    colframe=teal!70!black,
+    fonttitle=\bfseries\small,
+    title={#2},
+    arc=2mm,
+    boxrule=0.6pt,
+    left=3mm, right=3mm, top=2mm, bottom=2mm,
+    #1
+}
+
+\newtcolorbox{scaffoldbox}[2][]{
+    enhanced,
+    breakable,
+    colback=orange!4!white,
+    colframe=orange!80!black,
+    fonttitle=\bfseries\small,
+    title={#2},
+    arc=2mm,
+    boxrule=0.6pt,
+    left=3mm, right=3mm, top=2mm, bottom=2mm,
+    #1
+}
+
+\newtcolorbox{stembox}[2][]{
+    enhanced,
+    breakable,
+    colback=purple!4!white,
+    colframe=purple!75!black,
+    fonttitle=\bfseries\small,
+    title={#2},
+    arc=2mm,
+    boxrule=0.6pt,
+    left=3mm, right=3mm, top=2mm, bottom=2mm,
+    #1
+}
+
+\begin{document}
+
+\begin{center}
+    {\fontsize{14pt}{17pt}\selectfont \textbf{KẾ HOẠCH BÀI DẠY MÔN TOÁN LỚP 11}}\\[6pt]
+    {\fontsize{16pt}{19pt}\selectfont \textbf{CHUYÊN ĐỀ 2 - BÀI 10. BÀI TOÁN TÌM ĐƯỜNG TỐI ƯU}}\\[4pt]
+    {\fontsize{12pt}{15pt}\selectfont \textbf{Môn học: Toán 11} \ \textbar \ \textbf{Thời lượng: 2 tiết (Tiết CĐ21, CĐ22 theo PPCT | Tuần 25)}}
+\end{center}
+
+\vspace{5pt}
+
+\section*{I. MỤC TIÊU}
+
+\subsection*{1. Kiến thức, Năng lực}
+
+\begin{itemize}[leftmargin=1.2cm]
+    \item \textbf{Yêu cầu cần đạt (Nguyên văn CT GDPT 2018 Toán 11):}
+    \begin{itemize}[leftmargin=0.6cm]
+        \item Nhận biết được thuật toán về tìm đường đi tối ưu trong những trường hợp đơn giản.
+        \item Sử dụng kiến thức về đồ thị để giải quyết một số tình huống liên quan đến thực tiễn (xác định đường đi, đường đi ngắn nhất,...).
+    \end{itemize}
+
+    \item \textbf{Năng lực Toán học đặc thù:}
+    \begin{itemize}[leftmargin=0.6cm]
+        \item \textit{Năng lực tư duy và lập luận toán học:} Phân tích cấu trúc đồ thị có trọng số; so sánh tổng độ dài giữa các phương án đường đi; hiểu rõ nguyên lí tối ưu cục bộ và tối ưu toàn cục; suy luận logic từng bước của thuật toán Dijkstra (gán nhãn đỉnh cố định và nhãn tạm thời) để tìm ra đường đi ngắn nhất giữa hai đỉnh.
+        \item \textit{Năng lực mô hình hóa toán học:} Chuyển đổi mạng lưới giao thông, khoảng cách giữa các địa điểm dân cư, cước phí vận chuyển hàng hóa, đường dây truyền tải điện thành mô hình đồ thị có trọng số; biểu diễn mục tiêu thực tiễn (tiết kiệm chi phí, quãng đường di chuyển ngắn nhất, thời gian vận chuyển nhanh nhất) thành hàm mục tiêu toán học trên đồ thị.
+        \item \textit{Năng lực giải quyết vấn đề toán học:} Thực hiện thành thạo thuật toán Dijkstra (thuật toán gán nhãn) trên đồ thị có $5$ đến $6$ đỉnh; áp dụng thuật toán láng giềng gần nhất (Nearest Neighbour Heuristic) để giải bài toán Người du lịch (TSP - Travelling Salesperson Problem) tìm chu trình có tổng trọng số xấp xỉ tối ưu; truy vết chính xác đường đi tối ưu từ đỉnh đích ngược về đỉnh xuất phát.
+        \item \textit{Năng lực giao tiếp toán học:} Sử dụng chính xác các thuật ngữ chuyên ngành Lí thuyết đồ thị: đồ thị có trọng số, trọng số của cạnh $w(e)$, độ dài đường đi, nhãn tạm thời $d(v)$, nhãn cố định, đỉnh trước $p(v)$, đường đi ngắn nhất, chu trình tối ưu; trình bày bảng tính gán nhãn mạch lạc, khoa học.
+        \item \textit{Năng lực sử dụng công cụ, phương tiện học toán:} Sử dụng máy tính cầm tay Casio fx-580VN X để cộng dồn các trọng số; khai thác các phần mềm mô phỏng thuật toán đồ thị trực tuyến (như Graph Online) và ứng dụng bản đồ số (Google Maps) để kiểm chứng kết quả thuật toán và so sánh với thực nghiệm.
+    \end{itemize}
+
+    \item \textbf{Năng lực số (Theo Thông tư 02/2025/TT-BGDĐT):}
+    \begin{itemize}[leftmargin=0.6cm]
+        \item \textit{Mã 6.1NC1a (Phân tích thuật toán ứng dụng số):} Học sinh phân tích cách thức các nền tảng công nghệ số và ứng dụng dịch vụ vận tải/giao hàng hiện đại (Grab, Shopee, Gojek) ứng dụng thuật toán tìm đường ngắn nhất (Dijkstra, $A^*$) kết hợp trí tuệ nhân tạo để tính toán cước phí và điều hướng tài xế theo thời gian thực.
+        \item \textit{Mã 5.2NC1a (Sử dụng công cụ số lập kế hoạch):} Học sinh sử dụng thành thạo ứng dụng Google Maps trên điện thoại hoặc máy tính để thiết lập lộ trình di chuyển tối ưu (về quãng đường và thời gian) giữa các địa điểm cho chuyến dã ngoại thực tế của lớp.
+    \end{itemize}
+
+    \item \textbf{Năng lực AI (Theo Quyết định 2422/QĐ-BGDĐT):}
+    \begin{itemize}[leftmargin=0.6cm]
+        \item \textit{Mã 11.C2.1 (Nhận thức về thuật toán AI trong tối ưu hóa):} Học sinh tìm hiểu cách AI kết hợp thuật toán tìm kiếm trên đồ thị với hàm đánh giá Heuristic (thuật toán $A^*$) và mô hình học máy (Machine Learning) để dự đoán mật độ giao thông, giải quyết bài toán chống tắc đường và định tuyến tự động cho xe tự hành (Autonomous Vehicles).
+        \item \textit{Kỹ thuật Prompting phản biện:} Học sinh biết cách xây dựng câu lệnh prompt chuẩn mực yêu cầu trợ lý AI chạy từng bước thuật toán Dijkstra trên ma trận trọng số cho trước, so sánh bảng gán nhãn của AI với bài giải cá nhân để phát hiện lỗi sai.
+    \end{itemize}
+
+    \item \textbf{Năng lực chung:}
+    \begin{itemize}[leftmargin=0.6cm]
+        \item \textit{Tự chủ và tự học:} Chủ động tìm hiểu khái niệm đồ thị có trọng số và tiểu sử nhà khoa học máy tính Edsger W. Dijkstra; tự giác hoàn thiện bảng gán nhãn trên phiếu học tập.
+        \item \textit{Giao tiếp và hợp tác:} Thảo luận tích cực trong nhóm, phân công kiểm tra chéo các bước cập nhật nhãn đỉnh, cùng thống nhất đề xuất phương án lộ trình tối ưu cho dự án STEM.
+    \end{itemize}
+\end{itemize}
+
+\subsection*{2. Phẩm chất}
+
+\begin{itemize}[leftmargin=1.2cm]
+    \item \textbf{Chăm chỉ:} Kiên trì thực hiện từng bước lặp của thuật toán, cẩn thận so sánh các giá trị nhãn để không bỏ sót đỉnh có giá trị nhỏ nhất.
+    \item \textbf{Trung thực:} Ghi nhận chính xác các số liệu tính toán, không tùy tiện đoán mò kết quả mà tuân thủ chặt chẽ các bước thuật toán đã học.
+    \item \textbf{Trách nhiệm:} Tích cực đóng góp ý kiến trong nhóm; hình thành thói quen tư duy tối ưu hóa trong cuộc sống hàng ngày (tiết kiệm nhiên liệu, giảm phát thải carbon, quản lý thời gian hiệu quả).
+\end{itemize}
+
+\section*{II. THIẾT BỊ DẠY HỌC VÀ HỌC LIỆU}
+
+\begin{itemize}[leftmargin=1.2cm]
+    \item \textbf{Giáo viên:}
+    \begin{itemize}[leftmargin=0.6cm]
+        \item Kế hoạch bài dạy chi tiết 2 tiết theo chuẩn Công văn 5512/BGDĐT-GDTrH.
+        \item Bài trình chiếu PowerPoint tương tác trực quan, video ngắn mô phỏng thuật toán Dijkstra và hoạt động của ứng dụng giao hàng thời công nghệ số.
+        \item Phòng thực hành tin học (35 máy vi tính kết nối Internet tốc độ cao, truy cập ứng dụng Google Maps và website Graph Online).
+        \item Hệ thống Phiếu học tập phân tầng bậc thang (PHT số 1: Thuật toán Dijkstra gán nhãn; PHT số 2: Bài toán Người du lịch TSP và thuật toán tham lam).
+        \item Bảng Rubric đánh giá năng lực giải quyết vấn đề toán học và năng lực số của học sinh.
+    \end{itemize}
+
+    \item \textbf{Học sinh:}
+    \begin{itemize}[leftmargin=0.6cm]
+        \item Sách Chuyên đề học tập Toán 11, vở ghi bài, thước kẻ, bút dạ màu (xanh, đỏ để đánh dấu nhãn cố định và nhãn tạm thời).
+        \item Máy tính cầm tay Casio fx-580VN X để tính toán cộng dồn trọng số.
+        \item Điện thoại thông minh hoặc máy tính phòng thực hành để tra cứu Google Maps.
+    \end{itemize}
+\end{itemize}
+
+\section*{III. TIẾN TRÌNH DẠY HỌC}
+
+\begin{center}
+    \textbf{\large TIẾT 1 (TIẾT CĐ21 THEO PPCT | TUẦN 25)}\\[4pt]
+    \textbf{\large ĐỒ THỊ CÓ TRỌNG SỐ VÀ THUẬT TOÁN TÌM ĐƯỜNG ĐI NGẮN NHẤT (DIJKSTRA)}
+\end{center}
+
+\subsection*{1. Hoạt động 1: Mở đầu (Khởi động - 8 phút)}
+
+\begin{itemize}[leftmargin=1.2cm]
+    \item[a)] \textbf{Mục tiêu:}
+    \begin{itemize}[leftmargin=0.6cm]
+        \item Tạo nhu cầu thực tế gắn với việc tìm đường đi ngắn nhất trên bản đồ giao thông khi mỗi đoạn đường có độ dài hoặc thời gian di chuyển khác nhau.
+        \item Dẫn dắt học sinh nhận thức được sự cần thiết phải gán các con số (trọng số) vào các cạnh của đồ thị.
+    \end{itemize}
+
+    \item[b)] \textbf{Nội dung:}
+    \begin{itemize}[leftmargin=0.6cm]
+        \item Giáo viên trình chiếu sơ đồ giao thông nối 5 địa điểm: Trường học ($A$), Trạm y tế ($B$), Ủy ban nhân dân ($C$), Chợ trung tâm ($D$), và Bưu điện ($E$).
+        \item Trên mỗi đoạn đường nối giữa hai địa điểm có ghi rõ khoảng cách thực tế (tính bằng km):
+        $$AB = 4\text{ km}, AC = 2\text{ km}, BC = 1\text{ km}, BD = 5\text{ km}, CD = 8\text{ km}, CE = 10\text{ km}, DE = 2\text{ km}, BE = 6\text{ km}$$
+        \item Đặt câu hỏi thử thách: \textit{"Một bạn học sinh muốn đi từ Trường học ($A$) đến Bưu điện ($E$). Hãy tìm con đường có tổng quãng đường ngắn nhất? Có phải con đường đi qua ít giao lộ nhất luôn là con đường ngắn nhất hay không?"}
+    \end{itemize}
+
+    \item[c)] \textbf{Sản phẩm:}
+    \begin{itemize}[leftmargin=0.6cm]
+        \item Học sinh thử liệt kê một vài con đường từ $A$ đến $E$:
+        \begin{itemize}
+            \item Đường 1: $A \to C \to E$ có độ dài: $2 + 10 = 12\text{ km}$ (chỉ qua 1 giao lộ trung gian $C$).
+            \item Đường 2: $A \to B \to E$ có độ dài: $4 + 6 = 10\text{ km}$.
+            \item Đường 3: $A \to C \to B \to E$ có độ dài: $2 + 1 + 6 = 9\text{ km}$.
+            \item Đường 4: $A \to C \to B \to D \to E$ có độ dài: $2 + 1 + 5 + 2 = 10\text{ km}$.
+        \end{itemize}
+        \item Học sinh phát hiện: Đường 3 ($A \to C \to B \to E$) dài $9\text{ km}$ ngắn hơn đường 1 ($A \to C \to E$) dài $12\text{ km}$, mặc dù đường 3 đi qua nhiều giao lộ hơn!
+        \item Kết luận sơ bộ: Không thể chỉ đếm số cạnh mà bắt buộc phải tính tổng độ dài các cạnh.
+    \end{itemize}
+
+    \item[d)] \textbf{Tổ chức thực hiện:}
+\end{itemize}
+
+\begin{pedabox}{Tiến trình tổ chức Hoạt động 1 (Khởi động)}
+    \textbf{Bước 1: Chuyển giao nhiệm vụ}
+    \begin{itemize}[leftmargin=0.6cm]
+        \item GV chiếu bản đồ và giao nhiệm vụ làm việc cá nhân trong 3 phút: tìm lộ trình từ $A$ đến $E$ và tính tổng số km.
+    \end{itemize}
+
+    \textbf{Bước 2: Thực hiện nhiệm vụ}
+    \begin{itemize}[leftmargin=0.6cm]
+        \item HS tính toán nhanh vào vở nháp, trao đổi kết quả với bạn ngồi cạnh.
+        \item GV khích lệ học sinh tìm xem có lộ trình nào dưới $10\text{ km}$ không.
+    \end{itemize}
+
+    \textbf{Bước 3: Báo cáo, thảo luận}
+    \begin{itemize}[leftmargin=0.6cm]
+        \item Hai học sinh trình bày hai phương án đường đi khác nhau lên bảng.
+        \item Cả lớp đối chiếu và chỉ ra phương án $A \to C \to B \to E$ dài $9\text{ km}$ là ngắn nhất.
+    \end{itemize}
+
+    \textbf{Bước 4: Kết luận, nhận định}
+    \begin{itemize}[leftmargin=0.6cm]
+        \item GV nhận định: Khi đồ thị chỉ có 5 đỉnh, ta có thể thử liệt kê. Nhưng nếu mạng lưới giao thông có hàng nghìn, hàng triệu giao lộ như TP. Huế hay Hà Nội, việc liệt kê thủ công là bất khả thi.
+        \item Dẫn dắt vào bài học: Khái niệm Đồ thị có trọng số và Thuật toán Dijkstra tìm đường đi ngắn nhất.
+    \end{itemize}
+\end{pedabox}
+
+\subsection*{2. Hoạt động 2: Hình thành kiến thức mới (22 phút)}
+
+\begin{itemize}[leftmargin=1.2cm]
+    \item[a)] \textbf{Mục tiêu:}
+    \begin{itemize}[leftmargin=0.6cm]
+        \item Nắm vững khái niệm đồ thị có trọng số và độ dài của một đường đi.
+        \item Hiểu rõ tư tưởng, các bước thực hiện và nguyên lí gán nhãn của thuật toán Dijkstra để tìm đường đi ngắn nhất giữa hai đỉnh trên đồ thị có trọng số không âm.
+        \item Thành thạo thao tác lập bảng gán nhãn từng bước và truy vết đường đi tối ưu.
+    \end{itemize}
+
+    \item[b)] \textbf{Nội dung:}
+    \begin{itemize}[leftmargin=0.6cm]
+        \item \textbf{Khái niệm 1 (Đồ thị có trọng số):}
+        \begin{itemize}
+            \item Đồ thị mà mỗi cạnh $e$ được gán với một số thực không âm $w(e)$ được gọi là \textbf{đồ thị có trọng số}. Con số $w(e)$ được gọi là \textbf{trọng số} của cạnh $e$.
+            \item Trọng số thường đại diện cho: khoảng cách địa lí (km), thời gian di chuyển (phút), cước phí vận chuyển (nghìn đồng), lượng nhiên liệu tiêu thụ (lít).
+        \end{itemize}
+        \item \textbf{Khái niệm 2 (Độ dài đường đi):}
+        \begin{itemize}
+            \item Cho đường đi $L$ gồm các cạnh $e_1, e_2, \dots, e_k$. \textbf{Độ dài} của đường đi $L$, kí hiệu là $w(L)$, là tổng trọng số của tất cả các cạnh trên đường đi đó:
+            $$w(L) = w(e_1) + w(e_2) + \dots + w(e_k)$$
+            \item Bài toán tìm đường đi ngắn nhất: Cho đỉnh xuất phát $s$ và đỉnh kết thúc $t$. Tìm đường đi từ $s$ đến $t$ sao cho độ dài $w(L)$ đạt giá trị nhỏ nhất.
+        \end{itemize}
+        \item \textbf{Thuật toán Dijkstra (Thuật toán gán nhãn):}
+        \begin{itemize}
+            \item Xuất phát từ đỉnh $s$, mỗi đỉnh $v$ được gắn một nhãn $d(v)$ biểu diễn độ dài đường đi ngắn nhất tạm thời từ $s$ đến $v$, và $p(v)$ là đỉnh liền trước $v$ trên lộ trình đó.
+            \item \textit{Bước khởi tạo:} Gán nhãn cho đỉnh xuất phát $d(s) = 0$; gán nhãn cho tất cả các đỉnh khác $d(v) = +\infty$. Tập các đỉnh đã chốt nhãn vĩnh viễn (nhãn cố định) $S = \emptyset$.
+            \item \textit{Bước lặp:}
+            \begin{enumerate}[leftmargin=0.6cm]
+                \item Chọn một đỉnh $u \notin S$ có nhãn $d(u)$ nhỏ nhất. Đưa $u$ vào tập cố định $S$ (chốt nhãn $d(u)$).
+                \item Nếu $u = t$ (đã chốt đến đỉnh đích), thuật toán kết thúc.
+                \item Với mỗi đỉnh $v \notin S$ kề với $u$, cập nhật nhãn tạm thời:
+                $$\text{Nếu } d(u) + w(u, v) < d(v) \text{ thì } d(v) \leftarrow d(u) + w(u, v) \text{ và đặt } p(v) \leftarrow u$$
+            \end{enumerate}
+            \item \textit{Truy vết đường đi:} Dựa vào đỉnh trước $p(v)$, đi ngược từ đỉnh đích $t$ về đỉnh xuất phát $s$ để chỉ ra toàn bộ lộ trình tối ưu.
+        \end{itemize}
+    \end{itemize}
+
+    \item[c)] \textbf{Sản phẩm:}
+    \begin{itemize}[leftmargin=0.6cm]
+        \item Bảng ghi chép định nghĩa và các bước thuật toán Dijkstra vào vở.
+        \item Bảng thực hành gán nhãn mẫu cho bài toán khởi động (tìm đường từ $A$ đến $E$):
+    \end{itemize}
+
+    \begin{center}
+    \begin{tabular}{|c|c|c|c|c|c|c|}
+    \hline
+    \textbf{Bước lặp} & \textbf{Đỉnh chốt $u$} & $d(A)$ & $d(B)$ & $d(C)$ & $d(D)$ & $d(E)$ \\ \hline
+    \textbf{Khởi tạo} & --- & \textbf{0} & $+\infty$ & $+\infty$ & $+\infty$ & $+\infty$ \\ \hline
+    \textbf{Bước 1} & Chốt $A$ ($d(A)=0$) & \textbf{[0]} & $4$ (từ $A$) & $2$ (từ $A$) & $+\infty$ & $+\infty$ \\ \hline
+    \textbf{Bước 2} & Chốt $C$ ($d(C)=2$) & \textbf{[0]} & $\min(4, 2+1)=3$ (từ $C$) & \textbf{[2]} & $2+8=10$ (từ $C$) & $2+10=12$ (từ $C$) \\ \hline
+    \textbf{Bước 3} & Chốt $B$ ($d(B)=3$) & \textbf{[0]} & \textbf{[3]} & \textbf{[2]} & $\min(10, 3+5)=8$ (từ $B$) & $\min(12, 3+6)=9$ (từ $B$) \\ \hline
+    \textbf{Bước 4} & Chốt $D$ ($d(D)=8$) & \textbf{[0]} & \textbf{[3]} & \textbf{[2]} & \textbf{[8]} & $\min(9, 8+2)=9$ (giữ $B$) \\ \hline
+    \textbf{Bước 5} & Chốt $E$ ($d(E)=9$) & \textbf{[0]} & \textbf{[3]} & \textbf{[2]} & \textbf{[8]} & \textbf{[9]} \\ \hline
+    \end{tabular}
+    \end{center}
+
+    \begin{itemize}[leftmargin=0.6cm]
+        \item Kết quả: Độ dài đường đi ngắn nhất từ $A$ đến $E$ là $d(E) = 9\text{ km}$.
+        \item Truy vết: $E \leftarrow B \leftarrow C \leftarrow A$. Lộ trình ngắn nhất là: $A \to C \to B \to E$.
+    \end{itemize}
+
+    \item[d)] \textbf{Tổ chức thực hiện:}
+\end{itemize}
+
+\begin{pedabox}{Tiến trình tổ chức Hoạt động 2 (Hình thành kiến thức)}
+    \textbf{Bước 1: Chuyển giao nhiệm vụ}
+    \begin{itemize}[leftmargin=0.6cm]
+        \item GV trình bày khái niệm đồ thị có trọng số và thuật toán Dijkstra qua slide tương tác.
+        \item GV làm mẫu từng dòng của bảng gán nhãn cho đồ thị 5 đỉnh của bài toán khởi động.
+    \end{itemize}
+
+    \textbf{Bước 2: Thực hiện nhiệm vụ có giàn giáo sư phạm}
+    \begin{itemize}[leftmargin=0.6cm]
+        \item HS kẻ bảng gán nhãn vào vở, theo dõi từng bước chốt nhãn (tô màu xanh cho đỉnh chốt nhỏ nhất) và cập nhật nhãn các đỉnh lân cận.
+        \item GV đi quanh lớp, hướng dẫn chậm rãi cho các học sinh trung bình - yếu cách so sánh giữa nhãn cũ và tổng mới: $d(u) + w(u, v)$.
+    \end{itemize}
+
+    \textbf{Bước 3: Báo cáo, thảo luận}
+    \begin{itemize}[leftmargin=0.6cm]
+        \item Một học sinh đọc lại các bước truy vết ngược từ đỉnh đích $E$.
+        \item Cả lớp khẳng định kết quả bảng gán nhãn hoàn toàn trùng khớp với trực giác thử nghiệm ở Hoạt động 1 nhưng chặt chẽ và khoa học hơn rất nhiều.
+    \end{itemize}
+
+    \textbf{Bước 4: Kết luận, nhận định}
+    \begin{itemize}[leftmargin=0.6cm]
+        \item GV nhấn mạnh: Thuật toán Dijkstra đảm bảo luôn tìm ra đường đi ngắn nhất toàn cục khi trọng số các cạnh không âm.
+        \item Giới thiệu: Đây chính là thuật toán nền tảng của mọi hệ thống định vị GPS hiện đại trên thế giới.
+    \end{itemize}
+\end{pedabox}
+
+\begin{scaffoldbox}{Giàn giáo sư phạm cho học sinh trung bình - yếu (Scaffolding)}
+    \textbf{Quy tắc 3 bước gán nhãn Dijkstra cực dễ nhớ:}
+    \begin{enumerate}[leftmargin=0.6cm]
+        \item \textbf{Tìm số bé nhất:} Nhìn vào các đỉnh chưa chốt nhãn, chọn đỉnh có con số nhỏ nhất $\implies$ Đóng khung vuông hoặc tô màu xanh để CHỐT cố định đỉnh đó!
+        \item \textbf{Cập nhật láng giềng:} Từ đỉnh vừa chốt, cộng thêm độ dài các đoạn đường đi tới các đỉnh xung quanh chưa chốt.
+        $$\text{Số mới} = \text{Số tại đỉnh vừa chốt} + \text{Trọng số đoạn đường}$$
+        Nếu $\text{Số mới} < \text{Số cũ đang có}$ thì gạch bỏ số cũ, ghi số mới kèm theo tên đỉnh vừa chốt vào ngoặc đơn.
+        \item \textbf{Truy vết ngược:} Khi chốt đến đỉnh đích, nhìn vào tên đỉnh trong ngoặc đơn để lần ngược về xuất phát!
+    \end{enumerate}
+\end{scaffoldbox}
+
+\begin{aibox}{Tích hợp Năng lực số \& Năng lực AI (TT 02/2025 \& QĐ 2422)}
+    \textbf{1. Thực hành kiểm chứng thuật toán trên Graph Online (Mã 6.1NC1a):}
+    \begin{itemize}[leftmargin=0.6cm]
+        \item Học sinh mở website \texttt{https://graphonline.ru/en/}, nhập 5 đỉnh $A, B, C, D, E$ và các cạnh kèm trọng số khoảng cách.
+        \item Chọn menu \textbf{Algorithms} $\rightarrow$ chọn \textbf{Find shortest path using Dijkstra's algorithm}.
+        \item Chọn đỉnh bắt đầu là $A$, kết thúc là $E$. Quan sát phần mềm tự động đổi màu đường đi $A \to C \to B \to E$ màu xanh lá cây và hiển thị tổng độ dài $= 9$.
+    \end{itemize}
+    \textbf{2. Ứng dụng AI trong điều phối giao thông thời gian thực:}
+    \begin{itemize}[leftmargin=0.6cm]
+        \item GV chiếu hình ảnh ứng dụng Grab/Shopee: Trọng số các cung đường không cố định mà thay đổi liên tục theo tình hình kẹt xe hoặc trời mưa.
+        \item Trí tuệ nhân tạo (AI) sử dụng thuật toán $A^*$ kết hợp dự báo lưu lượng giao thông để cập nhật trọng số theo thời gian thực (Dynamic Weight Graph), giúp tài xế tránh điểm ùn tắc.
+    \end{itemize}
+\end{aibox}
+
+\subsection*{3. Hoạt động 3: Luyện tập (10 phút)}
+
+\begin{itemize}[leftmargin=1.2cm]
+    \item[a)] \textbf{Mục tiêu:} Rèn luyện kỹ năng lập bảng gán nhãn Dijkstra trên đồ thị có 6 đỉnh, tính toán chuẩn xác và truy vết đúng đường đi ngắn nhất.
+    \item[b)] \textbf{Nội dung:} Thực hiện bài toán trên Phiếu học tập số 1.
+    \begin{itemize}[leftmargin=0.6cm]
+        \item \textbf{Bài tập:} Cho mạng lưới truyền dữ liệu nội bộ giữa 6 máy chủ được mô hình hóa bằng đồ thị gồm các đỉnh $V = \{S, A, B, C, D, T\}$ và các trọng số độ trễ đường truyền (tính bằng mili-giây ms):
+        $$SA = 7, SC = 8, AB = 6, AC = 3, AD = 4, CB = 2, CD = 3, BD = 2, BT = 5, DT = 2$$
+        Hãy sử dụng thuật toán Dijkstra để tìm đường truyền có tổng độ trễ nhỏ nhất từ máy chủ $S$ đến máy chủ $T$.
+    \end{itemize}
+
+    \item[c)] \textbf{Sản phẩm (Lời giải chi tiết):}
+    \begin{itemize}[leftmargin=0.6cm]
+        \item Lập bảng gán nhãn Dijkstra:
+    \end{itemize}
+
+    \begin{center}
+    \begin{tabular}{|c|c|c|c|c|c|c|c|}
+    \hline
+    \textbf{Bước} & \textbf{Đỉnh chốt} & $d(S)$ & $d(A)$ & $d(C)$ & $d(B)$ & $d(D)$ & $d(T)$ \\ \hline
+    \textbf{0} & --- & \textbf{0} & $+\infty$ & $+\infty$ & $+\infty$ & $+\infty$ & $+\infty$ \\ \hline
+    \textbf{1} & $S$ ($d=0$) & \textbf{[0]} & $7$ ($S$) & $8$ ($S$) & $+\infty$ & $+\infty$ & $+\infty$ \\ \hline
+    \textbf{2} & $A$ ($d=7$) & \textbf{[0]} & \textbf{[7]} & $\min(8, 7+3)=8$ ($S$) & $7+6=13$ ($A$) & $7+4=11$ ($A$) & $+\infty$ \\ \hline
+    \textbf{3} & $C$ ($d=8$) & \textbf{[0]} & \textbf{[7]} & \textbf{[8]} & $\min(13, 8+2)=10$ ($C$) & $\min(11, 8+3)=11$ ($A$) & $+\infty$ \\ \hline
+    \textbf{4} & $B$ ($d=10$) & \textbf{[0]} & \textbf{[7]} & \textbf{[8]} & \textbf{[10]} & $\min(11, 10+2)=11$ ($A$) & $10+5=15$ ($B$) \\ \hline
+    \textbf{5} & $D$ ($d=11$) & \textbf{[0]} & \textbf{[7]} & \textbf{[8]} & \textbf{[10]} & \textbf{[11]} & $\min(15, 11+2)=13$ ($D$) \\ \hline
+    \textbf{6} & $T$ ($d=13$) & \textbf{[0]} & \textbf{[7]} & \textbf{[8]} & \textbf{[10]} & \textbf{[11]} & \textbf{[13]} \\ \hline
+    \end{tabular}
+    \end{center}
+
+    \begin{itemize}[leftmargin=0.6cm]
+        \item Độ trễ nhỏ nhất từ máy chủ $S$ đến máy chủ $T$ là $d(T) = 13\text{ ms}$.
+        \item Truy vết: $T \leftarrow D \leftarrow A \leftarrow S$.
+        \item Lộ trình truyền tối ưu: $S \to A \to D \to T$ với tổng độ trễ là: $7 + 4 + 2 = 13\text{ ms}$.
+    \end{itemize}
+
+    \item[d)] \textbf{Tổ chức thực hiện:}
+    \begin{itemize}[leftmargin=0.6cm]
+        \item Học sinh hoàn thành bảng gán nhãn cá nhân trong 6 phút.
+        \item GV mời 1 học sinh lên bảng hoàn thiện các dòng cập nhật nhãn.
+        \item Cả lớp nhận xét, đối chiếu kết quả; GV chốt lời giải chuẩn mực.
+    \end{itemize}
+\end{itemize}
+
+\subsection*{4. Hoạt động 4: Vận dụng (Chủ đề STEM - 5 phút)}
+
+\begin{itemize}[leftmargin=1.2cm]
+    \item[a)] \textbf{Mục tiêu:} Vận dụng thuật toán tìm đường ngắn nhất vào quy hoạch tuyến xe buýt đưa đón học sinh giữa các xã vùng cao huyện A Lưới.
+    \item[b)] \textbf{Nội dung:}
+    \begin{stembox}{Chủ đề STEM: Tối ưu hóa tuyến xe buýt đưa đón học sinh}
+        Ủy ban nhân dân huyện chuẩn bị bố trí tuyến xe buýt đưa đón học sinh từ cụm thôn $A$ về trường THCS\&THPT Hồng Vân ($H$). Do địa hình đồi núi, các cung đường nối qua các xã có cự li khác nhau. Em hãy thiết lập sơ đồ đồ thị gồm 5 điểm mốc chính và sử dụng thuật toán Dijkstra để lựa chọn cung đường ngắn nhất, giúp tiết kiệm thời gian ngồi trên xe cho học sinh và giảm chi phí xăng dầu.
+    \end{stembox}
+    \item[c)] \textbf{Sản phẩm:} Học sinh vẽ sơ đồ đồ thị mạng lưới đường giao thông địa phương thu nhỏ trên giấy và thiết lập bảng nhãn Dijkstra để đề xuất lộ trình tối ưu.
+    \item[d)] \textbf{Tổ chức thực hiện:} GV giao nhiệm vụ học sinh về nhà hoàn thiện phiếu STEM và chuẩn bị bài cho Tiết 2.
+\end{itemize}
+
+\vspace{10pt}
+\hrule
+\vspace{10pt}
+
+\begin{center}
+    \textbf{\large TIẾT 2 (TIẾT CĐ22 THEO PPCT | TUẦN 25)}\\[4pt]
+    \textbf{\large BÀI TOÁN NGƯỜI DU LỊCH (TSP) VÀ THUẬT TOÁN THAM LAM}
+\end{center}
+
+\subsection*{1. Hoạt động 1: Mở đầu (Khởi động - 7 phút)}
+
+\begin{itemize}[leftmargin=1.2cm]
+    \item[a)] \textbf{Mục tiêu:}
+    \begin{itemize}[leftmargin=0.6cm]
+        \item Nâng cấp bài toán từ tìm đường đi ngắn nhất giữa hai điểm (Dijkstra) lên bài toán tìm chu trình đi qua tất cả các điểm rồi quay về điểm xuất phát với chi phí thấp nhất.
+        \item Giới thiệu bài toán kinh điển: Bài toán Người bán hàng / Người du lịch (Travelling Salesperson Problem - TSP).
+    \end{itemize}
+
+    \item[b)] \textbf{Nội dung:}
+    \begin{itemize}[leftmargin=0.6cm]
+        \item Trình chiếu bài toán thực tế: Một shipper tại huyện A Lưới xuất phát từ trạm giao hàng trung tâm ($O$), cần giao bưu phẩm đến 3 khách hàng ở 3 bản làng $A, B, C$, sau đó quay trở về trạm $O$.
+        \item Bảng khoảng cách (km) giữa các điểm:
+        $$OA = 5, OB = 9, OC = 8, AB = 6, BC = 4, CA = 7$$
+        \item Đặt câu hỏi: \textit{"Shipper nên đi theo thứ tự nào để tổng quãng đường di chuyển là ngắn nhất?"}
+    \end{itemize}
+
+    \item[c)] \textbf{Sản phẩm:}
+    \begin{itemize}[leftmargin=0.6cm]
+        \item Học sinh liệt kê các chu trình Hamilton có thể có qua 4 đỉnh $\{O, A, B, C\}$:
+        \begin{itemize}
+            \item Chu trình 1: $O \to A \to B \to C \to O$ có độ dài: $5 + 6 + 4 + 8 = 23\text{ km}$.
+            \item Chu trình 2: $O \to A \to C \to B \to O$ có độ dài: $5 + 7 + 4 + 9 = 25\text{ km}$.
+            \item Chu trình 3: $O \to B \to A \to C \to O$ có độ dài: $9 + 6 + 7 + 8 = 30\text{ km}$.
+        \end{itemize}
+        \item Kết luận: Chu trình $O \to A \to B \to C \to O$ (hoặc ngược lại $O \to C \to B \to A \to O$) là ngắn nhất với độ dài $23\text{ km}$.
+    \end{itemize}
+
+    \item[d)] \textbf{Tổ chức thực hiện:} GV tổ chức cho các bàn tính nhẩm nhanh và so sánh kết quả; dẫn dắt vào bài toán TSP và thuật toán giải gần đúng.
+\end{itemize}
+
+\subsection*{2. Hoạt động 2: Hình thành kiến thức mới (18 phút)}
+
+\begin{itemize}[leftmargin=1.2cm]
+    \item[a)] \textbf{Mục tiêu:}
+    \begin{itemize}[leftmargin=0.6cm]
+        \item Nắm vững phát biểu toán học của Bài toán Người du lịch (TSP) trên đồ thị có trọng số.
+        \item Hiểu rõ thuật toán láng giềng gần nhất (Nearest Neighbour Heuristic - thuật toán tham lam) để tìm chu trình xấp xỉ tối ưu.
+        \item Nhận thức được độ phức tạp thuật toán và lí do các ứng dụng AI hiện đại phải sử dụng các giải thuật heuristic xấp xỉ.
+    \end{itemize}
+
+    \item[b)] \textbf{Nội dung:}
+    \begin{itemize}[leftmargin=0.6cm]
+        \item \textbf{1. Bài toán Người du lịch (TSP):}
+        \begin{itemize}
+            \item Cho đồ thị đầy đủ có trọng số $G$ với $n$ đỉnh. Bài toán Người du lịch yêu cầu tìm một \textbf{chu trình Hamilton} có tổng trọng số các cạnh là \textbf{nhỏ nhất}.
+            \item Ý nghĩa thực tiễn: Lập kế hoạch lộ trình xe chở rác đi qua tất cả các điểm gom, xe buýt đưa đón học sinh, máy bay chở khách qua các thành phố, máy khoan tự động khoan các lỗ trên bo mạch điện tử vi tính.
+        \end{itemize}
+        \item \textbf{2. Độ bùng nổ tổ hợp của bài toán TSP:}
+        \begin{itemize}
+            \item Với đồ thị đầy đủ gồm $n$ đỉnh, số lượng chu trình Hamilton khác nhau là $\dfrac{(n-1)!}{2}$.
+            \item Khi $n = 5$: có $\dfrac{4!}{2} = 12$ chu trình (kiểm tra tay được).
+            \item Khi $n = 10$: có $\dfrac{9!}{2} = 181.440$ chu trình.
+            \item Khi $n = 20$: có khoảng $6 \times 10^{16}$ chu trình (máy tính duyệt hết phải mất hàng trăm năm!).
+            \item Vì vậy, trong thực tế người ta sử dụng các \textbf{thuật toán xấp xỉ (Heuristic)} để tìm nghiệm gần tối ưu trong thời gian cực nhanh.
+        \end{itemize}
+        \item \textbf{3. Thuật toán Láng giềng gần nhất (Nearest Neighbour Heuristic):}
+        \begin{itemize}
+            \item \textit{Tư tưởng tham lam (Greedy):} Tại mỗi bước, từ đỉnh hiện tại, luôn chọn đi tới đỉnh kề \textbf{chưa được ghé thăm} có khoảng cách \textbf{ngắn nhất}.
+            \item \textit{Quy trình thuật toán:}
+            \begin{enumerate}[leftmargin=0.6cm]
+                \item Chọn một đỉnh xuất phát $v_1$. Đánh dấu $v_1$ đã thăm.
+                \item Tại đỉnh hiện tại $v_i$, tìm trong các đỉnh chưa thăm đỉnh $v_{i+1}$ sao cho trọng số cạnh $w(v_i, v_{i+1})$ là nhỏ nhất. Đi tới $v_{i+1}$ và đánh dấu đã thăm.
+                \item Lặp lại cho đến khi tất cả các đỉnh đều đã được ghé thăm.
+                \item Từ đỉnh cuối cùng, quay trở lại đỉnh xuất phát $v_1$ để khép kín chu trình Hamilton.
+            \end{enumerate}
+        \end{itemize}
+    \end{itemize}
+
+    \item[c)] \textbf{Sản phẩm:}
+    \begin{itemize}[leftmargin=0.6cm]
+        \item Ghi chép nội dung bài toán TSP và các bước thuật toán láng giềng gần nhất vào vở.
+        \item Áp dụng thuật toán láng giềng gần nhất cho bài toán mở đầu từ đỉnh $O$:
+        \begin{itemize}
+            \item Từ $O$: các cạnh nối là $OA=5, OC=8, OB=9 \implies$ chọn đỉnh gần nhất là $A$ (cạnh $5$).
+            \item Từ $A$: các đỉnh chưa thăm là $B, C$ với $AB=6, AC=7 \implies$ chọn đỉnh gần nhất là $B$ (cạnh $6$).
+            \item Từ $B$: đỉnh duy nhất chưa thăm là $C \implies$ đi tới $C$ (cạnh $BC=4$).
+            \item Từ $C$: đã thăm hết các đỉnh $\implies$ quay về xuất phát $O$ (cạnh $CO=8$).
+            \item Chu trình thu được: $O \to A \to B \to C \to O$ với độ dài $5 + 6 + 4 + 8 = 23\text{ km}$ (trùng với chu trình tối ưu tuyệt đối!).
+        \end{itemize}
+    \end{itemize}
+
+    \item[d)] \textbf{Tổ chức thực hiện:}
+\end{itemize}
+
+\begin{pedabox}{Tiến trình tổ chức Hoạt động 2 (Kiến thức mới - Tiết 2)}
+    \textbf{Bước 1: Chuyển giao nhiệm vụ}
+    \begin{itemize}[leftmargin=0.6cm]
+        \item GV giới thiệu bài toán TSP và nguyên lí của thuật toán tham lam láng giềng gần nhất.
+        \item Nêu rõ: Thuật toán rất đơn giản, dễ thực hiện, chạy nhanh nhưng đôi khi chỉ cho kết quả xấp xỉ tối ưu (không bảo đảm luôn luôn tối ưu tuyệt đối).
+    \end{itemize}
+
+    \textbf{Bước 2: Thực hiện nhiệm vụ}
+    \begin{itemize}[leftmargin=0.6cm]
+        \item HS làm việc cá nhân, tự diễn giải từng bước đi theo quy tắc chọn số nhỏ nhất tiếp theo.
+        \item GV đặt câu hỏi: \textit{"Nếu xuất phát từ đỉnh khác, ví dụ đỉnh $B$, thuật toán tham lam có cho ra chu trình giống như vậy không?"}
+    \end{itemize}
+
+    \textbf{Bước 3: Báo cáo, thảo luận}
+    \begin{itemize}[leftmargin=0.6cm]
+        \item HS thử chạy từ đỉnh $B$: $B \to C$ ($4$) $\to A$ ($7$) $\to O$ ($5$) $\to B$ ($9$) $\implies$ Chu trình $B \to C \to A \to O \to B$ dài $25\text{ km}$.
+        \item Rút ra bài học sư phạm: Kết quả của thuật toán láng giềng gần nhất có thể phụ thuộc vào đỉnh xuất phát.
+    \end{itemize}
+
+    \textbf{Bước 4: Kết luận, nhận định}
+    \begin{itemize}[leftmargin=0.6cm]
+        \item GV chuẩn hóa: Thuật toán tham lam láng giềng gần nhất là công cụ đắc lực để tìm nhanh một giải pháp hợp lí trong thực tế đời sống.
+    \end{itemize}
+\end{pedabox}
+
+\begin{aibox}{Tích hợp Năng lực số \& Năng lực AI (Theo Thông tư 02/2025 \& QĐ 2422)}
+    \textbf{1. Thực hành lập kế hoạch chuyến đi bằng Google Maps (Mã 5.2NC1a):}
+    \begin{itemize}[leftmargin=0.6cm]
+        \item Học sinh mở Google Maps trên máy tính/điện thoại, chọn tính năng \textbf{Thêm điểm dừng} (Add destination) cho 4 địa điểm trong tỉnh: TP. Huế $\to$ Lăng Cô $\to$ Bạch Mã $\to$ A Lưới $\to$ TP. Huế.
+        \item Thử kéo thả thay đổi thứ tự các điểm dừng và quan sát Google Maps tự động tính toán tổng số km và tổng thời gian di chuyển.
+    \end{itemize}
+    \textbf{2. Trí tuệ nhân tạo (AI) giải quyết bài toán TSP quy mô lớn:}
+    \begin{itemize}[leftmargin=0.6cm]
+        \item Các công ty logistics khổng lồ (như Amazon, FedEx, Viettel Post) phải giao hàng đến hàng triệu địa chỉ mỗi ngày.
+        \item AI sử dụng thuật toán tối ưu hóa bầy đàn (Particle Swarm Optimization), giải thuật di truyền (Genetic Algorithms) và mạng nơ-ron học sâu tăng cường (Reinforcement Learning) để tìm ra các lộ trình giao hàng tối ưu, tiết kiệm hàng trăm triệu lít nhiên liệu mỗi năm.
+    \end{itemize}
+\end{aibox}
+
+\subsection*{3. Hoạt động 3: Luyện tập (12 phút)}
+
+\begin{itemize}[leftmargin=1.2cm]
+    \item[a)] \textbf{Mục tiêu:} Rèn luyện thành thạo việc áp dụng thuật toán láng giềng gần nhất trên đồ thị đầy đủ 5 đỉnh có trọng số.
+    \item[b)] \textbf{Nội dung:} Thực hiện bài toán trên Phiếu học tập số 2.
+    \begin{itemize}[leftmargin=0.6cm]
+        \item \textbf{Bài tập:} Cho ma trận khoảng cách giữa 5 thành phố $A, B, C, D, E$ (đơn vị: km) như sau:
+    \end{itemize}
+
+    \begin{center}
+    \begin{tabular}{|c|c|c|c|c|c|}
+    \hline
+     & \textbf{A} & \textbf{B} & \textbf{C} & \textbf{D} & \textbf{E} \\ \hline
+    \textbf{A} & --- & $12$ & $10$ & $19$ & $8$ \\ \hline
+    \textbf{B} & $12$ & --- & $15$ & $7$ & $20$ \\ \hline
+    \textbf{C} & $10$ & $15$ & --- & $11$ & $14$ \\ \hline
+    \textbf{D} & $19$ & $7$ & $11$ & --- & $16$ \\ \hline
+    \textbf{E} & $8$ & $20$ & $14$ & $16$ & --- \\ \hline
+    \end{tabular}
+    \end{center}
+
+    \begin{itemize}[leftmargin=0.6cm]
+        \item Áp dụng thuật toán láng giềng gần nhất để tìm một chu trình tham quan 5 thành phố xuất phát từ thành phố $A$ rồi quay trở lại $A$. Tính tổng độ dài lộ trình đó.
+    \end{itemize}
+
+    \item[c)] \textbf{Sản phẩm (Lời giải chi tiết):}
+    \begin{itemize}[leftmargin=0.6cm]
+        \item \textit{Bước 1:} Xuất phát từ đỉnh $A$. Các khoảng cách từ $A$ đến các đỉnh khác:
+        $$AB = 12, AC = 10, AD = 19, AE = 8$$
+        Khoảng cách nhỏ nhất là $AE = 8 \implies$ Đi tới đỉnh $E$. Đã thăm: $\{A, E\}$.
+        \item \textit{Bước 2:} Từ đỉnh $E$, các đỉnh chưa thăm là $\{B, C, D\}$. Khoảng cách:
+        $$EB = 20, EC = 14, ED = 16$$
+        Khoảng cách nhỏ nhất là $EC = 14 \implies$ Đi tới đỉnh $C$. Đã thăm: $\{A, E, C\}$.
+        \item \textit{Bước 3:} Từ đỉnh $C$, các đỉnh chưa thăm là $\{B, D\}$. Khoảng cách:
+        $$CB = 15, CD = 11$$
+        Khoảng cách nhỏ nhất là $CD = 11 \implies$ Đi tới đỉnh $D$. Đã thăm: $\{A, E, C, D\}$.
+        \item \textit{Bước 4:} Từ đỉnh $D$, đỉnh duy nhất chưa thăm là $B \implies$ Đi tới đỉnh $B$ với khoảng cách $DB = 7$. Đã thăm đủ 5 đỉnh.
+        \item \textit{Bước 5:} Từ đỉnh $B$, quay trở lại đỉnh xuất phát $A$ với khoảng cách $BA = 12$.
+        \item \textbf{Chu trình Hamilton tìm được:}
+        $$A \to E \to C \to D \to B \to A$$
+        \item \textbf{Tổng độ dài của chu trình:}
+        $$w = AE + EC + CD + DB + BA = 8 + 14 + 11 + 7 + 12 = 52\text{ km}$$
+    \end{itemize}
+
+    \item[d)] \textbf{Tổ chức thực hiện:}
+    \begin{itemize}[leftmargin=0.6cm]
+        \item HS làm việc theo cặp đôi trong 6 phút, tra bảng ma trận và ghi lại tiến trình từng bước.
+        \item GV gọi đại diện 1 cặp đôi lên bảng ghi rõ lộ trình và phép cộng các khoảng cách.
+        \item GV nhận xét, khen ngợi các nhóm thực hiện đúng và chính xác.
+    \end{itemize}
+\end{pedabox}
+
+\subsection*{4. Hoạt động 4: Vận dụng (Dự án thực tế - 8 phút)}
+
+\begin{itemize}[leftmargin=1.2cm]
+    \item[a)] \textbf{Mục tiêu:} Vận dụng bài toán tìm đường tối ưu vào giải quyết dự án logistics giao hàng tại địa phương huyện A Lưới.
+    \item[b)] \textbf{Nội dung:}
+    \begin{stembox}{Dự án STEM: Thiết kế mạng lưới giao hàng tối ưu huyện A Lưới}
+        Hợp tác xã Nông sản sạch A Lưới cần giao các thùng đặc sản (chuối A Lưới, nếp than, thịt bò khô) từ kho trung tâm tại thị trấn A Lưới ($T$) đến 4 điểm tiêu thụ: Trường THPT A Lưới ($A$), Trường THCS\&THPT Hồng Vân ($H$), Cụm du lịch thác A Nôr ($N$), và Trạm kiểm soát cửa khẩu ($C$).
+        
+        \textbf{Nhiệm vụ của nhóm học sinh:}
+        \begin{enumerate}[leftmargin=0.6cm]
+            \item Tra cứu khoảng cách giữa các điểm mốc trên bản đồ số Google Maps.
+            \item Lập đồ thị có trọng số và áp dụng thuật toán láng giềng gần nhất để thiết kế một vòng tròn lộ trình giao hàng khép kín xuất phát từ kho $T$ qua cả 4 điểm rồi về $T$ sao cho tổng quãng đường ngắn nhất.
+        \end{enumerate}
+    \end{stembox}
+    \item[c)] \textbf{Sản phẩm:}
+    \begin{itemize}[leftmargin=0.6cm]
+        \item Báo cáo dự án của nhóm: sơ đồ đồ thị có trọng số km thực tế giữa các điểm.
+        \item Bảng tính lộ trình láng giềng gần nhất và kết luận về cung đường xe tải chở hàng nên đi để tiết kiệm thời gian và chi phí xăng xe nhất.
+    \end{itemize}
+    \item[d)] \textbf{Tổ chức thực hiện:} GV nhận xét chung về tiết học, biểu dương tinh thần làm việc nhóm và hướng dẫn ôn tập cuối Chuyên đề 2.
+\end{itemize}
+
+\section*{IV. PHỤ LỤC HỌC LIỆU BỔ TRỢ}
+
+\subsection*{1. Phiếu học tập số 1 (Tiết 1): Thuật toán Dijkstra gán nhãn}
+
+\begin{pedabox}{PHIẾU HỌC TẬP SỐ 1: BẢNG GÁN NHÃN DIJKSTRA TÌM ĐƯỜNG NGẮN NHẤT}
+    \textbf{Họ và tên học sinh:} \dotfill \textbf{Lớp:} 11\dots \textbf{Nhóm:} \dots
+    
+    \textbf{Nhiệm vụ 1: Hoàn thành bảng gán nhãn Dijkstra}
+    Cho đồ thị với các trọng số khoảng cách, tìm đường đi ngắn nhất từ đỉnh $S$ đến đỉnh $Z$:
+    \begin{center}
+    \begin{tabular}{|c|c|c|c|c|c|c|}
+    \hline
+    \textbf{Bước} & \textbf{Đỉnh chốt $u$} & $d(S)$ & $d(A)$ & $d(B)$ & $d(C)$ & $d(Z)$ \\ \hline
+    \textbf{Khởi tạo} & --- & \textbf{0} & $+\infty$ & $+\infty$ & $+\infty$ & $+\infty$ \\ \hline
+    \textbf{Bước 1} & \dots\dots & \dots\dots & \dots\dots & \dots\dots & \dots\dots & \dots\dots \\ \hline
+    \textbf{Bước 2} & \dots\dots & \dots\dots & \dots\dots & \dots\dots & \dots\dots & \dots\dots \\ \hline
+    \textbf{Bước 3} & \dots\dots & \dots\dots & \dots\dots & \dots\dots & \dots\dots & \dots\dots \\ \hline
+    \textbf{Bước 4} & \dots\dots & \dots\dots & \dots\dots & \dots\dots & \dots\dots & \dots\dots \\ \hline
+    \textbf{Bước 5} & \dots\dots & \dots\dots & \dots\dots & \dots\dots & \dots\dots & \dots\dots \\ \hline
+    \end{tabular}
+    \end{center}
+    
+    \textbf{Nhiệm vụ 2: Kết luận và truy vết}
+    \begin{itemize}[leftmargin=0.6cm]
+        \item Độ dài đường đi ngắn nhất là: $d(Z) = $ \dotfill
+        \item Truy vết ngược từ $Z$: $Z \leftarrow$ \dots\dots $\leftarrow$ \dots\dots $\leftarrow S$.
+        \item Lộ trình ngắn nhất cụ thể: \dotfill
+    \end{itemize}
+\end{pedabox}
+
+\subsection*{2. Phiếu học tập số 2 (Tiết 2): Bài toán Người du lịch TSP}
+
+\begin{pedabox}{PHIẾU HỌC TẬP SỐ 2: THUẬT TOÁN THAM LAM LÁNG GIỀNG GẦN NHẤT}
+    \textbf{Họ và tên học sinh:} \dotfill \textbf{Lớp:} 11\dots \textbf{Nhóm:} \dots
+
+    \textbf{Nhiệm vụ 1: Nhận diện kiến thức cốt lõi}
+    \begin{enumerate}[leftmargin=0.6cm]
+        \item Bài toán Người du lịch (TSP) yêu cầu tìm chu trình \dots\dots\dots\dots\dots\dots có tổng trọng số \dots\dots\dots\dots\dots\dots
+        \item Tư tưởng của thuật toán láng giềng gần nhất là: Tại mỗi đỉnh, luôn đi tới đỉnh chưa thăm có khoảng cách \dots\dots\dots\dots\dots\dots
+    \end{enumerate}
+
+    \textbf{Nhiệm vụ 2: Thực hiện thuật toán}
+    Cho 4 điểm $M, N, P, Q$ với bảng trọng số cước phí vận chuyển (nghìn đồng).
+    Hãy bắt đầu từ $M$, sử dụng thuật toán láng giềng gần nhất để thiết lập lộ trình giao bưu phẩm:
+    \begin{itemize}[leftmargin=0.6cm]
+        \item Lộ trình: $M \to$ \dots\dots $\to$ \dots\dots $\to$ \dots\dots $\to M$.
+        \item Tổng chi phí: \dotfill (nghìn đồng).
+    \end{itemize}
+\end{pedabox}
+
+\subsection*{3. Rubric đánh giá năng lực học sinh trong bài học (4 mức độ)}
+
+\begin{center}
+\begin{tabularx}{\textwidth}{|>{\bfseries}p{3cm}|X|X|X|X|}
+\hline
+\textbf{Tiêu chí} & \textbf{Mức 1: Chưa đạt} & \textbf{Mức 2: Đạt} & \textbf{Mức 3: Khá} & \textbf{Mức 4: Tốt} \\ \hline
+Hiểu khái niệm đồ thị có trọng số & Chưa phân biệt được số cạnh và tổng trọng số của đường đi. & Hiểu khái niệm trọng số nhưng đôi khi tính nhẩm sai tổng độ dài. & Tính đúng độ dài các đường đi trên đồ thị có trọng số cho trước. & Phân tích sâu sắc ý nghĩa thực tế của trọng số (khoảng cách, chi phí, thời gian). \\ \hline
+Thực hiện thuật toán Dijkstra & Chưa biết cách lập bảng và chọn đỉnh nhỏ nhất để chốt nhãn. & Lập được bảng nhưng còn nhầm lẫn trong bước cập nhật nhãn $d(v)$. & Thực hiện chuẩn xác toàn bộ các bước gán nhãn và truy vết đúng đường đi. & Giải thích thành thạo nguyên lí tối ưu cục bộ, so sánh các phương án lộ trình phức tạp. \\ \hline
+Thuật toán TSP và Láng giềng gần nhất & Chưa hiểu quy tắc tham lam chọn đỉnh kế tiếp. & Thực hiện được thuật toán tham lam khi có giáo viên hướng dẫn. & Tự lực thực hiện trọn vẹn thuật toán láng giềng gần nhất từ đỉnh xuất phát bất kì. & Phân tích được ưu điểm (tốc độ nhanh) và hạn chế (nghiệm xấp xỉ) của thuật toán tham lam. \\ \hline
+Năng lực số, AI và STEM & Chưa thao tác được trên Graph Online hoặc Google Maps. & Tra cứu được lộ trình trên Google Maps nhưng chưa liên hệ với thuật toán. & Sử dụng thành thạo Google Maps và phần mềm đồ thị để kiểm chứng kết quả. & Mô hình hóa xuất sắc bài toán logistics thực tế A Lưới, viết prompt AI phản biện tối ưu. \\ \hline
+\end{tabularx}
+\end{center}
+
+\end{document}
