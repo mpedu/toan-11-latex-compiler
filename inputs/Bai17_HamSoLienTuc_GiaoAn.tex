@@ -1,0 +1,664 @@
+\documentclass[12pt, a4paper]{article}
+% --- 1. Cấu hình Tiếng Việt và Font chữ chuẩn ---
+\usepackage[utf8]{inputenc}
+\usepackage[T5]{fontenc}
+\usepackage[vietnamese]{babel}
+\usepackage{mathptmx} % Font Times New Roman đồng bộ cả chữ và công thức toán, không gây xung đột gói
+
+\makeatletter
+\renewcommand{\normalsize}{\@setfontsize\normalsize{13pt}{16pt}}
+\makeatother
+\normalsize
+
+% --- 2. Gói Toán học & Ký hiệu bổ trợ ---
+\usepackage{amsmath, amssymb, amsfonts, mathrsfs, amsthm}
+\usepackage{graphicx}
+\usepackage{fontawesome}
+\usepackage{booktabs, tabularx, array, multirow}
+\usepackage{enumitem}
+
+% --- 3. Đồ họa TikZ, Bảng biến thiên & Hình không gian ---
+\usepackage{tikz}
+\usetikzlibrary{calc, intersections, angles, quotes, patterns, arrows.meta, 3d}
+\usepackage{pgfplots}
+\pgfplotsset{compat=1.18}
+\usepackage{tkz-euclide}
+\usepackage{tkz-tab}
+
+\renewcommand{\vec}[1]{\overrightarrow{#1}}
+
+% --- 4. Hộp sư phạm (Tcolorbox) ---
+\usepackage[many]{tcolorbox}
+\tcbuselibrary{skins, breakable}
+
+% --- 5. Căn lề chuẩn văn bản giáo án ---
+\usepackage{geometry}
+\geometry{
+    a4paper,
+    left=25mm,
+    right=15mm,
+    top=20mm,
+    bottom=20mm
+}
+
+% --- 6. Header / Footer chuẩn hóa ---
+\usepackage{fancyhdr}
+\usepackage{lastpage}
+\pagestyle{fancy}
+\fancyhf{}
+
+\fancyhead[L]{\small \textit{Kế hoạch bài dạy Toán 11}}
+\fancyhead[R]{\textbf{Trang \thepage/\pageref{LastPage}}}
+\fancyfoot[L]{\small \textit{Tổ Toán - Tin}}
+\fancyfoot[R]{\small \textit{Trường THCS\&THPT Hồng Vân}}
+\renewcommand{\headrulewidth}{0.4pt}
+\renewcommand{\footrulewidth}{0.4pt}
+
+% --- 7. Giãn dòng & Giãn đoạn theo chuẩn Nghị định 30/2020/NĐ-CP ---
+\usepackage{setspace}
+\setstretch{1.15}
+\setlength{\parindent}{1.0cm}
+\setlength{\parskip}{5pt}
+
+% Định nghĩa hộp sư phạm chuyên dụng
+\newtcolorbox{pedabox}[2][]{
+    enhanced,
+    breakable,
+    colback=blue!3!white,
+    colframe=blue!65!black,
+    fonttitle=\bfseries\small,
+    title={#2},
+    arc=2mm,
+    boxrule=0.6pt,
+    left=3mm, right=3mm, top=2mm, bottom=2mm,
+    #1
+}
+
+\newtcolorbox{aibox}[2][]{
+    enhanced,
+    breakable,
+    colback=teal!4!white,
+    colframe=teal!70!black,
+    fonttitle=\bfseries\small,
+    title={#2},
+    arc=2mm,
+    boxrule=0.6pt,
+    left=3mm, right=3mm, top=2mm, bottom=2mm,
+    #1
+}
+
+\newtcolorbox{scaffoldbox}[2][]{
+    enhanced,
+    breakable,
+    colback=orange!4!white,
+    colframe=orange!80!black,
+    fonttitle=\bfseries\small,
+    title={#2},
+    arc=2mm,
+    boxrule=0.6pt,
+    left=3mm, right=3mm, top=2mm, bottom=2mm,
+    #1
+}
+
+\begin{document}
+
+\begin{center}
+    {\fontsize{14pt}{17pt}\selectfont \textbf{KẾ HOẠCH BÀI DẠY MÔN TOÁN LỚP 11}}\\[6pt]
+    {\fontsize{16pt}{19pt}\selectfont \textbf{BÀI 17. HÀM SỐ LIÊN TỤC}}\\[4pt]
+    {\fontsize{12pt}{15pt}\selectfont \textbf{Môn học: Toán 11} \ \textbar \ \textbf{Thời lượng: 2 tiết (Tiết 44, 45 theo PPCT | Tuần 15)}}
+\end{center}
+
+\vspace{5pt}
+
+\section*{I. MỤC TIÊU}
+
+\subsection*{1. Kiến thức, Năng lực}
+
+\begin{itemize}[leftmargin=1.2cm]
+    \item \textbf{Yêu cầu cần đạt (Nguyên văn CT GDPT 2018 Toán 11):}
+    \begin{itemize}[leftmargin=0.6cm]
+        \item Nhận dạng được hàm số liên tục tại một điểm, hoặc trên một khoảng, hoặc trên một đoạn.
+        \item Nhận dạng được tính liên tục của tổng, hiệu, tích, thương của hai hàm số liên tục.
+        \item Nhận biết được tính liên tục của một số hàm sơ cấp cơ bản (như hàm đa thức, hàm phân thức hữu tỉ, hàm căn thức, hàm lượng giác) trên tập xác định của chúng.
+        \item Vận dụng được định lý giá trị trung gian của hàm số liên tục để giải thích sự tồn tại nghiệm của phương trình trên một khoảng cho trước.
+    \end{itemize}
+
+    \item \textbf{Năng lực Toán học đặc thù:}
+    \begin{itemize}[leftmargin=0.6cm]
+        \item \textit{Năng lực tư duy và lập luận toán học:} Kết nối chặt chẽ giữa hình ảnh trực quan hình học (đường cong liền nét, không đứt gãy) với định nghĩa giải tích chặt chẽ $\lim_{x \to x_0} f(x) = f(x_0)$; lập luận logic khi xét tính liên tục một phía tại các mút của đoạn $[a; b]$.
+        \item \textit{Năng lực mô hình hóa toán học:} Vận dụng định lý giá trị trung gian để mô hình hóa và giải quyết các bài toán cân bằng nhiệt động lực học, vị trí chuyển động liên tục trên quỹ đạo, và các hàm bậc thang gián đoạn trong thực tế (cước viễn thông, biểu giá điện sinh hoạt).
+        \item \textit{Năng lực giải quyết vấn đề toán học:} Thành thạo quy trình 3 bước xét tính liên tục tại một điểm; kỹ thuật tìm tham số $m$ để hàm số liên tục; phương pháp chọn hai giá trị $a, b$ thỏa mãn $f(a) \cdot f(b) < 0$ để chứng minh phương trình có nghiệm.
+        \item \textit{Năng lực giao tiếp toán học:} Trình bày lập luận giải tích rõ ràng, phân biệt chính xác giữa điểm liên tục và điểm gián đoạn; sử dụng đúng các ký hiệu toán học thuộc tập hợp và đoạn, khoảng.
+        \item \textit{Năng lực sử dụng công cụ, phương tiện học toán:} Khai thác phần mềm GeoGebra/Desmos để khảo sát sự liền mạch của đồ thị; sử dụng MTCT Casio fx-580VN X với bảng giá trị TABLE (Menu 8) để dò tìm khoảng đổi dấu của hàm số.
+    \end{itemize}
+
+    \item \textbf{Năng lực số (Theo Thông tư 02/2025/TT-BGDĐT):}
+    \begin{itemize}[leftmargin=0.6cm]
+        \item \textit{Mã 3.1NC1a (Tạo và tùy biến sản phẩm số trực quan):} Học sinh sử dụng phần mềm GeoGebra hoặc Desmos trên phòng máy / thiết bị cá nhân để vẽ đồ thị hàm phân nhánh, điều chỉnh thanh trượt (slider) tham số $m$ để quan sát trực quan sự nối liền các nhánh đồ thị tại điểm nối.
+    \end{itemize}
+
+    \item \textbf{Năng lực AI (Theo Quyết định 2422/QĐ-BGDĐT):}
+    \begin{itemize}[leftmargin=0.6cm]
+        \item \textit{Mã 11.C4.1 (Hiểu bản chất xử lý dữ liệu của hệ thống AI):} Học sinh hiểu được tại sao các mô hình học sâu (Deep Learning) và mạng nơ-ron nhân tạo (Neural Networks) bắt buộc phải sử dụng các hàm kích hoạt (Activation Functions) liên tục và khả vi (như hàm Sigmoid, ReLU, GELU, SiLU) để đảm bảo thuật toán lan truyền ngược (Backpropagation) không bị gián đoạn hay đứt gãy thông tin.
+    \end{itemize}
+
+    \item \textbf{Năng lực chung:}
+    \begin{itemize}[leftmargin=0.6cm]
+        \item \textit{Tự chủ và tự học:} Chủ động tìm hiểu khái niệm tính liên tục qua các đồ thị trực quan; tự giác hoàn thành phiếu học tập bậc thang.
+        \item \textit{Giao tiếp và hợp tác:} Tích cực trao đổi, phản biện trong hoạt động nhóm, cùng thảo luận kiểm chứng sự đổi dấu của hàm số.
+    \end{itemize}
+\end{itemize}
+
+\subsection*{2. Phẩm chất}
+
+\begin{itemize}[leftmargin=1.2cm]
+    \item \textbf{Chăm chỉ:} Cẩn thận trong từng bước tính giới hạn và xét giá trị hàm số tại điểm.
+    \item \textbf{Trung thực:} Tự lực làm bài tập, khách quan chỉ ra các lỗi sai ngộ nhận điều kiện liên tục trong bài giải của AI.
+    \item \textbf{Trách nhiệm:} Tích cực tham gia thảo luận nhóm, hỗ trợ học sinh trung bình - yếu nhận diện đúng điểm gián đoạn.
+\end{itemize}
+
+\section*{II. THIẾT BỊ DẠY HỌC VÀ HỌC LIỆU}
+
+\begin{itemize}[leftmargin=1.2cm]
+    \item \textbf{Giáo viên:}
+    \begin{itemize}[leftmargin=0.6cm]
+        \item Kế hoạch bài dạy, bài giảng điện tử tương tác minh họa tính liên tục của hàm số.
+        \item Tệp mô phỏng Desmos / GeoGebra đồ thị hàm phân nhánh có thanh trượt tham số $m$.
+        \item Phiếu học tập phân tầng bậc thang, các bảng Rubric đánh giá năng lực học sinh.
+        \item Máy chiếu, máy tính cầm tay Casio fx-580VN X kết nối màn hình hiển thị trực quan chức năng TABLE.
+    \end{itemize}
+    \item \textbf{Học sinh:}
+    \begin{itemize}[leftmargin=0.6cm]
+        \item Sách giáo khoa Toán 11, vở ghi chép, thước kẻ, bút viết.
+        \item Máy tính cầm tay Casio fx-580VN X sẵn sàng thao tác chức năng tính toán và bảng giá trị.
+    \end{itemize}
+\end{itemize}
+
+\section*{III. TIẾN TRÌNH DẠY HỌC (BAO QUÁT TRỌN VẸN 2 TIẾT)}
+
+\subsection*{TIẾT 1: HÀM SỐ LIÊN TỤC TẠI MỘT ĐIỂM, TRÊN MỘT KHOẢNG VÀ TÍNH CHẤT (TIẾT 44 THEO PPCT)}
+
+\subsubsection*{1. Hoạt động 1: Mở đầu (Khởi động) (5 phút)}
+
+\noindent \textbf{a) Mục tiêu:}
+Tạo ấn tượng trực quan hình học về sự "liền nét" và "đứt gãy" của đồ thị hàm số, kích thích học sinh phát hiện nhu cầu định nghĩa chặt chẽ khái niệm hàm số liên tục.
+
+\noindent \textbf{b) Nội dung: So sánh hai đồ thị hàm số}
+\begin{pedabox}{Khởi động: Đồ thị liền mạch và đồ thị đứt gãy}
+Quan sát hình ảnh đồ thị của hai hàm số sau trên cùng hệ trục tọa độ:
+\begin{itemize}[leftmargin=0.6cm]
+    \item Đồ thị 1: Hàm số $y = f(x) = x^2$ trên $\mathbb{R}$.
+    \item Đồ thị 2: Hàm số $y = g(x) = \begin{cases} x + 1 & \text{khi } x \ge 0 \\ x - 1 & \text{khi } x < 0 \end{cases}$ trên $\mathbb{R}$.
+\end{itemize}
+\textbf{Câu hỏi:}
+\begin{enumerate}[leftmargin=0.6cm]
+    \item Khi vẽ đồ thị hàm số $f(x)$ từ trái sang phải, ngòi bút có phải nhấc lên khỏi mặt giấy không?
+    \item Khi vẽ đồ thị hàm số $g(x)$ đi qua điểm $x = 0$, ngòi bút có phải nhấc lên không? Đồ thị bị hiện tượng gì tại $x = 0$?
+\end{enumerate}
+\end{pedabox}
+
+\noindent \textbf{c) Sản phẩm: Câu trả lời của học sinh}
+\begin{itemize}[leftmargin=0.6cm]
+    \item Đồ thị hàm $f(x) = x^2$ là một parabol liền nét, vẽ một mạch trơn tru không nhấc bút.
+    \item Đồ thị hàm $g(x)$ bị "nhảy cóc" (đứt gãy) tại vị trí $x = 0$, ngòi bút buộc phải nhấc lên từ $(-1)$ nhảy lên $(+1)$.
+    \item Học sinh rút ra nhận xét trực giác: Hàm $f(x)$ liên tục, hàm $g(x)$ bị gián đoạn tại $x = 0$.
+\end{itemize}
+
+\noindent \textbf{d) Tổ chức thực hiện:}
+\begin{itemize}[leftmargin=0.8cm]
+    \item \textit{Chuyển giao nhiệm vụ:} Giáo viên trình chiếu hai đồ thị trên màn hình; học sinh quan sát và trả lời câu hỏi nhanh.
+    \item \textit{Thực hiện nhiệm vụ:} Học sinh quan sát, trao đổi nhanh với bạn bên cạnh trong 2 phút.
+    \item \textit{Báo cáo, thảo luận:} Giáo viên gọi 1 học sinh trả lời; các bạn khác nhận xét.
+    \item \textit{Kết luận, nhận định:} Giáo viên dẫn dắt: Trong toán học, trực quan "liền nét" được mô tả chính xác qua công cụ giới hạn giải tích: đó là \textbf{Hàm số liên tục}.
+\end{itemize}
+
+\subsubsection*{2. Hoạt động 2: Hình thành kiến thức (20 phút)}
+
+\noindent \textbf{a) Mục tiêu:}
+\begin{itemize}[leftmargin=0.6cm]
+    \item Nắm vững định nghĩa hàm số liên tục tại một điểm $x_0$ và quy trình 3 bước xét tính liên tục.
+    \item Hiểu khái niệm hàm số liên tục trên một khoảng, trên một đoạn.
+    \item Nhận biết tính liên tục của các hàm số sơ cấp cơ bản trên tập xác định.
+    \item Tích hợp Năng lực số 3.1NC1a (mô phỏng đồ thị) và Năng lực AI 11.C4.1 (tín hiệu liên tục trong AI).
+\end{itemize}
+
+\noindent \textbf{b) Nội dung: Định nghĩa hàm số liên tục tại một điểm, trên tập hợp và tính chất}
+
+\begin{pedabox}{1. Khái niệm hàm số liên tục tại một điểm}
+Cho hàm số $y = f(x)$ xác định trên khoảng $K$ và $x_0 \in K$.
+\begin{itemize}[leftmargin=0.6cm]
+    \item Hàm số $y = f(x)$ được gọi là \textbf{liên tục tại điểm $x_0$} nếu:
+    $$\lim_{x \to x_0} f(x) = f(x_0).$$
+    \item Nếu tại điểm $x_0$, hàm số không liên tục thì ta nói hàm số \textbf{gián đoạn tại điểm $x_0$} (điểm $x_0$ gọi là điểm gián đoạn của hàm số).
+\end{itemize}
+\end{pedabox}
+
+\begin{scaffoldbox}{Hộp hỗ trợ sư phạm: Quy trình 3 bước vàng xét tính liên tục tại điểm $x_0$}
+Dành cho học sinh trung bình - yếu để giải toán không bị nhầm lẫn:
+\begin{itemize}[leftmargin=0.6cm]
+    \item \textbf{Bước 1 (Tính giá trị tại điểm):} Tính giá trị $f(x_0)$ (hàm số phải xác định tại $x_0$).
+    \item \textbf{Bước 2 (Tìm giới hạn):} Tính $\lim_{x \to x_0} f(x)$.\\
+    \textit{Lưu ý:} Nếu hàm số cho bởi hai công thức khác nhau ở bên trái và bên phải $x_0$, ta phải tính cả hai giới hạn một phía: $\lim_{x \to x_0^+} f(x)$ và $\lim_{x \to x_0^-} f(x)$.
+    \item \textbf{Bước 3 (So sánh và kết luận):}
+    \begin{itemize}
+        \item Nếu $\lim_{x \to x_0} f(x) = f(x_0)$ $\implies$ Hàm số liên tục tại $x_0$.
+        \item Nếu không thỏa mãn đẳng thức trên $\implies$ Hàm số gián đoạn tại $x_0$.
+    \end{itemize}
+\end{itemize}
+\end{scaffoldbox}
+
+\begin{pedabox}{2. Hàm số liên tục trên một khoảng, trên một đoạn}
+\begin{itemize}[leftmargin=0.6cm]
+    \item Hàm số $y = f(x)$ được gọi là \textbf{liên tục trên một khoảng} $(a; b)$ nếu nó liên tục tại mọi điểm thuộc khoảng đó.
+    \item Hàm số $y = f(x)$ được gọi là \textbf{liên tục trên một đoạn} $[a; b]$ nếu nó liên tục trên khoảng $(a; b)$ và:
+    $$\lim_{x \to a^+} f(x) = f(a); \quad \lim_{x \to b^-} f(x) = f(b).$$
+    \item \textbf{Ý nghĩa hình học:} Đồ thị của hàm số liên tục trên một khoảng là một \textbf{đường liền nét} trên khoảng đó.
+\end{itemize}
+\end{pedabox}
+
+\noindent \textbf{Hình vẽ đồ thị minh họa tính liên tục và gián đoạn:}
+\begin{center}
+\begin{tikzpicture}[scale=1.0]
+    % Đồ thị liên tục
+    \begin{scope}[xshift=0cm]
+        \draw[->, thick] (-0.5,0) -- (4,0) node[right] {$x$};
+        \draw[->, thick] (0,-0.5) -- (0,3) node[above] {$y$};
+        \draw[thick, blue, smooth, domain=0.5:3.5] plot (\x, {0.2*(\x-2)^2 + 1});
+        \fill[red] (2,1) circle (2pt) node[below] {\small $(x_0; f(x_0))$};
+        \node at (2,-1) {\textbf{a) Đồ thị liền nét (Liên tục)}};
+    \end{scope}
+
+    % Đồ thị gián đoạn bước nhảy
+    \begin{scope}[xshift=6cm]
+        \draw[->, thick] (-0.5,0) -- (4,0) node[right] {$x$};
+        \draw[->, thick] (0,-0.5) -- (0,3) node[above] {$y$};
+        \draw[thick, blue, domain=0.5:2] plot (\x, {0.5*\x + 0.2});
+        \draw[thick, blue, domain=2:3.5] plot (\x, {0.5*\x + 1.2});
+        \draw[thick, red] (2,1.2) circle (2pt); % Điểm rỗng
+        \fill[red] (2,2.2) circle (2pt); % Điểm đặc
+        \draw[dashed] (2,0) node[below] {$x_0$} -- (2,2.2);
+        \node at (2,-1) {\textbf{b) Đồ thị đứt gãy (Gián đoạn)}};
+    \end{scope}
+\end{tikzpicture}
+\end{center}
+
+\begin{pedabox}{3. Tính liên tục của các hàm số sơ cấp cơ bản}
+\begin{enumerate}[leftmargin=0.6cm]
+    \item Hàm đa thức $P(x) = a_n x^n + \dots + a_1 x + a_0$ liên tục trên toàn bộ tập số thực $\mathbb{R}$.
+    \item Hàm phân thức hữu tỉ, hàm căn thức, các hàm số lượng giác ($y = \sin x, y = \cos x, y = \tan x, y = \cot x$) liên tục trên \textbf{từng khoảng xác định} của chúng.
+\end{enumerate}
+\end{pedabox}
+
+\begin{aibox}{Năng lực AI 11.C4.1: Tại sao các thuật toán AI đòi hỏi hàm liên tục?}
+\textbf{Khám phá khoa học máy tính:}
+\begin{itemize}[leftmargin=0.6cm]
+    \item Trong các mô hình Trí tuệ nhân tạo (mạng nơ-ron học sâu), thuật toán tối ưu hóa lan truyền ngược (Backpropagation) sử dụng đạo hàm để cập nhật trọng số.
+    \item Để có đạo hàm, hàm số bắt buộc phải \textbf{liên tục}. Nếu hàm số có điểm đứt gãy (gián đoạn), đạo hàm sẽ không xác định hoặc tăng vọt tới vô cực, làm đổ vỡ toàn bộ quá trình huấn luyện AI (hiện tượng nổ gradient - Exploding Gradient).
+    \item Vì vậy, các nhà khoa học AI luôn thay thế các hàm bậc thang gián đoạn bằng các hàm kích hoạt liên tục và mượt mà như Sigmoid, ReLU, GELU hay SiLU.
+\end{itemize}
+\end{aibox}
+
+\noindent \textbf{c) Sản phẩm: Lời giải các ví dụ mẫu}
+\textbf{Ví dụ 1 (Xét tính liên tục tại một điểm):} Xét tính liên tục của hàm số $f(x) = \begin{cases} \dfrac{x^2 - 4}{x - 2} & \text{khi } x \neq 2 \\ 4 & \text{khi } x = 2 \end{cases}$ tại điểm $x_0 = 2$.
+\begin{itemize}[leftmargin=0.6cm]
+    \item \textit{Bước 1:} Tính $f(2) = 4$.
+    \item \textit{Bước 2:} Tính $\lim_{x \to 2} f(x) = \lim_{x \to 2} \dfrac{x^2 - 4}{x - 2} = \lim_{x \to 2} \dfrac{(x-2)(x+2)}{x-2} = \lim_{x \to 2} (x + 2) = 2 + 2 = 4$.
+    \item \textit{Bước 3:} Vì $\lim_{x \to 2} f(x) = f(2) = 4$ nên hàm số $f(x)$ \textbf{liên tục tại điểm $x_0 = 2$}.
+\end{itemize}
+
+\textbf{Ví dụ 2 (Hàm số gián đoạn tại điểm nối):} Xét tính liên tục của hàm số $g(x) = \begin{cases} x + 2 & \text{khi } x > 1 \\ 2x - 1 & \text{khi } x \le 1 \end{cases}$ tại $x_0 = 1$.
+\begin{itemize}[leftmargin=0.6cm]
+    \item \textit{Bước 1:} $g(1) = 2(1) - 1 = 1$.
+    \item \textit{Bước 2:} Tính các giới hạn một phía:
+    \begin{itemize}
+        \item $\lim_{x \to 1^+} g(x) = \lim_{x \to 1^+} (x + 2) = 1 + 2 = 3$.
+        \item $\lim_{x \to 1^-} g(x) = \lim_{x \to 1^-} (2x - 1) = 2(1) - 1 = 1$.
+    \end{itemize}
+    \item \textit{Bước 3:} Vì $\lim_{x \to 1^+} g(x) = 3 \neq \lim_{x \to 1^-} g(x) = 1$ nên không tồn tại $\lim_{x \to 1} g(x)$.\\
+    Do đó, hàm số $g(x)$ \textbf{gián đoạn tại điểm $x_0 = 1$}.
+\end{itemize}
+
+\noindent \textbf{d) Tổ chức thực hiện:}
+\begin{itemize}[leftmargin=0.8cm]
+    \item \textit{Chuyển giao nhiệm vụ:} Giáo viên trình bày quy trình 3 bước; hướng dẫn học sinh quan sát đồ thị trên Desmos; giao học sinh làm Ví dụ 1 và 2.
+    \item \textit{Thực hiện nhiệm vụ:} Học sinh ghi chép quy trình, tự làm ví dụ trong 5 phút.
+    \item \textit{Báo cáo, thảo luận:} 2 học sinh lên bảng trình bày; học sinh khác nhận xét, đối chiếu 3 bước giải.
+    \item \textit{Kết luận, nhận định:} Giáo viên chuẩn hóa lời giải; nhấn mạnh sự khác biệt giữa trường hợp giới hạn hai phía và giới hạn một phía.
+\end{itemize}
+
+\subsubsection*{3. Hoạt động 3: Luyện tập (13 phút)}
+
+\noindent \textbf{a) Mục tiêu:}
+Rèn luyện kỹ năng xét tính liên tục trên từng khoảng xác định và xác định tham số $m$ để hàm số liên tục tại một điểm.
+
+\noindent \textbf{b) Nội dung: Nhiệm vụ trên Phiếu học tập số 1}
+\begin{pedabox}{Phiếu luyện tập số 1: Xét tính liên tục và tìm tham số}
+\begin{enumerate}[leftmargin=0.6cm]
+    \item \textbf{Bài 1:} Tìm các khoảng liên tục của hàm số $y = \dfrac{2x + 1}{x^2 - 4}$.
+    \item \textbf{Bài 2:} Tìm giá trị của tham số $m$ để hàm số sau liên tục tại điểm $x_0 = 3$:
+    $$h(x) = \begin{cases} \dfrac{x^2 - 9}{x - 3} & \text{khi } x \neq 3 \\ 2m + 1 & \text{khi } x = 3 \end{cases}$$
+\end{enumerate}
+\end{pedabox}
+
+\noindent \textbf{c) Sản phẩm: Lời giải chi tiết của học sinh}
+\begin{enumerate}[leftmargin=0.6cm]
+    \item \textbf{Bài 1:}
+    \begin{itemize}
+        \item Điều kiện xác định: $x^2 - 4 \neq 0 \iff x \neq 2$ và $x \neq -2$.
+        \item Tập xác định: $D = (-\infty; -2) \cup (-2; 2) \cup (2; +\infty)$.
+        \item Vì $y$ là hàm phân thức hữu tỉ nên hàm số liên tục trên từng khoảng xác định của nó, tức là liên tục trên các khoảng: $(-\infty; -2)$, $(-2; 2)$ và $(2; +\infty)$.
+    \end{itemize}
+    \item \textbf{Bài 2:}
+    \begin{itemize}
+        \item Ta có: $h(3) = 2m + 1$.
+        \item Giới hạn: $\lim_{x \to 3} h(x) = \lim_{x \to 3} \dfrac{x^2 - 9}{x - 3} = \lim_{x \to 3} \dfrac{(x-3)(x+3)}{x-3} = \lim_{x \to 3} (x + 3) = 3 + 3 = 6$.
+        \item Để hàm số $h(x)$ liên tục tại $x_0 = 3$, điều kiện cần và đủ là:
+        $$\lim_{x \to 3} h(x) = h(3) \iff 6 = 2m + 1 \iff 2m = 5 \iff m = \dfrac{5}{2}.$$
+        \item Kết luận: Vậy $m = \dfrac{5}{2}$ là giá trị cần tìm.
+    \end{itemize}
+\end{enumerate}
+
+\noindent \textbf{d) Tổ chức thực hiện:}
+\begin{itemize}[leftmargin=0.8cm]
+    \item \textit{Chuyển giao nhiệm vụ:} Học sinh làm việc theo cặp đôi; bạn ngồi bên trái làm Bài 1, bạn ngồi bên phải làm Bài 2; sau đó đổi vở kiểm tra chéo.
+    \item \textit{Thực hiện nhiệm vụ:} Học sinh làm bài trong 6 phút; giáo viên theo dõi và hướng dẫn các em học sinh trung bình.
+    \item \textit{Báo cáo, thảo luận:} 2 học sinh đại diện lên bảng ghi kết quả; cả lớp nhận xét.
+    \item \textit{Kết luận, nhận định:} Giáo viên nhấn mạnh dạng toán tìm tham số $m$: Cốt lõi là giải phương trình $\lim_{x \to x_0} f(x) = f(x_0)$.
+\end{itemize}
+
+\subsubsection*{4. Hoạt động 4: Vận dụng (7 phút)}
+
+\noindent \textbf{a) Mục tiêu:}
+Vận dụng khái niệm hàm số gián đoạn vào mô hình tính cước viễn thông hoặc dịch vụ thực tế.
+
+\noindent \textbf{b) Nội dung: Mô hình cước dịch vụ trông xe theo bậc thang}
+\begin{pedabox}{Ứng dụng thực tiễn: Hàm cước dịch vụ bậc thang gián đoạn}
+Một bãi gửi xe ô tô tại sân bay quy định mức giá gửi xe theo thời gian đỗ xe $t$ (giờ) trong ngày như sau:
+\begin{itemize}[leftmargin=0.6cm]
+    \item Từ 0 đến dưới 2 giờ: giá trọn gói là $30\,000$ đồng.
+    \item Từ 2 đến dưới 4 giờ: giá trọn gói là $50\,000$ đồng.
+    \item Từ 4 đến dưới 8 giờ: giá trọn gói là $90\,000$ đồng.
+\end{itemize}
+Gọi $P(t)$ là số tiền phải trả (nghìn đồng) theo thời gian đỗ $t \in (0; 8)$.
+\begin{enumerate}[leftmargin=0.6cm]
+    \item Hãy viết công thức hàm số $P(t)$.
+    \item Vẽ phác đồ thị hàm số $P(t)$ và chỉ ra các điểm gián đoạn của hàm số này. Nêu ý nghĩa thực tế tại sao khách hàng thường cảm thấy "bị thiệt" khi đỗ xe $2$ giờ $1$ phút so với $1$ giờ $59$ phút?
+\end{enumerate}
+\end{pedabox}
+
+\noindent \textbf{c) Sản phẩm: Lời giải của học sinh}
+\begin{enumerate}[leftmargin=0.6cm]
+    \item Công thức hàm số:
+    $$P(t) = \begin{cases} 30 & \text{khi } 0 < t < 2 \\ 50 & \text{khi } 2 \le t < 4 \\ 90 & \text{khi } 4 \le t < 8 \end{cases}$$
+    \item \textbf{Điểm gián đoạn:} Hàm số có các điểm gián đoạn tại $t = 2$ và $t = 4$.
+    \item \textbf{Ý nghĩa thực tế:} Tại điểm $t = 2$, có một "bước nhảy" giá cước từ $30\,000$ đồng vọt lên $50\,000$ đồng. Khi đỗ xe $1$ giờ $59$ phút ($t \to 2^-$), tiền trả là $30\,000$ đồng; nhưng chỉ cần quá thêm $2$ phút ($2$ giờ $1$ phút, $t \to 2^+$), tiền cước lập tức nhảy lên $50\,000$ đồng do tính gián đoạn của biểu giá bậc thang.
+\end{enumerate}
+
+\noindent \textbf{d) Tổ chức thực hiện:}
+Giáo viên đặt vấn đề; học sinh thảo luận cặp đôi và giải thích hiện tượng thực tế; giáo viên kết nối toán học với đời sống xã hội.
+
+\newpage
+
+\subsection*{TIẾT 2: CÁC PHÉP TOÁN, ĐỊNH LÝ GIÁ TRỊ TRUNG GIAN VÀ BÀI TOÁN THỰC TIỄN (TIẾT 45 THEO PPCT)}
+
+\subsubsection*{1. Hoạt động 1: Mở đầu (Khởi động) (5 phút)}
+
+\noindent \textbf{a) Mục tiêu:}
+Dẫn dắt tự nhiên vào Định lý giá trị trung gian thông qua bài toán thực tế về hành trình leo núi.
+
+\noindent \textbf{b) Nội dung: Tình huống hành trình lên và xuống núi}
+\begin{pedabox}{Khởi động: Nghịch lý nhà leo núi}
+Một người đi bộ leo núi từ chân núi lên đỉnh núi dọc theo một con đường mòn duy nhất. Người đó xuất phát lúc $6\text{h}00$ sáng và lên tới đỉnh lúc $12\text{h}00$ trưa. Sáng hôm sau, người đó đi từ đỉnh núi xuống chân núi theo đúng con đường mòn đó, cũng bắt đầu lúc $6\text{h}00$ sáng và xuống tới chân núi lúc $12\text{h}00$ trưa.\\
+\textbf{Câu hỏi:} Có chắc chắn tồn tại một thời điểm nào đó trong khoảng từ $6\text{h}00$ đến $12\text{h}00$ mà ở cả hai ngày, người đó đều có mặt tại \textbf{cùng một vị trí chính xác} trên con đường mòn hay không?
+\end{pedabox}
+
+\noindent \textbf{c) Sản phẩm: Lập luận trực giác của học sinh}
+\begin{itemize}[leftmargin=0.6cm]
+    \item Hãy tưởng tượng: Trong cùng một ngày, có một người leo lên từ chân núi và một người đi xuống từ đỉnh núi cùng lúc $6\text{h}00$.
+    \item Vì con đường mòn là duy nhất và chuyển động là liên tục, hai người đó \textbf{bắt buộc phải gặp nhau} tại một điểm nào đó trên đường trước khi tới đích.
+    \item Do đó, chắc chắn tồn tại một thời điểm mà người đó ở cùng một vị trí trong cả hai ngày. Đây là minh họa trực quan kinh điển của \textbf{Định lý giá trị trung gian}.
+\end{itemize}
+
+\noindent \textbf{d) Tổ chức thực hiện:}
+Giáo viên nêu nghịch lý; học sinh hào hứng thảo luận; giáo viên dẫn dắt vào bài toán tìm nghiệm của phương trình dựa trên hàm số liên tục.
+
+\subsubsection*{2. Hoạt động 2: Hình thành kiến thức (18 phút)}
+
+\noindent \textbf{a) Mục tiêu:}
+\begin{itemize}[leftmargin=0.6cm]
+    \item Nắm vững các phép toán trên hàm số liên tục (tổng, hiệu, tích, thương).
+    \item Hiểu và vận dụng thành thạo Định lý giá trị trung gian và hệ quả chứng minh phương trình có nghiệm.
+    \item Tích hợp Năng lực số 5.2NC1b (dùng chức năng TABLE dò nghiệm) và Năng lực AI 11.C4.1 (thuật toán Bisection).
+\end{itemize}
+
+\noindent \textbf{b) Nội dung: Các định lý về hàm liên tục và ứng dụng tìm nghiệm}
+
+\begin{pedabox}{1. Định lý về các phép toán trên hàm số liên tục}
+Giả sử hai hàm số $y = f(x)$ và $y = g(x)$ cùng liên tục tại điểm $x_0$. Khi đó:
+\begin{enumerate}[leftmargin=0.6cm]
+    \item Các hàm số $y = f(x) + g(x)$, $y = f(x) - g(x)$ và $y = f(x) \cdot g(x)$ đều liên tục tại $x_0$.
+    \item Hàm số $y = \dfrac{f(x)}{g(x)}$ liên tục tại $x_0$ nếu $g(x_0) \neq 0$.
+\end{enumerate}
+\end{pedabox}
+
+\begin{pedabox}{2. Định lý giá trị trung gian (Định lý Bolzano - Cauchy)}
+Nếu hàm số $y = f(x)$ liên tục trên đoạn $[a; b]$ và $f(a) \neq f(b)$ thì với mỗi số thực $M$ nằm giữa $f(a)$ và $f(b)$, luôn tồn tại ít nhất một điểm $c \in (a; b)$ sao cho:
+$$f(c) = M.$$
+\end{pedabox}
+
+\begin{pedabox}{3. Hệ quả chứng minh phương trình có nghiệm (Trọng tâm thi cử)}
+Nếu hàm số $y = f(x)$ \textbf{liên tục trên đoạn $[a; b]$} và:
+$$f(a) \cdot f(b) < 0 \quad (\text{tức là } f(a) \text{ và } f(b) \text{ trái dấu}),$$
+thì tồn tại ít nhất một điểm $c \in (a; b)$ sao cho $f(c) = 0$.\\
+Nói cách khác, phương trình $f(x) = 0$ có \textbf{ít nhất một nghiệm} nằm trong khoảng $(a; b)$.
+\end{pedabox}
+
+\noindent \textbf{Hình vẽ đồ thị minh họa Định lý giá trị trung gian cắt trục hoành:}
+\begin{center}
+\begin{tikzpicture}[scale=1.1]
+    \draw[->, thick] (-0.5,0) -- (5.5,0) node[right] {$x$};
+    \draw[->, thick] (0,-2) -- (0,2.5) node[above] {$y$};
+    
+    \coordinate (A) at (1,-1.5);
+    \coordinate (B) at (4.5,2);
+    
+    % Đường cong liên tục cắt trục hoành
+    \draw[ultra thick, blue, smooth] plot coordinates {(1,-1.5) (2,-0.5) (2.8,0) (3.6,1.2) (4.5,2)};
+    
+    % Điểm mút
+    \fill[red] (A) circle (2pt);
+    \fill[red] (B) circle (2pt);
+    \draw[dashed] (1,0) node[above] {$a$} -- (1,-1.5) -- (0,-1.5) node[left] {$f(a) < 0$};
+    \draw[dashed] (4.5,0) node[below] {$b$} -- (4.5,2) -- (0,2) node[left] {$f(b) > 0$};
+    
+    % Điểm nghiệm c
+    \fill[black] (2.8,0) circle (2.5pt) node[below=3pt] {\textbf{Nghiệm} $c$};
+    \node[teal] at (2.8,0.5) {$f(c) = 0$};
+\end{tikzpicture}
+\end{center}
+
+\begin{scaffoldbox}{Hộp hỗ trợ sư phạm: 4 bước trình bày chuẩn mực chứng minh phương trình có nghiệm}
+\begin{itemize}[leftmargin=0.6cm]
+    \item \textbf{Bước 1 (Đặt hàm và khẳng định tính liên tục):} Đặt $f(x)$ là vế trái phương trình. Khẳng định: Hàm số $f(x)$ liên tục trên đoạn $[a; b]$ (giải thích do là hàm đa thức, lượng giác,...).
+    \item \textbf{Bước 2 (Tính giá trị tại hai đầu mút):} Tính cụ thể giá trị $f(a)$ và $f(b)$.
+    \item \textbf{Bước 3 (Nhân tích kiểm tra trái dấu):} Tính tích $f(a) \cdot f(b)$ và chỉ ra $f(a) \cdot f(b) < 0$.
+    \item \textbf{Bước 4 (Kết luận):} Áp dụng hệ quả của định lý giá trị trung gian, kết luận phương trình có ít nhất một nghiệm thuộc khoảng $(a; b)$.
+\end{itemize}
+\end{scaffoldbox}
+
+\noindent \textbf{c) Sản phẩm: Lời giải các ví dụ mẫu}
+\textbf{Ví dụ 1:} Chứng minh rằng phương trình $x^3 + 2x - 5 = 0$ có ít nhất một nghiệm nằm trong khoảng $(1; 2)$.
+\begin{itemize}[leftmargin=0.6cm]
+    \item \textit{Bước 1:} Xét hàm số $f(x) = x^3 + 2x - 5$. Vì $f(x)$ là hàm đa thức nên $f(x)$ liên tục trên toàn bộ $\mathbb{R}$, do đó $f(x)$ liên tục trên đoạn $[1; 2]$.
+    \item \textit{Bước 2:} Ta có:
+    \begin{itemize}
+        \item $f(1) = 1^3 + 2(1) - 5 = 1 + 2 - 5 = -2$.
+        \item $f(2) = 2^3 + 2(2) - 5 = 8 + 4 - 5 = 7$.
+    \end{itemize}
+    \item \textit{Bước 3:} Tích $f(1) \cdot f(2) = (-2) \cdot 7 = -14 < 0$.
+    \item \textit{Bước 4:} Theo hệ quả định lý giá trị trung gian, phương trình $f(x) = 0$ có ít nhất một nghiệm $c \in (1; 2)$. (đpcm)
+\end{itemize}
+
+\noindent \textbf{d) Tổ chức thực hiện:}
+\begin{itemize}[leftmargin=0.8cm]
+    \item \textit{Chuyển giao nhiệm vụ:} Giáo viên phát biểu định lý; vẽ hình minh họa trục hoành; yêu cầu học sinh thực hiện Ví dụ 1 vào vở.
+    \item \textit{Thực hiện nhiệm vụ:} Học sinh ghi chép 4 bước chuẩn, thực hành tính toán $f(1)$ và $f(2)$.
+    \item \textit{Báo cáo, thảo luận:} 1 học sinh lên bảng trình bày; giáo viên uốn nắn câu chữ (nhắc không được quên bước khẳng định tính liên tục trên đoạn).
+    \item \textit{Kết luận, nhận định:} Giáo viên nhấn mạnh: Thiếu bước khẳng định tính liên tục sẽ bị trừ điểm nặng vì định lý chỉ đúng khi hàm số liên tục.
+\end{itemize}
+
+\subsubsection*{3. Hoạt động 3: Luyện tập (15 phút)}
+
+\noindent \textbf{a) Mục tiêu:}
+Thành thạo kỹ năng chứng minh phương trình bậc ba, bậc cao có nhiều nghiệm thực phân biệt bằng cách chia nhỏ các khoảng.
+
+\noindent \textbf{b) Nội dung: Nhiệm vụ trên Phiếu học tập số 2}
+\begin{pedabox}{Phiếu luyện tập số 2: Chứng minh phương trình có nhiều nghiệm phân biệt}
+\begin{enumerate}[leftmargin=0.6cm]
+    \item \textbf{Bài 1:} Chứng minh phương trình $x^3 - 3x + 1 = 0$ có ít nhất 3 nghiệm thực phân biệt nằm trong khoảng $(-2; 2)$.
+    \item \textbf{Bài 2:} Chứng minh phương trình $x^5 - 5x - 1 = 0$ có nghiệm trong khoảng $(1; 2)$.
+\end{enumerate}
+\end{pedabox}
+
+\noindent \textbf{c) Sản phẩm: Lời giải chi tiết của học sinh}
+\begin{enumerate}[leftmargin=0.6cm]
+    \item \textbf{Bài 1:}
+    \begin{itemize}
+        \item Xét hàm số $f(x) = x^3 - 3x + 1$. Hàm số liên tục trên $\mathbb{R}$ nên liên tục trên mọi đoạn con.
+        \item Ta tính giá trị tại các điểm nguyên đặc biệt trên $[-2; 2]$:
+        \begin{itemize}
+            \item $f(-2) = (-2)^3 - 3(-2) + 1 = -8 + 6 + 1 = -1 < 0$.
+            \item $f(0) = 0^3 - 3(0) + 1 = 1 > 0$.
+            \item $f(1) = 1^3 - 3(1) + 1 = -1 < 0$.
+            \item $f(2) = 2^3 - 3(2) + 1 = 8 - 6 + 1 = 3 > 0$.
+        \end{itemize}
+        \item Xét trên 3 khoảng rời nhau:
+        \begin{itemize}
+            \item Trên $[-2; 0]$: $f(-2) \cdot f(0) = (-1) \cdot 1 = -1 < 0 \implies$ Có nghiệm $x_1 \in (-2; 0)$.
+            \item Trên $[0; 1]$: $f(0) \cdot f(1) = 1 \cdot (-1) = -1 < 0 \implies$ Có nghiệm $x_2 \in (0; 1)$.
+            \item Trên $[1; 2]$: $f(1) \cdot f(2) = (-1) \cdot 3 = -3 < 0 \implies$ Có nghiệm $x_3 \in (1; 2)$.
+        \end{itemize}
+        \item Vì ba khoảng $(-2; 0)$, $(0; 1)$ và $(1; 2)$ đôi một không giao nhau nên $x_1, x_2, x_3$ là 3 nghiệm thực phân biệt thuộc $(-2; 2)$.
+        \item Mặt khác, phương trình bậc ba có tối đa 3 nghiệm thực, do đó phương trình có đúng 3 nghiệm thực phân biệt trong khoảng $(-2; 2)$.
+    \end{itemize}
+    \item \textbf{Bài 2:}
+    \begin{itemize}
+        \item Hàm số $g(x) = x^5 - 5x - 1$ liên tục trên đoạn $[1; 2]$.
+        \item $g(1) = 1^5 - 5(1) - 1 = -5 < 0$.
+        \item $g(2) = 2^5 - 5(2) - 1 = 32 - 10 - 1 = 21 > 0$.
+        \item Vì $g(1) \cdot g(2) = (-5) \cdot 21 = -105 < 0$ nên phương trình có ít nhất một nghiệm trong khoảng $(1; 2)$.
+    \end{itemize}
+\end{enumerate}
+
+\noindent \textbf{d) Tổ chức thực hiện:}
+\begin{itemize}[leftmargin=0.8cm]
+    \item \textit{Chuyển giao nhiệm vụ:} Giáo viên hướng dẫn dùng chức năng TABLE (Menu 8) trên Casio fx-580VN X: nhập $f(x) = x^3 - 3x + 1$, Start: $-2$, End: $2$, Step: $1$ để nhìn cột $f(x)$ đổi dấu; yêu cầu học sinh giải Bài 1.
+    \item \textit{Thực hiện nhiệm vụ:} Học sinh bấm máy tính quan sát sự đổi dấu, sau đó trình bày bài tự luận vào vở.
+    \item \textit{Báo cáo, thảo luận:} 2 học sinh lên bảng hoàn thiện lời giải; lớp đối chiếu bài làm.
+    \item \textit{Kết luận, nhận định:} Giáo viên nhận xét, nhấn mạnh kỹ năng chọn điểm thử bằng máy tính cầm tay giúp tiết kiệm thời gian giải toán.
+\end{itemize}
+
+\subsubsection*{4. Hoạt động 4: Vận dụng \& Năng lực AI (7 phút)}
+
+\noindent \textbf{a) Mục tiêu:}
+Tích hợp Năng lực AI và rèn luyện tư duy phản biện khi nhận diện sai sót nghiêm trọng của AI do bỏ quên điều kiện tính liên tục của hàm số.
+
+\noindent \textbf{b) Nội dung: Phản biện bài giải của AI \& Thuật toán Bisection}
+\begin{aibox}{Năng lực AI: Phát hiện sai lầm nghiêm trọng của Chatbot AI}
+\textbf{Tình huống thực tế:} Một học sinh nhập đề bài vào Chatbot AI:
+\begin{quote}
+\textit{«Chứng minh rằng phương trình $\dfrac{1}{x} = 0$ có nghiệm trong khoảng $(-1; 1)$.»}
+\end{quote}
+\textbf{Câu trả lời của Chatbot AI:}
+\begin{quote}
+\textit{«Xét hàm số $f(x) = \dfrac{1}{x}$.\\
+Ta có: $f(-1) = \dfrac{1}{-1} = -1 < 0$ và $f(1) = \dfrac{1}{1} = 1 > 0$.\\
+Tích $f(-1) \cdot f(1) = -1 < 0$.\\
+Theo Định lý giá trị trung gian, phương trình $\dfrac{1}{x} = 0$ có ít nhất một nghiệm nằm trong khoảng $(-1; 1)$!»}
+\end{quote}
+\textbf{Nhiệm vụ của học sinh:}
+\begin{enumerate}[leftmargin=0.6cm]
+    \item Chỉ ra sai lầm nghiêm trọng trong suy luận của AI. Phương trình $\dfrac{1}{x} = 0$ trên thực tế có nghiệm hay không?
+    \item Rút ra bài học: Điều kiện tiên quyết nào của Định lý giá trị trung gian đã bị AI bỏ qua?
+    \item Giới thiệu thuật toán AI: Nêu mối liên hệ giữa định lý này với thuật toán chia đôi (Bisection Method) để AI tự động tìm nghiệm với độ chính xác tùy ý.
+\end{enumerate}
+\end{aibox}
+
+\noindent \textbf{c) Sản phẩm: Lời phản biện và bài học của học sinh}
+\begin{enumerate}[leftmargin=0.6cm]
+    \item \textbf{Phản biện lỗi sai của AI:}
+    \begin{itemize}
+        \item Phương trình $\dfrac{1}{x} = 0$ rõ ràng \textbf{vô nghiệm} vì tử số là 1 hằng số khác 0!
+        \item AI đã phạm sai lầm nghiêm trọng khi áp dụng định lý mà bỏ qua điều kiện tiên quyết: \textbf{Hàm số phải LIÊN TỤC trên đoạn $[-1; 1]$}. Trong khi đó, hàm $f(x) = \dfrac{1}{x}$ không xác định và bị gián đoạn tại $x = 0 \in [-1; 1]$.
+    \end{itemize}
+    \item \textbf{Bài học đắt giá:} Tuyệt đối không được áp dụng định lý nếu hàm số chưa được kiểm chứng tính liên tục trên toàn bộ đoạn đang xét.
+    \item \textbf{Ứng dụng thuật toán chia đôi (Bisection Method):} Thuật toán máy tính và AI tìm nghiệm bằng cách: liên tục chia đôi đoạn $[a; b]$ thành hai nửa, chọn nửa đoạn giữ nguyên tính đổi dấu ($f(a)f(c) < 0$), lặp lại $N$ bước cho đến khi độ dài đoạn nhỏ hơn sai số $\epsilon = 10^{-6}$ để tìm ra nghiệm xấp xỉ chính xác của các phương trình phức tạp.
+\end{enumerate}
+
+\noindent \textbf{d) Tổ chức thực hiện:}
+Giáo viên trình chiếu đoạn văn bản giải sai của AI; học sinh phát biểu chỉ trích lỗi sai; giáo viên chốt lại nguyên tắc: AI là trợ lý, con người phải nắm vững bản chất toán học để kiểm duyệt kết quả.
+
+\section*{IV. PHỤ LỤC HỌC LIỆU BỔ TRỢ}
+
+\subsection*{1. Phiếu học tập phân tầng bậc thang (Worksheet)}
+
+\noindent \textbf{A. PHẦN TRẮC NGHIỆM KHÁCH QUAN (Nhận biết - Thông hiểu)}
+\begin{enumerate}[leftmargin=0.6cm]
+    \item Hàm số $y = f(x)$ liên tục tại điểm $x_0$ khi và chỉ khi:
+    \begin{itemize}[leftmargin=0.6cm]
+        \item[A.] $\lim_{x \to x_0} f(x) = 0$. \quad \textbf{B.} $\lim_{x \to x_0} f(x) = f(x_0)$. \quad C. $f(x)$ xác định tại $x_0$. \quad D. $\lim_{x \to x_0^+} f(x) = \lim_{x \to x_0^-} f(x)$.
+    \end{itemize}
+    \item Hàm số nào sau đây gián đoạn tại điểm $x = 2$?
+    \begin{itemize}[leftmargin=0.6cm]
+        \item[A.] $y = x^2 - 3x + 1$. \quad \textbf{B.} $y = \dfrac{x + 1}{x - 2}$. \quad C. $y = \sin x$. \quad D. $y = \sqrt{x + 2}$.
+    \end{itemize}
+    \item Cho hàm số $f(x)$ liên tục trên đoạn $[1; 3]$ có $f(1) = 4$ và $f(3) = -2$. Khẳng định nào sau đây là đúng?
+    \begin{itemize}[leftmargin=0.6cm]
+        \item[A.] Phương trình $f(x) = 0$ vô nghiệm trên $(1; 3)$.
+        \item[\textbf{B.}] Phương trình $f(x) = 0$ có ít nhất một nghiệm thuộc khoảng $(1; 3)$.
+        \item[C.] Phương trình $f(x) = 0$ có đúng một nghiệm thuộc khoảng $(1; 3)$.
+        \item[D.] Hàm số đồng biến trên đoạn $[1; 3]$.
+    \end{itemize}
+    \item Hàm số $y = \tan x$ liên tục trên khoảng nào sau đây?
+    \begin{itemize}[leftmargin=0.6cm]
+        \item[\textbf{A.}] $\left(0; \dfrac{\pi}{2}\right)$. \quad B. $(0; \pi)$. \quad C. $\left(-\dfrac{\pi}{2}; \dfrac{\pi}{2}\right]$ (có chứa đầu mút). \quad D. $\mathbb{R}$.
+    \end{itemize}
+\end{enumerate}
+
+\noindent \textbf{B. PHẦN TỰ LUẬN PHÂN TẦNG BẬC THANG}
+\begin{itemize}[leftmargin=0.6cm]
+    \item \textbf{Tầng 1 (Cơ bản dành cho HS trung bình - yếu):}
+    \begin{enumerate}[leftmargin=0.5cm]
+        \item Xét tính liên tục của hàm số $f(x) = \begin{cases} \dfrac{x^2 - 1}{x - 1} & \text{khi } x \neq 1 \\ 2 & \text{khi } x = 1 \end{cases}$ tại điểm $x_0 = 1$.
+        \item Tìm các khoảng liên tục của hàm số $y = \dfrac{3x - 1}{x + 2}$.
+    \end{enumerate}
+
+    \item \textbf{Tầng 2 (Thông hiểu):}
+    \begin{enumerate}[leftmargin=0.5cm]
+        \item Tìm tham số $a$ để hàm số sau liên tục tại điểm $x_0 = 2$:
+        $$g(x) = \begin{cases} \dfrac{\sqrt{x + 2} - 2}{x - 2} & \text{khi } x > 2 \\ ax + \dfrac{1}{4} & \text{khi } x \le 2 \end{cases}$$
+        \item Chứng minh rằng phương trình $2x^3 - 6x + 1 = 0$ có ít nhất hai nghiệm thực nằm trong khoảng $(-2; 1)$.
+    \end{enumerate}
+
+    \item \textbf{Tầng 3 (Vận dụng cao):}
+    \begin{enumerate}[leftmargin=0.5cm]
+        \item Cho hàm số $f(x)$ liên tục trên đoạn $[0; 1]$ thỏa mãn $f(0) = f(1)$. Chứng minh rằng phương trình $f(x) = f\left(x + \dfrac{1}{2}\right)$ luôn có ít nhất một nghiệm trên đoạn $\left[0; \dfrac{1}{2}\right]$.
+        \item Một nhà mạng cung cấp gói cước dữ liệu Internet 5G: $10\,000$ đồng cho 1 GB đầu tiên. Nếu dùng vượt quá 1 GB, mỗi 500 MB tiếp theo được tính giá $3\,000$ đồng (làm tròn lên từng gói 500 MB). Mô hình hóa hàm cước phí $T(x)$ theo dung lượng sử dụng $x$ (GB) và xác định tất cả các điểm gián đoạn của hàm cước phí trong khoảng sử dụng từ $0$ đến $3\text{ GB}$.
+    \end{enumerate}
+\end{itemize}
+
+\subsection*{2. Bảng Rubric đánh giá năng lực học sinh trong bài học}
+
+\begin{center}
+\small
+\begin{tabularx}{\textwidth}{|p{2.8cm}|X|X|X|X|}
+\hline
+\textbf{Tiêu chí} & \textbf{Chưa đạt (Mức 1)} & \textbf{Đạt (Mức 2)} & \textbf{Khá (Mức 3)} & \textbf{Tốt (Mức 4)} \\ \hline
+\textbf{Nhận thức tính liên tục tại một điểm} & Quên tính $f(x_0)$ hoặc không so sánh giới hạn với giá trị tại điểm. & Thực hiện đúng 3 bước xét tính liên tục hàm đa thức đơn giản. & Xét thành thạo hàm phân nhánh có chứa giới hạn một phía. & Lập luận giải tích sắc bén; xử lý mẫu mực các điểm gián đoạn có tham số. \\ \hline
+\textbf{Tìm khoảng liên tục \& Tham số $m$} & Chưa tìm đúng tập xác định; nhầm lẫn khoảng và đoạn. & Nêu đúng các khoảng liên tục của hàm phân thức; tìm được $m$ cơ bản. & Khử thành thạo dạng vô định căn thức để tìm tham số $m$. & Giải quyết hoàn hảo bài toán tham số phức hợp kết hợp đồ thị trực quan. \\ \hline
+\textbf{Định lý giá trị trung gian \& Nghiệm} & Quên bước khẳng định tính liên tục trên đoạn; tính sai dấu $f(a)f(b)$. & Trình bày đủ 4 bước chứng minh phương trình có 1 nghiệm. & Biết chia nhỏ các khoảng để chứng minh phương trình có nhiều nghiệm. & Vận dụng xuất sắc định lý giải quyết bài toán trừu tượng $f(x) = f(x + 1/2)$. \\ \hline
+\textbf{Năng lực số \& Phản biện AI} & Chưa biết dùng TABLE dò nghiệm; tin tưởng tuyệt đối vào lời giải sai của AI. & Sử dụng được TABLE tìm khoảng đổi dấu; phát hiện được AI sai nhưng chưa giải thích được. & Thao tác TABLE thuần thục; phản biện chặt chẽ lỗi bỏ điều kiện liên tục của AI. & Kết nối sâu sắc tính liên tục với các hàm kích hoạt AI và thuật toán chia đôi Bisection. \\ \hline
+\end{tabularx}
+\end{center}
+
+\end{document}
