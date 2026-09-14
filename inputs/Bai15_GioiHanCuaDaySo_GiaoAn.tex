@@ -1,0 +1,631 @@
+\documentclass[12pt, a4paper]{article}
+% --- 1. Cấu hình Tiếng Việt và Font chữ chuẩn ---
+\usepackage[utf8]{inputenc}
+\usepackage[T5]{fontenc}
+\usepackage[vietnamese]{babel}
+\usepackage{mathptmx} % Font Times New Roman đồng bộ cả chữ và công thức toán, không gây xung đột gói
+
+\makeatletter
+\renewcommand{\normalsize}{\@setfontsize\normalsize{13pt}{16pt}}
+\makeatother
+\normalsize
+
+% --- 2. Gói Toán học & Ký hiệu bổ trợ ---
+\usepackage{amsmath, amssymb, amsfonts, mathrsfs, amsthm}
+\usepackage{graphicx}
+\usepackage{fontawesome}
+\usepackage{booktabs, tabularx, array, multirow}
+\usepackage{enumitem}
+
+% --- 3. Đồ họa TikZ, Bảng biến thiên & Hình không gian ---
+\usepackage{tikz}
+\usetikzlibrary{calc, intersections, angles, quotes, patterns, arrows.meta, 3d}
+\usepackage{pgfplots}
+\pgfplotsset{compat=1.18}
+\usepackage{tkz-euclide}
+\usepackage{tkz-tab}
+
+\renewcommand{\vec}[1]{\overrightarrow{#1}}
+
+% --- 4. Hộp sư phạm (Tcolorbox) ---
+\usepackage[many]{tcolorbox}
+\tcbuselibrary{skins, breakable}
+
+% --- 5. Căn lề chuẩn văn bản giáo án ---
+\usepackage{geometry}
+\geometry{
+    a4paper,
+    left=25mm,
+    right=15mm,
+    top=20mm,
+    bottom=20mm
+}
+
+% --- 6. Header / Footer chuẩn hóa ---
+\usepackage{fancyhdr}
+\usepackage{lastpage}
+\pagestyle{fancy}
+\fancyhf{}
+
+\fancyhead[L]{\small \textit{Kế hoạch bài dạy Toán 11}}
+\fancyhead[R]{\textbf{Trang \thepage/\pageref{LastPage}}}
+\fancyfoot[L]{\small \textit{Tổ Toán - Tin}}
+\fancyfoot[R]{\small \textit{Trường THCS\&THPT Hồng Vân}}
+\renewcommand{\headrulewidth}{0.4pt}
+\renewcommand{\footrulewidth}{0.4pt}
+
+% --- 7. Giãn dòng & Giãn đoạn theo chuẩn Nghị định 30/2020/NĐ-CP ---
+\usepackage{setspace}
+\setstretch{1.15}
+\setlength{\parindent}{1.0cm}
+\setlength{\parskip}{5pt}
+
+% Định nghĩa hộp sư phạm chuyên dụng
+\newtcolorbox{pedabox}[2][]{
+    enhanced,
+    breakable,
+    colback=blue!3!white,
+    colframe=blue!65!black,
+    fonttitle=\bfseries\small,
+    title={#2},
+    arc=2mm,
+    boxrule=0.6pt,
+    left=3mm, right=3mm, top=2mm, bottom=2mm,
+    #1
+}
+
+\newtcolorbox{aibox}[2][]{
+    enhanced,
+    breakable,
+    colback=teal!4!white,
+    colframe=teal!70!black,
+    fonttitle=\bfseries\small,
+    title={#2},
+    arc=2mm,
+    boxrule=0.6pt,
+    left=3mm, right=3mm, top=2mm, bottom=2mm,
+    #1
+}
+
+\newtcolorbox{scaffoldbox}[2][]{
+    enhanced,
+    breakable,
+    colback=orange!4!white,
+    colframe=orange!80!black,
+    fonttitle=\bfseries\small,
+    title={#2},
+    arc=2mm,
+    boxrule=0.6pt,
+    left=3mm, right=3mm, top=2mm, bottom=2mm,
+    #1
+}
+
+\begin{document}
+
+\begin{center}
+    {\fontsize{14pt}{17pt}\selectfont \textbf{KẾ HOẠCH BÀI DẠY MÔN TOÁN LỚP 11}}\\[6pt]
+    {\fontsize{16pt}{19pt}\selectfont \textbf{BÀI 15. GIỚI HẠN CỦA DÃY SỐ}}\\[4pt]
+    {\fontsize{12pt}{15pt}\selectfont \textbf{Môn học: Toán 11} \ \textbar \ \textbf{Thời lượng: 2 tiết (Tiết 40, 41 theo PPCT | Tuần 14)}}
+\end{center}
+
+\vspace{5pt}
+
+\section*{I. MỤC TIÊU}
+
+\subsection*{1. Kiến thức, Năng lực}
+
+\begin{itemize}[leftmargin=1.2cm]
+    \item \textbf{Yêu cầu cần đạt (Nguyên văn CT GDPT 2018 Toán 11):}
+    \begin{itemize}[leftmargin=0.6cm]
+        \item Nhận biết được khái niệm giới hạn của dãy số (giới hạn hữu hạn và giới hạn vô cực).
+        \item Giải thích được một số giới hạn cơ bản như: $\lim \dfrac{1}{n^k} = 0$ ($k \in \mathbb{N}^*$); $\lim q^n = 0$ ($|q| < 1$); $\lim c = c$ với $c$ là hằng số; $\lim n^k = +\infty$ ($k \in \mathbb{N}^*$); $\lim q^n = +\infty$ ($q > 1$).
+        \item Vận dụng được các phép toán trên giới hạn dãy số để tìm giới hạn của một số dãy số đơn giản (ví dụ: $\lim \dfrac{2n+1}{n}$; $\lim \dfrac{\sqrt{4n^2+1}}{n}$).
+        \item Tính được tổng của một cấp số nhân lùi vô hạn và vận dụng được kết quả đó để giải quyết một số tình huống thực tiễn giả định hoặc liên quan đến thực tiễn.
+    \end{itemize}
+
+    \item \textbf{Năng lực Toán học đặc thù:}
+    \begin{itemize}[leftmargin=0.6cm]
+        \item \textit{Năng lực tư duy và lập luận toán học:} Phát triển tư duy trực giác hình học và giải tích về quá trình tiệm cận vô hạn; hiểu bản chất của sự hội tụ; lập luận logic chặt chẽ khi áp dụng các định lý giới hạn tổng, hiệu, tích, thương.
+        \item \textit{Năng lực mô hình hóa toán học:} Thiết lập mô hình toán học giải quyết các bài toán chuyển động tiệm cận (nghịch lý Zeno), bài toán bóng nảy suy giảm đàn hồi, và biểu diễn số thập phân vô hạn tuần hoàn dưới dạng phân số tối giản.
+        \item \textit{Năng lực giải quyết vấn đề toán học:} Nắm vững phương pháp phân loại và xử lý các dạng giới hạn: phương pháp chia bậc cao nhất ở mẫu số, phương pháp nhân lượng liên hợp khử dạng vô định, phương pháp áp dụng công thức tổng cấp số nhân lùi vô hạn $S = \dfrac{u_1}{1 - q}$.
+        \item \textit{Năng lực giao tiếp toán học:} Sử dụng chính xác các ký hiệu toán học giải tích ($\lim, \lim_{n \to +\infty}, +\infty, -\infty$); trình bày lời giải rõ ràng, mạch lạc, phân biệt rõ giữa dãy số hội tụ và dãy số phân kỳ.
+        \item \textit{Năng lực sử dụng công cụ, phương tiện học toán:} Sử dụng máy tính cầm tay (Casio fx-580VN X) để tính toán xấp xỉ, kiểm tra kết quả giới hạn qua chức năng phím CALC.
+    \end{itemize}
+
+    \item \textbf{Năng lực số (Theo Thông tư 02/2025/TT-BGDĐT):}
+    \begin{itemize}[leftmargin=0.6cm]
+        \item \textit{Mã 5.2NC1c (Ứng dụng công nghệ số giải quyết vấn đề toán học):} Học sinh áp dụng thành thạo máy tính cầm tay (MTCT Casio fx-580VN X) sử dụng chức năng phím CALC với giá trị $x = 10^6$ hoặc $x = 999999$ để dự đoán chính xác xu hướng hội tụ và kiểm chứng kết quả tính toán giới hạn của dãy số.
+    \end{itemize}
+
+    \item \textbf{Năng lực AI (Theo Quyết định 2422/QĐ-BGDĐT):}
+    \begin{itemize}[leftmargin=0.6cm]
+        \item \textit{Mã 11.D2.1 (Nhận thức về nguyên lý hoạt động của hệ thống AI):} Học sinh hiểu và trình bày được sự tương đồng giữa khái niệm giới hạn dãy số hội tụ với nguyên lý tối ưu hóa trong học máy (Machine Learning/AI) thông qua thuật toán giảm dần độ dốc (Gradient Descent), khi hàm mất mát (loss function) hội tụ dần về sai số cực tiểu sau các bước lặp huấn luyện.
+    \end{itemize}
+
+    \item \textbf{Năng lực chung:}
+    \begin{itemize}[leftmargin=0.6cm]
+        \item \textit{Tự chủ và tự học:} Chủ động tìm hiểu khái niệm tiệm cận vô hạn qua các ví dụ thực tiễn; tự giác thực hiện các bài tập phân tầng trong phiếu học tập.
+        \item \textit{Giao tiếp và hợp tác:} Tích cực thảo luận nhóm, biết lắng nghe và phản biện ý kiến toán học của bạn học trong việc xử lý các bài toán giới hạn phức tạp.
+    \end{itemize}
+\end{itemize}
+
+\subsection*{2. Phẩm chất}
+
+\begin{itemize}[leftmargin=1.2cm]
+    \item \textbf{Chăm chỉ:} Kiên nhẫn thực hiện từng bước chia lũy thừa bậc cao nhất, cẩn trọng khi rút gọn các biểu thức chứa căn thức.
+    \item \textbf{Trung thực:} Tự giác làm bài tập, không lạm dụng máy tính cầm tay hoặc AI để chép kết quả mà không hiểu bản chất thuật toán suy luận.
+    \item \textbf{Trách nhiệm:} Nghiêm túc hoàn thành nhiệm vụ nhóm, hỗ trợ các bạn học sinh trung bình - yếu làm chủ kỹ năng tính toán cơ bản.
+\end{itemize}
+
+\section*{II. THIẾT BỊ DẠY HỌC VÀ HỌC LIỆU}
+
+\begin{itemize}[leftmargin=1.2cm]
+    \item \textbf{Giáo viên:}
+    \begin{itemize}[leftmargin=0.6cm]
+        \item Kế hoạch bài dạy, bài giảng điện tử tương tác minh họa sự hội tụ của dãy số.
+        \item Mô phỏng động hình học bằng GeoGebra: mô phỏng điểm số hạng $u_n = \dfrac{1}{n}$ tiến dần về $0$ trên trục số khi $n$ tăng dần.
+        \item Phiếu học tập phân tầng bậc thang, hệ thống bài tập trắc nghiệm và tự luận phân hóa.
+        \item Máy chiếu, máy tính cầm tay Casio fx-580VN X kết nối màn hình hiển thị trực quan thao tác bấm phím.
+    \end{itemize}
+    \item \textbf{Học sinh:}
+    \begin{itemize}[leftmargin=0.6cm]
+        \item Sách giáo khoa Toán 11, vở ghi chép, đồ dùng học tập.
+        \item Máy tính cầm tay Casio fx-580VN X chuẩn bị sẵn sàng thực hành chức năng CALC.
+    \end{itemize}
+\end{itemize}
+
+\section*{III. TIẾN TRÌNH DẠY HỌC (BAO QUÁT TRỌN VẸN 2 TIẾT)}
+
+\subsection*{TIẾT 1: KHÁI NIỆM GIỚI HẠN DÃY SỐ, MỘT SỐ GIỚI HẠN CƠ BẢN VÀ CÁC PHÉP TOÁN (TIẾT 40 THEO PPCT)}
+
+\subsubsection*{1. Hoạt động 1: Mở đầu (Khởi động) (5 phút)}
+
+\noindent \textbf{a) Mục tiêu:}
+Tạo mâu thuẫn nhận thức và kích thích sự tò mò của học sinh về quá trình vô hạn thông qua nghịch lý chia đôi quãng đường của triết gia Hy Lạp Zeno.
+
+\noindent \textbf{b) Nội dung: Tình huống nghịch lý Zeno (Achilles đuổi rùa)}
+\begin{pedabox}{Khởi động: Nghịch lý Zeno và bài toán chia đôi quãng đường}
+Xét một đoạn thẳng $AB$ có độ dài bằng $1\text{ m}$. Một chú rùa xuất phát từ điểm $A$ bò về phía $B$:
+\begin{itemize}[leftmargin=0.6cm]
+    \item Bước 1: Rùa bò được nửa đoạn đường, còn cách $B$ một khoảng $d_1 = \dfrac{1}{2}\text{ m}$.
+    \item Bước 2: Rùa bò tiếp nửa đoạn đường còn lại, còn cách $B$ một khoảng $d_2 = \dfrac{1}{4}\text{ m}$.
+    \item Bước $n$: Rùa bò tiếp nửa đoạn đường còn lại, còn cách $B$ một khoảng $d_n = \dfrac{1}{2^n}\text{ m}$.
+\end{itemize}
+\textbf{Câu hỏi:} Khi số bước $n$ trở nên vô cùng lớn ($n \to +\infty$), khoảng cách $d_n$ giữa rùa và điểm $B$ thay đổi như thế nào? Khoảng cách đó có thể nhỏ hơn bất kỳ khoảng cách dương nào ta muốn hay không?
+\end{pedabox}
+
+\noindent \textbf{c) Sản phẩm: Câu trả lời và nhận định của học sinh}
+\begin{itemize}[leftmargin=0.6cm]
+    \item Khi $n = 10 \implies d_{10} = \dfrac{1}{2^{10}} = \dfrac{1}{1024} \approx 0{,}000976\text{ m} < 1\text{ mm}$.
+    \item Khi $n = 20 \implies d_{20} = \dfrac{1}{2^{20}} \approx 0{,}00000095\text{ m} < 1\text{ }\mu\text{m}$.
+    \item Học sinh nhận xét: Khi $n$ càng lớn, giá trị của $d_n$ càng tiến sát về số $0$, khoảng cách có thể nhỏ hơn bất kỳ số dương nào tùy ý. Ta nói khoảng cách $d_n$ có \textbf{giới hạn là 0} khi $n$ dần tới dương vô cực.
+\end{itemize}
+
+\noindent \textbf{d) Tổ chức thực hiện:}
+\begin{itemize}[leftmargin=0.8cm]
+    \item \textit{Chuyển giao nhiệm vụ:} Giáo viên trình chiếu hình ảnh chú rùa bò trên trục số; yêu cầu học sinh tính $d_1, d_2, d_3$ và nêu nhận xét về xu hướng của $d_n$.
+    \item \textit{Thực hiện nhiệm vụ:} Học sinh làm việc cá nhân 2 phút, bấm máy tính các lũy thừa mẫu số.
+    \item \textit{Báo cáo, thảo luận:} Giáo viên gọi 2 học sinh trả lời miệng; cả lớp lắng nghe và thảo luận.
+    \item \textit{Kết luận, nhận định:} Giáo viên dẫn dắt: Trong toán học, hiện tượng một số hạng $u_n$ tiến sát đến một số thực $L$ khi $n$ tăng lên vô hạn được gọi là khái niệm \textbf{Giới hạn của dãy số}.
+\end{itemize}
+
+\subsubsection*{2. Hoạt động 2: Hình thành kiến thức (20 phút)}
+
+\noindent \textbf{a) Mục tiêu:}
+\begin{itemize}[leftmargin=0.6cm]
+    \item Nắm vững định nghĩa dãy số có giới hạn $0$ và định nghĩa dãy số có giới hạn hữu hạn $a$.
+    \item Ghi nhớ và giải thích các giới hạn cơ bản: $\lim \dfrac{1}{n^k} = 0$, $\lim q^n = 0$ ($|q| < 1$), $\lim c = c$.
+    \item Hiểu và vận dụng thành thạo định lý về các phép toán trên giới hạn hữu hạn của dãy số.
+    \item Tích hợp Năng lực số (Mã 5.2NC1c): Học sinh làm chủ thao tác phím CALC trên MTCT Casio fx-580VN X để tìm giới hạn.
+\end{itemize}
+
+\noindent \textbf{b) Nội dung: Khái niệm giới hạn, giới hạn cơ bản và định lý phép toán}
+
+\begin{pedabox}{1. Khái niệm giới hạn của dãy số}
+\textbf{a) Dãy số có giới hạn là 0:}
+\begin{itemize}[leftmargin=0.6cm]
+    \item Ta nói dãy số $(u_n)$ có giới hạn là $0$ khi $n$ dần tới dương vô cực nếu $|u_n|$ có thể nhỏ hơn một số dương bé tuỳ ý, kể từ một số hạng nào đó trở đi.
+    \item Kí hiệu: $\lim_{n \to +\infty} u_n = 0$ hoặc viết tắt là $\lim u_n = 0$.
+\end{itemize}
+
+\textbf{b) Dãy số có giới hạn hữu hạn:}
+\begin{itemize}[leftmargin=0.6cm]
+    \item Ta nói dãy số $(u_n)$ có giới hạn là số thực $a$ khi $n \to +\infty$ nếu $\lim_{n \to +\infty} (u_n - a) = 0$.
+    \item Kí hiệu: $\lim_{n \to +\infty} u_n = a$ hoặc viết tắt là $\lim u_n = a$ (hay $u_n \to a$ khi $n \to +\infty$).
+\end{itemize}
+\end{pedabox}
+
+\noindent \textbf{Minh họa trực quan hình học trên trục số:}
+\begin{center}
+\begin{tikzpicture}[scale=1.2]
+    % Trục số
+    \draw[->, thick] (-0.5,0) -- (8.5,0) node[right] {$x$};
+    % Vạch chia
+    \draw[thick] (0,0.15) -- (0,-0.15) node[below] {$0$};
+    \draw[thick] (8,0.15) -- (8,-0.15) node[below] {$1$};
+    
+    % Các điểm u_n = 1/n
+    \coordinate (u1) at (8,0);
+    \coordinate (u2) at (4,0);
+    \coordinate (u3) at (2.67,0);
+    \coordinate (u4) at (2.0,0);
+    \coordinate (u5) at (1.6,0);
+    \coordinate (u6) at (1.33,0);
+    \coordinate (u10) at (0.8,0);
+    
+    \fill[blue] (u1) circle (2pt) node[above=2pt] {$u_1=1$};
+    \fill[blue] (u2) circle (2pt) node[above=2pt] {$u_2=\frac{1}{2}$};
+    \fill[blue] (u3) circle (2pt) node[above=2pt] {$u_3=\frac{1}{3}$};
+    \fill[blue] (u4) circle (2pt) node[above=2pt] {$u_4=\frac{1}{4}$};
+    \fill[blue] (u5) circle (1.5pt);
+    \fill[blue] (u6) circle (1.5pt);
+    \fill[blue] (u10) circle (1.5pt) node[above=2pt] {$u_{10}$};
+    
+    % Mũi tên xu hướng
+    \draw[->, ultra thick, red] (7, -0.6) -- (1, -0.6) node[midway, below] {\small Tiến dần về điểm $0$ khi $n \to +\infty$};
+    \fill[red] (0,0) circle (3pt) node[above=3pt, red] {\textbf{Giới hạn} $L = 0$};
+\end{tikzpicture}
+\end{center}
+
+\begin{pedabox}{2. Một số giới hạn cơ bản cần ghi nhớ}
+\begin{enumerate}[leftmargin=0.6cm]
+    \item $\lim c = c$ với $c$ là hằng số.
+    \item $\lim \dfrac{1}{n} = 0$, tổng quát: $\lim \dfrac{1}{n^k} = 0$ với $k$ là số nguyên dương ($k \in \mathbb{N}^*$).
+    \item $\lim q^n = 0$ nếu $|q| < 1$ (ví dụ: $\lim \left(\dfrac{1}{2}\right)^n = 0$, $\lim \left(-\dfrac{2}{3}\right)^n = 0$).
+\end{enumerate}
+\end{pedabox}
+
+\begin{pedabox}{3. Định lý về các phép toán trên giới hạn hữu hạn}
+Giả sử $\lim u_n = a$ và $\lim v_n = b$ ($a, b \in \mathbb{R}$). Khi đó:
+\begin{enumerate}[leftmargin=0.6cm]
+    \item $\lim (u_n + v_n) = a + b$.
+    \item $\lim (u_n - v_n) = a - b$.
+    \item $\lim (u_n \cdot v_n) = a \cdot b$.
+    \item $\lim \left(\dfrac{u_n}{v_n}\right) = \dfrac{a}{b}$ (với điều kiện $b \neq 0$).
+    \item Nếu $u_n \ge 0$ với mọi $n$ thì $a \ge 0$ và $\lim \sqrt{u_n} = \sqrt{a}$.
+\end{enumerate}
+\end{pedabox}
+
+\begin{scaffoldbox}{Hộp hỗ trợ sư phạm: Quy tắc 3 bước vàng tìm giới hạn phân thức hữu tỉ}
+Dành cho học sinh trung bình - yếu khi tính $\lim \dfrac{P(n)}{Q(n)}$:
+\begin{itemize}[leftmargin=0.6cm]
+    \item \textbf{Bước 1 (Xác định bậc):} Tìm bậc cao nhất của $n$ trong biểu thức ở mẫu số (gọi là $n^k$).
+    \item \textbf{Bước 2 (Chia đồng thời):} Chia cả tử số và mẫu số cho lũy thừa $n^k$.
+    \item \textbf{Bước 3 (Triệt tiêu giới hạn không):} Áp dụng tính chất $\lim \dfrac{c}{n^p} = 0$ ($p > 0$) để thu được kết quả bằng số cụ thể.
+\end{itemize}
+\end{scaffoldbox}
+
+\begin{aibox}{Năng lực số 5.2NC1c: Kỹ thuật kiểm tra giới hạn trên MTCT Casio fx-580VN X}
+Để dự đoán hoặc kiểm chứng kết quả $\lim \dfrac{2n + 1}{n}$:
+\begin{enumerate}[leftmargin=0.6cm]
+    \item \textbf{Bước 1:} Nhập biểu thức vào màn hình máy tính (thay biến $n$ bằng biến $X$): \texttt{(2X + 1) / X}.
+    \item \textbf{Bước 2:} Nhấn phím \fbox{\textbf{CALC}}. Máy tính hiển thị $X?$.
+    \item \textbf{Bước 3:} Nhập giá trị $X$ thật lớn (mô phỏng $n \to +\infty$): Nhập \fbox{\textbf{10\textsuperscript{6}}} hoặc \fbox{\textbf{999999}} rồi nhấn \fbox{\textbf{=}}.
+    \item \textbf{Bước 4:} Màn hình hiển thị: \texttt{2.000001}. Ta dự đoán ngay kết quả chính xác là $2$.
+\end{enumerate}
+\end{aibox}
+
+\noindent \textbf{c) Sản phẩm: Lời giải mẫu ví dụ áp dụng}
+\textbf{Ví dụ 1:} Tính giới hạn $\lim \dfrac{2n + 1}{n}$.
+\begin{itemize}[leftmargin=0.6cm]
+    \item \textit{Lời giải:} Chia cả tử và mẫu cho $n$:
+    $$\lim \dfrac{2n + 1}{n} = \lim \left(\dfrac{2n}{n} + \dfrac{1}{n}\right) = \lim \left(2 + \dfrac{1}{n}\right) = \lim 2 + \lim \dfrac{1}{n} = 2 + 0 = 2.$$
+\end{itemize}
+
+\textbf{Ví dụ 2:} Tính giới hạn $\lim \dfrac{3n^2 - 4n + 5}{2n^2 + 1}$.
+\begin{itemize}[leftmargin=0.6cm]
+    \item \textit{Lời giải:} Bậc cao nhất ở mẫu là $n^2$. Chia cả tử và mẫu cho $n^2$:
+    $$\lim \dfrac{3n^2 - 4n + 5}{2n^2 + 1} = \lim \dfrac{\dfrac{3n^2}{n^2} - \dfrac{4n}{n^2} + \dfrac{5}{n^2}}{\dfrac{2n^2}{n^2} + \dfrac{1}{n^2}} = \lim \dfrac{3 - \dfrac{4}{n} + \dfrac{5}{n^2}}{2 + \dfrac{1}{n^2}} = \dfrac{3 - 0 + 0}{2 + 0} = \dfrac{3}{2}.$$
+\end{itemize}
+
+\noindent \textbf{d) Tổ chức thực hiện:}
+\begin{itemize}[leftmargin=0.8cm]
+    \item \textit{Chuyển giao nhiệm vụ:} Giáo viên trình bày các định lý cơ bản; chiếu màn hình giả lập máy tính hướng dẫn thao tác phím CALC.
+    \item \textit{Thực hiện nhiệm vụ:} Học sinh ghi chép quy tắc 3 bước vàng; đồng thời 35 học sinh cầm máy tính thực hành bấm kiểm tra Ví dụ 1 và Ví dụ 2.
+    \item \textit{Báo cáo, thảo luận:} Giáo viên quan sát lớp, hỗ trợ các học sinh thao tác phím chậm; mời 1 học sinh đọc kết quả màn hình máy tính.
+    \item \textit{Kết luận, nhận định:} Giáo viên nhấn mạnh: Giới hạn của phân thức khi tử và mẫu cùng bậc bằng tỉ số của hai hệ số đứng trước lũy thừa bậc cao nhất.
+\end{itemize}
+
+\subsubsection*{3. Hoạt động 3: Luyện tập (13 phút)}
+
+\noindent \textbf{a) Mục tiêu:}
+Rèn luyện kỹ năng biến đổi đại số tìm giới hạn của các dãy số phân thức hữu tỉ đơn giản, kết hợp sử dụng MTCT để kiểm chứng kết quả.
+
+\noindent \textbf{b) Nội dung: Nhiệm vụ luyện tập trên Phiếu học tập số 1}
+\begin{pedabox}{Phiếu luyện tập số 1: Giới hạn phân thức hữu tỉ}
+Tính các giới hạn sau bằng phương pháp tự luận và kiểm tra lại bằng máy tính cầm tay:
+\begin{enumerate}[leftmargin=0.6cm]
+    \item $I_1 = \lim \dfrac{4n - 3}{2n + 5}$.
+    \item $I_2 = \lim \dfrac{n^2 - 3n + 1}{3n^2 + 2}$.
+    \item $I_3 = \lim \dfrac{2n - 1}{n^2 + 4}$.
+\end{enumerate}
+\end{pedabox}
+
+\noindent \textbf{c) Sản phẩm: Lời giải chi tiết của học sinh}
+\begin{enumerate}[leftmargin=0.6cm]
+    \item $I_1 = \lim \dfrac{4n - 3}{2n + 5} = \lim \dfrac{4 - \dfrac{3}{n}}{2 + \dfrac{5}{n}} = \dfrac{4 - 0}{2 + 0} = \dfrac{4}{2} = 2$.
+    \item $I_2 = \lim \dfrac{n^2 - 3n + 1}{3n^2 + 2} = \lim \dfrac{1 - \dfrac{3}{n} + \dfrac{1}{n^2}}{3 + \dfrac{2}{n^2}} = \dfrac{1 - 0 + 0}{3 + 0} = \dfrac{1}{3}$.
+    \item $I_3 = \lim \dfrac{2n - 1}{n^2 + 4} = \lim \dfrac{\dfrac{2}{n} - \dfrac{1}{n^2}}{1 + \dfrac{4}{n^2}} = \dfrac{0 - 0}{1 + 0} = \dfrac{0}{1} = 0$.
+\end{enumerate}
+\textbf{Nhận xét quy luật rút gọn nhanh:}
+\begin{itemize}[leftmargin=0.6cm]
+    \item Bậc tử bằng bậc mẫu $\implies$ giới hạn là số thực khác 0.
+    \item Bậc tử bé hơn bậc mẫu $\implies$ giới hạn luôn bằng 0.
+\end{itemize}
+
+\noindent \textbf{d) Tổ chức thực hiện:}
+\begin{itemize}[leftmargin=0.8cm]
+    \item \textit{Chuyển giao nhiệm vụ:} Chia lớp thành 4 dãy, mỗi dãy làm một câu trên bảng phụ hoặc vở, sau đó đối chiếu kết quả bấm CALC.
+    \item \textit{Thực hiện nhiệm vụ:} Học sinh làm bài độc lập trong 6 phút, giáo viên đi vòng quanh lớp hỗ trợ học sinh yếu ở khâu chia cho $n^2$.
+    \item \textit{Báo cáo, thảo luận:} Mời 3 học sinh lên bảng trình bày 3 câu; cả lớp nhận xét bước chia và rút gọn.
+    \item \textit{Kết luận, nhận định:} Giáo viên sửa lỗi trình bày (nhắc nhở học sinh không được bỏ chữ $\lim$ trước khi thay giá trị giới hạn).
+\end{itemize}
+
+\subsubsection*{4. Hoạt động 4: Vận dụng \& Năng lực AI (7 phút)}
+
+\noindent \textbf{a) Mục tiêu:}
+Tích hợp Năng lực AI (Mã 11.D2.1): Giúp học sinh hiểu được ứng dụng thực tiễn của khái niệm giới hạn dãy số hội tụ trong việc tối ưu hóa mô hình Trí tuệ nhân tạo (AI).
+
+\noindent \textbf{b) Nội dung: Sự hội tụ trong thuật toán Gradient Descent của AI}
+\begin{aibox}{Năng lực AI 11.D2.1: Mối liên hệ giữa giới hạn dãy số và sự hội tụ của AI}
+\textbf{Tình huống khoa học:} Khi huấn luyện một mô hình trí tuệ nhân tạo (ví dụ nhận diện khuôn mặt hoặc dịch ngôn ngữ), máy tính phải điều chỉnh liên tục các trọng số sao cho hàm sai số $E_n$ (Error/Loss) sau $n$ vòng lặp huấn luyện (epoch) càng ngày càng nhỏ.
+\begin{itemize}[leftmargin=0.6cm]
+    \item Giả sử sai số của mô hình sau $n$ vòng lặp được mô tả bởi dãy số: $E_n = \dfrac{3n + 2}{n^2 + 5}$.
+    \item Khi cho máy tính huấn luyện với số vòng lặp rất lớn ($n \to +\infty$), sai số $E_n$ sẽ tiến về giá trị nào?
+    \item Thuật toán tối ưu hóa Gradient Descent hoạt động dựa trên nguyên lý: Dừng huấn luyện khi sai số $|E_n - E_{n-1}| < \epsilon$ (với $\epsilon$ là một ngưỡng sai số cực nhỏ được định trước, ví dụ $10^{-6}$).
+\end{itemize}
+\textbf{Nhiệm vụ của học sinh:}
+\begin{enumerate}[leftmargin=0.6cm]
+    \item Tính $\lim_{n \to +\infty} E_n$.
+    \item Nêu ý nghĩa: Tại sao mô hình AI cần một dãy số sai số hội tụ về 0?
+\end{enumerate}
+\end{aibox}
+
+\noindent \textbf{c) Sản phẩm: Kết quả phân tích của học sinh}
+\begin{enumerate}[leftmargin=0.6cm]
+    \item Ta có: $\lim_{n \to +\infty} E_n = \lim_{n \to +\infty} \dfrac{3n + 2}{n^2 + 5} = \lim_{n \to +\infty} \dfrac{\dfrac{3}{n} + \dfrac{2}{n^2}}{1 + \dfrac{5}{n^2}} = \dfrac{0 + 0}{1 + 0} = 0$.
+    \item \textbf{Ý nghĩa trí tuệ nhân tạo:} Giới hạn bằng $0$ chứng minh thuật toán huấn luyện có tính hội tụ, mô hình AI học hỏi chính xác dần theo thời gian và sai số dự đoán tiến sát về $0$, đảm bảo hệ thống đưa ra kết quả tin cậy.
+\end{enumerate}
+
+\noindent \textbf{d) Tổ chức thực hiện:}
+Giáo viên trình chiếu đồ thị đường cong học tập (learning curve) của mô hình AI; học sinh trả lời câu hỏi và kết nối toán học với công nghệ tương lai; giáo viên tổng kết tiết học.
+
+\newpage
+
+\subsection*{TIẾT 2: CẤP SỐ NHÂN LÙI VÔ HẠN, GIỚI HẠN VÔ CỰC VÀ BÀI TOÁN THỰC TIỄN (TIẾT 41 THEO PPCT)}
+
+\subsubsection*{1. Hoạt động 1: Mở đầu (Khởi động) (5 phút)}
+
+\noindent \textbf{a) Mục tiêu:}
+Dẫn dắt học sinh tiếp cận bài toán tính tổng của vô hạn số hạng thông qua mô hình phân chia diện tích hình vuông đơn vị.
+
+\noindent \textbf{b) Nội dung: Bài toán lát kín hình vuông đơn vị}
+\begin{pedabox}{Khởi động: Tổng của vô hạn số hạng có thể là một số hữu hạn?}
+Xét một hình vuông có diện tích bằng $1\text{ m}^2$:
+\begin{itemize}[leftmargin=0.6cm]
+    \item Chia đôi hình vuông, ta được một nửa có diện tích là $\dfrac{1}{2}\text{ m}^2$.
+    \item Chia đôi phần còn lại, ta được phần có diện tích là $\dfrac{1}{4}\text{ m}^2$.
+    \item Tiếp tục quá trình chia đôi vô hạn lần, ta được các diện tích: $\dfrac{1}{8}, \dfrac{1}{16}, \dots, \dfrac{1}{2^n}, \dots$
+\end{itemize}
+\textbf{Câu hỏi:} Nếu ta đem cộng tất cả vô hạn các phần diện tích nhỏ này lại:
+$$S = \dfrac{1}{2} + \dfrac{1}{4} + \dfrac{1}{8} + \dfrac{1}{16} + \dots + \dfrac{1}{2^n} + \dots$$
+Tổng $S$ này có bằng đúng diện tích ban đầu của hình vuông (bằng $1$) hay không?
+\end{pedabox}
+
+\noindent \textbf{c) Sản phẩm: Phản xạ và tính toán trực giác của học sinh}
+Học sinh nhận thấy trực quan: Toàn bộ các miếng nhỏ đều nằm vừa khít bên trong hình vuông ban đầu, do đó tổng vô hạn các diện tích này chính xác phải bằng $1$. Đây là một tổng vô hạn đặc biệt gọi là tổng của cấp số nhân lùi vô hạn.
+
+\noindent \textbf{d) Tổ chức thực hiện:}
+Giáo viên trình chiếu hình vẽ chia ô trực quan; học sinh thảo luận cặp đôi 2 phút; giáo viên chốt lại vấn đề và chuyển tiếp sang bài học mới.
+
+\subsubsection*{2. Hoạt động 2: Hình thành kiến thức (18 phút)}
+
+\noindent \textbf{a) Mục tiêu:}
+\begin{itemize}[leftmargin=0.6cm]
+    \item Định nghĩa cấp số nhân lùi vô hạn và thiết lập công thức tính tổng $S = \dfrac{u_1}{1 - q}$.
+    \item Nhận biết khái niệm giới hạn vô cực ($\lim u_n = +\infty, \lim u_n = -\infty$) và các giới hạn vô cực cơ bản.
+    \item Nắm vững quy tắc tìm giới hạn tích và thương chứa yếu tố vô cực.
+\end{itemize}
+
+\noindent \textbf{b) Nội dung: Cấp số nhân lùi vô hạn \& Giới hạn vô cực}
+
+\begin{pedabox}{1. Cấp số nhân lùi vô hạn và công thức tính tổng}
+\textbf{a) Định nghĩa:} Cấp số nhân vô hạn $(u_n)$ có công bội $q$ thoả mãn $|q| < 1$ được gọi là \textbf{cấp số nhân lùi vô hạn}.
+
+\textbf{b) Tổng của cấp số nhân lùi vô hạn:}
+Xét tổng của $n$ số hạng đầu tiên: $S_n = u_1 + u_2 + \dots + u_n = \dfrac{u_1(1 - q^n)}{1 - q}$.\\
+Vì $|q| < 1$ nên $\lim_{n \to +\infty} q^n = 0$. Do đó, khi cho $n \to +\infty$, ta có:
+$$S = \lim_{n \to +\infty} S_n = \lim_{n \to +\infty} \dfrac{u_1(1 - q^n)}{1 - q} = \dfrac{u_1(1 - 0)}{1 - q} = \dfrac{u_1}{1 - q}.$$
+\textbf{Kí hiệu:} $S = u_1 + u_2 + \dots + u_n + \dots = \dfrac{u_1}{1 - q}$.
+\end{pedabox}
+
+\begin{pedabox}{2. Giới hạn vô cực của dãy số}
+\begin{itemize}[leftmargin=0.6cm]
+    \item Ta nói dãy số $(u_n)$ có giới hạn là $+\infty$ khi $n \to +\infty$ nếu $u_n$ có thể lớn hơn một số dương bất kì tuỳ ý, kể từ một số hạng nào đó trở đi. Kí hiệu: $\lim_{n \to +\infty} u_n = +\infty$ hoặc $\lim u_n = +\infty$.
+    \item Dãy số $(u_n)$ có giới hạn là $-\infty$ nếu $\lim (-u_n) = +\infty$. Kí hiệu: $\lim u_n = -\infty$.
+\end{itemize}
+
+\textbf{Một số giới hạn vô cực cơ bản:}
+\begin{enumerate}[leftmargin=0.6cm]
+    \item $\lim n^k = +\infty$ với mọi $k \in \mathbb{N}^*$.
+    \item $\lim q^n = +\infty$ nếu $q > 1$.
+    \item Nếu $\lim u_n = a$ và $\lim |v_n| = +\infty$ thì $\lim \dfrac{u_n}{v_n} = 0$.
+    \item Nếu $\lim u_n = a > 0, \lim v_n = 0$ và $v_n > 0$ kể từ số hạng nào đó thì $\lim \dfrac{u_n}{v_n} = +\infty$.
+\end{enumerate}
+\end{pedabox}
+
+\begin{scaffoldbox}{Hộp hỗ trợ sư phạm: Bảng xét dấu quy tắc nhân và chia với vô cực}
+\small
+\begin{tabularx}{\textwidth}{|c|c|c|c|}
+\hline
+\textbf{Dãy số $u_n$} & \textbf{Dãy số $v_n$} & \textbf{Điều kiện bổ sung} & \textbf{Giới hạn $\lim (u_n \cdot v_n)$ hoặc $\lim \dfrac{u_n}{v_n}$} \\ \hline
+$\lim u_n = a > 0$ & $\lim v_n = +\infty$ & & $\lim (u_n \cdot v_n) = +\infty$ \\ \hline
+$\lim u_n = a < 0$ & $\lim v_n = +\infty$ & & $\lim (u_n \cdot v_n) = -\infty$ \\ \hline
+$\lim u_n = a > 0$ & $\lim v_n = 0$ & $v_n > 0, \forall n > N$ & $\lim \dfrac{u_n}{v_n} = +\infty$ \\ \hline
+$\lim u_n = a > 0$ & $\lim v_n = 0$ & $v_n < 0, \forall n > N$ & $\lim \dfrac{u_n}{v_n} = -\infty$ \\ \hline
+\end{tabularx}
+\end{scaffoldbox}
+
+\noindent \textbf{c) Sản phẩm: Lời giải các ví dụ mẫu}
+\textbf{Ví dụ 1 (Tổng cấp số nhân lùi vô hạn):} Tính tổng $S = 1 + \dfrac{1}{3} + \dfrac{1}{9} + \dots + \dfrac{1}{3^n} + \dots$
+\begin{itemize}[leftmargin=0.6cm]
+    \item Dãy số là cấp số nhân lùi vô hạn với số hạng đầu $u_1 = 1$, công bội $q = \dfrac{1}{3}$ thỏa mãn $|q| < 1$.
+    \item Áp dụng công thức: $S = \dfrac{u_1}{1 - q} = \dfrac{1}{1 - \dfrac{1}{3}} = \dfrac{1}{\dfrac{2}{3}} = \dfrac{3}{2}$.
+\end{itemize}
+
+\textbf{Ví dụ 2 (Số thập phân vô hạn tuần hoàn sang phân số):} Biểu diễn số $0{,}(6) = 0{,}6666\dots$ dưới dạng phân số.
+\begin{itemize}[leftmargin=0.6cm]
+    \item Ta tách: $0{,}(6) = 0{,}6 + 0{,}06 + 0{,}006 + \dots = \dfrac{6}{10} + \dfrac{6}{100} + \dfrac{6}{1000} + \dots$
+    \item Đây là tổng cấp số nhân lùi vô hạn có $u_1 = \dfrac{6}{10} = \dfrac{3}{5}$, công bội $q = \dfrac{1}{10}$.
+    \item Do đó: $0{,}(6) = \dfrac{\dfrac{3}{5}}{1 - \dfrac{1}{10}} = \dfrac{\dfrac{3}{5}}{\dfrac{9}{10}} = \dfrac{3}{5} \cdot \dfrac{10}{9} = \dfrac{2}{3}$.
+\end{itemize}
+
+\textbf{Ví dụ 3 (Giới hạn chứa căn thức):} Tính giới hạn $\lim \dfrac{\sqrt{4n^2 + 1}}{n}$.
+\begin{itemize}[leftmargin=0.6cm]
+    \item Đưa $n^2$ ra ngoài dấu căn: $\sqrt{4n^2 + 1} = \sqrt{n^2\left(4 + \dfrac{1}{n^2}\right)} = n\sqrt{4 + \dfrac{1}{n^2}}$ (vì $n > 0$).
+    \item Chia cả tử và mẫu cho $n$:
+    $$\lim \dfrac{\sqrt{4n^2 + 1}}{n} = \lim \dfrac{n\sqrt{4 + \dfrac{1}{n^2}}}{n} = \lim \sqrt{4 + \dfrac{1}{n^2}} = \sqrt{4 + 0} = 2.$$
+\end{itemize}
+
+\noindent \textbf{d) Tổ chức thực hiện:}
+\begin{itemize}[leftmargin=0.8cm]
+    \item \textit{Chuyển giao nhiệm vụ:} Giáo viên lần lượt giới thiệu định nghĩa, chứng minh công thức tổng cấp số nhân lùi vô hạn; hướng dẫn kỹ thuật đưa thừa số ra ngoài căn.
+    \item \textit{Thực hiện nhiệm vụ:} Học sinh ghi bài, làm việc cá nhân biến đổi các ví dụ mẫu vào vở ghi.
+    \item \textit{Báo cáo, thảo luận:} Giáo viên gọi 2 học sinh lên bảng làm Ví dụ 2 và Ví dụ 3; cả lớp nhận xét.
+    \item \textit{Kết luận, nhận định:} Giáo viên chốt phương pháp xử lý căn bậc hai: luôn lưu ý khi đưa $n^2$ ra ngoài căn thức của dãy số vì $n \to +\infty$ nên $\sqrt{n^2} = n$ (không có dấu âm).
+\end{itemize}
+
+\subsubsection*{3. Hoạt động 3: Luyện tập (15 phút)}
+
+\noindent \textbf{a) Mục tiêu:}
+Thành thạo kỹ năng tính tổng cấp số nhân lùi vô hạn và giải quyết bài toán giới hạn vô cực dạng nhân lượng liên hợp $\infty - \infty$.
+
+\noindent \textbf{b) Nội dung: Nhiệm vụ luyện tập trên Phiếu học tập số 2}
+\begin{pedabox}{Phiếu luyện tập số 2: Cấp số nhân lùi vô hạn và dạng vô định}
+Giải các bài toán sau:
+\begin{enumerate}[leftmargin=0.6cm]
+    \item \textbf{Bài 1:} Tính tổng $S = 2 - 1 + \dfrac{1}{2} - \dfrac{1}{4} + \dots + 2 \cdot \left(-\dfrac{1}{2}\right)^{n-1} + \dots$
+    \item \textbf{Bài 2:} Biểu diễn số thập phân vô hạn tuần hoàn $0{,}(18) = 0{,}181818\dots$ dưới dạng phân số tối giản.
+    \item \textbf{Bài 3 (Dạng vô định $\infty - \infty$):} Tính giới hạn $L = \lim \left(\sqrt{n^2 + 2n} - n\right)$.
+\end{enumerate}
+\end{pedabox}
+
+\noindent \textbf{c) Sản phẩm: Lời giải chi tiết}
+\begin{enumerate}[leftmargin=0.6cm]
+    \item \textbf{Bài 1:} Dãy là cấp số nhân lùi vô hạn có $u_1 = 2$, công bội $q = -\dfrac{1}{2}$ ($|q| < 1$).
+    $$S = \dfrac{u_1}{1 - q} = \dfrac{2}{1 - \left(-\dfrac{1}{2}\right)} = \dfrac{2}{\dfrac{3}{2}} = \dfrac{4}{3}.$$
+    \item \textbf{Bài 2:} Ta có $0{,}(18) = \dfrac{18}{100} + \dfrac{18}{10000} + \dots$ với $u_1 = \dfrac{18}{100}$, $q = \dfrac{1}{100}$.
+    $$0{,}(18) = \dfrac{\dfrac{18}{100}}{1 - \dfrac{1}{100}} = \dfrac{\dfrac{18}{100}}{\dfrac{99}{100}} = \dfrac{18}{99} = \dfrac{2}{11}.$$
+    \item \textbf{Bài 3:} Nhân và chia với biểu thức liên hợp $\left(\sqrt{n^2 + 2n} + n\right)$:
+    $$L = \lim \dfrac{\left(\sqrt{n^2 + 2n} - n\right)\left(\sqrt{n^2 + 2n} + n\right)}{\sqrt{n^2 + 2n} + n} = \lim \dfrac{(n^2 + 2n) - n^2}{\sqrt{n^2 + 2n} + n} = \lim \dfrac{2n}{\sqrt{n^2 + 2n} + n}.$$
+    Chia cả tử và mẫu cho $n$:
+    $$L = \lim \dfrac{2}{\sqrt{1 + \dfrac{2}{n}} + 1} = \dfrac{2}{\sqrt{1 + 0} + 1} = \dfrac{2}{1 + 1} = 1.$$
+\end{enumerate}
+
+\noindent \textbf{d) Tổ chức thực hiện:}
+\begin{itemize}[leftmargin=0.8cm]
+    \item \textit{Chuyển giao nhiệm vụ:} Học sinh làm việc theo nhóm 2 bạn cùng bàn; bạn bên trái làm Bài 1, bạn bên phải làm Bài 2; cả hai cùng thảo luận Bài 3.
+    \item \textit{Thực hiện nhiệm vụ:} Học sinh tích cực trao đổi; giáo viên gợi ý công thức lượng liên hợp $(A - B)(A + B) = A^2 - B^2$ cho Bài 3.
+    \item \textit{Báo cáo, thảo luận:} Gọi 3 học sinh lên bảng; cả lớp bấm máy tính CALC $X = 10^6$ kiểm chứng: $\sqrt{10^{12} + 2 \cdot 10^6} - 10^6 \approx 1{,}000000$.
+    \item \textit{Kết luận, nhận định:} Giáo viên khen ngợi học sinh đã thành thạo kỹ thuật nhân liên hợp khử dạng vô định $\infty - \infty$.
+\end{itemize}
+
+\subsubsection*{4. Hoạt động 4: Vận dụng \& Năng lực AI (7 phút)}
+
+\noindent \textbf{a) Mục tiêu:}
+Vận dụng tổng cấp số nhân lùi vô hạn giải quyết bài toán vật lý thực tiễn và phát triển năng lực phản biện câu trả lời của trợ lý AI.
+
+\noindent \textbf{b) Nội dung: Bài toán bóng nảy suy giảm đàn hồi \& Phản biện AI}
+\begin{pedabox}{Bài toán thực tiễn: Quãng đường di chuyển của quả bóng nảy}
+Một quả bóng cao su được thả rơi tự do từ độ cao $h_0 = 3\text{ m}$ xuống mặt sàn cứng. Mỗi lần chạm sàn, quả bóng nảy lên độ cao bằng $\dfrac{2}{3}$ độ cao của lần rơi trước đó. Giả sử quả bóng tiếp tục nảy vô hạn lần theo phương thẳng đứng.
+\begin{itemize}[leftmargin=0.6cm]
+    \item Tính tổng quãng đường $D$ mà quả bóng di chuyển được kể từ lúc thả rơi cho đến khi dừng hẳn trên sàn.
+\end{itemize}
+\end{pedabox}
+
+\begin{aibox}{Hoạt động: Phản biện câu trả lời của Trợ lý AI}
+\textbf{Câu trả lời của một Chatbot AI trên mạng:}
+\textit{«Tổng quãng đường quả bóng đi được là tổng cấp số nhân lùi vô hạn với $u_1 = 3$ và công bội $q = \dfrac{2}{3}$. Do đó: $D = \dfrac{u_1}{1 - q} = \dfrac{3}{1 - \dfrac{2}{3}} = 9\text{ m}$!»}\\
+\textbf{Câu hỏi phản biện:} Em hãy chỉ ra điểm sai sót vật lý của câu trả lời AI trên và tính toán lại kết quả chính xác.
+\end{aibox}
+
+\noindent \textbf{c) Sản phẩm: Lời phản biện và bài giải chính xác của học sinh}
+\begin{enumerate}[leftmargin=0.6cm]
+    \item \textbf{Phát hiện sai sót của AI:} AI đã bỏ qua thực tế rằng: Ngoại trừ lần rơi đầu tiên chỉ đi xuống ($3\text{ m}$), ở tất cả các lần nảy tiếp theo quả bóng đều phải \textbf{đi lên rồi lại rơi xuống}, tức là mỗi độ cao $h_1, h_2, \dots$ đều được nhân đôi ($2h_n$).
+    \item \textbf{Tính toán chuẩn xác:}
+    \begin{itemize}[leftmargin=0.6cm]
+        \item Độ cao các lần nảy lên: $h_1 = 3 \cdot \dfrac{2}{3} = 2\text{ m}$; $h_2 = 2 \cdot \dfrac{2}{3} = \dfrac{4}{3}\text{ m}$; \dots
+        \item Tổng quãng đường thực tế quả bóng di chuyển là:
+        $$D = h_0 + 2h_1 + 2h_2 + 2h_3 + \dots = 3 + 2\left(h_1 + h_2 + h_3 + \dots\right).$$
+        \item Phần trong ngoặc là tổng cấp số nhân lùi vô hạn với số hạng đầu $h_1 = 2$, công bội $q = \dfrac{2}{3}$:
+        $$S' = \dfrac{h_1}{1 - q} = \dfrac{2}{1 - \dfrac{2}{3}} = \dfrac{2}{\dfrac{1}{3}} = 6\text{ m}.$$
+        \item Vậy tổng quãng đường quả bóng đi được là:
+        $$D = 3 + 2 \cdot 6 = 15\text{ m}.$$
+    \end{itemize}
+\end{enumerate}
+
+\noindent \textbf{d) Tổ chức thực hiện:}
+Giáo viên đặt vấn đề; học sinh hào hứng phát hiện sơ hở trong mô hình hóa của AI; giáo viên nhấn mạnh tầm quan trọng của việc phân tích cẩn trọng hiện tượng thực tế, không ỷ lại máy móc.
+
+\section*{IV. PHỤ LỤC HỌC LIỆU BỔ TRỢ}
+
+\subsection*{1. Phiếu học tập phân tầng bậc thang (Worksheet)}
+
+\noindent \textbf{A. PHẦN TRẮC NGHIỆM KHÁCH QUAN (Nhận biết - Thông hiểu)}
+\begin{enumerate}[leftmargin=0.6cm]
+    \item Giá trị của $\lim \dfrac{1}{n^3}$ bằng:
+    \begin{itemize}[leftmargin=0.6cm]
+        \item[A.] $1$. \quad \textbf{B.} $0$. \quad C. $+\infty$. \quad D. $3$.
+    \end{itemize}
+    \item Dãy số nào sau đây có giới hạn bằng $0$?
+    \begin{itemize}[leftmargin=0.6cm]
+        \item[A.] $u_n = \left(\dfrac{4}{3}\right)^n$. \quad \textbf{B.} $u_n = \left(-\dfrac{2}{3}\right)^n$. \quad C. $u_n = n^2 + 1$. \quad D. $u_n = (-1)^n$.
+    \end{itemize}
+    \item Cho $\lim u_n = 3$ và $\lim v_n = -2$. Khi đó $\lim (2u_n - v_n)$ bằng:
+    \begin{itemize}[leftmargin=0.6cm]
+        \item[A.] $4$. \quad B. $1$. \quad \textbf{C.} $8$. \quad D. $-8$.
+    \end{itemize}
+    \item Tổng của cấp số nhân lùi vô hạn $1, -\dfrac{1}{2}, \dfrac{1}{4}, -\dfrac{1}{8}, \dots$ là:
+    \begin{itemize}[leftmargin=0.6cm]
+        \item[A.] $\dfrac{1}{2}$. \quad \textbf{B.} $\dfrac{2}{3}$. \quad C. $2$. \quad D. $\dfrac{3}{2}$.
+    \end{itemize}
+\end{enumerate}
+
+\noindent \textbf{B. PHẦN TỰ LUẬN PHÂN TẦNG BẬC THANG}
+\begin{itemize}[leftmargin=0.6cm]
+    \item \textbf{Tầng 1 (Cơ bản dành cho HS trung bình - yếu):}
+    Tính các giới hạn sau bằng cách chia cho lũy thừa bậc cao nhất:
+    \begin{enumerate}[leftmargin=0.5cm]
+        \item $\lim \dfrac{5n + 2}{n - 3}$.
+        \item $\lim \dfrac{2n^2 - n + 3}{4n^2 + 5}$.
+    \end{enumerate}
+
+    \item \textbf{Tầng 2 (Thông hiểu):}
+    \begin{enumerate}[leftmargin=0.5cm]
+        \item Tính giới hạn chứa căn: $\lim \dfrac{\sqrt{9n^2 + 2n} - 1}{2n + 3}$.
+        \item Biểu diễn số thập phân vô hạn tuần hoàn $1{,}(25) = 1{,}252525\dots$ dưới dạng phân số tối giản.
+    \end{enumerate}
+
+    \item \textbf{Tầng 3 (Vận dụng cao):}
+    Cho tam giác đều $A_1B_1C_1$ có cạnh bằng $a$ và diện tích bằng $S_1$. Từ các trung điểm của các cạnh tam giác $A_1B_1C_1$, ta dựng tam giác đều $A_2B_2C_2$ có diện tích $S_2$. Cứ tiếp tục như vậy vô hạn lần, ta được dãy các tam giác đều $A_nB_nC_n$ có diện tích tương ứng là $S_n$.
+    \begin{enumerate}[leftmargin=0.5cm]
+        \item Chứng minh dãy số diện tích $(S_n)$ lập thành một cấp số nhân lùi vô hạn. Tìm công bội $q$.
+        \item Tính tổng diện tích của tất cả các tam giác đều được tạo thành: $S = S_1 + S_2 + \dots + S_n + \dots$ theo $a$.
+    \end{enumerate}
+\end{itemize}
+
+\subsection*{2. Bảng Rubric đánh giá năng lực học sinh trong bài học}
+
+\begin{center}
+\small
+\begin{tabularx}{\textwidth}{|p{2.8cm}|X|X|X|X|}
+\hline
+\textbf{Tiêu chí} & \textbf{Chưa đạt (Mức 1)} & \textbf{Đạt (Mức 2)} & \textbf{Khá (Mức 3)} & \textbf{Tốt (Mức 4)} \\ \hline
+\textbf{Nhận thức khái niệm \& Giới hạn cơ bản} & Chưa phân biệt được giới hạn hữu hạn và vô cực; nhớ sai điều kiện $|q| < 1$. & Nhớ được các giới hạn cơ bản nhưng lúng túng khi giải thích bản chất tiệm cận. & Nắm vững các giới hạn cơ bản; giải thích chính xác tại sao $\lim \dfrac{1}{n^k} = 0$. & Hiểu sâu sắc bản chất giới hạn; vận dụng linh hoạt để dự đoán nhanh xu thế hội tụ. \\ \hline
+\textbf{Kỹ năng tính giới hạn phân thức \& liên hợp} & Chia sai bậc của $n$; lúng túng khi đưa biểu thức ra ngoài dấu căn. & Thực hiện đúng quy tắc 3 bước chia bậc; chưa thành thạo nhân lượng liên hợp. & Tính thành thạo phân thức và căn thức đơn giản; trình bày bài tự luận chuẩn mực. & Xử lý điêu luyện dạng vô định $\infty - \infty$; biến đổi lượng liên hợp bậc cao chính xác. \\ \hline
+\textbf{Cấp số nhân lùi vô hạn \& Mô hình thực tế} & Quên công thức $S = \dfrac{u_1}{1 - q}$ hoặc áp dụng khi $|q| \ge 1$. & Áp dụng được công thức tính tổng cơ bản; chưa đổi được số tuần hoàn sang phân số. & Tính đúng tổng cấp số nhân lùi; đổi thành thạo số tuần hoàn sang phân số. & Mô hình hóa xuất sắc bài toán bóng nảy và hình học lặp vô hạn; phản biện chặt chẽ. \\ \hline
+\textbf{Năng lực số \& Phản biện AI} & Chưa biết dùng phím CALC trên MTCT; tin tưởng hoàn toàn vào kết quả sai của AI. & Sử dụng được phím CALC nhập $X = 10^6$ nhưng chưa phát hiện được lỗi sai của AI. & Làm chủ MTCT kiểm chứng nghiệm; chỉ ra được điểm sai sót vật lý của câu trả lời AI. & Phân tích sâu sắc sự tương đồng giữa giới hạn dãy số và thuật toán AI Gradient Descent. \\ \hline
+\end{tabularx}
+\end{center}
+
+\end{document}
