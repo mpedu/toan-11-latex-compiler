@@ -1,0 +1,554 @@
+\documentclass[12pt, a4paper]{article}
+% --- 1. Cấu hình Tiếng Việt và Font chữ chuẩn ---
+\usepackage[utf8]{inputenc}
+\usepackage[T5]{fontenc}
+\usepackage[vietnamese]{babel}
+\usepackage{mathptmx} % Font Times New Roman đồng bộ cả chữ và công thức toán, không gây xung đột gói
+
+\makeatletter
+\renewcommand{\normalsize}{\@setfontsize\normalsize{13pt}{16pt}}
+\makeatother
+\normalsize
+
+% --- 2. Gói Toán học & Ký hiệu bổ trợ ---
+\usepackage{amsmath, amssymb, amsfonts, mathrsfs, amsthm}
+\usepackage{graphicx}
+\usepackage{fontawesome}
+\usepackage{booktabs, tabularx, array, multirow}
+\usepackage{enumitem}
+
+% --- 3. Đồ họa TikZ, Bảng biến thiên & Hình không gian ---
+\usepackage{tikz}
+\usetikzlibrary{calc, intersections, angles, quotes, patterns, arrows.meta, 3d}
+\usepackage{pgfplots}
+\pgfplotsset{compat=1.18}
+\usepackage{tkz-euclide}
+\usepackage{tkz-tab}
+
+\renewcommand{\vec}[1]{\overrightarrow{#1}}
+
+% --- 4. Hộp sư phạm (Tcolorbox) ---
+\usepackage[many]{tcolorbox}
+\tcbuselibrary{skins, breakable}
+
+% --- 5. Căn lề chuẩn văn bản giáo án ---
+\usepackage{geometry}
+\geometry{
+    a4paper,
+    left=25mm,
+    right=15mm,
+    top=20mm,
+    bottom=20mm
+}
+
+% --- 6. Header / Footer chuẩn hóa ---
+\usepackage{fancyhdr}
+\usepackage{lastpage}
+\pagestyle{fancy}
+\fancyhf{}
+
+\fancyhead[L]{\small \textit{Kế hoạch bài dạy Toán 11}}
+\fancyhead[R]{\textbf{Trang \thepage/\pageref{LastPage}}}
+\fancyfoot[L]{\small \textit{Tổ Toán - Tin}}
+\fancyfoot[R]{\small \textit{Trường THCS\&THPT Hồng Vân}}
+\renewcommand{\headrulewidth}{0.4pt}
+\renewcommand{\footrulewidth}{0.4pt}
+
+% --- 7. Giãn dòng & Giãn đoạn theo chuẩn Nghị định 30/2020/NĐ-CP ---
+\usepackage{setspace}
+\setstretch{1.15}
+\setlength{\parindent}{1.0cm}
+\setlength{\parskip}{5pt}
+
+% Định nghĩa hộp sư phạm chuyên dụng
+\newtcolorbox{pedabox}[2][]{
+    enhanced,
+    breakable,
+    colback=blue!3!white,
+    colframe=blue!65!black,
+    fonttitle=\bfseries\small,
+    title={#2},
+    arc=2mm,
+    boxrule=0.6pt,
+    left=3mm, right=3mm, top=2mm, bottom=2mm,
+    #1
+}
+
+\newtcolorbox{aibox}[2][]{
+    enhanced,
+    breakable,
+    colback=teal!4!white,
+    colframe=teal!70!black,
+    fonttitle=\bfseries\small,
+    title={#2},
+    arc=2mm,
+    boxrule=0.6pt,
+    left=3mm, right=3mm, top=2mm, bottom=2mm,
+    #1
+}
+
+\newtcolorbox{scaffoldbox}[2][]{
+    enhanced,
+    breakable,
+    colback=orange!4!white,
+    colframe=orange!80!black,
+    fonttitle=\bfseries\small,
+    title={#2},
+    arc=2mm,
+    boxrule=0.6pt,
+    left=3mm, right=3mm, top=2mm, bottom=2mm,
+    #1
+}
+
+\newtcolorbox{stembox}[2][]{
+    enhanced,
+    breakable,
+    colback=purple!4!white,
+    colframe=purple!75!black,
+    fonttitle=\bfseries\small,
+    title={#2},
+    arc=2mm,
+    boxrule=0.6pt,
+    left=3mm, right=3mm, top=2mm, bottom=2mm,
+    #1
+}
+
+\begin{document}
+
+\begin{center}
+    {\fontsize{14pt}{17pt}\selectfont \textbf{KẾ HOẠCH BÀI DẠY MÔN TOÁN LỚP 11}}\\[6pt]
+    {\fontsize{16pt}{19pt}\selectfont \textbf{BÀI 20. HÀM SỐ MŨ VÀ HÀM SỐ LÔGARIT}}\\[4pt]
+    {\fontsize{12pt}{15pt}\selectfont \textbf{Môn học: Toán 11} \ \textbar \ \textbf{Thời lượng: 1 tiết (Tiết 59 theo PPCT | Tuần 20)}}
+\end{center}
+
+\vspace{5pt}
+
+\section*{I. MỤC TIÊU}
+
+\subsection*{1. Kiến thức, Năng lực}
+
+\begin{itemize}[leftmargin=1.2cm]
+    \item \textbf{Yêu cầu cần đạt (Nguyên văn CT GDPT 2018 Toán 11):}
+    \begin{itemize}[leftmargin=0.6cm]
+        \item Nhận biết được hàm số mũ và hàm số lôgarit. Nêu được một số ví dụ thực tế về hàm số mũ, hàm số lôgarit.
+        \item Nhận dạng được đồ thị của các hàm số mũ, hàm số lôgarit.
+        \item Giải thích được các tính chất của hàm số mũ, hàm số lôgarit thông qua đồ thị của chúng (tập xác định, tập giá trị, chiều biến thiên, tính liên tục, các điểm đặc biệt và đường tiệm cận).
+        \item Giải quyết được một số vấn đề có liên quan đến thực tiễn gắn với hàm số mũ và hàm số lôgarit (ví dụ: mô hình tăng trưởng dân số, lãi suất ngân hàng, định luật suy giảm ánh sáng Beer-Lambert).
+    \end{itemize}
+
+    \item \textbf{Năng lực Toán học đặc thù:}
+    \begin{itemize}[leftmargin=0.6cm]
+        \item \textit{Năng lực tư duy và lập luận toán học:} So sánh, đối chiếu các tính chất đối ngẫu giữa hàm số mũ $y = a^x$ và hàm số lôgarit $y = \log_a x$ cùng cơ số; lập luận giải thích tính đồng biến khi $a > 1$ và nghịch biến khi $0 < a < 1$ dựa trên dáng điệu đồ thị; phân tích sự hoán đổi tập xác định và tập giá trị, tiệm cận ngang và tiệm cận đứng.
+        \item \textit{Năng lực mô hình hóa toán học:} Thiết lập hàm số mũ mô tả sự tăng trưởng dân số $N(t) = N_0 e^{rt}$ và hàm số mũ mô tả sự suy giảm cường độ ánh sáng trong môi trường nước $I(x) = I_0 a^x$.
+        \item \textit{Năng lực giải quyết vấn đề toán học:} Nhận dạng nhanh cơ số $a$ từ đồ thị cho trước; tìm tập xác định của các hàm số chứa căn thức và biểu thức lôgarit; so sánh giá trị hàm số tại các điểm khác nhau mà không cần tính toán chi tiết.
+        \item \textit{Năng lực giao tiếp toán học:} Sử dụng chuẩn xác các thuật ngữ: hàm số mũ, hàm số lôgarit, đường tiệm cận ngang, đường tiệm cận đứng, tính đối xứng qua đường phân giác $y = x$; trình bày bảng biến thiên và mô tả dáng điệu đồ thị mạch lạc, khoa học.
+        \item \textit{Năng lực sử dụng công cụ, phương tiện học toán:} Khai thác thành thạo phần mềm hình học động GeoGebra/Desmos để vẽ đồ thị, tạo thanh trượt (slider) thay đổi tham số cơ số $a$ để quan sát trực quan sự biến thiên của đồ thị; sử dụng tính năng lập bảng giá trị \texttt{TABLE} trên máy tính cầm tay (MTCT) Casio fx-580VN X để tìm tọa độ các điểm thuộc đồ thị.
+    \end{itemize}
+
+    \item \textbf{Năng lực số (Theo Thông tư 02/2025/TT-BGDĐT):}
+    \begin{itemize}[leftmargin=0.6cm]
+        \item \textit{Mã 3.1NC1b (Sử dụng phần mềm số học và hình học động để khảo sát mô hình toán):} Học sinh sử dụng phần mềm GeoGebra hoặc Desmos trên điện thoại thông minh/máy tính để vẽ đồng thời hai đồ thị $y = 2^x$ và $y = \log_2 x$, dựng đường thẳng phân giác $y = x$, từ đó kiểm chứng trực quan tính đối xứng của hai đồ thị qua phép phản xạ trục.
+    \end{itemize}
+
+    \item \textbf{Năng lực AI (Theo Quyết định 2422/QĐ-BGDĐT):}
+    \begin{itemize}[leftmargin=0.6cm]
+        \item \textit{Mã 11.C3.1 (Kỹ thuật Prompting và Hiểu biết hàm kích hoạt trong AI):} Học sinh biết cách xây dựng câu lệnh prompt tối ưu cho trợ lý AI (Gemini, ChatGPT) để tìm hiểu ứng dụng của hàm Sigmoid (hàm mũ logistic $\sigma(x) = \dfrac{1}{1 + e^{-x}}$) làm hàm kích hoạt (Activation Function) trong mạng nơ-ron học sâu (Deep Learning), nhận diện cách hàm mũ nén dữ liệu đầu vào thực về khoảng xác suất $(0; 1)$.
+    \end{itemize}
+
+    \item \textbf{Năng lực chung:}
+    \begin{itemize}[leftmargin=0.6cm]
+        \item \textit{Tự chủ và tự học:} Tự giác hoàn thành phiếu học tập, chủ động khám phá đồ thị trên ứng dụng số trước khi giáo viên hướng dẫn.
+        \item \textit{Giao tiếp và hợp tác:} Tích cực thảo luận cặp đôi để so sánh hai hàm số, chia sẻ màn hình mô phỏng đồ thị với bạn cùng bàn.
+    \end{itemize}
+\end{itemize}
+
+\subsection*{2. Phẩm chất}
+
+\begin{itemize}[leftmargin=1.2cm]
+    \item \textbf{Chăm chỉ:} Cẩn thận vẽ từng nét đồ thị, tra cứu bảng giá trị số học và kiên trì rèn luyện kỹ năng tìm tập xác định.
+    \item \textbf{Trung thực:} Tự lực vẽ hình và nhận xét tính chất, trung thực trong việc báo cáo kết quả thực hành vẽ đồ thị số.
+    \item \textbf{Trách nhiệm:} Bảo quản tốt thiết bị học tập cá nhân trong giờ học số; có ý thức ứng dụng toán học giải thích các hiện tượng tự nhiên.
+\end{itemize}
+
+\vspace{5pt}
+
+\section*{II. THIẾT BỊ DẠY HỌC VÀ HỌC LIỆU}
+
+\begin{itemize}[leftmargin=1.2cm]
+    \item \textbf{Giáo viên:}
+    \begin{itemize}[leftmargin=0.6cm]
+        \item Kế hoạch bài dạy chi tiết theo chuẩn Công văn 5512/BGDĐT-GDTrH.
+        \item Bài trình chiếu PowerPoint tương tác, tệp mô phỏng GeoGebra trực tuyến khảo sát đồ thị $y = a^x$ và $y = \log_a x$ theo tham số $a$.
+        \item Phiếu học tập phân tầng bậc thang số 1 (dành cho hoạt động Luyện tập).
+        \item Bảng Rubric đánh giá năng lực học sinh trong tiết học.
+    \end{itemize}
+    \item \textbf{Học sinh:}
+    \begin{itemize}[leftmargin=0.6cm]
+        \item Sách giáo khoa Toán 11, vở ghi chép, thước kẻ, bút chì, giấy vẽ đồ thị.
+        \item Máy tính cầm tay Casio fx-580VN X.
+        \item Điện thoại thông minh hoặc máy tính bảng cài sẵn phần mềm GeoGebra/Desmos (hoặc truy cập trình duyệt web).
+    \end{itemize}
+\end{itemize}
+
+\vspace{5pt}
+
+\section*{III. TIẾN TRÌNH DẠY HỌC (1 TIẾT | TIẾT 59 THEO PPCT)}
+
+\subsection*{1. Hoạt động 1: Mở đầu (Khởi động) (5 phút)}
+
+\noindent \textbf{a) Mục tiêu:}
+Tạo hứng thú học tập và dẫn dắt học sinh nhận biết dạng biểu thức hàm số mũ và hàm số lôgarit thông qua các hiện tượng thực tế.
+
+\noindent \textbf{b) Nội dung:}
+Giáo viên trình chiếu tình huống thực tiễn:
+\begin{pedabox}{Tình huống khởi động: Lây lan mã độc máy tính}
+Một mã độc máy tính có khả năng tự nhân bản: cứ sau mỗi phút, số lượng máy tính bị lây nhiễm lại tăng gấp $3$ lần. Giả sử ban đầu có $1$ máy tính bị nhiễm.
+\begin{enumerate}[leftmargin=0.6cm]
+    \item Viết công thức biểu diễn số máy tính $y$ bị lây nhiễm sau $x$ phút ($x \ge 0$).
+    \item Ngược lại, nếu muốn biết sau bao nhiêu phút thì số máy tính bị lây nhiễm đạt tới $N$ máy, ta cần biểu diễn đại lượng $x$ theo $N$ qua công thức nào?
+\end{enumerate}
+\end{pedabox}
+
+\noindent \textbf{c) Sản phẩm:}
+Câu trả lời của học sinh:
+\begin{itemize}
+    \item Sau $x$ phút, số máy tính bị nhiễm là: $y = 3^x$. Biểu thức có biến số $x$ nằm ở \textbf{số mũ}. Đó là một \textbf{hàm số mũ}!
+    \item Để tìm thời gian $x$ khi biết số máy $N$: $3^x = N \iff x = \log_3 N$. Biểu thức có biến số $N$ nằm ở \textbf{dưới dấu lôgarit}. Đó là một \textbf{hàm số lôgarit}!
+\end{itemize}
+
+\noindent \textbf{d) Tổ chức thực hiện:}
+\begin{itemize}[leftmargin=0.6cm]
+    \item \textbf{Giao nhiệm vụ:} Giáo viên trình chiếu tình huống, yêu cầu học sinh làm việc cá nhân trong 2 phút.
+    \item \textbf{Thực hiện nhiệm vụ:} Học sinh lập bảng giá trị: $x=0 \to y=1$; $x=1 \to y=3$; $x=2 \to y=9 \dots \to y = 3^x$ và rút ra $x = \log_3 N$.
+    \item \textbf{Báo cáo, thảo luận:} 1 học sinh trả lời miệng; giáo viên phân tích hai biểu thức thu được.
+    \item \textbf{Kết luận, nhận định:} Giáo viên dẫn dắt vào bài học: Để nghiên cứu đầy đủ quy luật vận động của hai quá trình thuận - nghịch này, chúng ta cùng khảo sát cấu trúc giải tích và đồ thị của \textbf{Hàm số mũ và Hàm số lôgarit}.
+\end{itemize}
+
+\subsection*{2. Hoạt động 2: Hình thành kiến thức (23 phút)}
+
+\paragraph{2.1. Đơn vị kiến thức 1: Hàm số mũ và Đồ thị (8 phút)}
+
+\noindent \textbf{a) Mục tiêu:}
+Nhận biết định nghĩa hàm số mũ; giải thích được các tính chất của hàm số mũ thông qua đồ thị và bảng biến thiên.
+
+\noindent \textbf{b) Nội dung:}
+\begin{pedabox}{Định nghĩa Hàm số mũ}
+Cho số thực dương $a \neq 1$.
+Hàm số $y = a^x$ được gọi là \textbf{hàm số mũ} cơ số $a$.
+\end{pedabox}
+
+\begin{pedabox}{Khảo sát và Tính chất của Hàm số mũ $y = a^x$}
+\begin{itemize}[leftmargin=0.6cm]
+    \item \textbf{Tập xác định:} $D = \mathbb{R}$.
+    \item \textbf{Tập giá trị:} $T = (0; +\infty)$ (vì $a^x > 0$ với mọi $x \in \mathbb{R}$).
+    \item \textbf{Chiều biến thiên:}
+    \begin{itemize}
+        \item Khi $a > 1$: Hàm số \textbf{đồng biến} trên $\mathbb{R}$ ($\lim_{x \to -\infty} a^x = 0; \lim_{x \to +\infty} a^x = +\infty$).
+        \item Khi $0 < a < 1$: Hàm số \textbf{nghịch biến} trên $\mathbb{R}$ ($\lim_{x \to -\infty} a^x = +\infty; \lim_{x \to +\infty} a^x = 0$).
+    \end{itemize}
+    \item \textbf{Đường tiệm cận:} Đồ thị nhận trục hoành $Ox$ (đường thẳng $y = 0$) làm \textbf{tiệm cận ngang} (khi $x \to -\infty$ nếu $a > 1$; khi $x \to +\infty$ nếu $0 < a < 1$).
+    \item \textbf{Điểm đặc biệt:} Đồ thị luôn đi qua điểm $(0; 1)$ và điểm $(1; a)$, luôn nằm phía trên trục hoành.
+\end{itemize}
+\end{pedabox}
+
+\begin{center}
+\begin{tikzpicture}[scale=0.85]
+    \begin{axis}[
+        axis lines = middle,
+        xlabel = {$x$},
+        ylabel = {$y$},
+        ymin = -0.5, ymax = 4.5,
+        xmin = -3, xmax = 3,
+        domain = -3:2.2,
+        samples = 100,
+        axis line style = {->, thick},
+        tick style = {thick},
+        legend pos = north west,
+        legend style = {draw=none, fill=none, font=\small}
+    ]
+        \addplot[blue, very thick] {2^x};
+        \addlegendentry{$y = 2^x \ (a = 2 > 1)$}
+        \addplot[red, very thick, dashed, domain=-2.2:3] {0.5^x};
+        \addlegendentry{$y = (1/2)^x \ (0 < a < 1)$}
+        
+        \filldraw[black] (axis cs:0,1) circle (2pt) node[above left] {$(0;1)$};
+        \filldraw[blue] (axis cs:1,2) circle (2pt) node[right] {$(1;2)$};
+        \filldraw[red] (axis cs:1,0.5) circle (2pt) node[below left] {$(1;\frac{1}{2})$};
+    \end{axis}
+\end{tikzpicture}
+\end{center}
+
+\noindent \textbf{c) Sản phẩm:}
+Học sinh hoàn thành bảng biến thiên tóm tắt:
+\begin{center}
+\small
+\begin{tabular}{|c|c|c|}
+    \hline
+    & \textbf{Trường hợp $a > 1$} & \textbf{Trường hợp $0 < a < 1$} \\ \hline
+    \textbf{Chiều biến thiên} & Đồng biến trên $(-\infty; +\infty)$ & Nghịch biến trên $(-\infty; +\infty)$ \\ \hline
+    \textbf{Bảng biến thiên} & \begin{tikzpicture}[scale=0.7]
+        \tkzTabInit[nocadre,lgt=1.2,espcl=2.2]{$x$/0.6,$y$/1.2}{$-\infty$,$+\infty$}
+        \tkzTabVar{-/$0$, +/$+\infty$}
+    \end{tikzpicture} & \begin{tikzpicture}[scale=0.7]
+        \tkzTabInit[nocadre,lgt=1.2,espcl=2.2]{$x$/0.6,$y$/1.2}{$-\infty$,$+\infty$}
+        \tkzTabVar{+/$+\infty$, -/$0$}
+    \end{tikzpicture} \\ \hline
+    \textbf{Đặc điểm đồ thị} & Đi lên từ trái sang phải & Đi xuống từ trái sang phải \\ \hline
+\end{tabular}
+\end{center}
+
+\noindent \textbf{d) Tổ chức thực hiện:}
+\begin{itemize}[leftmargin=0.6cm]
+    \item \textbf{Giao nhiệm vụ:} Giáo viên trình chiếu đồ thị của $y = 2^x$ và $y = \left(\dfrac{1}{2}\right)^x$, yêu cầu học sinh nhận xét tập xác định, tập giá trị, hướng đi của đồ thị và giao điểm với trục tung.
+    \item \textbf{Thực hiện nhiệm vụ:} Học sinh quan sát đồ thị, thảo luận cặp đôi để rút ra bảng tính chất.
+    \item \textbf{Báo cáo, thảo luận:} 2 học sinh đại diện trình bày tính chất khi $a > 1$ và $0 < a < 1$.
+    \item \textbf{Kết luận, nhận định:} Giáo viên nhấn mạnh: Điểm nhận dạng then chốt là đồ thị luôn đi qua $(0; 1)$ và tiệm cận ngang là trục hoành $y = 0$.
+\end{itemize}
+
+\paragraph{2.2. Đơn vị kiến thức 2: Hàm số lôgarit và Đồ thị (8 phút)}
+
+\noindent \textbf{a) Mục tiêu:}
+Nhận biết định nghĩa hàm số lôgarit; giải thích được các tính chất của hàm số lôgarit thông qua đồ thị và bảng biến thiên.
+
+\noindent \textbf{b) Nội dung:}
+\begin{pedabox}{Định nghĩa Hàm số lôgarit}
+Cho số thực dương $a \neq 1$.
+Hàm số $y = \log_a x$ được gọi là \textbf{hàm số lôgarit} cơ số $a$.
+\end{pedabox}
+
+\begin{pedabox}{Khảo sát và Tính chất của Hàm số lôgarit $y = \log_a x$}
+\begin{itemize}[leftmargin=0.6cm]
+    \item \textbf{Tập xác định:} $D = (0; +\infty)$ (bắt buộc $x > 0$).
+    \item \textbf{Tập giá trị:} $T = \mathbb{R}$ ($y$ nhận mọi giá trị từ $-\infty$ đến $+\infty$).
+    \item \textbf{Chiều biến thiên:}
+    \begin{itemize}
+        \item Khi $a > 1$: Hàm số \textbf{đồng biến} trên $(0; +\infty)$ ($\lim_{x \to 0^+} \log_a x = -\infty; \lim_{x \to +\infty} \log_a x = +\infty$).
+        \item Khi $0 < a < 1$: Hàm số \textbf{nghịch biến} trên $(0; +\infty)$ ($\lim_{x \to 0^+} \log_a x = +\infty; \lim_{x \to +\infty} \log_a x = -\infty$).
+    \end{itemize}
+    \item \textbf{Đường tiệm cận:} Đồ thị nhận trục tung $Oy$ (đường thẳng $x = 0$) làm \textbf{tiệm cận đứng} (về phía bên phải).
+    \item \textbf{Điểm đặc biệt:} Đồ thị luôn đi qua điểm $(1; 0)$ và điểm $(a; 1)$, luôn nằm phía bên phải trục tung.
+\end{itemize}
+\end{pedabox}
+
+\begin{center}
+\begin{tikzpicture}[scale=0.85]
+    \begin{axis}[
+        axis lines = middle,
+        xlabel = {$x$},
+        ylabel = {$y$},
+        ymin = -3, ymax = 3,
+        xmin = -0.5, xmax = 5,
+        domain = 0.12:4.8,
+        samples = 100,
+        axis line style = {->, thick},
+        tick style = {thick},
+        legend pos = south east,
+        legend style = {draw=none, fill=none, font=\small}
+    ]
+        \addplot[teal, very thick] {ln(x)/ln(2)};
+        \addlegendentry{$y = \log_2 x \ (a = 2 > 1)$}
+        \addplot[purple, very thick, dashed] {ln(x)/ln(0.5)};
+        \addlegendentry{$y = \log_{0.5} x \ (0 < a < 1)$}
+        
+        \filldraw[black] (axis cs:1,0) circle (2pt) node[below right] {$(1;0)$};
+        \filldraw[teal] (axis cs:2,1) circle (2pt) node[above left] {$(2;1)$};
+        \filldraw[purple] (axis cs:2,-1) circle (2pt) node[below left] {$(2;-1)$};
+    \end{axis}
+\end{tikzpicture}
+\end{center}
+
+\noindent \textbf{c) Sản phẩm:}
+Học sinh lập bảng so sánh đối ngẫu giữa hai hàm số:
+\begin{scaffoldbox}{Giàn giáo sư phạm: Bảng so sánh đối ngẫu Mũ - Lôgarit (Scaffolding)}
+\begin{center}
+\small
+\begin{tabular}{|l|c|c|}
+    \hline
+    \textbf{Đặc trưng so sánh} & \textbf{Hàm số mũ $y = a^x$} & \textbf{Hàm số lôgarit $y = \log_a x$} \\ \hline
+    \textbf{Tập xác định} & $D = \mathbb{R}$ & $D = (0; +\infty)$ \\ \hline
+    \textbf{Tập giá trị} & $T = (0; +\infty)$ & $T = \mathbb{R}$ \\ \hline
+    \textbf{Điểm cố định} & Luôn đi qua $(0; 1)$ & Luôn đi qua $(1; 0)$ \\ \hline
+    \textbf{Đường tiệm cận} & Trục hoành $Ox: y = 0$ (tiệm cận ngang) & Trục tung $Oy: x = 0$ (tiệm cận đứng) \\ \hline
+    \textbf{Vị trí so với trục tọa độ} & Luôn ở phía trên trục hoành & Luôn ở phía bên phải trục tung \\ \hline
+    \textbf{Tính biến thiên} & $a > 1$: Đồng biến; $0 < a < 1$: Nghịch biến & $a > 1$: Đồng biến; $0 < a < 1$: Nghịch biến \\ \hline
+\end{tabular}
+\end{center}
+\end{scaffoldbox}
+
+\noindent \textbf{d) Tổ chức thực hiện:}
+\begin{itemize}[leftmargin=0.6cm]
+    \item \textbf{Giao nhiệm vụ:} Giáo viên trình bày định nghĩa, cho học sinh quan sát đồ thị hàm số $y = \log_2 x$ và $y = \log_{0{,}5} x$. Yêu cầu đối chiếu với hàm số mũ.
+    \item \textbf{Thực hiện nhiệm vụ:} Học sinh so sánh từng cặp yếu tố: TXĐ $\leftrightarrow$ TGT; $(0; 1) \leftrightarrow (1; 0)$; Tiệm cận ngang $\leftrightarrow$ Tiệm cận đứng.
+    \item \textbf{Báo cáo, thảo luận:} Đại diện 1 học sinh trình bày bảng so sánh; cả lớp ghi nhận quy luật đối ngẫu.
+    \item \textbf{Kết luận, nhận định:} Giáo viên nhấn mạnh: Vì hai hàm số là hai phép toán ngược nhau nên toàn bộ vai trò của $x$ và $y$ được hoán đổi hoàn hảo!
+\end{itemize}
+
+\paragraph{2.3. Đơn vị kiến thức 3: Quan hệ đối xứng qua đường thẳng $y = x$ (7 phút)}
+
+\noindent \textbf{a) Mục tiêu:}
+Nhận biết và giải thích được tính đối xứng qua đường thẳng $y = x$ của đồ thị hai hàm số $y = a^x$ và $y = \log_a x$; làm chủ phần mềm hình học động GeoGebra (Mã 3.1NC1b).
+
+\noindent \textbf{b) Nội dung:}
+\begin{pedabox}{Tính đối xứng của hai đồ thị cùng cơ số}
+Đồ thị hàm số mũ $y = a^x$ và đồ thị hàm số lôgarit $y = \log_a x$ ($a > 0, a \neq 1$) \textbf{đối xứng với nhau qua đường phân giác của góc phần tư thứ nhất} (đường thẳng $y = x$).
+\end{pedabox}
+
+\begin{aibox}{Tích hợp Năng lực số (Mã 3.1NC1b): Khám phá trên GeoGebra / Desmos}
+\begin{itemize}[leftmargin=0.6cm]
+    \item \textbf{Bước 1:} Mở ứng dụng GeoGebra trên thiết bị. Nhập lệnh: \texttt{f(x) = 2\textasciicircum x} để vẽ đồ thị hàm số mũ.
+    \item \textbf{Bước 2:} Nhập lệnh: \texttt{g(x) = log(2, x)} để vẽ đồ thị hàm số lôgarit.
+    \item \textbf{Bước 3:} Nhập đường thẳng: \texttt{y = x} (đổi sang nét đứt màu xám).
+    \item \textbf{Bước 4:} Lấy điểm $A(1; 2)$ trên đồ thị $y = 2^x$. Dùng công cụ ``Phản xạ qua đường thẳng'' đối với điểm $A$ qua trục $y = x \implies$ Điểm đối xứng thu được chính là $A'(2; 1)$, và điểm này nằm chính xác trên đồ thị $y = \log_2 x$.
+    \item \textbf{Tổng quát:} Điểm $M(x_0; y_0)$ thuộc đồ thị $y = a^x \iff y_0 = a^{x_0} \iff x_0 = \log_a y_0 \iff$ Điểm $M'(y_0; x_0)$ thuộc đồ thị $y = \log_a x$.
+\end{itemize}
+\end{aibox}
+
+\noindent \textbf{c) Sản phẩm:}
+Màn hình thực hành GeoGebra hiển thị chính xác hai đồ thị đối xứng qua đường thẳng $y = x$.
+
+\noindent \textbf{d) Tổ chức thực hiện:}
+\begin{itemize}[leftmargin=0.6cm]
+    \item \textbf{Giao nhiệm vụ:} Giáo viên kết nối máy chiếu màn hình mô phỏng GeoGebra, yêu cầu học sinh thực hành trên thiết bị của mình hoặc quan sát màn hình tương tác.
+    \item \textbf{Thực hiện nhiệm vụ:} Học sinh thao tác vẽ 2 đồ thị, kéo thanh trượt cơ số $a$ thay đổi từ $a = 2 \to a = 3 \to a = 0{,}5$.
+    \item \textbf{Báo cáo, nhận định:} Học sinh rút ra nhận xét trực quan sâu sắc về tính đối xứng qua đường phân giác $y = x$.
+\end{itemize}
+
+\subsection*{3. Hoạt động 3: Luyện tập (10 phút)}
+
+\noindent \textbf{a) Mục tiêu:}
+Củng cố kỹ năng tìm tập xác định của hàm số mũ, lôgarit và kỹ năng nhận diện cơ số qua đồ thị.
+
+\noindent \textbf{b) Nội dung:}
+Thực hiện các bài toán trong Phiếu học tập số 1:
+\begin{enumerate}[leftmargin=0.6cm]
+    \item \textbf{Bài 1 (Tìm tập xác định):} Tìm tập xác định của các hàm số sau:
+    $$a) \ y = \log_3 (x^2 - 4); \qquad b) \ y = \log_{0{,}5} (2x - 6) + \sqrt{5 - x}; \qquad c) \ y = 2^{\frac{1}{x - 1}}$$
+    \item \textbf{Bài 2 (Nhận dạng đồ thị):} Cho hình vẽ bên dưới gồm 3 đường cong là đồ thị của ba hàm số $y = a^x, y = b^x, y = c^x$. Hãy so sánh các cơ số $a, b, c$ với $1$ và sắp xếp thứ tự độ lớn của chúng.
+\end{enumerate}
+
+\noindent \textbf{c) Sản phẩm:}
+Lời giải chi tiết:
+\begin{itemize}
+    \item \textbf{Bài 1:}
+    \begin{itemize}
+        \item $a)$ Hàm số xác định $\iff x^2 - 4 > 0 \iff x \in (-\infty; -2) \cup (2; +\infty)$.
+        Vậy $D = (-\infty; -2) \cup (2; +\infty)$.
+        \item $b)$ Hàm số xác định $\iff \begin{cases} 2x - 6 > 0 \\ 5 - x \ge 0 \end{cases} \iff \begin{cases} x > 3 \\ x \le 5 \end{cases} \iff 3 < x \le 5$.
+        Vậy $D = (3; 5]$.
+        \item $c)$ Hàm số mũ $y = 2^u$ xác định khi và chỉ khi biểu thức ở số mũ $u = \dfrac{1}{x - 1}$ xác định, tức là $x - 1 \neq 0 \iff x \neq 1$.
+        Vậy $D = \mathbb{R} \setminus \{1\}$.
+    \end{itemize}
+    \item \textbf{Bài 2 (Kỹ thuật kẻ đường thẳng $x = 1$):}
+    \begin{itemize}
+        \item Kẻ đường thẳng thẳng đứng $x = 1$ cắt ba đồ thị $y = a^x, y = b^x, y = c^x$ lần lượt tại các điểm có tung độ là $a, b, c$.
+        \item Đồ thị nào đi xuống từ trái sang phải thì cơ số nằm trong khoảng $(0; 1)$ (ví dụ $c < 1$).
+        \item Các đồ thị đi lên có cơ số lớn hơn $1$. Điểm cắt của đường $x = 1$ ở vị trí cao hơn sẽ có cơ số lớn hơn $\implies a > b > 1 > c > 0$.
+    \end{itemize}
+\end{itemize}
+
+\noindent \textbf{d) Tổ chức thực hiện:}
+\begin{itemize}[leftmargin=0.6cm]
+    \item \textbf{Giao nhiệm vụ:} Học sinh làm việc cá nhân 6 phút, sau đó thảo luận cặp đôi bài 2.
+    \item \textbf{Thực hiện nhiệm vụ:} Giáo viên đi quanh lớp hướng dẫn học sinh phương pháp “kẻ đường thẳng $x = 1$” để đọc cơ số nhanh trên đồ thị.
+    \item \textbf{Báo cáo, thảo luận:} 2 học sinh lên bảng giải; cả lớp nhận xét đối chiếu.
+    \item \textbf{Kết luận, nhận định:} Giáo viên chuẩn hóa kỹ năng đọc đồ thị và tìm tập xác định.
+\end{itemize}
+
+\subsection*{4. Hoạt động 4: Vận dụng (7 phút)}
+
+\noindent \textbf{a) Mục tiêu:}
+Vận dụng mô hình hàm số mũ giải quyết bài toán thực tế (Vật lí - Sinh thái) và kết nối với Năng lực AI theo QĐ 2422 (Mã 11.C3.1).
+
+\noindent \textbf{b) Nội dung:}
+\begin{stembox}{Bài toán Thực tiễn: Định luật Beer-Lambert về suy giảm ánh sáng}
+Khi ánh sáng mặt trời truyền qua mặt nước biển, cường độ ánh sáng $I(x)$ (tính bằng đơn vị candela) ở độ sâu $x$ (mét) giảm dần theo hàm số mũ:
+$$I(x) = I_0 \cdot (0{,}85)^x$$
+(trong đó $I_0$ là cường độ ánh sáng tại mặt nước).
+\begin{enumerate}[leftmargin=0.6cm]
+    \item Ở độ sâu $x = 10\text{ m}$, cường độ ánh sáng còn lại bằng bao nhiêu phần trăm so với mặt nước?
+    \item Ở độ sâu nào thì cường độ ánh sáng chỉ còn bằng một nửa cường độ ban đầu ($I(x) = 0{,}5 I_0$)?
+\end{enumerate}
+\end{stembox}
+
+\begin{aibox}{Tích hợp Năng lực AI (Theo Quyết định 2422/QĐ-BGDĐT - Mã 11.C3.1)}
+\textbf{Kỹ thuật Prompting và Ứng dụng Hàm Sigmoid trong Học sâu (Deep Learning):}
+\begin{itemize}[leftmargin=0.6cm]
+    \item \textbf{Nhiệm vụ số:} Học sinh mở ứng dụng trợ lý AI và nhập câu lệnh prompt:
+    \begin{quote}
+        \textit{``Hãy giải thích ngắn gọn bằng toán học tại sao hàm Sigmoid $\sigma(x) = \dfrac{1}{1 + e^{-x}}$ lại được dùng làm hàm kích hoạt phổ biến trong mạng nơ-ron nhân tạo? Đồ thị của nó có tính chất gì đặc biệt?''}
+    \end{quote}
+    \item \textbf{Bản chất toán học AI phản hồi:}
+    \begin{enumerate}[leftmargin=0.6cm]
+        \item Hàm số $\sigma(x) = \dfrac{1}{1 + e^{-x}}$ sử dụng hàm số mũ cơ số tự nhiên $e^{-x}$.
+        \item \textbf{Miền giá trị:} Với mọi $x \in (-\infty; +\infty)$, ta có $e^{-x} > 0 \implies 1 + e^{-x} > 1 \implies 0 < \sigma(x) < 1$.
+        \item \textbf{Ý nghĩa trong AI:} Hàm Sigmoid nén toàn bộ các giá trị thực vô hạn từ các nơ-ron về khoảng chuẩn hóa $(0; 1)$, tương ứng với \textbf{xác suất kích hoạt} (bằng $0$: nơ-ron không hoạt động, bằng $1$: nơ-ron kích hoạt tối đa).
+        \item Đồ thị có dạng đường cong chữ $S$ mềm mại, có đạo hàm đẹp $\sigma'(x) = \sigma(x)(1 - \sigma(x))$ giúp thuật toán tối ưu hóa lan truyền ngược (Backpropagation) hoạt động hiệu quả.
+    \end{enumerate}
+\end{itemize}
+\end{aibox}
+
+\noindent \textbf{c) Sản phẩm:}
+\begin{enumerate}[leftmargin=0.6cm]
+    \item Ở độ sâu $x = 10\text{ m}$:
+    $$\dfrac{I(10)}{I_0} = (0{,}85)^{10} \approx 0{,}1969 = 19{,}69\%.$$
+    Cường độ ánh sáng chỉ còn khoảng $19{,}7\%$.
+    \item Để $I(x) = 0{,}5 I_0 \iff (0{,}85)^x = 0{,}5 \iff x = \log_{0{,}85} 0{,}5 \approx 4{,}265\text{ m}$.
+    Vậy ở độ sâu khoảng $4{,}3\text{ m}$, cường độ ánh sáng giảm đi một nửa.
+\end{enumerate}
+
+\noindent \textbf{d) Tổ chức thực hiện:}
+\begin{itemize}[leftmargin=0.6cm]
+    \item \textbf{Giao nhiệm vụ:} Giáo viên giao bài toán Beer-Lambert và trình chiếu câu lệnh prompt AI.
+    \item \textbf{Thực hiện nhiệm vụ:} Học sinh dùng MTCT tính câu 1 và câu 2; một nhóm học sinh đọc phản hồi của AI về hàm Sigmoid.
+    \item \textbf{Báo cáo, nhận xét:} Học sinh chia sẻ câu trả lời; giáo viên tổng kết toàn bộ tiết học, dặn dò chuẩn bị cho \textbf{Bài 21: Phương trình, bất phương trình mũ và lôgarit}.
+\end{itemize}
+
+\vspace{10pt}
+
+\section*{IV. PHỤ LỤC HỌC LIỆU BỔ TRỢ (BẮT BUỘC)}
+
+\subsection*{1. Phiếu học tập phân tầng bậc thang (Worksheet)}
+
+\begin{pedabox}{PHIẾU HỌC TẬP: HÀM SỐ MŨ VÀ HÀM SỐ LÔGARIT}
+\textbf{Họ và tên học sinh:} \dotfill \ \textbf{Lớp:} \dotfill \ \textbf{Nhóm:} \dotfill
+
+\noindent \textbf{CẤP ĐỘ 1: NHẬN BIẾT (Định nghĩa \& Nhận dạng)}
+\begin{enumerate}[leftmargin=0.6cm]
+    \item Trong các hàm số sau, hàm số nào là hàm số mũ, hàm số nào là hàm số lôgarit? Chỉ rõ cơ số $a$ của mỗi hàm số:
+    $$y = 5^x; \quad y = x^5; \quad y = \log_{\frac{1}{2}} x; \quad y = \ln x; \quad y = (\sqrt{3})^x; \quad y = \log_x 4$$
+    \item Điền thông tin vào chỗ trống:
+    \begin{itemize}
+        \item Đồ thị hàm số $y = 3^x$ luôn đi qua điểm $(\dots; \dots)$ và có tiệm cận ngang là đường thẳng $\dots\dots\dots$
+        \item Đồ thị hàm số $y = \log_3 x$ luôn đi qua điểm $(\dots; \dots)$ và có tiệm cận đứng là đường thẳng $\dots\dots\dots$
+    \end{itemize}
+\end{enumerate}
+
+\noindent \textbf{CẤP ĐỘ 2: THÔNG HIỂU (Tập xác định \& Chiều biến thiên)}
+\begin{enumerate}[leftmargin=0.6cm]
+    \item Tìm tập xác định của các hàm số sau:
+    $$a) \ y = \log_5 (6 - 3x); \qquad b) \ y = \ln(x^2 - 5x + 6); \qquad c) \ y = \left(\dfrac{1}{2}\right)^{\frac{x}{x+1}}$$
+    \item Xét chiều biến thiên (đồng biến hay nghịch biến) của các hàm số sau trên tập xác định:
+    $$a) \ y = (\pi - 2)^x; \qquad b) \ y = \log_{\sqrt{2} - 1} x; \qquad c) \ y = \log_{\frac{e}{3}} x$$
+\end{enumerate}
+
+\noindent \textbf{CẤP ĐỘ 3: VẬN DỤNG (Đọc đồ thị \& Ứng dụng thực tế)}
+\begin{enumerate}[leftmargin=0.6cm]
+    \item Cho đồ thị hàm số $y = a^x$ và $y = \log_b x$. Biết đồ thị $y = a^x$ đi qua điểm $M(2; 9)$ và đồ thị $y = \log_b x$ đi qua điểm $N(8; 3)$. Tính giá trị của biểu thức $T = a^2 + b^2$.
+    \item Áp suất khí quyển $P$ (tính bằng mmHg) ở độ cao $h$ (mét so với mực nước biển) được tính theo mô hình hàm số mũ: $P(h) = 760 \cdot e^{-0{,}00012 h}$. Tính áp suất khí quyển tại đỉnh Fansipan (độ cao $h = 3143\text{ m}$).
+\end{enumerate}
+\end{pedabox}
+
+\subsection*{2. Bảng Rubric đánh giá năng lực học sinh theo 4 mức độ}
+
+\begin{center}
+\begin{tabularx}{\textwidth}{|p{2.8cm}|X|X|X|X|}
+    \hline
+    \textbf{Tiêu chí} & \textbf{Mức 1: Chưa đạt} & \textbf{Mức 2: Đạt} & \textbf{Mức 3: Khá} & \textbf{Mức 4: Tốt} \\ \hline
+    \textbf{1. Nhận biết và Phân loại hàm số} & Nhầm lẫn hàm số mũ $y = a^x$ với hàm số lũy thừa $y = x^\alpha$. & Phân biệt đúng dạng hàm số mũ và lôgarit; xác định được cơ số. & Nắm vững điều kiện cơ số $a > 0, a \neq 1$; tìm đúng điểm cố định đồ thị. & Hiểu sâu sắc bản chất hàm ngược và giải thích được sự đối ngẫu hoàn hảo. \\ \hline
+    \textbf{2. Khảo sát biến thiên \& Tìm TXĐ} & Không tìm được điều kiện $x > 0$ trong biểu thức lôgarit; sai chiều biến thiên. & Tìm được TXĐ cơ bản; xác định đúng tính đồng/nghịch biến dựa vào $a$. & Tìm đúng TXĐ của hàm số hợp chứa căn và phân thức; giải thích tiệm cận tốt. & Thành thạo xử lý các bài toán tập xác định chứa tham số và bất đẳng thức kép. \\ \hline
+    \textbf{3. Năng lực số GeoGebra (Mã 3.1NC1b)} & Chưa biết thao tác nhập hàm số mũ và lôgarit vào phần mềm. & Vẽ được hai đồ thị $y = 2^x$ và $y = \log_2 x$ theo hướng dẫn mẫu. & Thao tác nhanh; dựng được đường $y = x$ và kiểm chứng đối xứng điểm. & Làm chủ thanh trượt slider thay đổi cơ số $a$; phân tích động biến đổi đồ thị. \\ \hline
+    \textbf{4. Vận dụng thực tiễn \& Năng lực AI (Mã 11.C3.1)} & Chưa liên hệ được bài toán thực tế với hàm số mũ/lôgarit. & Thay số vào công thức cho sẵn và tính được kết quả gần đúng. & Tự thiết lập hàm số mũ từ bài toán thực tế; tính toán thành thạo bằng MTCT. & Đặt prompt AI xuất sắc; phân tích sâu sắc ý nghĩa hàm Sigmoid trong học máy AI. \\ \hline
+\end{tabularx}
+\end{center}
+
+\end{document}
