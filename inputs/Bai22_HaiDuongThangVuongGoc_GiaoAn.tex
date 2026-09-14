@@ -1,0 +1,657 @@
+\documentclass[12pt, a4paper]{article}
+% --- 1. Cấu hình Tiếng Việt và Font chữ chuẩn ---
+\usepackage[utf8]{inputenc}
+\usepackage[T5]{fontenc}
+\usepackage[vietnamese]{babel}
+\usepackage{mathptmx} % Font Times New Roman đồng bộ cả chữ và công thức toán, không gây xung đột gói
+
+\makeatletter
+\renewcommand{\normalsize}{\@setfontsize\normalsize{13pt}{16pt}}
+\makeatother
+\normalsize
+
+% --- 2. Gói Toán học & Ký hiệu bổ trợ ---
+\usepackage{amsmath, amssymb, amsfonts, mathrsfs, amsthm}
+\usepackage{graphicx}
+\usepackage{fontawesome}
+\usepackage{booktabs, tabularx, array, multirow}
+\usepackage{enumitem}
+
+% --- 3. Đồ họa TikZ, Bảng biến thiên & Hình không gian ---
+\usepackage{tikz}
+\usetikzlibrary{calc, intersections, angles, quotes, patterns, arrows.meta, 3d}
+\usepackage{pgfplots}
+\pgfplotsset{compat=1.18}
+\usepackage{tkz-euclide}
+\usepackage{tkz-tab}
+
+\renewcommand{\vec}[1]{\overrightarrow{#1}}
+
+% --- 4. Hộp sư phạm (Tcolorbox) ---
+\usepackage[many]{tcolorbox}
+\tcbuselibrary{skins, breakable}
+
+% --- 5. Căn lề chuẩn văn bản giáo án ---
+\usepackage{geometry}
+\geometry{
+    a4paper,
+    left=25mm,
+    right=15mm,
+    top=20mm,
+    bottom=20mm
+}
+
+% --- 6. Header / Footer chuẩn hóa ---
+\usepackage{fancyhdr}
+\usepackage{lastpage}
+\pagestyle{fancy}
+\fancyhf{}
+
+\fancyhead[L]{\small \textit{Kế hoạch bài dạy Toán 11}}
+\fancyhead[R]{\textbf{Trang \thepage/\pageref{LastPage}}}
+\fancyfoot[L]{\small \textit{Tổ Toán - Tin}}
+\fancyfoot[R]{\small \textit{Trường THCS\&THPT Hồng Vân}}
+\renewcommand{\headrulewidth}{0.4pt}
+\renewcommand{\footrulewidth}{0.4pt}
+
+% --- 7. Giãn dòng & Giãn đoạn theo chuẩn Nghị định 30/2020/NĐ-CP ---
+\usepackage{setspace}
+\setstretch{1.15}
+\setlength{\parindent}{1.0cm}
+\setlength{\parskip}{5pt}
+
+% Định nghĩa hộp sư phạm chuyên dụng
+\newtcolorbox{pedabox}[2][]{
+    enhanced,
+    breakable,
+    colback=blue!3!white,
+    colframe=blue!65!black,
+    fonttitle=\bfseries\small,
+    title={#2},
+    arc=2mm,
+    boxrule=0.6pt,
+    left=3mm, right=3mm, top=2mm, bottom=2mm,
+    #1
+}
+
+\newtcolorbox{aibox}[2][]{
+    enhanced,
+    breakable,
+    colback=teal!4!white,
+    colframe=teal!70!black,
+    fonttitle=\bfseries\small,
+    title={#2},
+    arc=2mm,
+    boxrule=0.6pt,
+    left=3mm, right=3mm, top=2mm, bottom=2mm,
+    #1
+}
+
+\newtcolorbox{scaffoldbox}[2][]{
+    enhanced,
+    breakable,
+    colback=orange!4!white,
+    colframe=orange!80!black,
+    fonttitle=\bfseries\small,
+    title={#2},
+    arc=2mm,
+    boxrule=0.6pt,
+    left=3mm, right=3mm, top=2mm, bottom=2mm,
+    #1
+}
+
+\newtcolorbox{stembox}[2][]{
+    enhanced,
+    breakable,
+    colback=purple!4!white,
+    colframe=purple!75!black,
+    fonttitle=\bfseries\small,
+    title={#2},
+    arc=2mm,
+    boxrule=0.6pt,
+    left=3mm, right=3mm, top=2mm, bottom=2mm,
+    #1
+}
+
+\begin{document}
+
+\begin{center}
+    {\fontsize{14pt}{17pt}\selectfont \textbf{KẾ HOẠCH BÀI DẠY MÔN TOÁN LỚP 11}}\\[6pt]
+    {\fontsize{16pt}{19pt}\selectfont \textbf{BÀI 22. HAI ĐƯỜNG THẲNG VUÔNG GÓC}}\\[4pt]
+    {\fontsize{12pt}{15pt}\selectfont \textbf{Môn học: Toán 11} \ \textbar \ \textbf{Thời lượng: 2 tiết (Tiết 63, 64 theo PPCT | Tuần 21)}}
+\end{center}
+
+\vspace{5pt}
+
+\section*{I. MỤC TIÊU}
+
+\subsection*{1. Kiến thức, Năng lực}
+
+\begin{itemize}[leftmargin=1.2cm]
+    \item \textbf{Yêu cầu cần đạt (Nguyên văn CT GDPT 2018 Toán 11):}
+    \begin{itemize}[leftmargin=0.6cm]
+        \item Nhận biết được khái niệm góc giữa hai đường thẳng trong không gian.
+        \item Nhận biết được hai đường thẳng vuông góc trong không gian.
+        \item Chứng minh được hai đường thẳng vuông góc trong không gian trong một số trường hợp đơn giản.
+        \item Sử dụng được kiến thức về hai đường thẳng vuông góc để mô tả một số hình ảnh trong thực tiễn (các thanh xà gồ, cột nhà, đường bay chéo nhau của máy bay, kết cấu cầu đường).
+    \end{itemize}
+
+    \item \textbf{Năng lực Toán học đặc thù:}
+    \begin{itemize}[leftmargin=0.6cm]
+        \item \textit{Năng lực tư duy và lập luận toán học:} So sánh sự giống và khác nhau giữa hai đường thẳng vuông góc trong mặt phẳng và trong không gian (trong không gian, hai đường thẳng vuông góc có thể cắt nhau hoặc chéo nhau); phân tích mối liên hệ giữa góc của hai đường thẳng và góc giữa hai vectơ chỉ phương tương ứng; lập luận logic chặt chẽ khi chứng minh tính vuông góc.
+        \item \textit{Năng lực mô hình hóa toán học:} Mô tả các liên kết cơ học, kiến trúc xây dựng (khung nhà thép, cột cờ, đường giao thông phân tầng) thành mô hình hình học không gian gồm các cặp đường thẳng vuông góc hoặc chéo nhau.
+        \item \textit{Năng lực giải quyết vấn đề toán học:} Lựa chọn và thực hiện linh hoạt 3 phương pháp xác định góc và chứng minh hai đường thẳng vuông góc: phương pháp hình học tổng hợp (kẻ đường thẳng song song), phương pháp vectơ (tính tích vô hướng $\vec{u} \cdot \vec{v} = 0$), và phương pháp định lý bắc cầu qua quan hệ song song ($a \perp b$ và $b \parallel c \implies a \perp c$).
+        \item \textit{Năng lực giao tiếp toán học:} Trình bày chứng minh hình học mạch lạc, chính xác theo chuẩn mực ký hiệu ($\perp, \parallel, \vec{u}, \angle(a, b)$); đọc hiểu và diễn đạt chính xác giả thiết - kết luận của bài toán không gian.
+        \item \textit{Năng lực sử dụng công cụ, phương tiện học toán:} Sử dụng thước kẻ, compa vẽ hình biểu diễn không gian chuẩn xác; sử dụng phần mềm hình học động GeoGebra 3D để xoay khối hình đa diện trong không gian ba chiều, trực quan hóa góc giữa hai đường thẳng chéo nhau.
+    \end{itemize}
+
+    \item \textbf{Năng lực số (Theo Thông tư 02/2025/TT-BGDĐT):}
+    \begin{itemize}[leftmargin=0.6cm]
+        \item \textit{Mã 1.3NC1b (Quan sát và khai thác mô hình 3D trong môi trường số):} Học sinh quan sát, tương tác với mô hình 3D góc giữa hai đường thẳng chéo nhau qua phần mềm GeoGebra 3D; biết xoay các góc nhìn khác nhau trong không gian để nhận diện vị trí tương đối và hình ảnh tịnh tiến của các vectơ chỉ phương.
+    \end{itemize}
+
+    \item \textbf{Năng lực AI (Theo Quyết định 2422/QĐ-BGDĐT):}
+    \begin{itemize}[leftmargin=0.6cm]
+        \item \textit{Mã 11.C5.2 (Hiểu nguyên lý hoạt động của AI và xử lý dữ liệu không gian):} Học sinh hiểu được cách thuật toán Trí tuệ nhân tạo (trong xe tự hành, cánh tay robot công nghiệp và thị giác máy tính 3D) tính tích vô hướng của 2 vectơ chỉ phương bằng 0 ($\vec{u}_1 \cdot \vec{u}_2 = 0$) để xác định tính vuông góc và định vị quỹ đạo vật thể trong không gian ba chiều.
+    \end{itemize}
+
+    \item \textbf{Năng lực chung:}
+    \begin{itemize}[leftmargin=0.6cm]
+        \item \textit{Tự chủ và tự học:} Chủ động tìm tòi, quan sát hình ảnh không gian từ thực tế cuộc sống, tự giác hoàn thành phiếu học tập.
+        \item \textit{Giao tiếp và hợp tác:} Thảo luận cặp đôi và làm việc nhóm tích cực để giải quyết các bài toán dựng hình và tính góc trong không gian.
+    \end{itemize}
+\end{itemize}
+
+\subsection*{2. Phẩm chất}
+
+\begin{itemize}[leftmargin=1.2cm]
+    \item \textbf{Chăm chỉ:} Rèn luyện kỹ năng vẽ hình không gian đúng quy ước nét liền (thấy) và nét đứt (khuất), kiên trì thực hiện các phép biến đổi vectơ.
+    \item \textbf{Trung thực:} Khách quan, tự lực trong giải toán hình học và phản biện ý kiến của bạn học.
+    \item \textbf{Trách nhiệm:} Nghiêm túc, cẩn trọng trong các bước chứng minh; có ý thức quan sát và vận dụng kiến thức hình học vào đời sống thực tế và kỹ thuật công nghệ.
+\end{itemize}
+
+\vspace{5pt}
+
+\section*{II. THIẾT BỊ DẠY HỌC VÀ HỌC LIỆU}
+
+\begin{itemize}[leftmargin=1.2cm]
+    \item \textbf{Giáo viên:}
+    \begin{itemize}[leftmargin=0.6cm]
+        \item Kế hoạch bài dạy chi tiết 2 tiết theo chuẩn Công văn 5512/BGDĐT-GDTrH.
+        \item Bài trình chiếu PowerPoint tương tác, tích hợp sẵn các tệp mô phỏng không gian GeoGebra 3D (hình lập phương, tứ diện đều, hai đường thẳng chéo nhau).
+        \item Mô hình khung không gian bằng nhựa / gỗ (hình lập phương, hình chóp tứ giác).
+        \item Phiếu học tập phân hóa bậc thang: Phiếu học tập số 1 (Tiết 1) và Phiếu học tập số 2 (Tiết 2).
+        \item Bảng Rubric đánh giá năng lực học sinh theo chuẩn Thông tư 02/2025 và QĐ 2422.
+    \end{itemize}
+    \item \textbf{Học sinh:}
+    \begin{itemize}[leftmargin=0.6cm]
+        \item Sách giáo khoa Toán 11, vở ghi bài, giấy nháp.
+        \item Dụng cụ học tập hình học: Thước thẳng có chia vạch, compa, êke, bút màu.
+        \item Ôn tập lại khái niệm vectơ trong mặt phẳng, quy tắc ba điểm, quy tắc hình bình hành và tích vô hướng của hai vectơ đã học ở lớp 10.
+    \end{itemize}
+\end{itemize}
+
+\vspace{5pt}
+
+\section*{III. TIẾN TRÌNH DẠY HỌC (2 TIẾT | TIẾT 63, 64 THEO PPCT)}
+
+\subsection*{\faClockO \ TIẾT 1 (TIẾT 63 THEO PPCT): GÓC GIỮA HAI ĐƯỜNG THẲNG TRONG KHÔNG GIAN}
+
+\subsubsection*{1. Hoạt động 1: Mở đầu (Khởi động) (5 phút)}
+
+\noindent \textbf{a) Mục tiêu:}
+Kích thích trí tò mò, tạo tình huống có vấn đề về việc xác định góc giữa hai đường thẳng không cùng nằm trong một mặt phẳng (hai đường thẳng chéo nhau) trong thực tiễn.
+
+\noindent \textbf{b) Nội dung:}
+Giáo viên chiếu hình ảnh một chiếc cầu vượt giao thông phân tầng (như Cầu vượt Ngã Tư Sở hoặc cầu cạn cao tốc) và đường sắt đô thị chạy phía trên cắt qua đường bộ phía dưới:
+\begin{pedabox}{Tình huống khởi động: Cầu vượt giao thông và Góc giữa hai đường thẳng}
+Trong thực tế, làn đường sắt trên cao $a$ và làn đường bộ phía dưới $b$ không có điểm chung và không song song với nhau (hai đường thẳng chéo nhau trong không gian).
+\begin{enumerate}[leftmargin=0.6cm]
+    \item Hai tuyến đường này có cắt nhau không? Nếu không cắt nhau, người ta có thể đo được góc giữa tuyến đường $a$ và tuyến đường $b$ hay không?
+    \item Theo em, làm thế nào để xác định được góc giữa hai đường thẳng chéo nhau trong không gian?
+\end{enumerate}
+\end{pedabox}
+
+\noindent \textbf{c) Sản phẩm:}
+Câu trả lời của học sinh:
+\begin{itemize}
+    \item Hai tuyến đường này không cắt nhau vì chúng nằm ở hai độ cao khác nhau (tránh xung đột giao thông).
+    \item Dù không cắt nhau, ta vẫn xác định được góc giữa chúng bằng cách: Từ một điểm quan sát, ta hình dung các đường thẳng chạy song song với hai tuyến đường đó để đưa về cùng một mặt phẳng hoặc chiếu thẳng đứng xuống mặt đất để đo góc.
+\end{itemize}
+
+\noindent \textbf{d) Tổ chức thực hiện:}
+\begin{itemize}[leftmargin=0.6cm]
+    \item \textbf{Giao nhiệm vụ:} Giáo viên trình chiếu hình ảnh, đặt câu hỏi cho toàn lớp suy nghĩ trong 2 phút.
+    \item \textbf{Thực hiện nhiệm vụ:} Học sinh quan sát hình ảnh, thảo luận cặp đôi.
+    \item \textbf{Báo cáo, thảo luận:} 1 học sinh trả lời miệng; cả lớp lắng nghe và nhận xét.
+    \item \textbf{Kết luận, nhận định:} Giáo viên dẫn dắt: Để giải quyết bài toán đo góc giữa hai đường thẳng chéo nhau trong không gian một cách chặt chẽ về toán học, ta nghiên cứu khái niệm góc giữa hai đường thẳng thông qua vectơ chỉ phương và phép tịnh tiến song song.
+\end{itemize}
+
+\subsubsection*{2. Hoạt động 2: Hình thành kiến thức (25 phút)}
+
+\paragraph{2.1. Đơn vị kiến thức 1: Vectơ chỉ phương của đường thẳng trong không gian (10 phút)}
+
+\noindent \textbf{a) Mục tiêu:}
+Nắm vững định nghĩa vectơ chỉ phương của đường thẳng trong không gian; nhận biết được mối quan hệ giữa các vectơ chỉ phương cùng phương của một đường thẳng.
+
+\noindent \textbf{b) Nội dung:}
+\begin{pedabox}{Vectơ chỉ phương của đường thẳng}
+Vectơ $\vec{u} \neq \vec{0}$ được gọi là \textbf{vectơ chỉ phương} của đường thẳng $d$ nếu giá của vectơ $\vec{u}$ song song hoặc trùng với đường thẳng $d$.
+\begin{itemize}[leftmargin=0.6cm]
+    \item Nếu $\vec{u}$ là một vectơ chỉ phương của $d$ thì $k\vec{u}$ ($k \neq 0$) cũng là một vectơ chỉ phương của $d$.
+    \item Một đường thẳng hoàn toàn được xác định nếu biết một điểm thuộc nó và một vectơ chỉ phương của nó.
+    \item Hai đường thẳng song song hoặc trùng nhau khi và chỉ khi hai vectơ chỉ phương của chúng cùng phương.
+\end{itemize}
+\end{pedabox}
+
+\noindent \textbf{c) Sản phẩm:}
+Học sinh lấy được các ví dụ về vectơ chỉ phương trong hình lập phương $ABCD.A'B'C'D'$:
+\begin{itemize}
+    \item Đường thẳng $AB$ có các vectơ chỉ phương là: $\vec{AB}, \vec{BA}, \vec{CD}, \vec{D'C'}, \dots$
+    \item Đường thẳng $AA'$ có các vectơ chỉ phương là: $\vec{AA'}, \vec{BB'}, \vec{CC'}, \vec{DD'}, \dots$
+\end{itemize}
+
+\noindent \textbf{d) Tổ chức thực hiện:}
+\begin{itemize}[leftmargin=0.6cm]
+    \item \textbf{Giao nhiệm vụ:} Giáo viên trình bày định nghĩa, vẽ hình minh họa một đường thẳng và các vectơ chỉ phương có giá song song hoặc trùng với nó.
+    \item \textbf{Thực hiện nhiệm vụ:} Học sinh ghi chép định nghĩa, trả lời câu hỏi nhanh về các vectơ chỉ phương của cạnh hình lập phương.
+    \item \textbf{Báo cáo, nhận định:} Giáo viên xác nhận câu trả lời đúng và chuyển sang định nghĩa góc giữa hai đường thẳng.
+\end{itemize}
+
+\paragraph{2.2. Đơn vị kiến thức 2: Khái niệm và phương pháp xác định góc giữa hai đường thẳng (15 phút)}
+
+\noindent \textbf{a) Mục tiêu:}
+Nắm vững định nghĩa góc giữa hai đường thẳng trong không gian; biết cách tịnh tiến về một điểm để xác định góc; áp dụng công thức tính góc thông qua tích vô hướng của hai vectơ chỉ phương.
+
+\noindent \textbf{b) Nội dung:}
+\begin{pedabox}{Định nghĩa góc giữa hai đường thẳng trong không gian}
+\textbf{Góc giữa hai đường thẳng $a$ và $b$} trong không gian là góc giữa hai đường thẳng $a'$ và $b'$ cùng đi qua một điểm $O$ bất kì và lần lượt song song (hoặc trùng) với $a$ và $b$.
+\begin{itemize}[leftmargin=0.6cm]
+    \item Ký hiệu góc giữa hai đường thẳng $a$ và $b$ là $(a, b)$ hoặc $\widehat{(a, b)}$.
+    \item Quy ước về độ lớn của góc: $0^\circ \le (a, b) \le 90^\circ$.
+    \item Nếu $a \parallel b$ hoặc $a \equiv b$ thì góc giữa chúng bằng $0^\circ$.
+    \item Điểm $O$ có thể chọn tùy ý, nhưng trong thực hành ta thường chọn $O$ nằm ngay trên một trong hai đường thẳng (ví dụ lấy $O \in a$ rồi qua $O$ kẻ $b' \parallel b$).
+\end{itemize}
+\end{pedabox}
+
+\begin{pedabox}{Công thức tính góc qua vectơ chỉ phương}
+Gọi $\vec{u}$ và $\vec{v}$ lần lượt là vectơ chỉ phương của đường thẳng $a$ và $b$. Khi đó:
+$$\cos(a, b) = |\cos(\vec{u}, \vec{v})| = \dfrac{|\vec{u} \cdot \vec{v}|}{|\vec{u}| \cdot |\vec{v}|}$$
+\end{pedabox}
+
+\begin{scaffoldbox}{Giàn giáo sư phạm: Khắc phục sai lầm về góc tù}
+\textbf{Lưu ý sống còn cho học sinh trung bình - yếu:}
+\begin{itemize}
+    \item Góc giữa hai vectơ $\widehat{(\vec{u}, \vec{v})}$ có thể là góc tù (từ $0^\circ$ đến $180^\circ$).
+    \item Nhưng góc giữa hai đường thẳng $(a, b)$ \textbf{BẮT BUỘC KHÔNG VƯỢT QUÁ $90^\circ$}!
+    \item Nếu tính được $\cos(\vec{u}, \vec{v}) = -\dfrac{1}{2} \implies \widehat{(\vec{u}, \vec{v})} = 120^\circ$. Khi đó góc giữa hai đường thẳng là:
+    $$(a, b) = 180^\circ - 120^\circ = 60^\circ \quad (\text{vì } \cos(a, b) = |-\tfrac{1}{2}| = \tfrac{1}{2}).$$
+\end{itemize}
+\end{scaffoldbox}
+
+\begin{aibox}{Tích hợp Năng lực số (Mã 1.3NC1b): Mô hình GeoGebra 3D xoay không gian}
+\begin{itemize}[leftmargin=0.6cm]
+    \item Giáo viên trình chiếu tệp GeoGebra 3D mô phỏng góc giữa hai đường thẳng chéo nhau $A'B$ và $CC'$ trong hình lập phương $ABCD.A'B'C'D'$.
+    \item \textbf{Thao tác tương tác số:} Cho học sinh lên bảng chạm tay xoay mô hình 3D:
+    \begin{enumerate}
+        \item Xoay khối hình để quan sát từ nhiều phía: Hai đường thẳng $A'B$ và $CC'$ rõ ràng chéo nhau, không cắt nhau.
+        \item Kích hoạt nút tịnh tiến: Đường thẳng $CC'$ được tịnh tiến song song sang đường thẳng $BB'$ (vì $BB' \parallel CC'$).
+        \item Góc giữa $A'B$ và $CC'$ chính là góc giữa $A'B$ và $BB'$, tức là góc $\widehat{A'BB'} = 45^\circ$.
+    \end{enumerate}
+\end{itemize}
+\end{aibox}
+
+\noindent \textbf{c) Sản phẩm:}
+Học sinh hoàn thành lời giải Ví dụ mẫu:
+\begin{pedabox}{Ví dụ áp dụng: Tính góc trong hình lập phương}
+Cho hình lập phương $ABCD.A'B'C'D'$. Tính góc giữa các cặp đường thẳng sau:
+$$a) \ AB\text{ và }B'C'; \qquad b) \ AC\text{ và }B'D'; \qquad c) \ A'B\text{ và }CD.$$
+\end{pedabox}
+\textit{Lời giải chi tiết:}
+\begin{itemize}
+    \item $a)$ Vì $B'C' \parallel BC$ nên $(AB, B'C') = (AB, BC) = \widehat{ABC} = 90^\circ$ (do $ABCD$ là hình vuông).
+    \item $b)$ Vì $B'D' \parallel BD$ nên $(AC, B'D') = (AC, BD) = 90^\circ$ (hai đường chéo của hình vuông $ABCD$ vuông góc với nhau).
+    \item $c)$ Vì $CD \parallel AB$ nên $(A'B, CD) = (A'B, AB) = \widehat{A'BA} = 45^\circ$ (vì tam giác $ABB'A'$ là hình vuông có $A'B$ là đường chéo).
+\end{itemize}
+
+\noindent \textbf{d) Tổ chức thực hiện:}
+\begin{itemize}[leftmargin=0.6cm]
+    \item \textbf{Giao nhiệm vụ:} Giáo viên trình bày lý thuyết; thực hiện thao tác xoay mô hình 3D trên màn hình. Yêu cầu học sinh làm Ví dụ vào vở.
+    \item \textbf{Thực hiện nhiệm vụ:} Học sinh quan sát hình vẽ, tìm đường thẳng song song thay thế để đưa về góc ở đỉnh chung.
+    \item \textbf{Báo cáo, thảo luận:} 3 học sinh lần lượt trả lời 3 câu $a, b, c$; giải thích rõ chọn đường thẳng nào song song.
+    \item \textbf{Kết luận, nhận định:} Giáo viên chuẩn hóa: Quy tắc 2 bước tính góc giữa hai đường thẳng chéo nhau: \textbf{Bước 1:} Thay một trong hai đường thẳng bằng đường thẳng song song với nó và cắt đường kia; \textbf{Bước 2:} Tính góc phẳng trong tam giác tạo thành.
+\end{itemize}
+
+\subsubsection*{3. Hoạt động 3: Luyện tập (10 phút)}
+
+\noindent \textbf{a) Mục tiêu:}
+Rèn luyện kỹ năng tính góc giữa hai đường thẳng trong hình tứ diện đều và hình chóp; sử dụng thành thạo định lý hàm số cosin trong tam giác.
+
+\noindent \textbf{b) Nội dung:}
+Học sinh thực hiện bài toán trong Phiếu học tập số 1:
+\begin{pedabox}{Bài toán luyện tập: Góc trong tứ diện đều}
+Cho tứ diện đều $ABCD$ cạnh $a$. Gọi $M, N$ lần lượt là trung điểm của các cạnh $BC$ và $AD$.
+\begin{enumerate}[leftmargin=0.6cm]
+    \item Tính góc giữa hai đường thẳng $AB$ và $CD$.
+    \item Tính góc giữa hai đường thẳng $MN$ và $AB$.
+\end{enumerate}
+\end{pedabox}
+
+\noindent \textbf{c) Sản phẩm:}
+Lời giải chi tiết:
+\begin{itemize}
+    \item \textbf{Câu 1 (Tính góc giữa $AB$ và $CD$ bằng phương pháp vectơ):}
+    Ta có: $\vec{CD} = \vec{AD} - \vec{AC}$.
+    Tính tích vô hướng:
+    $$\vec{AB} \cdot \vec{CD} = \vec{AB} \cdot (\vec{AD} - \vec{AC}) = \vec{AB} \cdot \vec{AD} - \vec{AB} \cdot \vec{AC}$$
+    Vì các tam giác $ABD$ và $ABC$ là tam giác đều cạnh $a$ nên:
+    $$\vec{AB} \cdot \vec{AD} = a \cdot a \cdot \cos 60^\circ = \dfrac{a^2}{2}; \qquad \vec{AB} \cdot \vec{AC} = a \cdot a \cdot \cos 60^\circ = \dfrac{a^2}{2}.$$
+    Do đó: $\vec{AB} \cdot \vec{CD} = \dfrac{a^2}{2} - \dfrac{a^2}{2} = 0$.
+    Suy ra: $\cos(AB, CD) = \dfrac{|\vec{AB} \cdot \vec{CD}|}{AB \cdot CD} = 0 \implies (AB, CD) = 90^\circ$.
+    \item \textbf{Câu 2 (Tính góc giữa $MN$ và $AB$):}
+    Lấy $P$ là trung điểm của $AC$. Khi đó trong tam giác $ABC$, $MP$ là đường trung bình $\implies MP \parallel AB$ và $MP = \dfrac{a}{2}$.
+    Trong tam giác $ACD$, $NP$ là đường trung bình $\implies NP \parallel CD$ và $NP = \dfrac{a}{2}$.
+    Do đó góc giữa $MN$ và $AB$ chính là góc giữa $MN$ và $MP$.
+    Xét tam giác $BCD$ đều cạnh $a$, trung tuyến $DM = \dfrac{a\sqrt{3}}{2}$.
+    Tam giác $ADM$ có $AM = DM = \dfrac{a\sqrt{3}}{2}$, $N$ là trung điểm $AD \implies MN \perp AD$.
+    Trong tam giác vuông $ANM$: $MN = \sqrt{AM^2 - AN^2} = \sqrt{\left(\dfrac{a\sqrt{3}}{2}\right)^2 - \left(\dfrac{a}{2}\right)^2} = \dfrac{a\sqrt{2}}{2}$.
+    Xét tam giác $MNP$ có: $MP = \dfrac{a}{2}, NP = \dfrac{a}{2}, MN = \dfrac{a\sqrt{2}}{2}$.
+    Ta nhận thấy: $MP^2 + NP^2 = \left(\dfrac{a}{2}\right)^2 + \left(\dfrac{a}{2}\right)^2 = \dfrac{a^2}{2} = MN^2$.
+    Vậy tam giác $MNP$ vuông cân tại $P$, suy ra $\widehat{PMN} = 45^\circ$.
+    Vậy góc giữa $MN$ và $AB$ bằng $45^\circ$.
+\end{itemize}
+
+\noindent \textbf{d) Tổ chức thực hiện:}
+\begin{itemize}[leftmargin=0.6cm]
+    \item \textbf{Giao nhiệm vụ:} Giáo viên giao bài tập, gợi ý học sinh câu 1 dùng vectơ, câu 2 lấy thêm điểm trung điểm $P$ để tạo đường trung bình.
+    \item \textbf{Thực hiện nhiệm vụ:} Học sinh làm bài độc lập trong 6 phút, sau đó trao đổi cặp đôi.
+    \item \textbf{Báo cáo, thảo luận:} 2 học sinh lên bảng giải 2 câu; cả lớp nhận xét.
+    \item \textbf{Kết luận, nhận định:} Giáo viên nhấn mạnh: Phương pháp vectơ là một công cụ cực kỳ mạnh mẽ để tính góc trong không gian mà không cần phải dựng thêm hình phụ phức tạp.
+\end{itemize}
+
+\subsubsection*{4. Hoạt động 4: Vận dụng (5 phút)}
+
+\noindent \textbf{a) Mục tiêu:}
+Vận dụng kiến thức góc giữa hai đường thẳng giải bài toán thực tiễn về giàn giáo xây dựng.
+
+\noindent \textbf{b) Nội dung:}
+\begin{stembox}{Bài toán Kỹ thuật Xây dựng: Góc thanh giằng giàn giáo}
+Một khung giàn giáo thép dạng hình hộp chữ nhật có chiều rộng đáy $1{,}2\text{ m}$, chiều dài đáy $1{,}6\text{ m}$ và chiều cao tầng giáo là $2{,}0\text{ m}$. Người ta lắp hai thanh giằng chéo trên hai mặt bên liền kề để tăng độ cứng vững của khung giáo.
+Hỏi góc giữa hai thanh giằng chéo đó bằng bao nhiêu độ (làm tròn đến hàng đơn vị của độ)?
+\end{stembox}
+
+\noindent \textbf{c) Sản phẩm:}
+Mô hình hóa hình hộp chữ nhật $ABCD.A'B'C'D'$ có kích thước $AB = 1{,}6\text{ m}; BC = 1{,}2\text{ m}; AA' = 2{,}0\text{ m}$.
+Hai thanh giằng chéo trên hai mặt bên liền kề là $AB'$ và $BC'$.
+Kẻ $A'D' \parallel BC'$ để quy về góc giữa $AB'$ và đường thẳng song song.
+Học sinh tính được góc xấp xỉ bằng $64^\circ$.
+
+\noindent \textbf{d) Tổ chức thực hiện:}
+Giáo viên giao bài toán, gợi ý cách lập hệ tọa độ hoặc dựng hình bình hành; học sinh về nhà hoàn thiện vào vở bài tập.
+
+\vspace{10pt}
+
+\subsection*{\faClockO \ TIẾT 2 (TIẾT 64 THEO PPCT): HAI ĐƯỜNG THẲNG VUÔNG GÓC TRONG KHÔNG GIAN}
+
+\subsubsection*{1. Hoạt động 1: Mở đầu (Khởi động) (5 phút)}
+
+\noindent \textbf{a) Mục tiêu:}
+Tạo mâu thuẫn nhận thức giữa hình học phẳng và hình học không gian về khái niệm hai đường thẳng vuông góc.
+
+\noindent \textbf{b) Nội dung:}
+Giáo viên đặt câu hỏi:
+\begin{pedabox}{Tình huống khởi động: Vuông góc có nhất thiết phải cắt nhau?}
+\begin{enumerate}[leftmargin=0.6cm]
+    \item Trong hình học phẳng, hai đường thẳng vuông góc với nhau thì có cắt nhau không?
+    \item Quan sát lớp học: Xét đường chân tường phòng học và đường mép cột thẳng đứng ở góc tường đối diện. Hai đường thẳng này có cắt nhau không? Góc giữa chúng bằng bao nhiêu độ? Chúng có được gọi là vuông góc với nhau không?
+\end{enumerate}
+\end{pedabox}
+
+\noindent \textbf{c) Sản phẩm:}
+Câu trả lời của học sinh:
+\begin{itemize}
+    \item Trong mặt phẳng, hai đường thẳng vuông góc thì bắt buộc phải cắt nhau tại một điểm và tạo thành góc $90^\circ$.
+    \item Trong phòng học, mép cột thẳng đứng và chân tường đối diện không có điểm chung (chúng chéo nhau). Tuy nhiên, nếu tịnh tiến mép cột về góc tường thì nó vuông góc với mép chân tường. Do đó góc giữa chúng bằng $90^\circ$. Trong không gian, chúng vẫn được gọi là \textbf{hai đường thẳng vuông góc với nhau}!
+\end{itemize}
+
+\noindent \textbf{d) Tổ chức thực hiện:}
+\begin{itemize}[leftmargin=0.6cm]
+    \item \textbf{Giao nhiệm vụ:} Giáo viên yêu cầu học sinh quan sát không gian thực tế trong lớp học và thảo luận trong 2 phút.
+    \item \textbf{Thực hiện nhiệm vụ:} Học sinh chỉ ra các cạnh mép tường, cạnh bảng, cạnh bàn.
+    \item \textbf{Báo cáo, nhận định:} Giáo viên chốt: Đây chính là điểm khác biệt then chốt giữa hình học không gian và hình học phẳng.
+\end{itemize}
+
+\subsubsection*{2. Hoạt động 2: Hình thành kiến thức (25 phút)}
+
+\paragraph{2.1. Đơn vị kiến thức 1: Định nghĩa hai đường thẳng vuông góc (10 phút)}
+
+\noindent \textbf{a) Mục tiêu:}
+Nắm vững định nghĩa hai đường thẳng vuông góc trong không gian; nhận biết điều kiện tương đương qua tích vô hướng của hai vectơ chỉ phương.
+
+\noindent \textbf{b) Nội dung:}
+\begin{pedabox}{Định nghĩa hai đường thẳng vuông góc}
+Hai đường thẳng $a$ và $b$ được gọi là \textbf{vuông góc với nhau}, ký hiệu là $a \perp b$, nếu góc giữa chúng bằng $90^\circ$.
+\end{pedabox}
+
+\begin{pedabox}{Điều kiện tương đương qua vectơ chỉ phương}
+Cho $\vec{u}$ và $\vec{v}$ lần lượt là vectơ chỉ phương của hai đường thẳng $a$ và $b$. Khi đó:
+$$a \perp b \iff \vec{u} \cdot \vec{v} = 0$$
+\end{pedabox}
+
+\begin{scaffoldbox}{Biện pháp sư phạm: Bảng so sánh mặt phẳng vs không gian (Scaffolding)}
+\begin{center}
+\begin{tabular}{|m{4cm}|m{5cm}|m{5.5cm}|}
+\hline
+\textbf{Đặc điểm so sánh} & \textbf{Trong Hình học Phẳng} & \textbf{Trong Hình học Không gian} \\ \hline
+\textbf{Vị trí tương đối khi vuông góc} & BẮT BUỘC \textbf{cắt nhau} tại đúng $1$ điểm. & Có thể \textbf{cắt nhau} HOẶC \textbf{chéo nhau}. \\ \hline
+\textbf{Góc tạo thành} & Góc giữa 2 đường thẳng bằng $90^\circ$. & Góc giữa 2 đường thẳng bằng $90^\circ$. \\ \hline
+\textbf{Số lượng đường thẳng vuông góc qua 1 điểm} & Qua một điểm nằm ngoài đường thẳng chỉ có \textbf{duy nhất 1} đường thẳng vuông góc. & Qua một điểm trong không gian có \textbf{vô số} đường thẳng vuông góc với đường thẳng đã cho (tất cả cùng nằm trong một mặt phẳng vuông góc). \\ \hline
+\end{tabular}
+\end{center}
+\end{scaffoldbox}
+
+\noindent \textbf{c) Sản phẩm:}
+Học sinh nhận biết các cặp đường thẳng vuông góc nhưng chéo nhau trong hình lập phương $ABCD.A'B'C'D'$:
+\begin{itemize}
+    \item $AB \perp B'C'$ (vì $AB \perp BC$ và $BC \parallel B'C'$). Cặp này chéo nhau.
+    \item $AA' \perp BC$ (vì $AA' \parallel BB'$ và $BB' \perp BC$). Cặp này chéo nhau.
+    \item $AC \perp B'D'$ (hai đường chéo đáy chéo nhau và vuông góc nhau).
+\end{itemize}
+
+\noindent \textbf{d) Tổ chức thực hiện:}
+\begin{itemize}[leftmargin=0.6cm]
+    \item \textbf{Giao nhiệm vụ:} Giáo viên trình bày định nghĩa, phân tích bảng so sánh mặt phẳng vs không gian.
+    \item \textbf{Thực hiện nhiệm vụ:} Học sinh ghi nhớ điều kiện $\vec{u} \cdot \vec{v} = 0$, tìm thêm các cặp vuông góc trên mô hình hình lập phương cầm tay.
+    \item \textbf{Báo cáo, nhận định:} Giáo viên khẳng định: Hai đường thẳng vuông góc trong không gian không cần phải giao nhau.
+\end{itemize}
+
+\paragraph{2.2. Đơn vị kiến thức 2: Các tính chất và phương pháp chứng minh hai đường thẳng vuông góc (15 phút)}
+
+\noindent \textbf{a) Mục tiêu:}
+Nắm vững các tính chất cơ bản; vận dụng thành thạo 3 phương pháp chứng minh hai đường thẳng vuông góc trong không gian.
+
+\noindent \textbf{b) Nội dung:}
+\begin{pedabox}{Các tính chất quan trọng}
+\begin{itemize}[leftmargin=0.6cm]
+    \item Cho hai đường thẳng song song $b$ và $c$. Nếu đường thẳng $a$ vuông góc với $b$ thì $a$ cũng vuông góc với $c$:
+    $$\begin{cases} b \parallel c \\ a \perp b \end{cases} \implies a \perp c$$
+    \item Hai đường thẳng cùng vuông góc với một đường thẳng thứ ba thì \textbf{chưa chắc đã song song với nhau} (chúng có thể cắt nhau, chéo nhau hoặc trùng nhau).
+\end{itemize}
+\end{pedabox}
+
+\begin{pedabox}{Hệ thống 3 phương pháp chứng minh $a \perp b$}
+\begin{itemize}[leftmargin=0.6cm]
+    \item \textbf{Phương pháp 1 (Dùng góc):} Chứng minh góc giữa $a$ và $b$ bằng $90^\circ$ bằng cách kẻ các đường song song để chuyển về góc trong tam giác, rồi dùng định lý Pytago hoặc định lý hàm cosin.
+    \item \textbf{Phương pháp 2 (Dùng vectơ):} Chọn hai vectơ chỉ phương $\vec{u}$ của $a$ và $\vec{v}$ của $b$. Phân tích $\vec{u}, \vec{v}$ theo các vectơ cơ sở rồi chứng minh tích vô hướng $\vec{u} \cdot \vec{v} = 0$.
+    \item \textbf{Phương pháp 3 (Dùng tính chất bắc cầu qua đường song song):} Tìm một đường thẳng $c \parallel b$ sao cho $a \perp c \implies a \perp b$.
+\end{itemize}
+\end{pedabox}
+
+\begin{aibox}{Tích hợp Năng lực AI (Theo Quyết định 2422/QĐ-BGDĐT - Mã 11.C5.2)}
+\textbf{Nguyên lý AI nhận diện sự vuông góc trong không gian 3D:}
+\begin{itemize}[leftmargin=0.6cm]
+    \item \textbf{Bản chất công nghệ:} Trong hệ thống xe tự hành (Tesla Autopilot, Waymo) và cánh tay robot công nghiệp (Automated Manufacturing), camera 3D và cảm biến LiDAR quét hàng triệu điểm ảnh để dựng các vectơ hướng trong không gian.
+    \item Thuật toán AI không thể dùng thước đo góc trực tiếp mà luôn chuyển đổi các đường thẳng về hai vectơ chỉ phương $\vec{u} = (x_1, y_1, z_1)$ và $\vec{v} = (x_2, y_2, z_2)$.
+    \item AI kiểm tra điều kiện vuông góc thông qua phép nhân ma trận vô hướng cực nhanh:
+    $$\vec{u} \cdot \vec{v} = x_1 x_2 + y_1 y_2 + z_1 z_2 = 0.$$
+    Nếu kết quả bằng $0$, AI lập tức kích hoạt lệnh rẽ góc vuông chính xác cho xe hoặc đặt thanh thép vuông góc trong dây chuyền sản xuất tự động.
+\end{itemize}
+\end{aibox}
+
+\noindent \textbf{c) Sản phẩm:}
+Học sinh hoàn thành bài toán mẫu:
+\begin{pedabox}{Bài toán mẫu: Chứng minh vuông góc trong hình chóp}
+Cho hình chóp $S.ABC$ có đáy $ABC$ là tam giác đều cạnh $a$. Cạnh bên $SA$ vuông góc với $AB$ và $SA$ vuông góc với $AC$. Gọi $M$ là trung điểm của $BC$. Chứng minh rằng:
+$$a) \ SA \perp BC; \qquad b) \ AM \perp BC.$$
+\end{pedabox}
+\textit{Lời giải chi tiết:}
+\begin{itemize}
+    \item $a)$ Ta có $\vec{BC} = \vec{AC} - \vec{AB}$.
+    Xét tích vô hướng: $\vec{SA} \cdot \vec{BC} = \vec{SA} \cdot (\vec{AC} - \vec{AB}) = \vec{SA} \cdot \vec{AC} - \vec{SA} \cdot \vec{AB}$.
+    Theo giả thiết, $SA \perp AB \implies \vec{SA} \cdot \vec{AB} = 0$ và $SA \perp AC \implies \vec{SA} \cdot \vec{AC} = 0$.
+    Do đó: $\vec{SA} \cdot \vec{BC} = 0 - 0 = 0 \implies SA \perp BC$.
+    \item $b)$ Vì tam giác $ABC$ là tam giác đều cạnh $a$ và $M$ là trung điểm cạnh $BC$ nên trung tuyến $AM$ đồng thời là đường cao của tam giác $ABC \implies AM \perp BC$.
+\end{itemize}
+
+\noindent \textbf{d) Tổ chức thực hiện:}
+\begin{itemize}[leftmargin=0.6cm]
+    \item \textbf{Giao nhiệm vụ:} Giáo viên trình bày các phương pháp chứng minh, chiếu liên hệ với thuật toán AI. Yêu cầu học sinh giải bài toán mẫu.
+    \item \textbf{Thực hiện nhiệm vụ:} Học sinh làm bài vào vở, áp dụng quy tắc trừ vectơ ở câu a.
+    \item \textbf{Báo cáo, thảo luận:} 1 học sinh lên bảng trình bày; cả lớp nhận xét.
+    \item \textbf{Kết luận, nhận định:} Giáo viên nhận định: Phép phân tích vectơ chỉ phương giúp việc chứng minh vuông góc trở nên ngắn gọn, sáng sủa và không phụ thuộc vào việc hai đường thẳng có cắt nhau hay không.
+\end{itemize}
+
+\subsubsection*{3. Hoạt động 3: Luyện tập (10 phút)}
+
+\noindent \textbf{a) Mục tiêu:}
+Củng cố kỹ năng chứng minh hai đường thẳng vuông góc trong khối đa diện (hình chóp, tứ diện).
+
+\noindent \textbf{b) Nội dung:}
+Thực hiện bài tập trong Phiếu học tập số 2:
+\begin{pedabox}{Bài tập luyện tập: Cạnh đối vuông góc trong tứ diện}
+Cho tứ diện $ABCD$ có $AB \perp CD$ và $AC \perp BD$. Chứng minh rằng $AD \perp BC$.
+\textit{(Định lý: Trong một tứ diện, nếu có hai cặp cạnh đối vuông góc với nhau thì cặp cạnh đối còn lại cũng vuông góc với nhau).}
+\end{pedabox}
+
+\noindent \textbf{c) Sản phẩm:}
+Lời giải chi tiết:
+Đặt $\vec{AB} = \vec{b}$, $\vec{AC} = \vec{c}$, $\vec{AD} = \vec{d}$. Khi đó:
+\begin{itemize}
+    \item $\vec{CD} = \vec{d} - \vec{c}$. Giả thiết $AB \perp CD \implies \vec{AB} \cdot \vec{CD} = 0 \iff \vec{b} \cdot (\vec{d} - \vec{c}) = 0 \iff \vec{b} \cdot \vec{d} = \vec{b} \cdot \vec{c}$ \quad (1).
+    \item $\vec{BD} = \vec{d} - \vec{b}$. Giả thiết $AC \perp BD \implies \vec{AC} \cdot \vec{BD} = 0 \iff \vec{c} \cdot (\vec{d} - \vec{b}) = 0 \iff \vec{c} \cdot \vec{d} = \vec{b} \cdot \vec{c}$ \quad (2).
+    \item Từ (1) và (2) suy ra: $\vec{b} \cdot \vec{d} = \vec{c} \cdot \vec{d} \iff \vec{d} \cdot (\vec{b} - \vec{c}) = 0$.
+    \item Mặt khác, $\vec{BC} = \vec{AC} - \vec{AB} = \vec{c} - \vec{b} = -(\vec{b} - \vec{c})$.
+    Do đó: $\vec{AD} \cdot \vec{BC} = \vec{d} \cdot (\vec{c} - \vec{b}) = - \vec{d} \cdot (\vec{b} - \vec{c}) = -0 = 0$.
+    \item Vì $\vec{AD} \cdot \vec{BC} = 0$ nên $AD \perp BC$. Bài toán được chứng minh trọn vẹn!
+\end{itemize}
+
+\noindent \textbf{d) Tổ chức thực hiện:}
+\begin{itemize}[leftmargin=0.6cm]
+    \item \textbf{Giao nhiệm vụ:} Giáo viên giao bài tập, gợi ý học sinh biểu diễn tất cả các vectơ theo 3 vectơ gốc $A$ ($\vec{AB}, \vec{AC}, \vec{AD}$).
+    \item \textbf{Thực hiện nhiệm vụ:} Học sinh biến đổi đại số vectơ trong 5 phút.
+    \item \textbf{Báo cáo, thảo luận:} Gọi 1 học sinh giỏi lên bảng trình bày lời giải; cả lớp cùng phân tích sự tinh tế của phép biến đổi vectơ.
+    \item \textbf{Kết luận, nhận định:} Giáo viên biểu dương học sinh và nhấn mạnh đây là tính chất hình học vô cùng đẹp mắt của tứ diện trực tâm.
+\end{itemize}
+
+\subsubsection*{4. Hoạt động 4: Vận dụng (5 phút)}
+
+\noindent \textbf{a) Mục tiêu:}
+Vận dụng kiến thức hai đường thẳng vuông góc để kiểm tra độ an toàn trong thiết kế khung nhà xưởng mái tôn.
+
+\noindent \textbf{b) Nội dung:}
+\begin{stembox}{Bài toán Kỹ thuật Cơ khí & Xây dựng: Kiểm tra vì kèo mái nhà xưởng}
+Một nhà xưởng công nghiệp có khung vì kèo thép hình tam giác cân $SAB$ ($SA = SB$). Để gia cố mái, người ta hàn một thanh giằng $CD$ nằm ngang song song với cạnh đáy $AB$. Kỹ sư thiết kế yêu cầu thanh xà gồ dọc $d$ chạy vuông góc với thanh giằng $CD$.
+Một người thợ hàn thắc mắc: \textit{``Nếu tôi hàn thanh xà gồ dọc $d$ vuông góc với thanh giằng ngang $CD$, liệu thanh $d$ đó có tự động vuông góc với dầm chính $AB$ hay không?''}
+Em hãy dùng kiến thức toán học đã học để trả lời và giải thích cho người thợ hàn.
+\end{stembox}
+
+\noindent \textbf{c) Sản phẩm:}
+Câu trả lời của học sinh:
+\begin{itemize}
+    \item Trả lời: \textbf{CÓ}, thanh xà gồ dọc $d$ chắc chắn sẽ vuông góc với dầm chính $AB$.
+    \item Giải thích toán học: Theo thiết kế, thanh giằng $CD$ song song với dầm chính $AB$ ($CD \parallel AB$).
+    Áp dụng tính chất hình học không gian: \textit{``Nếu một đường thẳng vuông góc với một trong hai đường thẳng song song thì nó cũng vuông góc với đường thẳng còn lại''}.
+    Vì $d \perp CD$ và $CD \parallel AB$ nên suy ra $d \perp AB$. Do đó thiết kế hoàn toàn đảm bảo yêu cầu kỹ thuật và độ chịu lực của mái nhà xưởng.
+\end{itemize}
+
+\noindent \textbf{d) Tổ chức thực hiện:}
+\begin{itemize}[leftmargin=0.6cm]
+    \item \textbf{Giao nhiệm vụ:} Giáo viên nêu tình huống thực tế đời sống.
+    \item \textbf{Thực hiện nhiệm vụ:} Học sinh suy nghĩ, vận dụng tính chất của bài học để trả lời.
+    \item \textbf{Báo cáo, nhận định:} Giáo viên tổng kết bài học, dặn dò học sinh chuẩn bị bài học tiếp theo: \textbf{Bài 23. Đường thẳng vuông góc với mặt phẳng}.
+\end{itemize}
+
+\vspace{10pt}
+
+\section*{IV. PHỤ LỤC HỌC LIỆU BỔ TRỢ (BẮT BUỘC)}
+
+\subsection*{1. Phiếu học tập số 1 (Tiết 1): Góc giữa hai đường thẳng trong không gian}
+
+\begin{pedabox}{PHIẾU HỌC TẬP SỐ 1: GÓC GIỮA HAI ĐƯỜNG THẲNG}
+\textbf{Họ và tên học sinh:} \dotfill \ \textbf{Lớp:} \dotfill \ \textbf{Nhóm:} \dotfill
+
+\noindent \textbf{CẤP ĐỘ 1: NHẬN BIẾT (Điền khuyết \& Vẽ hình)}
+\begin{enumerate}[leftmargin=0.6cm]
+    \item Điền vào chỗ trống:
+    Góc giữa hai đường thẳng $a$ và $b$ trong không gian có số đo từ $\dots\dots^\circ$ đến $\dots\dots^\circ$.
+    Nếu $\vec{u}, \vec{v}$ là hai vectơ chỉ phương của $a, b$ thì $\cos(a, b) = \dots\dots\dots\dots$
+    \item Cho hình lập phương $ABCD.A'B'C'D'$. Hãy xác định góc giữa các cặp đường thẳng sau:
+    $$a) \ (AA', BC) = \dots\dots^\circ; \qquad b) \ (A'D', CD) = \dots\dots^\circ; \qquad c) \ (A'C', AC) = \dots\dots^\circ$$
+\end{enumerate}
+
+\noindent \textbf{CẤP ĐỘ 2: THÔNG HIỂU (Dựng đường song song \& Tính góc)}
+\begin{enumerate}[leftmargin=0.6cm]
+    \item Cho hình chóp $S.ABCD$ có đáy $ABCD$ là hình vuông cạnh $a$. Cạnh bên $SA = a$ và $SA \perp AB, SA \perp AD$.
+    Tính góc giữa đường thẳng $SD$ và đường thẳng $BC$.
+    \item Cho tứ diện $OABC$ có $OA, OB, OC$ đôi một vuông góc và $OA = OB = OC = a$. Gọi $M$ là trung điểm của $BC$.
+    Tính góc giữa hai đường thẳng $OM$ và $AB$.
+\end{enumerate}
+
+\noindent \textbf{CẤP ĐỘ 3: VẬN DỤNG (Khai thác mô hình GeoGebra 3D)}
+\begin{enumerate}[leftmargin=0.6cm]
+    \item Sử dụng ứng dụng GeoGebra 3D trên điện thoại/máy tính, dựng một tứ diện đều cạnh $3$. Dùng công cụ đo góc của phần mềm để kiểm tra góc giữa hai cạnh đối diện bất kì của tứ diện. Ghi lại kết quả và so sánh với lý thuyết đã học.
+\end{enumerate}
+\end{pedabox}
+
+\subsection*{2. Phiếu học tập số 2 (Tiết 2): Hai đường thẳng vuông góc}
+
+\begin{pedabox}{PHIẾU HỌC TẬP SỐ 2: HAI ĐƯỜNG THẲNG VUÔNG GÓC}
+\textbf{Họ và tên học sinh:} \dotfill \ \textbf{Lớp:} \dotfill \ \textbf{Nhóm:} \dotfill
+
+\noindent \textbf{CẤP ĐỘ 1: NHẬN BIẾT \& THÔNG HIỂU (Đúng/Sai)}
+\begin{enumerate}[leftmargin=0.6cm]
+    \item Xác định tính Đúng (Đ) hoặc Sai (S) của các mệnh đề sau:
+    \begin{itemize}
+        \item [$\Box$] $a)$ Hai đường thẳng cùng vuông góc với một đường thẳng thứ ba thì song song với nhau.
+        \item [$\Box$] $b)$ Hai đường thẳng vuông góc với nhau trong không gian thì có thể chéo nhau.
+        \item [$\Box$] $c)$ Nếu $a \perp b$ và $b \parallel c$ thì $a \perp c$.
+        \item [$\Box$] $d)$ Hai đường thẳng phân biệt cùng song song với một mặt phẳng thì song song với nhau.
+    \end{itemize}
+\end{enumerate}
+
+\noindent \textbf{CẤP ĐỘ 2: VẬN DỤNG (Chứng minh vuông góc bằng vectơ)}
+\begin{enumerate}[leftmargin=0.6cm]
+    \item Cho hình lăng trụ tam giác $ABC.A'B'C'$ có đáy $ABC$ là tam giác vuông tại $A$. Cạnh bên $AA'$ vuông góc với $AB$ và $AA'$ vuông góc với $AC$. Chứng minh rằng:
+    $$a) \ AA' \perp BC; \qquad b) \ AB \perp B'C'.$$
+\end{enumerate}
+
+\noindent \textbf{CẤP ĐỘ 3: VẬN DỤNG CAO (Mô hình hóa AI \& Robot)}
+\begin{enumerate}[leftmargin=0.6cm]
+    \item Một cánh tay robot 3 trục di chuyển trong không gian có hai thanh cơ học định hướng bởi hai vectơ $\vec{u}_1 = (1; -2; 3)$ và $\vec{u}_2 = (4; 5; 2)$. Hãy kiểm tra xem hai thanh cơ học này có vuông góc với nhau hay không?
+\end{enumerate}
+\end{pedabox}
+
+\subsection*{3. Bảng Rubric đánh giá năng lực học sinh theo 4 mức độ}
+
+\begin{center}
+\begin{tabularx}{\textwidth}{|p{2.8cm}|X|X|X|X|}
+    \hline
+    \textbf{Tiêu chí} & \textbf{Mức 1: Chưa đạt} & \textbf{Mức 2: Đạt} & \textbf{Mức 3: Khá} & \textbf{Mức 4: Tốt} \\ \hline
+    \textbf{1. Hiểu và xác định góc hai đường thẳng} & Nhầm lẫn góc giữa 2 đường thẳng với góc tù của vectơ; không biết tịnh tiến song song. & Biết tịnh tiến về đỉnh chung; xác định được góc trong các khối hình cơ bản. & Tính đúng góc bằng tam giác phẳng hoặc vectơ; giải thích rõ ràng điều kiện góc $\le 90^\circ$. & Thành thạo phương pháp vectơ; tính nhanh góc của các đường chéo không gian phức tạp. \\ \hline
+    \textbf{2. Kỹ năng chứng minh hai ĐT vuông góc} & Nhầm lẫn rằng hai đường thẳng vuông góc bắt buộc phải cắt nhau. & Nhận biết được tính vuông góc khi có yếu tố song song đơn giản ($b \parallel c, a \perp b$). & Chứng minh tốt bằng vectơ ($\vec{u} \cdot \vec{v} = 0$); vẽ hình chuẩn xác nét đứt, nét liền. & Tư duy hình học sắc sảo; giải quyết trọn vẹn bài toán tứ diện trực tâm và hình chóp phân hóa. \\ \hline
+    \textbf{3. Năng lực số \& Mô hình GeoGebra 3D (Mã 1.3NC1b)} & Chưa biết mở phần mềm hoặc chưa biết thao tác xoay không gian 3 chiều. & Mở được mô hình GeoGebra 3D; xoay khối hình theo hướng dẫn của giáo viên. & Tương tác thuần thục; tự đổi góc nhìn để phát hiện tính chéo nhau và vuông góc. & Chủ động tự dựng được mô hình tứ diện đều trên GeoGebra 3D để đo góc và kiểm chứng. \\ \hline
+    \textbf{4. Hiểu nguyên lý AI \& Vận dụng (Mã 11.C5.2)} & Chưa hiểu mối liên hệ giữa tích vô hướng và thuật toán máy tính. & Nêu được điều kiện tích vô hướng bằng 0 khi AI định vị góc vuông. & Giải thích được vì sao robot công nghiệp dùng vectơ thay cho việc đo góc truyền thống. & Vận dụng kiến thức vectơ giải bài toán tọa độ robot; liên hệ xuất sắc với thực tiễn xây dựng. \\ \hline
+\end{tabularx}
+\end{center}
+
+\end{document}
