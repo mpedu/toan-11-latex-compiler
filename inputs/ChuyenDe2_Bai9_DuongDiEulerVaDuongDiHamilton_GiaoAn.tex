@@ -1,0 +1,670 @@
+\documentclass[12pt, a4paper]{article}
+% --- 1. Cấu hình Tiếng Việt và Font chữ chuẩn ---
+\usepackage[utf8]{inputenc}
+\usepackage[T5]{fontenc}
+\usepackage[vietnamese]{babel}
+\usepackage{mathptmx} % Font Times New Roman đồng bộ cả chữ và công thức toán, không gây xung đột gói
+
+\makeatletter
+\renewcommand{\normalsize}{\@setfontsize\normalsize{13pt}{16pt}}
+\makeatother
+\normalsize
+
+% --- 2. Gói Toán học & Ký hiệu bổ trợ ---
+\usepackage{amsmath, amssymb, amsfonts, mathrsfs, amsthm}
+\usepackage{graphicx}
+\usepackage{fontawesome}
+\usepackage{booktabs, tabularx, array, multirow}
+\usepackage{enumitem}
+
+% --- 3. Đồ họa TikZ, Bảng biến thiên & Hình không gian ---
+\usepackage{tikz}
+\usetikzlibrary{calc, intersections, angles, quotes, patterns, arrows.meta, 3d}
+\usepackage{pgfplots}
+\pgfplotsset{compat=1.18}
+\usepackage{tkz-euclide}
+\usepackage{tkz-tab}
+
+\renewcommand{\vec}[1]{\overrightarrow{#1}}
+
+% --- 4. Hộp sư phạm (Tcolorbox) ---
+\usepackage[many]{tcolorbox}
+\tcbuselibrary{skins, breakable}
+
+% --- 5. Căn lề chuẩn văn bản giáo án ---
+\usepackage{geometry}
+\geometry{
+    a4paper,
+    left=25mm,
+    right=15mm,
+    top=20mm,
+    bottom=20mm
+}
+
+% --- 6. Header / Footer chuẩn hóa ---
+\usepackage{fancyhdr}
+\usepackage{lastpage}
+\pagestyle{fancy}
+\fancyhf{}
+
+\fancyhead[L]{\small \textit{Kế hoạch bài dạy Toán 11}}
+\fancyhead[R]{\textbf{Trang \thepage/\pageref{LastPage}}}
+\fancyfoot[L]{\small \textit{Tổ Toán - Tin}}
+\fancyfoot[R]{\small \textit{Trường THCS\&THPT Hồng Vân}}
+\renewcommand{\headrulewidth}{0.4pt}
+\renewcommand{\footrulewidth}{0.4pt}
+
+% --- 7. Giãn dòng & Giãn đoạn theo chuẩn Nghị định 30/2020/NĐ-CP ---
+\usepackage{setspace}
+\setstretch{1.15}
+\setlength{\parindent}{1.0cm}
+\setlength{\parskip}{5pt}
+
+% Định nghĩa hộp sư phạm chuyên dụng
+\newtcolorbox{pedabox}[2][]{
+    enhanced,
+    breakable,
+    colback=blue!3!white,
+    colframe=blue!65!black,
+    fonttitle=\bfseries\small,
+    title={#2},
+    arc=2mm,
+    boxrule=0.6pt,
+    left=3mm, right=3mm, top=2mm, bottom=2mm,
+    #1
+}
+
+\newtcolorbox{aibox}[2][]{
+    enhanced,
+    breakable,
+    colback=teal!4!white,
+    colframe=teal!70!black,
+    fonttitle=\bfseries\small,
+    title={#2},
+    arc=2mm,
+    boxrule=0.6pt,
+    left=3mm, right=3mm, top=2mm, bottom=2mm,
+    #1
+}
+
+\newtcolorbox{scaffoldbox}[2][]{
+    enhanced,
+    breakable,
+    colback=orange!4!white,
+    colframe=orange!80!black,
+    fonttitle=\bfseries\small,
+    title={#2},
+    arc=2mm,
+    boxrule=0.6pt,
+    left=3mm, right=3mm, top=2mm, bottom=2mm,
+    #1
+}
+
+\newtcolorbox{stembox}[2][]{
+    enhanced,
+    breakable,
+    colback=purple!4!white,
+    colframe=purple!75!black,
+    fonttitle=\bfseries\small,
+    title={#2},
+    arc=2mm,
+    boxrule=0.6pt,
+    left=3mm, right=3mm, top=2mm, bottom=2mm,
+    #1
+}
+
+\begin{document}
+
+\begin{center}
+    {\fontsize{14pt}{17pt}\selectfont \textbf{KẾ HOẠCH BÀI DẠY MÔN TOÁN LỚP 11}}\\[6pt]
+    {\fontsize{16pt}{19pt}\selectfont \textbf{CHUYÊN ĐỀ 2 - BÀI 9. ĐƯỜNG ĐI EULER VÀ ĐƯỜNG ĐI HAMILTON}}\\[4pt]
+    {\fontsize{12pt}{15pt}\selectfont \textbf{Môn học: Toán 11} \ \textbar \ \textbf{Thời lượng: 2 tiết (Tiết CĐ19, CĐ20 theo PPCT | Tuần 25)}}
+\end{center}
+
+\vspace{5pt}
+
+\section*{I. MỤC TIÊU}
+
+\subsection*{1. Kiến thức, Năng lực}
+
+\begin{itemize}[leftmargin=1.2cm]
+    \item \textbf{Yêu cầu cần đạt (Nguyên văn CT GDPT 2018 Toán 11):}
+    \begin{itemize}[leftmargin=0.6cm]
+        \item Nhận biết được đường đi Euler, đường đi Hamilton từ đồ thị.
+        \item Sử dụng kiến thức về đồ thị để giải quyết một số tình huống liên quan đến thực tiễn.
+    \end{itemize}
+
+    \item \textbf{Năng lực Toán học đặc thù:}
+    \begin{itemize}[leftmargin=0.6cm]
+        \item \textit{Năng lực tư duy và lập luận toán học:} So sánh, phân tích sự khác biệt bản chất giữa đường đi Euler (đi qua mỗi \textbf{cạnh} của đồ thị đúng một lần) và đường đi Hamilton (đi qua mỗi \textbf{đỉnh} của đồ thị đúng một lần); giải thích chặt chẽ cơ sở của Định lý Euler thông qua tính chẵn/lẻ của bậc đỉnh; suy luận logic để chứng minh hoặc bác bỏ sự tồn tại của chu trình Euler/Hamilton trên đồ thị.
+        \item \textit{Năng lực mô hình hóa toán học:} Chuyển hóa các bài toán thực tiễn lịch sử và hiện đại (bài toán 7 cây cầu Königsberg của Euler, bài toán vòng quanh thế giới của Hamilton, bài toán người đưa thư phát thư trên các tuyến đường, bài toán xe thu gom rác thải đô thị, bài toán lập lộ trình du lịch qua các địa danh) thành bài toán tìm đường đi/chu trình trên mô hình đồ thị.
+        \item \textit{Năng lực giải quyết vấn đề toán học:} Thiết lập thuật toán kiểm tra bậc của các đỉnh để nhận biết đồ thị Euler hoặc nửa Euler; xây dựng quy trình từng bước tìm đường đi Euler/Hamilton; áp dụng thành thạo điều kiện cần và đủ của Euler để giải quyết bài toán "vẽ hình bằng một nét không nhấc bút".
+        \item \textit{Năng lực giao tiếp toán học:} Sử dụng chuẩn xác các thuật ngữ và kí hiệu của lí thuyết đồ thị: đỉnh $V$, cạnh $E$, bậc của đỉnh $d(v)$, đỉnh bậc chẵn, đỉnh bậc lẻ, đường đi Euler, chu trình Euler, đồ thị Euler, đồ thị nửa Euler, đường đi Hamilton, chu trình Hamilton, đồ thị Hamilton; trình bày mạch lạc chuỗi đỉnh và cạnh biểu diễn lộ trình.
+        \item \textit{Năng lực sử dụng công cụ, phương tiện học toán:} Khai thác hiệu quả các phần mềm mô phỏng đồ thị (Graph Online, GeoGebra Graph Theory) để dựng đồ thị, kiểm tra tính liên thông, tự động tính bậc đỉnh và mô phỏng trực quan đường đi Euler/Hamilton.
+    \end{itemize}
+
+    \item \textbf{Năng lực số (Theo Thông tư 02/2025/TT-BGDĐT):}
+    \begin{itemize}[leftmargin=0.6cm]
+        \item \textit{Mã 5.1NC1a (Sử dụng công cụ số để giải quyết vấn đề toán học):} Học sinh sử dụng thành thạo các ứng dụng, website trực tuyến mô phỏng thuật toán đồ thị (như Graph Online: \texttt{https://graphonline.ru/en/} hoặc công cụ số trên phòng máy) để nhập đồ thị, trực quan hóa bậc của các đỉnh, chạy thuật toán Fleury tìm chu trình Euler và kiểm tra tính đúng đắn của lộ trình.
+    \end{itemize}
+
+    \item \textbf{Năng lực AI (Theo Quyết định 2422/QĐ-BGDĐT):}
+    \begin{itemize}[leftmargin=0.6cm]
+        \item \textit{Mã 1.2NC1a (Khai thác và phân tích dữ liệu cùng AI):} Học sinh phân tích bài toán nổi tiếng 7 cây cầu Königsberg thông qua mô hình tương tác trực tuyến; tìm hiểu cách Trí tuệ nhân tạo (AI) biểu diễn tri thức dưới dạng đồ thị tri thức (Knowledge Graph) và cách các thuật toán tìm kiếm của AI (DFS, BFS, $A^*$) duyệt qua các đỉnh và cạnh của đồ thị để điều hướng xe tự hành, định tuyến mạng Internet và tối ưu hóa chuỗi cung ứng logistics.
+        \item \textit{Kỹ thuật Prompting kiểm chứng logic:} Học sinh biết cách xây dựng câu lệnh prompt chính xác yêu cầu trợ lý AI kiểm tra tính Euler/Hamilton của một đồ thị cho trước bằng danh sách đỉnh và tập cạnh, phân tích phản biện các bước lập luận của AI.
+    \end{itemize}
+
+    \item \textbf{Năng lực chung:}
+    \begin{itemize}[leftmargin=0.6cm]
+        \item \textit{Tự chủ và tự học:} Chủ động tìm hiểu bối cảnh lịch sử của bài toán 7 cây cầu Königsberg và trò chơi Icosian của Hamilton; tự giác thực hành rèn luyện trên phiếu học tập.
+        \item \textit{Giao tiếp và hợp tác:} Tích cực phối hợp nhóm, phân công vai trò rõ ràng khi khảo sát đồ thị thực tế, cùng thảo luận tìm phương án lộ trình tối ưu và phản biện giải pháp của nhóm bạn.
+    \end{itemize}
+\end{itemize}
+
+\subsection*{2. Phẩm chất}
+
+\begin{itemize}[leftmargin=1.2cm]
+    \item \textbf{Chăm chỉ:} Kiên nhẫn thử nghiệm và kiểm tra tỉ mỉ từng cạnh, từng đỉnh của đồ thị; chủ động tìm kiếm các quy luật toán học ẩn sau các trò chơi giải đố dân gian.
+    \item \textbf{Trung thực:} Báo cáo kết quả khảo sát đồ thị chính xác, không ngụy tạo lộ trình đi qua cạnh/đỉnh; tôn trọng sản phẩm trí tuệ và sự đóng góp của các thành viên trong nhóm.
+    \item \textbf{Trách nhiệm:} Có ý thức bảo quản thiết bị trong phòng thực hành máy tính; tích cực đóng góp vào dự án STEM của nhóm; rèn luyện tư duy tối ưu hóa nhằm tiết kiệm năng lượng và thời gian trong cuộc sống.
+\end{itemize}
+
+\section*{II. THIẾT BỊ DẠY HỌC VÀ HỌC LIỆU}
+
+\begin{itemize}[leftmargin=1.2cm]
+    \item \textbf{Giáo viên:}
+    \begin{itemize}[leftmargin=0.6cm]
+        \item Kế hoạch bài dạy chi tiết 2 tiết theo chuẩn Công văn 5512/BGDĐT-GDTrH.
+        \item Bài trình chiếu điện tử tương tác (Slide PowerPoint), hình ảnh minh họa bài toán 7 cây cầu Königsberg năm 1736 và trò chơi Icosian năm 1857.
+        \item Phòng thực hành tin học (35 máy tính nối mạng Internet ổn định, cài sẵn trình duyệt web truy cập công cụ Graph Online).
+        \item Hệ thống Phiếu học tập phân tầng bậc thang (PHT số 1: Đường đi và chu trình Euler; PHT số 2: Đường đi và chu trình Hamilton).
+        \item Bảng Rubric đánh giá năng lực giải quyết vấn đề toán học và năng lực số của học sinh.
+    \end{itemize}
+
+    \item \textbf{Học sinh:}
+    \begin{itemize}[leftmargin=0.6cm]
+        \item Sách Chuyên đề học tập Toán 11, vở ghi chép bài học, thước kẻ, bút dạ màu (để tô màu cạnh và đỉnh khi duyệt đồ thị).
+        \item Thiết bị cá nhân (điện thoại thông minh/máy tính bảng) hoặc máy tính phòng thực hành để thao tác phần mềm mô phỏng trực tuyến.
+    \end{itemize}
+\end{itemize}
+
+\section*{III. TIẾN TRÌNH DẠY HỌC}
+
+\begin{center}
+    \textbf{\large TIẾT 1 (TIẾT CĐ19 THEO PPCT | TUẦN 25)}\\[4pt]
+    \textbf{\large ĐƯỜNG ĐI EULER VÀ CHU TRÌNH EULER}
+\end{center}
+
+\subsection*{1. Hoạt động 1: Mở đầu (Khởi động - 8 phút)}
+
+\begin{itemize}[leftmargin=1.2cm]
+    \item[a)] \textbf{Mục tiêu:}
+    \begin{itemize}[leftmargin=0.6cm]
+        \item Tạo tình huống có vấn đề xuất phát từ lịch sử toán học: bài toán 7 cây cầu Königsberg và trò chơi vẽ hình bằng một nét không nhấc bút trong dân gian.
+        \item Kích thích sự tò mò, nhu cầu tìm hiểu quy luật toán học để biết khi nào một hình vẽ có thể vẽ được bằng một nét.
+    \end{itemize}
+
+    \item[b)] \textbf{Nội dung:}
+    \begin{itemize}[leftmargin=0.6cm]
+        \item Giáo viên trình chiếu bản đồ thành phố Königsberg (thế kỷ XVIII) với dòng sông Pregel chia thành phố làm 4 vùng đất được nối với nhau bởi 7 cây cầu.
+        \item Đặt ra câu hỏi: \textit{"Có thể xuất phát từ một vùng đất nào đó, đi dạo qua tất cả 7 cây cầu, mỗi cây cầu đi qua đúng một lần rồi quay trở lại điểm xuất phát hay không?"}
+        \item Giao nhiệm vụ thử vẽ "ngôi nhà có gác" (hình vuông có hai đường chéo kèm mái tam giác) bằng một nét liền không nhấc bút và không đồ lại nét cũ.
+    \end{itemize}
+
+    \item[c)] \textbf{Sản phẩm:}
+    \begin{itemize}[leftmargin=0.6cm]
+        \item Học sinh thử nghiệm vẽ trên giấy: một số em vẽ được ngôi nhà, một số em vẽ mãi không được và đặt câu hỏi vì sao có hình vẽ được, có hình lại không.
+        \item Đối với 7 cây cầu Königsberg: học sinh nhận thấy thử nhiều cách đều bị thừa hoặc lặp lại một cây cầu, từ đó nhận thức được nhu cầu cần một công cụ toán học để giải thích.
+    \end{itemize}
+
+    \item[d)] \textbf{Tổ chức thực hiện:}
+\end{itemize}
+
+\begin{pedabox}{Tiến trình tổ chức Hoạt động 1 (Khởi động)}
+    \textbf{Bước 1: Chuyển giao nhiệm vụ}
+    \begin{itemize}[leftmargin=0.6cm]
+        \item GV chiếu hình ảnh bài toán 7 cây cầu Königsberg và yêu cầu học sinh làm việc cặp đôi trong 3 phút: thử tìm một lộ trình đi qua 7 cây cầu mỗi cầu đúng 1 lần.
+        \item GV phát tờ giấy nháp vẽ sẵn 3 hình học dân gian: (1) Ngôi nhà không gác; (2) Ngôi nhà có gác; (3) Ngũ giác sao. Yêu cầu vẽ mỗi hình bằng 1 nét duy nhất.
+    \end{itemize}
+
+    \textbf{Bước 2: Thực hiện nhiệm vụ}
+    \begin{itemize}[leftmargin=0.6cm]
+        \item HS hào hứng thử nghiệm vẽ bằng bút chì trên nháp.
+        \item GV quan sát, khích lệ HS chú ý đến số đường nối vào mỗi điểm nút của hình vẽ.
+    \end{itemize}
+
+    \textbf{Bước 3: Báo cáo, thảo luận}
+    \begin{itemize}[leftmargin=0.6cm]
+        \item Đại diện 2 học sinh lên bảng vẽ hình ngôi nhà bằng 1 nét và chỉ ra điểm bắt đầu, điểm kết thúc.
+        \item Về bài toán 7 cây cầu, cả lớp đều thống nhất không thể tìm được đường đi như yêu cầu.
+    \end{itemize}
+
+    \textbf{Bước 4: Kết luận, nhận định}
+    \begin{itemize}[leftmargin=0.6cm]
+        \item GV giới thiệu: Năm 1736, nhà toán học thiên tài Leonhard Euler đã giải quyết trọn vẹn bài toán này bằng cách mô hình hóa các vùng đất thành các \textbf{đỉnh} và các cây cầu thành các \textbf{cạnh}, khai sinh ra ngành \textbf{Lí thuyết đồ thị}.
+        \item GV dẫn dắt vào bài học mới: Khái niệm đường đi Euler và chu trình Euler.
+    \end{itemize}
+\end{pedabox}
+
+\subsection*{2. Hoạt động 2: Hình thành kiến thức mới (22 phút)}
+
+\begin{itemize}[leftmargin=1.2cm]
+    \item[a)] \textbf{Mục tiêu:}
+    \begin{itemize}[leftmargin=0.6cm]
+        \item Nắm vững định nghĩa: đường đi Euler, chu trình Euler, đồ thị Euler, đồ thị nửa Euler.
+        \item Nắm vững phát biểu và ý nghĩa của Định lý Euler về điều kiện cần và đủ để đồ thị liên thông có chu trình Euler hoặc đường đi Euler dựa trên bậc của các đỉnh.
+        \item Nắm vững phương pháp xác định bậc của đỉnh $d(v)$ và phân loại đỉnh chẵn, đỉnh lẻ.
+    \end{itemize}
+
+    \item[b)] \textbf{Nội dung:}
+    \begin{itemize}[leftmargin=0.6cm]
+        \item Tìm hiểu khái niệm đường đi Euler và chu trình Euler:
+        \begin{itemize}
+            \item Đường đi trong đồ thị $G$ được gọi là \textbf{đường đi Euler} nếu nó đi qua \textbf{mỗi cạnh} của đồ thị đúng một lần.
+            \item Chu trình trong đồ thị $G$ được gọi là \textbf{chu trình Euler} nếu nó đi qua \textbf{mỗi cạnh} của đồ thị đúng một lần.
+            \item Đồ thị có chu trình Euler được gọi là \textbf{đồ thị Euler}.
+            \item Đồ thị có đường đi Euler nhưng không có chu trình Euler được gọi là \textbf{đồ thị nửa Euler}.
+        \end{itemize}
+        \item Khám phá Định lý Euler thông qua việc đếm số cạnh vào/ra tại mỗi đỉnh:
+        \begin{itemize}
+            \item Nhận xét quan trọng: Mỗi khi đường đi đi qua một đỉnh trung gian, nó dùng 1 cạnh để đi vào và 1 cạnh để đi ra (đóng góp 2 vào bậc của đỉnh đó).
+            \item Do đó, tại các đỉnh trung gian, bậc bắt buộc phải là số chẵn.
+            \item Nếu chu trình khép kín (bắt đầu tại $u$ và kết thúc tại $u$), đỉnh $u$ cũng dùng 1 cạnh để đi ra lúc đầu và 1 cạnh để đi vào lúc kết thúc, nên bậc của $u$ cũng phải là số chẵn.
+            \item Nếu đường đi mở từ $u$ đến $v$ ($u \neq v$), đỉnh xuất phát $u$ và đỉnh kết thúc $v$ sẽ có bậc lẻ!
+        \end{itemize}
+        \item Phát biểu Định lý Euler:
+        \begin{itemize}
+            \item \textbf{Định lý 1 (Đồ thị Euler):} Cho $G$ là đồ thị liên thông. $G$ là đồ thị Euler khi và chỉ khi mọi đỉnh của $G$ đều có bậc chẵn.
+            \item \textbf{Định lý 2 (Đồ thị nửa Euler):} Cho $G$ là đồ thị liên thông. $G$ là đồ thị nửa Euler khi và chỉ khi $G$ có đúng 2 đỉnh bậc lẻ. Khi đó, mọi đường đi Euler đều bắt đầu tại một đỉnh bậc lẻ và kết thúc tại đỉnh bậc lẻ còn lại.
+        \end{itemize}
+    \end{itemize}
+
+    \item[c)] \textbf{Sản phẩm:}
+    \begin{itemize}[leftmargin=0.6cm]
+        \item Ghi chép đầy đủ các định nghĩa và định lý vào vở học tập.
+        \item Lời giải chi tiết giải thích vì sao bài toán 7 cây cầu Königsberg không có lời giải:
+        \begin{itemize}
+            \item Đồ thị Königsberg có 4 đỉnh tương ứng với 4 vùng đất $A, B, C, D$.
+            \item Bậc của các đỉnh lần lượt là: $d(A) = 5$, $d(B) = 3$, $d(C) = 3$, $d(D) = 3$.
+            \item Cả 4 đỉnh đều là đỉnh bậc lẻ (nhiều hơn 2 đỉnh bậc lẻ).
+            \item Kết luận: Đồ thị không tồn tại đường đi Euler và cũng không tồn tại chu trình Euler. Người dân Königsberg không thể đi dạo qua mỗi cây cầu đúng một lần!
+        \end{itemize}
+    \end{itemize}
+
+    \item[d)] \textbf{Tổ chức thực hiện:}
+\end{itemize}
+
+\begin{pedabox}{Tiến trình tổ chức Hoạt động 2 (Hình thành kiến thức)}
+    \textbf{Bước 1: Chuyển giao nhiệm vụ}
+    \begin{itemize}[leftmargin=0.6cm]
+        \item GV trình chiếu định nghĩa đường đi Euler và chu trình Euler, nhấn mạnh từ khóa cốt lõi: \textbf{"mỗi CẠNH đúng một lần"}.
+        \item GV hướng dẫn học sinh phân tích đồ thị hình 3 tam giác ghép lại, lập bảng đếm bậc của từng đỉnh.
+        \item GV tổ chức dẫn dắt tìm hiểu Định lý Euler thông qua câu hỏi gợi mở: \textit{"Nếu bạn đi vào một thành phố rồi đi ra bằng một con đường khác mà không quay lại các con đường đã đi, thì thành phố đó đã tiêu tốn bao nhiêu con đường?"}
+    \end{itemize}
+
+    \textbf{Bước 2: Thực hiện nhiệm vụ có giàn giáo sư phạm}
+    \begin{itemize}[leftmargin=0.6cm]
+        \item HS làm việc theo nhóm 4 em, thảo luận câu hỏi gợi mở của GV.
+        \item GV hỗ trợ các nhóm có học sinh trung bình - yếu thông qua phiếu hỗ trợ.
+    \end{itemize}
+
+    \textbf{Bước 3: Báo cáo, thảo luận}
+    \begin{itemize}[leftmargin=0.6cm]
+        \item Đại diện nhóm rút ra quy luật: Mỗi lần ghé thăm một đỉnh rồi rời đi cần 2 cạnh kề đỉnh đó. Suy ra đỉnh trung gian luôn có bậc chẵn.
+        \item GV chính thức hóa phát biểu Định lý Euler trên màn hình trình chiếu.
+    \end{itemize}
+
+    \textbf{Bước 4: Kết luận, nhận định}
+    \begin{itemize}[leftmargin=0.6cm]
+        \item GV chốt lại kiến thức then chốt: Để kiểm tra một đồ thị liên thông có chu trình/đường đi Euler hay không, chỉ cần kiểm tra bậc của các đỉnh:
+        \begin{itemize}
+            \item 0 đỉnh bậc lẻ $\iff$ Có chu trình Euler (Đồ thị Euler).
+            \item Đúng 2 đỉnh bậc lẻ $\iff$ Có đường đi Euler từ đỉnh lẻ này sang đỉnh lẻ kia (Đồ thị nửa Euler).
+            \item Lớn hơn 2 đỉnh bậc lẻ $\iff$ Không có đường đi Euler.
+        \end{itemize}
+    \end{itemize}
+\end{pedabox}
+
+\begin{scaffoldbox}{Giàn giáo sư phạm cho học sinh trung bình - yếu (Scaffolding)}
+    \textbf{Bí quyết đếm bậc và nhận biết nhanh đồ thị Euler:}
+    \begin{enumerate}[leftmargin=0.6cm]
+        \item \textbf{Xác định bậc của đỉnh $d(v)$:} Là số cạnh nối trực tiếp vào đỉnh $v$. Cứ đếm các đoạn thẳng/đường cong chụm vào đỉnh đó.
+        \item \textbf{Đánh dấu tính chẵn - lẻ:}
+        \begin{itemize}
+            \item Bậc chẵn: $2, 4, 6, \dots$ (tô màu xanh).
+            \item Bậc lẻ: $1, 3, 5, \dots$ (tô màu đỏ).
+        \end{itemize}
+        \item \textbf{Quy tắc kết luận 3 giây:}
+        \begin{itemize}
+            \item Không có màu đỏ nào ($0$ đỉnh bậc lẻ): Chu trình Euler (vẽ được 1 nét khép kín, xuất phát ở đâu về lại ở đó).
+            \item Có đúng 2 màu đỏ ($2$ đỉnh bậc lẻ): Đường đi Euler (bắt buộc phải đặt bút vẽ tại 1 đỉnh màu đỏ và nhấc bút tại đỉnh màu đỏ còn lại).
+            \item Có $4, 6, 8, \dots$ màu đỏ: Không thể vẽ bằng một nét!
+        \end{itemize}
+    \end{enumerate}
+\end{scaffoldbox}
+
+\begin{aibox}{Tích hợp Năng lực số \& Năng lực AI (TT 02/2025 \& QĐ 2422)}
+    \textbf{Hoạt động thực hành số trên Graph Online (Mã 5.1NC1a):}
+    \begin{itemize}[leftmargin=0.6cm]
+        \item Học sinh mở trình duyệt trên máy vi tính, truy cập \texttt{https://graphonline.ru/en/}.
+        \item Thao tác: Nhấp đúp chuột để tạo 4 đỉnh $A, B, C, D$; kéo thả chuột giữa các đỉnh để vẽ 7 cạnh mô phỏng 7 cây cầu Königsberg.
+        \item Nhấp vào menu \textbf{Algorithms} $\rightarrow$ chọn \textbf{Find Eulerian cycle/path}.
+        \item Hệ thống trả về thông báo: \textit{"Graph does not contain Eulerian cycle/path"} và tự động tô màu đỏ hiển thị bậc lẻ của các đỉnh, giúp HS kiểm chứng trực quan phát hiện của Euler.
+    \end{itemize}
+\end{aibox}
+
+\subsection*{3. Hoạt động 3: Luyện tập (10 phút)}
+
+\begin{itemize}[leftmargin=1.2cm]
+    \item[a)] \textbf{Mục tiêu:}
+    \begin{itemize}[leftmargin=0.6cm]
+        \item Củng cố kĩ năng tính bậc của các đỉnh trong đồ thị.
+        \item Nhận dạng chính xác đồ thị Euler, đồ thị nửa Euler hoặc đồ thị không có đường đi Euler.
+        \item Viết được thứ tự các đỉnh của chu trình/đường đi Euler cụ thể.
+    \end{itemize}
+
+    \item[b)] \textbf{Nội dung:} Thực hiện bài toán trên Phiếu học tập số 1.
+    \begin{itemize}[leftmargin=0.6cm]
+        \item \textbf{Bài tập 1:} Cho đồ thị $G_1$ có các đỉnh $A, B, C, D$ và các cạnh: $AB, BC, CD, DA, AC, BD$.
+        \begin{itemize}
+            \item Tính bậc của tất cả các đỉnh của $G_1$.
+            \item Đồ thị $G_1$ có phải là đồ thị Euler không? Có phải đồ thị nửa Euler không?
+        \end{itemize}
+        \item \textbf{Bài tập 2:} Cho đồ thị $G_2$ biểu diễn hình chiếc phong bì thư mở nắp (ngôi nhà có gác) gồm các đỉnh $A, B, C, D, E$ với các cạnh: $AB, BC, CD, DA, AC, BD, CE, ED$.
+        \begin{itemize}
+            \item Xác định bậc của từng đỉnh.
+            \item Tìm một đường đi Euler xuất phát từ đỉnh nào và kết thúc tại đỉnh nào?
+        \end{itemize}
+    \end{itemize}
+
+    \item[c)] \textbf{Sản phẩm (Lời giải chi tiết):}
+    \begin{itemize}[leftmargin=0.6cm]
+        \item \textbf{Lời giải Bài tập 1:}
+        \begin{itemize}
+            \item Đồ thị $G_1$ là đồ thị đầy đủ $K_4$. Mỗi đỉnh nối với 3 đỉnh còn lại.
+            \item Bậc của các đỉnh: $d(A) = 3$, $d(B) = 3$, $d(C) = 3$, $d(D) = 3$.
+            \item Vì cả 4 đỉnh đều có bậc lẻ ($> 2$ đỉnh bậc lẻ) nên $G_1$ không có chu trình Euler và cũng không có đường đi Euler.
+        \end{itemize}
+        \item \textbf{Lời giải Bài tập 2:}
+        \begin{itemize}
+            \item Đỉnh $A$: nối với $B, C, D \implies d(A) = 3$ (bậc lẻ).
+            \item Đỉnh $B$: nối với $A, C, D \implies d(B) = 3$ (bậc lẻ).
+            \item Đỉnh $C$: nối với $A, B, D, E \implies d(C) = 4$ (bậc chẵn).
+            \item Đỉnh $D$: nối với $A, B, C, E \implies d(D) = 4$ (bậc chẵn).
+            \item Đỉnh $E$: nối với $C, D \implies d(E) = 2$ (bậc chẵn).
+            \item Số đỉnh bậc lẻ của đồ thị là đúng 2 đỉnh ($A$ và $B$). Theo Định lý Euler, $G_2$ là đồ thị nửa Euler và có đường đi Euler.
+            \item Đường đi Euler bắt buộc phải bắt đầu tại một trong hai đỉnh bậc lẻ ($A$ hoặc $B$) và kết thúc tại đỉnh bậc lẻ còn lại.
+            \item Một đường đi Euler cụ thể bắt đầu từ $A$ và kết thúc tại $B$:
+            $$A \to C \to E \to D \to C \to B \to D \to A \to B$$
+            Kiểm tra: Đường đi qua đúng 8 cạnh ($AC, CE, ED, DC, CB, BD, DA, AB$), mỗi cạnh đúng một lần!
+        \end{itemize}
+    \end{itemize}
+
+    \item[d)] \textbf{Tổ chức thực hiện:}
+    \begin{itemize}[leftmargin=0.6cm]
+        \item GV cho học sinh làm việc cá nhân trong 5 phút.
+        \item Gọi 2 học sinh lên bảng trình bày hai bài tập.
+        \item GV nhận xét, chốt phương pháp trình bày bài toán tìm đường đi Euler.
+    \end{itemize}
+\end{itemize}
+
+\subsection*{4. Hoạt động 4: Vận dụng (Chủ đề STEM - 5 phút)}
+
+\begin{itemize}[leftmargin=1.2cm]
+    \item[a)] \textbf{Mục tiêu:} Vận dụng định lý Euler vào bài toán thực tiễn: giải thích và sáng tạo các hình vẽ một nét trong trò chơi dân gian và tối ưu hóa lộ trình xe phun khử khuẩn/quét rác trên đường phố.
+    \item[b)] \textbf{Nội dung:}
+    \begin{stembox}{Chủ đề STEM: Sáng tạo mô hình hình học dân gian một nét \& Tối ưu lộ trình}
+        \textbf{Nhiệm vụ 1 (Vẽ một nét):} Hãy giải thích tại sao ngôi sao năm cánh lại có thể vẽ được bằng một nét khép kín bắt đầu và kết thúc tại cùng một đỉnh? (Dựng đồ thị ngôi sao 5 cánh và đếm bậc đỉnh).
+        
+        \textbf{Nhiệm vụ 2 (Bài toán Người đưa thư):} Một nhân viên bưu điện cần phát thư trên tất cả các tuyến đường của một khu phố nhỏ (mỗi con đường đi qua đúng một lần). Làm thế nào để nhân viên đó biết khu phố của mình có thể đi phát thư theo cách đó mà không phải đi lặp lại con đường nào?
+    \end{stembox}
+    \item[c)] \textbf{Sản phẩm:}
+    \begin{itemize}[leftmargin=0.6cm]
+        \item Đối với ngôi sao 5 cánh: Đồ thị gồm 5 đỉnh, mỗi đỉnh nối với 2 đỉnh khác $\implies d(v) = 2$ với mọi đỉnh (mọi đỉnh đều bậc chẵn). Theo Định lý Euler, đồ thị có chu trình Euler, nên luôn vẽ được bằng một nét khép kín xuất phát từ bất kì đỉnh nào!
+        \item Đối với nhân viên bưu điện: Vẽ sơ đồ các ngã ba, ngã tư thành các đỉnh và các đoạn đường thành các cạnh. Đếm bậc của các đỉnh: nếu tất cả các ngã giao đều nối với số chẵn con đường thì có thể đi hết các con đường và quay về bưu điện ban đầu; nếu có đúng 2 ngã giao có số lẻ con đường thì có thể đi được từ ngã giao lẻ này đến ngã giao lẻ kia.
+    \end{itemize}
+    \item[d)] \textbf{Tổ chức thực hiện:} GV giao bài tập về nhà hoàn thiện phiếu STEM và chuẩn bị cho Tiết 2.
+\end{itemize}
+
+\vspace{10pt}
+\hrule
+\vspace{10pt}
+
+\begin{center}
+    \textbf{\large TIẾT 2 (TIẾT CĐ20 THEO PPCT | TUẦN 25)}\\[4pt]
+    \textbf{\large ĐƯỜNG ĐI HAMILTON VÀ CHU TRÌNH HAMILTON}
+\end{center}
+
+\subsection*{1. Hoạt động 1: Mở đầu (Khởi động - 7 phút)}
+
+\begin{itemize}[leftmargin=1.2cm]
+    \item[a)] \textbf{Mục tiêu:}
+    \begin{itemize}[leftmargin=0.6cm]
+        \item Tạo nhu cầu chuyển dịch tư duy từ việc quan tâm đến \textbf{CẠNH} (Euler) sang quan tâm đến \textbf{ĐỈNH} (Hamilton).
+        \item Giới thiệu trò chơi nổi tiếng Icosian Game (Vòng quanh thế giới) của William Rowan Hamilton năm 1857.
+    \end{itemize}
+
+    \item[b)] \textbf{Nội dung:}
+    \begin{itemize}[leftmargin=0.6cm]
+        \item GV chiếu hình ảnh khối mười hai mặt đều (Dodecahedron) có 20 đỉnh tương ứng với 20 thành phố lớn trên thế giới.
+        \item Nhiệm vụ: Tìm một lộ trình xuất phát từ một thành phố, đi qua dọc theo các cạnh của khối sao cho đi qua \textbf{mỗi thành phố đúng một lần} rồi quay trở về thành phố xuất phát.
+        \item So sánh với tiết trước: Tiết trước Euler yêu cầu đi qua mỗi \textit{cây cầu/cạnh} đúng 1 lần; còn bài toán này yêu cầu đi qua mỗi \textit{thành phố/đỉnh} đúng 1 lần!
+    \end{itemize}
+
+    \item[c)] \textbf{Sản phẩm:} Học sinh nhận diện rõ điểm khác biệt cốt lõi giữa hai loại bài toán và hào hứng tham gia tìm chu trình qua 20 đỉnh.
+    \item[d)] \textbf{Tổ chức thực hiện:} GV tổ chức chơi game nhanh trên slide tương tác, dẫn dắt vào bài mới.
+\end{itemize}
+
+\subsection*{2. Hoạt động 2: Hình thành kiến thức mới (18 phút)}
+
+\begin{itemize}[leftmargin=1.2cm]
+    \item[a)] \textbf{Mục tiêu:}
+    \begin{itemize}[leftmargin=0.6cm]
+        \item Nắm vững các định nghĩa: đường đi Hamilton, chu trình Hamilton, đồ thị Hamilton, đồ thị nửa Hamilton.
+        \item Phân biệt sự khác nhau sâu sắc giữa đồ thị Euler và đồ thị Hamilton.
+        \item Hiểu được tính chất phức tạp của bài toán Hamilton trong khoa học máy tính và Trí tuệ nhân tạo (bài toán NP-đầy đủ, bài toán Người bán hàng - TSP).
+    \end{itemize}
+
+    \item[b)] \textbf{Nội dung:}
+    \begin{itemize}[leftmargin=0.6cm]
+        \item \textbf{Định nghĩa 1:} Đường đi trong đồ thị $G$ được gọi là \textbf{đường đi Hamilton} nếu nó đi qua \textbf{mỗi đỉnh} của đồ thị đúng một lần.
+        \item \textbf{Định nghĩa 2:} Chu trình trong đồ thị $G$ được gọi là \textbf{chu trình Hamilton} nếu nó xuất phát từ một đỉnh, đi qua \textbf{mỗi đỉnh} còn lại của đồ thị đúng một lần rồi quay trở lại đỉnh xuất phát.
+        \item \textbf{Định nghĩa 3:} Đồ thị chứa chu trình Hamilton được gọi là \textbf{đồ thị Hamilton}. Đồ thị chứa đường đi Hamilton nhưng không chứa chu trình Hamilton được gọi là \textbf{đồ thị nửa Hamilton}.
+        \item \textbf{Bảng so sánh đối sánh sư phạm giữa Euler và Hamilton:}
+    \end{itemize}
+
+    \begin{center}
+    \begin{tabularx}{\textwidth}{|>{\bfseries}p{3.2cm}|X|X|}
+    \hline
+    \textbf{Tiêu chí} & \textbf{Khái niệm Euler} & \textbf{Khái niệm Hamilton} \\ \hline
+    Đối tượng cốt lõi & Đi qua mỗi \textbf{CẠNH} đúng một lần. & Đi qua mỗi \textbf{ĐỈNH} đúng một lần. \\ \hline
+    Số lần qua đỉnh/cạnh & Có thể đi qua một đỉnh nhiều lần nếu bậc lớn. & Mỗi đỉnh chỉ qua đúng một lần (trừ đỉnh đầu/cuối của chu trình). Không bắt buộc đi qua hết các cạnh. \\ \hline
+    Điều kiện nhận biết & Có điều kiện cần và đủ hoàn chỉnh và đơn giản (dựa vào bậc đỉnh chẵn/lẻ). & \textbf{Chưa có} điều kiện cần và đủ đơn giản tổng quát. Là bài toán rất khó (NP-complete). \\ \hline
+    Ứng dụng tiêu biểu & Bài toán người đưa thư (Chinese Postman Problem), xe dọn rác, vẽ một nét. & Bài toán người du lịch (Travelling Salesperson Problem - TSP), thiết kế vi mạch máy tính, robot tự hành. \\ \hline
+    \end{tabularx}
+    \end{center}
+
+    \item[c)] \textbf{Sản phẩm:}
+    \begin{itemize}[leftmargin=0.6cm]
+        \item Ghi chép đầy đủ các định nghĩa và bảng so sánh vào vở.
+        \item Chỉ ra được chu trình Hamilton trên đồ thị khối lập phương (8 đỉnh):
+        $$A \to B \to C \to D \to D' \to C' \to B' \to A' \to A$$
+    \end{itemize}
+
+    \item[d)] \textbf{Tổ chức thực hiện:}
+\end{itemize}
+
+\begin{pedabox}{Tiến trình tổ chức Hoạt động 2 (Kiến thức mới - Tiết 2)}
+    \textbf{Bước 1: Chuyển giao nhiệm vụ}
+    \begin{itemize}[leftmargin=0.6cm]
+        \item GV giới thiệu định nghĩa đường đi và chu trình Hamilton, nhấn mạnh từ khóa \textbf{"mỗi ĐỈNH đúng 1 lần"}.
+        \item Chiếu 2 đồ thị: Đồ thị vòng tròn $C_4$ và Đồ thị hình chiếc nơ (hai tam giác dính chung một đỉnh $O$). Yêu cầu HS tìm chu trình Hamilton ở cả 2 hình.
+    \end{itemize}
+
+    \textbf{Bước 2: Thực hiện nhiệm vụ}
+    \begin{itemize}[leftmargin=0.6cm]
+        \item HS thảo luận cặp đôi.
+        \item Phát hiện: Ở hình chiếc nơ, muốn đi từ tam giác này sang tam giác kia bắt buộc phải qua đỉnh chung $O$, rồi khi quay về lại phải qua $O$ lần nữa $\implies$ đỉnh $O$ bị đi qua 2 lần $\implies$ Không có chu trình Hamilton!
+    \end{itemize}
+
+    \textbf{Bước 3: Báo cáo, thảo luận}
+    \begin{itemize}[leftmargin=0.6cm]
+        \item Đại diện HS giải thích vì sao hình chiếc nơ không có chu trình Hamilton.
+        \item GV phân tích: Đồ thị có "đỉnh thắt nút" (cắt đỉnh làm đồ thị mất liên thông) thì không thể có chu trình Hamilton.
+    \end{itemize}
+
+    \textbf{Bước 4: Kết luận, nhận định}
+    \begin{itemize}[leftmargin=0.6cm]
+        \item GV nhấn mạnh: Khác với Euler có thể kết luận ngay bằng cách đếm bậc, bài toán kiểm tra Hamilton là bài toán kinh điển trong Khoa học máy tính và AI.
+    \end{itemize}
+\end{pedabox}
+
+\begin{aibox}{Tích hợp Năng lực AI (Theo QĐ 2422/QĐ-BGDĐT - Mã 1.2NC1a)}
+    \textbf{Thuật toán tìm kiếm không gian trạng thái của AI trên Đồ thị Hamilton:}
+    \begin{itemize}[leftmargin=0.6cm]
+        \item \textbf{Vấn đề thực tế:} Khi số lượng đỉnh $n$ tăng lên, số khả năng tạo lộ trình tăng theo giai thừa $(n-1)!$. Ví dụ với $n = 30$ thành phố, một máy tính siêu mạnh tính toán hàng tỉ phép tính mỗi giây cũng mất hàng tỉ năm để duyệt hết!
+        \item \textbf{Cách tiếp cận của Trí tuệ nhân tạo (AI):} AI không duyệt mù quáng mà sử dụng các thuật toán heuristic, thuật toán di truyền (Genetic Algorithm), thuật toán bầy kiến (Ant Colony Optimization) và mạng nơ-ron học tăng cường (Deep Reinforcement Learning) để tìm ra chu trình Hamilton có chi phí thấp nhất trong vài giây cho các ứng dụng vận chuyển như Shopee, Grab, Google Maps.
+        \item \textbf{Kỹ thuật Prompting:} \textit{"Đóng vai trò là một chuyên gia thuật toán, hãy lập bảng kề của đồ thị gồm 5 đỉnh $A, B, C, D, E$ với các cạnh đã cho, sau đó áp dụng thuật toán quay lui (Backtracking) để liệt kê tất cả các chu trình Hamilton."}
+    \end{itemize}
+\end{aibox}
+
+\subsection*{3. Hoạt động 3: Luyện tập (12 phút)}
+
+\begin{itemize}[leftmargin=1.2cm]
+    \item[a)] \textbf{Mục tiêu:}
+    \begin{itemize}[leftmargin=0.6cm]
+        \item Rèn luyện kỹ năng tìm đường đi và chu trình Hamilton trên các đồ thị cụ thể.
+        \item Phân biệt đồ thị vừa là Euler vừa là Hamilton, hoặc là Euler nhưng không Hamilton, hoặc là Hamilton nhưng không Euler.
+    \end{itemize}
+
+    \item[b)] \textbf{Nội dung:} Thực hiện Phiếu học tập số 2.
+    \begin{itemize}[leftmargin=0.6cm]
+        \item \textbf{Bài tập 1:} Cho đồ thị $G_3$ là đồ thị bánh xe $W_5$ (gồm một chu trình 4 đỉnh $A, B, C, D$ bao quanh và 1 đỉnh tâm $O$ nối với cả 4 đỉnh $A, B, C, D$).
+        \begin{itemize}
+            \item Đồ thị $G_3$ có phải là đồ thị Hamilton không? Nếu có, hãy chỉ ra một chu trình Hamilton.
+            \item Đồ thị $G_3$ có phải là đồ thị Euler không? Vì sao?
+        \end{itemize}
+        \item \textbf{Bài tập 2:} Xét đồ thị hình chiếc nơ (hai tam giác $ABC$ và $CDE$ dính chung đỉnh $C$).
+        \begin{itemize}
+            \item Đồ thị này có phải là đồ thị Euler không?
+            \item Đồ thị này có phải là đồ thị Hamilton không? Có đường đi Hamilton không?
+        \end{itemize}
+    \end{itemize}
+
+    \item[c)] \textbf{Sản phẩm (Lời giải chi tiết):}
+    \begin{itemize}[leftmargin=0.6cm]
+        \item \textbf{Lời giải Bài tập 1:}
+        \begin{itemize}
+            \item Chu trình Hamilton trong $W_5$: Xuất phát từ $O \to A \to B \to C \to D \to O$. Chu trình này đi qua đủ 5 đỉnh $O, A, B, C, D$, mỗi đỉnh đúng 1 lần rồi quay về $O$. Vậy $G_3$ là \textbf{đồ thị Hamilton}.
+            \item Xét tính Euler: Bậc của các đỉnh: $d(O) = 4$ (chẵn); $d(A) = d(B) = d(C) = d(D) = 3$ (bậc lẻ). Vì có 4 đỉnh bậc lẻ ($> 2$), nên $G_3$ \textbf{không phải là đồ thị Euler}.
+            \item \textit{Nhận xét sư phạm:} Đây là minh chứng rõ nét cho thấy một đồ thị có thể là Hamilton nhưng không phải là Euler!
+        \end{itemize}
+        \item \textbf{Lời giải Bài tập 2:}
+        \begin{itemize}
+            \item Xét tính Euler: $d(A) = 2, d(B) = 2, d(D) = 2, d(E) = 2$ (đều bậc chẵn); đỉnh $C$ nối với $A, B, D, E \implies d(C) = 4$ (bậc chẵn). Mọi đỉnh đều có bậc chẵn và đồ thị liên thông $\implies$ Đồ thị hình chiếc nơ là \textbf{đồ thị Euler} (chu trình Euler: $A \to B \to C \to D \to E \to C \to A$).
+            \item Xét tính Hamilton: Muốn đi qua các đỉnh tam giác $ABC$ và các đỉnh tam giác $CDE$ rồi quay về điểm ban đầu thì đỉnh $C$ bắt buộc phải được viếng thăm ít nhất 2 lần. Do đó, đồ thị \textbf{không có chu trình Hamilton}.
+            \item Tuy nhiên đồ thị có \textbf{đường đi Hamilton}: $A \to B \to C \to D \to E$ (đi qua 5 đỉnh, mỗi đỉnh đúng 1 lần). Vậy đây là \textbf{đồ thị nửa Hamilton}.
+        \end{itemize}
+    \end{itemize}
+
+    \item[d)] \textbf{Tổ chức thực hiện:}
+    \begin{itemize}[leftmargin=0.6cm]
+        \item Học sinh hoàn thành bài tập theo nhóm đôi.
+        \item GV cho đại diện 2 nhóm lên bảng vẽ hình và mô tả chu trình/đường đi.
+        \item Chốt lại nhận xét cốt lõi về mối quan hệ độc lập giữa tính chất Euler và tính chất Hamilton.
+    \end{itemize}
+\end{itemize}
+
+\subsection*{4. Hoạt động 4: Vận dụng (8 phút)}
+
+\begin{itemize}[leftmargin=1.2cm]
+    \item[a)] \textbf{Mục tiêu:} Vận dụng bài toán chu trình Hamilton vào giải quyết tình huống thực tiễn địa phương: lập kế hoạch tour du lịch tham quan qua các di tích lịch sử cố đô Huế.
+    \item[b)] \textbf{Nội dung:}
+    \begin{stembox}{Dự án thực tế: Lập lịch trình City Tour di sản Cố đô Huế}
+        Một hướng dẫn viên du lịch đón đoàn khách tại khách sạn ở trung tâm TP. Huế (điểm $H$). Lịch trình trong ngày cần đưa khách đến tham quan 4 địa điểm nổi tiếng: Đại Nội ($D$), Chùa Thiên Mụ ($M$), Lăng Tự Đức ($T$), và Lăng Khải Định ($K$), sao cho:
+        \begin{enumerate}[leftmargin=0.6cm]
+            \item Mỗi địa điểm chỉ ghé thăm đúng một lần để tiết kiệm thời gian.
+            \item Kết thúc chuyến đi quay trở về khách sạn $H$ ban đầu.
+        \end{enumerate}
+        \textbf{Yêu cầu:}
+        \begin{itemize}
+            \item Mô hình hóa bài toán thành bài toán tìm chu trình gì trên đồ thị?
+            \item Vẽ đồ thị kết nối 5 địa điểm và đề xuất một chu trình hợp lý.
+        \end{itemize}
+    \end{stembox}
+    \item[c)] \textbf{Sản phẩm:}
+    \begin{itemize}[leftmargin=0.6cm]
+        \item Mô hình hóa: Đây chính là bài toán tìm \textbf{chu trình Hamilton} trên đồ thị có 5 đỉnh $\{H, D, M, T, K\}$.
+        \item Một chu trình Hamilton thực tế thuận tiện tuyến đường di chuyển:
+        $$H \text{ (Khách sạn)} \to D \text{ (Đại Nội)} \to M \text{ (Chùa Thiên Mụ)} \to T \text{ (Lăng Tự Đức)} \to K \text{ (Lăng Khải Định)} \to H$$
+        Lộ trình đi dọc sông Hương lên thượng lưu rồi rẽ qua vùng đồi phía Tây Nam thăm các lăng và xuôi đường tránh về trung tâm, tối ưu hóa giao thông không quay đầu xe.
+    \end{itemize}
+    \item[d)] \textbf{Tổ chức thực hiện:} GV nhận xét, đánh giá kết quả hoạt động và dặn dò bài tập cuối chuyên đề.
+\end{itemize}
+
+\section*{IV. PHỤ LỤC HỌC LIỆU BỔ TRỢ}
+
+\subsection*{1. Phiếu học tập số 1: Đường đi và Chu trình Euler (Tiết 1)}
+
+\begin{pedabox}{PHIẾU HỌC TẬP SỐ 1: BÍ QUYẾT ĐỒ THỊ EULER \& VẼ MỘT NÉT}
+    \textbf{Họ và tên học sinh:} \dotfill \textbf{Lớp:} 11\dots \textbf{Nhóm:} \dots
+    
+    \textbf{Nhiệm vụ 1: Bảng tổng hợp bậc đỉnh}
+    Điền số bậc và xác định tính Chẵn/Lẻ cho các đỉnh của đồ thị phong bì thư 5 đỉnh $A, B, C, D, E$:
+    \begin{center}
+    \begin{tabular}{|c|c|c|c|c|c|}
+    \hline
+    \textbf{Đỉnh} & Đỉnh $A$ & Đỉnh $B$ & Đỉnh $C$ & Đỉnh $D$ & Đỉnh $E$ \\ \hline
+    \textbf{Bậc $d(v)$} & \dots\dots & \dots\dots & \dots\dots & \dots\dots & \dots\dots \\ \hline
+    \textbf{Chẵn / Lẻ} & \dots\dots & \dots\dots & \dots\dots & \dots\dots & \dots\dots \\ \hline
+    \end{tabular}
+    \end{center}
+    
+    \textbf{Nhiệm vụ 2: Áp dụng Định lý Euler}
+    \begin{itemize}[leftmargin=0.6cm]
+        \item Số đỉnh bậc lẻ là: \dots\dots
+        \item Kết luận loại đồ thị: \dots\dots (Đồ thị Euler / Đồ thị nửa Euler / Không có đường đi Euler).
+        \item Chỉ ra một đường đi Euler cụ thể: \dotfill
+    \end{itemize}
+    
+    \textbf{Nhiệm vụ 3: Thử thách nâng cao}
+    Cho đồ thị gồm các cạnh của một hình lập phương (8 đỉnh, 12 cạnh). Hình này có vẽ được bằng một nét không? Vì sao?
+    \dotfill
+\end{pedabox}
+
+\subsection*{2. Phiếu học tập số 2: Đường đi và Chu trình Hamilton (Tiết 2)}
+
+\begin{pedabox}{PHIẾU HỌC TẬP SỐ 2: PHÂN BIỆT EULER - HAMILTON \& LỘ TRÌNH TỐI ƯU}
+    \textbf{Họ và tên học sinh:} \dotfill \textbf{Lớp:} 11\dots \textbf{Nhóm:} \dots
+
+    \textbf{Nhiệm vụ 1: Nhận diện Đúng / Sai}
+    \begin{enumerate}[leftmargin=0.6cm]
+        \item[( )] 1. Đường đi Euler đi qua mỗi đỉnh đúng một lần.
+        \item[( )] 2. Đường đi Hamilton đi qua mỗi đỉnh đúng một lần.
+        \item[( )] 3. Đồ thị có chu trình Euler thì chắc chắn có chu trình Hamilton.
+        \item[( )] 4. Đồ thị hình bánh xe $W_5$ có chu trình Hamilton nhưng không có chu trình Euler.
+    \end{enumerate}
+
+    \textbf{Nhiệm vụ 2: Xây dựng lộ trình Hamilton}
+    Cho đồ thị gồm 6 đỉnh $A, B, C, D, E, F$ kết nối thành hình lục giác đều và có 3 đường chéo chính nối các đỉnh đối diện ($AD, BE, CF$).
+    \begin{itemize}[leftmargin=0.6cm]
+        \item Hãy tìm 2 chu trình Hamilton khác nhau trên đồ thị này.
+        \item Chu trình 1: \dotfill
+        \item Chu trình 2: \dotfill
+    \end{itemize}
+\end{pedabox}
+
+\subsection*{3. Rubric đánh giá năng lực học sinh trong bài học}
+
+\begin{center}
+\begin{tabularx}{\textwidth}{|>{\bfseries}p{3cm}|X|X|X|X|}
+\hline
+\textbf{Tiêu chí} & \textbf{Mức 1: Chưa đạt} & \textbf{Mức 2: Đạt} & \textbf{Mức 3: Khá} & \textbf{Mức 4: Tốt} \\ \hline
+Nhận biết khái niệm Euler và Hamilton & Chưa phân biệt được đường đi qua cạnh và đường đi qua đỉnh. & Phân biệt được định nghĩa nhưng còn nhầm lẫn khi tìm đường đi cụ thể. & Nhận diện chính xác đường đi/chu trình Euler và Hamilton trên đồ thị quen thuộc. & Phân tích sâu sắc sự khác biệt, tự tạo ví dụ đồ thị Euler mà không Hamilton và ngược lại. \\ \hline
+Áp dụng Định lý Euler & Chưa tính đúng bậc của các đỉnh trong đồ thị. & Tính đúng bậc đỉnh nhưng chưa nhớ điều kiện có chu trình hay đường đi. & Vận dụng đúng Định lý Euler để kết luận tính chất và chỉ ra điểm bắt đầu/kết thúc. & Vận dụng linh hoạt giải quyết trọn vẹn bài toán vẽ một nét và bài toán 7 cây cầu Königsberg. \\ \hline
+Năng lực số và ứng dụng công nghệ & Chưa thao tác được trên phần mềm Graph Online. & Nhập được đồ thị đơn giản nhưng cần sự trợ giúp để chạy thuật toán. & Sử dụng thành thạo phần mềm mô phỏng kiểm tra bậc và tìm chu trình Euler. & Khai thác sáng tạo công cụ số, thiết kế prompt hiệu quả cho trợ lý AI phản biện đồ thị. \\ \hline
+Mô hình hóa thực tiễn và STEM & Chưa liên hệ được kiến thức đồ thị với thực tế. & Nhận biết bài toán người đưa thư và bài toán du lịch tương ứng với Euler/Hamilton. & Mô hình hóa chính xác bài toán giao thông, du lịch thực tế thành đồ thị. & Đề xuất giải pháp lộ trình tối ưu khoa học, giải thích thấu đáo trên cơ sở lí thuyết đồ thị. \\ \hline
+\end{tabularx}
+\end{center}
+
+\end{document}
