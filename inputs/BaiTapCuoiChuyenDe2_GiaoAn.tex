@@ -1,0 +1,594 @@
+\documentclass[12pt, a4paper]{article}
+% --- 1. Cấu hình Tiếng Việt và Font chữ chuẩn ---
+\usepackage[utf8]{inputenc}
+\usepackage[T5]{fontenc}
+\usepackage[vietnamese]{babel}
+\usepackage{mathptmx} % Font Times New Roman đồng bộ cả chữ và công thức toán, không gây xung đột gói
+
+\makeatletter
+\renewcommand{\normalsize}{\@setfontsize\normalsize{13pt}{16pt}}
+\makeatother
+\normalsize
+
+% --- 2. Gói Toán học & Ký hiệu bổ trợ ---
+\usepackage{amsmath, amssymb, amsfonts, mathrsfs, amsthm}
+\usepackage{graphicx}
+\usepackage{fontawesome}
+\usepackage{booktabs, tabularx, array, multirow}
+\usepackage{enumitem}
+
+% --- 3. Đồ họa TikZ, Bảng biến thiên & Hình không gian ---
+\usepackage{tikz}
+\usetikzlibrary{calc, intersections, angles, quotes, patterns, arrows.meta, 3d}
+\usepackage{pgfplots}
+\pgfplotsset{compat=1.18}
+\usepackage{tkz-euclide}
+\usepackage{tkz-tab}
+
+\renewcommand{\vec}[1]{\overrightarrow{#1}}
+
+% --- 4. Hộp sư phạm (Tcolorbox) ---
+\usepackage[many]{tcolorbox}
+\tcbuselibrary{skins, breakable}
+
+% --- 5. Căn lề chuẩn văn bản giáo án ---
+\usepackage{geometry}
+\geometry{
+    a4paper,
+    left=25mm,
+    right=15mm,
+    top=20mm,
+    bottom=20mm
+}
+
+% --- 6. Header / Footer chuẩn hóa ---
+\usepackage{fancyhdr}
+\usepackage{lastpage}
+\pagestyle{fancy}
+\fancyhf{}
+
+\fancyhead[L]{\small \textit{Kế hoạch bài dạy Toán 11}}
+\fancyhead[R]{\textbf{Trang \thepage/\pageref{LastPage}}}
+\fancyfoot[L]{\small \textit{Tổ Toán - Tin}}
+\fancyfoot[R]{\small \textit{Trường THCS\&THPT Hồng Vân}}
+\renewcommand{\headrulewidth}{0.4pt}
+\renewcommand{\footrulewidth}{0.4pt}
+
+% --- 7. Giãn dòng & Giãn đoạn theo chuẩn Nghị định 30/2020/NĐ-CP ---
+\usepackage{setspace}
+\setstretch{1.15}
+\setlength{\parindent}{1.0cm}
+\setlength{\parskip}{5pt}
+
+% Định nghĩa hộp sư phạm chuyên dụng
+\newtcolorbox{pedabox}[2][]{
+    enhanced,
+    breakable,
+    colback=blue!3!white,
+    colframe=blue!65!black,
+    fonttitle=\bfseries\small,
+    title={#2},
+    arc=2mm,
+    boxrule=0.6pt,
+    left=3mm, right=3mm, top=2mm, bottom=2mm,
+    #1
+}
+
+\newtcolorbox{aibox}[2][]{
+    enhanced,
+    breakable,
+    colback=teal!4!white,
+    colframe=teal!70!black,
+    fonttitle=\bfseries\small,
+    title={#2},
+    arc=2mm,
+    boxrule=0.6pt,
+    left=3mm, right=3mm, top=2mm, bottom=2mm,
+    #1
+}
+
+\newtcolorbox{scaffoldbox}[2][]{
+    enhanced,
+    breakable,
+    colback=orange!4!white,
+    colframe=orange!80!black,
+    fonttitle=\bfseries\small,
+    title={#2},
+    arc=2mm,
+    boxrule=0.6pt,
+    left=3mm, right=3mm, top=2mm, bottom=2mm,
+    #1
+}
+
+\newtcolorbox{stembox}[2][]{
+    enhanced,
+    breakable,
+    colback=purple!4!white,
+    colframe=purple!75!black,
+    fonttitle=\bfseries\small,
+    title={#2},
+    arc=2mm,
+    boxrule=0.6pt,
+    left=3mm, right=3mm, top=2mm, bottom=2mm,
+    #1
+}
+
+\begin{document}
+
+\begin{center}
+    {\fontsize{14pt}{17pt}\selectfont \textbf{KẾ HOẠCH BÀI DẠY MÔN TOÁN LỚP 11}}\\[6pt]
+    {\fontsize{16pt}{19pt}\selectfont \textbf{BÀI TẬP CUỐI CHUYÊN ĐỀ 2}}\\[4pt]
+    {\fontsize{12pt}{15pt}\selectfont \textbf{Môn học: Toán 11} \ \textbar \ \textbf{Thời lượng: 2 tiết (Tiết CĐ23, CĐ24 theo PPCT | Tuần 26)}}
+\end{center}
+
+\vspace{5pt}
+
+\section*{I. MỤC TIÊU}
+
+\subsection*{1. Kiến thức, Năng lực}
+
+\begin{itemize}[leftmargin=1.2cm]
+    \item \textbf{Yêu cầu cần đạt (Nguyên văn CT GDPT 2018 Toán 11):}
+    \begin{itemize}[leftmargin=0.6cm]
+        \item Hệ thống hóa kiến thức Lí thuyết đồ thị: khái niệm, đường đi Euler, Hamilton và bài toán đường tối ưu.
+        \item Củng cố và vận dụng thành thạo các kiến thức, kĩ năng cốt lõi của Chuyên đề 2 vào giải quyết các bài toán toán học và tình huống thực tiễn phong phú.
+    \end{itemize}
+
+    \item \textbf{Năng lực Toán học đặc thù:}
+    \begin{itemize}[leftmargin=0.6cm]
+        \item \textit{Năng lực tư duy và lập luận toán học:} Khái quát hóa, xâu chuỗi mối liên hệ hữu cơ giữa các khái niệm cơ bản của đồ thị (đỉnh, cạnh, bậc, ma trận kề) với bài toán duyệt đồ thị (đường đi/chu trình Euler, đường đi/chu trình Hamilton) và bài toán tối ưu trên đồ thị có trọng số; so sánh bản chất giữa đường đi Euler (duyệt cạnh) và đường đi Hamilton (duyệt đỉnh); phân tích tính đúng đắn và giới hạn của các thuật toán.
+        \item \textit{Năng lực mô hình hóa toán học:} Nhận diện và chuyển đổi linh hoạt các vấn đề thực tiễn đa dạng (mạng lưới giao thông, tuyến đưa thư, lộ trình du lịch qua các danh lam thắng cảnh, mạng truyền thông máy tính, quy trình phân phối hàng hóa) thành mô hình đồ thị thuần túy hoặc đồ thị có trọng số; thiết lập hàm mục tiêu chi phí/khoảng cách để tìm giải pháp tối ưu.
+        \item \textit{Năng lực giải quyết vấn đề toán học:} Lựa chọn và thực hiện thành thạo các thuật toán chuyên đề: kiểm tra tính liên thông, lập ma trận kề; áp dụng Định lý Euler để giải quyết bài toán vẽ một nét; nhận diện chu trình Hamilton; thực hiện thuật toán Dijkstra tìm đường đi ngắn nhất; vận dụng thuật toán tham lam láng giềng gần nhất giải bài toán Người du lịch (TSP).
+        \item \textit{Năng lực giao tiếp toán học:} Sử dụng chính xác và chuẩn mực hệ thống ngôn ngữ, kí hiệu lí thuyết đồ thị: tập đỉnh $V$, tập cạnh $E$, bậc của đỉnh $d(v)$, ma trận kề $A$, trọng số $w(e)$, nhãn tạm thời $d(v)$, nhãn cố định, chu trình tối ưu; trình bày lời giải bài toán đồ thị rõ ràng, mạch lạc, có lập luận thuyết phục.
+        \item \textit{Năng lực sử dụng công cụ, phương tiện học toán:} Khai thác thành thạo máy tính cầm tay Casio fx-580VN X để tính toán cộng dồn trọng số ma trận; sử dụng phần mềm đồ thị trực tuyến (Graph Online) và bản đồ số Google Maps để mô phỏng, kiểm chứng thuật toán.
+    \end{itemize}
+
+    \item \textbf{Năng lực số (Theo Thông tư 02/2025/TT-BGDĐT):}
+    \begin{itemize}[leftmargin=0.6cm]
+        \item \textit{Mã 5.3NC1a (Tối ưu hóa quy trình làm việc trên phần mềm máy tính):} Học sinh lập sơ đồ tư duy dạng đồ thị (Mindmap / Concept Graph) tổng kết toàn bộ kiến thức Chuyên đề 2 bằng phần mềm máy tính (GitMind, Coggle, hoặc Canva); biết cách biểu diễn ma trận kề trên bảng tính điện tử Excel/Google Sheets để tự động hóa việc tính toán bậc của các đỉnh trong đồ thị quy mô lớn.
+    \end{itemize}
+
+    \item \textbf{Năng lực AI (Theo Quyết định 2422/QĐ-BGDĐT):}
+    \begin{itemize}[leftmargin=0.6cm]
+        \item \textit{Mã 11.B2.1 (Kiểm thử thuật toán và an toàn hệ thống số):} Học sinh hiểu tầm quan trọng của việc kiểm tra, đánh giá tính đúng đắn của thuật toán định tuyến để tránh lỗi tắc nghẽn mạng (Network Congestion) và hiện tượng vòng lặp vô hạn (Infinite Loops / Deadlock) trong mạng Internet và các hệ thống điều phối thông minh của AI.
+        \item \textit{Kỹ thuật Prompting phản biện đối sánh:} Học sinh xây dựng câu lệnh prompt yêu cầu AI giải thích thuật toán Dijkstra và kiểm tra chéo các bước cập nhật nhãn trên ma trận trọng số, rèn luyện tư duy phản biện khi phát hiện các nhầm lẫn thường gặp của mô hình ngôn ngữ lớn.
+    \end{itemize}
+
+    \item \textbf{Năng lực chung:}
+    \begin{itemize}[leftmargin=0.6cm]
+        \item \textit{Tự chủ và tự học:} Tự giác hệ thống hóa toàn bộ kiến thức Chuyên đề 2; chủ động rà soát và khắc phục các lỗ hổng kiến thức trước khi làm bài tập tổng hợp.
+        \item \textit{Giao tiếp và hợp tác:} Hoạt động nhóm hiệu quả, lắng nghe và chia sẻ phương pháp giải ngắn gọn, cẩn thận trong việc cộng dồn trọng số để hỗ trợ bạn cùng tiến bộ.
+    \end{itemize}
+\end{itemize}
+
+\subsection*{2. Phẩm chất}
+
+\begin{itemize}[leftmargin=1.2cm]
+    \item \textbf{Chăm chỉ:} Kiên trì luyện tập từng dạng toán, cẩn thận cộng dồn từng trọng số của cạnh để tránh nhầm lẫn sai số; rèn luyện tính kiên nhẫn khi thực hiện các thuật toán nhiều bước lặp.
+    \item \textbf{Trung thực:} Tự lực hoàn thành các bài tập kiểm tra đánh giá, phản ánh trung thực kết quả học tập cá nhân.
+    \item \textbf{Trách nhiệm:} Có trách nhiệm với nhiệm vụ học tập của bản thân và của nhóm; hình thành ý thức vận dụng tư duy toán học tối ưu để giải quyết các vấn đề thực tiễn của gia đình và cộng đồng địa phương.
+\end{itemize}
+
+\section*{II. THIẾT BỊ DẠY HỌC VÀ HỌC LIỆU}
+
+\begin{itemize}[leftmargin=1.2cm]
+    \item \textbf{Giáo viên:}
+    \begin{itemize}[leftmargin=0.6cm]
+        \item Kế hoạch bài dạy chi tiết 2 tiết theo chuẩn Công văn 5512/BGDĐT-GDTrH.
+        \item Sơ đồ tư duy số tổng kết Chuyên đề 2 trên Slide PowerPoint / Canva.
+        \item Phòng thực hành tin học (35 máy tính kết nối Internet tốc độ cao, truy cập ứng dụng Graph Online và bảng tính Excel).
+        \item Hệ thống Phiếu học tập phân tầng bậc thang (PHT số 1: Hệ thống lý thuyết \& Bài tập cơ bản; PHT số 2: Bài toán tối ưu \& Ứng dụng thực tiễn STEM).
+        \item Đề kiểm tra nhanh đánh giá năng lực cuối chuyên đề kèm ma trận đặc tả.
+        \item Bảng Rubric đánh giá năng lực học sinh.
+    \end{itemize}
+
+    \item \textbf{Học sinh:}
+    \begin{itemize}[leftmargin=0.6cm]
+        \item Sách Chuyên đề học tập Toán 11, vở bài tập, thước kẻ, bút dạ màu (xanh, đỏ để đánh dấu đồ thị).
+        \item Máy tính cầm tay Casio fx-580VN X để thực hiện các phép tính cộng dồn trọng số.
+        \item Sơ đồ tư duy cá nhân chuẩn bị trước ở nhà tổng kết Chuyên đề 2.
+    \end{itemize}
+\end{itemize}
+
+\section*{III. TIẾN TRÌNH DẠY HỌC}
+
+\begin{center}
+    \textbf{\large TIẾT 1 (TIẾT CĐ23 THEO PPCT | TUẦN 26)}\\[4pt]
+    \textbf{\large HỆ THỐNG HÓA KIẾN THỨC VÀ BÀI TẬP CƠ BẢN VỀ LÍ THUYẾT ĐỒ THỊ}
+\end{center}
+
+\subsection*{1. Hoạt động 1: Mở đầu (Khởi động - 7 phút)}
+
+\begin{itemize}[leftmargin=1.2cm]
+    \item[a)] \textbf{Mục tiêu:}
+    \begin{itemize}[leftmargin=0.6cm]
+        \item Tạo tâm thế hào hứng, kích hoạt trí nhớ dài hạn của học sinh về các khái niệm cốt lõi đã học trong Chuyên đề 2 thông qua trò chơi trắc nghiệm tương tác nhanh "Mạng lưới kết nối thông minh".
+    \end{itemize}
+
+    \item[b)] \textbf{Nội dung:}
+    \begin{itemize}[leftmargin=0.6cm]
+        \item Giáo viên trình chiếu một đồ thị tổng hợp gồm 6 đỉnh $A, B, C, D, E, F$ có các cạnh và trọng số.
+        \item Đặt ra 4 câu hỏi nhận diện nhanh (thời gian trả lời 30 giây/câu):
+        \begin{enumerate}[leftmargin=0.6cm]
+            \item Câu 1: Xác định số đỉnh, số cạnh và bậc của đỉnh $A$.
+            \item Câu 2: Đồ thị có liên thông không? Ma trận kề của đồ thị có kích thước bao nhiêu?
+            \item Câu 3: Đồ thị có chu trình Euler không? Có đường đi Euler không? Vì sao?
+            \item Câu 4: Hãy chỉ ra một chu trình Hamilton (nếu có) trên đồ thị.
+        \end{enumerate}
+    \end{itemize}
+
+    \item[c)] \textbf{Sản phẩm:} Học sinh giơ bảng chọn đáp án hoặc trả lời miệng nhanh, chỉ ra được các yếu tố cơ bản của đồ thị, kích hoạt tư duy liên kết các bài học.
+    \item[d)] \textbf{Tổ chức thực hiện:} GV nhận xét, khen ngợi tinh thần khởi động của lớp và dẫn dắt vào bài học ôn tập cuối chuyên đề.
+\end{itemize}
+
+\subsection*{2. Hoạt động 2: Hệ thống hóa kiến thức trọng tâm (18 phút)}
+
+\begin{itemize}[leftmargin=1.2cm]
+    \item[a)] \textbf{Mục tiêu:}
+    \begin{itemize}[leftmargin=0.6cm]
+        \item Hệ thống hóa một cách toàn diện và sâu sắc các mạch kiến thức cốt lõi của Chuyên đề 2:
+        \begin{itemize}
+            \item Bài 8: Khái niệm đồ thị, đỉnh, cạnh, bậc của đỉnh, đồ thị liên thông, ma trận kề.
+            \item Bài 9: Đường đi và chu trình Euler (Định lý Euler), đường đi và chu trình Hamilton, so sánh đối sánh Euler vs Hamilton.
+            \item Bài 10: Đồ thị có trọng số, thuật toán Dijkstra tìm đường đi ngắn nhất, bài toán Người du lịch (TSP) và thuật toán tham lam.
+        \end{itemize}
+        \item Rèn luyện năng lực số thông qua việc hệ thống hóa kiến thức dưới dạng sơ đồ tư duy số dạng đồ thị mạng.
+    \end{itemize}
+
+    \item[b)] \textbf{Nội dung:}
+    \begin{itemize}[leftmargin=0.6cm]
+        \item GV hướng dẫn học sinh phân tích bảng tổng hợp kiến thức Chuyên đề 2:
+    \end{itemize}
+
+    \begin{center}
+    \begin{tabularx}{\textwidth}{|>{\bfseries}p{2.8cm}|X|X|}
+    \hline
+    \textbf{Chủ đề} & \textbf{Khái niệm / Định lý then chốt} & \textbf{Ứng dụng & Thuật toán} \\ \hline
+    Khái niệm cơ bản (Bài 8) & Đồ thị $G=(V,E)$; Bậc đỉnh $d(v)$; Định lý bắt tay: $\sum d(v) = 2|E|$; Ma trận kề $A = (a_{ij})_{n \times n}$. & Biểu diễn mạng xã hội, phân tích liên kết web, lưu trữ đồ thị trên máy tính. \\ \hline
+    Đường đi Euler (Bài 9) & Qua mỗi \textbf{cạnh} đúng 1 lần. Đồ thị Euler $\iff$ liên thông và mọi đỉnh bậc chẵn. Nửa Euler $\iff$ đúng 2 đỉnh bậc lẻ. & Vẽ hình bằng 1 nét; Bài toán người đưa thư; Thuật toán Fleury. \\ \hline
+    Đường đi Hamilton (Bài 9) & Qua mỗi \textbf{đỉnh} đúng 1 lần. Chu trình Hamilton về lại đỉnh ban đầu. Không có tiêu chuẩn cần và đủ đơn giản (NP-complete). & Trò chơi Icosian; Bài toán mã đi tuần; Quy hoạch lộ trình du lịch qua các thành phố. \\ \hline
+    Đường tối ưu (Bài 10) & Đồ thị có trọng số; Độ dài đường đi $w(L) = \sum w(e)$. Bài toán đường đi ngắn nhất; Bài toán người du lịch TSP. & Thuật toán Dijkstra (gán nhãn đỉnh); Thuật toán tham lam láng giềng gần nhất cho TSP; Ứng dụng Grab, Google Maps. \\ \hline
+    \end{tabularx}
+    \end{center}
+
+    \item[c)] \textbf{Sản phẩm:}
+    \begin{itemize}[leftmargin=0.6cm]
+        \item Sơ đồ tư duy dạng đồ thị mạng lưới được hoàn thiện vào vở ghi chép.
+        \item Nắm chắc các công thức: Tổng bậc các đỉnh luôn bằng hai lần số cạnh: $\sum_{v \in V} d(v) = 2|E| \implies$ số đỉnh bậc lẻ trong một đồ thị luôn là một số chẵn!
+    \end{itemize}
+
+    \item[d)] \textbf{Tổ chức thực hiện:}
+\end{itemize}
+
+\begin{pedabox}{Tiến trình tổ chức Hoạt động 2 (Hệ thống hóa kiến thức)}
+    \textbf{Bước 1: Chuyển giao nhiệm vụ}
+    \begin{itemize}[leftmargin=0.6cm]
+        \item GV trình chiếu bảng tổng hợp và sơ đồ tư duy dạng đồ thị mạng lưới.
+        \item Yêu cầu học sinh làm việc theo nhóm 4 em: thảo luận đối chiếu sự khác nhau giữa đường đi Euler và đường đi Hamilton; nêu rõ cách đếm bậc đỉnh để kết luận tính Euler.
+    \end{itemize}
+
+    \textbf{Bước 2: Thực hiện nhiệm vụ có giàn giáo sư phạm}
+    \begin{itemize}[leftmargin=0.6cm]
+        \item HS làm việc nhóm, trao đổi và bổ sung cho nhau.
+        \item GV hướng dẫn chậm rãi cho các học sinh trung bình - yếu ghi nhớ: Euler gắn với CẠNH (mỗi cạnh 1 lần), Hamilton gắn với ĐỈNH (mỗi đỉnh 1 lần).
+    \end{itemize}
+
+    \textbf{Bước 3: Báo cáo, thảo luận}
+    \begin{itemize}[leftmargin=0.6cm]
+        \item Đại diện 1 nhóm đứng tại chỗ trình bày bảng so sánh.
+        \item Các nhóm khác lắng nghe, phản biện và hoàn thiện sơ đồ tư duy.
+    \end{itemize}
+
+    \textbf{Bước 4: Kết luận, nhận định}
+    \begin{itemize}[leftmargin=0.6cm]
+        \item GV chuẩn hóa kiến thức, nhấn mạnh các bẫy lý thuyết thường gặp khi làm bài trắc nghiệm.
+    \end{itemize}
+\end{pedabox}
+
+\begin{aibox}{Tích hợp Năng lực số (Theo Thông tư 02/2025/TT-BGDĐT - Mã 5.3NC1a)}
+    \textbf{Ứng dụng phần mềm máy tính lập sơ đồ tư duy đồ thị tối ưu hóa quy trình:}
+    \begin{itemize}[leftmargin=0.6cm]
+        \item Học sinh mở máy vi tính trong phòng thực hành, truy cập công cụ trực tuyến \texttt{https://coggle.it/} hoặc phần mềm \texttt{GitMind}.
+        \item Thực hành thiết kế sơ đồ tư duy tổng kết Chuyên đề 2 dưới dạng cấu trúc đồ thị mạng lưới (Graph Network):
+        \begin{itemize}
+            \item Nút trung tâm: "LÍ THUYẾT ĐỒ THỊ VÀ ỨNG DỤNG".
+            \item 3 nút nhánh cấp 1: "Khái niệm cơ bản", "Đường đi Euler \& Hamilton", "Bài toán đường tối ưu".
+            \item Các liên kết chéo biểu diễn sự kế thừa thuật toán và mối quan hệ giữa các khái niệm.
+        \end{itemize}
+        \item Rèn luyện kỹ năng tổ chức dữ liệu số và tối ưu hóa quy trình học tập cá nhân.
+    \end{itemize}
+\end{aibox}
+
+\subsection*{3. Hoạt động 3: Luyện tập các bài toán cơ bản (15 phút)}
+
+\begin{itemize}[leftmargin=1.2cm]
+    \item[a)] \textbf{Mục tiêu:} Rèn luyện kĩ năng tính bậc, lập ma trận kề, nhận diện đồ thị Euler, đồ thị Hamilton và giải bài toán vẽ hình một nét.
+    \item[b)] \textbf{Nội dung:} Thực hiện Phiếu học tập số 1.
+    \begin{itemize}[leftmargin=0.6cm]
+        \item \textbf{Bài tập 1 (Bậc đỉnh và Ma trận kề):} Cho đồ thị $G_1$ có tập đỉnh $V = \{1, 2, 3, 4, 5\}$ và tập cạnh:
+        $$E = \{(1, 2), (1, 3), (2, 3), (2, 4), (3, 4), (3, 5), (4, 5)\}$$
+        \begin{enumerate}[leftmargin=0.6cm]
+            \item Tính bậc của các đỉnh của đồ thị $G_1$. Kiểm tra hệ thức $\sum d(v) = 2|E|$.
+            \item Viết ma trận kề của đồ thị $G_1$.
+        \end{enumerate}
+        \item \textbf{Bài tập 2 (Euler \& Hamilton \& Vẽ một nét):} Xét đồ thị $G_1$ ở trên:
+        \begin{enumerate}[leftmargin=0.6cm]
+            \item Đồ thị $G_1$ có phải là đồ thị Euler không? Có phải là đồ thị nửa Euler không? Hình vẽ của $G_1$ có vẽ được bằng một nét không? Nếu có, hãy chỉ ra một đường đi Euler.
+            \item Đồ thị $G_1$ có phải là đồ thị Hamilton không? Nếu có, hãy chỉ ra một chu trình Hamilton.
+        \end{enumerate}
+    \end{itemize}
+
+    \item[c)] \textbf{Sản phẩm (Lời giải chi tiết):}
+    \begin{itemize}[leftmargin=0.6cm]
+        \item \textbf{Lời giải Bài tập 1:}
+        \begin{itemize}
+            \item Bậc của các đỉnh:
+            $$d(1) = 2 \text{ (nối với } 2, 3); \quad d(2) = 3 \text{ (nối với } 1, 3, 4); \quad d(3) = 4 \text{ (nối với } 1, 2, 4, 5)$$
+            $$d(4) = 3 \text{ (nối với } 2, 3, 5); \quad d(5) = 2 \text{ (nối với } 3, 4)$$
+            \item Tổng bậc: $\sum d(v) = 2 + 3 + 4 + 3 + 2 = 14$. Số cạnh $|E| = 7 \implies 2|E| = 14$ (hệ thức được nghiệm đúng).
+            \item Ma trận kề $A$ kích thước $5 \times 5$:
+            $$A = \begin{pmatrix}
+            0 & 1 & 1 & 0 & 0 \\
+            1 & 0 & 1 & 1 & 0 \\
+            1 & 1 & 0 & 1 & 1 \\
+            0 & 1 & 1 & 0 & 1 \\
+            0 & 0 & 1 & 1 & 0
+            \end{pmatrix}$$
+        \end{itemize}
+        \item \textbf{Lời giải Bài tập 2:}
+        \begin{itemize}
+            \item \textit{Xét tính Euler:} Đồ thị có 2 đỉnh bậc lẻ là đỉnh $2$ ($d(2)=3$) và đỉnh $4$ ($d(4)=3$); các đỉnh còn lại đều có bậc chẵn. Vì đồ thị liên thông và có đúng 2 đỉnh bậc lẻ, nên $G_1$ là \textbf{đồ thị nửa Euler} (không phải đồ thị Euler).
+            \item Do đó, hình vẽ $G_1$ \textbf{vẽ được bằng một nét không nhấc bút}. Đường đi Euler bắt buộc phải bắt đầu tại một trong hai đỉnh bậc lẻ ($2$ hoặc $4$) và kết thúc tại đỉnh bậc lẻ còn lại.
+            \item Một đường đi Euler cụ thể từ đỉnh $2$ đến đỉnh $4$:
+            $$2 \to 1 \to 3 \to 2 \to 4 \to 3 \to 5 \to 4$$
+            Kiểm tra: đi qua đủ 7 cạnh của đồ thị, mỗi cạnh đúng một lần!
+            \item \textit{Xét tính Hamilton:} Chu trình qua đủ 5 đỉnh và quay về điểm xuất phát:
+            $$1 \to 2 \to 4 \to 5 \to 3 \to 1$$
+            Chu trình này đi qua mỗi đỉnh đúng 1 lần (trừ đỉnh 1 lặp lại ở đầu và cuối). Vậy $G_1$ là \textbf{đồ thị Hamilton}.
+        \end{itemize}
+    \end{itemize}
+
+    \item[d)] \textbf{Tổ chức thực hiện:}
+    \begin{itemize}[leftmargin=0.6cm]
+        \item Học sinh làm việc cá nhân trong 8 phút.
+        \item GV mời 2 học sinh lên bảng trình bày hai bài tập.
+        \item GV nhận xét, chuẩn hóa quy tắc viết ma trận kề đối xứng và cách kiểm tra bậc đỉnh.
+    \end{itemize}
+\end{itemize}
+
+\subsection*{4. Hoạt động 4: Vận dụng (5 phút)}
+
+\begin{itemize}[leftmargin=1.2cm]
+    \item[a)] \textbf{Mục tiêu:} Giao nhiệm vụ tự học chuẩn bị cho Tiết 2 về các bài toán tối ưu trên đồ thị có trọng số.
+    \item[b)] \textbf{Nội dung & Tổ chức thực hiện:}
+    \begin{itemize}[leftmargin=0.6cm]
+        \item GV yêu cầu học sinh về nhà ôn lại bảng gán nhãn Dijkstra và quy tắc tham lam láng giềng gần nhất.
+        \item Làm trước bài tập tìm đường đi ngắn nhất trên đồ thị có 6 đỉnh trong Phiếu học tập số 2.
+    \end{itemize}
+\end{itemize}
+
+\vspace{10pt}
+\hrule
+\vspace{10pt}
+
+\begin{center}
+    \textbf{\large TIẾT 2 (TIẾT CĐ24 THEO PPCT | TUẦN 26)}\\[4pt]
+    \textbf{\large CHỮA BÀI TẬP TÌM ĐƯỜNG TỐI ƯU VÀ ĐÁNH GIÁ NĂNG LỰC CUỐI CHUYÊN ĐỀ}
+\end{center}
+
+\subsection*{1. Hoạt động 1: Mở đầu (Khởi động - 6 phút)}
+
+\begin{itemize}[leftmargin=1.2cm]
+    \item[a)] \textbf{Mục tiêu:} Kích hoạt phản xạ tính toán cộng dồn trọng số và quy tắc gán nhãn của thuật toán Dijkstra; tạo sự tập trung cho tiết chữa bài tập vận dụng.
+    \item[b)] \textbf{Nội dung:} Trò chơi "Ai nhanh hơn": Chiếu một tam giác có trọng số 3 cạnh $AB=3, BC=4, AC=8$. Nếu đi từ $A$ đến $C$, lộ trình nào ngắn nhất? Vì sao $A \to B \to C$ ngắn hơn đi trực tiếp $A \to C$? (Quy tắc cập nhật nhãn $d(C) \leftarrow \min(8, 3+4) = 7$).
+    \item[c)] \textbf{Sản phẩm:} Học sinh trả lời ngay $A \to B \to C$ dài $7 < 8$, củng cố ý nghĩa của việc cập nhật nhãn tạm thời khi tìm được đường đi ngắn hơn.
+    \item[d)] \textbf{Tổ chức thực hiện:} GV dẫn dắt vào bài chữa bài tập chuyên sâu.
+\end{itemize}
+
+\subsection*{2. Hoạt động 2: Chữa bài tập vận dụng tìm đường tối ưu (20 phút)}
+
+\begin{itemize}[leftmargin=1.2cm]
+    \item[a)] \textbf{Mục tiêu:}
+    \begin{itemize}[leftmargin=0.6cm]
+        \item Rèn luyện kỹ năng thực hiện thành thạo thuật toán Dijkstra trên đồ thị có trọng số, rèn tính cẩn thận cộng dồn độ dài cho học sinh trung bình - yếu.
+        \item Nắm vững phương pháp giải bài toán Người du lịch (TSP) bằng thuật toán láng giềng gần nhất và phân tích tính xấp xỉ của nghiệm.
+        \item Tích hợp Năng lực AI (QĐ 2422): Nhận thức tầm quan trọng của việc kiểm tra thuật toán định tuyến tránh lỗi nghẽn mạng và bế tắc hệ thống.
+    \end{itemize}
+
+    \item[b)] \textbf{Nội dung:} Thực hiện bài toán trên Phiếu học tập số 2.
+    \begin{itemize}[leftmargin=0.6cm]
+        \item \textbf{Bài tập 3 (Thuật toán Dijkstra):} Cho mạng lưới giao thông gồm 6 thị trấn $A, B, C, D, E, F$ với bảng trọng số khoảng cách (km) giữa các cặp thị trấn có đường nối trực tiếp:
+        $$AB = 5, AC = 3, BC = 2, BD = 6, CD = 7, CE = 4, DE = 1, DF = 4, EF = 8$$
+        Áp dụng thuật toán Dijkstra để tìm đường đi ngắn nhất từ thị trấn $A$ đến thị trấn $F$.
+        \item \textbf{Bài tập 4 (Bài toán Người du lịch TSP):} Một nhân viên giao hàng cần xuất phát từ kho $A$, đi qua 4 khách hàng tại các điểm $B, C, D, E$ đúng một lần rồi quay về $A$. Bảng khoảng cách (km) cho bởi ma trận:
+    \end{itemize}
+
+    \begin{center}
+    \begin{tabular}{|c|c|c|c|c|c|}
+    \hline
+     & \textbf{A} & \textbf{B} & \textbf{C} & \textbf{D} & \textbf{E} \\ \hline
+    \textbf{A} & --- & $10$ & $8$ & $9$ & $7$ \\ \hline
+    \textbf{B} & $10$ & --- & $10$ & $5$ & $6$ \\ \hline
+    \textbf{C} & $8$ & $10$ & --- & $8$ & $9$ \\ \hline
+    \textbf{D} & $9$ & $5$ & $8$ & --- & $11$ \\ \hline
+    \textbf{E} & $7$ & $6$ & $9$ & $11$ & --- \\ \hline
+    \end{tabular}
+    \end{center}
+
+    \begin{itemize}[leftmargin=0.6cm]
+        \item Áp dụng thuật toán láng giềng gần nhất để tìm chu trình xuất phát từ kho $A$. Tính tổng quãng đường di chuyển.
+    \end{itemize}
+
+    \item[c)] \textbf{Sản phẩm (Lời giải chi tiết):}
+    \begin{itemize}[leftmargin=0.6cm]
+        \item \textbf{Lời giải Bài tập 3 (Thuật toán Dijkstra):}
+        Lập bảng gán nhãn từng bước:
+    \end{itemize}
+
+    \begin{center}
+    \begin{tabular}{|c|c|c|c|c|c|c|c|}
+    \hline
+    \textbf{Bước} & \textbf{Đỉnh chốt $u$} & $d(A)$ & $d(B)$ & $d(C)$ & $d(D)$ & $d(E)$ & $d(F)$ \\ \hline
+    \textbf{0} & --- & \textbf{0} & $+\infty$ & $+\infty$ & $+\infty$ & $+\infty$ & $+\infty$ \\ \hline
+    \textbf{1} & $A$ ($d=0$) & \textbf{[0]} & $5$ ($A$) & $3$ ($A$) & $+\infty$ & $+\infty$ & $+\infty$ \\ \hline
+    \textbf{2} & $C$ ($d=3$) & \textbf{[0]} & $\min(5, 3+2)=5$ ($A$) & \textbf{[3]} & $3+7=10$ ($C$) & $3+4=7$ ($C$) & $+\infty$ \\ \hline
+    \textbf{3} & $B$ ($d=5$) & \textbf{[0]} & \textbf{[5]} & \textbf{[3]} & $\min(10, 5+6)=10$ ($C$) & $7$ ($C$) & $+\infty$ \\ \hline
+    \textbf{4} & $E$ ($d=7$) & \textbf{[0]} & \textbf{[5]} & \textbf{[3]} & $\min(10, 7+1)=8$ ($E$) & \textbf{[7]} & $7+8=15$ ($E$) \\ \hline
+    \textbf{5} & $D$ ($d=8$) & \textbf{[0]} & \textbf{[5]} & \textbf{[3]} & \textbf{[8]} & \textbf{[7]} & $\min(15, 8+4)=12$ ($D$) \\ \hline
+    \textbf{6} & $F$ ($d=12$) & \textbf{[0]} & \textbf{[5]} & \textbf{[3]} & \textbf{[8]} & \textbf{[7]} & \textbf{[12]} \\ \hline
+    \end{tabular}
+    \end{center}
+
+    \begin{itemize}[leftmargin=0.6cm]
+        \item Độ dài đường đi ngắn nhất từ $A$ đến $F$ là $d(F) = 12\text{ km}$.
+        \item Truy vết ngược: $F \leftarrow D \leftarrow E \leftarrow C \leftarrow A$.
+        \item Lộ trình tối ưu: $A \to C \to E \to D \to F$ với độ dài: $3 + 4 + 1 + 4 = 12\text{ km}$.
+    \end{itemize}
+
+    \begin{itemize}[leftmargin=0.6cm]
+        \item \textbf{Lời giải Bài tập 4 (Thuật toán láng giềng gần nhất):}
+        \begin{itemize}
+            \item Từ kho $A$: Khoảng cách đến các đỉnh là: $AB=10, AC=8, AD=9, AE=7$. Nhỏ nhất là $AE = 7 \implies$ Đi tới $E$. Đã thăm: $\{A, E\}$.
+            \item Từ $E$: Chưa thăm $\{B, C, D\}$. Khoảng cách: $EB=6, EC=9, ED=11$. Nhỏ nhất là $EB = 6 \implies$ Đi tới $B$. Đã thăm: $\{A, E, B\}$.
+            \item Từ $B$: Chưa thăm $\{C, D\}$. Khoảng cách: $BC=10, BD=5$. Nhỏ nhất là $BD = 5 \implies$ Đi tới $D$. Đã thăm: $\{A, E, B, D\}$.
+            \item Từ $D$: Đỉnh duy nhất chưa thăm là $C \implies$ Đi tới $C$ với $DC = 8$. Đã thăm đủ 5 đỉnh.
+            \item Từ $C$: Quay trở về kho xuất phát $A$ với khoảng cách $CA = 8$.
+            \item \textbf{Chu trình tìm được:} $A \to E \to B \to D \to C \to A$.
+            \item \textbf{Tổng quãng đường:} $w = 7 + 6 + 5 + 8 + 8 = 34\text{ km}$.
+        \end{itemize}
+    \end{itemize}
+
+    \item[d)] \textbf{Tổ chức thực hiện:}
+\end{itemize}
+
+\begin{pedabox}{Tiến trình tổ chức Hoạt động 2 (Chữa bài tập chuyên sâu)}
+    \textbf{Bước 1: Chuyển giao nhiệm vụ}
+    \begin{itemize}[leftmargin=0.6cm]
+        \item GV gọi 2 học sinh lên bảng giải Bài 3 (lập bảng gán nhãn) và Bài 4 (thuật toán tham lam).
+        \item Yêu cầu cả lớp làm bài vào vở, đối chiếu từng phép tính cộng dồn.
+    \end{itemize}
+
+    \textbf{Bước 2: Thực hiện nhiệm vụ có giàn giáo sư phạm}
+    \begin{itemize}[leftmargin=0.6cm]
+        \item HS trên bảng trình bày lời giải chi tiết.
+        \item GV đi quan sát học sinh dưới lớp, đặc biệt rèn tính cẩn thận cộng dồn độ dài cho học sinh trung bình - yếu ở bước cập nhật nhãn đỉnh $D$ khi chốt đỉnh $E$: $7 + 1 = 8 < 10$, ghi nhận đỉnh trước mới là $E$.
+    \end{itemize}
+
+    \textbf{Bước 3: Báo cáo, thảo luận}
+    \begin{itemize}[leftmargin=0.6cm]
+        \item Hai học sinh thuyết minh từng bước giải trên bảng.
+        \item Cả lớp phản biện, nhận xét kết quả.
+    \end{itemize}
+
+    \textbf{Bước 4: Kết luận, nhận định}
+    \begin{itemize}[leftmargin=0.6cm]
+        \item GV chốt đáp án chuẩn mực, nhấn mạnh kỹ năng truy vết ngược từ đỉnh đích để tránh nhầm lẫn lộ trình.
+    \end{itemize}
+\end{pedabox}
+
+\begin{aibox}{Tích hợp Năng lực AI (Theo QĐ 2422/QĐ-BGDĐT - Mã 11.B2.1)}
+    \textbf{Tầm quan trọng của kiểm thử thuật toán chống tắc nghẽn mạng và vòng lặp bế tắc:}
+    \begin{itemize}[leftmargin=0.6cm]
+        \item \textbf{Vấn đề trong hệ thống mạng số:} Khi hàng triệu gói tin di chuyển trên Internet, nếu thuật toán định tuyến bị lỗi hoặc gặp đồ thị có chu trình trọng số âm / cập nhật sai nhãn, các gói tin sẽ chạy lòng vòng vô tận (Routing Loop), dẫn đến cạn kiệt băng thông và sập toàn bộ hệ thống mạng máy tính.
+        \item \textbf{Ứng dụng trong Trí tuệ nhân tạo (AI):} Các hệ thống AI tự hành (Robot giao hàng, xe ô tô tự lái của Tesla, Waymo) luôn tích hợp thuật toán kiểm thử đa tầng (Fault-Tolerant Routing) để tự động phát hiện đường cụt, đường cấm và tái cấu trúc lộ trình tức thì khi có biến cố tắc đường.
+        \item \textbf{Kỹ thuật Prompting phản biện đối chứng:} Học sinh soạn prompt: \textit{"Cho đồ thị có 6 đỉnh với ma trận trọng số như trên. Hãy chạy thuật toán Dijkstra tìm đường đi ngắn nhất từ A đến F và giải thích chi tiết tại sao ở bước chốt đỉnh E nhãn của đỉnh D lại được cập nhật từ 10 xuống 8."}
+    \end{itemize}
+\end{aibox}
+
+\subsection*{3. Hoạt động 3: Kiểm tra đánh giá nhanh cuối Chuyên đề (12 phút)}
+
+\begin{itemize}[leftmargin=1.2cm]
+    \item[a)] \textbf{Mục tiêu:} Đánh giá mức độ nắm vững chuẩn kiến thức, kĩ năng của học sinh sau toàn bộ Chuyên đề 2 thông qua bài trắc nghiệm và câu hỏi tự luận ngắn có phân hóa.
+    \item[b)] \textbf{Nội dung đề kiểm tra nhanh (10 câu trắc nghiệm khách quan & 1 câu tự luận):}
+    \begin{enumerate}[leftmargin=0.6cm]
+        \item Đồ thị nào sau đây chắc chắn có chu trình Euler? (A. Đồ thị liên thông có mọi đỉnh bậc chẵn; B. Đồ thị có 2 đỉnh bậc lẻ; C. Đồ thị có chu trình Hamilton; D. Đồ thị đầy đủ $K_4$). $\implies$ \textbf{Đáp án: A}.
+        \item Số đỉnh bậc lẻ trong một đồ thị bất kì luôn là: (A. Số lẻ; B. Số chẵn; C. Số nguyên tố; D. Bằng số cạnh). $\implies$ \textbf{Đáp án: B}.
+        \item Đường đi Hamilton là đường đi đi qua: (A. Mỗi cạnh đúng 1 lần; B. Mỗi đỉnh đúng 1 lần; C. Ít nhất 2 đỉnh; D. Tất cả các cạnh). $\implies$ \textbf{Đáp án: B}.
+        \item Thuật toán Dijkstra dùng để giải quyết bài toán: (A. Tìm chu trình Euler; B. Tìm đường đi ngắn nhất trên đồ thị có trọng số không âm; C. Đếm số đỉnh bậc lẻ; D. Tìm cây khung). $\implies$ \textbf{Đáp án: B}.
+    \end{enumerate}
+    \item[c)] \textbf{Sản phẩm:} Bài làm của học sinh, bảng chấm điểm nhanh chéo cặp đôi.
+    \item[d)] \textbf{Tổ chức thực hiện:} HS làm bài cá nhân nghiêm túc trong 8 phút, đổi bài chấm chéo 4 phút dưới sự hướng dẫn đáp án của GV.
+\end{itemize}
+
+\subsection*{4. Hoạt động 4: Vận dụng (Chủ đề STEM & Tổng kết - 7 phút)}
+
+\begin{itemize}[leftmargin=1.2cm]
+    \item[a)] \textbf{Mục tiêu:} Vận dụng tổng hợp kiến thức Chuyên đề 2 vào dự án cộng đồng địa phương huyện A Lưới.
+    \item[b)] \textbf{Nội dung:}
+    \begin{stembox}{Dự án STEM: Tối ưu hóa mạng lưới thu gom rác thải tại thị trấn A Lưới}
+        Đoàn thanh niên trường THCS\&THPT Hồng Vân phối hợp với Đội môi trường đô thị huyện A Lưới xây dựng dự án: "Tuyến đường xanh - Thu gom rác thải tối ưu".
+        \begin{itemize}[leftmargin=0.6cm]
+            \item Phân biệt: Tuyến xe thu gom rác trên mọi con phố tương ứng với bài toán gì? (Bài toán Euler - đi qua mỗi cạnh/tuyến đường).
+            \item Tuyến xe vận chuyển từ bãi rác trung tâm đến các điểm tập kết lớn rồi quay về tương ứng với bài toán gì? (Bài toán Hamilton / TSP - đi qua mỗi điểm tập kết).
+            \item Đề xuất giải pháp phối hợp cả 2 mô hình toán học để tiết kiệm tối đa nhiên liệu xe tải và giảm thiểu ô nhiễm môi trường.
+        \end{itemize}
+    \end{stembox}
+    \item[c)] \textbf{Sản phẩm:} Báo cáo ý tưởng dự án STEM của các nhóm nộp vào link Padlet chung của lớp.
+    \item[d)] \textbf{Tổ chức thực hiện:} GV tổng kết toàn bộ Chuyên đề 2, đánh giá quá trình học tập và giới thiệu Chuyên đề 3: "Hình học họa hình và Vẽ kĩ thuật".
+\end{itemize}
+
+\section*{IV. PHỤ LỤC HỌC LIỆU BỔ TRỢ}
+
+\subsection*{1. Phiếu học tập số 1 (Tiết 1): Hệ thống hóa Lý thuyết \& Bài tập cơ bản}
+
+\begin{pedabox}{PHIẾU HỌC TẬP SỐ 1: BẢNG KIỂM TRA KIẾN THỨC CHUYÊN ĐỀ 2}
+    \textbf{Họ và tên học sinh:} \dotfill \textbf{Lớp:} 11\dots \textbf{Nhóm:} \dots
+    
+    \textbf{Nhiệm vụ 1: Hoàn thành hệ thống định lý then chốt}
+    \begin{itemize}[leftmargin=0.6cm]
+        \item Đồ thị liên thông $G$ có chu trình Euler khi và chỉ khi: \dotfill
+        \item Đồ thị liên thông $G$ có đường đi Euler khi và chỉ khi: \dotfill
+        \item Hệ thức liên hệ giữa tổng bậc các đỉnh và số cạnh $|E|$: \dotfill
+    \end{itemize}
+
+    \textbf{Nhiệm vụ 2: Thực hành vẽ ma trận kề}
+    Vẽ hình biểu diễn của đồ thị có ma trận kề:
+    $$A = \begin{pmatrix}
+    0 & 1 & 0 & 1 \\
+    1 & 0 & 1 & 0 \\
+    0 & 1 & 0 & 1 \\
+    1 & 0 & 1 & 0
+    \end{pmatrix}$$
+    Đồ thị này có phải là chu trình $C_4$ không? Tính bậc của mỗi đỉnh: \dotfill
+\end{pedabox}
+
+\subsection*{2. Phiếu học tập số 2 (Tiết 2): Thuật toán Dijkstra \& Bài toán TSP}
+
+\begin{pedabox}{PHIẾU HỌC TẬP SỐ 2: BẢNG GÁN NHÃN DIJKSTRA VÀ THUẬT TOÁN THAM LAM}
+    \textbf{Họ và tên học sinh:} \dotfill \textbf{Lớp:} 11\dots \textbf{Nhóm:} \dots
+
+    \textbf{Nhiệm vụ 1: Lập bảng gán nhãn Dijkstra tìm đường từ đỉnh 1 đến đỉnh 6}
+    \begin{center}
+    \begin{tabular}{|c|c|c|c|c|c|c|c|}
+    \hline
+    \textbf{Bước} & \textbf{Đỉnh chốt $u$} & $d(1)$ & $d(2)$ & $d(3)$ & $d(4)$ & $d(5)$ & $d(6)$ \\ \hline
+    \textbf{Khởi tạo} & --- & \textbf{0} & $+\infty$ & $+\infty$ & $+\infty$ & $+\infty$ & $+\infty$ \\ \hline
+    \textbf{Bước 1} & \dots\dots & \dots\dots & \dots\dots & \dots\dots & \dots\dots & \dots\dots & \dots\dots \\ \hline
+    \textbf{Bước 2} & \dots\dots & \dots\dots & \dots\dots & \dots\dots & \dots\dots & \dots\dots & \dots\dots \\ \hline
+    \textbf{Bước 3} & \dots\dots & \dots\dots & \dots\dots & \dots\dots & \dots\dots & \dots\dots & \dots\dots \\ \hline
+    \textbf{Bước 4} & \dots\dots & \dots\dots & \dots\dots & \dots\dots & \dots\dots & \dots\dots & \dots\dots \\ \hline
+    \textbf{Bước 5} & \dots\dots & \dots\dots & \dots\dots & \dots\dots & \dots\dots & \dots\dots & \dots\dots \\ \hline
+    \end{tabular}
+    \end{center}
+
+    \textbf{Nhiệm vụ 2: Kết luận và truy vết ngược}
+    \begin{itemize}[leftmargin=0.6cm]
+        \item Độ dài đường đi ngắn nhất: $d(6) = $ \dotfill
+        \item Lộ trình tối ưu: $1 \to$ \dots\dots $\to$ \dots\dots $\to 6$.
+    \end{itemize}
+\end{pedabox}
+
+\subsection*{3. Rubric đánh giá năng lực học sinh cuối Chuyên đề 2 (4 mức độ)}
+
+\begin{center}
+\begin{tabularx}{\textwidth}{|>{\bfseries}p{3cm}|X|X|X|X|}
+\hline
+\textbf{Tiêu chí} & \textbf{Mức 1: Chưa đạt} & \textbf{Mức 2: Đạt} & \textbf{Mức 3: Khá} & \textbf{Mức 4: Tốt} \\ \hline
+Hệ thống hóa kiến thức Lí thuyết đồ thị & Còn nhầm lẫn giữa đỉnh và cạnh, chưa nhớ công thức tính tổng bậc. & Nhận biết đúng các khái niệm cơ bản, phân biệt được Euler và Hamilton. & Hệ thống hóa tốt toàn bộ kiến thức, lập được ma trận kề chuẩn xác. & Phân tích sâu sắc bản chất toán học, thiết kế sơ đồ tư duy số sáng tạo, khoa học. \\ \hline
+Kỹ năng giải toán tìm đường tối ưu (Dijkstra) & Chưa lập được bảng gán nhãn, cộng dồn trọng số sai sót nhiều. & Lập được bảng nhưng chưa nhớ cách cập nhật nhãn tạm thời khi có đường ngắn hơn. & Thực hiện đúng các bước gán nhãn Dijkstra, truy vết chính xác đường đi ngắn nhất. & Thành thạo thuật toán, giải thích cặn kẽ nguyên lí tối ưu và so sánh các phương án phức tạp. \\ \hline
+Bài toán Người du lịch (TSP) & Chưa hiểu tư tưởng của thuật toán láng giềng gần nhất. & Áp dụng được thuật toán tham lam khi có gợi ý của giáo viên. & Tự lực thực hiện chính xác thuật toán láng giềng gần nhất từ đỉnh xuất phát bất kì. & Phân tích được tính xấp xỉ của nghiệm, so sánh các kịch bản xuất phát khác nhau. \\ \hline
+Năng lực số, AI và STEM & Chưa biết dùng phần mềm Graph Online hoặc vẽ sơ đồ tư duy số. & Thao tác được trên phần mềm với sự trợ giúp của bạn trong nhóm. & Khai thác thành thạo công cụ số, tham gia tích cực dự án STEM huyện A Lưới. & Làm chủ công cụ số, hiểu sâu sắc cơ chế AI định tuyến chống nghẽn mạng, thiết kế prompt tối ưu. \\ \hline
+\end{tabularx}
+\end{center}
+
+\end{document}
