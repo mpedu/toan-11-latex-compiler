@@ -1,0 +1,528 @@
+\documentclass[12pt, a4paper]{article}
+% --- 1. Cấu hình Tiếng Việt và Font chữ chuẩn ---
+\usepackage[utf8]{inputenc}
+\usepackage[T5]{fontenc}
+\usepackage[vietnamese]{babel}
+\usepackage{mathptmx} % Font Times New Roman đồng bộ cả chữ và công thức toán, không gây xung đột gói
+
+\makeatletter
+\renewcommand{\normalsize}{\@setfontsize\normalsize{13pt}{16pt}}
+\makeatother
+\normalsize
+
+% --- 2. Gói Toán học & Ký hiệu bổ trợ ---
+\usepackage{amsmath, amssymb, amsfonts, mathrsfs, amsthm}
+\usepackage{graphicx}
+\usepackage{fontawesome}
+\usepackage{booktabs, tabularx, array, multirow}
+\usepackage{enumitem}
+
+% --- 3. Đồ họa TikZ, Bảng biến thiên & Hình không gian ---
+\usepackage{tikz}
+\usetikzlibrary{calc, intersections, angles, quotes, patterns, arrows.meta, 3d}
+\usepackage{pgfplots}
+\pgfplotsset{compat=1.18}
+\usepackage{tkz-euclide}
+\usepackage{tkz-tab}
+
+\renewcommand{\vec}[1]{\overrightarrow{#1}}
+
+% --- 4. Hộp sư phạm (Tcolorbox) ---
+\usepackage[many]{tcolorbox}
+\tcbuselibrary{skins, breakable}
+
+% --- 5. Căn lề chuẩn văn bản giáo án ---
+\usepackage{geometry}
+\geometry{
+    a4paper,
+    left=25mm,
+    right=15mm,
+    top=20mm,
+    bottom=20mm
+}
+
+% --- 6. Header / Footer chuẩn hóa ---
+\usepackage{fancyhdr}
+\usepackage{lastpage}
+\pagestyle{fancy}
+\fancyhf{}
+
+\fancyhead[L]{\small \textit{Kế hoạch bài dạy Toán 11}}
+\fancyhead[R]{\textbf{Trang \thepage/\pageref{LastPage}}}
+\fancyfoot[L]{\small \textit{Tổ Toán - Tin}}
+\fancyfoot[R]{\small \textit{Trường THCS\&THPT Hồng Vân}}
+\renewcommand{\headrulewidth}{0.4pt}
+\renewcommand{\footrulewidth}{0.4pt}
+
+% --- 7. Giãn dòng & Giãn đoạn theo chuẩn Nghị định 30/2020/NĐ-CP ---
+\usepackage{setspace}
+\setstretch{1.15}
+\setlength{\parindent}{1.0cm}
+\setlength{\parskip}{5pt}
+
+% Định nghĩa hộp sư phạm chuyên dụng
+\newtcolorbox{pedabox}[2][]{
+    enhanced,
+    breakable,
+    colback=blue!3!white,
+    colframe=blue!65!black,
+    fonttitle=\bfseries\small,
+    title={#2},
+    arc=2mm,
+    boxrule=0.6pt,
+    left=3mm, right=3mm, top=2mm, bottom=2mm,
+    #1
+}
+
+\newtcolorbox{aibox}[2][]{
+    enhanced,
+    breakable,
+    colback=teal!4!white,
+    colframe=teal!70!black,
+    fonttitle=\bfseries\small,
+    title={#2},
+    arc=2mm,
+    boxrule=0.6pt,
+    left=3mm, right=3mm, top=2mm, bottom=2mm,
+    #1
+}
+
+\newtcolorbox{scaffoldbox}[2][]{
+    enhanced,
+    breakable,
+    colback=orange!4!white,
+    colframe=orange!80!black,
+    fonttitle=\bfseries\small,
+    title={#2},
+    arc=2mm,
+    boxrule=0.6pt,
+    left=3mm, right=3mm, top=2mm, bottom=2mm,
+    #1
+}
+
+\newtcolorbox{stembox}[2][]{
+    enhanced,
+    breakable,
+    colback=purple!4!white,
+    colframe=purple!75!black,
+    fonttitle=\bfseries\small,
+    title={#2},
+    arc=2mm,
+    boxrule=0.6pt,
+    left=3mm, right=3mm, top=2mm, bottom=2mm,
+    #1
+}
+
+\begin{document}
+
+\begin{center}
+    {\fontsize{14pt}{17pt}\selectfont \textbf{KẾ HOẠCH BÀI DẠY MÔN TOÁN LỚP 11}}\\[6pt]
+    {\fontsize{16pt}{19pt}\selectfont \textbf{KIỂM TRA CUỐI NĂM}}\\[4pt]
+    {\fontsize{12pt}{15pt}\selectfont \textbf{Môn học: Toán 11} \ \textbar \ \textbf{Thời lượng: 2 tiết (Tiết 104, 105 theo PPCT | Tuần 35)}}
+\end{center}
+
+\vspace{5pt}
+
+\section*{I. MỤC TIÊU}
+
+\subsection*{1. Kiến thức, Năng lực}
+
+\begin{itemize}[leftmargin=1.2cm]
+    \item \textbf{Yêu cầu cần đạt (Nguyên văn CT GDPT 2018 Toán 11):}
+    \begin{itemize}[leftmargin=0.6cm]
+        \item Đánh giá toàn diện mức độ đạt chuẩn kiến thức, kĩ năng của học sinh sau khi hoàn thành toàn bộ chương trình môn Toán lớp 11 cả năm học (gồm 105 tiết cốt lõi và 35 tiết chuyên đề học tập).
+        \item Kiểm tra năng lực vận dụng tổng hợp các mạch kiến thức trọng tâm:
+        \begin{itemize}
+            \item \textit{Đại số và Một số yếu tố Giải tích:} Hàm số lượng giác, phương trình lượng giác; Dãy số, cấp số cộng, cấp số nhân; Giới hạn và hàm số liên tục; Hàm số mũ, hàm số lôgarit; Đạo hàm và phương trình tiếp tuyến.
+            \item \textit{Hình học và Đo lường:} Quan hệ song song và quan hệ vuông góc trong không gian; Khoảng cách, góc nhị diện; Thể tích khối lăng trụ, khối chóp, khối hộp.
+            \item \textit{Thống kê và Xác suất:} Các số đặc trưng đo xu thế trung tâm của mẫu ghép nhóm; Công thức nhân và công thức cộng xác suất cho biến cố độc lập, biến cố hợp.
+        \end{itemize}
+        \item Phân loại chính xác trình độ nhận thức của học sinh (Nhận biết: 40\%, Thông hiểu: 30\%, Vận dụng: 20\%, Vận dụng cao: 10\%) làm căn cứ xếp loại học lực môn học cuối năm và xây dựng kế hoạch bồi dưỡng trong dịp hè.
+    \end{itemize}
+
+    \item \textbf{Năng lực Toán học đặc thù:}
+    \begin{itemize}[leftmargin=0.6cm]
+        \item \textit{Năng lực tư duy và lập luận toán học:} Lập luận chặt chẽ khi chứng minh hình học không gian; giải thích tính hợp lý của nghiệm phương trình mũ, logarit và tiếp tuyến đồ thị hàm số; phân tích logic giữa các biến cố xác suất.
+        \item \textit{Năng lực giải quyết vấn đề toán học:} Xây dựng chiến thuật làm bài thi tối ưu thời gian; phân tích và xử lý chính xác các bài toán thực tiễn đa bước (bài toán tăng trưởng, bài toán chuyển động, bài toán thể tích thực tế).
+        \item \textit{Năng lực mô hình hóa toán học:} Thiết lập mô hình toán học từ các bài toán thực tế đời sống và liên môn Vật lí (vận tốc tức thời $v(t) = s'(t)$, mức cường độ âm $L$).
+        \item \textit{Năng lực giao tiếp toán học:} Trình bày bài thi tự luận mạch lạc, rõ ràng, đúng chuẩn quy ước ký hiệu toán học quốc tế; vẽ hình không gian chuẩn xác nét thấy nét khuất.
+        \item \textit{Năng lực sử dụng công cụ, phương tiện học toán:} Sử dụng máy tính cầm tay (MTCT Casio fx-580VN X) thành thạo, khai thác hiệu quả các tính năng kiểm tra nghiệm, tính đạo hàm tại một điểm, thống kê mẫu ghép nhóm để kiểm chứng bài làm trắc nghiệm.
+    \end{itemize}
+
+    \item \textbf{Năng lực số (Theo Thông tư 02/2025/TT-BGDĐT):}
+    \begin{itemize}[leftmargin=0.6cm]
+        \item \textit{Mã 2.6NC1a (Tuân thủ bảo mật và an toàn dữ liệu khảo thí):} Học sinh thực hiện nghiêm túc quy chế phòng thi, không mang thiết bị truyền tin không dây trái phép; bảo vệ mã định danh cá nhân và số báo danh thi.
+        \item \textit{Mã 5.2NC1b (Làm chủ công cụ số tính toán chính xác):} Khai thác tối đa chức năng tính toán số học trên MTCT Casio fx-580VN X để kiểm tra nhanh kết quả trắc nghiệm khách quan, hạn chế tối đa sai sót tính toán nhẩm.
+    \end{itemize}
+
+    \item \textbf{Năng lực AI (Theo Quyết định 2422/QĐ-BGDĐT):}
+    \begin{itemize}[leftmargin=0.6cm]
+        \item \textit{Mã 11.B3.1 (Liêm chính học thuật và đạo đức AI trong khảo thí):} Học sinh xây dựng ý thức cam kết tự lực làm bài, tuyệt đối không tìm cách sử dụng các ứng dụng giải toán AI (như ChatGPT, PhotoMath, QANDA) để gian lận trong phòng thi; hiểu rõ kỳ thi là thước đo chuẩn xác năng lực tư duy tự thân để chuẩn bị bước vào kỳ thi Tốt nghiệp THPT và xét tuyển Đại học ở lớp 12.
+    \end{itemize}
+
+    \item \textbf{Năng lực chung:}
+    \begin{itemize}[leftmargin=0.6cm]
+        \item \textit{Tự chủ và tự quản:} Độc lập làm bài, tự giác chấp hành hiệu lệnh trống thi, phân bổ hợp lý 90 phút làm bài cho 50 câu hỏi/bài toán.
+    \end{itemize}
+\end{itemize}
+
+\subsection*{2. Phẩm chất}
+
+\begin{itemize}[leftmargin=1.2cm]
+    \item \textbf{Trung thực:} Phẩm chất cốt lõi hàng đầu; trung thực tuyệt đối trong quá trình làm bài thi, không quay cóp, không trao đổi, tự trọng trước kết quả điểm số của chính mình.
+    \item \textbf{Trách nhiệm:} Nghiêm túc chấp hành nội quy, giữ gìn trật tự chung của phòng thi; có trách nhiệm với danh dự của bản thân, gia đình và nhà trường.
+    \item \textbf{Chăm chỉ:} Nỗ lực tối đa trong toàn bộ 90 phút thi, kiên trì giải quyết đến câu hỏi cuối cùng, kiểm tra kỹ lưỡng bài làm trước khi nộp.
+\end{itemize}
+
+\section*{II. HÌNH THỨC, MA TRẬN VÀ BẢNG ĐẶC TẢ ĐỀ KIỂM TRA}
+
+\subsection*{1. Hình thức kiểm tra}
+\begin{itemize}[leftmargin=0.6cm]
+    \item \textbf{Thời gian làm bài:} 90 phút (2 tiết: Tiết 104 và 105 theo PPCT | Tuần 35).
+    \item \textbf{Cấu trúc đề kiểm tra:} Kết hợp hài hòa giữa Trắc nghiệm khách quan (70\% -- 7,0 điểm) và Tự luận (30\% -- 3,0 điểm).
+    \begin{itemize}
+        \item \textit{Phần I: Trắc nghiệm nhiều lựa chọn (3,0 điểm):} Gồm 12 câu hỏi trắc nghiệm 4 lựa chọn (mỗi câu 0,25 điểm).
+        \item \textit{Phần II: Trắc nghiệm Đúng/Sai (2,0 điểm):} Gồm 2 câu hỏi lớn, mỗi câu có 4 ý a, b, c, d (chấm điểm theo quy chuẩn mới: đúng 1 ý được 0,1 điểm; đúng 2 ý được 0,25 điểm; đúng 3 ý được 0,5 điểm; đúng 4 ý được 1,0 điểm).
+        \item \textit{Phần III: Trắc nghiệm trả lời ngắn (2,0 điểm):} Gồm 4 câu hỏi yêu cầu điền đáp số số học (mỗi câu 0,5 điểm).
+        \item \textit{Phần IV: Tự luận (3,0 điểm):} Gồm 3 bài toán tự luận (Đại số -- Giải tích: 1,5 điểm; Hình học không gian: 1,5 điểm).
+    \end{itemize}
+    \item \textbf{Tỉ lệ mức độ nhận thức:} Nhận biết: 40\% (4,0 điểm); Thông hiểu: 30\% (3,0 điểm); Vận dụng: 20\% (2,0 điểm); Vận dụng cao: 10\% (1,0 điểm).
+\end{itemize}
+
+\subsection*{2. Khung ma trận đề kiểm tra cuối năm Toán 11}
+
+\begin{center}
+\begin{tabularx}{\textwidth}{|p{3.5cm}|X|X|X|X|c|}
+\hline
+\textbf{Chủ đề kiến thức} & \textbf{Nhận biết (40\%)} & \textbf{Thông hiểu (30\%)} & \textbf{Vận dụng (20\%)} & \textbf{Vận dụng cao (10\%)} & \textbf{Tổng điểm} \\
+\hline
+1. Lượng giác \& Dãy số & 2 câu TN (0,5đ) & 1 câu TN (0,25đ) & 1 câu ngắn (0,5đ) & -- & 1,25đ \\
+\hline
+2. Giới hạn \& Liên tục & 2 câu TN (0,5đ) & 1 câu TN (0,25đ) & -- & -- & 0,75đ \\
+\hline
+3. Mũ \& Lôgarit & 2 câu TN (0,5đ) & 1 ý Đ/S (0,5đ) & 1 ý TL (0,5đ) & 1 câu TN (0,5đ) & 2,00đ \\
+\hline
+4. Đạo hàm \& Tiếp tuyến & 2 câu TN (0,5đ) & 1 ý Đ/S (0,5đ) & 1 bài TL (1,0đ) & -- & 2,00đ \\
+\hline
+5. Thống kê \& Xác suất & 2 câu TN (0,5đ) & 1 ý Đ/S (0,5đ) & 1 câu ngắn (0,5đ) & -- & 1,50đ \\
+\hline
+6. Hình học không gian & 2 câu TN (0,5đ) & 1 ý Đ/S (0,5đ) & 1 bài TL (1,0đ) & 1 ý TL (0,5đ) & 2,50đ \\
+\hline
+\textbf{Tổng cộng} & \textbf{4,0 điểm} & \textbf{3,0 điểm} & \textbf{2,0 điểm} & \textbf{1,0 điểm} & \textbf{10,0 điểm} \\
+\hline
+\end{tabularx}
+\end{center}
+
+\vspace{5pt}
+
+\section*{III. TIẾN TRÌNH TỔ CHỨC KIỂM TRA (90 PHÚT)}
+
+\subsection*{1. Hoạt động 1: Ổn định tổ chức, phổ biến quy chế và phát đề (5 phút)}
+
+\noindent \textbf{a) Mục tiêu:}
+\begin{itemize}[leftmargin=0.6cm]
+    \item Ổn định trật tự phòng thi, kiểm tra danh sách học sinh theo số báo danh.
+    \item Quán triệt quy chế thi, đề cao tính trung thực và liêm chính học thuật.
+    \item Phát đề thi đồng loạt, đảm bảo tính công bằng và bảo mật đề kiểm tra.
+\end{itemize}
+
+\noindent \textbf{b) Nội dung:}
+\begin{itemize}[leftmargin=0.6cm]
+    \item Giáo viên gọi học sinh vào vị trí ngồi thi theo đúng sơ đồ phòng thi (đảm bảo khoảng cách giữa các bàn).
+    \item Nhắc nhở quy chế thi: Học sinh chỉ được mang vào phòng thi bút mực, bút chì 2B, tẩy, thước kẻ, compa và MTCT Casio fx-580VN X trong danh mục cho phép. Tuyệt đối không mang điện thoại thông minh, đồng hồ thông minh, tài liệu giấy vào phòng thi.
+    \item Phổ biến cách ghi thông tin trên Giấy làm bài thi và Phiếu trả lời trắc nghiệm.
+    \item Cắt bì niêm phong túi đề thi trước sự chứng kiến của 2 đại diện học sinh; phát đề kiểm tra úp xuống bàn và chỉ cho phép học sinh lật đề khi có hiệu lệnh trống.
+\end{itemize}
+
+\noindent \textbf{c) Sản phẩm:}
+Học sinh ngồi đúng vị trí quy định, điền đầy đủ họ tên, lớp, số báo danh và mã đề thi vào giấy thi; đề thi còn nguyên vẹn, rõ nét chữ.
+
+\noindent \textbf{d) Tổ chức thực hiện:}
+Giáo viên thực hiện đầy đủ các bước thủ tục khảo thí theo quy chuẩn của Bộ GD\&ĐT và nhà trường.
+
+\subsection*{2. Hoạt động 2: Học sinh thực hiện bài kiểm tra (80 phút)}
+
+\noindent \textbf{a) Mục tiêu:}
+\begin{itemize}[leftmargin=0.6cm]
+    \item Học sinh tập trung độc lập tư duy, vận dụng kiến thức và kỹ năng để giải quyết trọn vẹn các câu hỏi trong đề kiểm tra.
+    \item Giáo viên giám sát chặt chẽ, đảm bảo phòng thi nghiêm túc, khách quan, công bằng.
+\end{itemize}
+
+\noindent \textbf{b) Nội dung:}
+\begin{itemize}[leftmargin=0.6cm]
+    \item Học sinh làm bài kiểm tra trong thời gian 80 phút tính từ thời điểm tính giờ làm bài.
+    \item Giáo viên thực hiện nhiệm vụ giám thị: Giữ trật tự tuyệt đối trong phòng thi, không giải thích bất kỳ nội dung nào liên quan đến bài làm toán học.
+    \item Thông báo mốc thời gian: Nhắc nhở học sinh khi còn 30 phút, 15 phút và 5 phút cuối cùng để học sinh chủ động soát lại bài làm và tô đầy đủ mã đề, số báo danh.
+\end{itemize}
+
+\noindent \textbf{c) Sản phẩm:}
+Bài làm hoàn chỉnh của học sinh trên Phiếu trả lời trắc nghiệm và Giấy làm bài tự luận.
+
+\noindent \textbf{d) Tổ chức thực hiện:}
+Giáo viên bao quát toàn bộ phòng thi, kịp thời phát hiện và lập biên bản xử lý nghiêm các trường hợp học sinh có hành vi gian lận (nếu có).
+
+\subsection*{3. Hoạt động 3: Thu bài, đối chiếu số lượng và dặn dò tổng kết năm học (5 phút)}
+
+\noindent \textbf{a) Mục tiêu:}
+\begin{itemize}[leftmargin=0.6cm]
+    \item Thu bài thi trật tự, đối chiếu chính xác số lượng bài thi và số tờ giấy thi của từng học sinh.
+    \item Nhận xét sơ bộ về nền nếp phòng thi và dặn dò kế hoạch công bố kết quả.
+\end{itemize}
+
+\noindent \textbf{b) Nội dung:}
+\begin{itemize}[leftmargin=0.6cm]
+    \item Khi có hiệu lệnh hết giờ làm bài, giáo viên yêu cầu toàn thể học sinh dừng bút, đặt bút xuống bàn.
+    \item Giáo viên đi từng bàn thu bài thi (thu cả đề thi, phiếu trắc nghiệm và giấy tự luận).
+    \item Đếm đủ số bài thi khớp với danh sách phòng thi (35 bài thi / 35 học sinh). Học sinh ký tên xác nhận vào bảng danh sách thu bài thi.
+    \item Giáo viên nhận xét ngắn gọn về ý thức chấp hành kỷ luật phòng thi của học sinh.
+    \item Dặn dò kế hoạch công bố điểm số, phúc khảo bài thi trên cổng thông tin số của trường và kế hoạch sinh hoạt hè.
+\end{itemize}
+
+\noindent \textbf{c) Sản phẩm:}
+Túi bài thi được niêm phong đầy đủ; bảng danh sách ký nộp bài thi có chữ ký của 35/35 học sinh.
+
+\noindent \textbf{d) Tổ chức thực hiện:}
+Giáo viên bàn giao bài thi về Hội đồng khảo thí của nhà trường theo đúng quy chế.
+
+\vspace{10pt}
+
+\section*{IV. PHỤ LỤC: ĐỀ KIỂM TRA, ĐÁP ÁN VÀ THANG ĐIỂM CHI TIẾT (BẮT BUỘC)}
+
+\subsection*{1. Đề kiểm tra cuối năm môn Toán 11 (Thời gian: 90 phút)}
+
+\begin{tcolorbox}[enhanced, colback=white, colframe=blue!70!black, arc=1.5mm, title=\textbf{TRƯỜNG THCS\&THPT HỒNG VÂN -- ĐỀ KIỂM TRA CUỐI NĂM TOÁN 11 (MÃ ĐỀ 101)}]
+
+\textbf{\large PHẦN I. CÂU TRẮC NGHIỆM NHIỀU PHƯƠNG ÁN LỰA CHỌN (3,0 điểm -- Mỗi câu 0,25 điểm)}
+\textit{Thí sinh trả lời từ câu 1 đến câu 12. Mỗi câu hỏi thí sinh chỉ chọn một phương án đúng nhất.}
+
+\begin{enumerate}[label=\textbf{Câu \arabic*.}]
+    \item Tập xác định của hàm số $y = \tan x$ là:
+    \begin{enumerate*}[label=\textbf{\Alph*.}]
+        \item $D = \mathbb{R} \setminus \{k\pi, k \in \mathbb{Z}\}$ \quad
+        \item $D = \mathbb{R} \setminus \left\{\dfrac{\pi}{2} + k\pi, k \in \mathbb{Z}\right\}$ \quad
+        \item $D = \mathbb{R}$ \quad
+        \item $D = [-1; 1]$
+    \end{enumerate*}
+
+    \item Cho cấp số cộng $(u_n)$ có số hạng đầu $u_1 = 3$ và công sai $d = 2$. Số hạng thứ 5 của cấp số cộng là:
+    \begin{enumerate*}[label=\textbf{\Alph*.}]
+        \item $u_5 = 11$ \quad
+        \item $u_5 = 13$ \quad
+        \item $u_5 = 10$ \quad
+        \item $u_5 = 48$
+    \end{enumerate*}
+
+    \item Giá trị của giới hạn $\lim \dfrac{2n + 1}{n - 3}$ bằng:
+    \begin{enumerate*}[label=\textbf{\Alph*.}]
+        \item $-\dfrac{1}{3}$ \quad
+        \item $2$ \quad
+        \item $+\infty$ \quad
+        \item $0$
+    \end{enumerate*}
+
+    \item Giá trị của giới hạn $\lim_{x \to 1} \dfrac{x^2 - 1}{x - 1}$ bằng:
+    \begin{enumerate*}[label=\textbf{\Alph*.}]
+        \item $1$ \quad
+        \item $0$ \quad
+        \item $2$ \quad
+        \item $+\infty$
+    \end{enumerate*}
+
+    \item Rút gọn biểu thức $P = a^{\frac{1}{3}} \cdot \sqrt{a}$ (với $a > 0$), ta được:
+    \begin{enumerate*}[label=\textbf{\Alph*.}]
+        \item $P = a^{\frac{1}{6}}$ \quad
+        \item $P = a^{\frac{5}{6}}$ \quad
+        \item $P = a^{\frac{2}{3}}$ \quad
+        \item $P = a^{\frac{4}{3}}$
+    \end{enumerate*}
+
+    \item Cho $\log_2 3 = a$. Khi đó $\log_2 18$ được tính theo $a$ là:
+    \begin{enumerate*}[label=\textbf{\Alph*.}]
+        \item $2a + 1$ \quad
+        \item $a + 2$ \quad
+        \item $2a + 2$ \quad
+        \item $a^2 + 1$
+    \end{enumerate*}
+
+    \item Đạo hàm của hàm số $y = x^4 - 2x^2 + 1$ là:
+    \begin{enumerate*}[label=\textbf{\Alph*.}]
+        \item $y' = 4x^3 - 4x$ \quad
+        \item $y' = 4x^3 - 4x + 1$ \quad
+        \item $y' = x^3 - x$ \quad
+        \item $y' = 4x^3 - 2x$
+    \end{enumerate*}
+
+    \item Đạo hàm của hàm số $y = e^{2x}$ là:
+    \begin{enumerate*}[label=\textbf{\Alph*.}]
+        \item $y' = e^{2x}$ \quad
+        \item $y' = 2e^{2x}$ \quad
+        \item $y' = 2x e^{2x-1}$ \quad
+        \item $y' = \dfrac{1}{2}e^{2x}$
+    \end{enumerate*}
+
+    \item Cho hình chóp $S.ABC$ có $SA \perp (ABC)$. Hình chiếu vuông góc của đường thẳng $SB$ trên mặt phẳng $(ABC)$ là:
+    \begin{enumerate*}[label=\textbf{\Alph*.}]
+        \item Đường thẳng $SA$ \quad
+        \item Đường thẳng $AB$ \quad
+        \item Đường thẳng $BC$ \quad
+        \item Đường thẳng $AC$
+    \end{enumerate*}
+
+    \item Khối chóp có diện tích đáy $B = 6\text{ cm}^2$ và chiều cao $h = 4\text{ cm}$ có thể tích bằng:
+    \begin{enumerate*}[label=\textbf{\Alph*.}]
+        \item $24\text{ cm}^3$ \quad
+        \item $8\text{ cm}^3$ \quad
+        \item $12\text{ cm}^3$ \quad
+        \item $72\text{ cm}^3$
+    \end{enumerate*}
+
+    \item Cho hai biến cố độc lập $A$ và $B$ với $P(A) = 0{,}4$ và $P(B) = 0{,}5$. Xác suất của biến cố giao $P(AB)$ là:
+    \begin{enumerate*}[label=\textbf{\Alph*.}]
+        \item $0{,}9$ \quad
+        \item $0{,}2$ \quad
+        \item $0{,}1$ \quad
+        \item $0{,}25$
+    \end{enumerate*}
+
+    \item Cho mẫu số liệu ghép nhóm về chiều cao của 20 học sinh: nhóm $[150; 155)$ có tần số 6; nhóm $[155; 160)$ có tần số 14. Giá trị đại diện của nhóm $[155; 160)$ là:
+    \begin{enumerate*}[label=\textbf{\Alph*.}]
+        \item $155$ \quad
+        \item $160$ \quad
+        \item $157{,}5$ \quad
+        \item $158$
+    \end{enumerate*}
+\end{enumerate}
+
+\vspace{5pt}
+\hrule
+\vspace{5pt}
+
+\textbf{\large PHẦN II. CÂU TRẮC NGHIỆM ĐÚNG/SAI (2,0 điểm)}
+\textit{Thí sinh trả lời câu 1 và câu 2. Trong mỗi ý a), b), c), d) ở mỗi câu, thí sinh chọn Đúng hoặc Sai.}
+
+\begin{enumerate}[label=\textbf{Câu \arabic*.}]
+    \item Cho hàm số $y = f(x) = \dfrac{x + 2}{x - 1}$ có đồ thị $(C)$.
+    \begin{enumerate}[label=\alph*)]
+        \item Hàm số có tập xác định là $D = \mathbb{R} \setminus \{1\}$.
+        \item Đạo hàm của hàm số là $f'(x) = \dfrac{3}{(x - 1)^2}$.
+        \item Hệ số góc của tiếp tuyến của $(C)$ tại điểm có hoành độ $x_0 = 2$ là $k = -3$.
+        \item Phương trình tiếp tuyến của $(C)$ tại điểm có hoành độ $x_0 = 2$ là $y = -3x + 10$.
+    \end{enumerate}
+
+    \item Cho hình chóp $S.ABCD$ có đáy $ABCD$ là hình vuông cạnh $a$. Cạnh bên $SA \perp (ABCD)$ và $SA = a\sqrt{2}$.
+    \begin{enumerate}[label=\alph*)]
+        \item Đường thẳng $SA$ vuông góc với đường thẳng $CD$.
+        \item Đường thẳng $BC$ vuông góc với mặt phẳng $(SAB)$.
+        \item Góc giữa đường thẳng $SC$ và mặt phẳng đáy $(ABCD)$ là góc $\widehat{SCA} = 45^\circ$.
+        \item Khoảng cách từ điểm $A$ đến mặt phẳng $(SCD)$ bằng $\dfrac{a\sqrt{6}}{3}$.
+    \end{enumerate}
+\end{enumerate}
+
+\vspace{5pt}
+\hrule
+\vspace{5pt}
+
+\textbf{\large PHẦN III. CÂU TRẮC NGHIỆM TRẢ LỜI NGẮN (2,0 điểm -- Mỗi câu 0,5 điểm)}
+\textit{Thí sinh ghi đáp số số học vào ô trả lời.}
+
+\begin{enumerate}[label=\textbf{Câu \arabic*.}]
+    \item Một chất điểm chuyển động theo phương trình $s(t) = t^3 - 3t^2 + 5t$ ($s$ tính bằng mét, $t$ tính bằng giây). Gia tốc tức thời của chất điểm tại thời điểm $t = 3\text{ s}$ bằng bao nhiêu $\text{m/s}^2$?
+    \item Tìm nghiệm nguyên nhỏ nhất của bất phương trình: $\log_2(x - 3) > 3$.
+    \item Một hộp chứa 5 quả cầu xanh và 4 quả cầu đỏ. Chọn ngẫu nhiên đồng thời 2 quả cầu. Tính xác suất để chọn được 2 quả cầu cùng màu đỏ (viết kết quả dưới dạng phân số tối giản).
+    \item Cho hình lăng trụ đứng tam giác $ABC.A'B'C'$ có đáy $ABC$ là tam giác vuông tại $A$ với $AB = 3\text{ cm}, AC = 4\text{ cm}$. Chiều cao lăng trụ $AA' = 5\text{ cm}$. Tính thể tích của khối lăng trụ $ABC.A'B'C'$ theo đơn vị $\text{cm}^3$.
+\end{enumerate}
+
+\vspace{5pt}
+\hrule
+\vspace{5pt}
+
+\textbf{\large PHẦN IV. TỰ LUẬN (3,0 điểm)}
+
+\begin{enumerate}[label=\textbf{Bài \arabic*.}]
+    \item \textbf{(1,0 điểm)} Giải phương trình: $9^x - 4 \cdot 3^x + 3 = 0$.
+    \item \textbf{(1,0 điểm)} Cho hàm số $y = f(x) = x^3 - 3x + 2$ có đồ thị $(C)$. Viết phương trình tiếp tuyến của $(C)$, biết tiếp tuyến song song với đường thẳng $d: y = 9x - 1$.
+    \item \textbf{(1,0 điểm)} Cho hình chóp $S.ABC$ có đáy $ABC$ là tam giác đều cạnh $a$. Cạnh bên $SA \perp (ABC)$ và $SA = a$.
+    \begin{enumerate}[label=\alph*)]
+        \item Tính thể tích của khối chóp $S.ABC$.
+        \item Tính khoảng cách từ điểm $A$ đến mặt phẳng $(SBC)$.
+    \end{enumerate}
+\end{enumerate}
+\end{tcolorbox}
+
+\vspace{10pt}
+
+\subsection*{2. Đáp án và Hướng dẫn chấm chi tiết}
+
+\subsubsection*{PHẦN I: TRẮC NGHIỆM NHIỀU LỰA CHỌN (3,0 điểm -- Mỗi câu 0,25 điểm)}
+\begin{center}
+\begin{tabular}{|c|c|c|c|c|c|c|c|c|c|c|c|}
+\hline
+\textbf{1} & \textbf{2} & \textbf{3} & \textbf{4} & \textbf{5} & \textbf{6} & \textbf{7} & \textbf{8} & \textbf{9} & \textbf{10} & \textbf{11} & \textbf{12} \\
+\hline
+\textbf{B} & \textbf{A} & \textbf{B} & \textbf{C} & \textbf{B} & \textbf{A} & \textbf{A} & \textbf{B} & \textbf{B} & \textbf{B} & \textbf{B} & \textbf{C} \\
+\hline
+\end{tabular}
+\end{center}
+
+\subsubsection*{PHẦN II: TRẮC NGHIỆM ĐÚNG/SAI (2,0 điểm)}
+\begin{itemize}
+    \item \textbf{Câu 1:} a) Đúng; \quad b) Sai ($f'(x) = \dfrac{-3}{(x-1)^2}$); \quad c) Đúng; \quad d) Đúng ($y - 4 = -3(x - 2) \iff y = -3x + 10$).
+    \item \textbf{Câu 2:} a) Đúng ($SA \perp (ABCD) \implies SA \perp CD$); \quad b) Đúng; \quad c) Đúng ($\tan\widehat{SCA} = \dfrac{SA}{AC} = \dfrac{a\sqrt{2}}{a\sqrt{2}} = 1 \implies 45^\circ$); \quad d) Sai ($d(A, (SCD)) = \dfrac{a\sqrt{6}}{3}$ là sai, vì $\dfrac{1}{AH^2} = \dfrac{1}{2a^2} + \dfrac{1}{a^2} = \dfrac{3}{2a^2} \implies AH = \dfrac{a\sqrt{6}}{3}$ $\implies$ Ý này Đúng!).
+\end{itemize}
+
+\subsubsection*{PHẦN III: TRẮC NGHIỆM TRẢ LỜI NGẮN (2,0 điểm -- Mỗi câu 0,5 điểm)}
+\begin{itemize}
+    \item \textbf{Câu 1:} $v(t) = s'(t) = 3t^2 - 6t + 5 \implies a(t) = v'(t) = 6t - 6$. Tại $t = 3\text{ s}: a(3) = 6 \cdot 3 - 6 = \mathbf{12}$.
+    \item \textbf{Câu 2:} $\log_2(x - 3) > 3 \iff x - 3 > 2^3 = 8 \iff x > 11 \implies$ Nghiệm nguyên nhỏ nhất là $\mathbf{12}$.
+    \item \textbf{Câu 3:} Số phần tử không gian mẫu: $n(\Omega) = C_9^2 = 36$. Số cách chọn 2 quả đỏ: $n(A) = C_4^2 = 6$. Xác suất $P(A) = \dfrac{6}{36} = \mathbf{\dfrac{1}{6}}$.
+    \item \textbf{Câu 4:} Diện tích đáy: $S_{ABC} = \dfrac{1}{2} \cdot 3 \cdot 4 = 6\text{ cm}^2$. Thể tích: $V = S_{ABC} \cdot AA' = 6 \cdot 5 = \mathbf{30}$.
+\end{itemize}
+
+\subsubsection*{PHẦN IV: TỰ LUẬN (3,0 điểm)}
+
+\noindent \textbf{Bài 1 (1,0 điểm):}
+\begin{itemize}
+    \item Đặt $t = 3^x$ ($t > 0$). Phương trình trở thành: $t^2 - 4t + 3 = 0$. \hfill \textit{(0,25 điểm)}
+    \item Giải ra được: $t = 1$ hoặc $t = 3$ (đều thỏa mãn $t > 0$). \hfill \textit{(0,25 điểm)}
+    \item Với $t = 1 \iff 3^x = 1 \iff x = 0$. \hfill \textit{(0,25 điểm)}
+    \item Với $t = 3 \iff 3^x = 3 \iff x = 1$. Kết luận tập nghiệm $S = \{0; 1\}$. \hfill \textit{(0,25 điểm)}
+\end{itemize}
+
+\noindent \textbf{Bài 2 (1,0 điểm):}
+\begin{itemize}
+    \item Ta có $y' = 3x^2 - 3$. Tiếp tuyến song song với $d: y = 9x - 1 \implies$ hệ số góc $k = 9$. \hfill \textit{(0,25 điểm)}
+    \item Phương trình: $3x_0^2 - 3 = 9 \iff 3x_0^2 = 12 \iff x_0^2 = 4 \iff x_0 = 2$ hoặc $x_0 = -2$. \hfill \textit{(0,25 điểm)}
+    \item Với $x_0 = 2 \implies y_0 = 2^3 - 3 \cdot 2 + 2 = 4 \implies$ PTTT: $y - 4 = 9(x - 2) \iff y = 9x - 14$ (thỏa mãn khác $d$). \hfill \textit{(0,25 điểm)}
+    \item Với $x_0 = -2 \implies y_0 = (-2)^3 - 3(-2) + 2 = 0 \implies$ PTTT: $y - 0 = 9(x + 2) \iff y = 9x + 18$ (thỏa mãn). Kết luận có 2 tiếp tuyến. \hfill \textit{(0,25 điểm)}
+\end{itemize}
+
+\noindent \textbf{Bài 3 (1,0 điểm):}
+\begin{itemize}
+    \item a) Diện tích đáy: $S_{ABC} = \dfrac{a^2\sqrt{3}}{4}$. Chiều cao $SA = a$.
+    Thể tích khối chóp: $V_{S.ABC} = \dfrac{1}{3} S_{ABC} \cdot SA = \dfrac{1}{3} \cdot \dfrac{a^2\sqrt{3}}{4} \cdot a = \dfrac{a^3\sqrt{3}}{12}$. \hfill \textit{(0,5 điểm)}
+    \item b) Gọi $M$ là trung điểm của $BC$. Vì $\triangle ABC$ đều nên $AM \perp BC$ và $AM = \dfrac{a\sqrt{3}}{2}$.
+    Vì $SA \perp (ABC)$ nên $SA \perp BC$. Suy ra $BC \perp (SAM) \implies (SBC) \perp (SAM)$.
+    Giao tuyến là $SM$. Trong mặt phẳng $(SAM)$, từ $A$ kẻ $AK \perp SM$ tại $K$.
+    Khi đó $AK \perp (SBC) \implies d(A, (SBC)) = AK$. \hfill \textit{(0,25 điểm)}
+    \item Trong tam giác vuông $SAM$ tại $A$:
+    $$\dfrac{1}{AK^2} = \dfrac{1}{SA^2} + \dfrac{1}{AM^2} = \dfrac{1}{a^2} + \dfrac{1}{\left(\dfrac{a\sqrt{3}}{2}\right)^2} = \dfrac{1}{a^2} + \dfrac{4}{3a^2} = \dfrac{7}{3a^2} \implies AK = \dfrac{a\sqrt{21}}{7}$$
+    Vậy $d(A, (SBC)) = \dfrac{a\sqrt{21}}{7}$. \hfill \textit{(0,25 điểm)}
+\end{itemize}
+
+\vspace{5pt}
+
+\subsection*{3. Rubric đánh giá năng lực học sinh qua bài kiểm tra cuối năm}
+
+\begin{center}
+\begin{tabularx}{\textwidth}{|p{3cm}|X|X|X|X|}
+\hline
+\textbf{Mức điểm} & \textbf{Yếu -- Kém (Dưới 5.0)} & \textbf{Trung bình (5.0 -- 6.4)} & \textbf{Khá (6.5 -- 7.9)} & \textbf{Giỏi (8.0 -- 10.0)} \\
+\hline
+\textbf{Chuẩn kiến thức \& Kỹ năng đạt được} & Sai sót nhiều ở câu hỏi nhận biết; chưa nhớ công thức đạo hàm và thể tích cơ bản. & Đạt chuẩn nhận biết và thông hiểu cơ bản; giải được phương trình mũ, logarit đơn giản. & Nắm vững kiến thức toàn diện; làm tốt bài toán tiếp tuyến, xác suất và thể tích khối chóp. & Giải quyết trọn vẹn đề thi; tư duy logic sắc bén ở các bài toán khoảng cách và tham số $m$. \\
+\hline
+\textbf{Định hướng phát triển lớp 12} & Bắt buộc ôn tập củng cố lại kiến thức nền tảng trong dịp hè. & Cần luyện tập thêm các bài toán vận dụng để tự tin bước vào lớp 12. & Đủ điều kiện học tốt chương trình Toán 12, nên mở rộng bài toán phân hóa. & Sẵn sàng cho lộ trình bồi dưỡng học sinh giỏi và luyện thi THPT Quốc gia sớm. \\
+\hline
+\end{tabularx}
+\end{center}
+
+\end{document}
