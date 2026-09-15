@@ -1,0 +1,503 @@
+\documentclass[12pt, a4paper]{article}
+% --- 1. Cấu hình Tiếng Việt và Font chữ chuẩn ---
+\usepackage[utf8]{inputenc}
+\usepackage[T5]{fontenc}
+\usepackage[vietnamese]{babel}
+\usepackage{mathptmx} % Font Times New Roman đồng bộ cả chữ và công thức toán, không gây xung đột gói
+
+\makeatletter
+\renewcommand{\normalsize}{\@setfontsize\normalsize{13pt}{16pt}}
+\makeatother
+\normalsize
+
+% --- 2. Gói Toán học & Ký hiệu bổ trợ ---
+\usepackage{amsmath, amssymb, amsfonts, mathrsfs, amsthm}
+\usepackage{graphicx}
+\usepackage{fontawesome}
+\usepackage{booktabs, tabularx, array, multirow}
+\usepackage{enumitem}
+
+% --- 3. Đồ họa TikZ, Bảng biến thiên & Hình không gian ---
+\usepackage{tikz}
+\usetikzlibrary{calc, intersections, angles, quotes, patterns, arrows.meta, 3d}
+\usepackage{pgfplots}
+\pgfplotsset{compat=1.18}
+\usepackage{tkz-euclide}
+\usepackage{tkz-tab}
+
+\renewcommand{\vec}[1]{\overrightarrow{#1}}
+
+% --- 4. Hộp sư phạm (Tcolorbox) ---
+\usepackage[many]{tcolorbox}
+\tcbuselibrary{skins, breakable}
+
+% --- 5. Căn lề chuẩn văn bản giáo án ---
+\usepackage{geometry}
+\geometry{
+    a4paper,
+    left=25mm,
+    right=15mm,
+    top=20mm,
+    bottom=20mm
+}
+
+% --- 6. Header / Footer chuẩn hóa ---
+\usepackage{fancyhdr}
+\usepackage{lastpage}
+\pagestyle{fancy}
+\fancyhf{}
+
+\fancyhead[L]{\small \textit{Kế hoạch bài dạy Toán 11}}
+\fancyhead[R]{\textbf{Trang \thepage/\pageref{LastPage}}}
+\fancyfoot[L]{\small \textit{Tổ Toán - Tin}}
+\fancyfoot[R]{\small \textit{Trường THCS\&THPT Hồng Vân}}
+\renewcommand{\headrulewidth}{0.4pt}
+\renewcommand{\footrulewidth}{0.4pt}
+
+% --- 7. Giãn dòng & Giãn đoạn theo chuẩn Nghị định 30/2020/NĐ-CP ---
+\usepackage{setspace}
+\setstretch{1.15}
+\setlength{\parindent}{1.0cm}
+\setlength{\parskip}{5pt}
+
+% Định nghĩa hộp sư phạm chuyên dụng
+\newtcolorbox{pedabox}[2][]{
+    enhanced,
+    breakable,
+    colback=blue!3!white,
+    colframe=blue!65!black,
+    fonttitle=\bfseries\small,
+    title={#2},
+    arc=2mm,
+    boxrule=0.6pt,
+    left=3mm, right=3mm, top=2mm, bottom=2mm,
+    #1
+}
+
+\newtcolorbox{aibox}[2][]{
+    enhanced,
+    breakable,
+    colback=teal!4!white,
+    colframe=teal!70!black,
+    fonttitle=\bfseries\small,
+    title={#2},
+    arc=2mm,
+    boxrule=0.6pt,
+    left=3mm, right=3mm, top=2mm, bottom=2mm,
+    #1
+}
+
+\newtcolorbox{scaffoldbox}[2][]{
+    enhanced,
+    breakable,
+    colback=orange!4!white,
+    colframe=orange!80!black,
+    fonttitle=\bfseries\small,
+    title={#2},
+    arc=2mm,
+    boxrule=0.6pt,
+    left=3mm, right=3mm, top=2mm, bottom=2mm,
+    #1
+}
+
+\newtcolorbox{stembox}[2][]{
+    enhanced,
+    breakable,
+    colback=purple!4!white,
+    colframe=purple!75!black,
+    fonttitle=\bfseries\small,
+    title={#2},
+    arc=2mm,
+    boxrule=0.6pt,
+    left=3mm, right=3mm, top=2mm, bottom=2mm,
+    #1
+}
+
+\begin{document}
+
+\begin{center}
+    {\fontsize{14pt}{17pt}\selectfont \textbf{KẾ HOẠCH BÀI DẠY MÔN TOÁN LỚP 11}}\\[6pt]
+    {\fontsize{16pt}{19pt}\selectfont \textbf{BÀI TẬP CUỐI CHƯƠNG VIII}}\\[4pt]
+    {\fontsize{12pt}{15pt}\selectfont \textbf{Môn học: Toán 11} \ \textbar \ \textbf{Thời lượng: 1 tiết (Tiết 91 theo PPCT | Tuần 32)}}
+\end{center}
+
+\vspace{5pt}
+
+\section*{I. MỤC TIÊU}
+
+\subsection*{1. Kiến thức, Năng lực}
+
+\begin{itemize}[leftmargin=1.2cm]
+    \item \textbf{Yêu cầu cần đạt (Nguyên văn CT GDPT 2018 Toán 11):}
+    \begin{itemize}[leftmargin=0.6cm]
+        \item Hệ thống hoá các quy tắc tính xác suất đã học trong Chương VIII: Công thức cộng xác suất (trường hợp biến cố xung khắc và trường hợp tổng quát), công thức nhân xác suất cho hai biến cố độc lập, sơ đồ hình cây.
+        \item Vận dụng kết hợp thành thạo các quy tắc tính xác suất để giải quyết các bài toán xác suất tổng hợp và các tình huống thực tiễn gắn với đời sống, sản xuất kỹ thuật và công nghệ thông tin.
+    \end{itemize}
+
+    \item \textbf{Năng lực Toán học đặc thù:}
+    \begin{itemize}[leftmargin=0.6cm]
+        \item \textit{Năng lực tư duy và lập luận toán học:} So sánh, phân tích và hệ thống hóa bản chất của hai mối quan hệ then chốt giữa các biến cố ngẫu nhiên: \textbf{Quan hệ xung khắc} ($A \cap B = \emptyset \implies$ dùng phép cộng xác suất) và \textbf{Quan hệ độc lập} ($P(AB) = P(A) \cdot P(B) \implies$ dùng phép nhân xác suất); giải thích tính logic của quy tắc nhân dọc theo nhánh và cộng ngang qua các ngọn trên sơ đồ hình cây; nhận diện các ngụy biện kinh điển trong xác suất (như ngụy biện người đánh bạc -- Gambler's Fallacy).
+        \item \textit{Năng lực mô hình hóa toán học:} Thiết lập mô hình xác suất cho các bài toán thực tiễn phức tạp (kiểm soát chất lượng sản phẩm qua nhiều công đoạn độc lập trong dây chuyền công nghiệp, độ tin cậy của hệ thống mạch điện vi xử lý dự phòng, bài toán xét nghiệm y khoa); chuyển đổi các tình huống thực tế thành sơ đồ hình cây hoặc bảng phân hoạch biến cố chuẩn xác.
+        \item \textit{Năng lực giải quyết vấn đề toán học:} Nhận diện chính xác từ khóa và cấu trúc bài toán để lựa chọn chiến lược giải tối ưu: khi gặp từ khóa ``có ít nhất một'' thì ưu tiên chuyển sang bài toán đối lập $P(E) = 1 - P(\overline{E})$; khi bài toán gồm nhiều giai đoạn phân nhánh thì sử dụng sơ đồ hình cây hoặc phân hoạch biến cố.
+        \item \textit{Năng lực giao tiếp toán học:} Trình bày bài giải tự luận chuẩn mực, mạch lạc, lập luận chặt chẽ tính độc lập hoặc tính xung khắc trước khi áp dụng công thức; sử dụng chính xác các ký hiệu toán học tập hợp và xác suất: $A \cup B$, $A \cap B$, $AB$, $\overline{A}$, $P(A)$, $P(AB)$.
+        \item \textit{Năng lực sử dụng công cụ, phương tiện học toán:} Khai thác hiệu quả máy tính cầm tay (MTCT Casio fx-580VN X) để thực hiện các phép tính lũy thừa xác suất và tổ hợp số lớn; sử dụng phần mềm sơ đồ tư duy số (Mindmap, Canva) để vẽ sơ đồ tổng kết toàn chương.
+    \end{itemize}
+
+    \item \textbf{Năng lực số (Theo Thông tư 02/2025/TT-BGDĐT):}
+    \begin{itemize}[leftmargin=0.6cm]
+        \item \textit{Mã 2.5NC1a (Hợp tác, trao đổi kinh nghiệm giải toán xác suất trên diễn đàn học tập số):} Học sinh tham gia thảo luận nhóm, đăng tải sơ đồ tư duy tóm tắt kiến thức Chương VIII và các bài giải mẫu lên diễn đàn học tập trực tuyến (Padlet / Google Classroom / Zalo nhóm lớp), thực hiện nhận xét chéo (peer-review) bài giải của các bạn khác.
+    \end{itemize}
+
+    \item \textbf{Năng lực AI (Theo Quyết định 2422/QĐ-BGDĐT):}
+    \begin{itemize}[leftmargin=0.6cm]
+        \item \textit{Mã 11.B2.1 (Phát hiện và chỉnh sửa lỗi sai của AI tạo sinh trong tính toán xác suất):} Học sinh phân tích, đối chiếu lời giải của một bài toán xác suất do Trí tuệ nhân tạo (ChatGPT / Gemini) sinh ra; chỉ ra điểm sai chết người của AI khi nhầm lẫn giữa hai biến cố độc lập và hai biến cố phụ thuộc (bài toán lấy vật phẩm không hoàn lại nhưng AI vẫn áp dụng công thức nhân độc lập); viết câu lệnh phản biện (prompting) chuẩn mực để chỉnh sửa AI.
+    \end{itemize}
+
+    \item \textbf{Giáo dục STEM/STEAM:}
+    \begin{itemize}[leftmargin=0.6cm]
+        \item \textit{Chủ đề STEM:} Tối ưu hóa kiểm soát chất lượng linh kiện điện tử trong dây chuyền sản xuất tự động 2 công đoạn độc lập. Phân tích xác suất sản phẩm đạt chuẩn loại A, loại B và tỷ lệ phế phẩm để hoạch định chi phí bảo hành.
+    \end{itemize}
+
+    \item \textbf{Năng lực chung:}
+    \begin{itemize}[leftmargin=0.6cm]
+        \item \textit{Tự chủ và tự học:} Tự giác làm bài tập tổng kết chương trong SGK, chủ động vẽ sơ đồ tư duy tóm tắt công thức trước giờ học.
+        \item \textit{Giao tiếp và hợp tác:} Tích cực tranh luận học thuật trong nhóm 5 học sinh, phân công công việc hài hòa khi chữa bài và phản biện AI.
+    \end{itemize}
+\end{itemize}
+
+\subsection*{2. Phẩm chất}
+
+\begin{itemize}[leftmargin=1.2cm]
+    \item \textbf{Chăm chỉ:} Kiên trì luyện tập các bài toán xác suất tổng hợp nhiều bước, cẩn thận rà soát từng trường hợp để không bị sót hoặc trùng lặp.
+    \item \textbf{Trung thực:} Tự lực làm bài tập, ghi nhận trung thực lỗi sai trong quá trình giải toán và đánh giá khách quan lời giải của bạn và của AI.
+    \item \textbf{Trách nhiệm:} Nghiêm túc hoàn thành nhiệm vụ nhóm; có ý thức hình thành tư duy xác suất khách quan để ra quyết định tỉnh táo, tránh xa các trò cờ bạc may rủi.
+\end{itemize}
+
+\section*{II. THIẾT BỊ DẠY HỌC VÀ HỌC LIỆU}
+
+\begin{itemize}[leftmargin=1.2cm]
+    \item \textbf{Giáo viên:}
+    \begin{itemize}[leftmargin=0.6cm]
+        \item Kế hoạch bài dạy chi tiết Tiết 91 chuẩn khung Công văn 5512/BGDĐT-GDTrH.
+        \item Bài trình chiếu điện tử đa phương tiện (PowerPoint / Canva) tích hợp sơ đồ tư duy động Chương VIII, ảnh chụp màn hình lời giải có lỗi sai của AI để học sinh phản biện.
+        \item Hệ thống Phiếu học tập số 1 (Ôn tập \& Bài tập tổng hợp) và Phiếu học tập số 2 (Phản biện AI \& Dự án STEM).
+        \item Bảng Rubric đánh giá năng lực học sinh cuối Chương VIII (4 mức độ).
+    \end{itemize}
+    \item \textbf{Học sinh:}
+    \begin{itemize}[leftmargin=0.6cm]
+        \item SGK Toán 11, vở bài tập đã chuẩn bị sẵn các bài tập cuối chương VIII.
+        \item Máy tính cầm tay Casio fx-580VN X.
+        \item Thiết bị di động / máy tính phòng học có kết nối Internet để tham gia diễn đàn thảo luận và trải nghiệm prompt AI.
+    \end{itemize}
+\end{itemize}
+
+\section*{III. TIẾN TRÌNH DẠY HỌC}
+
+\begin{center}
+    \textbf{\large TIẾT 91 THEO PPCT (TUẦN 32)}\\[4pt]
+    \textit{(Bài tập cuối chương VIII: Các quy tắc tính xác suất)}
+\end{center}
+
+\subsection*{1. Hoạt động 1: Mở đầu (Khởi động - 6 phút)}
+
+\paragraph{a) Mục tiêu:} Kích hoạt kiến thức toàn bộ Chương VIII; củng cố các định nghĩa và công thức thông qua trò chơi ghép nối khái niệm tương tác nhanh.
+
+\paragraph{b) Nội dung:} Giáo viên tổ chức trò chơi ghép cặp \textbf{``Mảnh ghép Xác suất''}: Nối mỗi khái niệm ở Cột 1 với công thức hoặc định nghĩa tương ứng ở Cột 2:
+\begin{center}
+\small
+\begin{tabularx}{\linewidth}{|l|X|l|X|}
+\hline
+\multicolumn{2}{|c|}{\textbf{Cột 1: Khái niệm}} & \multicolumn{2}{c|}{\textbf{Cột 2: Công thức / Bản chất}} \\ \hline
+1 & Biến cố hợp $A \cup B$ & A & $A$ và $B$ không bao giờ cùng xảy ra ($A \cap B = \emptyset$). \\ \hline
+2 & Biến cố xung khắc & B & Biến cố ``$A$ hoặc $B$ xảy ra''. \\ \hline
+3 & Biến cố độc lập & C & $P(A \cup B) = P(A) + P(B) - P(AB)$. \\ \hline
+4 & Công thức cộng tổng quát & D & Việc xảy ra của $A$ không ảnh hưởng đến xác suất của $B$. \\ \hline
+5 & Công thức nhân xác suất & E & $P(AB) = P(A) \cdot P(B)$. \\ \hline
+6 & Quy tắc biến cố đối & F & $P(A) = 1 - P(\overline{A})$. \\ \hline
+\end{tabularx}
+\end{center}
+
+\paragraph{c) Sản phẩm:} Đáp án ghép cặp chính xác của học sinh:
+\begin{center}
+\textbf{1 -- B \quad \textbar \quad 2 -- A \quad \textbar \quad 3 -- D \quad \textbar \quad 4 -- C \quad \textbar \quad 5 -- E \quad \textbar \quad 6 -- F}
+\end{center}
+
+\paragraph{d) Tổ chức thực hiện:}
+\begin{itemize}[leftmargin=0.8cm]
+    \item \textbf{Chuyển giao nhiệm vụ:} Giáo viên trình chiếu bảng ghép cặp, yêu cầu học sinh làm việc cá nhân trong 2 phút ghi đáp án vào bảng con hoặc vở nháp.
+    \item \textbf{Thực hiện nhiệm vụ:} Học sinh quan sát, suy nghĩ, ghi đáp án nhanh. Giáo viên bao quát lớp.
+    \item \textbf{Báo cáo, thảo luận:} Giáo viên gọi 2 học sinh đọc đáp án và giải thích ngắn gọn sự khác nhau giữa biến cố xung khắc (Cột 1 dòng 2) và biến cố độc lập (Cột 1 dòng 3).
+    \item \textbf{Kết luận, nhận định:} Giáo viên chốt lại đáp án, tuyên dương học sinh nhớ bài tốt và chính thức bước vào phần trọng tâm của tiết học.
+\end{itemize}
+
+\subsection*{2. Hoạt động 2: Luyện tập - Hệ thống hóa kiến thức \& Chữa bài tập trọng tâm (20 phút)}
+
+\paragraph{a) Mục tiêu:} Khắc sâu sơ đồ tư duy Chương VIII; phân biệt dứt khoát điều kiện áp dụng công thức cộng và công thức nhân; rèn luyện kỹ năng giải các bài toán xác suất tổng hợp nhiều bước kết hợp biến cố đối và sơ đồ hình cây.
+
+\paragraph{b) Nội dung:} Giáo viên hướng dẫn học sinh tổng kết lý thuyết bằng sơ đồ tư duy và giải quyết các bài toán trọng tâm trên Phiếu học tập số 1:
+
+\begin{pedabox}{1. Sơ đồ tư duy Hệ thống hóa Chương VIII (TikZ)}
+\begin{center}
+\begin{tikzpicture}[
+    box/.style={rectangle, rounded corners=2.5mm, draw=blue!70!black, fill=blue!6!white, thick, text width=4.0cm, align=center, inner sep=5pt, font=\small},
+    rootbox/.style={rectangle, rounded corners=3mm, draw=blue!85!black, fill=blue!18!white, very thick, text width=5.6cm, align=center, inner sep=7pt, font=\bfseries\normalsize},
+    arrow/.style={thick, -{Latex[length=2.5mm]}, blue!75!black}
+]
+\node[rootbox] (root) at (0, 0) {QUY TẮC TÍNH XÁC SUẤT\\(CHƯƠNG VIII)};
+
+\node[box] (cong) at (-4.8, -2.4) {\textbf{CÔNG THỨC CỘNG}\\[2pt]
+$\bullet$ Xung khắc: $P(A \cup B) = P(A) + P(B)$\\[2pt]
+$\bullet$ Tổng quát: $P(A \cup B) = P(A) + P(B) - P(AB)$};
+
+\node[box] (nhan) at (4.8, -2.4) {\textbf{CÔNG THỨC NHÂN}\\[2pt]
+$\bullet$ Độc lập: $P(AB) = P(A) \cdot P(B)$\\[2pt]
+$\bullet$ Biến cố đối: $(A,\overline{B}), (\overline{A},B), (\overline{A},\overline{B})$ độc lập};
+
+\node[box] (cay) at (-4.8, -5.6) {\textbf{SƠ ĐỒ HÌNH CÂY}\\[2pt]
+$\bullet$ Nhân xác suất dọc theo nhánh\\[2pt]
+$\bullet$ Cộng xác suất ngang các ngọn};
+
+\node[box] (doi) at (4.8, -5.6) {\textbf{BIẾN CỐ ĐỐI}\\[2pt]
+$\bullet$ Từ khóa: ``có ít nhất một''\\[2pt]
+$\bullet$ Công thức: $P(E) = 1 - P(\overline{E})$};
+
+\draw[arrow] (root.south) -- ++(0,-0.4) -| (cong.north);
+\draw[arrow] (root.south) -- ++(0,-0.4) -| (nhan.north);
+\draw[arrow] (cong.south) -- (cay.north);
+\draw[arrow] (nhan.south) -- (doi.north);
+\end{tikzpicture}
+\end{center}
+\end{pedabox}
+
+\begin{pedabox}{2. Hệ thống Bài tập Trọng tâm (Phiếu học tập số 1)}
+\textbf{Bài 1 (Trắc nghiệm nhận biết \& thông hiểu):}
+Cho hai biến cố $A$ và $B$ có $P(A) = 0{,}6$; $P(B) = 0{,}4$.
+\begin{enumerate}[leftmargin=0.6cm]
+    \item[a)] Nếu $A$ và $B$ là hai biến cố xung khắc thì $P(A \cup B)$ bằng:
+    \quad \textbf{A.} $0{,}24$. \quad \textbf{B.} $1{,}0$. \quad \textbf{C.} $0{,}2$. \quad \textbf{D.} $0{,}76$.
+    \item[b)] Nếu $A$ và $B$ là hai biến cố độc lập thì $P(AB)$ và $P(A \cup B)$ lần lượt là:
+    \quad \textbf{A.} $0{,}24$ và $1{,}0$. \quad \textbf{B.} $0{,}24$ và $0{,}76$. \quad \textbf{C.} $0{,}1$ và $0{,}9$. \quad \textbf{D.} $0$ và $1{,}0$.
+\end{enumerate}
+
+\textbf{Bài 2 (Bài toán Tự luận Tổng hợp - Kiểm tra Chất lượng Sản phẩm):}
+Một dây chuyền may công nghiệp sản xuất khẩu trang y tế kháng khuẩn. Mỗi sản phẩm phải qua hai công đoạn kiểm tra chất lượng hoàn toàn độc lập:
+\begin{itemize}[leftmargin=0.5cm]
+    \item Công đoạn 1: Kiểm tra lỗi may và dây quai. Xác suất khẩu trang bị lỗi ở công đoạn này là $0{,}04$.
+    \item Công đoạn 2: Kiểm tra độ kháng khuẩn màng lọc. Xác suất khẩu trang bị lỗi ở công đoạn này là $0{,}05$.
+\end{itemize}
+Khẩu trang được đóng gói xuất khẩu (đạt chuẩn loại A) nếu \textbf{cả hai công đoạn đều không bị lỗi}. Khẩu trang bị tiêu hủy nếu \textbf{bị lỗi ở cả hai công đoạn}. Các trường hợp còn lại được xếp vào loại B bán nội địa.
+\begin{enumerate}[leftmargin=0.6cm]
+    \item[a)] Tính xác suất để một khẩu trang được chọn ngẫu nhiên đạt chuẩn xuất khẩu (loại A).
+    \item[b)] Tính xác suất để một khẩu trang bị tiêu hủy.
+    \item[c)] Tính xác suất để một khẩu trang xếp vào loại B.
+    \item[d)] Tính xác suất để một khẩu trang có ít nhất một công đoạn bị lỗi.
+\end{enumerate}
+\end{pedabox}
+
+\begin{scaffoldbox}{Giàn giáo sư phạm: Bảng quyết định chiến lược giải cho HS Trung bình - Yếu}
+\begin{center}
+\small
+\begin{tabularx}{\linewidth}{|l|l|X|}
+\hline
+\textbf{Dấu hiệu đề bài} & \textbf{Chiến lược toán học} & \textbf{Công thức cần dùng} \\ \hline
+Xuất hiện từ ``hoặc'', các trường hợp rời nhau & Phép cộng xác suất & $P(A \cup B) = P(A) + P(B)$ nếu xung khắc. \\ \hline
+Xuất hiện từ ``và'', các sự kiện đồng thời/nối tiếp độc lập & Phép nhân xác suất & $P(AB) = P(A) \cdot P(B)$ nếu độc lập. \\ \hline
+Xuất hiện từ khóa ``ít nhất một'' & Chuyển sang biến cố đối & $P(\text{ít nhất một}) = 1 - P(\text{không có cái nào})$. \\ \hline
+Bài toán quá trình gồm 2--3 bước rẽ nhánh & Sơ đồ hình cây & Nhân xác suất theo nhánh, cộng các nhánh thuận lợi. \\ \hline
+\end{tabularx}
+\end{center}
+\end{scaffoldbox}
+
+\paragraph{c) Sản phẩm:} Lời giải chi tiết của học sinh:
+\begin{itemize}[leftmargin=0.8cm]
+    \item \textbf{Bài 1:}
+    \begin{itemize}[leftmargin=0.4cm]
+        \item a) Do $A, B$ xung khắc $\implies P(A \cup B) = P(A) + P(B) = 0{,}6 + 0{,}4 = 1{,}0 \implies$ \textbf{Chọn B}.
+        \item b) Do $A, B$ độc lập $\implies P(AB) = P(A) \cdot P(B) = 0{,}6 \cdot 0{,}4 = 0{,}24$.
+        Áp dụng công thức cộng tổng quát:
+        $$P(A \cup B) = P(A) + P(B) - P(AB) = 0{,}6 + 0{,}4 - 0{,}24 = 0{,}76 \implies \textbf{Chọn B}.$$
+    \end{itemize}
+    \item \textbf{Bài 2:}
+    Gọi $E_1$: ``Khẩu trang bị lỗi ở công đoạn 1'' $\implies P(E_1) = 0{,}04 \implies P(\overline{E}_1) = 1 - 0{,}04 = 0{,}96$.
+    Gọi $E_2$: ``Khẩu trang bị lỗi ở công đoạn 2'' $\implies P(E_2) = 0{,}05 \implies P(\overline{E}_2) = 1 - 0{,}05 = 0{,}95$.
+    Vì hai công đoạn kiểm tra hoàn toàn độc lập nên $E_1$ và $E_2$ độc lập.
+    \begin{itemize}[leftmargin=0.4cm]
+        \item a) Khẩu trang đạt loại A khi cả hai công đoạn không lỗi: biến cố $\overline{E}_1 \cap \overline{E}_2$.
+        Do $\overline{E}_1, \overline{E}_2$ độc lập:
+        $$P(A) = P(\overline{E}_1) \cdot P(\overline{E}_2) = 0{,}96 \cdot 0{,}95 = 0{,}912 \quad (91{,}2\%)$$
+        \item b) Khẩu trang bị tiêu hủy khi cả hai công đoạn cùng bị lỗi: biến cố $E_1 \cap E_2$.
+        Do $E_1, E_2$ độc lập:
+        $$P(\text{Tiêu hủy}) = P(E_1) \cdot P(E_2) = 0{,}04 \cdot 0{,}05 = 0{,}002 \quad (0{,}2\%)$$
+        \item c) Khẩu trang đạt loại B khi chỉ bị lỗi ở đúng một công đoạn:
+        $$P(B) = P(E_1 \overline{E}_2) + P(\overline{E}_1 E_2) = 0{,}04 \cdot 0{,}95 + 0{,}96 \cdot 0{,}05 = 0{,}038 + 0{,}048 = 0{,}086 \quad (8{,}6\%)$$
+        \textit{Kiểm tra lại tổng xác suất các biến cố xung khắc đầy đủ:}
+        $$P(A) + P(B) + P(\text{Tiêu hủy}) = 0{,}912 + 0{,}086 + 0{,}002 = 1{,}000 \quad (\text{Hoàn toàn chính xác!})$$
+        \item d) Khẩu trang có ít nhất một công đoạn bị lỗi: biến cố đối của loại A.
+        $$P = 1 - P(A) = 1 - 0{,}912 = 0{,}088 \quad (8{,}8\%)$$
+        (Hoặc tính bằng: $P(B) + P(\text{Tiêu hủy}) = 0{,}086 + 0{,}002 = 0{,}088$).
+    \end{itemize}
+\end{itemize}
+
+\paragraph{d) Tổ chức thực hiện:}
+\begin{itemize}[leftmargin=0.8cm]
+    \item \textbf{Chuyển giao nhiệm vụ:} Giáo viên trình chiếu sơ đồ tư duy TikZ, chia lớp thành 7 nhóm (mỗi nhóm 5 học sinh), giao Phiếu học tập số 1 với thời gian thảo luận 10 phút.
+    \item \textbf{Thực hiện nhiệm vụ:} Các nhóm phân công học sinh giải Bài 1 (cá nhân nhẩm nhanh) và cùng hợp sức giải Bài 2. Giáo viên đi quan sát, hỗ trợ nhóm học sinh yếu áp dụng bảng giàn giáo sư phạm để nhận ra biến cố đối ở câu d.
+    \item \textbf{Báo cáo, thảo luận:} Nhóm 2 cử đại diện lên trình bày Bài 1; Nhóm 5 lên bảng trình bày Bài 2 (các câu a, b, c, d). Các nhóm khác phản biện, kiểm tra lại đẳng thức tổng xác suất bằng $1$.
+    \item \textbf{Kết luận, nhận định:} Giáo viên đánh giá cao tính chuẩn xác trong việc kiểm tra lại $P(A) + P(B) + P(\text{Tiêu hủy}) = 1$, giúp học sinh hình thành thói quen tự kiểm chứng kết quả trong toán học.
+\end{itemize}
+
+\subsection*{3. Hoạt động 3: Hoạt động Phản biện AI \& Vận dụng STEM (14 phút)}
+
+\paragraph{a) Mục tiêu:} Rèn luyện Năng lực AI (Mã 11.B2.1: phát hiện lỗi ngụy biện biến cố độc lập của AI tạo sinh và thiết lập prompt phản biện); vận dụng STEM phân tích độ tin cậy của hệ thống mạch điện công nghệ cao.
+
+\paragraph{b) Nội dung:}
+
+\begin{aibox}{Tích hợp Năng lực AI (Mã 11.B2.1): Phát hiện lỗi sai của AI khi tính xác suất}
+\textbf{Tình huống thực tế:} Bạn Minh sử dụng một ứng dụng Chatbot AI để giải bài toán sau:
+\textit{``Trong một hộp có 5 viên bi xanh và 3 viên bi đỏ. Lấy ngẫu nhiên liên tiếp 2 viên bi (lấy \textbf{không hoàn lại}). Tính xác suất để cả 2 viên bi lấy ra đều có màu xanh.''}
+
+\textbf{Lời giải do Chatbot AI tạo sinh đưa ra:}
+\begin{itemize}[leftmargin=0.5cm]
+    \item \textit{Bước 1 của AI:} Xác suất lấy được viên bi xanh lần thứ nhất là $P(A) = \dfrac{5}{8}$.
+    \item \textit{Bước 2 của AI:} Xác suất lấy được viên bi xanh lần thứ hai là $P(B) = \dfrac{5}{8}$.
+    \item \textit{Bước 3 của AI:} Vì hai lần lấy diễn ra liên tiếp nên hai biến cố độc lập. Do đó, theo công thức nhân xác suất:
+    $$P(AB) = P(A) \cdot P(B) = \dfrac{5}{8} \cdot \dfrac{5}{8} = \dfrac{25}{64} \approx 0{,}3906$$
+\end{itemize}
+
+\textbf{Nhiệm vụ của học sinh:}
+\begin{enumerate}[leftmargin=0.6cm]
+    \item Hãy chỉ ra ít nhất \textbf{hai lỗi sai nghiêm trọng} về mặt toán học trong lời giải trên của AI.
+    \item Viết lời giải chính xác cho bài toán trên bằng cách sử dụng phương pháp tổ hợp hoặc xác suất có điều kiện.
+    \item Đóng vai trò chuyên gia, hãy soạn một câu lệnh phản biện (Prompt) gửi lại cho AI để AI nhận ra lỗi sai và giải thích rõ sự khác biệt giữa ``lấy có hoàn lại'' và ``lấy không hoàn lại''.
+\end{enumerate}
+\end{aibox}
+
+\begin{stembox}{Chủ đề STEM: Độ tin cậy của Hệ thống Mạch vi xử lý Dự phòng}
+\textbf{Bài toán thực tiễn:} Trong thiết kế bo mạch máy chủ trí tuệ nhân tạo, để đảm bảo hệ thống không bị ngừng hoạt động đột ngột, kỹ sư thiết kế $3$ khối nguồn cấp điện độc lập chạy song song. Mỗi khối nguồn có xác suất bị quá nhiệt và ngắt điện trong một tháng vận hành là $0{,}02$. Hệ thống máy chủ chỉ sập nguồn nếu \textbf{cả 3 khối nguồn đều bị ngắt cùng lúc}.
+\begin{enumerate}[leftmargin=0.6cm]
+    \item Tính xác suất để hệ thống máy chủ bị sập nguồn trong tháng.
+    \item Tính độ tin cậy (xác suất hệ thống duy trì hoạt động an toàn) trong tháng. Nhận xét về vai trò của việc mắc dự phòng độc lập.
+\end{enumerate}
+\end{stembox}
+
+\paragraph{c) Sản phẩm:} Lời giải phản biện AI và bài toán STEM của học sinh:
+\begin{itemize}[leftmargin=0.8cm]
+    \item \textbf{Phản biện lời giải AI:}
+    \begin{enumerate}[leftmargin=0.4cm]
+        \item \textit{Lỗi sai 1 của AI:} Khẳng định ``hai biến cố độc lập'' là hoàn toàn sai bản chất. Vì đề bài yêu cầu lấy \textbf{không hoàn lại}, nên việc lần 1 lấy được bi xanh sẽ làm số bi trong hộp giảm từ 8 xuống 7, và số bi xanh giảm từ 5 xuống 4. Kết quả lần 1 ảnh hưởng trực tiếp tới lần 2 $\implies$ Đây là \textbf{hai biến cố phụ thuộc}, không được dùng công thức nhân cho biến cố độc lập!
+        \item \textit{Lỗi sai 2 của AI:} Xác suất lần 2 lấy được bi xanh trong điều kiện lần 1 đã lấy được bi xanh phải là $P(B \mid A) = \dfrac{4}{7}$, chứ không thể là $\dfrac{5}{8}$.
+        \item \textit{Lời giải đúng:}
+        Không gian mẫu: Chọn lần lượt 2 viên từ 8 viên (hoặc chọn đồng thời 2 viên): $n(\Omega) = C_8^2 = 28$.
+        Số cách chọn 2 viên màu xanh từ 5 viên: $n(E) = C_5^2 = 10$.
+        Xác suất đúng: $P(E) = \dfrac{C_5^2}{C_8^2} = \dfrac{10}{28} = \dfrac{5}{14} \approx 0{,}3571$.
+        (Cách khác: $P = \dfrac{5}{8} \cdot \dfrac{4}{7} = \dfrac{20}{56} = \dfrac{5}{14}$).
+        \item \textit{Câu lệnh Prompt phản biện chuẩn:}
+        \begin{quote}
+            \small
+            \texttt{``Chào bạn, lời giải của bạn chưa chính xác ở Bước 2 và Bước 3. Đề bài yêu cầu lấy KHÔNG HOÀN LẠI, do đó sau khi lấy 1 viên bi xanh ở lần 1, trong hộp chỉ còn lại 7 viên bi (trong đó có 4 viên bi xanh). Hai biến cố này phụ thuộc nhau chứ không độc lập. Hãy sửa lại xác suất lần 2 là 4/7 và tính lại xác suất biến cố giao bằng 5/8 * 4/7 = 5/14.''}
+        \end{quote}
+    \end{enumerate}
+
+    \item \textbf{Lời giải Bài toán STEM:}
+    Gọi $A_1, A_2, A_3$ lần lượt là biến cố khối nguồn 1, 2, 3 bị ngắt điện.
+    Do các khối nguồn độc lập nhau và $P(A_1) = P(A_2) = P(A_3) = 0{,}02$.
+    \begin{enumerate}[leftmargin=0.4cm]
+        \item Hệ thống sập khi cả 3 khối nguồn cùng ngắt: $A_1 A_2 A_3$.
+        $$P(\text{Sập nguồn}) = P(A_1) \cdot P(A_2) \cdot P(A_3) = (0{,}02)^3 = 0{,}000008 \quad (0{,}0008\%)$$
+        \item Độ tin cậy của máy chủ:
+        $$P(\text{Hoạt động an toàn}) = 1 - 0{,}000008 = 0{,}999992 \quad (99{,}9992\%)$$
+        \textit{Nhận xét:} Nếu chỉ dùng 1 nguồn, xác suất hỏng là $2\%$. Nhưng khi dùng 3 nguồn độc lập chạy song song, rủi ro giảm xuống chỉ còn 8 phần triệu (đạt chuẩn độ tin cậy Five Nines trong công nghệ thông tin).
+    \end{enumerate}
+\end{itemize}
+
+\paragraph{d) Tổ chức thực hiện:}
+\begin{itemize}[leftmargin=0.8cm]
+    \item \textbf{Chuyển giao nhiệm vụ:} Giáo viên trình chiếu màn hình lỗi sai của Chatbot AI và đề bài STEM, yêu cầu các nhóm thảo luận tìm lỗi sai trong 6 phút.
+    \item \textbf{Thực hiện nhiệm vụ:} Học sinh sôi nổi chỉ ra từ khóa ``không hoàn lại'' làm thay đổi mẫu số từ 8 xuống 7. Nhóm trưởng ghi câu prompt vào phiếu học tập.
+    \item \textbf{Báo cáo, thảo luận:} Giáo viên gọi đại diện Nhóm 6 đọc câu prompt phản biện; Nhóm 7 trình bày kết quả bài toán nguồn điện máy chủ STEM.
+    \item \textbf{Kết luận, nhận định:} Giáo viên chốt lại: AI là công cụ hỗ trợ đắc lực nhưng học sinh phải nắm vững bản chất toán học để làm chủ công nghệ, không bị phụ thuộc thụ động vào các câu trả lời sai lệch của AI.
+\end{itemize}
+
+\subsection*{4. Hoạt động 4: Vận dụng \& Đánh giá (5 phút)}
+
+\paragraph{a) Mục tiêu:} Củng cố toàn diện năng lực giải quyết vấn đề xác suất; định hướng học sinh ôn tập chuẩn bị bước sang Chương IX (Đạo hàm).
+
+\paragraph{b) Nội dung:}
+\begin{itemize}[leftmargin=0.6cm]
+    \item Giáo viên tổng kết 3 ghi nhớ cốt lõi:
+    \begin{enumerate}[leftmargin=0.5cm]
+        \item Phân biệt rạch ròi: Xung khắc $\iff$ Phép cộng; Độc lập $\iff$ Phép nhân.
+        \item Chìa khóa biến cố đối: Khi thấy ``ít nhất một'' $\implies P = 1 - P(\text{không có})$.
+        \item Cẩn trọng với bài toán lấy đồ vật: Có hoàn lại $\implies$ Độc lập; Không hoàn lại $\implies$ Phụ thuộc (mẫu số giảm dần).
+    \end{enumerate}
+    \item \textbf{Nhiệm vụ số hóa (Mã 2.5NC1a):} Các nhóm chụp ảnh sơ đồ tư duy đã hoàn thiện và đăng tải lên không gian Padlet của lớp để nhận xét chéo.
+    \item \textbf{Hướng dẫn chuẩn bị bài mới:} Đọc trước \textbf{Bài 31. Định nghĩa và ý nghĩa của đạo hàm} (tìm hiểu bài toán vận tốc tức thời và tiếp tuyến của đường cong).
+\end{itemize}
+
+\paragraph{c) Sản phẩm:} Sơ đồ tư duy hoàn chỉnh được tải lên diễn đàn số của lớp; ghi chép bài học đầy đủ trong vở học sinh.
+
+\paragraph{d) Tổ chức thực hiện:} Giáo viên trình chiếu tổng kết $\implies$ Học sinh ghi nhiệm vụ về nhà $\implies$ Giáo viên thu phiếu học tập và nhận xét tinh thần học tập của lớp.
+
+\section*{IV. PHỤ LỤC HỌC LIỆU BỔ TRỢ}
+
+\subsection*{1. Phiếu học tập số 1: Hệ thống hóa kiến thức \& Bài tập tổng hợp}
+
+\begin{pedabox}{PHIẾU HỌC TẬP SỐ 1: BÀI TẬP CUỐI CHƯƠNG VIII}
+\textbf{Họ và tên học sinh:} \dotfill \textbf{Lớp:} 11A\dots \quad \textbf{Nhóm:} \dots
+\begin{enumerate}[leftmargin=0.6cm]
+    \item \textbf{Điền công thức thích hợp vào chỗ trống:}
+    \begin{itemize}
+        \item Nếu $A$ và $B$ xung khắc: $P(A \cup B) = $ \dotfill
+        \item Nếu $A$ và $B$ bất kỳ: $P(A \cup B) = $ \dotfill
+        \item Nếu $A$ và $B$ độc lập: $P(AB) = $ \dotfill
+        \item Xác suất của biến cố đối: $P(\overline{A}) = $ \dotfill
+    \end{itemize}
+
+    \item \textbf{Bài toán luyện tập:}
+    Hai người thợ săn $M$ và $N$ cùng bắn độc lập vào một con mồi. Xác suất bắn trúng của $M$ là $0{,}7$; của $N$ là $0{,}6$. Con mồi bị tiêu diệt nếu trúng ít nhất một viên đạn.
+    \begin{itemize}
+        \item Xác suất cả hai người cùng bắn trúng là: \dotfill
+        \item Xác suất cả hai người cùng bắn trượt là: \dotfill
+        \item Xác suất con mồi bị tiêu diệt là: \dotfill
+    \end{itemize}
+\end{enumerate}
+\end{pedabox}
+
+\subsection*{2. Phiếu học tập số 2: Phản biện Lời giải AI \& Bài toán Thực tế STEM}
+
+\begin{pedabox}{PHIẾU HỌC TẬP SỐ 2: PHẢN BIỆN AI \& DỰ ÁN STEM}
+\textbf{Phần 1: Phát hiện lỗi sai AI (Mã 11.B2.1):}
+\begin{itemize}
+    \item Lỗi sai 1 của AI: \dotfill
+    \item Lỗi sai 2 của AI: \dotfill
+    \item Câu lệnh Prompt phản biện em gửi lại cho AI: \dotfill
+    \item \dotfill
+\end{itemize}
+
+\textbf{Phần 2: Bảng tính toán Bài toán STEM Nguồn điện Dự phòng:}
+\begin{center}
+\begin{tabularx}{\linewidth}{|l|X|c|c|}
+\hline
+\textbf{Cấu hình hệ thống} & \textbf{Điều kiện sập nguồn} & \textbf{Xác suất sập nguồn} & \textbf{Độ tin cậy vận hành} \\ \hline
+Chỉ dùng 1 khối nguồn & 1 nguồn bị ngắt & $0{,}02$ & $98{,}00\%$ \\ \hline
+Dùng 2 nguồn độc lập & Cả 2 nguồn cùng ngắt & $(0{,}02)^2 = 0{,}0004$ & $99{,}96\%$ \\ \hline
+Dùng 3 nguồn độc lập & Cả 3 nguồn cùng ngắt & & \\ \hline
+\end{tabularx}
+\end{center}
+\end{pedabox}
+
+\subsection*{3. Rubric đánh giá năng lực học sinh cuối Chương VIII (4 mức độ)}
+
+\begin{center}
+\small
+\begin{tabularx}{\linewidth}{|p{3.2cm}|X|X|X|X|}
+\hline
+\textbf{Tiêu chí đánh giá} & \textbf{Mức 1: Chưa đạt} & \textbf{Mức 2: Đạt} & \textbf{Mức 3: Khá} & \textbf{Mức 4: Tốt} \\ \hline
+\textbf{1. Hệ thống hóa công thức xác suất} & Nhầm lẫn giữa công thức cộng và công thức nhân; chưa phân biệt được xung khắc và độc lập. & Nhớ được các công thức nhưng đôi khi áp dụng nhầm điều kiện bài toán. & Phân biệt rõ ràng xung khắc và độc lập; áp dụng đúng công thức cho từng dạng bài. & Hệ thống hóa kiến thức toàn chương bằng sơ đồ tư duy khoa học, giải thích sâu sắc bản chất toán học. \\ \hline
+\textbf{2. Kỹ năng giải bài toán tổng hợp} & Chưa xác định được biến cố đối; tính toán sai sót nhiều ở các bước trung gian. & Giải được bài toán đơn giản; tính được xác suất biến cố đối nhưng cần gợi ý. & Giải đúng và độc lập các bài toán xác suất tổng hợp; kết hợp nhuần nhuyễn cộng và nhân. & Trình bày bài giải tự luận chặt chẽ, tối ưu; biết kiểm tra lại bằng tổng xác suất đầy đủ bằng 1. \\ \hline
+\textbf{3. Năng lực phản biện AI (11.B2.1)} & Không nhận ra lỗi sai trong lời giải do AI cung cấp; tin tưởng tuyệt đối vào AI. & Nhận thấy kết quả AI sai nhưng chưa chỉ rõ nguyên nhân ở tính độc lập hay phụ thuộc. & Chỉ ra chính xác 2 lỗi sai của AI (nhầm độc lập và sai mẫu số khi không hoàn lại). & Soạn thảo câu lệnh Prompt phản biện sắc sảo, sư phạm, giúp AI hiểu và sửa đổi thuật toán lời giải. \\ \hline
+\textbf{4. Vận dụng thực tế STEM \& Năng lực số} & Không tham gia tính toán dự án STEM; không tương tác trên diễn đàn số. & Tính được xác suất bài toán STEM nhưng chưa nêu được ý nghĩa thực tiễn. & Tính đúng xác suất hệ thống vi xử lý STEM; tích cực chia sẻ bài giải lên nhóm học tập số. & Đề xuất được giải pháp tối ưu hóa số lượng linh kiện dự phòng; đóng vai trò nòng cốt trên diễn đàn lớp. \\ \hline
+\end{tabularx}
+\end{center}
+
+\end{document}
