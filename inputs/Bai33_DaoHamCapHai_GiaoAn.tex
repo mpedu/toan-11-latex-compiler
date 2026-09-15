@@ -1,0 +1,488 @@
+\documentclass[12pt, a4paper]{article}
+% --- 1. Cấu hình Tiếng Việt và Font chữ chuẩn ---
+\usepackage[utf8]{inputenc}
+\usepackage[T5]{fontenc}
+\usepackage[vietnamese]{babel}
+\usepackage{mathptmx} % Font Times New Roman đồng bộ cả chữ và công thức toán, không gây xung đột gói
+
+\makeatletter
+\renewcommand{\normalsize}{\@setfontsize\normalsize{13pt}{16pt}}
+\makeatother
+\normalsize
+
+% --- 2. Gói Toán học & Ký hiệu bổ trợ ---
+\usepackage{amsmath, amssymb, amsfonts, mathrsfs, amsthm}
+\usepackage{graphicx}
+\usepackage{fontawesome}
+\usepackage{booktabs, tabularx, array, multirow}
+\usepackage{enumitem}
+
+% --- 3. Đồ họa TikZ, Bảng biến thiên & Hình không gian ---
+\usepackage{tikz}
+\usetikzlibrary{calc, intersections, angles, quotes, patterns, arrows.meta, 3d}
+\usepackage{pgfplots}
+\pgfplotsset{compat=1.18}
+\usepackage{tkz-euclide}
+\usepackage{tkz-tab}
+
+\renewcommand{\vec}[1]{\overrightarrow{#1}}
+
+% --- 4. Hộp sư phạm (Tcolorbox) ---
+\usepackage[many]{tcolorbox}
+\tcbuselibrary{skins, breakable}
+
+% --- 5. Căn lề chuẩn văn bản giáo án ---
+\usepackage{geometry}
+\geometry{
+    a4paper,
+    left=25mm,
+    right=15mm,
+    top=20mm,
+    bottom=20mm
+}
+
+% --- 6. Header / Footer chuẩn hóa ---
+\usepackage{fancyhdr}
+\usepackage{lastpage}
+\pagestyle{fancy}
+\fancyhf{}
+
+\fancyhead[L]{\small \textit{Kế hoạch bài dạy Toán 11}}
+\fancyhead[R]{\textbf{Trang \thepage/\pageref{LastPage}}}
+\fancyfoot[L]{\small \textit{Tổ Toán - Tin}}
+\fancyfoot[R]{\small \textit{Trường THCS\&THPT Hồng Vân}}
+\renewcommand{\headrulewidth}{0.4pt}
+\renewcommand{\footrulewidth}{0.4pt}
+
+% --- 7. Giãn dòng & Giãn đoạn theo chuẩn Nghị định 30/2020/NĐ-CP ---
+\usepackage{setspace}
+\setstretch{1.15}
+\setlength{\parindent}{1.0cm}
+\setlength{\parskip}{5pt}
+
+% Định nghĩa hộp sư phạm chuyên dụng
+\newtcolorbox{pedabox}[2][]{
+    enhanced,
+    breakable,
+    colback=blue!3!white,
+    colframe=blue!65!black,
+    fonttitle=\bfseries\small,
+    title={#2},
+    arc=2mm,
+    boxrule=0.6pt,
+    left=3mm, right=3mm, top=2mm, bottom=2mm,
+    #1
+}
+
+\newtcolorbox{aibox}[2][]{
+    enhanced,
+    breakable,
+    colback=teal!4!white,
+    colframe=teal!70!black,
+    fonttitle=\bfseries\small,
+    title={#2},
+    arc=2mm,
+    boxrule=0.6pt,
+    left=3mm, right=3mm, top=2mm, bottom=2mm,
+    #1
+}
+
+\newtcolorbox{scaffoldbox}[2][]{
+    enhanced,
+    breakable,
+    colback=orange!4!white,
+    colframe=orange!80!black,
+    fonttitle=\bfseries\small,
+    title={#2},
+    arc=2mm,
+    boxrule=0.6pt,
+    left=3mm, right=3mm, top=2mm, bottom=2mm,
+    #1
+}
+
+\newtcolorbox{stembox}[2][]{
+    enhanced,
+    breakable,
+    colback=purple!4!white,
+    colframe=purple!75!black,
+    fonttitle=\bfseries\small,
+    title={#2},
+    arc=2mm,
+    boxrule=0.6pt,
+    left=3mm, right=3mm, top=2mm, bottom=2mm,
+    #1
+}
+
+\begin{document}
+
+\begin{center}
+    {\fontsize{14pt}{17pt}\selectfont \textbf{KẾ HOẠCH BÀI DẠY MÔN TOÁN LỚP 11}}\\[6pt]
+    {\fontsize{16pt}{19pt}\selectfont \textbf{BÀI 33. ĐẠO HÀM CẤP HAI}}\\[4pt]
+    {\fontsize{12pt}{15pt}\selectfont \textbf{Môn học: Toán 11} \ \textbar \ \textbf{Thời lượng: 1 tiết (Tiết 97 theo PPCT | Tuần 34)}}
+\end{center}
+
+\vspace{5pt}
+
+\section*{I. MỤC TIÊU}
+
+\subsection*{1. Kiến thức, Năng lực}
+
+\begin{itemize}[leftmargin=1.2cm]
+    \item \textbf{Yêu cầu cần đạt (Nguyên văn CT GDPT 2018 Toán 11):}
+    \begin{itemize}[leftmargin=0.6cm]
+        \item Nhận biết được khái niệm đạo hàm cấp hai của một hàm số.
+        \item Tính được đạo hàm cấp hai của một số hàm số đơn giản (như hàm đa thức, hàm phân thức, hàm lượng giác, hàm mũ).
+        \item Giải quyết được một số vấn đề có liên quan đến môn học khác hoặc có liên quan đến thực tiễn gắn với đạo hàm cấp hai (ví dụ: xác định gia tốc từ đồ thị vận tốc theo thời gian của một chuyển động không đều, xác định lực tác dụng theo định luật II Newton).
+    \end{itemize}
+
+    \item \textbf{Năng lực Toán học đặc thù:}
+    \begin{itemize}[leftmargin=0.6cm]
+        \item \textit{Năng lực tư duy và lập luận toán học:} Khái quát hóa quá trình lấy đạo hàm kế tiếp: đạo hàm của hàm đạo hàm cấp một chính là đạo hàm cấp hai; phân biệt rạch ròi giữa đạo hàm cấp hai $y''$ và bình phương của đạo hàm cấp một $(y')^2$; giải thích mối liên hệ giữa dấu của gia tốc $a(t) = s''(t)$ và tính chất chuyển động (nhanh dần đều, chậm dần đều).
+        \item \textit{Năng lực mô hình hóa toán học:} Thiết lập hàm số chuyển động $s(t)$ cho các phương tiện cơ giới (ô tô, tàu lượn siêu tốc, con lắc đơn); mô hình hóa đại lượng gia tốc tức thời $a(t) = s''(t)$ và lực quán tính $F = m \cdot a(t)$ để giải quyết bài toán an toàn kỹ thuật; thiết lập mô hình gia tốc tăng trưởng kinh tế và biến động giá cả tài chính.
+        \item \textit{Năng lực giải quyết vấn đề toán học:} Thực hiện thuần thục quy trình 2 bước tính đạo hàm cấp hai: tính $y'$ rồi tính tiếp $(y')'$; vận dụng đạo hàm cấp hai để giải phương trình vi phân đơn giản dạng $y'' + \omega^2 y = 0$ trong dao động điều hòa.
+        \item \textit{Năng lực giao tiếp toán học:} Sử dụng chính xác và chuẩn mực các ký hiệu: $y''$, $f''(x)$, $\dfrac{\mathrm{d}^2 y}{\mathrm{d}x^2}$, $s''(t)$, $a(t)$; trình bày bài giải tự luận rõ ràng, tường minh từng bước đạo hàm liên tiếp.
+        \item \textit{Năng lực sử dụng công cụ, phương tiện học toán:} Sử dụng MTCT Casio fx-580VN X để tính xấp xỉ đạo hàm cấp hai bằng công thức sai phân hữu hạn hoặc đạo hàm hai lần liên tiếp; khai thác các phần mềm toán học động (GeoGebra, Desmos) để vẽ đồng thời ba đồ thị: quãng đường $s(t)$, vận tốc $v(t)$ và gia tốc $a(t)$.
+    \end{itemize}
+
+    \item \textbf{Năng lực số (Theo Thông tư 02/2025/TT-BGDĐT):}
+    \begin{itemize}[leftmargin=0.6cm]
+        \item \textit{Mã 3.1NC1b (Áp dụng tính toán đạo hàm hai lần trên các công cụ số trực tuyến):} Học sinh thao tác trên thiết bị số hoặc máy vi tính phòng học, nhập lệnh tính đạo hàm cấp hai trên GeoGebra (\texttt{Derivative(f, 2)}) hoặc các nền tảng toán học số để đối chiếu đồ thị vận tốc và gia tốc; sử dụng MTCT Casio fx-580VN X kiểm chứng giá trị $f''(x_0)$ tại một điểm ngẫu nhiên.
+    \end{itemize}
+
+    \item \textbf{Năng lực AI (Theo Quyết định 2422/QĐ-BGDĐT):}
+    \begin{itemize}[leftmargin=0.6cm]
+        \item \textit{Mã 11.C2.1 (Nhận biết vai trò của đạo hàm cấp 2 trong mô hình AI phân tích gia tốc thị trường và tối ưu hóa Newton-Raphson):} Học sinh tìm hiểu và trình bày được ý nghĩa của đạo hàm bậc hai trong Trí tuệ nhân tạo: đạo hàm cấp 1 (Gradient) cho biết hướng dốc, nhưng đạo hàm cấp 2 (Ma trận Hessian / Curvature) cho biết độ cong của địa hình sai số; thuật toán tối ưu hóa bậc hai (Newton's Method) sử dụng đạo hàm cấp 2 để giúp AI điều chỉnh kích thước bước nhảy thông minh, hội tụ nhanh hơn gấp nhiều lần so với Gradient Descent thông thường; đồng thời AI sử dụng đạo hàm cấp 2 để đo ``gia tốc'' biến động giá chứng khoán, phát hiện sớm các điểm bão hòa của xu hướng công nghệ.
+    \end{itemize}
+
+    \item \textbf{Giáo dục STEM/STEAM:}
+    \begin{itemize}[leftmargin=0.6cm]
+        \item \textit{Chủ đề STEM:} Phân tích gia tốc và lực quán tính bảo vệ an toàn cho hành khách trên tàu lượn siêu tốc (\textit{Roller Coaster Physics}). Cho phương trình chuyển động của khoang tàu lượn $s(t)$, học sinh tính toán gia tốc tức thời $a(t) = s''(t)$, đánh giá lực quán tính cực đại tác dụng lên cơ thể người $F_{\text{max}} = m \cdot a_{\text{max}}$ để đối chiếu với tiêu chuẩn y sinh học hàng không ($a \leq 3g \approx 30\text{ m/s}^2$).
+    \end{itemize}
+
+    \item \textbf{Năng lực chung:}
+    \begin{itemize}[leftmargin=0.6cm]
+        \item \textit{Tự chủ và tự học:} Chủ động đọc trước định nghĩa đạo hàm cấp hai trong SGK; tự giác làm bài tập trên Phiếu học tập cá nhân.
+        \item \textit{Giao tiếp và hợp tác:} Tích cực thảo luận nhóm trong hoạt động thực hành STEM và phân tích ứng dụng AI; phân công nhiệm vụ hài hòa giữa thành viên tính toán và thành viên đồ họa số.
+    \end{itemize}
+\end{itemize}
+
+\subsection*{2. Phẩm chất}
+
+\begin{itemize}[leftmargin=1.2cm]
+    \item \textbf{Chăm chỉ:} Kiên trì thực hiện hai lần lấy đạo hàm liên tiếp, cẩn thận rút gọn biểu thức ở bước một trước khi chuyển sang bước hai.
+    \item \textbf{Trung thực:} Ghi chép trung thực số liệu tính toán và kết quả mô phỏng số, không sửa đổi kết quả sai lệch.
+    \item \textbf{Trách nhiệm:} Có trách nhiệm trong công việc nhóm; ý thức rõ vai trò của gia tốc và lực quán tính để tuân thủ luật an toàn giao thông khi điều khiển phương tiện (không tăng ga hoặc phanh gấp đột ngột).
+\end{itemize}
+
+\section*{II. THIẾT BỊ DẠY HỌC VÀ HỌC LIỆU}
+
+\begin{itemize}[leftmargin=1.2cm]
+    \item \textbf{Giáo viên:}
+    \begin{itemize}[leftmargin=0.6cm]
+        \item Kế hoạch bài dạy chi tiết Tiết 97 chuẩn khung Công văn 5512/BGDĐT-GDTrH.
+        \item Bài trình chiếu điện tử tương tác (Slide PowerPoint / Canva) sinh động với video mô phỏng chuyển động tàu lượn siêu tốc và hình ảnh minh họa độ cong mặt cong Hessian trong AI.
+        \item Tệp thực hành GeoGebra động: \texttt{GiaTocChuyenDong.ggb} vẽ đồng thời 3 đường $s(t), v(t), a(t)$.
+        \item Hệ thống Phiếu học tập số 1 (Định nghĩa, quy trình tính & bài tập rèn luyện) và Phiếu học tập số 2 (Phân tích AI Mã 11.C2.1 & Dự án STEM Tàu lượn siêu tốc).
+        \item Bảng Rubric đánh giá năng lực học sinh 4 mức độ.
+    \end{itemize}
+    \item \textbf{Học sinh:}
+    \begin{itemize}[leftmargin=0.6cm]
+        \item SGK Toán 11, vở ghi bài, bút màu.
+        \item Máy tính cầm tay Casio fx-580VN X.
+        \item Thiết bị di động / máy tính cá nhân có kết nối Internet để tra cứu phần mềm đồ họa GeoGebra và trải nghiệm mô phỏng số.
+    \end{itemize}
+\end{itemize}
+
+\section*{III. TIẾN TRÌNH DẠY HỌC}
+
+\begin{center}
+    \textbf{\large TIẾT 97 THEO PPCT (TUẦN 34)}\\[4pt]
+    \textit{(Nội dung: Định nghĩa Đạo hàm cấp hai -- Ý nghĩa vật lí của gia tốc -- Ứng dụng AI \& Dự án STEM)}
+\end{center}
+
+\subsection*{1. Hoạt động 1: Mở đầu (Khởi động - 6 phút)}
+
+\paragraph{a) Mục tiêu:} Tạo tình huống có vấn đề xuất phát từ khái niệm gia tốc trong Vật lý lớp 10, khơi gợi nhu cầu xác định tốc độ biến thiên của vận tốc tức thời, từ đó dẫn dắt tự nhiên đến khái niệm đạo hàm cấp hai.
+
+\paragraph{b) Nội dung:} Giáo viên chiếu video ngắn 30 giây cảnh một chiếc xe điện Tesla tăng tốc từ $0$ lên $100\text{ km/h}$ trong $2{,}5\text{ giây}$ và đặt vấn đề:
+\begin{pedabox}{Tình huống Khởi động: Chiếc xe tăng tốc}
+Một vật chuyển động thẳng có phương trình quãng đường theo thời gian là:
+$$s(t) = t^3 - 6t^2 + 15t \quad (t \geq 0\text{ tính bằng giây, } s\text{ tính bằng mét})$$
+\begin{enumerate}[leftmargin=0.6cm]
+    \item Hãy viết biểu thức vận tốc tức thời $v(t)$ của vật tại thời điểm $t$.
+    \item Vận tốc của xe có giữ nguyên không hay thay đổi liên tục theo thời gian? Đại lượng nào trong Vật lý đặc trưng cho tốc độ biến thiên của vận tốc theo thời gian?
+    \item Làm thế nào để tính đại lượng đó từ biểu thức vận tốc $v(t)$?
+\end{enumerate}
+\end{pedabox}
+
+\paragraph{c) Sản phẩm:} Câu trả lời của học sinh:
+\begin{itemize}[leftmargin=0.8cm]
+    \item Vận tốc tức thời là đạo hàm của quãng đường:
+    $$v(t) = s'(t) = (t^3 - 6t^2 + 15t)' = 3t^2 - 12t + 15\text{ (m/s)}$$
+    \item Vận tốc $v(t)$ thay đổi liên tục theo thời gian $t$.
+    \item Đại lượng đặc trưng cho tốc độ thay đổi của vận tốc chính là \textbf{Gia tốc} $a(t)$.
+    \item Gia tốc tức thời chính là đạo hàm của vận tốc theo thời gian:
+    $$a(t) = v'(t) = (3t^2 - 12t + 15)' = 6t - 12\text{ (m/s}^2\text{)}$$
+    \item Học sinh phát hiện: Để tìm gia tốc từ quãng đường $s(t)$, ta phải lấy đạo hàm \textbf{hai lần liên tiếp}!
+\end{itemize}
+
+\paragraph{d) Tổ chức thực hiện:}
+\begin{itemize}[leftmargin=0.8cm]
+    \item \textbf{Chuyển giao nhiệm vụ:} Giáo viên chiếu video và câu hỏi, yêu cầu học sinh thảo luận cặp đôi trong 3 phút.
+    \item \textbf{Thực hiện nhiệm vụ:} Học sinh tính đạo hàm $v(t) = s'(t)$ và đạo hàm của $v(t)$.
+    \item \textbf{Báo cáo, thảo luận:} 1 học sinh trả lời miệng; giáo viên ghi bảng kết quả $6t - 12$.
+    \item \textbf{Kết luận, nhận định:} Giáo viên chốt lại: Đạo hàm của đạo hàm $y'$ được gọi là \textbf{Đạo hàm cấp hai} của hàm số ban đầu, ký hiệu là $y''$. Đó chính là nội dung trọng tâm của bài học hôm nay.
+\end{itemize}
+
+\subsection*{2. Hoạt động 2: Hình thành kiến thức - Định nghĩa Đạo hàm cấp hai & Ý nghĩa vật lí (16 phút)}
+
+\paragraph{a) Mục tiêu:} Giúp học sinh nắm vững định nghĩa, ký hiệu của đạo hàm cấp hai; hiểu sâu sắc ý nghĩa vật lí (gia tốc tức thời); làm chủ quy trình 2 bước tính đạo hàm cấp hai.
+
+\paragraph{b) Nội dung:} Giáo viên trình bày kiến thức chuẩn mực:
+
+\begin{pedabox}{1. Định nghĩa Đạo hàm cấp hai}
+Cho hàm số $y = f(x)$ có đạo hàm $f'(x)$ tại mọi điểm $x$ thuộc một khoảng $(a; b)$.
+\begin{itemize}[leftmargin=0.5cm]
+    \item Nếu hàm số $y' = f'(x)$ lại có đạo hàm tại điểm $x \in (a; b)$ thì đạo hàm của $f'(x)$ được gọi là \textbf{đạo hàm cấp hai của hàm số $y = f(x)$ tại điểm $x$}.
+    \item Ký hiệu đạo hàm cấp hai:
+    \begin{equation}
+        y'' \quad \text{hoặc} \quad f''(x) \quad \text{hoặc} \quad \dfrac{\mathrm{d}^2 y}{\mathrm{d}x^2}
+    \end{equation}
+    \item Công thức định nghĩa:
+    \begin{equation}
+        y'' = (y')' \quad \text{hay} \quad f''(x) = [f'(x)]'
+    \end{equation}
+    \item \textit{Đạo hàm cấp cao hơn:} Đạo hàm cấp ba là $(y'')'$, đạo hàm cấp $n$ ký hiệu là $y^{(n)} = [y^{(n-1)}]'$ ($n \in \mathbb{N}, n \geq 3$).
+\end{itemize}
+\end{pedabox}
+
+\begin{pedabox}{2. Ý nghĩa Vật lí của Đạo hàm cấp hai}
+Một chất điểm chuyển động thẳng có phương trình tọa độ / quãng đường $s = s(t)$ theo thời gian $t$.
+\begin{itemize}[leftmargin=0.5cm]
+    \item Đạo hàm cấp một của quãng đường là \textbf{vận tốc tức thời}:
+    \begin{equation}
+        v(t) = s'(t)
+    \end{equation}
+    \item Đạo hàm cấp hai của quãng đường (tức là đạo hàm cấp một của vận tốc) là \textbf{gia tốc tức thời} của chất điểm tại thời điểm $t$:
+    \begin{equation}
+        a(t) = v'(t) = s''(t)
+    \end{equation}
+    \item Theo Định luật II Newton: Lực tác dụng lên vật có khối lượng $m$ tại thời điểm $t$ là:
+    \begin{equation}
+        F(t) = m \cdot a(t) = m \cdot s''(t)
+    \end{equation}
+\end{itemize}
+\end{pedabox}
+
+\begin{pedabox}{3. Minh họa Mối quan hệ giữa Quãng đường, Vận tốc và Gia tốc bằng TikZ}
+\begin{center}
+\begin{tikzpicture}[scale=0.95]
+    \draw[->, thick] (-0.2, 0) -- (6.5, 0) node[below] {$t\text{ (giây)}$};
+    \draw[->, thick] (0, -2.2) -- (0, 4.2) node[left] {Giá trị đại lượng};
+    \node[below left] at (0, 0) {$O$};
+
+    % Đồ thị quãng đường s(t) = -0.2*t^3 + 1.2*t^2
+    \draw[blue!80!black, very thick, domain=0:5.2, samples=100] plot (\x, {-0.15*\x*\x*\x + 0.9*\x*\x}) node[right] {$s(t)\text{ (quãng đường)}$};
+
+    % Đồ thị vận tốc v(t) = s'(t) = -0.45*t^2 + 1.8*t
+    \draw[teal!80!black, thick, dashed, domain=0:5.2, samples=100] plot (\x, {-0.45*\x*\x + 1.8*\x}) node[right] {$v(t) = s'(t)\text{ (vận tốc)}$};
+
+    % Đồ thị gia tốc a(t) = v'(t) = s''(t) = -0.9*t + 1.8
+    \draw[red!80!black, very thick, domain=0:5.0, samples=80] plot (\x, {-0.9*\x + 1.8}) node[right] {$a(t) = s''(t)\text{ (gia tốc)}$};
+
+    % Điểm đỉnh của vận tốc v'(t) = 0 => a(t) = 0 tại t = 2
+    \draw[dotted, thick] (2, 0) node[below] {$t = 2$} -- (2, 1.8);
+    \fill[red] (2, 0) circle (2pt) node[above right] {$a(2) = 0$};
+    \fill[teal!80!black] (2, 1.8) circle (2pt) node[above] {$v_{\text{max}}$};
+\end{tikzpicture}
+\end{center}
+\end{pedabox}
+
+\begin{scaffoldbox}{Giàn giáo sư phạm: Bẫy sai lầm và Quy trình 2 bước cho HS TB-Yếu}
+\begin{itemize}[leftmargin=0.5cm]
+    \item \textbf{CẢNH BÁO BẪY SAI LẦM PHỔ BIẾN:}
+    Rất nhiều học sinh viết nhầm:
+    $$y'' = (y')^2 \quad \implies \textbf{SAI HOÀN TOÀN BẢN CHẤT!}$$
+    $(y')^2$ là phép toán \textbf{bình phương} giá trị đạo hàm cấp một, còn $y''$ là phép toán \textbf{đạo hàm thêm một lần nữa}.
+    \item \textbf{QUY TRÌNH 2 BƯỚC TÍNH ĐẠO HÀM CẤP HAI:}
+    \begin{itemize}[leftmargin=0.4cm]
+        \item \textbf{Bước 1:} Tính đạo hàm cấp một $y' = f'(x)$ bằng các quy tắc đã học ở Bài 32. \textbf{Bắt buộc rút gọn tối đa biểu thức $y'$} (quy đồng, rút gọn đa thức) trước khi sang bước 2.
+        \item \textbf{Bước 2:} Lấy đạo hàm của biểu thức vừa rút gọn: $y'' = (y')'$.
+    \end{itemize}
+\end{itemize}
+\end{scaffoldbox}
+
+\paragraph{c) Sản phẩm:} Định nghĩa, ý nghĩa vật lí và quy trình 2 bước được ghi chép đầy đủ vào vở học sinh; học sinh phân biệt được $y''$ và $(y')^2$.
+
+\paragraph{d) Tổ chức thực hiện:}
+\begin{itemize}[leftmargin=0.8cm]
+    \item \textbf{Chuyển giao nhiệm vụ:} Giáo viên phân tích định nghĩa, trình chiếu đồ thị TikZ so sánh 3 đường $s(t), v(t), a(t)$, phát Phiếu học tập số 1.
+    \item \textbf{Thực hiện nhiệm vụ:} Học sinh ghi bài, thảo luận cặp đôi về sự khác nhau giữa $y''$ và $(y')^2$.
+    \item \textbf{Báo cáo, thảo luận:} 1 học sinh giải thích tại sao khi vận tốc đạt giá trị lớn nhất ($v_{\text{max}}$) thì gia tốc bằng $0$ ($a = 0$).
+    \item \textbf{Kết luận, nhận định:} Giáo viên khẳng định: Đạo hàm cấp một đo độ dốc của hàm ban đầu, còn đạo hàm cấp hai đo độ cong (độ uốn) của đồ thị.
+\end{itemize}
+
+\subsection*{3. Hoạt động 3: Luyện tập & Làm chủ công cụ số (15 phút)}
+
+\paragraph{a) Mục tiêu:} Vận dụng thành thạo quy trình 2 bước tính đạo hàm cấp hai của hàm đa thức, phân thức, lượng giác và mũ; sử dụng MTCT Casio fx-580VN X và GeoGebra kiểm tra kết quả (Mã 3.1NC1b).
+
+\paragraph{b) Nội dung:} Học sinh làm việc cá nhân và nhóm trên Phiếu học tập số 1:
+
+\begin{pedabox}{Bài tập luyện tập Tiết 97}
+\textbf{Bài 1 (Tính đạo hàm cấp hai của các hàm số sau):}
+\begin{enumerate}[leftmargin=0.6cm]
+    \item[a)] $y = 2x^5 - 3x^4 + 4x - 1$.
+    \item[b)] $y = \dfrac{1}{x + 1}$ ($x \neq -1$).
+    \item[c)] $y = \sin(2x)$.
+    \item[d)] $y = e^{-x^2}$.
+\end{enumerate}
+
+\textbf{Bài 2 (Bài toán Cơ học & Dao động điều hòa):}
+Một chất điểm dao động điều hòa có phương trình li độ: $x(t) = 4 \cos\left(5\pi t + \dfrac{\pi}{3}\right)\text{ (cm)}$.
+\begin{enumerate}[leftmargin=0.6cm]
+    \item Tính vận tốc tức thời $v(t)$ và gia tốc tức thời $a(t)$ của chất điểm tại thời điểm $t = 0{,}2\text{ s}$.
+    \item Chứng minh rằng với mọi thời điểm $t$, gia tốc và li độ luôn thỏa mãn hệ thức: $a(t) = -\omega^2 \cdot x(t) = -25\pi^2 \cdot x(t)$ (đặc trưng cơ bản của dao động điều hòa).
+\end{enumerate}
+\end{pedabox}
+
+\paragraph{c) Sản phẩm:} Lời giải chi tiết của học sinh:
+\begin{itemize}[leftmargin=0.8cm]
+    \item \textbf{Giải Bài 1:}
+    \begin{itemize}[leftmargin=0.4cm]
+        \item a) $y' = 10x^4 - 12x^3 + 4 \implies y'' = (10x^4 - 12x^3 + 4)' = 40x^3 - 36x^2$.
+        \item b) $y' = -\dfrac{1}{(x + 1)^2} = -(x + 1)^{-2} \implies y'' = -(-2)(x + 1)^{-3} = \dfrac{2}{(x + 1)^3}$.
+        \item c) $y' = 2\cos(2x) \implies y'' = 2 \cdot [-2\sin(2x)] = -4\sin(2x)$.
+        \item d) $y' = (-x^2)' \cdot e^{-x^2} = -2x \cdot e^{-x^2}$.
+        Áp dụng quy tắc đạo hàm của tích: $u = -2x \implies u' = -2$; $v = e^{-x^2} \implies v' = -2x e^{-x^2}$.
+        $$y'' = u'v + uv' = -2 e^{-x^2} + (-2x)(-2x e^{-x^2}) = (4x^2 - 2) e^{-x^2}$$
+    \end{itemize}
+    \item \textbf{Giải Bài 2:}
+    \begin{itemize}[leftmargin=0.4cm]
+        \item Vận tốc: $v(t) = x'(t) = 4 \cdot \left[ -5\pi \sin\left(5\pi t + \dfrac{\pi}{3}\right) \right] = -20\pi \sin\left(5\pi t + \dfrac{\pi}{3}\right)\text{ (cm/s)}$.
+        \item Gia tốc: $a(t) = v'(t) = -20\pi \cdot \left[ 5\pi \cos\left(5\pi t + \dfrac{\pi}{3}\right) \right] = -100\pi^2 \cos\left(5\pi t + \dfrac{\pi}{3}\right)\text{ (cm/s}^2\text{)}$.
+        \item Tại $t = 0{,}2\text{ s}$: Góc pha là $5\pi(0{,}2) + \dfrac{\pi}{3} = \pi + \dfrac{\pi}{3} = \dfrac{4\pi}{3}$.
+        $$v(0{,}2) = -20\pi \sin\left(\dfrac{4\pi}{3}\right) = -20\pi \cdot \left(-\dfrac{\sqrt{3}}{2}\right) = 10\pi\sqrt{3} \approx 54{,}41\text{ cm/s}$$
+        $$a(0{,}2) = -100\pi^2 \cos\left(\dfrac{4\pi}{3}\right) = -100\pi^2 \cdot \left(-\dfrac{1}{2}\right) = 50\pi^2 \approx 493{,}48\text{ cm/s}^2$$
+        \item Đẳng thức dao động: $a(t) = -100\pi^2 \cos\left(5\pi t + \dfrac{\pi}{3}\right) = -25\pi^2 \cdot \left[ 4\cos\left(5\pi t + \dfrac{\pi}{3}\right) \right] = -25\pi^2 \cdot x(t)$ (Điều phải chứng minh).
+    \end{itemize}
+\end{itemize}
+
+\paragraph{d) Tổ chức thực hiện:}
+\begin{itemize}[leftmargin=0.8cm]
+    \item \textbf{Chuyển giao nhiệm vụ:} Giáo viên chia 7 nhóm, giao Bài 1a, 1b cho nhóm 1, 2, 3; Bài 1c, 1d cho nhóm 4, 5; Bài 2 cho nhóm 6, 7.
+    \item \textbf{Thực hiện nhiệm vụ:} Học sinh tính toán, hỗ trợ nhau rút gọn biểu thức ở bước 1. Giáo viên hướng dẫn dùng MTCT Casio kiểm tra.
+    \item \textbf{Báo cáo, thảo luận:} Đại diện các nhóm lên bảng trình bày; học sinh nhóm 7 giải thích công thức gia tốc hướng tâm liên môn Vật lý.
+    \item \textbf{Kết luận, nhận định:} Giáo viên chuẩn hóa bài giải, khen ngợi sự liên kết chặt chẽ giữa Toán học và Vật lý học.
+\end{itemize}
+
+\subsection*{4. Hoạt động 4: Vận dụng STEM & Tích hợp Năng lực AI (8 phút)}
+
+\paragraph{a) Mục tiêu:} Vận dụng đạo hàm cấp hai vào dự án STEM phân tích độ an toàn của tàu lượn siêu tốc; tích hợp năng lực AI (Mã 11.C2.1: vai trò của đạo hàm cấp 2 trong tối ưu hóa và phân tích gia tốc thị trường tài chính).
+
+\paragraph{b) Nội dung:}
+
+\begin{aibox}{Tích hợp Năng lực AI (Mã 11.C2.1): Đạo hàm cấp hai trong Trí tuệ nhân tạo}
+\textbf{Vai trò đột phá của Đạo hàm cấp 2 trong AI:}
+\begin{itemize}[leftmargin=0.5cm]
+    \item \textbf{Độ cong của mặt sai số (Curvature):} Nếu đạo hàm cấp 1 ($J'$) chỉ cho AI biết đi về bên trái hay bên phải, thì đạo hàm cấp 2 ($J''$) cho AI biết \textbf{địa hình dốc thoải hay dốc đứng, lồi hay lõm}.
+    \item \textbf{Thuật toán tối ưu hóa bậc hai (Newton-Raphson Optimization):}
+    Thay vì dùng bước nhảy cố định $\eta$, AI tính bước nhảy tối ưu dựa trên tỉ số giữa đạo hàm cấp 1 và đạo hàm cấp 2:
+    \begin{equation}
+        \Delta \theta = -\dfrac{J'(\theta)}{J''(\theta)} \quad \text{(trong nhiều chiều là ma trận Hessian $H^{-1} \nabla J$)}
+    \end{equation}
+    Nhờ có $J''(\theta)$, AI có thể nhảy thẳng đến đáy cực tiểu chỉ sau vài vòng lặp, thay vì hàng nghìn vòng lặp của Gradient Descent bậc một!
+    \item \textbf{Phân tích gia tốc tài chính của AI:} Trong dự báo giá cổ phiếu hoặc phân tích xu hướng mạng xã hội, AI lấy đạo hàm cấp 2 của đường giá để tính ``gia tốc tăng trưởng''. Nếu giá vẫn tăng ($y' > 0$) nhưng gia tốc bắt đầu âm ($y'' < 0$), AI phát hiện ngay đà tăng đang cạn kiệt (hiện tượng phân kỳ đỉnh) để đưa ra khuyến nghị bán tự động.
+\end{itemize}
+\end{aibox}
+
+\begin{stembox}{Chủ đề STEM: Đánh giá độ an toàn gia tốc tàu lượn siêu tốc}
+\textbf{Bài toán Kỹ thuật Công viên Giải trí:} Một khoang tàu lượn siêu tốc trượt xuống từ đỉnh dốc trượt cao $40\text{ m}$. Phương trình chuyển động trong $6\text{ giây}$ đầu tiên là:
+$$s(t) = 0{,}15 t^4 - 1{,}6 t^3 + 4{,}8 t^2 \quad (0 \leq t \leq 6\text{ giây})$$
+\textbf{Nhiệm vụ của học sinh:}
+\begin{enumerate}[leftmargin=0.6cm]
+    \item Tính biểu thức vận tốc $v(t) = s'(t)$ và biểu thức gia tốc $a(t) = s''(t)$.
+    \item Tính gia tốc của khoang tàu tại thời điểm $t = 1\text{ s}$ và $t = 4\text{ s}$.
+    \item Theo tiêu chuẩn an toàn công viên giải trí quốc tế (ASTM F24), gia tốc tác dụng lên hành khách không được vượt quá $3g \approx 30\text{ m/s}^2$ để tránh hiện tượng ngất xỉu do thiếu máu lên não (G-LOC). Tàu lượn này có đảm bảo an toàn về mặt gia tốc hay không?
+\end{enumerate}
+\end{stembox}
+
+\paragraph{c) Sản phẩm:} Lời giải dự án STEM của học sinh:
+\begin{itemize}[leftmargin=0.8cm]
+    \item Vận tốc: $v(t) = s'(t) = 0{,}6 t^3 - 4{,}8 t^2 + 9{,}6 t\text{ (m/s)}$.
+    \item Gia tốc: $a(t) = s''(t) = 1{,}8 t^2 - 9{,}6 t + 9{,}6\text{ (m/s}^2\text{)}$.
+    \item Tại $t = 1\text{ s}$: $a(1) = 1{,}8(1)^2 - 9{,}6(1) + 9{,}6 = 1{,}8\text{ m/s}^2$.
+    \item Tại $t = 4\text{ s}$: $a(4) = 1{,}8(16) - 9{,}6(4) + 9{,}6 = 28{,}8 - 38{,}4 + 9{,}6 = 0\text{ m/s}^2$ (vận tốc đạt cực trị).
+    \item Tại đỉnh ban đầu $t = 0$: $a(0) = 9{,}6\text{ m/s}^2 \approx 1g$.
+    \item Tại $t = 6\text{ s}$: $a(6) = 1{,}8(36) - 9{,}6(6) + 9{,}6 = 64{,}8 - 57{,}6 + 9{,}6 = 16{,}8\text{ m/s}^2 \approx 1{,}7g$.
+    \item \textit{Kết luận an toàn:} Gia tốc cực đại của tàu lượn $a_{\text{max}} \approx 16{,}8\text{ m/s}^2 < 30\text{ m/s}^2$ ($3g$). Hệ thống tàu lượn hoàn toàn đảm bảo an toàn tính mạng và sức khỏe cho du khách!
+\end{itemize}
+
+\paragraph{d) Tổ chức thực hiện:}
+\begin{itemize}[leftmargin=0.8cm]
+    \item Giáo viên trình chiếu video thuật toán Newton-Raphson của AI và bài toán tàu lượn siêu tốc.
+    \item Các nhóm học sinh tính toán gia tốc tàu lượn trên Phiếu học tập số 2 trong 5 phút.
+    \item Đại diện Nhóm 6 báo cáo kết quả đánh giá tiêu chuẩn an toàn ASTM F24.
+    \item Giáo viên tổng kết, tuyên dương sự kết hợp hài hòa giữa kiến thức Giải tích, Cơ học thực nghiệm và Khoa học dữ liệu AI.
+    \item Dặn dò chuẩn bị bài tiếp theo: **Bài tập cuối chương IX (Tiết 98)**.
+\end{itemize}
+
+\section*{IV. PHỤ LỤC HỌC LIỆU BỔ TRỢ}
+
+\subsection*{1. Phiếu học tập số 1: Định nghĩa & Kỹ năng tính Đạo hàm cấp hai}
+
+\begin{pedabox}{PHIẾU HỌC TẬP SỐ 1 (TIẾT 97)}
+\textbf{Họ và tên học sinh:} \dotfill \textbf{Lớp:} 11A\dots \quad \textbf{Nhóm:} \dots
+\begin{enumerate}[leftmargin=0.6cm]
+    \item \textbf{Lý thuyết cơ bản:}
+    \begin{itemize}
+        \item Đạo hàm cấp hai của hàm số $y = f(x)$ là: $y'' = (\dots\dots)'$.
+        \item Phân biệt sự khác nhau giữa $y''$ và $(y')^2$: \dotfill
+        \item Gia tốc tức thời của chuyển động $s = s(t)$ là: $a(t) = $ \dotfill
+    \end{itemize}
+
+    \item \textbf{Bài tập tự luận:}
+    Tính đạo hàm cấp hai của các hàm số sau:
+    \begin{itemize}
+        \item $y = x^4 - 2x^2 + 1 \implies y' = $ \dotfill $\implies y'' = $ \dotfill
+        \item $y = \cos(3x) \implies y' = $ \dotfill $\implies y'' = $ \dotfill
+        \item $y = \dfrac{x}{x - 1} \implies y' = $ \dotfill $\implies y'' = $ \dotfill
+    \end{itemize}
+\end{enumerate}
+\end{pedabox}
+
+\subsection*{2. Phiếu học tập số 2: Phân tích AI & Dự án STEM Tàu lượn siêu tốc}
+
+\begin{pedabox}{PHIẾU HỌC TẬP SỐ 2 (TIẾT 97)}
+\textbf{Phần 1: Khám phá AI (Mã 11.C2.1):}
+\begin{itemize}
+    \item Đạo hàm cấp hai $J''(\theta)$ thể hiện đặc tính gì của hàm mất mát trong AI? \dotfill
+    \item Tại sao thuật toán tối ưu bậc hai Newton-Raphson lại hội tụ nhanh hơn thuật toán Gradient Descent bậc một? \dotfill
+\end{itemize}
+
+\textbf{Phần 2: Đánh giá an toàn gia tốc tàu lượn STEM:}
+\begin{center}
+\begin{tabularx}{\linewidth}{|l|c|c|c|}
+\hline
+\textbf{Thời điểm $t$} & \textbf{Vận tốc $v(t) = s'(t)$} & \textbf{Gia tốc $a(t) = s''(t)$} & \textbf{Đánh giá an toàn ($a \le 30\text{ m/s}^2$)} \\ \hline
+$t = 1\text{ s}$ & & & Đạt chuẩn an toàn \\ \hline
+$t = 4\text{ s}$ & & & Đạt chuẩn an toàn \\ \hline
+$t = 6\text{ s}$ & & & Đạt chuẩn an toàn \\ \hline
+\end{tabularx}
+\end{center}
+\end{pedabox}
+
+\subsection*{3. Rubric đánh giá năng lực học sinh trong bài học (4 mức độ)}
+
+\begin{center}
+\small
+\begin{tabularx}{\linewidth}{|p{3.2cm}|X|X|X|X|}
+\hline
+\textbf{Tiêu chí đánh giá} & \textbf{Mức 1: Chưa đạt} & \textbf{Mức 2: Đạt} & \textbf{Mức 3: Khá} & \textbf{Mức 4: Tốt} \\ \hline
+\textbf{1. Kỹ năng tính đạo hàm cấp hai} & Viết nhầm $y'' = (y')^2$; tính sai đạo hàm cấp một ngay từ bước 1. & Tính đúng $y'$ nhưng lấy đạo hàm tiếp theo ở bước 2 còn nhầm lẫn công thức. & Thực hiện thành thạo quy trình 2 bước; tính đúng đạo hàm cấp hai cho hàm đa thức, lượng giác, phân thức. & Tính toán nhanh, rút gọn tối ưu; giải quyết tốt đạo hàm cấp hai của hàm hợp phức tạp và kiểm tra bằng MTCT. \\ \hline
+\textbf{2. Ý nghĩa vật lí \& Gia tốc chuyển động} & Không nêu được mối liên hệ giữa quãng đường, vận tốc và gia tốc. & Nêu được công thức $a = s''$ nhưng tính toán gia tốc tức thời tại một điểm còn sai số. & Tính chính xác gia tốc tức thời và lực quán tính $F = ma$; phân tích được tính chất nhanh/chậm dần. & Chứng minh hoàn hảo hệ thức dao động điều hòa $a = -\omega^2 x$; vẽ và phân tích sâu sắc đồ thị pha dao động. \\ \hline
+\textbf{3. Nhận thức công nghệ AI (11.C2.1)} & Không hiểu vai trò của đạo hàm cấp hai trong mô hình AI. & Nhận biết AI dùng đạo hàm cấp hai để phân tích độ cong và tối ưu hóa bước nhảy. & Trình bày được nguyên lý thuật toán Newton-Raphson và ý nghĩa phân tích gia tốc thị trường của AI. & Phân tích sâu sắc sự khác biệt về hiệu năng và chi phí tính toán giữa ma trận Hessian bậc hai và Gradient bậc một. \\ \hline
+\textbf{4. Dự án STEM Tàu lượn siêu tốc} & Không tham gia tính toán các đại lượng chuyển động của tàu lượn. & Tính được vận tốc và gia tốc nhưng chưa so sánh với tiêu chuẩn an toàn gia tốc quốc tế. & Hoàn thành bảng tính toán; kết luận chính xác mức độ an toàn của tàu lượn siêu tốc theo chuẩn ASTM. & Đề xuất được giải pháp điều chỉnh độ cong máng trượt để giảm chấn gia tốc cực đại bảo vệ sức khỏe hành khách. \\ \hline
+\end{tabularx}
+\end{center}
+
+\end{document}
