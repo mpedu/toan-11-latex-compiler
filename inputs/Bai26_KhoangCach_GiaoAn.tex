@@ -1,0 +1,773 @@
+\documentclass[12pt, a4paper]{article}
+% --- 1. Cấu hình Tiếng Việt và Font chữ chuẩn ---
+\usepackage[utf8]{inputenc}
+\usepackage[T5]{fontenc}
+\usepackage[vietnamese]{babel}
+\usepackage{mathptmx} % Font Times New Roman đồng bộ cả chữ và công thức toán, không gây xung đột gói
+
+\makeatletter
+\renewcommand{\normalsize}{\@setfontsize\normalsize{13pt}{16pt}}
+\makeatother
+\normalsize
+
+% --- 2. Gói Toán học & Ký hiệu bổ trợ ---
+\usepackage{amsmath, amssymb, amsfonts, mathrsfs, amsthm}
+\usepackage{graphicx}
+\usepackage{fontawesome}
+\usepackage{booktabs, tabularx, array, multirow}
+\usepackage{enumitem}
+
+% --- 3. Đồ họa TikZ, Bảng biến thiên & Hình không gian ---
+\usepackage{tikz}
+\usetikzlibrary{calc, intersections, angles, quotes, patterns, arrows.meta, 3d}
+\usepackage{pgfplots}
+\pgfplotsset{compat=1.18}
+\usepackage{tkz-euclide}
+\usepackage{tkz-tab}
+
+\renewcommand{\vec}[1]{\overrightarrow{#1}}
+
+% --- 4. Hộp sư phạm (Tcolorbox) ---
+\usepackage[many]{tcolorbox}
+\tcbuselibrary{skins, breakable}
+
+% --- 5. Căn lề chuẩn văn bản giáo án ---
+\usepackage{geometry}
+\geometry{
+    a4paper,
+    left=25mm,
+    right=15mm,
+    top=20mm,
+    bottom=20mm
+}
+
+% --- 6. Header / Footer chuẩn hóa ---
+\usepackage{fancyhdr}
+\usepackage{lastpage}
+\pagestyle{fancy}
+\fancyhf{}
+
+\fancyhead[L]{\small \textit{Kế hoạch bài dạy Toán 11}}
+\fancyhead[R]{\textbf{Trang \thepage/\pageref{LastPage}}}
+\fancyfoot[L]{\small \textit{Tổ Toán - Tin}}
+\fancyfoot[R]{\small \textit{Trường THCS\&THPT Hồng Vân}}
+\renewcommand{\headrulewidth}{0.4pt}
+\renewcommand{\footrulewidth}{0.4pt}
+
+% --- 7. Giãn dòng & Giãn đoạn theo chuẩn Nghị định 30/2020/NĐ-CP ---
+\usepackage{setspace}
+\setstretch{1.15}
+\setlength{\parindent}{1.0cm}
+\setlength{\parskip}{5pt}
+
+% Định nghĩa hộp sư phạm chuyên dụng
+\newtcolorbox{pedabox}[2][]{
+    enhanced,
+    breakable,
+    colback=blue!3!white,
+    colframe=blue!65!black,
+    fonttitle=\bfseries\small,
+    title={#2},
+    arc=2mm,
+    boxrule=0.6pt,
+    left=3mm, right=3mm, top=2mm, bottom=2mm,
+    #1
+}
+
+\newtcolorbox{aibox}[2][]{
+    enhanced,
+    breakable,
+    colback=teal!4!white,
+    colframe=teal!70!black,
+    fonttitle=\bfseries\small,
+    title={#2},
+    arc=2mm,
+    boxrule=0.6pt,
+    left=3mm, right=3mm, top=2mm, bottom=2mm,
+    #1
+}
+
+\newtcolorbox{scaffoldbox}[2][]{
+    enhanced,
+    breakable,
+    colback=orange!4!white,
+    colframe=orange!80!black,
+    fonttitle=\bfseries\small,
+    title={#2},
+    arc=2mm,
+    boxrule=0.6pt,
+    left=3mm, right=3mm, top=2mm, bottom=2mm,
+    #1
+}
+
+\newtcolorbox{stembox}[2][]{
+    enhanced,
+    breakable,
+    colback=purple!4!white,
+    colframe=purple!75!black,
+    fonttitle=\bfseries\small,
+    title={#2},
+    arc=2mm,
+    boxrule=0.6pt,
+    left=3mm, right=3mm, top=2mm, bottom=2mm,
+    #1
+}
+
+\begin{document}
+
+\begin{center}
+    {\fontsize{14pt}{17pt}\selectfont \textbf{KẾ HOẠCH BÀI DẠY MÔN TOÁN LỚP 11}}\\[6pt]
+    {\fontsize{16pt}{19pt}\selectfont \textbf{BÀI 26. KHOẢNG CÁCH}}\\[4pt]
+    {\fontsize{12pt}{15pt}\selectfont \textbf{Môn học: Toán 11} \ \textbar \ \textbf{Thời lượng: 3 tiết (Tiết 74, 75, 76 theo PPCT | Tuần 27, 28)}}
+\end{center}
+
+\vspace{5pt}
+
+\section*{I. MỤC TIÊU}
+
+\subsection*{1. Kiến thức, Năng lực}
+
+\begin{itemize}[leftmargin=1.2cm]
+    \item \textbf{Yêu cầu cần đạt (Nguyên văn CT GDPT 2018 Toán 11):}
+    \begin{itemize}[leftmargin=0.6cm]
+        \item Xác định được khoảng cách từ một điểm đến một đường thẳng; khoảng cách từ một điểm đến một mặt phẳng; khoảng cách giữa hai đường thẳng song song; khoảng cách giữa đường thẳng và mặt phẳng song song; khoảng cách giữa hai mặt phẳng song song trong những trường hợp đơn giản.
+        \item Nhận biết được đường vuông góc chung của hai đường thẳng chéo nhau; tính được khoảng cách giữa hai đường thẳng chéo nhau trong những trường hợp đơn giản (ví dụ: có một đường thẳng vuông góc với mặt phẳng chứa đường thẳng còn lại).
+        \item Sử dụng được kiến thức về khoảng cách trong không gian để mô tả một số hình ảnh trong thực tiễn.
+    \end{itemize}
+
+    \item \textbf{Năng lực Toán học đặc thù:}
+    \begin{itemize}[leftmargin=0.6cm]
+        \item \textit{Năng lực tư duy và lập luận toán học:} Rèn luyện tư duy không gian trực quan và tư duy suy luận logic chặt chẽ; phân tích mối quan hệ vuông góc giữa đường thẳng và mặt phẳng để chuyển đổi bài toán khoảng cách 3D phức tạp về bài toán hệ thức lượng phẳng 2D trong tam giác vuông; so sánh, khái quát hóa mối liên hệ giữa các loại khoảng cách: từ điểm đến mặt phẳng, khoảng cách giữa các đối tượng song song và khoảng cách giữa hai đường thẳng chéo nhau.
+        \item \textit{Năng lực mô hình hóa toán học:} Chuyển hóa các bài toán thực tiễn (khoảng cách an toàn giữa dây điện cao thế và mặt đất, khoảng cách tĩnh không cầu vượt sông, khoảng cách định vị giữa hai tuyến đường hầm chéo nhau) thành mô hình toán học hình học không gian chuẩn xác; xác định đúng các yếu tố hình học tương ứng để tính toán số liệu cụ thể.
+        \item \textit{Năng lực giải quyết vấn đề toán học:} Nắm vững và thực hiện thành thạo hai phương pháp trọng tâm giải toán khoảng cách:
+        \begin{enumerate}
+            \item Kỹ thuật dựng đoạn vuông góc kẻ từ chân đường cao (điểm gốc $A$) đến mặt phẳng bên qua quy tắc 2 bước: Bước 1 kẻ vuông góc cạnh đáy $AK \perp BC$, Bước 2 kẻ vuông góc đường sinh $AH \perp SK$. Áp dụng hệ thức: $\dfrac{1}{AH^2} = \dfrac{1}{SA^2} + \dfrac{1}{AK^2}$.
+            \item Kỹ thuật đổi điểm (dời điểm): Sử dụng định lý Talet và tính chất song song để chuyển khoảng cách từ điểm bất kì $M$ về khoảng cách từ chân đường vuông góc $A$.
+        \end{enumerate}
+        \item \textit{Năng lực giao tiếp toán học:} Trình bày lập luận hình học không gian mạch lạc, khoa học; sử dụng chuẩn xác các ký hiệu toán học: $d(M, \Delta), d(M, (P)), d(\Delta, (P)), d((P), (Q)), d(a, b)$; vẽ hình biểu diễn không gian trực quan, đúng quy tắc nét thấy, nét khuất.
+        \item \textit{Năng lực sử dụng công cụ, phương tiện học toán:} Ứng dụng thành thạo phần mềm hình học động GeoGebra 3D để mô phỏng không gian, dựng đường cao, mặt phẳng vuông góc và kiểm tra nhanh kết quả số trị của khoảng cách.
+    \end{itemize}
+
+    \item \textbf{Năng lực số (Theo Thông tư 02/2025/TT-BGDĐT):}
+    \begin{itemize}[leftmargin=0.6cm]
+        \item \textit{Mã 3.1NC1a (Ứng dụng phần mềm mô phỏng hình học số):} Học sinh sử dụng phần mềm GeoGebra 3D (hoặc ứng dụng di động GeoGebra 3D Calculator) để dựng khối chóp, khối lăng trụ; thao tác xoay khối đa diện theo nhiều góc nhìn không gian khác nhau; dùng công cụ đo khoảng cách tự động (\texttt{Distance or Length}) từ một đỉnh đến một mặt phẳng để đối chiếu, kiểm chứng kết quả giải bằng phương pháp giải tích hình học cổ điển.
+        \item \textit{Mã 1.1NC1a (Tra cứu và khai thác học liệu số):} Học sinh tra cứu công thức tính nhanh khoảng cách giữa hai đường thẳng chéo nhau và bảng tổng hợp các dạng toán khoảng cách trên hệ thống sổ tay toán học trực tuyến.
+    \end{itemize}
+
+    \item \textbf{Năng lực AI (Theo Quyết định 2422/QĐ-BGDĐT):}
+    \begin{itemize}[leftmargin=0.6cm]
+        \item \textit{Mã 11.D2.1 (Nguyên lý thị giác máy tính và cảm biến khoảng cách trong công nghệ AI):} Học sinh tìm hiểu nguyên lý Trí tuệ nhân tạo tích hợp cảm biến sóng siêu âm, radar và hệ thống quét quang học LiDAR (Light Detection and Ranging) để tính toán khoảng cách không gian 3D theo thời gian thực ($d = \dfrac{c \cdot \Delta t}{2}$), giúp xe tự hành (Autonomous Vehicles) nhận diện vật cản, tự động phanh khẩn cấp và dẫn đường an toàn.
+        \item \textit{Mã 11.C3.1 (Kỹ thuật Prompting tương tác AI):} Học sinh rèn luyện kỹ năng đặt câu hỏi gợi mở (Prompting) cho trợ lý AI để phân tích hình vẽ, phát hiện mối quan hệ song song và đề xuất hướng dựng đoạn vuông góc chung của hai đường thẳng chéo nhau.
+    \end{itemize}
+
+    \item \textbf{Năng lực chung:}
+    \begin{itemize}[leftmargin=0.6cm]
+        \item \textit{Tự chủ và tự học:} Tự giác hoàn thành các bài tập trên Phiếu học tập phân tầng; chủ động tìm kiếm các ứng dụng thực tiễn của khoảng cách không gian trong đời sống.
+        \item \textit{Giao tiếp và hợp tác:} Tích cực thảo luận cặp đôi, trao đổi phương pháp đổi điểm, chia sẻ màn hình mô phỏng GeoGebra 3D cho các bạn trong nhóm cùng quan sát.
+    \end{itemize}
+\end{itemize}
+
+\subsection*{2. Phẩm chất}
+
+\begin{itemize}[leftmargin=1.2cm]
+    \item \textbf{Chăm chỉ:} Kiên nhẫn, cẩn thận trong việc vẽ hình không gian; chịu khó rèn luyện kỹ năng vẽ thêm đường phụ và tính toán hệ thức lượng.
+    \item \textbf{Trung thực:} Tự lực vẽ hình và tính toán, ghi chép trung thực số liệu đo đạc từ phần mềm, không sao chép lời giải máy móc.
+    \item \textbf{Trách nhiệm:} Hợp tác tích cực với các thành viên trong nhóm, có ý thức hỗ trợ bạn học trung bình - yếu nắm vững phương pháp kẻ 2 bước.
+\end{itemize}
+
+\section*{II. THIẾT BỊ DẠY HỌC VÀ HỌC LIỆU}
+
+\begin{itemize}[leftmargin=1.2cm]
+    \item \textbf{Giáo viên:}
+    \begin{itemize}[leftmargin=0.6cm]
+        \item Kế hoạch bài dạy chi tiết 3 tiết theo chuẩn Công văn 5512/BGDĐT-GDTrH.
+        \item Máy tính, máy chiếu, các tệp trình diễn mô hình không gian động trên GeoGebra 3D (mô phỏng khối chóp $S.ABC$ có $SA \perp (ABC)$, dựng đường vuông góc $AH \perp (SBC)$, dựng đoạn vuông góc chung).
+        \item Đoạn video ngắn minh họa công nghệ xe tự lái sử dụng cảm biến LiDAR quét khoảng cách 3D (AI Computer Vision).
+        \item Hệ thống 3 Phiếu học tập phân tầng bậc thang (PHT 1: Khoảng cách từ điểm đến mặt phẳng; PHT 2: Phương pháp đổi điểm & các đối tượng song song; PHT 3: Khoảng cách giữa 2 đường thẳng chéo nhau).
+        \item Bảng Rubric đánh giá quá trình học tập.
+    \end{itemize}
+
+    \item \textbf{Học sinh:}
+    \begin{itemize}[leftmargin=0.6cm]
+        \item Sách giáo khoa, vở ghi, đồ dùng học tập (thước kẻ, bút chì, compa, ê-ke).
+        \item Điện thoại thông minh hoặc máy tính bảng (nếu được phép) đã cài đặt ứng dụng GeoGebra 3D Calculator để thực hành đo khoảng cách.
+    \end{itemize}
+\end{itemize}
+
+\section*{III. TIẾN TRÌNH DẠY HỌC}
+
+\begin{center}
+    \textbf{\large TIẾT 1 (TIẾT 74 THEO PPCT | TUẦN 27)}\\[4pt]
+    \textbf{\large KHOẢNG CÁCH TỪ MỘT ĐIỂM ĐẾN ĐƯỜNG THẲNG VÀ MẶT PHẲNG}
+\end{center}
+
+\subsection*{1. Hoạt động 1: Mở đầu (Khởi động - 6 phút)}
+
+\begin{itemize}[leftmargin=1.2cm]
+    \item[a)] \textbf{Mục tiêu:}
+    \begin{itemize}[leftmargin=0.6cm]
+        \item Gợi nhớ lại khái niệm khoảng cách từ một điểm đến một đường thẳng trong hình học phẳng; kích hoạt nhu cầu mở rộng khái niệm khoảng cách từ một điểm đến một mặt phẳng trong không gian 3D.
+    \end{itemize}
+
+    \item[b)] \textbf{Nội dung:}
+    \begin{itemize}[leftmargin=0.6cm]
+        \item Giáo viên chiếu hình ảnh thực tế: Một người thợ xây dùng quả dọi để đo khoảng cách từ một điểm trên trần nhà xuống mặt sàn.
+        \item Đặt câu hỏi:
+        \begin{enumerate}
+            \item Dây dọi có phương như thế nào so với mặt sàn nhà?
+            \item Chiều dài của đoạn dây dọi từ điểm treo đến mặt sàn chính là khoảng cách từ điểm treo đến sàn nhà. Vậy trong toán học, khoảng cách từ điểm $M$ đến mặt phẳng $(P)$ được định nghĩa như thế nào?
+        \end{enumerate}
+    \end{itemize}
+
+    \item[c)] \textbf{Sản phẩm:} Học sinh trả lời: Dây dọi luôn có phương thẳng đứng, vuông góc với mặt phẳng sàn nằm ngang. Khoảng cách từ điểm $M$ đến mặt phẳng $(P)$ chính là độ dài đoạn thẳng vuông góc kẻ từ $M$ đến $(P)$.
+    \item[d)] \textbf{Tổ chức thực hiện:} GV nhận xét, chốt lại ý tưởng và dẫn dắt vào bài học mới: Khái niệm và phương pháp tính khoảng cách trong không gian.
+\end{itemize}
+
+\subsection*{2. Hoạt động 2: Hình thành kiến thức mới (22 phút)}
+
+\begin{itemize}[leftmargin=1.2cm]
+    \item[a)] \textbf{Mục tiêu:}
+    \begin{itemize}[leftmargin=0.6cm]
+        \item Nắm vững định nghĩa khoảng cách từ một điểm đến đường thẳng và khoảng cách từ một điểm đến mặt phẳng.
+        \item Thành thạo phương pháp dựng hình và công thức tính khoảng cách từ chân đường cao (điểm gốc) của hình chóp đến một mặt phẳng bên thông qua quy tắc 2 bước kẻ đường vuông góc.
+    \end{itemize}
+
+    \item[b)] \textbf{Nội dung:}
+    \begin{itemize}[leftmargin=0.6cm]
+        \item \textbf{1. Khoảng cách từ một điểm đến một đường thẳng:}
+        \begin{itemize}
+            \item Cho điểm $O$ và đường thẳng $\Delta$. Kẻ $OH \perp \Delta$ tại $H$. Độ dài đoạn thẳng $OH$ được gọi là \textit{khoảng cách từ điểm $O$ đến đường thẳng $\Delta$}, kí hiệu là $d(O, \Delta)$.
+            \item Ta luôn có: $d(O, \Delta) = OH \le OM$ với mọi điểm $M \in \Delta$.
+        \end{itemize}
+
+        \item \textbf{2. Khoảng cách từ một điểm đến một mặt phẳng:}
+        \begin{itemize}
+            \item Cho điểm $O$ và mặt phẳng $(P)$. Gọi $H$ là hình chiếu vuông góc của $O$ lên $(P)$ (nghĩa là $OH \perp (P)$ tại $H$). Độ dài đoạn thẳng $OH$ được gọi là \textit{khoảng cách từ điểm $O$ đến mặt phẳng $(P)$}, kí hiệu là $d(O, (P))$.
+            \item Tính chất: $d(O, (P)) = OH \le OM$ với mọi điểm $M \in (P)$.
+        \end{itemize}
+
+        \item \textbf{3. Trọng tâm sư phạm: Kỹ thuật dựng khoảng cách từ chân đường cao đến mặt phẳng bên (Quy tắc 2 bước):}
+        \begin{itemize}
+            \item Xét bài toán hình chóp $S.ABC$ có đáy $ABC$ nằm trên mặt phẳng nằm ngang, $SA \perp (ABC)$ (điểm $A$ là chân đường vuông góc). Cần tính khoảng cách $d(A, (SBC))$.
+            \item \textbf{Bước 1 (Kẻ vào cạnh đáy):} Từ chân đường cao $A$, kẻ đoạn thẳng $AK \perp BC$ tại $K$.
+            \item \textbf{Bước 2 (Kẻ vào đường sinh mặt bên):} Nối $SK$. Trong mặt phẳng $(SAK)$, từ $A$ kẻ đoạn thẳng $AH \perp SK$ tại $H$.
+            \item \textbf{Chứng minh:}
+            $$BC \perp AK \text{ và } BC \perp SA \implies BC \perp (SAK) \implies BC \perp AH.$$
+            Do $AH \perp SK$ và $AH \perp BC$, suy ra $AH \perp (SBC)$ tại $H$. Vậy $d(A, (SBC)) = AH$.
+            \item \textbf{Hệ thức tính nhanh trong tam giác vuông $SAK$ (vuông tại $A$):}
+            $$\dfrac{1}{AH^2} = \dfrac{1}{SA^2} + \dfrac{1}{AK^2} \implies AH = \dfrac{SA \cdot AK}{\sqrt{SA^2 + AK^2}}$$
+        \end{itemize}
+    \end{itemize}
+
+    \item[c)] \textbf{Sản phẩm:}
+    \begin{itemize}[leftmargin=0.6cm]
+        \item Học sinh vẽ chính xác hình chóp $S.ABC$, thể hiện đúng hai đường kẻ phụ $AK$ và $AH$ bằng nét đứt (vì nằm bên trong khối chóp).
+        \item Trình bày đầy đủ chứng minh $AH \perp (SBC)$ và ghi nhớ công thức tính $AH$.
+    \end{itemize}
+
+    \item[d)] \textbf{Tổ chức thực hiện:}
+\end{itemize}
+
+\begin{pedabox}{Tiến trình tổ chức Hoạt động 2 (Kiến thức mới - Tiết 1)}
+    \textbf{Bước 1: Chuyển giao nhiệm vụ}
+    \begin{itemize}[leftmargin=0.6cm]
+        \item GV vẽ hình chóp $S.ABC$ với $SA \perp (ABC)$ lên bảng, yêu cầu học sinh thảo luận cặp đôi: Làm thế nào dựng được đoạn vuông góc từ $A$ đến mặt phẳng $(SBC)$?
+    \end{itemize}
+
+    \textbf{Bước 2: Thực hiện nhiệm vụ có giàn giáo sư phạm}
+    \begin{itemize}[leftmargin=0.6cm]
+        \item Học sinh trung bình thường hay ngộ nhận $SA \perp (SBC)$ hoặc $AK \perp (SBC)$.
+        \item GV sử dụng mô hình GeoGebra 3D xoay góc nhìn để học sinh thấy rõ mặt phẳng $(SAK)$ vuông góc với $BC$, từ đó chỉ ra rằng đoạn $AH$ nằm trong $(SAK)$ sẽ vuông góc với toàn bộ mặt phẳng $(SBC)$.
+    \end{itemize}
+
+    \textbf{Bước 3: Báo cáo, thảo luận}
+    \begin{itemize}[leftmargin=0.6cm]
+        \item 1 học sinh lên bảng trình bày các bước chứng minh hình học.
+        \item Cả lớp lắng nghe và nhận xét các bước lập luận.
+    \end{itemize}
+
+    \textbf{Bước 4: Kết luận, chuẩn hóa}
+    \begin{itemize}[leftmargin=0.6cm]
+        \item GV đúc kết "Quy tắc 2 bước vàng" và nhấn mạnh đây là hạt nhân để giải quyết $90\%$ các bài toán khoảng cách trong chương trình THPT.
+    \end{itemize}
+\end{pedabox}
+
+\begin{scaffoldbox}{Giàn giáo sư phạm cho học sinh trung bình - yếu (Quy tắc 2 bước)}
+    \textbf{Ghi nhớ "Thần chú 2 bước" để tính khoảng cách từ chân đường cao $A$ đến mặt bên $(SBC)$:}
+    \begin{itemize}[leftmargin=0.6cm]
+        \item \textbf{Bước 1 (Nhìn xuống đáy):} Từ điểm gốc $A$, kẻ vuông góc vào cạnh đáy giao tuyến $BC$ $\implies$ Được điểm $K$.
+        \item \textbf{Bước 2 (Nhìn lên đỉnh):} Nối đỉnh $S$ với $K$. Từ $A$, kẻ vuông góc lên đoạn $SK$ $\implies$ Được đoạn vuông góc $AH$.
+        \item \textbf{Tính toán:} Tam giác $SAK$ vuông tại $A$ có $AH$ là đường cao $\implies AH = \dfrac{SA \cdot AK}{\sqrt{SA^2 + AK^2}}$.
+    \end{itemize}
+\end{scaffoldbox}
+
+\subsection*{3. Hoạt động 3: Luyện tập (12 phút)}
+
+\begin{itemize}[leftmargin=1.2cm]
+    \item[a)] \textbf{Mục tiêu:} Áp dụng thành thạo quy tắc 2 bước để tính toán số trị cụ thể khoảng cách từ chân đường cao đến mặt bên trong bài toán hình chóp đáy tam giác đều hoặc tam giác vuông.
+    \item[b)] \textbf{Nội dung:} Thực hiện Ví dụ 1 trên Phiếu học tập số 1:
+    \begin{quote}
+        \textbf{Ví dụ 1:} Cho hình chóp $S.ABC$ có đáy $ABC$ là tam giác vuông tại $B$, $AB = a$, $BC = a\sqrt{3}$. Cạnh bên $SA$ vuông góc với mặt phẳng đáy và $SA = 2a$.
+        \begin{enumerate}
+            \item Tính khoảng cách từ điểm $A$ đến đường thẳng $BC$.
+            \item Tính khoảng cách từ điểm $A$ đến mặt phẳng $(SBC)$.
+        \end{enumerate}
+    \end{quote}
+
+    \item[c)] \textbf{Sản phẩm (Lời giải chi tiết):}
+    \begin{itemize}[leftmargin=0.6cm]
+        \item \textit{Câu 1:} Vì đáy $ABC$ vuông tại $B$ nên $AB \perp BC$. Do đó hình chiếu của $A$ lên $BC$ chính là điểm $B$.
+        Suy ra:
+        $$d(A, BC) = AB = a$$
+        \item \textit{Câu 2:} 
+        Áp dụng quy tắc 2 bước:
+        \begin{itemize}
+            \item Bước 1: Kẻ từ chân đường cao $A$ vuông góc vào cạnh đáy $BC$. Do tam giác $ABC$ vuông tại $B$ nên điểm $K$ trùng với điểm $B$ ($AB \perp BC$).
+            \item Bước 2: Nối $S$ với $B$. Kẻ $AH \perp SB$ tại $H$ ($H \in SB$).
+        \end{itemize}
+        Ta có: $BC \perp AB$ và $BC \perp SA \implies BC \perp (SAB) \implies BC \perp AH$.
+        Vì $AH \perp SB$ và $AH \perp BC$ nên $AH \perp (SBC)$.
+        Do đó:
+        $$d(A, (SBC)) = AH$$
+        Xét tam giác $SAB$ vuông tại $A$, đường cao $AH$:
+        $$\dfrac{1}{AH^2} = \dfrac{1}{SA^2} + \dfrac{1}{AB^2} = \dfrac{1}{(2a)^2} + \dfrac{1}{a^2} = \dfrac{1}{4a^2} + \dfrac{1}{a^2} = \dfrac{5}{4a^2}$$
+        $$\implies AH^2 = \dfrac{4a^2}{5} \implies AH = \dfrac{2a\sqrt{5}}{5}$$
+        Vậy $d(A, (SBC)) = \dfrac{2a\sqrt{5}}{5}$.
+    \end{itemize}
+
+    \item[d)] \textbf{Tổ chức thực hiện:}
+    \begin{itemize}[leftmargin=0.6cm]
+        \item Học sinh làm bài độc lập trong 6 phút. GV theo dõi, hỗ trợ học sinh nhận ra điểm $K$ trùng điểm $B$.
+        \item Mời 1 học sinh lên bảng trình bày. Cả lớp nhận xét, đánh giá lời giải.
+    \end{itemize}
+\end{itemize}
+
+\subsection*{4. Hoạt động 4: Vận dụng (5 phút)}
+
+\begin{itemize}[leftmargin=1.2cm]
+    \item[a)] \textbf{Mục tiêu:} Rèn luyện khả năng mở rộng tư duy: Nếu đáy là tam giác đều cạnh $a$, điểm $K$ sẽ là trung điểm của cạnh $BC$; tính khoảng cách trong trường hợp này.
+    \item[b)] \textbf{Nội dung & Hướng dẫn về nhà:}
+    \begin{itemize}[leftmargin=0.6cm]
+        \item Cho hình chóp $S.ABC$ có đáy $ABC$ là tam giác đều cạnh $a$, $SA \perp (ABC)$ và $SA = a$.
+        \item Kẻ $AK \perp BC \implies K$ là trung điểm của $BC \implies AK = \dfrac{a\sqrt{3}}{2}$.
+        \item Kẻ $AH \perp SK \implies d(A, (SBC)) = AH = \dfrac{SA \cdot AK}{\sqrt{SA^2 + AK^2}} = \dfrac{a \cdot \frac{a\sqrt{3}}{2}}{\sqrt{a^2 + \frac{3a^2}{4}}} = \dfrac{a\sqrt{21}}{7}$.
+        \item Chuẩn bị nội dung Tiết 2: Khoảng cách giữa các đối tượng song song và Phương pháp đổi điểm.
+    \end{itemize}
+\end{itemize}
+
+\vspace{10pt}
+\hrule
+\vspace{10pt}
+
+\begin{center}
+    \textbf{\large TIẾT 2 (TIẾT 75 THEO PPCT | TUẦN 28)}\\[4pt]
+    \textbf{\large KHOẢNG CÁCH GIỮA CÁC ĐỐI TƯỢNG SONG SONG VÀ PHƯƠNG PHÁP ĐỔI ĐIỂM}
+\end{center}
+
+\subsection*{1. Hoạt động 1: Mở đầu (Khởi động - 6 phút)}
+
+\begin{itemize}[leftmargin=1.2cm]
+    \item[a)] \textbf{Mục tiêu:} Ôn tập kiến thức Tiết 1 và phát hiện vấn đề: Khi điểm cần tính khoảng cách không phải là chân đường vuông góc (điểm gốc), ta xử lý như thế nào?
+    \item[b)] \textbf{Nội dung:}
+    \begin{itemize}[leftmargin=0.6cm]
+        \item GV cho hình chóp $S.ABC$ có $SA \perp (ABC)$. Đã biết cách tính $d(A, (SBC))$.
+        \item Đặt câu hỏi: \textit{"Bây giờ muốn tính khoảng cách từ trọng tâm $G$ của tam giác $ABC$, hoặc từ trung điểm $M$ của cạnh $AB$ đến mặt phẳng $(SBC)$, liệu ta có phải tìm cách kẻ trực tiếp một đoạn vuông góc từ $M$ hay $G$ đến $(SBC)$ không? Có cách nào dựa vào kết quả của điểm $A$ để tính nhanh không?"}
+    \end{itemize}
+
+    \item[c)] \textbf{Sản phẩm:} Học sinh dự đoán: Có thể sử dụng tỉ số đoạn thẳng (định lý Talet) để so sánh khoảng cách từ $M$ với khoảng cách từ $A$.
+    \item[d)] \textbf{Tổ chức thực hiện:} GV khẳng định đây chính là "Phương pháp đổi điểm" vô cùng đắc lực trong hình học không gian.
+\end{itemize}
+
+\subsection*{2. Hoạt động 2: Hình thành kiến thức mới (20 phút)}
+
+\begin{itemize}[leftmargin=1.2cm]
+    \item[a)] \textbf{Mục tiêu:}
+    \begin{itemize}[leftmargin=0.6cm]
+        \item Định nghĩa khoảng cách giữa hai đường thẳng song song, đường thẳng song song với mặt phẳng, hai mặt phẳng song song.
+        \item Nắm vững 2 quy tắc đổi điểm trọng tâm: Đổi điểm qua đường thẳng song song và Đổi điểm qua đường thẳng cắt mặt phẳng.
+        \item Tích hợp Năng lực số (kiểm chứng bằng GeoGebra 3D) và Năng lực AI (nguyên lý cảm biến khoảng cách LiDAR của xe tự lái).
+    \end{itemize}
+
+    \item[b)] \textbf{Nội dung:}
+    \begin{itemize}[leftmargin=0.6cm]
+        \item \textbf{1. Khoảng cách giữa các đối tượng song song:}
+        \begin{itemize}
+            \item \textit{Giữa hai đường thẳng song song $\Delta_1$ và $\Delta_2$:} Là khoảng cách từ một điểm bất kì trên đường thẳng này đến đường thẳng kia:
+            $$d(\Delta_1, \Delta_2) = d(M, \Delta_2) \quad (\text{với } M \in \Delta_1)$$
+            \item \textit{Giữa đường thẳng $\Delta$ song song với mặt phẳng $(P)$:} Là khoảng cách từ một điểm bất kì trên $\Delta$ đến $(P)$:
+            $$d(\Delta, (P)) = d(M, (P)) \quad (\text{với } M \in \Delta)$$
+            \item \textit{Giữa hai mặt phẳng song song $(P)$ và $(Q)$:} Là khoảng cách từ một điểm bất kì trên mặt phẳng này đến mặt phẳng kia:
+            $$d((P), (Q)) = d(M, (Q)) \quad (\text{với } M \in (P))$$
+        \end{itemize}
+
+        \item \textbf{2. Phương pháp đổi điểm (Chuyển khoảng cách về chân đường cao $A$):}
+        \begin{itemize}
+            \item \textbf{Quy tắc 1 (Song song - Khoảng cách bằng nhau):}
+            Nếu đường thẳng đi qua điểm cần tính $M$ và chân đường cao $A$ song song với mặt phẳng $(P)$, tức là $AM \parallel (P)$, thì:
+            $$d(M, (P)) = d(A, (P))$$
+            \item \textbf{Quy tắc 2 (Cắt nhau - Tỉ số khoảng cách Talet):}
+            Nếu đường thẳng $AM$ cắt mặt phẳng $(P)$ tại điểm $I$ ($I \ne A, I \ne M$), thì:
+            $$\dfrac{d(M, (P))}{d(A, (P))} = \dfrac{MI}{AI} \implies d(M, (P)) = \dfrac{MI}{AI} \cdot d(A, (P))$$
+            \begin{itemize}
+                \item Đặc biệt: Nếu $M$ là trung điểm của $AI$ thì $d(M, (P)) = \dfrac{1}{2} d(A, (P))$.
+                \item Nếu $A$ là trung điểm của $MI$ thì $d(M, (P)) = 2 d(A, (P))$.
+            \end{itemize}
+        \end{itemize}
+    \end{itemize}
+
+    \item[c)] \textbf{Sản phẩm:} Học sinh ghi chép quy tắc đổi điểm vào sổ tay toán học và vẽ hình minh họa quan hệ tỉ số khoảng cách.
+    \item[d)] \textbf{Tổ chức thực hiện:}
+\end{itemize}
+
+\begin{pedabox}{Tiến trình tổ chức Hoạt động 2 (Kiến thức mới - Tiết 2)}
+    \textbf{Bước 1: Chuyển giao nhiệm vụ}
+    \begin{itemize}[leftmargin=0.6cm]
+        \item GV vẽ hình minh họa đường thẳng $AM$ cắt mặt phẳng $(P)$ tại $I$.
+        \item Kẻ $AH \perp (P)$ và $MK \perp (P)$. Yêu cầu học sinh chứng minh tỉ số $\dfrac{MK}{AH} = \dfrac{MI}{AI}$.
+    \end{itemize}
+
+    \textbf{Bước 2: Thực hiện nhiệm vụ}
+    \begin{itemize}[leftmargin=0.6cm]
+        \item Học sinh nhận xét: $AH \parallel MK$ (vì cùng vuông góc với $(P)$) $\implies 4$ điểm $A, M, H, K$ cùng thuộc một mặt phẳng.
+        \item Áp dụng định lý Talet trong tam giác $IAH$ có $MK \parallel AH \implies \dfrac{MK}{AH} = \dfrac{MI}{AI}$.
+    \end{itemize}
+
+    \textbf{Bước 3: Báo cáo, thảo luận}
+    \begin{itemize}[leftmargin=0.6cm]
+        \item Học sinh phát biểu định lý đổi điểm. GV chốt công thức tổng quát.
+    \end{itemize}
+
+    \textbf{Bước 4: Kết luận, chuẩn hóa}
+    \begin{itemize}[leftmargin=0.6cm]
+        \item Nhấn mạnh: \textit{"Không bao giờ dựng đường vuông góc từ điểm khó, luôn luôn chuyển về chân đường cao (điểm gốc) rồi nhân với tỉ số khoảng cách!"}
+    \end{itemize}
+\end{pedabox}
+
+\begin{aibox}{Tích hợp Năng lực số \& Năng lực AI (Theo TT 02/2025 \& QĐ 2422)}
+    \textbf{1. Ứng dụng phần mềm GeoGebra 3D đo khoảng cách tự động (Mã 3.1NC1a):}
+    \begin{itemize}[leftmargin=0.6cm]
+        \item GV hướng dẫn học sinh mở ứng dụng GeoGebra 3D trên điện thoại hoặc máy tính.
+        \item Nhập tọa độ hoặc dựng hình chóp $S.ABC$ có $SA \perp (ABC)$. Chọn công cụ \texttt{Perpendicular Line} để dựng $AH \perp (SBC)$. Dùng công cụ \texttt{Distance or Length}, nhấp vào điểm $A$ và mặt phẳng $(SBC)$.
+        \item Phần mềm lập tức hiển thị giá trị số học (ví dụ: $0.894$ tương ứng với $\dfrac{2\sqrt{5}}{5}$). Học sinh đối chiếu kết quả tính tay để xác nhận tính chính xác tuyệt đối.
+    \end{itemize}
+
+    \textbf{2. Khám phá cảm biến LiDAR và AI đo khoảng cách trong xe tự lái (Mã 11.D2.1):}
+    \begin{itemize}[leftmargin=0.6cm]
+        \item Chiếu clip 1 phút: Cách xe tự lái Tesla, Waymo hay robot hút bụi nhận diện môi trường xung quanh.
+        \item Nguyên lý: Hệ thống LiDAR phát ra hàng triệu chùm tia laser mỗi giây vào các mặt phẳng (mặt đường, xe phía trước, tường nhà). Tia laser phản xạ lại cảm biến, máy tính AI đo thời gian bay của tia laser $\Delta t$ để tính khoảng cách không gian:
+        $$d = \dfrac{c \cdot \Delta t}{2} \quad (c \approx 3 \times 10^8\text{ m/s})$$
+        Từ hàng triệu điểm khoảng cách đó, thuật toán AI dựng nên một "đám mây điểm 3D" (Point Cloud) tái hiện chính xác khoảng cách từ xe đến mọi vật thể xung quanh để tự động ra quyết định chuyển làn hoặc dừng khẩn cấp.
+    \end{itemize}
+\end{aibox}
+
+\subsection*{3. Hoạt động 3: Luyện tập (14 phút)}
+
+\begin{itemize}[leftmargin=1.2cm]
+    \item[a)] \textbf{Mục tiêu:} Áp dụng nhuần nhuyễn phương pháp đổi điểm để tính khoảng cách từ điểm bất kì về chân đường cao.
+    \item[b)] \textbf{Nội dung:} Thực hiện bài toán trên Phiếu học tập số 2:
+    \begin{quote}
+        \textbf{Ví dụ 2:} Cho hình chóp $S.ABCD$ có đáy $ABCD$ là hình vuông cạnh $a$. Cạnh bên $SA \perp (ABCD)$ và $SA = a\sqrt{2}$.
+        \begin{enumerate}
+            \item Tính khoảng cách $d(A, (SCD))$.
+            \item Gọi $M$ là trung điểm của cạnh $AB$. Tính khoảng cách $d(M, (SCD))$.
+            \item Gọi $O$ là tâm của hình vuông đáy $ABCD$. Tính khoảng cách $d(O, (SCD))$.
+        \end{enumerate}
+    \end{quote}
+
+    \item[c)] \textbf{Sản phẩm (Lời giải chi tiết):}
+    \begin{itemize}[leftmargin=0.6cm]
+        \item \textit{Câu 1: Tính $d(A, (SCD))$}
+        \begin{itemize}
+            \item Điểm $A$ là chân đường cao. Áp dụng quy tắc 2 bước:
+            \item Bước 1: Kẻ từ $A$ vuông góc với cạnh đáy $CD$. Vì $ABCD$ là hình vuông nên $AD \perp CD$ (điểm $K$ trùng $D$).
+            \item Bước 2: Kẻ $AH \perp SD$ tại $H$.
+            \item Ta có: $CD \perp AD$ và $CD \perp SA \implies CD \perp (SAD) \implies CD \perp AH$.
+            \item Vì $AH \perp SD$ và $AH \perp CD \implies AH \perp (SCD) \implies d(A, (SCD)) = AH$.
+            \item Xét tam giác $SAD$ vuông tại $A$:
+            $$\dfrac{1}{AH^2} = \dfrac{1}{SA^2} + \dfrac{1}{AD^2} = \dfrac{1}{2a^2} + \dfrac{1}{a^2} = \dfrac{3}{2a^2} \implies AH = \dfrac{a\sqrt{6}}{3}$$
+            Vậy $d(A, (SCD)) = \dfrac{a\sqrt{6}}{3}$.
+        \end{itemize}
+
+        \item \textit{Câu 2: Tính $d(M, (SCD))$}
+        \begin{itemize}
+            \item Điểm $M$ thuộc đoạn thẳng $AB$. Ta có: $AB \parallel CD$ mà $CD \subset (SCD) \implies AB \parallel (SCD)$.
+            \item Do $M \in AB$ và $A \in AB$ nên đường thẳng $AM \parallel (SCD)$.
+            \item Theo Quy tắc 1 (đổi điểm song song):
+            $$d(M, (SCD)) = d(A, (SCD)) = \dfrac{a\sqrt{6}}{3}$$
+        \end{itemize}
+
+        \item \textit{Câu 3: Tính $d(O, (SCD))$}
+        \begin{itemize}
+            \item Nối chân đường cao $A$ với điểm $O$, đường thẳng $AO$ kéo dài cắt mặt phẳng $(SCD)$ tại điểm $C$ (vì $AC \cap CD = C$).
+            \item Vì $O$ là tâm hình vuông $ABCD$ nên $O$ là trung điểm của đường chéo $AC$. Do đó:
+            $$\dfrac{CO}{CA} = \dfrac{1}{2}$$
+            \item Theo Quy tắc 2 (đổi điểm cắt nhau):
+            $$\dfrac{d(O, (SCD))}{d(A, (SCD))} = \dfrac{CO}{CA} = \dfrac{1}{2} \implies d(O, (SCD)) = \dfrac{1}{2} d(A, (SCD)) = \dfrac{1}{2} \cdot \dfrac{a\sqrt{6}}{3} = \dfrac{a\sqrt{6}}{6}$$
+        \end{itemize}
+    \end{itemize}
+
+    \item[d)] \textbf{Tổ chức thực hiện:}
+    \begin{itemize}[leftmargin=0.6cm]
+        \item HS làm việc cá nhân trong 7 phút, sau đó thảo luận chéo cặp đôi để so sánh kết quả.
+        \item GV gọi 2 HS lên bảng trình bày câu 2 và câu 3. Nhận xét và chốt phương pháp đổi điểm.
+    \end{itemize}
+\end{itemize}
+
+\subsection*{4. Hoạt động 4: Vận dụng (5 phút)}
+
+\begin{itemize}[leftmargin=1.2cm]
+    \item[a)] \textbf{Mục tiêu:} Giao nhiệm vụ tự học có hướng dẫn; chuẩn bị nội dung Tiết 3 về Khoảng cách giữa hai đường thẳng chéo nhau.
+    \item[b)] \textbf{Nội dung & Hướng dẫn:}
+    \begin{itemize}[leftmargin=0.6cm]
+        \item Cho hình chóp $S.ABCD$ như Ví dụ 2. Gọi $G$ là trọng tâm tam giác $SAB$. Hãy tính khoảng cách từ $G$ đến mặt phẳng $(SCD)$. (Gợi ý: Dùng đổi điểm từ $G$ về $M$, rồi từ $M$ về $A$).
+        \item Đọc trước mục Khoảng cách giữa hai đường thẳng chéo nhau trong SGK.
+    \end{itemize}
+\end{itemize}
+
+\vspace{10pt}
+\hrule
+\vspace{10pt}
+
+\begin{center}
+    \textbf{\large TIẾT 3 (TIẾT 76 THEO PPCT | TUẦN 28)}\\[4pt]
+    \textbf{\large KHOẢNG CÁCH GIỮA HAI ĐƯỜNG THẲNG CHÉO NHAU}
+\end{center}
+
+\subsection*{1. Hoạt động 1: Mở đầu (Khởi động - 6 phút)}
+
+\begin{itemize}[leftmargin=1.2cm]
+    \item[a)] \textbf{Mục tiêu:} Tiếp cận khái niệm khoảng cách giữa hai đường thẳng chéo nhau thông qua hình ảnh thực tế quen thuộc trong đời sống kĩ thuật.
+    \item[b)] \textbf{Nội dung:}
+    \begin{itemize}[leftmargin=0.6cm]
+        \item GV trình chiếu hình ảnh chiếc cầu vượt nút giao thông lập thể (như cầu vượt Ngã Tư Sở hoặc cầu đường bộ vượt trên tuyến đường sắt).
+        \item Đặt vấn đề: \textit{"Tuyến đường trên cầu và tuyến đường sắt bên dưới là hai đường thẳng chéo nhau (không bao giờ cắt nhau và không song song). Làm thế nào các kỹ sư giao thông xác định được chiều cao tĩnh không an toàn giữa cây cầu và đoàn tàu hỏa chạy phía dưới?"}
+    \end{itemize}
+
+    \item[c)] \textbf{Sản phẩm:} Học sinh suy nghĩ và trả lời: Đó là độ dài của đoạn thẳng ngắn nhất nối một điểm trên cầu với một điểm trên đường ray bên dưới, đoạn thẳng này vuông góc với cả hai đường.
+    \item[d)] \textbf{Tổ chức thực hiện:} GV dẫn dắt: Đoạn thẳng đó trong hình học không gian được gọi là "Đoạn vuông góc chung của hai đường thẳng chéo nhau".
+\end{itemize}
+
+\subsection*{2. Hoạt động 2: Hình thành kiến thức mới (20 phút)}
+
+\begin{itemize}[leftmargin=1.2cm]
+    \item[a)] \textbf{Mục tiêu:}
+    \begin{itemize}[leftmargin=0.6cm]
+        \item Nắm vững khái niệm đường vuông góc chung và khoảng cách giữa hai đường thẳng chéo nhau.
+        \item Nắm chắc 2 phương pháp tính khoảng cách giữa hai đường thẳng chéo nhau: Phương pháp đoạn vuông góc chung (khi $a \perp b$) và Phương pháp quy về khoảng cách từ đường thẳng đến mặt phẳng song song.
+    \end{itemize}
+
+    \item[b)] \textbf{Nội dung:}
+    \begin{itemize}[leftmargin=0.6cm]
+        \item \textbf{1. Định nghĩa:}
+        \begin{itemize}
+            \item Đường thẳng $\Delta$ cắt cả hai đường thẳng chéo nhau $a, b$ và cùng vuông góc với cả hai đường thẳng đó được gọi là \textit{đường vuông góc chung} của $a$ và $b$.
+            \item Nếu đường vuông góc chung $\Delta$ cắt $a$ tại $M$ và cắt $b$ tại $N$ thì đoạn thẳng $MN$ được gọi là \textit{đoạn vuông góc chung} của $a$ và $b$.
+            \item Độ dài đoạn vuông góc chung $MN$ được gọi là \textit{khoảng cách giữa hai đường thẳng chéo nhau $a$ và $b$}, kí hiệu là $d(a, b)$.
+        \end{itemize}
+
+        \item \textbf{2. Hai phương pháp tìm khoảng cách giữa hai đường thẳng chéo nhau:}
+        \begin{itemize}
+            \item \textbf{Phương pháp 1 (Dành riêng cho trường hợp $a \perp b$):}
+            \begin{itemize}
+                \item Dựng một mặt phẳng $(P)$ chứa đường thẳng $b$ và vuông góc với đường thẳng $a$ tại điểm $A$.
+                \item Trong mặt phẳng $(P)$, từ điểm $A$ kẻ đoạn thẳng $AH \perp b$ tại $H$.
+                \item Khi đó, $AH \perp a$ (do $a \perp (P)$) và $AH \perp b \implies AH$ chính là đoạn vuông góc chung của $a$ và $b$.
+                \item Kết luận: $d(a, b) = AH$.
+            \end{itemize}
+
+            \item \textbf{Phương pháp 2 (Phương pháp tổng quát cho mọi bài toán):}
+            \begin{itemize}
+                \item Dựng mặt phẳng $(P)$ chứa đường thẳng $b$ và song song với đường thẳng $a$.
+                \item Khi đó: Khoảng cách giữa hai đường thẳng chéo nhau $a$ và $b$ bằng khoảng cách từ đường thẳng $a$ đến mặt phẳng $(P)$, và bằng khoảng cách từ một điểm $M$ tùy ý trên $a$ đến $(P)$:
+                $$d(a, b) = d(a, (P)) = d(M, (P)) \quad (\text{với } M \in a)$$
+                \item \textit{Chiến lược tiếp theo:} Chọn $M$ thích hợp để đưa về chân đường cao $A$ bằng kỹ thuật đổi điểm đã học ở Tiết 2!
+            \end{itemize}
+        \end{itemize}
+    \end{itemize}
+
+    \item[c)] \textbf{Sản phẩm:} Học sinh vẽ hình mô tả hai phương pháp và ghi nhớ sơ đồ chuyển đổi bài toán:
+    $$\text{Khoảng cách giữa } 2 \text{ đường chéo nhau } \longrightarrow \text{Khoảng cách từ điểm đến mp } \longrightarrow \text{Quy tắc } 2 \text{ bước tại chân đường cao}$$
+    \item[d)] \textbf{Tổ chức thực hiện:}
+\end{itemize}
+
+\begin{pedabox}{Tiến trình tổ chức Hoạt động 2 (Kiến thức mới - Tiết 3)}
+    \textbf{Bước 1: Chuyển giao nhiệm vụ}
+    \begin{itemize}[leftmargin=0.6cm]
+        \item GV nêu câu hỏi: Nếu hai đường thẳng $a$ và $b$ không vuông góc với nhau thì việc tìm đoạn thẳng vuông góc chung trực tiếp có dễ không? Có thể đưa về bài toán quen thuộc ở Tiết 1 và Tiết 2 không?
+    \end{itemize}
+
+    \textbf{Bước 2: Thực hiện nhiệm vụ}
+    \begin{itemize}[leftmargin=0.6cm]
+        \item HS thảo luận: Kẻ một đường thẳng $a' \parallel a$ cắt $b \implies$ Mặt phẳng $(a', b)$ chính là mặt phẳng chứa $b$ và song song với $a$.
+        \item Áp dụng tính chất khoảng cách giữa đường thẳng và mặt phẳng song song.
+    \end{itemize}
+
+    \textbf{Bước 3: Báo cáo, thảo luận}
+    \begin{itemize}[leftmargin=0.6cm]
+        \item Đại diện nhóm trình bày sơ đồ tư duy giải quyết bài toán.
+    \end{itemize}
+
+    \textbf{Bước 4: Kết luận, chuẩn hóa}
+    \begin{itemize}[leftmargin=0.6cm]
+        \item GV khẳng định: Phương pháp 2 là chìa khóa vạn năng, giúp biến đổi bài toán khó nhất của hình học không gian 11 thành bài toán khoảng cách từ điểm đến mặt phẳng đã thành thạo!
+    \end{itemize}
+\end{pedabox}
+
+\begin{aibox}{Tích hợp Năng lực AI (Theo QĐ 2422/QĐ-BGDĐT - Mã 11.C3.1)}
+    \textbf{Kỹ thuật Prompting hướng dẫn giải toán hình học không gian với AI:}
+    \begin{itemize}[leftmargin=0.6cm]
+        \item Giáo viên hướng dẫn học sinh cách viết câu lệnh (prompt) chính xác khi gặp bài toán hình học khó để AI đóng vai trò gia sư gợi ý từng bước (Socratic Tutor) thay vì giải hộ toàn bộ:
+        \item \textit{Ví dụ Prompt mẫu:}
+        \begin{quote}
+            \texttt{"Tôi đang làm bài toán tính khoảng cách giữa hai đường thẳng chéo nhau $SA$ và $BC$ của hình chóp $S.ABC$ có $SA \perp (ABC)$. Xin hãy hướng dẫn tôi xác định mặt phẳng chứa đường này và song song với đường kia, và gợi ý cách đổi điểm về chân đường cao $A$ mà không cho ngay đáp án cuối cùng."}
+        \end{quote}
+        \item Học sinh nhận biết ưu điểm của việc sử dụng AI để kiểm tra sơ đồ tư duy và tìm các cách giải khác nhau (như phương pháp tọa độ hóa hoặc phương pháp thể tích).
+    \end{itemize}
+\end{aibox}
+
+\subsection*{3. Hoạt động 3: Luyện tập (14 phút)}
+
+\begin{itemize}[leftmargin=1.2cm]
+    \item[a)] \textbf{Mục tiêu:} Vận dụng linh hoạt Phương pháp 1 và Phương pháp 2 để tính khoảng cách giữa hai đường thẳng chéo nhau.
+    \item[b)] \textbf{Nội dung:} Thực hiện bài toán trên Phiếu học tập số 3:
+    \begin{quote}
+        \textbf{Ví dụ 3:} Cho hình chóp $S.ABCD$ có đáy $ABCD$ là hình vuông cạnh $a$. Cạnh bên $SA \perp (ABCD)$ và $SA = a$.
+        \begin{enumerate}
+            \item Chứng minh $SA \perp BD$ và tính khoảng cách giữa hai đường thẳng chéo nhau $SA$ và $BD$.
+            \item Tính khoảng cách giữa hai đường thẳng chéo nhau $SC$ và $BD$.
+        \end{enumerate}
+    \end{quote}
+
+    \item[c)] \textbf{Sản phẩm (Lời giải chi tiết):}
+    \begin{itemize}[leftmargin=0.6cm]
+        \item \textit{Câu 1: Tính khoảng cách giữa $SA$ và $BD$}
+        \begin{itemize}
+            \item Vì $SA \perp (ABCD)$ và $BD \subset (ABCD)$ nên $SA \perp BD$.
+            \item Do $SA \perp BD$ nên ta áp dụng Phương pháp 1:
+            \item Mặt phẳng đáy $(ABCD)$ chứa $BD$ và vuông góc với $SA$ tại điểm $A$.
+            \item Trong $(ABCD)$, từ $A$ kẻ đường thẳng vuông góc với $BD$. Vì $ABCD$ là hình vuông tâm $O$ nên hai đường chéo $AC \perp BD$ tại $O$.
+            \item Do đó đoạn thẳng kẻ từ $A$ vuông góc với $BD$ chính là $AO$.
+            \item Ta có: $AO \perp BD$ (tại $O$) và $AO \perp SA$ (tại $A$, do $SA \perp (ABCD)$).
+            \item Suy ra $AO$ chính là đoạn vuông góc chung của $SA$ và $BD$.
+            \item Vậy:
+            $$d(SA, BD) = AO = \dfrac{AC}{2} = \dfrac{a\sqrt{2}}{2}$$
+        \end{itemize}
+
+        \item \textit{Câu 2: Tính khoảng cách giữa $SC$ và $BD$}
+        \begin{itemize}
+            \item Ta nhận thấy $BD \perp AC$ và $BD \perp SA \implies BD \perp (SAC) \implies BD \perp SC$.
+            \item Do $BD \perp SC$, ta áp dụng Phương pháp 1:
+            \item Mặt phẳng $(SAC)$ chứa đường thẳng $SC$ và vuông góc với đường thẳng $BD$ tại giao điểm $O$ ($O = AC \cap BD$).
+            \item Trong mặt phẳng $(SAC)$, từ $O$ kẻ đường thẳng vuông góc với $SC$ tại $I$ ($OI \perp SC$ tại $I \in SC$).
+            \item Khi đó: $OI \perp SC$ và $OI \perp BD$ (vì $OI \subset (SAC)$ mà $BD \perp (SAC)$).
+            \item Do đó $OI$ chính là đoạn vuông góc chung của $SC$ và $BD$.
+            \item Vậy: $d(SC, BD) = OI$.
+            \item \textit{Tính độ dài $OI$:}
+            Xét tam giác $SAC$ vuông tại $A$ có: $SA = a, AC = a\sqrt{2} \implies SC = \sqrt{SA^2 + AC^2} = a\sqrt{3}$.
+            Hai tam giác vuông $\Delta OIC$ (vuông tại $I$) và $\Delta SAC$ (vuông tại $A$) có góc nhọn $\widehat{SCA}$ chung $\implies \Delta OIC \backsim \Delta SAC$.
+            Do đó:
+            $$\dfrac{OI}{SA} = \dfrac{OC}{SC} \implies OI = \dfrac{SA \cdot OC}{SC} = \dfrac{a \cdot \frac{a\sqrt{2}}{2}}{a\sqrt{3}} = \dfrac{a\sqrt{6}}{6}$$
+            Vậy khoảng cách giữa hai đường thẳng chéo nhau $SC$ và $BD$ là $d(SC, BD) = \dfrac{a\sqrt{6}}{6}$.
+        \end{itemize}
+    \end{itemize}
+
+    \item[d)] \textbf{Tổ chức thực hiện:}
+    \begin{itemize}[leftmargin=0.6cm]
+        \item Học sinh làm việc cá nhân câu 1 trong 4 phút; thảo luận nhóm câu 2 trong 6 phút.
+        \item GV mời 2 đại diện nhóm lên bảng vẽ hình và trình bày lời giải.
+        \item GV chuẩn hóa các bước dựng đoạn vuông góc chung và cách tính thông qua tam giác đồng dạng.
+    \end{itemize}
+\end{pedabox}
+
+\subsection*{4. Hoạt động 4: Vận dụng (5 phút)}
+
+\begin{itemize}[leftmargin=1.2cm]
+    \item[a)] \textbf{Mục tiêu:} Khắc sâu quy trình tổng quát tính khoảng cách trong không gian và vận dụng vào bài toán thực tiễn cuộc sống.
+    \item[b)] \textbf{Nội dung:}
+    \begin{stembox}{Bài toán thực tế: Khoảng cách an toàn đường dây tải điện cao thế 500kV}
+        Đường dây dẫn điện cao thế $500\text{ kV}$ chạy ngang qua một con dốc nghiêng có góc dốc $\alpha = 30^\circ$ so với mặt phẳng ngang. Để đảm bảo an toàn tuyệt đối chống hiện tượng phóng điện trong không khí, Quy chuẩn Kỹ thuật Quốc gia về An toàn điện (QCVN 01:2020/BCT) quy định khoảng cách thẳng đứng nhỏ nhất từ điểm thấp nhất của dây dẫn điện đến mặt đất tự nhiên không được nhỏ hơn $8{,}0\text{ m}$.
+        \begin{itemize}[leftmargin=0.6cm]
+            \item Hãy mô hình hóa hình học bài toán trên thành khoảng cách từ một đoạn thẳng song song với mặt phẳng nghiêng.
+            \item Nếu người ta treo dây dẫn ở độ cao đầu dốc là $14\text{ m}$ theo phương thẳng đứng, hãy xác định khoảng cách vuông góc từ dây dẫn đến bề mặt sườn dốc nghiêng.
+        \end{itemize}
+    \end{stembox}
+    \item[c)] \textbf{Sản phẩm:} Học sinh mô hình hóa tam giác vuông có cạnh góc vuông đối diện góc $30^\circ$, tính khoảng cách vuông góc $d = 14 \cdot \cos 30^\circ = 7\sqrt{3} \approx 12{,}12\text{ m} > 8{,}0\text{ m}$ (đảm bảo an toàn theo quy chuẩn).
+    \item[d)] \textbf{Tổ chức thực hiện:} GV nhận xét, tổng kết trọn vẹn 3 tiết của Bài 26.
+\end{itemize}
+
+\section*{IV. PHỤ LỤC HỌC LIỆU BỔ TRỢ}
+
+\subsection*{1. Phiếu học tập số 1 (Tiết 1): Khoảng cách từ điểm đến mặt phẳng}
+
+\begin{pedabox}{PHIẾU HỌC TẬP SỐ 1: QUY TẮC 2 BƯỚC TÍNH KHOẢNG CÁCH TỪ CHÂN ĐƯỜNG CAO}
+    \textbf{Họ và tên học sinh:} \dotfill \textbf{Lớp:} 11\dots \textbf{Nhóm:} \dots
+    
+    \textbf{1. Ghi nhớ sơ đồ 2 bước kẻ:}
+    \begin{itemize}[leftmargin=0.6cm]
+        \item \textbf{Bước 1:} Từ chân đường cao $A$, kẻ vuông góc với \dotfill $\implies$ Điểm $K$.
+        \item \textbf{Bước 2:} Từ chân đường cao $A$, kẻ vuông góc với \dotfill $\implies$ Điểm $H$.
+        \item \textbf{Đoạn vuông góc là:} $d(A, (SBC)) = $ \dotfill
+        \item \textbf{Hệ thức lượng:} $\dfrac{1}{AH^2} = $ \dotfill
+    \end{itemize}
+
+    \textbf{2. Áp dụng giải bài tập:}
+    Cho hình chóp $S.ABC$ có $SA \perp (ABC)$, đáy $ABC$ vuông tại $C$, $AC = a, BC = 2a, SA = a\sqrt{3}$.
+    \begin{enumerate}
+        \item Xác định chân đường vuông góc kẻ từ $A$ đến mặt phẳng $(SBC)$.
+        \item Tính khoảng cách từ điểm $A$ đến mặt phẳng $(SBC)$.
+    \end{enumerate}
+\end{pedabox}
+
+\subsection*{2. Phiếu học tập số 2 (Tiết 2): Phương pháp đổi điểm}
+
+\begin{pedabox}{PHIẾU HỌC TẬP SỐ 2: PHƯƠNG PHÁP ĐỔI ĐIỂM KHOẢNG CÁCH}
+    \textbf{Họ và tên học sinh:} \dotfill \textbf{Lớp:} 11\dots \textbf{Nhóm:} \dots
+
+    \textbf{1. Hoàn thành công thức đổi điểm:}
+    \begin{itemize}[leftmargin=0.6cm]
+        \item Nếu $AM \parallel (P)$ thì: $d(M, (P)) = $ \dotfill
+        \item Nếu $AM \cap (P) = I$ thì: $\dfrac{d(M, (P))}{d(A, (P))} = $ \dotfill
+    \end{itemize}
+
+    \textbf{2. Bài tập rèn luyện:}
+    Cho hình chóp $S.ABCD$ có đáy là hình bình hành. $SA \perp (ABCD)$. Gọi $M$ là trung điểm của $SC$.
+    \begin{itemize}[leftmargin=0.6cm]
+        \item Đổi khoảng cách từ $C$ về điểm $A$: $d(C, (SBD)) = $ \dotfill $d(A, (SBD))$.
+        \item Đổi khoảng cách từ $M$ về điểm $A$: $d(M, (SBD)) = $ \dotfill $d(A, (SBD))$.
+    \end{itemize}
+\end{pedabox}
+
+\subsection*{3. Phiếu học tập số 3 (Tiết 3): Khoảng cách giữa 2 đường thẳng chéo nhau}
+
+\begin{pedabox}{PHIẾU HỌC TẬP SỐ 3: KHOẢNG CÁCH GIỮA HAI ĐƯỜNG THẲNG CHÉO NHAU}
+    \textbf{Họ và tên học sinh:} \dotfill \textbf{Lớp:} 11\dots \textbf{Nhóm:} \dots
+
+    \textbf{1. Lựa chọn phương pháp:}
+    \begin{center}
+    \begin{tabular}{|p{4.5cm}|p{5cm}|p{5.5cm}|}
+    \hline
+    \textbf{Dấu hiệu nhận biết} & \textbf{Phương pháp thực hiện} & \textbf{Công thức quy đổi} \\ \hline
+    Hai đường thẳng vuông góc với nhau ($a \perp b$) & Dựng mặt phẳng $(P) \supset b$ và $(P) \perp a$ tại $A$. Kẻ $AH \perp b$ tại $H$. & $d(a, b) = AH$ \\ \hline
+    Hai đường thẳng chéo nhau tổng quát & Dựng mặt phẳng $(P) \supset b$ và $(P) \parallel a$. & $d(a, b) = d(a, (P)) = d(M, (P))$ với $M \in a$. \\ \hline
+    \end{tabular}
+    \end{center}
+
+    \textbf{2. Bài tập tự luận:}
+    Cho hình lăng trụ đứng $ABC.A'B'C'$ có đáy $ABC$ là tam giác vuông tại $A$, $AB = a, AC = a\sqrt{3}, AA' = 2a$.
+    Tính khoảng cách giữa hai đường thẳng chéo nhau $AA'$ và $BC'$.
+\end{pedabox}
+
+\subsection*{4. Rubric đánh giá năng lực học sinh trong bài học (4 mức độ)}
+
+\begin{center}
+\begin{tabularx}{\textwidth}{|>{\bfseries}p{3cm}|X|X|X|X|}
+\hline
+\textbf{Tiêu chí} & \textbf{Mức 1: Chưa đạt} & \textbf{Mức 2: Đạt} & \textbf{Mức 3: Khá} & \textbf{Mức 4: Tốt} \\ \hline
+Dựng và tính khoảng cách từ điểm đến mặt phẳng & Chưa xác định được hình chiếu vuông góc, vẽ hình thiếu nét khuất. & Nắm được quy tắc 2 bước nhưng tính toán hệ thức lượng còn sai sót. & Dựng chuẩn xác đoạn vuông góc từ chân đường cao, tính đúng kết quả. & Thành thạo tuyệt đối quy tắc 2 bước, giải thích sâu sắc bản chất hình học không gian. \\ \hline
+Kỹ năng đổi điểm & Chưa nhận biết được điểm chân đường cao và điểm khó. & Nhận biết được quan hệ song song nhưng nhầm lẫn tỉ số cắt nhau. & Vận dụng đúng cả 2 quy tắc đổi điểm, tính đúng khoảng cách từ điểm bất kì. & Đổi điểm linh hoạt, sáng tạo qua nhiều điểm trung gian, tối ưu hóa bài toán. \\ \hline
+Khoảng cách giữa hai đường chéo nhau & Chưa phân biệt được đường chéo nhau và đường cắt nhau. & Nhận biết được đoạn vuông góc chung trong trường hợp hai đường vuông góc. & Áp dụng thành thạo phương pháp dựng mặt phẳng song song, tính đúng kết quả. & Làm chủ cả 2 phương pháp, giải quyết trọn vẹn các bài toán khoảng cách phức tạp. \\ \hline
+Năng lực số và nhận thức AI & Chưa biết thao tác xoay hình trên phần mềm GeoGebra 3D. & Sử dụng được GeoGebra 3D đo khoảng cách cơ bản dưới sự hướng dẫn. & Tự tay dựng hình trên GeoGebra 3D kiểm tra kết quả; hiểu nguyên lý LiDAR. & Thành thạo công cụ số; biết viết prompt tương tác AI dẫn dắt tư duy giải toán. \\ \hline
+\end{tabularx}
+\end{center}
+
+\end{document}
