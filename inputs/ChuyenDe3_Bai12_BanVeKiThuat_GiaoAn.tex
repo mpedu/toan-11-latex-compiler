@@ -1,0 +1,603 @@
+\documentclass[12pt, a4paper]{article}
+% --- 1. Cấu hình Tiếng Việt và Font chữ chuẩn ---
+\usepackage[utf8]{inputenc}
+\usepackage[T5]{fontenc}
+\usepackage[vietnamese]{babel}
+\usepackage{mathptmx} % Font Times New Roman đồng bộ cả chữ và công thức toán, không gây xung đột gói
+
+\makeatletter
+\renewcommand{\normalsize}{\@setfontsize\normalsize{13pt}{16pt}}
+\makeatother
+\normalsize
+
+% --- 2. Gói Toán học & Ký hiệu bổ trợ ---
+\usepackage{amsmath, amssymb, amsfonts, mathrsfs, amsthm}
+\usepackage{graphicx}
+\usepackage{fontawesome}
+\usepackage{booktabs, tabularx, array, multirow}
+\usepackage{enumitem}
+
+% --- 3. Đồ họa TikZ, Bảng biến thiên & Hình không gian ---
+\usepackage{tikz}
+\usetikzlibrary{calc, intersections, angles, quotes, patterns, arrows.meta, 3d}
+\usepackage{pgfplots}
+\pgfplotsset{compat=1.18}
+\usepackage{tkz-euclide}
+\usepackage{tkz-tab}
+
+\renewcommand{\vec}[1]{\overrightarrow{#1}}
+
+% --- 4. Hộp sư phạm (Tcolorbox) ---
+\usepackage[many]{tcolorbox}
+\tcbuselibrary{skins, breakable}
+
+% --- 5. Căn lề chuẩn văn bản giáo án ---
+\usepackage{geometry}
+\geometry{
+    a4paper,
+    left=25mm,
+    right=15mm,
+    top=20mm,
+    bottom=20mm
+}
+
+% --- 6. Header / Footer chuẩn hóa ---
+\usepackage{fancyhdr}
+\usepackage{lastpage}
+\pagestyle{fancy}
+\fancyhf{}
+
+\fancyhead[L]{\small \textit{Kế hoạch bài dạy Toán 11}}
+\fancyhead[R]{\textbf{Trang \thepage/\pageref{LastPage}}}
+\fancyfoot[L]{\small \textit{Tổ Toán - Tin}}
+\fancyfoot[R]{\small \textit{Trường THCS\&THPT Hồng Vân}}
+\renewcommand{\headrulewidth}{0.4pt}
+\renewcommand{\footrulewidth}{0.4pt}
+
+% --- 7. Giãn dòng & Giãn đoạn theo chuẩn Nghị định 30/2020/NĐ-CP ---
+\usepackage{setspace}
+\setstretch{1.15}
+\setlength{\parindent}{1.0cm}
+\setlength{\parskip}{5pt}
+
+% Định nghĩa hộp sư phạm chuyên dụng
+\newtcolorbox{pedabox}[2][]{
+    enhanced,
+    breakable,
+    colback=blue!3!white,
+    colframe=blue!65!black,
+    fonttitle=\bfseries\small,
+    title={#2},
+    arc=2mm,
+    boxrule=0.6pt,
+    left=3mm, right=3mm, top=2mm, bottom=2mm,
+    #1
+}
+
+\newtcolorbox{aibox}[2][]{
+    enhanced,
+    breakable,
+    colback=teal!4!white,
+    colframe=teal!70!black,
+    fonttitle=\bfseries\small,
+    title={#2},
+    arc=2mm,
+    boxrule=0.6pt,
+    left=3mm, right=3mm, top=2mm, bottom=2mm,
+    #1
+}
+
+\newtcolorbox{scaffoldbox}[2][]{
+    enhanced,
+    breakable,
+    colback=orange!4!white,
+    colframe=orange!80!black,
+    fonttitle=\bfseries\small,
+    title={#2},
+    arc=2mm,
+    boxrule=0.6pt,
+    left=3mm, right=3mm, top=2mm, bottom=2mm,
+    #1
+}
+
+\newtcolorbox{stembox}[2][]{
+    enhanced,
+    breakable,
+    colback=purple!4!white,
+    colframe=purple!75!black,
+    fonttitle=\bfseries\small,
+    title={#2},
+    arc=2mm,
+    boxrule=0.6pt,
+    left=3mm, right=3mm, top=2mm, bottom=2mm,
+    #1
+}
+
+\begin{document}
+
+\begin{center}
+    {\fontsize{14pt}{17pt}\selectfont \textbf{KẾ HOẠCH BÀI DẠY MÔN TOÁN LỚP 11}}\\[6pt]
+    {\fontsize{16pt}{19pt}\selectfont \textbf{CHUYÊN ĐỀ 3 - BÀI 12. BẢN VẼ KĨ THUẬT}}\\[4pt]
+    {\fontsize{12pt}{15pt}\selectfont \textbf{Môn học: Toán 11} \ \textbar \ \textbf{Thời lượng: 2 tiết (Tiết CĐ27, CĐ28 theo PPCT | Tuần 27)}}
+\end{center}
+
+\vspace{5pt}
+
+\section*{I. MỤC TIÊU}
+
+\subsection*{1. Kiến thức, Năng lực}
+
+\begin{itemize}[leftmargin=1.2cm]
+    \item \textbf{Yêu cầu cần đạt (Nguyên văn CT GDPT 2018 Toán 11):}
+    \begin{itemize}[leftmargin=0.6cm]
+        \item Đọc được thông tin từ một số bản vẽ kĩ thuật đơn giản.
+        \item Vẽ được bản vẽ kĩ thuật đơn giản (gắn với phép chiếu song song và phép chiếu vuông góc).
+    \end{itemize}
+
+    \item \textbf{Năng lực Toán học đặc thù:}
+    \begin{itemize}[leftmargin=0.6cm]
+        \item \textit{Năng lực tư duy và lập luận toán học:} Nâng cao khả năng chuyển dịch tư duy hai chiều giữa không gian 3D thực tế và bản vẽ phẳng 2D; giải thích nguyên tắc thể hiện các hình chiếu, hình cắt, mặt cắt trên bản vẽ cơ khí và bản vẽ xây dựng; phân tích tính logic và sự tương ứng kích thước giữa mặt bằng, mặt đứng và mặt cắt của ngôi nhà.
+        \item \textit{Năng lực mô hình hóa toán học:} Mô hình hóa các công trình kiến trúc dân dụng (nhà ở một tầng mái dốc, nhà truyền thống vùng cao) và các chi tiết cơ khí quen thuộc thành hệ thống các hình học cơ bản (khối hộp chữ nhật, lăng trụ, chóp cụt, hình trụ); thiết lập tỉ lệ bản vẽ phù hợp ($1:1, 1:2, 1:50, 1:100$) để biểu diễn thu nhỏ các công trình kích thước lớn lên mặt phẳng giấy.
+        \item \textit{Năng lực giải quyết vấn đề toán học:} Đọc hiểu thành thạo các thông số trên bản vẽ chi tiết (khung tên, hình biểu diễn, kích thước dài, rộng, cao, bán kính $\varnothing, R$, độ nhẵn bề mặt) và bản vẽ nhà (mặt bằng phân chia phòng ốc, vị trí cửa đi $D$, cửa sổ $S$, mặt đứng kiến trúc bên ngoài, mặt cắt cao độ các tầng); tự tay lập và vẽ được bản vẽ kĩ thuật đơn giản đúng tiêu chuẩn Việt Nam (TCVN).
+        \item \textit{Năng lực giao tiếp toán học:} Sử dụng chính xác và chuẩn mực các thuật ngữ của ngôn ngữ kĩ thuật quốc tế: bản vẽ chi tiết, bản vẽ lắp, bản vẽ nhà, mặt bằng, mặt đứng, mặt cắt, đường dóng, đường kích thước, con số kích thước, tỉ lệ bản vẽ; trình bày bản vẽ khoa học, rõ ràng, nét vẽ đúng quy chuẩn.
+        \item \textit{Năng lực sử dụng công cụ, phương tiện học toán:} Sử dụng thành thạo thước đo mm, ê-ke, compa, thước tỉ lệ trong quá trình đo đạc và vẽ bản vẽ; khai thác hiệu quả máy tính phòng học để tra cứu, đọc hiểu các tệp bản vẽ số (.PDF, .DWG) từ kho dữ liệu mở.
+    \end{itemize}
+
+    \item \textbf{Năng lực số (Theo Thông tư 02/2025/TT-BGDĐT):}
+    \begin{itemize}[leftmargin=0.6cm]
+        \item \textit{Mã 1.1NC1a (Tìm kiếm và đọc hiểu dữ liệu số):} Học sinh tìm kiếm, tải về và đọc hiểu các tệp bản vẽ kĩ thuật số định dạng PDF/DWG của các chi tiết máy và mô hình nhà ở thông dụng từ các kho học liệu mở (Open Source CAD Data, GrabCAD); biết cách sử dụng các công cụ zoom, đo kích thước số (Measure Tool) trên phần mềm đọc tệp PDF.
+    \end{itemize}
+
+    \item \textbf{Năng lực AI (Theo Quyết định 2422/QĐ-BGDĐT):}
+    \begin{itemize}[leftmargin=0.6cm]
+        \item \textit{Mã 3.3NC1a (Bản quyền số và đạo đức sử dụng AI trong thiết kế):} Học sinh tìm hiểu về quyền tác giả, giấy phép sở hữu trí tuệ (Creative Commons, Copyright) khi khai thác và chia sẻ các bản vẽ kĩ thuật trên môi trường mạng; khám phá ứng dụng của Trí tuệ nhân tạo tạo sinh trong kiến trúc (Generative AI Architecture) giúp tự động tạo các phương án mặt bằng ngôi nhà tối ưu diện tích và ánh sáng tự nhiên.
+        \item \textit{Kỹ thuật Prompting hướng dẫn đọc bản vẽ:} Học sinh biết cách soạn câu lệnh prompt chuẩn mực nhờ AI giải thích các ký hiệu viết tắt chuyên ngành trên bản vẽ xây dựng (ví dụ: $D1, S2, \text{KT } 1200 \times 1800, \pm 0.000$).
+    \end{itemize}
+
+    \item \textbf{Năng lực chung:}
+    \begin{itemize}[leftmargin=0.6cm]
+        \item \textit{Tự chủ và tự học:} Chủ động quan sát cấu trúc không gian ngôi nhà mình đang ở (cửa ra vào, cửa sổ, chiều cao trần nhà); tự giác tìm hiểu các kí hiệu quy ước trên bản vẽ xây dựng.
+        \item \textit{Giao tiếp và hợp tác:} Hoạt động nhóm hiệu quả trong dự án STEM, phân công nhiệm vụ rõ ràng: bạn đo kích thước, bạn đọc bản vẽ, bạn cắt dán mô hình ngôi nhà bằng bìa các-tông.
+    \end{itemize}
+\end{itemize}
+
+\subsection*{2. Phẩm chất}
+
+\begin{itemize}[leftmargin=1.2cm]
+    \item \textbf{Chăm chỉ:} Cẩn thận, tỉ mỉ trong từng phép đo và đường kẻ chì; kiên nhẫn đối chiếu từng con số kích thước giữa các hình biểu diễn.
+    \item \textbf{Trung thực:} Ghi đúng kích thước đo được, tôn trọng nguyên bản thiết kế, trung thực trong việc ghi nhận công sức đóng góp của bạn bè.
+    \item \textbf{Trách nhiệm:} Tuân thủ nghiêm ngặt các quy định an toàn khi sử dụng kéo, dao trổ trong tiết thực hành STEM; có ý thức bảo vệ môi trường, tận dụng bìa giấy tái chế.
+\end{itemize}
+
+\section*{II. THIẾT BỊ DẠY HỌC VÀ HỌC LIỆU}
+
+\begin{itemize}[leftmargin=1.2cm]
+    \item \textbf{Giáo viên:}
+    \begin{itemize}[leftmargin=0.6cm]
+        \item Kế hoạch bài dạy chi tiết 2 tiết theo chuẩn Công văn 5512/BGDĐT-GDTrH.
+        \item Bản vẽ phóng to khổ A0 hoặc trình chiếu Slide tương tác về: (1) Bản vẽ chi tiết quai vỏ đệm / bulông; (2) Bản vẽ ngôi nhà một tầng mái dốc (gồm mặt bằng, mặt đứng, mặt cắt).
+        \item Phòng thực hành tin học (35 máy tính kết nối Internet tốc độ cao, cài sẵn phần mềm đọc PDF Acrobat Reader / Foxit Reader).
+        \item Hệ thống Phiếu học tập phân tầng bậc thang (PHT số 1: Kỹ năng đọc bản vẽ chi tiết; PHT số 2: Kỹ năng đọc bản vẽ nhà \& Triển khai STEM).
+        \item Bìa các-tông, kéo cắt giấy, keo dán, thước kẻ phục vụ hoạt động STEM.
+        \item Bảng Rubric đánh giá năng lực học sinh.
+    \end{itemize}
+
+    \item \textbf{Học sinh:}
+    \begin{itemize}[leftmargin=0.6cm]
+        \item Sách Chuyên đề học tập Toán 11, vở bài tập, thước kẻ chia vạch mm, ê-ke, compa, bút chì.
+        \item Bìa các-tông hộp bánh hoặc giấy bìa màu khổ A4, kéo, keo dán (chuẩn bị theo nhóm 4 - 5 em).
+    \end{itemize}
+\end{itemize}
+
+\section*{III. TIẾN TRÌNH DẠY HỌC}
+
+\begin{center}
+    \textbf{\large TIẾT 1 (TIẾT CĐ27 THEO PPCT | TUẦN 27)}\\[4pt]
+    \textbf{\large BẢN VẼ CHI TIẾT VÀ QUY TẮC ĐỌC KÍCH THƯỚC KĨ THUẬT}
+\end{center}
+
+\subsection*{1. Hoạt động 1: Mở đầu (Khởi động - 7 phút)}
+
+\begin{itemize}[leftmargin=1.2cm]
+    \item[a)] \textbf{Mục tiêu:}
+    \begin{itemize}[leftmargin=0.6cm]
+        \item Tạo sự tò mò và nhận thức được tầm quan trọng của bản vẽ kĩ thuật: Bản vẽ kĩ thuật được xem là "ngôn ngữ chung" của tất cả các kỹ sư, công nhân trên toàn cầu.
+        \item Phân biệt được sự khác nhau giữa một bức tranh vẽ nghệ thuật và một bản vẽ kĩ thuật cơ khí.
+    \end{itemize}
+
+    \item[b)] \textbf{Nội dung:}
+    \begin{itemize}[leftmargin=0.6cm]
+        \item Giáo viên trình chiếu hai hình ảnh:
+        \begin{itemize}
+            \item Hình 1: Bức tranh vẽ một chiếc bu-lông ốc vít được tô bóng nghệ thuật.
+            \item Hình 2: Bản vẽ kĩ thuật chi tiết của bu-lông gồm hình chiếu đứng, hình chiếu cạnh, các đường dóng kích thước $M12 \times 45$, ren, bước ren và khung tên ghi vật liệu thép $CT3$.
+        \end{itemize}
+        \item Đặt câu hỏi thảo luận: \textit{"Nếu giao nhiệm vụ cho người thợ tiện ở xưởng cơ khí gia công 100 chiếc bu-lông chính xác, các em sẽ đưa cho người thợ bức tranh Hình 1 hay bản vẽ Hình 2? Vì sao?"}
+    \end{itemize}
+
+    \item[c)] \textbf{Sản phẩm:}
+    \begin{itemize}[leftmargin=0.6cm]
+        \item Học sinh đồng thanh chọn Hình 2.
+        \item Giải thích: Vì bản vẽ Hình 2 có đầy đủ các con số kích thước cụ thể, chỉ rõ vật liệu, bước ren và dung sai cho phép, giúp người thợ đo đạc và gia công chính xác mà không cần giải thích bằng lời nói.
+    \end{itemize}
+
+    \item[d)] \textbf{Tổ chức thực hiện:} GV nhận xét, khẳng định bản vẽ kĩ thuật là tài liệu pháp lí kỹ thuật cơ bản, dẫn dắt vào bài học mới.
+\end{itemize}
+
+\subsection*{2. Hoạt động 2: Hình thành kiến thức mới (23 phút)}
+
+\begin{itemize}[leftmargin=1.2cm]
+    \item[a)] \textbf{Mục tiêu:}
+    \begin{itemize}[leftmargin=0.6cm]
+        \item Nắm vững khái niệm, vai trò và 4 nội dung cốt lõi của một bản vẽ chi tiết (Khung tên, Hình biểu diễn, Kích thước, Yêu cầu kĩ thuật).
+        \item Hiểu rõ quy chuẩn ghi kích thước: đường dóng, đường kích thước, con số kích thước, các kí hiệu $\varnothing, R$, đơn vị quy ước milimet ($\text{mm}$).
+        \item Thành thạo quy trình 4 bước đọc một bản vẽ chi tiết kĩ thuật từ tổng quan đến chi tiết.
+    \end{itemize}
+
+    \item[b)] \textbf{Nội dung:}
+    \begin{itemize}[leftmargin=0.6cm]
+        \item \textbf{1. Các thành phần cơ bản của bản vẽ chi tiết:}
+        \begin{itemize}
+            \item \textbf{Khung tên (Title Block):} Bố trí ở góc dưới bên phải bản vẽ. Ghi rõ: tên gọi chi tiết, vật liệu chế tạo, tỉ lệ bản vẽ ($1:1, 1:2, 2:1$), kí hiệu bản vẽ, tên người thiết kế, người duyệt, tên cơ sở chế tạo.
+            \item \textbf{Hình biểu diễn (Views):} Gồm các hình chiếu vuông góc (hình chiếu đứng, bằng, cạnh) và hình cắt, mặt cắt để thể hiện rõ hình dạng bên ngoài và cấu tạo rỗng bên trong của chi tiết.
+            \item \textbf{Kích thước (Dimensions):} Thể hiện độ lớn thực tế của vật thể.
+            \begin{itemize}
+                \item \textit{Đường dóng kích thước:} Kẻ bằng nét mảnh, vuông góc với đoạn thẳng cần đo, kéo dài vượt qua đường kích thước $2 - 4\text{ mm}$.
+                \item \textit{Đường kích thước:} Kẻ song song với đoạn thẳng cần đo, hai đầu có mũi tên chạm vào đường dóng.
+                \item \textit{Con số kích thước:} Ghi trị số thực của kích thước (đơn vị quy ước trên bản vẽ cơ khí luôn là milimet $\text{mm}$, không ghi kèm chữ $\text{mm}$).
+                \item \textit{Kí hiệu đặc biệt:} Đường kính hình tròn ghi $\varnothing$ (ví dụ: $\varnothing 20$); bán kính cung tròn ghi $R$ (ví dụ: $R15$); vát mép ghi $C$ hoặc số đo $\times 45^\circ$.
+            \end{itemize}
+            \item \textbf{Yêu cầu kĩ thuật (Technical Requirements):} Gồm chỉ dẫn về gia công (xử lý bề mặt, nhiệt luyện) và độ nhẵn bóng bề mặt.
+        \end{itemize}
+
+        \item \textbf{2. Trình tự 4 bước đọc bản vẽ chi tiết (Chuẩn sư phạm cho HS):}
+    \end{itemize}
+
+    \begin{center}
+    \begin{tabularx}{\textwidth}{|>{\bfseries}p{3.2cm}|X|X|}
+    \hline
+    \textbf{Bước đọc} & \textbf{Nội dung cần tìm hiểu} & \textbf{Thông tin thu nhận được} \\ \hline
+    Bước 1: Khung tên & Đọc tên gọi chi tiết, vật liệu chế tạo, tỉ lệ bản vẽ, cơ quan thiết kế. & Biết tên chi tiết, làm bằng chất liệu gì (thép, nhôm, gang), tỉ lệ phóng to hay thu nhỏ. \\ \hline
+    Bước 2: Hình biểu diễn & Xác định tên gọi các hình chiếu và vị trí mặt phẳng cắt (nếu có). & Biết rõ hướng nhìn chính (từ trước, từ trên, từ trái) và cấu tạo bên trong qua hình cắt. \\ \hline
+    Bước 3: Kích thước & Đọc kích thước chung và kích thước các phần tử cấu thành chi tiết. & Xác định chiều dài, chiều rộng, chiều cao tổng thể; vị trí và đường kính các lỗ khoét, rãnh khuyết. \\ \hline
+    Bước 4: Yêu cầu kĩ thuật & Đọc các chỉ dẫn gia công và xử lý bề mặt. & Nắm được phương pháp làm nguội, tôi cứng, sơn mạ chống gỉ để tiến hành chế tạo. \\ \hline
+    \end{tabularx}
+    \end{center}
+
+    \item[c)] \textbf{Sản phẩm:}
+    \begin{itemize}[leftmargin=0.6cm]
+        \item Ghi chép đầy đủ cấu trúc bản vẽ chi tiết và bảng trình tự 4 bước đọc vào vở học tập.
+        \item Kết quả đọc bản vẽ chi tiết mẫu "Gối đỡ trục" hoặc "Quai ren":
+        \begin{itemize}
+            \item Tên chi tiết: Gối đỡ; Vật liệu: Gang xám; Tỉ lệ: $1:1$.
+            \item Hình biểu diễn: Hình chiếu đứng (kết hợp hình cắt một nửa), Hình chiếu bằng.
+            \item Kích thước chung: Dài $80\text{ mm}$, Rộng $40\text{ mm}$, Cao $45\text{ mm}$.
+            \item Kích thước lỗ trục: Đường kính $\varnothing 24\text{ mm}$; hai lỗ bắt vít $\varnothing 10\text{ mm}$.
+        \end{itemize}
+    \end{itemize}
+
+    \item[d)] \textbf{Tổ chức thực hiện:}
+\end{itemize}
+
+\begin{pedabox}{Tiến trình tổ chức Hoạt động 2 (Hình thành kiến thức)}
+    \textbf{Bước 1: Chuyển giao nhiệm vụ}
+    \begin{itemize}[leftmargin=0.6cm]
+        \item GV phát Phiếu học tập số 1 có in bản vẽ chi tiết "Gối đỡ".
+        \item Yêu cầu học sinh làm việc nhóm đôi: đọc lần lượt theo 4 bước và điền các thông số vào bảng mẫu.
+    \end{itemize}
+
+    \textbf{Bước 2: Thực hiện nhiệm vụ có giàn giáo sư phạm}
+    \begin{itemize}[leftmargin=0.6cm]
+        \item HS trao đổi, quan sát kỹ các con số kích thước và các mũi tên dóng.
+        \item GV hướng dẫn học sinh trung bình - yếu: Tìm khung tên ở góc dưới bên phải trước; con số nằm trên đường kích thước là kích thước thật tính bằng milimet.
+    \end{itemize}
+
+    \textbf{Bước 3: Báo cáo, thảo luận}
+    \begin{itemize}[leftmargin=0.6cm]
+        \item Đại diện 2 cặp đôi đọc to các thông số kích thước chung và kích thước các lỗ khoét.
+        \item Cả lớp đối chiếu và thống nhất kết quả.
+    \end{itemize}
+
+    \textbf{Bước 4: Kết luận, nhận định}
+    \begin{itemize}[leftmargin=0.6cm]
+        \item GV chuẩn hóa cách đọc kích thước theo TCVN, lưu ý kí hiệu $\varnothing$ đọc là "phi" (đường kính), $R$ là bán kính.
+    \end{itemize}
+\end{pedabox}
+
+\begin{scaffoldbox}{Giàn giáo sư phạm cho học sinh trung bình - yếu (Scaffolding)}
+    \textbf{Bí quyết đọc nhanh kích thước không bị nhầm lẫn:}
+    \begin{enumerate}[leftmargin=0.6cm]
+        \item \textbf{Không có chữ mm:} Thấy số $50$, hiểu ngay là $50\text{ mm}$ (bằng $5\text{ cm}$).
+        \item \textbf{Gặp kí hiệu tròn:} Thấy $\varnothing 20$ (đọc là phi 20) $\implies$ Lỗ tròn có đường kính $20\text{ mm}$.
+        \item \textbf{Gặp kí hiệu cung:} Thấy $R15$ $\implies$ Cung tròn có bán kính $15\text{ mm}$.
+        \item \textbf{Kích thước bao:} Luôn tìm 3 con số to nhất trên các hình chiếu để biết Chiều dài $\times$ Chiều rộng $\times$ Chiều cao của vật thể!
+    \end{enumerate}
+\end{scaffoldbox}
+
+\subsection*{3. Hoạt động 3: Luyện tập (10 phút)}
+
+\begin{itemize}[leftmargin=1.2cm]
+    \item[a)] \textbf{Mục tiêu:} Củng cố kĩ năng đọc bản vẽ chi tiết kĩ thuật cơ khí đơn giản và trả lời các câu hỏi trắc nghiệm/tự luận ngắn kiểm tra năng lực.
+    \item[b)] \textbf{Nội dung:} Thực hiện bài tập trên Phiếu học tập số 1.
+    \begin{itemize}[leftmargin=0.6cm]
+        \item Cho bản vẽ chi tiết "Ống lót" có hình chiếu đứng và hình chiếu cạnh.
+        \item Yêu cầu học sinh xác định:
+        \begin{enumerate}[leftmargin=0.6cm]
+            \item Đường kính ngoài và đường kính trong của ống lót.
+            \item Chiều dài toàn bộ của ống lót.
+            \item Vật liệu chế tạo và tỉ lệ của bản vẽ.
+            \item Hình dạng 3D của ống lót là khối hình học gì?
+        \end{enumerate}
+    \end{itemize}
+
+    \item[c)] \textbf{Sản phẩm (Lời giải chi tiết):}
+    \begin{itemize}[leftmargin=0.6cm]
+        \item Đường kính ngoài: $D = \varnothing 36\text{ mm}$; Đường kính trong: $d = \varnothing 20\text{ mm}$.
+        \item Chiều dài toàn bộ: $L = 50\text{ mm}$.
+        \item Vật liệu: Thép $C45$; Tỉ lệ bản vẽ: $1:1$ (tỉ lệ nguyên hình).
+        \item Hình dạng 3D: Là một hình trụ tròn rỗng ruột (ống trụ tròn) có chiều dày thành ống là $(36 - 20)/2 = 8\text{ mm}$.
+    \end{itemize}
+
+    \item[d)] \textbf{Tổ chức thực hiện:}
+    \begin{itemize}[leftmargin=0.6cm]
+        \item Học sinh làm việc cá nhân trong 5 phút.
+        \item GV mời 1 học sinh trả lời miệng; cả lớp nhận xét, bổ sung.
+        \item GV chốt kiến thức và hướng dẫn thu dọn học liệu Tiết 1.
+    \end{itemize}
+\end{itemize}
+
+\subsection*{4. Hoạt động 4: Vận dụng (5 phút)}
+
+\begin{itemize}[leftmargin=1.2cm]
+    \item[a)] \textbf{Mục tiêu:} Giao nhiệm vụ tìm hiểu dữ liệu bản vẽ số và chuẩn bị học liệu cho Tiết 2 về Bản vẽ nhà và thực hành STEM.
+    \item[b)] \textbf{Nội dung & Tổ chức thực hiện:}
+    \begin{itemize}[leftmargin=0.6cm]
+        \item GV giao nhiệm vụ: Mỗi tổ chuẩn bị 1 kéo cắt giấy, 1 cuộn băng dính hai mặt hoặc keo dán, 2 tờ bìa các-tông hoặc vỏ hộp ngũ cốc đã qua sử dụng.
+        \item Tìm hiểu trước cấu trúc bản vẽ nhà (mặt bằng, mặt đứng, mặt cắt) trong SGK Chuyên đề Toán 11.
+    \end{itemize}
+\end{itemize}
+
+\vspace{10pt}
+\hrule
+\vspace{10pt}
+
+\begin{center}
+    \textbf{\large TIẾT 2 (TIẾT CĐ28 THEO PPCT | TUẦN 27)}\\[4pt]
+    \textbf{\large BẢN VẼ NHÀ VÀ THỰC HÀNH MÔ HÌNH HÓA STEM}
+\end{center}
+
+\subsection*{1. Hoạt động 1: Mở đầu (Khởi động - 6 phút)}
+
+\begin{itemize}[leftmargin=1.2cm]
+    \item[a)] \textbf{Mục tiêu:}
+    \begin{itemize}[leftmargin=0.6cm]
+        \item Tạo cầu nối từ bản vẽ cơ khí sang bản vẽ xây dựng (bản vẽ nhà); nhận thức được vai trò tối quan trọng của bản vẽ thiết kế trước khi đặt móng xây dựng bất kì công trình nào.
+    \end{itemize}
+
+    \item[b)] \textbf{Nội dung:}
+    \begin{itemize}[leftmargin=0.6cm]
+        \item GV trình chiếu bản vẽ phối cảnh 3D và sơ đồ mặt bằng kiến trúc của một ngôi nhà một tầng mái dốc quen thuộc tại vùng đồi núi huyện A Lưới.
+        \item Đặt câu hỏi: \textit{"Khi nhìn vào bản vẽ mặt bằng ngôi nhà, các em có thấy mái nhà không? Tại sao lại nhìn thấy được giường, bàn ghế và tường ngăn bên trong ngôi nhà?"}
+    \end{itemize}
+
+    \item[c)] \textbf{Sản phẩm:} Học sinh suy luận: Mặt bằng giống như một nhát cắt ngang thân nhà, bỏ đi phần mái bên trên để nhìn thấu từ trên xuống dưới thấy rõ các phòng và đồ đạc.
+    \item[d)] \textbf{Tổ chức thực hiện:} GV xác nhận câu trả lời rất chính xác, giới thiệu khái niệm Mặt bằng và dẫn dắt vào bài học.
+\end{itemize}
+
+\subsection*{2. Hoạt động 2: Hình thành kiến thức mới (18 phút)}
+
+\begin{itemize}[leftmargin=1.2cm]
+    \item[a)] \textbf{Mục tiêu:}
+    \begin{itemize}[leftmargin=0.6cm]
+        \item Nắm vững khái niệm, ý nghĩa của 3 hình biểu diễn cơ bản của một ngôi nhà: Mặt bằng, Mặt đứng, Mặt cắt.
+        \item Nhận biết các ký hiệu quy ước kiến trúc trên bản vẽ nhà: cửa đi đơn, cửa đi hai cánh, cửa sổ, cầu thang, tường gạch.
+        \item Rèn luyện năng lực số (tìm kiếm bản vẽ số) và hiểu biết về đạo đức AI trong thiết kế kiến trúc.
+    \end{itemize}
+
+    \item[b)] \textbf{Nội dung:}
+    \begin{itemize}[leftmargin=0.6cm]
+        \item \textbf{1. Các hình biểu diễn cơ bản của bản vẽ nhà:}
+        \begin{itemize}
+            \item \textbf{Mặt bằng (Floor Plan):}
+            \begin{itemize}
+                \item Là hình cắt bằng của ngôi nhà được cắt bởi một mặt phẳng nằm ngang giả định cách sàn nhà khoảng $1 - 1{,}5\text{ m}$ (ngang tầm mắt).
+                \item Ý nghĩa: Là hình biểu diễn quan trọng nhất của ngôi nhà; thể hiện vị trí, kích thước các phòng (phòng khách, phòng ngủ, bếp, nhà vệ sinh), chiều dày các bức tường, vị trí và độ mở của các cửa đi, cửa sổ.
+            \end{itemize}
+            \item \textbf{Mặt đứng (Elevation):}
+            \begin{itemize}
+                \item Là hình chiếu vuông góc các mặt ngoài của ngôi nhà lên mặt phẳng hình chiếu đứng hoặc hình chiếu cạnh.
+                \item Ý nghĩa: Thể hiện hình dáng kiến trúc bên ngoài, tỉ lệ chiều cao, hình dạng mái nhà, cửa ban công và tính thẩm mĩ của công trình.
+            \end{itemize}
+            \item \textbf{Mặt cắt (Section):}
+            \begin{itemize}
+                \item Là hình cắt đứng tạo bởi một mặt phẳng cắt thẳng đứng đi qua các không gian đặc biệt (như cửa đi, cửa sổ, cầu thang).
+                \item Ý nghĩa: Thể hiện chiều cao các tầng, độ dày của sàn bê tông, độ dốc và kết cấu của mái ngói/mái tôn, kết cấu móng nhà.
+            \end{itemize}
+        \end{itemize}
+
+        \item \textbf{2. Một số kí hiệu quy ước trên bản vẽ xây dựng (TCVN 5070):}
+        \begin{itemize}
+            \item Cửa đi một cánh mở vào trong: đoạn thẳng vuông góc tường có cung tròn biểu diễn góc mở.
+            \item Cửa đi hai cánh: hai cung tròn đối xứng.
+            \item Cửa sổ: vẽ hai nét mảnh song song ở giữa bức tường.
+            \item Bậc thang: các đoạn thẳng song song cách đều kèm mũi tên chỉ hướng đi lên.
+        \end{itemize}
+    \end{itemize}
+
+    \item[c)] \textbf{Sản phẩm:}
+    \begin{itemize}[leftmargin=0.6cm]
+        \item Ghi chép khái niệm Mặt bằng, Mặt đứng, Mặt cắt và vẽ các kí hiệu quy ước vào vở.
+        \item Đọc bản vẽ ngôi nhà một tầng mái dốc mẫu:
+        \begin{itemize}
+            \item Kích thước tổng thể: Dài $12\text{ m}$, Rộng $6\text{ m}$, Cao đỉnh mái $4{,}8\text{ m}$.
+            \item Công năng gồm: 1 Phòng khách ($24\text{ m}^2$), 2 Phòng ngủ (mỗi phòng $15\text{ m}^2$), 1 Bếp và ăn ($14\text{ m}^2$), 1 Phòng vệ sinh chung.
+            \item Có 1 cửa chính $4$ cánh mở ra sân và $4$ cửa sổ lấy sáng.
+        \end{itemize}
+    \end{itemize}
+
+    \item[d)] \textbf{Tổ chức thực hiện:}
+\end{itemize}
+
+\begin{pedabox}{Tiến trình tổ chức Hoạt động 2 (Kiến thức mới - Tiết 2)}
+    \textbf{Bước 1: Chuyển giao nhiệm vụ}
+    \begin{itemize}[leftmargin=0.6cm]
+        \item GV chiếu bản vẽ ngôi nhà một tầng mái dốc khổ lớn.
+        \item Yêu cầu các nhóm quan sát 3 hình biểu diễn: Mặt bằng tầng 1, Mặt đứng trục $A-D$, Mặt cắt $A-A$ và trả lời các câu hỏi khai thác thông tin.
+    \end{itemize}
+
+    \textbf{Bước 2: Thực hiện nhiệm vụ}
+    \begin{itemize}[leftmargin=0.6cm]
+        \item HS thảo luận nhóm, đối chiếu giữa mặt bằng và mặt cắt để tính chiều cao trần nhà ($3{,}6\text{ m}$) và độ dốc mái.
+    \end{itemize}
+
+    \textbf{Bước 3: Báo cáo, thảo luận}
+    \begin{itemize}[leftmargin=0.6cm]
+        \item Đại diện nhóm lên bảng chỉ rõ trên bản chiếu: vị trí cửa chính, hướng mở cửa và cách tính diện tích từng phòng.
+    \end{itemize}
+
+    \textbf{Bước 4: Kết luận, nhận định}
+    \begin{itemize}[leftmargin=0.6cm]
+        \item GV tổng kết: Khác với cơ khí tính bằng $\text{mm}$, trên bản vẽ nhà các con số kích thước trục thường ghi bằng milimet hoặc quy đổi mét ($\text{m}$), diện tích tính bằng mét vuông ($\text{m}^2$).
+    \end{itemize}
+\end{pedabox}
+
+\begin{aibox}{Tích hợp Năng lực số \& Năng lực AI (Theo TT 02/2025 \& QĐ 2422)}
+    \textbf{1. Tìm kiếm và đọc bản vẽ kĩ thuật số trên kho dữ liệu mở (Mã 1.1NC1a):}
+    \begin{itemize}[leftmargin=0.6cm]
+        \item Học sinh mở máy tính phòng thực hành, truy cập cổng học liệu số hoặc các trang chia sẻ thiết kế mở (như \texttt{https://openarchitecturecollaborative.org/} hoặc kho bản vẽ mẫu nhà nông thôn mới của Bộ Xây dựng).
+        \item Tải tệp bản vẽ định dạng PDF, thực hành thao tác: phóng to thu nhỏ (Zoom), chuyển trang, đọc khung tên và sử dụng công cụ đo kích thước ảo.
+    \end{itemize}
+    \textbf{2. Bản quyền thiết kế số và AI kiến trúc tạo sinh (Mã 3.3NC1a):}
+    \begin{itemize}[leftmargin=0.6cm]
+        \item \textit{Đạo đức và bản quyền số:} Học sinh hiểu rõ nguyên tắc tôn trọng quyền tác giả của kiến trúc sư, không tùy tiện sao chép nguyên bản bản vẽ thương mại để trục lợi mà phải xin phép hoặc sử dụng giấy phép nguồn mở (Creative Commons).
+        \item \textit{Ứng dụng của AI trong thiết kế kiến trúc:} Giới thiệu công nghệ AI Generative Design (như Maket.ai, Midjourney Architecture, Planner 5D): Người dùng chỉ cần nhập văn bản yêu cầu (Ví dụ: "Nhà 1 tầng 3 phòng ngủ, diện tích $100\text{ m}^2$, đón gió Nam"), AI sẽ tự động tính toán và phác thảo hàng chục phương án mặt bằng tối ưu sau vài giây.
+    \end{itemize}
+\end{aibox}
+
+\subsection*{3. Hoạt động 3: Luyện tập (10 phút)}
+
+\begin{itemize}[leftmargin=1.2cm]
+    \item[a)] \textbf{Mục tiêu:} Rèn luyện kĩ năng đọc thông số chi tiết của bản vẽ nhà và tính toán số lượng vật liệu cơ bản.
+    \item[b)] \textbf{Nội dung:} Thực hiện bài toán trên Phiếu học tập số 2.
+    \begin{itemize}[leftmargin=0.6cm]
+        \item Cho bản vẽ mặt bằng và mặt đứng của một phòng học trường THCS\&THPT Hồng Vân:
+        \begin{itemize}
+            \item Chiều dài phòng học: $8{,}4\text{ m}$; Chiều rộng: $6{,}0\text{ m}$; Chiều cao tường: $3{,}8\text{ m}$.
+            \item Phòng có 2 cửa đi ra vào kích thước $1{,}2\text{ m} \times 2{,}2\text{ m}$ và 4 cửa sổ kích thước $1{,}5\text{ m} \times 1{,}6\text{ m}$.
+            \item Hãy tính diện tích sàn của phòng học.
+            \item Hãy tính tổng diện tích tường cần quét vôi sơn (sau khi đã trừ đi diện tích các cửa đi và cửa sổ, không tính trần nhà).
+        \end{itemize}
+    \end{itemize}
+
+    \item[c)] \textbf{Sản phẩm (Lời giải chi tiết):}
+    \begin{itemize}[leftmargin=0.6cm]
+        \item Diện tích sàn phòng học:
+        $$S_{\text{sàn}} = 8{,}4 \times 6{,}0 = 50{,}4\text{ m}^2$$
+        \item Chu vi phòng học:
+        $$C = 2 \times (8{,}4 + 6{,}0) = 28{,}8\text{ m}$$
+        \item Diện tích toàn phần của 4 bức tường (chưa trừ cửa):
+        $$S_{\text{xung quanh}} = C \times h = 28{,}8 \times 3{,}8 = 109{,}44\text{ m}^2$$
+        \item Tổng diện tích của các cửa đi và cửa sổ:
+        $$S_{\text{cửa}} = 2 \times (1{,}2 \times 2{,}2) + 4 \times (1{,}5 \times 1{,}6) = 2 \times 2{,}64 + 4 \times 2{,}40 = 5{,}28 + 9{,}60 = 14{,}88\text{ m}^2$$
+        \item Diện tích tường cần quét sơn thực tế:
+        $$S_{\text{sơn}} = S_{\text{xung quanh}} - S_{\text{cửa}} = 109{,}44 - 14{,}88 = 94{,}56\text{ m}^2$$
+    \end{itemize}
+
+    \item[d)] \textbf{Tổ chức thực hiện:}
+    \begin{itemize}[leftmargin=0.6cm]
+        \item Học sinh làm việc cá nhân vào vở trong 5 phút.
+        \item GV gọi 1 HS lên bảng trình bày; cả lớp kiểm tra đối chiếu kết quả.
+    \end{itemize}
+\end{itemize}
+
+\subsection*{4. Hoạt động 4: Vận dụng (Dự án STEM - 11 phút)}
+
+\begin{itemize}[leftmargin=1.2cm]
+    \item[a)] \textbf{Mục tiêu:} Vận dụng tổng hợp kỹ năng đọc bản vẽ nhà để cắt, gấp và lắp ghép mô hình ngôi nhà một tầng mái dốc bằng bìa các-tông theo đúng tỉ lệ thu nhỏ.
+    \item[b)] \textbf{Nội dung:}
+    \begin{stembox}{Dự án STEM: Chế tạo mô hình ngôi nhà một tầng mái dốc từ bìa các-tông}
+        Mỗi tổ (gồm 7 học sinh) nhận bản vẽ thiết kế ngôi nhà một tầng mái dốc (tỉ lệ $1:100$ trên bản vẽ).
+        \textbf{Nhiệm vụ thi đua giữa các tổ:}
+        \begin{enumerate}[leftmargin=0.6cm]
+            \item Đo kích thước các tấm tường (tường trước, tường sau có đầu hồi tam giác, hai tường bên) và hai tấm mái dốc.
+            \item Dùng thước kẻ và bút chì vẽ dưỡng (phác thảo kích thước) lên tấm bìa các-tông tái chế.
+            \item Dùng kéo cắt chuẩn xác các chi tiết, trổ lỗ cửa đi và cửa sổ.
+            \item Dán lắp ghép các bức tường và mái dốc lại thành mô hình ngôi nhà 3D hoàn chỉnh, chắc chắn và ngay ngắn.
+        \end{enumerate}
+    \end{stembox}
+    \item[c)] \textbf{Sản phẩm:} 5 mô hình ngôi nhà bằng bìa các-tông của 5 tổ được trưng bày tại bàn giáo viên. Các bức tường thẳng đứng, mái dốc khít, cửa mở đúng vị trí bản vẽ.
+    \item[d)] \textbf{Tổ chức thực hiện:}
+    \begin{itemize}[leftmargin=0.6cm]
+        \item GV cho các tổ thực hành trong 8 phút, hỗ trợ các nhóm gặp khó khăn khi dán ghép góc tường.
+        \item 3 phút cuối: Đại diện các tổ thuyết minh ngắn gọn về sản phẩm mô hình của tổ mình.
+        \item GV tổng kết Chuyên đề 3, nhận xét tinh thần hợp tác và sự khéo léo của học sinh.
+    \end{itemize}
+\end{pedabox}
+
+\section*{IV. PHỤ LỤC HỌC LIỆU BỔ TRỢ}
+
+\subsection*{1. Phiếu học tập số 1 (Tiết 1): Đọc bản vẽ chi tiết kĩ thuật}
+
+\begin{pedabox}{PHIẾU HỌC TẬP SỐ 1: QUY TRÌNH ĐỌC BẢN VẼ CHI TIẾT "GỐI ĐỠ"}
+    \textbf{Họ và tên học sinh:} \dotfill \textbf{Lớp:} 11\dots \textbf{Nhóm:} \dots
+    
+    \textbf{Nhiệm vụ 1: Hoàn thành bảng tổng hợp 4 bước đọc}
+    \begin{center}
+    \begin{tabular}{|l|l|l|}
+    \hline
+    \textbf{Các bước đọc} & \textbf{Câu hỏi định hướng} & \textbf{Thông tin đọc được từ bản vẽ} \\ \hline
+    1. Khung tên & Tên chi tiết? Vật liệu? Tỉ lệ? & \dots\dots\dots\dots\dots\dots\dots\dots\dots\dots \\ \hline
+    2. Hình biểu diễn & Tên các hình chiếu? Có hình cắt không? & \dots\dots\dots\dots\dots\dots\dots\dots\dots\dots \\ \hline
+    3. Kích thước & Kích thước chung (Dài $\times$ Rộng $\times$ Cao)? & \dots\dots\dots\dots\dots\dots\dots\dots\dots\dots \\ \cline{2-3}
+     & Kích thước các lỗ rỗng và rãnh? & \dots\dots\dots\dots\dots\dots\dots\dots\dots\dots \\ \hline
+    4. Yêu cầu kĩ thuật & Chỉ dẫn gia công và xử lý bề mặt? & \dots\dots\dots\dots\dots\dots\dots\dots\dots\dots \\ \hline
+    \end{tabular}
+    \end{center}
+
+    \textbf{Nhiệm vụ 2: Đọc kí hiệu kích thước}
+    \begin{itemize}[leftmargin=0.6cm]
+        \item Con số $45$ ghi trên đường kích thước có ý nghĩa là: \dotfill
+        \item Kí hiệu $\varnothing 24$ có ý nghĩa là: \dotfill
+        \item Kí hiệu $R12$ có ý nghĩa là: \dotfill
+    \end{itemize}
+\end{pedabox}
+
+\subsection*{2. Phiếu học tập số 2 (Tiết 2): Đọc bản vẽ nhà và Triển khai STEM}
+
+\begin{pedabox}{PHIẾU HỌC TẬP SỐ 2: ĐỌC BẢN VẼ XÂY DỰNG \& KẾ HOẠCH DỰ ÁN STEM}
+    \textbf{Họ và tên học sinh:} \dotfill \textbf{Lớp:} 11\dots \textbf{Nhóm:} \dots
+
+    \textbf{Nhiệm vụ 1: Phân biệt 3 hình biểu diễn của ngôi nhà}
+    \begin{itemize}[leftmargin=0.6cm]
+        \item \textbf{Mặt bằng} là hình \dotfill, dùng để biết \dotfill
+        \item \textbf{Mặt đứng} là hình \dotfill, dùng để biết \dotfill
+        \item \textbf{Mặt cắt} là hình \dotfill, dùng để biết \dotfill
+    \end{itemize}
+
+    \textbf{Nhiệm vụ 2: Kế hoạch phân công dự án STEM làm mô hình nhà}
+    \begin{center}
+    \begin{tabular}{|c|l|l|}
+    \hline
+    \textbf{STT} & \textbf{Thành viên trong nhóm} & \textbf{Nhiệm vụ được phân công} \\ \hline
+    1 & \dots\dots\dots\dots\dots\dots\dots\dots & Đọc kích thước bản vẽ và vẽ dưỡng lên bìa \\ \hline
+    2 & \dots\dots\dots\dots\dots\dots\dots\dots & Cắt tỉa các bức tường và trổ cửa đi, cửa sổ \\ \hline
+    3 & \dots\dots\dots\dots\dots\dots\dots\dots & Cắt hai tấm mái dốc và dán cố định khung nhà \\ \hline
+    4 & \dots\dots\dots\dots\dots\dots\dots\dots & Thuyết minh sản phẩm và dọn vệ sinh lớp \\ \hline
+    \end{tabular}
+    \end{center}
+\end{pedabox}
+
+\subsection*{3. Rubric đánh giá năng lực học sinh trong bài học (4 mức độ)}
+
+\begin{center}
+\begin{tabularx}{\textwidth}{|>{\bfseries}p{3cm}|X|X|X|X|}
+\hline
+\textbf{Tiêu chí} & \textbf{Mức 1: Chưa đạt} & \textbf{Mức 2: Đạt} & \textbf{Mức 3: Khá} & \textbf{Mức 4: Tốt} \\ \hline
+Kỹ năng đọc bản vẽ chi tiết cơ khí & Chưa xác định được các kích thước cơ bản, nhầm lẫn $\varnothing$ và $R$. & Đọc đúng khung tên và kích thước chung nhưng còn lúng túng ở hình cắt. & Đọc thành thạo 4 bước bản vẽ chi tiết, xác định đúng kích thước các phần tử. & Đọc nhanh, giải thích thấu đáo hình dáng 3D của vật thể từ bản vẽ chi tiết. \\ \hline
+Kỹ năng đọc bản vẽ xây dựng (Bản vẽ nhà) & Chưa phân biệt được mặt bằng, mặt đứng và mặt cắt. & Phân biệt được các hình biểu diễn nhưng chưa đọc đúng kí hiệu cửa sổ, cửa đi. & Đọc chuẩn xác công năng các phòng, tính đúng diện tích sàn và diện tích tường sơn. & Phân tích sâu sắc giải pháp kiến trúc, đối chiếu đa chiều giữa mặt bằng và mặt đứng. \\ \hline
+Năng lực số và nhận thức AI & Chưa mở và tra cứu được tệp bản vẽ PDF trên máy tính. & Tra cứu được bản vẽ PDF nhưng chưa biết dùng công cụ đo kích thước số. & Khai thác tốt kho bản vẽ số mở, hiểu quy định bản quyền thiết kế kĩ thuật. & Làm chủ công cụ bản vẽ số, hiểu sâu cách AI kiến trúc tạo sinh mặt bằng tối ưu. \\ \hline
+Sản phẩm mô hình hóa STEM & Mô hình nhà méo mó, các góc dán không vuông, kích thước sai lệch nhiều. & Cắt dán được mô hình ngôi nhà nhưng mái dốc bị hở, thiếu cửa sổ. & Mô hình chắc chắn, đúng tỉ lệ thiết kế, cửa cắt gọn gàng, đẹp mắt. & Mô hình xuất sắc, tỉ lệ chuẩn xác tuyệt đối, trang trí sáng tạo, thuyết minh cuốn hút. \\ \hline
+\end{tabularx}
+\end{center}
+
+\end{document}
