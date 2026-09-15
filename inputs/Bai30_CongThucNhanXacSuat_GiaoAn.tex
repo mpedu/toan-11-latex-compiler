@@ -1,0 +1,605 @@
+\documentclass[12pt, a4paper]{article}
+% --- 1. Cấu hình Tiếng Việt và Font chữ chuẩn ---
+\usepackage[utf8]{inputenc}
+\usepackage[T5]{fontenc}
+\usepackage[vietnamese]{babel}
+\usepackage{mathptmx} % Font Times New Roman đồng bộ cả chữ và công thức toán, không gây xung đột gói
+
+\makeatletter
+\renewcommand{\normalsize}{\@setfontsize\normalsize{13pt}{16pt}}
+\makeatother
+\normalsize
+
+% --- 2. Gói Toán học & Ký hiệu bổ trợ ---
+\usepackage{amsmath, amssymb, amsfonts, mathrsfs, amsthm}
+\usepackage{graphicx}
+\usepackage{fontawesome}
+\usepackage{booktabs, tabularx, array, multirow}
+\usepackage{enumitem}
+
+% --- 3. Đồ họa TikZ, Bảng biến thiên & Hình không gian ---
+\usepackage{tikz}
+\usetikzlibrary{calc, intersections, angles, quotes, patterns, arrows.meta, 3d, trees}
+\usepackage{pgfplots}
+\pgfplotsset{compat=1.18}
+\usepackage{tkz-euclide}
+\usepackage{tkz-tab}
+
+\renewcommand{\vec}[1]{\overrightarrow{#1}}
+
+% --- 4. Hộp sư phạm (Tcolorbox) ---
+\usepackage[many]{tcolorbox}
+\tcbuselibrary{skins, breakable}
+
+% --- 5. Căn lề chuẩn văn bản giáo án ---
+\usepackage{geometry}
+\geometry{
+    a4paper,
+    left=25mm,
+    right=15mm,
+    top=20mm,
+    bottom=20mm
+}
+
+% --- 6. Header / Footer chuẩn hóa ---
+\usepackage{fancyhdr}
+\usepackage{lastpage}
+\pagestyle{fancy}
+\fancyhf{}
+
+\fancyhead[L]{\small \textit{Kế hoạch bài dạy Toán 11}}
+\fancyhead[R]{\textbf{Trang \thepage/\pageref{LastPage}}}
+\fancyfoot[L]{\small \textit{Tổ Toán - Tin}}
+\fancyfoot[R]{\small \textit{Trường THCS\&THPT Hồng Vân}}
+\renewcommand{\headrulewidth}{0.4pt}
+\renewcommand{\footrulewidth}{0.4pt}
+
+% --- 7. Giãn dòng & Giãn đoạn theo chuẩn Nghị định 30/2020/NĐ-CP ---
+\usepackage{setspace}
+\setstretch{1.15}
+\setlength{\parindent}{1.0cm}
+\setlength{\parskip}{5pt}
+
+% Định nghĩa hộp sư phạm chuyên dụng
+\newtcolorbox{pedabox}[2][]{
+    enhanced,
+    breakable,
+    colback=blue!3!white,
+    colframe=blue!65!black,
+    fonttitle=\bfseries\small,
+    title={#2},
+    arc=2mm,
+    boxrule=0.6pt,
+    left=3mm, right=3mm, top=2mm, bottom=2mm,
+    #1
+}
+
+\newtcolorbox{aibox}[2][]{
+    enhanced,
+    breakable,
+    colback=teal!4!white,
+    colframe=teal!70!black,
+    fonttitle=\bfseries\small,
+    title={#2},
+    arc=2mm,
+    boxrule=0.6pt,
+    left=3mm, right=3mm, top=2mm, bottom=2mm,
+    #1
+}
+
+\newtcolorbox{scaffoldbox}[2][]{
+    enhanced,
+    breakable,
+    colback=orange!4!white,
+    colframe=orange!80!black,
+    fonttitle=\bfseries\small,
+    title={#2},
+    arc=2mm,
+    boxrule=0.6pt,
+    left=3mm, right=3mm, top=2mm, bottom=2mm,
+    #1
+}
+
+\newtcolorbox{stembox}[2][]{
+    enhanced,
+    breakable,
+    colback=purple!4!white,
+    colframe=purple!75!black,
+    fonttitle=\bfseries\small,
+    title={#2},
+    arc=2mm,
+    boxrule=0.6pt,
+    left=3mm, right=3mm, top=2mm, bottom=2mm,
+    #1
+}
+
+\begin{document}
+
+\begin{center}
+    {\fontsize{14pt}{17pt}\selectfont \textbf{KẾ HOẠCH BÀI DẠY MÔN TOÁN LỚP 11}}\\[6pt]
+    {\fontsize{16pt}{19pt}\selectfont \textbf{BÀI 30. CÔNG THỨC NHÂN XÁC SUẤT CHO HAI BIẾN CỐ ĐỘC LẬP}}\\[4pt]
+    {\fontsize{12pt}{15pt}\selectfont \textbf{Môn học: Toán 11} \ \textbar \ \textbf{Thời lượng: 2 tiết (Tiết 89, 90 theo PPCT | Tuần 32)}}
+\end{center}
+
+\vspace{5pt}
+
+\section*{I. MỤC TIÊU}
+
+\subsection*{1. Kiến thức, Năng lực}
+
+\begin{itemize}[leftmargin=1.2cm]
+    \item \textbf{Yêu cầu cần đạt (Nguyên văn CT GDPT 2018 Toán 11):}
+    \begin{itemize}[leftmargin=0.6cm]
+        \item Tính được xác suất của biến cố giao bằng cách sử dụng công thức nhân (cho trường hợp biến cố độc lập: $P(AB) = P(A) \cdot P(B)$).
+        \item Tính được xác suất trong một số bài toán đơn giản bằng cách sử dụng sơ đồ hình cây.
+        \item Vận dụng kết hợp công thức cộng và công thức nhân xác suất để giải quyết một số vấn đề thực tiễn gắn với đời sống, khoa học kỹ thuật và an toàn thông tin.
+    \end{itemize}
+
+    \item \textbf{Năng lực Toán học đặc thù:}
+    \begin{itemize}[leftmargin=0.6cm]
+        \item \textit{Năng lực tư duy và lập luận toán học:} Khái quát hóa, phân biệt bản chất giữa hai khái niệm then chốt dễ gây nhầm lẫn trong xác suất: \textbf{biến cố xung khắc} (quan hệ loại trừ nhau: $A \cap B = \emptyset$, liên quan đến phép cộng $P(A \cup B) = P(A) + P(B)$) và \textbf{biến cố độc lập} (quan hệ về mặt xác suất: việc xảy ra của $A$ không ảnh hưởng đến $B$, liên quan đến phép nhân $P(AB) = P(A) \cdot P(B)$); giải thích tính logic của quy tắc nhân dọc theo nhánh và quy tắc cộng ngang các nhánh trên sơ đồ hình cây; chứng minh các cặp biến cố đối $(A, \overline{B})$, $(\overline{A}, B)$, $(\overline{A}, \overline{B})$ cũng độc lập khi $A$ và $B$ độc lập.
+        \item \textit{Năng lực mô hình hóa toán học:} Thiết lập mô hình xác suất cho các quá trình đa giai đoạn diễn ra nối tiếp hoặc đồng thời độc lập trong thực tiễn (hai xạ thủ cùng bắn độc lập vào bia, hai vòng quay may mắn trong hội chợ, hệ thống mạch điện gồm nhiều linh kiện hoạt động độc lập, quá trình truyền tin qua nhiều trạm chuyển tiếp, hệ thống bảo mật xác thực hai bước 2FA); chuyển đổi các tình huống thực tế thành sơ đồ hình cây toán học.
+        \item \textit{Năng lực giải quyết vấn đề toán học:} Nhận diện chính xác từ khóa và cấu trúc bài toán để lựa chọn công cụ phù hợp: biến cố giao của các phép thử độc lập $\implies$ dùng công thức nhân; bài toán nhiều nhánh rẽ có điều kiện $\implies$ lập sơ đồ hình cây; bài toán tìm xác suất ``có ít nhất một biến cố xảy ra'' trong chuỗi phép thử độc lập $\implies$ chuyển sang biến cố đối $P = 1 - P(\overline{A}_1)\dots P(\overline{A}_n)$.
+        \item \textit{Năng lực giao tiếp toán học:} Sử dụng chính xác và chuẩn mực hệ thống ký hiệu toán học xác suất: $A \cap B, AB, P(AB), P(A) \cdot P(B), \overline{A}, \overline{B}$; trình bày bài giải tự luận rõ ràng, mạch lạc, lập luận chặt chẽ tính độc lập của các biến cố trước khi áp dụng công thức nhân; diễn đạt lưu loát quy trình đọc sơ đồ hình cây trước lớp.
+        \item \textit{Năng lực sử dụng công cụ, phương tiện học toán:} Khai thác hiệu quả máy tính cầm tay (MTCT Casio fx-580VN X) để thực hiện các phép nhân lũy thừa, phân số và số thập phân xác suất; ứng dụng phần mềm vẽ sơ đồ tư duy số (Canva, PowerPoint, GitMind) để thiết kế sơ đồ hình cây phân nhánh xác suất trực quan, thẩm mỹ.
+    \end{itemize}
+
+    \item \textbf{Năng lực số (Theo Thông tư 02/2025/TT-BGDĐT):}
+    \begin{itemize}[leftmargin=0.6cm]
+        \item \textit{Mã 3.1NC1b (Tạo và biểu diễn nội dung số trực quan bằng phần mềm):} Học sinh thao tác trên máy tính phòng học hoặc thiết bị thông minh, sử dụng phần mềm đồ họa/sơ đồ tư duy số (Mindmap, Canva, GeoGebra) để tự tay thiết kế sơ đồ hình cây (Tree Diagram) biểu diễn các nhánh xác suất của phép thử ngẫu nhiên hai giai đoạn; định dạng các nhánh, gán nhãn xác suất thành phần trên từng nhánh và xuất bản dưới dạng tệp ảnh số/PDF phục vụ học tập cộng tác.
+    \end{itemize}
+
+    \item \textbf{Năng lực AI (Theo Quyết định 2422/QĐ-BGDĐT):}
+    \begin{itemize}[leftmargin=0.6cm]
+        \item \textit{Mã 11.C4.1 (Hiểu cơ chế AI tính xác suất phân phối từ ngữ để gợi ý từ tiếp theo):} Học sinh tìm hiểu và trình bày được nguyên lý toán học nền tảng của các mô hình Trí tuệ nhân tạo xử lý ngôn ngữ tự nhiên (NLP) và mô hình ngôn ngữ lớn (LLM như Gemini, ChatGPT, tính năng gợi ý từ tự động của bàn phím ảo Gboard trên điện thoại): cơ chế tính xác suất xuất hiện của từ tiếp theo dựa trên chuỗi từ đã gõ (Next Token Prediction) thông qua mô hình xác suất Markov và quy tắc nhân xác suất; hiểu được rằng văn bản do AI sinh ra thực chất là quá trình chọn ngẫu nhiên các từ có xác suất cao nhất.
+        \item \textit{Kỹ thuật Prompting tương tác phản biện AI:} Học sinh biết cách xây dựng câu lệnh prompt chuẩn mực nhờ AI giải thích sơ đồ hình cây của một bài toán xác suất thực tế và phát hiện các trường hợp AI nhầm lẫn giữa biến cố độc lập và biến cố phụ thuộc.
+    \end{itemize}
+
+    \item \textbf{Giáo dục STEM/STEAM:}
+    \begin{itemize}[leftmargin=0.6cm]
+        \item \textit{Chủ đề STEM:} Thiết kế và phân tích xác suất trúng thưởng của trò chơi \textbf{``Vòng quay may mắn hai tầng độc lập''} (Double Lucky Wheel). Học sinh tính toán xác suất lý thuyết của các giải thưởng (Giải Nhất, Giải Nhì, Giải Khuyến khích), thiết lập tỷ lệ diện tích các cung tròn trên hai vòng quay để đảm bảo tính hấp dẫn và cân đối ngân sách của hội chợ trường học.
+    \end{itemize}
+
+    \item \textbf{Năng lực chung:}
+    \begin{itemize}[leftmargin=0.6cm]
+        \item \textit{Tự chủ và tự học:} Chủ động đọc trước bài đọc trong SGK; tự giác làm bài tập trên Phiếu học tập và tích cực tìm hiểu ứng dụng công nghệ của toán xác suất.
+        \item \textit{Giao tiếp và hợp tác:} Hoạt động nhóm hiệu quả (chia 7 nhóm, mỗi nhóm 5 học sinh trong lớp 35 học sinh); biết lắng nghe, phân công công việc hài hòa giữa thiết kế đồ họa sơ đồ cây và tính toán xác suất.
+    \end{itemize}
+\end{itemize}
+
+\subsection*{2. Phẩm chất}
+
+\begin{itemize}[leftmargin=1.2cm]
+    \item \textbf{Chăm chỉ:} Kiên nhẫn vẽ từng nhánh cây xác suất, cẩn thận thực hiện các phép nhân phân số và làm tròn số thập phân; tích cực tham gia hoạt động STEM.
+    \item \textbf{Trung thực:} Ghi nhận trung thực các số liệu xác suất thu được từ thực nghiệm vòng quay may mắn, không tùy tiện sửa đổi số liệu; tôn trọng luật chơi.
+    \item \textbf{Trách nhiệm:} Có trách nhiệm với nhiệm vụ được phân công trong nhóm; có ý thức bảo quản thiết bị học tập tại phòng máy tính; hình thành thói quen tư duy xác suất để quản lý rủi ro trong cuộc sống.
+\end{itemize}
+
+\section*{II. THIẾT BỊ DẠY HỌC VÀ HỌC LIỆU}
+
+\begin{itemize}[leftmargin=1.2cm]
+    \item \textbf{Giáo viên:}
+    \begin{itemize}[leftmargin=0.6cm]
+        \item Kế hoạch bài dạy chi tiết 2 tiết theo chuẩn Công văn 5512/BGDĐT-GDTrH.
+        \item Bài trình chiếu điện tử tương tác (Slide PowerPoint / Canva) sinh động với hình ảnh minh họa sơ đồ cây và video ngắn về cơ chế Next Token Prediction của AI.
+        \item Bộ học cụ STEM: 02 mô hình vòng quay may mắn tự chế (vòng 1 chia 4 màu cờ đỏ - vàng - xanh - trắng; vòng 2 chia 6 ô số điểm từ 1 đến 6).
+        \item Phòng thực hành tin học của trường (35 máy vi tính kết nối Internet ổn định, có phần mềm trình duyệt và công cụ vẽ sơ đồ trực tuyến).
+        \item Hệ thống Phiếu học tập phân tầng bậc thang (Phiếu số 1: Công thức nhân xác suất; Phiếu số 2: Sơ đồ hình cây, Dự án STEM \& Phân tích AI).
+        \item Bảng Rubric đánh giá năng lực học sinh 4 mức độ.
+    \end{itemize}
+    \item \textbf{Học sinh:}
+    \begin{itemize}[leftmargin=0.6cm]
+        \item Sách giáo khoa Toán 11, vở ghi bài, thước kẻ, bút màu (đỏ, xanh, cam).
+        \item Máy tính cầm tay Casio fx-580VN X (hoặc tương đương).
+        \item Điện thoại thông minh hoặc máy tính cá nhân để thực hành vẽ sơ đồ cây số và trải nghiệm tính năng gõ phím tiên đoán từ AI.
+    \end{itemize}
+\end{itemize}
+
+\section*{III. TIẾN TRÌNH DẠY HỌC}
+
+\begin{center}
+    \textbf{\large TIẾT 1 (TIẾT 89 THEO PPCT | TUẦN 32)}\\[4pt]
+    \textit{(Nội dung: Công thức nhân xác suất cho hai biến cố độc lập)}
+\end{center}
+
+\subsection*{1. Hoạt động 1: Mở đầu (Khởi động - 6 phút)}
+
+\paragraph{a) Mục tiêu:} Tạo tình huống có vấn đề xuất phát từ trò chơi gieo xúc xắc và tung đồng xu quen thuộc; dẫn dắt học sinh nhận biết sự độc lập của hai hành động và phát hiện ra công thức nhân xác suất.
+
+\paragraph{b) Nội dung:} Giáo viên tổ chức trò chơi \textbf{``Gieo đồng xu \& Tung xúc xắc''}: Một học sinh thực hiện đồng thời hai hành động ngẫu nhiên: Tung một đồng xu cân đối đồng chất (mặt $S$ hoặc $N$) và gieo một con xúc xắc cân đối $6$ mặt (số chấm từ $1$ đến $6$).
+\begin{itemize}[leftmargin=0.6cm]
+    \item Xét biến cố $A$: ``Đồng xu xuất hiện mặt sấp ($S$)''.
+    \item Xét biến cố $B$: ``Con xúc xắc xuất hiện mặt $6$ chấm''.
+\end{itemize}
+\textbf{Câu hỏi gợi mở:}
+\begin{enumerate}[leftmargin=0.6cm]
+    \item Tính xác suất $P(A)$ và $P(B)$.
+    \item Kết quả xuất hiện của đồng xu có làm thay đổi xác suất xuất hiện mặt $6$ chấm của con xúc xắc không? Hai biến cố $A$ và $B$ có quan hệ gì?
+    \item Hãy liệt kê không gian mẫu $\Omega$ của phép thử kết hợp và tính xác suất để biến cố giao $AB$ xảy ra: ``Đồng xu xuất hiện mặt sấp \textbf{và} con xúc xắc xuất hiện mặt $6$ chấm''.
+    \item Nhận xét mối quan hệ giữa $P(AB)$ với $P(A)$ và $P(B)$.
+\end{enumerate}
+
+\paragraph{c) Sản phẩm:} Câu trả lời của học sinh:
+\begin{itemize}[leftmargin=0.8cm]
+    \item $P(A) = \dfrac{1}{2} = 0{,}5$.
+    \item $P(B) = \dfrac{1}{6}$.
+    \item Đồng xu và xúc xắc là hai vật thể chuyển động hoàn toàn tách biệt, việc đồng xu sấp hay ngửa không ảnh hưởng gì tới xác suất xúc xắc ra $6$ chấm $\implies$ $A$ và $B$ là \textbf{hai biến cố độc lập}.
+    \item Không gian mẫu: $\Omega = \{(S,1), (S,2), \dots, (S,6), (N,1), (N,2), \dots, (N,6)\} \implies n(\Omega) = 2 \times 6 = 12$.
+    \item Biến cố giao $AB = \{(S, 6)\} \implies n(AB) = 1$.
+    \item Xác suất: $P(AB) = \dfrac{1}{12}$.
+    \item Học sinh phát hiện: $\dfrac{1}{12} = \dfrac{1}{2} \cdot \dfrac{1}{6} \implies P(AB) = P(A) \cdot P(B)$.
+\end{itemize}
+
+\paragraph{d) Tổ chức thực hiện:}
+\begin{itemize}[leftmargin=0.8cm]
+    \item \textbf{Chuyển giao nhiệm vụ:} Giáo viên gọi 1 học sinh lên bảng tung đồng xu và xúc xắc thực tế, chiếu các câu hỏi lên màn hình.
+    \item \textbf{Thực hiện nhiệm vụ:} Cả lớp quan sát, tính toán nhanh vào vở nháp trong 3 phút.
+    \item \textbf{Báo cáo, thảo luận:} 1 học sinh trả lời miệng; các học sinh khác đối chiếu phép nhân $\dfrac{1}{2} \times \dfrac{1}{6} = \dfrac{1}{12}$.
+    \item \textbf{Kết luận, nhận định:} Giáo viên chốt lại: Khi hai biến cố độc lập với nhau, xác suất để cả hai cùng xảy ra bằng tích xác suất của từng biến cố. Đó chính là \textbf{Công thức nhân xác suất}.
+\end{itemize}
+
+\subsection*{2. Hoạt động 2: Hình thành kiến thức - Công thức nhân xác suất (18 phút)}
+
+\paragraph{a) Mục tiêu:} Giúp học sinh nắm vững định nghĩa và định lý công thức nhân xác suất cho hai biến cố độc lập; mở rộng cho nhiều biến cố độc lập; chứng minh tính độc lập của các biến cố đối.
+
+\paragraph{b) Nội dung:} Giáo viên hướng dẫn học sinh tiếp cận kiến thức có hệ thống:
+
+\begin{pedabox}{1. Định nghĩa và Định lý Công thức nhân xác suất}
+\textbf{Định lý:} Nếu hai biến cố $A$ và $B$ độc lập với nhau thì:
+\begin{equation}
+    P(A \cap B) = P(A) \cdot P(B) \quad \text{hay viết gọn là} \quad P(AB) = P(A) \cdot P(B)
+\end{equation}
+\textbf{Chứng minh:}
+\begin{itemize}[leftmargin=0.5cm]
+    \item Xét phép thử kết hợp từ hai phép thử độc lập $T_1$ (có không gian mẫu $\Omega_1$) và $T_2$ (có không gian mẫu $\Omega_2$).
+    \item Không gian mẫu chung là tập tích Đề-các: $\Omega = \Omega_1 \times \Omega_2 \implies n(\Omega) = n(\Omega_1) \cdot n(\Omega_2)$.
+    \item Biến cố giao $AB$ có tập hợp kết quả thuận lợi là $A \times B \implies n(AB) = n(A) \cdot n(B)$.
+    \item Áp dụng định nghĩa cổ điển của xác suất:
+    $$P(AB) = \dfrac{n(AB)}{n(\Omega)} = \dfrac{n(A) \cdot n(B)}{n(\Omega_1) \cdot n(\Omega_2)} = \dfrac{n(A)}{n(\Omega_1)} \cdot \dfrac{n(B)}{n(\Omega_2)} = P(A) \cdot P(B)$$
+\end{itemize}
+\end{pedabox}
+
+\begin{pedabox}{2. Tính chất độc lập của các biến cố đối \& Mở rộng}
+\textbf{Tính chất quan trọng:} Nếu $A$ và $B$ là hai biến cố độc lập thì các cặp biến cố sau đây cũng độc lập với nhau:
+\begin{itemize}[leftmargin=0.5cm]
+    \item $A$ và $\overline{B}$ độc lập $\implies P(A\overline{B}) = P(A) \cdot P(\overline{B}) = P(A) \cdot [1 - P(B)]$.
+    \item $\overline{A}$ và $B$ độc lập $\implies P(\overline{A}B) = P(\overline{A}) \cdot P(B) = [1 - P(A)] \cdot P(B)$.
+    \item $\overline{A}$ và $\overline{B}$ độc lập $\implies P(\overline{A}\overline{B}) = P(\overline{A}) \cdot P(\overline{B}) = [1 - P(A)] \cdot [1 - P(B)]$.
+\end{itemize}
+\textbf{Mở rộng cho $k$ biến cố độc lập ($k \geq 3$):}
+Nếu $A_1, A_2, \dots, A_k$ là các biến cố độc lập toàn thể thì:
+\begin{equation}
+    P(A_1 A_2 \dots A_k) = P(A_1) \cdot P(A_2) \dots P(A_k)
+\end{equation}
+\end{pedabox}
+
+\begin{scaffoldbox}{Giàn giáo sư phạm: Phân biệt biến cố Xung khắc và Độc lập cho HS TB-Yếu}
+\begin{center}
+\small
+\begin{tabularx}{\linewidth}{|l|X|X|}
+\hline
+\textbf{Tiêu chí} & \textbf{Hai biến cố Xung khắc ($A \cap B = \emptyset$)} & \textbf{Hai biến cố Độc lập} \\ \hline
+\textbf{Bản chất} & Quan hệ loại trừ: $A$ xảy ra thì $B$ \textbf{không thể} xảy ra. & Quan hệ xác suất: $A$ xảy ra \textbf{không ảnh hưởng} đến $B$. \\ \hline
+\textbf{Từ khóa nhận diện} & Biến cố hợp: ``$A$ \textbf{hoặc} $B$'' & Biến cố giao: ``cả $A$ \textbf{và} $B$ cùng xảy ra'' \\ \hline
+\textbf{Công thức áp dụng} & \textbf{CÔNG THỨC CỘNG:} & \textbf{CÔNG THỨC NHÂN:} \\ 
+& $P(A \cup B) = P(A) + P(B)$ & $P(AB) = P(A) \cdot P(B)$ \\ \hline
+\end{tabularx}
+\end{center}
+\textit{Quy tắc khắc cốt ghi tâm: ``HOẶC thì CỘNG (nếu xung khắc) - VÀ thì NHÂN (nếu độc lập)''.}
+\end{scaffoldbox}
+
+\paragraph{c) Sản phẩm:} Định lý, công thức và bảng so sánh được ghi chép cẩn thận vào vở; học sinh trả lời được câu hỏi phân biệt xung khắc và độc lập.
+
+\paragraph{d) Tổ chức thực hiện:}
+\begin{itemize}[leftmargin=0.8cm]
+    \item \textbf{Chuyển giao nhiệm vụ:} Giáo viên trình bày chứng minh định lý, yêu cầu học sinh thảo luận cặp đôi để điền vào bảng so sánh giữa Xung khắc và Độc lập.
+    \item \textbf{Thực hiện nhiệm vụ:} Học sinh thảo luận 4 phút, hoàn thành bảng. Giáo viên hỗ trợ nhóm học sinh yếu ghi nhớ mẹo ``Hoặc thì cộng, Và thì nhân''.
+    \item \textbf{Báo cáo, thảo luận:} 1 học sinh nhắc lại định nghĩa độc lập; 1 học sinh phát biểu công thức mở rộng cho 3 biến cố.
+    \item \textbf{Kết luận, nhận định:} Giáo viên chuẩn hóa nội dung, chuyển tiếp sang bài tập luyện tập.
+\end{itemize}
+
+\subsection*{3. Hoạt động 3: Luyện tập các bài toán cơ bản (16 phút)}
+
+\paragraph{a) Mục tiêu:} Học sinh vận dụng chính xác công thức nhân xác suất và tính chất của biến cố đối độc lập vào giải bài toán thực tế kinh điển.
+
+\paragraph{b) Nội dung:} Học sinh làm việc theo nhóm 5 học sinh trên Phiếu học tập số 1:
+
+\begin{pedabox}{Bài tập luyện tập Tiết 1}
+\textbf{Bài 1 (Ví dụ kinh điển - Bắn súng thể thao):} Hai vận động viên bắn súng $X$ và $Y$ cùng bắn mỗi người $1$ viên đạn vào một tấm bia một cách độc lập. Xác suất bắn trúng bia của xạ thủ $X$ là $0{,}8$, của xạ thủ $Y$ là $0{,}7$. Tính xác suất để:
+\begin{enumerate}[leftmargin=0.6cm]
+    \item[a)] Cả hai xạ thủ đều bắn trúng bia.
+    \item[b)] Cả hai xạ thủ đều bắn trượt bia.
+    \item[c)] Có đúng một xạ thủ bắn trúng bia.
+    \item[d)] Có ít nhất một xạ thủ bắn trúng bia.
+\end{enumerate}
+
+\textbf{Bài 2 (Kỹ thuật mạch điện):} Một hệ thống cảnh báo cháy gồm $2$ cảm biến nhiệt độ $K_1$ và $K_2$ hoạt động độc lập với nhau. Xác suất để cảm biến $K_1$ phát tín hiệu báo động khi có cháy là $0{,}95$; của $K_2$ là $0{,}90$. Hệ thống sẽ phát chuông báo động nếu có ít nhất một trong hai cảm biến phát tín hiệu. Tính xác suất hệ thống phát chuông báo động khi có sự cố cháy xảy ra.
+\end{pedabox}
+
+\paragraph{c) Sản phẩm:} Lời giải chi tiết của học sinh:
+\begin{itemize}[leftmargin=0.8cm]
+    \item \textbf{Giải Bài 1:}
+    Gọi $A$: ``Xạ thủ $X$ bắn trúng bia'' $\implies P(A) = 0{,}8 \implies P(\overline{A}) = 1 - 0{,}8 = 0{,}2$.
+    Gọi $B$: ``Xạ thủ $Y$ bắn trúng bia'' $\implies P(B) = 0{,}7 \implies P(\overline{B}) = 1 - 0{,}7 = 0{,}3$.
+    Vì hai xạ thủ bắn độc lập nên $A$ và $B$ là hai biến cố độc lập.
+    \begin{itemize}[leftmargin=0.4cm]
+        \item[a)] Biến cố cả hai cùng trúng là $AB$. Do $A, B$ độc lập:
+        $$P(AB) = P(A) \cdot P(B) = 0{,}8 \cdot 0{,}7 = 0{,}56$$
+        \item[b)] Biến cố cả hai cùng trượt là $\overline{A}\overline{B}$. Do $\overline{A}, \overline{B}$ độc lập:
+        $$P(\overline{A}\overline{B}) = P(\overline{A}) \cdot P(\overline{B}) = 0{,}2 \cdot 0{,}3 = 0{,}06$$
+        \item[c)] Gọi $C$: ``Có đúng một xạ thủ bắn trúng bia''. Ta có:
+        $$C = (A\overline{B}) \cup (\overline{A}B)$$
+        Vì $A\overline{B}$ và $\overline{A}B$ là hai biến cố xung khắc, nên:
+        $$P(C) = P(A\overline{B}) + P(\overline{A}B) = P(A) \cdot P(\overline{B}) + P(\overline{A}) \cdot P(B) = 0{,}8 \cdot 0{,}3 + 0{,}2 \cdot 0{,}7 = 0{,}24 + 0{,}14 = 0{,}38$$
+        \item[d)] Gọi $D$: ``Có ít nhất một xạ thủ bắn trúng bia''.
+        \textit{Cách 1 (Dùng biến cố đối):} Biến cố đối $\overline{D}$ là ``Cả hai xạ thủ đều trượt'' (chính là câu b).
+        $$P(D) = 1 - P(\overline{D}) = 1 - 0{,}06 = 0{,}94$$
+        \textit{Cách 2 (Dùng công thức cộng tổng quát):}
+        $$P(A \cup B) = P(A) + P(B) - P(AB) = 0{,}8 + 0{,}7 - 0{,}56 = 1{,}5 - 0{,}56 = 0{,}94$$
+    \end{itemize}
+    \item \textbf{Giải Bài 2:}
+    Gọi $A$: ``Cảm biến $K_1$ phát tín hiệu'' $\implies P(A) = 0{,}95 \implies P(\overline{A}) = 0{,}05$.
+    Gọi $B$: ``Cảm biến $K_2$ phát tín hiệu'' $\implies P(B) = 0{,}90 \implies P(\overline{B}) = 0{,}10$.
+    Hệ thống không phát chuông báo động khi cả hai cảm biến cùng bị hỏng (biến cố $\overline{A}\overline{B}$).
+    Do hai cảm biến hoạt động độc lập:
+    $$P(\overline{A}\overline{B}) = P(\overline{A}) \cdot P(\overline{B}) = 0{,}05 \cdot 0{,}10 = 0{,}005$$
+    Xác suất hệ thống phát chuông báo động khi có cháy là:
+    $$P = 1 - P(\overline{A}\overline{B}) = 1 - 0{,}005 = 0{,}995 \quad (99{,}5\%)$$
+\end{itemize}
+
+\paragraph{d) Tổ chức thực hiện:}
+\begin{itemize}[leftmargin=0.8cm]
+    \item \textbf{Chuyển giao nhiệm vụ:} Giáo viên giao bài tập trên Phiếu học tập số 1, yêu cầu các nhóm hoàn thành trong 10 phút.
+    \item \textbf{Thực hiện nhiệm vụ:} Học sinh làm việc nhóm, trao đổi cách tính câu c và câu d. Giáo viên đến các nhóm hướng dẫn học sinh nhận ra $A\overline{B}$ và $\overline{A}B$ là xung khắc để dùng dấu cộng.
+    \item \textbf{Báo cáo, thảo luận:} Nhóm 1 trình bày Bài 1; Nhóm 4 trình bày Bài 2 trên bảng phụ. Cả lớp thảo luận về sự tiện lợi của phương pháp biến cố đối trong câu d.
+    \item \textbf{Kết luận, nhận định:} Giáo viên chuẩn hóa bài giải, nhấn mạnh: Việc mắc thêm cảm biến độc lập đã nâng độ an toàn của hệ thống từ $95\%$ lên tới $99{,}5\%$.
+\end{itemize}
+
+\subsection*{4. Hoạt động 4: Vận dụng (5 phút)}
+
+\paragraph{a) Mục tiêu:} Vận dụng công thức nhân vào bài toán an ninh mạng và bảo mật tài khoản cá nhân.
+
+\paragraph{b) Nội dung:} Giáo viên đặt vấn đề: ``Tại sao các ngân hàng và tài khoản mạng xã hội luôn khuyến nghị người dùng kích hoạt tính năng Xác thực hai yếu tố (2FA)? Giả sử một hacker có xác suất đoán đúng mật khẩu là $10^{-4}$ ($0{,}01\%$) và xác suất bẻ khóa được mã OTP gửi về điện thoại là $10^{-3}$ ($0{,}1\%$). Tính xác suất để hacker xâm nhập thành công tài khoản khi hai lớp bảo mật này độc lập nhau?''.
+
+\paragraph{c) Sản phẩm:} Học sinh tính: $P = 10^{-4} \cdot 10^{-3} = 10^{-7} = \dfrac{1}{10.000.000}$ (một phần mười triệu). Xác suất bị tấn công giảm đi một vạn lần so với chỉ dùng mật khẩu.
+
+\paragraph{d) Tổ chức thực hiện:} Giáo viên nêu bài toán $\implies$ Học sinh tính nhẩm nhanh $\implies$ Giáo viên chốt lại bài học về an toàn số, chuẩn bị tâm thế cho Tiết 2 học về Sơ đồ hình cây và Trí tuệ nhân tạo.
+
+\newpage
+
+\begin{center}
+    \textbf{\large TIẾT 2 (TIẾT 90 THEO PPCT | TUẦN 32)}\\[4pt]
+    \textit{(Nội dung: Tính xác suất bằng Sơ đồ hình cây - Chủ đề STEM Vòng quay may mắn \& Khám phá AI)}
+\end{center}
+
+\subsection*{1. Hoạt động 1: Mở đầu (Khởi động - 5 phút)}
+
+\paragraph{a) Mục tiêu:} Tạo nhu cầu biểu diễn trực quan quá trình ngẫu nhiên nhiều giai đoạn phân nhánh thông qua bài toán chọn đồ vật.
+
+\paragraph{b) Nội dung:} Một bạn học sinh có $2$ chiếc áo (áo Trắng, áo Xanh) và $3$ chiếc quần (quần Đen, quần Xám, quần Bò). Bạn chọn ngẫu nhiên $1$ chiếc áo rồi chọn ngẫu nhiên $1$ chiếc quần để mặc. Làm thế nào để liệt kê đầy đủ và trực quan toàn bộ các cách phối đồ mà không bị sót?
+
+\paragraph{c) Sản phẩm:} Học sinh phác thảo sơ đồ phân nhánh từ gốc: Áo Trắng rẽ ra 3 nhánh Quần (Đen, Xám, Bò); Áo Xanh rẽ ra 3 nhánh Quần. Tổng cộng có $2 \times 3 = 6$ nhánh kết quả.
+
+\paragraph{d) Tổ chức thực hiện:} Giáo viên trình chiếu sơ đồ $\implies$ Dẫn dắt: Cấu trúc phân nhánh này trong toán học và tin học được gọi là \textbf{Sơ đồ hình cây (Tree Diagram)}.
+
+\subsection*{2. Hoạt động 2: Hình thành kiến thức - Tính xác suất bằng sơ đồ hình cây (18 phút)}
+
+\paragraph{a) Mục tiêu:} Học sinh hiểu rõ cấu trúc của sơ đồ hình cây; nắm vững quy tắc nhân xác suất dọc theo các nhánh và quy tắc cộng xác suất ngang qua các nhánh kết quả; ứng dụng công nghệ số để vẽ sơ đồ cây (Mã 3.1NC1b).
+
+\paragraph{b) Nội dung:} Giáo viên hướng dẫn quy trình lập và đọc sơ đồ hình cây qua bài toán mẫu:
+
+\begin{pedabox}{1. Cấu trúc và Quy tắc tính xác suất trên Sơ đồ hình cây}
+\textbf{Định nghĩa:} Sơ đồ hình cây là một sơ đồ phân nhánh hình cây biểu diễn tuần tự các giai đoạn của một phép thử nhiều bước hoặc các biến cố kế tiếp nhau:
+\begin{itemize}[leftmargin=0.5cm]
+    \item \textbf{Gốc cây:} Điểm khởi đầu của phép thử.
+    \item \textbf{Các nhánh giai đoạn 1:} Biểu diễn các kết quả có thể của bước 1, trên mỗi nhánh ghi xác suất tương ứng.
+    \item \textbf{Các nhánh giai đoạn 2:} Từ mỗi đầu cành bước 1, tiếp tục phân nhánh biểu diễn các kết quả của bước 2 kèm xác suất.
+    \item \textbf{Ngọn cây (Lá):} Liệt kê các kết quả kết hợp của toàn bộ phép thử.
+\end{itemize}
+\textbf{Hai quy tắc vàng khi tính xác suất trên sơ đồ hình cây:}
+\begin{enumerate}[leftmargin=0.6cm]
+    \item \textbf{Quy tắc nhân dọc theo nhánh:} Xác suất của một kết quả ở ngọn cây bằng \textbf{tích} các xác suất ghi trên các nhánh dẫn từ gốc đến ngọn đó:
+    $$P(\text{Ngọn } AB) = P(A) \cdot P(B)$$
+    \item \textbf{Quy tắc cộng ngang các ngọn:} Xác suất của một biến cố gồm nhiều ngọn cây thuận lợi bằng \textbf{tổng} xác suất của các ngọn cây đó:
+    $$P(E) = \sum P(\text{các ngọn thuận lợi})$$
+\end{enumerate}
+\end{pedabox}
+
+\begin{pedabox}{2. Minh họa trực quan Sơ đồ hình cây bằng TikZ}
+\begin{center}
+\begin{tikzpicture}[
+    grow=right,
+    level 1/.style={sibling distance=2.5cm, level distance=3.2cm},
+    level 2/.style={sibling distance=1.2cm, level distance=3.5cm},
+    edge from parent/.style={draw, thick, -{Latex[length=2mm]}},
+    every node/.style={font=\small}
+]
+\node[circle, fill=black, inner sep=1.5pt, label=left:{\textbf{Bắt đầu}}] {}
+    child {
+        node[circle, fill=blue!80, inner sep=2pt, label=above:{$A_2$}] {}
+        child {
+            node[label=right:{$A_2 B_2 \implies P = P(A_2) \cdot P(B_2)$}] {}
+            edge from parent node[below] {$P(B_2)$}
+        }
+        child {
+            node[label=right:{$A_2 B_1 \implies P = P(A_2) \cdot P(B_1)$}] {}
+            edge from parent node[above] {$P(B_1)$}
+        }
+        edge from parent node[below=2pt] {$P(A_2)$}
+    }
+    child {
+        node[circle, fill=blue!80, inner sep=2pt, label=above:{$A_1$}] {}
+        child {
+            node[label=right:{$A_1 B_2 \implies P = P(A_1) \cdot P(B_2)$}] {}
+            edge from parent node[below] {$P(B_2)$}
+        }
+        child {
+            node[label=right:{$A_1 B_1 \implies P = P(A_1) \cdot P(B_1)$}] {}
+            edge from parent node[above] {$P(B_1)$}
+        }
+        edge from parent node[above=2pt] {$P(A_1)$}
+    };
+\end{tikzpicture}
+\end{center}
+\end{pedabox}
+
+\begin{scaffoldbox}{Tích hợp Năng lực số (Mã 3.1NC1b): Thực hành vẽ sơ đồ cây bằng công cụ số}
+Học sinh sử dụng phần mềm vẽ sơ đồ tư duy số (như Canva, PowerPoint hoặc Mindmap trực tuyến) trên phòng máy 35 máy:
+\begin{itemize}[leftmargin=0.5cm]
+    \item Chọn công cụ \texttt{SmartArt} $\implies$ \texttt{Hierarchy (Sơ đồ phân cấp)} hoặc công cụ \texttt{Mindmap}.
+    \item Nhập các nút gốc, nút nhánh giai đoạn 1, nút nhánh giai đoạn 2.
+    \item Chèn nhãn văn bản (Text Box) ghi rõ xác suất trên từng đường nối phân nhánh.
+    \item Xuất tệp sơ đồ dưới dạng tệp ảnh PNG hoặc PDF để lưu vào hồ sơ học tập điện tử của nhóm.
+\end{itemize}
+\end{scaffoldbox}
+
+\paragraph{c) Sản phẩm:} Sơ đồ hình cây được vẽ hoàn chỉnh trong vở ghi và tệp số hóa trên máy tính; học sinh nắm vững quy tắc nhân dọc - cộng ngang.
+
+\paragraph{d) Tổ chức thực hiện:}
+\begin{itemize}[leftmargin=0.8cm]
+    \item \textbf{Chuyển giao nhiệm vụ:} Giáo viên chiếu bài toán gieo đồng xu liên tiếp 2 lần, hướng dẫn học sinh từng bước dựng sơ đồ cây 4 nhánh ($SS, SN, NS, NN$).
+    \item \textbf{Thực hiện nhiệm vụ:} Học sinh thao tác vẽ sơ đồ cây vào vở ghi và trên máy tính cá nhân. Giáo viên quan sát, uốn nắn cách ghi xác suất trên thân cành.
+    \item \textbf{Báo cáo, thảo luận:} 1 học sinh lên bảng giải thích tại sao tổng xác suất ở các ngọn cây luôn bằng $1$.
+    \item \textbf{Kết luận, nhận định:} Giáo viên chốt quy tắc tính xác suất bằng sơ đồ cây.
+\end{itemize}
+
+\subsection*{3. Hoạt động 3: Hoạt động STEM \& Tích hợp Năng lực AI (16 phút)}
+
+\paragraph{a) Mục tiêu:} Vận dụng sơ đồ hình cây vào dự án thực nghiệm STEM ``Vòng quay may mắn hai tầng''; tích hợp năng lực AI (Mã 11.C4.1: hiểu cơ chế AI tính xác suất từ tiếp theo Next Token Prediction).
+
+\paragraph{b) Nội dung:}
+
+\begin{stembox}{Chủ đề STEM: Phân tích xác suất trò chơi Vòng quay may mắn hai tầng}
+\textbf{Bối cảnh:} Đoàn trường THCS\&THPT Hồng Vân tổ chức gian hàng trò chơi gây quỹ từ thiện bằng một thiết bị gồm \textbf{hai vòng quay may mắn độc lập}:
+\begin{itemize}[leftmargin=0.5cm]
+    \item \textbf{Vòng quay 1 (Màu sắc):} Chia thành 4 hình quạt bằng nhau: Đỏ, Vàng, Xanh, Trắng (mỗi màu có xác suất dừng là $\dfrac{1}{4} = 0{,}25$).
+    \item \textbf{Vòng quay 2 (Điểm số):} Chia thành 6 hình quạt bằng nhau đánh số từ $1$ đến $6$ (mỗi ô có xác suất $\dfrac{1}{6}$).
+\end{itemize}
+\textbf{Cơ cấu giải thưởng của Ban tổ chức:}
+\begin{itemize}[leftmargin=0.5cm]
+    \item \textbf{Giải Nhất (Đặc biệt):} Vòng 1 dừng ở màu Đỏ VÀ Vòng 2 dừng ở ô số 6.
+    \item \textbf{Giải Nhì:} Vòng 1 dừng ở màu Đỏ VÀ Vòng 2 dừng ở ô số lẻ ($1, 3, 5$).
+    \item \textbf{Giải Khuyến khích:} Vòng 1 dừng ở màu khác màu Đỏ VÀ Vòng 2 dừng ở ô số chẵn ($2, 4, 6$).
+\end{itemize}
+\textbf{Nhiệm vụ của học sinh:}
+\begin{enumerate}[leftmargin=0.6cm]
+    \item Vẽ sơ đồ hình cây biểu diễn toàn bộ các nhánh rẽ của trò chơi.
+    \item Tính xác suất trúng thưởng của từng hạng giải.
+    \item Nếu có $600$ lượt chơi, dự kiến Ban tổ chức phải chuẩn bị bao nhiêu phần thưởng cho mỗi loại giải?
+\end{enumerate}
+\end{stembox}
+
+\begin{aibox}{Tích hợp Năng lực AI (Mã 11.C4.1): Cơ chế AI gợi ý từ tiếp theo (Next Token Prediction)}
+\textbf{Khám phá công nghệ Trí tuệ nhân tạo:}
+\begin{itemize}[leftmargin=0.5cm]
+    \item \textbf{Hiện tượng thực tế:} Khi gõ tin nhắn trên điện thoại: ``Chúc bạn ngày mới...'', bàn phím thông minh (Gboard) lập tức hiện lên 3 từ gợi ý: ``vui vẻ'', ``tốt lành'', ``hạnh phúc''. Tương tự, các mô hình ngôn ngữ lớn như ChatGPT hay Gemini cũng tạo ra bài viết bằng cách sinh từng từ (token) một cách tuần tự.
+    \item \textbf{Cơ chế toán học đằng sau:} Thực chất, AI không hề ``hiểu'' ý nghĩa như con người, mà AI sử dụng một \textbf{cây xác suất khổng lồ} (Language Model Tree):
+    Dựa trên kho dữ liệu hàng tỷ trang sách đã học, AI tính xác suất có điều kiện:
+    $$P(\text{vui vẻ} \mid \text{``Chúc bạn ngày mới''}) = 0{,}65$$
+    $$P(\text{tốt lành} \mid \text{``Chúc bạn ngày mới''}) = 0{,}25$$
+    $$P(\text{hạnh phúc} \mid \text{``Chúc bạn ngày mới''}) = 0{,}08$$
+    $$P(\text{đi ngủ} \mid \text{``Chúc bạn ngày mới''}) = 0{,}02$$
+    \item Xác suất của toàn bộ một câu văn dài $W = (w_1, w_2, \dots, w_n)$ chính là tích của các xác suất rẽ nhánh liên tiếp trên cây ngôn ngữ:
+    $$P(W) = P(w_1) \cdot P(w_2 \mid w_1) \cdot P(w_3 \mid w_1, w_2) \dots P(w_n \mid w_1, \dots, w_{n-1})$$
+    \item \textbf{Bài học cho học sinh:} Hiểu được bản chất xác suất của AI giúp học sinh nhận thức rõ: AI có thể đưa ra câu trả lời sai (hiện tượng ảo giác - Hallucination) nếu từ được chọn ngẫu nhiên rơi vào nhánh có xác suất thấp.
+\end{itemize}
+\end{aibox}
+
+\paragraph{c) Sản phẩm:} Lời giải dự án STEM của học sinh:
+\begin{itemize}[leftmargin=0.8cm]
+    \item \textbf{Xác suất Giải Nhất:} $P_1 = P(\text{Đỏ}) \cdot P(\text{số 6}) = \dfrac{1}{4} \cdot \dfrac{1}{6} = \dfrac{1}{24} \approx 0{,}0417$ ($4{,}17\%$).
+    Số giải dự kiến trên $600$ lượt chơi: $600 \times \dfrac{1}{24} = 25$ giải.
+    \item \textbf{Xác suất Giải Nhì:} $P_2 = P(\text{Đỏ}) \cdot P(\text{lẻ}) = \dfrac{1}{4} \cdot \dfrac{3}{6} = \dfrac{1}{4} \cdot \dfrac{1}{2} = \dfrac{1}{8} = 0{,}125$ ($12{,}5\%$).
+    Số giải dự kiến: $600 \times \dfrac{1}{8} = 75$ giải.
+    \item \textbf{Xác suất Giải Khuyến khích:} $P_3 = P(\text{không Đỏ}) \cdot P(\text{chẵn}) = \dfrac{3}{4} \cdot \dfrac{3}{6} = \dfrac{3}{4} \cdot \dfrac{1}{2} = \dfrac{3}{8} = 0{,}375$ ($37{,}5\%$).
+    Số giải dự kiến: $600 \times \dfrac{3}{8} = 225$ giải.
+    \item Tổng số người trúng thưởng dự kiến: $25 + 75 + 225 = 325$ người ($54{,}17\%$). Ban tổ chức thu hồi vốn và gây quỹ từ $275$ lượt không trúng giải.
+\end{itemize}
+
+\paragraph{d) Tổ chức thực hiện:}
+\begin{itemize}[leftmargin=0.8cm]
+    \item Giáo viên cho 2 học sinh đại diện quay thử nghiệm mô hình vòng quay may mắn trước lớp.
+    \item 7 nhóm học sinh tính toán xác suất các giải thưởng trên Phiếu học tập số 2 trong 7 phút.
+    \item Giáo viên trình chiếu Slide giới thiệu cơ chế AI Next Token Prediction, cho học sinh mở điện thoại thử gõ một cụm từ để xem các từ gợi ý xác suất của bàn phím.
+    \item Đại diện Nhóm 3 trình bày kết quả tính giải thưởng STEM; cả lớp thảo luận về tính khả thi của ngân sách hội chợ.
+    \item Giáo viên nhận xét, khen ngợi tính ứng dụng liên môn của bài học.
+\end{itemize}
+
+\subsection*{4. Hoạt động 4: Vận dụng \& Tổng kết (5 phút)}
+
+\paragraph{a) Mục tiêu:} Khái quát toàn bộ chương VIII: Hệ thống hóa mối tương quan giữa Quy tắc cộng và Quy tắc nhân xác suất.
+
+\paragraph{b) Nội dung:} Giáo viên chiếu bảng tổng kết:
+\begin{itemize}[leftmargin=0.6cm]
+    \item Khi nào dùng công thức cộng? $\implies$ Khi bài toán phân chia thành các trường hợp rời nhau (từ khóa: ``hoặc'', ``ít nhất một'').
+    \item Khi nào dùng công thức nhân? $\implies$ Khi bài toán gồm nhiều giai đoạn liên tiếp hoặc các sự kiện xảy ra đồng thời độc lập (từ khóa: ``và'', ``cả hai'').
+    \item Khi nào dùng sơ đồ hình cây? $\implies$ Khi bài toán có từ 2 đến 3 giai đoạn phân nhánh trực quan.
+\end{itemize}
+Giao nhiệm vụ ôn tập chuẩn bị cho tiết sau: **Bài tập cuối chương VIII (Tiết 91)**.
+
+\paragraph{c) Sản phẩm:} Sơ đồ tóm tắt quy tắc cộng và quy tắc nhân trong vở ghi học sinh.
+
+\paragraph{d) Tổ chức thực hiện:} Giáo viên đúc kết $\implies$ Học sinh ghi bài tập $\implies$ Giáo viên thu phiếu học tập và chấm điểm nhóm.
+
+\section*{IV. PHỤ LỤC HỌC LIỆU BỔ TRỢ}
+
+\subsection*{1. Phiếu học tập số 1 (Tiết 1): Công thức nhân xác suất \& Biến cố độc lập}
+
+\begin{pedabox}{PHIẾU HỌC TẬP SỐ 1 (TIẾT 1)}
+\textbf{Họ và tên học sinh:} \dotfill \textbf{Lớp:} 11A\dots \quad \textbf{Nhóm:} \dots
+\begin{enumerate}[leftmargin=0.6cm]
+    \item \textbf{Khái niệm:}
+    \begin{itemize}
+        \item Hai biến cố $A$ và $B$ được gọi là độc lập khi: \dotfill
+        \item Nếu $A$ và $B$ độc lập thì công thức nhân xác suất là: $P(AB) = $ \dots\dots\dots\dots\dots
+        \item Nếu $A$ và $B$ độc lập thì $P(\overline{A}\overline{B}) = $ \dots\dots\dots\dots\dots
+    \end{itemize}
+    \item \textbf{Bài tập:} Một bài thi trắc nghiệm gồm 2 câu hỏi độc lập. Mỗi câu có 4 phương án trả lời (trong đó chỉ có 1 phương án đúng). Một học sinh không học bài nên khoanh bừa đáp án cho cả 2 câu.
+    \begin{itemize}
+        \item Xác suất để học sinh đó trả lời đúng cả 2 câu là: \dotfill
+        \item Xác suất để học sinh đó trả lời sai cả 2 câu là: \dotfill
+        \item Xác suất để học sinh đó trả lời đúng ít nhất 1 câu là: \dotfill
+    \end{itemize}
+\end{enumerate}
+\end{pedabox}
+
+\subsection*{2. Phiếu học tập số 2 (Tiết 2): Sơ đồ hình cây, Dự án STEM \& Khám phá AI}
+
+\begin{pedabox}{PHIẾU HỌC TẬP SỐ 2 (TIẾT 2)}
+\textbf{Phần 1: Thực hành sơ đồ hình cây:}
+Vẽ sơ đồ hình cây biểu diễn việc lấy liên tiếp 2 viên bi từ một hộp chứa 3 bi đỏ và 2 bi xanh (lấy có hoàn lại). Tính xác suất để lấy được 2 viên bi khác màu.
+
+\textbf{Phần 2: Dự án STEM Vòng quay may mắn:}
+\begin{center}
+\begin{tabularx}{\linewidth}{|l|X|c|c|}
+\hline
+\textbf{Hạng giải} & \textbf{Điều kiện trúng thưởng} & \textbf{Xác suất lý thuyết} & \textbf{Số giải trên 600 lượt} \\ \hline
+Giải Nhất & Vòng 1: Đỏ VÀ Vòng 2: Số 6 & & \\ \hline
+Giải Nhì & Vòng 1: Đỏ VÀ Vòng 2: Số lẻ & & \\ \hline
+Giải Khuyến khích & Vòng 1: Khác Đỏ VÀ Vòng 2: Số chẵn & & \\ \hline
+\end{tabularx}
+\end{center}
+
+\textbf{Phần 3: Phiếu phân tích cơ chế AI Next Token Prediction:}
+Ghi lại 3 từ mà bàn phím điện thoại của em gợi ý khi em gõ cụm từ ``Học toán giúp em...'':
+\begin{itemize}
+    \item Từ gợi ý 1: \dots\dots\dots\dots \quad Từ gợi ý 2: \dots\dots\dots\dots \quad Từ gợi ý 3: \dots\dots\dots\dots
+    \item Giải thích tại sao AI lại đưa ra các từ đó dựa trên lý thuyết xác suất: \dotfill
+\end{itemize}
+\end{pedabox}
+
+\subsection*{3. Rubric đánh giá năng lực học sinh trong bài học (4 mức độ)}
+
+\begin{center}
+\small
+\begin{tabularx}{\linewidth}{|p{3cm}|X|X|X|X|}
+\hline
+\textbf{Tiêu chí đánh giá} & \textbf{Mức 1: Chưa đạt} & \textbf{Mức 2: Đạt} & \textbf{Mức 3: Khá} & \textbf{Mức 4: Tốt} \\ \hline
+\textbf{1. Nắm vững lý thuyết công thức nhân} & Nhầm lẫn giữa biến cố xung khắc và biến cố độc lập. & Nhớ công thức nhân nhưng chưa chứng minh được tính độc lập của biến cố đối. & Nắm vững công thức, phân biệt thành thạo độc lập và xung khắc trong bài toán. & Hiểu sâu sắc bản chất xác suất, mở rộng thành thạo cho $k$ biến cố độc lập. \\ \hline
+\textbf{2. Kỹ năng lập và đọc Sơ đồ hình cây} & Chưa vẽ được sơ đồ cây hoặc gán nhãn xác suất sai. & Vẽ được sơ đồ cây đơn giản nhưng tính toán ngọn cây còn lúng túng. & Vẽ sơ đồ cây chuẩn mực, áp dụng thành thạo quy tắc nhân dọc và cộng ngang. & Sử dụng phần mềm số vẽ sơ đồ cây trực quan, phân tích bài toán phức tạp mạch lạc. \\ \hline
+\textbf{3. Dự án STEM Vòng quay may mắn} & Không tham gia tính toán xác suất giải thưởng STEM. & Tính được xác suất một vài giải nhưng chưa quy đổi ra số phần thưởng. & Tính đúng xác suất cả 3 hạng giải, xác định chính xác số lượng phần thưởng. & Đề xuất phương án tối ưu hóa cơ cấu giải thưởng đảm bảo sức hút và kinh phí. \\ \hline
+\textbf{4. Nhận thức công nghệ AI (11.C4.1)} & Không hiểu cơ chế gợi ý từ ngữ của AI. & Nhận biết AI dùng xác suất để đoán từ tiếp theo. & Trình bày được nguyên lý Next Token Prediction qua mô hình cây xác suất. & Phân tích sâu sắc ranh giới giữa tính toán xác suất của AI và tư duy ngôn ngữ con người. \\ \hline
+\end{tabularx}
+\end{center}
+
+\end{document}
