@@ -1,0 +1,480 @@
+\documentclass[12pt, a4paper]{article}
+% --- 1. Cấu hình Tiếng Việt và Font chữ chuẩn ---
+\usepackage[utf8]{inputenc}
+\usepackage[T5]{fontenc}
+\usepackage[vietnamese]{babel}
+\usepackage{mathptmx} % Font Times New Roman đồng bộ cả chữ và công thức toán, không gây xung đột gói
+
+\makeatletter
+\renewcommand{\normalsize}{\@setfontsize\normalsize{13pt}{16pt}}
+\makeatother
+\normalsize
+
+% --- 2. Gói Toán học & Ký hiệu bổ trợ ---
+\usepackage{amsmath, amssymb, amsfonts, mathrsfs, amsthm}
+\usepackage{graphicx}
+\usepackage{fontawesome}
+\usepackage{booktabs, tabularx, array, multirow}
+\usepackage{enumitem}
+
+% --- 3. Đồ họa TikZ, Bảng biến thiên & Hình không gian ---
+\usepackage{tikz}
+\usetikzlibrary{calc, intersections, angles, quotes, patterns, arrows.meta, 3d}
+\usepackage{pgfplots}
+\pgfplotsset{compat=1.18}
+\usepackage{tkz-euclide}
+\usepackage{tkz-tab}
+
+\renewcommand{\vec}[1]{\overrightarrow{#1}}
+
+% --- 4. Hộp sư phạm (Tcolorbox) ---
+\usepackage[many]{tcolorbox}
+\tcbuselibrary{skins, breakable}
+
+% --- 5. Căn lề chuẩn văn bản giáo án ---
+\usepackage{geometry}
+\geometry{
+    a4paper,
+    left=25mm,
+    right=15mm,
+    top=20mm,
+    bottom=20mm
+}
+
+% --- 6. Header / Footer chuẩn hóa ---
+\usepackage{fancyhdr}
+\usepackage{lastpage}
+\pagestyle{fancy}
+\fancyhf{}
+
+\fancyhead[L]{\small \textit{Kế hoạch bài dạy Toán 11}}
+\fancyhead[R]{\textbf{Trang \thepage/\pageref{LastPage}}}
+\fancyfoot[L]{\small \textit{Tổ Toán - Tin}}
+\fancyfoot[R]{\small \textit{Trường THCS\&THPT Hồng Vân}}
+\renewcommand{\headrulewidth}{0.4pt}
+\renewcommand{\footrulewidth}{0.4pt}
+
+% --- 7. Giãn dòng & Giãn đoạn theo chuẩn Nghị định 30/2020/NĐ-CP ---
+\usepackage{setspace}
+\setstretch{1.15}
+\setlength{\parindent}{1.0cm}
+\setlength{\parskip}{5pt}
+
+% Định nghĩa hộp sư phạm chuyên dụng
+\newtcolorbox{pedabox}[2][]{
+    enhanced,
+    breakable,
+    colback=blue!3!white,
+    colframe=blue!65!black,
+    fonttitle=\bfseries\small,
+    title={#2},
+    arc=2mm,
+    boxrule=0.6pt,
+    left=3mm, right=3mm, top=2mm, bottom=2mm,
+    #1
+}
+
+\newtcolorbox{aibox}[2][]{
+    enhanced,
+    breakable,
+    colback=teal!4!white,
+    colframe=teal!70!black,
+    fonttitle=\bfseries\small,
+    title={#2},
+    arc=2mm,
+    boxrule=0.6pt,
+    left=3mm, right=3mm, top=2mm, bottom=2mm,
+    #1
+}
+
+\newtcolorbox{scaffoldbox}[2][]{
+    enhanced,
+    breakable,
+    colback=orange!4!white,
+    colframe=orange!80!black,
+    fonttitle=\bfseries\small,
+    title={#2},
+    arc=2mm,
+    boxrule=0.6pt,
+    left=3mm, right=3mm, top=2mm, bottom=2mm,
+    #1
+}
+
+\newtcolorbox{stembox}[2][]{
+    enhanced,
+    breakable,
+    colback=purple!4!white,
+    colframe=purple!75!black,
+    fonttitle=\bfseries\small,
+    title={#2},
+    arc=2mm,
+    boxrule=0.6pt,
+    left=3mm, right=3mm, top=2mm, bottom=2mm,
+    #1
+}
+
+\begin{document}
+
+\begin{center}
+    {\fontsize{14pt}{17pt}\selectfont \textbf{KẾ HOẠCH BÀI DẠY MÔN TOÁN LỚP 11}}\\[6pt]
+    {\fontsize{16pt}{19pt}\selectfont \textbf{THỰC HÀNH TRẢI NGHIỆM VÀ ÔN TẬP CHUYÊN ĐỀ}}\\[4pt]
+    {\fontsize{12pt}{15pt}\selectfont \textbf{Môn học: Toán 11} \ \textbar \ \textbf{Thời lượng: 2 tiết (Tiết CĐ31, CĐ32 theo PPCT | Tuần 31)}}
+\end{center}
+
+\vspace{5pt}
+
+\section*{I. MỤC TIÊU}
+
+\subsection*{1. Kiến thức, Năng lực}
+
+\begin{itemize}[leftmargin=1.2cm]
+    \item \textbf{Yêu cầu cần đạt (Nguyên văn CT GDPT 2018 Toán 11):}
+    \begin{itemize}[leftmargin=0.6cm]
+        \item Ôn tập tổng hợp Chuyên đề 1 (Phép biến hình trong mặt phẳng) và Chuyên đề 2 (Lí thuyết đồ thị).
+        \item Thực hành vận dụng các phép biến hình (phép tịnh tiến, phép đối xứng trục, phép đối xứng tâm, phép quay, phép vị tự) trong thiết kế đồ họa, hoa văn hình học và kiến trúc.
+        \item Vận dụng các kiến thức và thuật toán về lí thuyết đồ thị (đường đi Euler, đường đi Hamilton, thuật toán Dijkstra tìm đường đi ngắn nhất, bài toán Người du lịch TSP) vào giải quyết các bài toán tối ưu hóa mạng lưới giao thông, vận tải và logistics thực tiễn.
+    \end{itemize}
+
+    \item \textbf{Năng lực Toán học đặc thù:}
+    \begin{itemize}[leftmargin=0.6cm]
+        \item \textit{Năng lực tư duy và lập luận toán học:} Khái quát hóa, xâu chuỗi mối quan hệ tương hỗ giữa hai mạch kiến thức chuyên đề: hình học chuyển động (phép biến hình trong không gian hai chiều) và toán học rời rạc cấu trúc mạng (lí thuyết đồ thị và thuật toán tối ưu); giải thích tính logic của thuật toán gán nhãn Dijkstra (nguyên lý tối ưu Bellman); phân tích tính đối xứng hình học để giảm độ phức tạp tính toán khi mô hình hóa mạng lưới không gian.
+        \item \textit{Năng lực mô hình hóa toán học:} Chuyển đổi các mạng lưới giao thông đô thị, hệ thống đường giao hàng logistics, chuỗi trạm sạc xe điện thông minh thành mô hình đồ thị có trọng số $G = (V, E, w)$; mô hình hóa các cụm dân cư đối xứng qua trục đường giao thông chính bằng các phép đối xứng trục và phép tịnh tiến vectơ để tối ưu hóa vị trí đặt trạm trung chuyển.
+        \item \textit{Năng lực giải quyết vấn đề toán học:} Thực hiện thành thạo thuật toán Dijkstra từng bước trên bảng ma trận gán nhãn để tìm ra đường đi ngắn nhất giữa hai địa điểm dân cư; xây dựng được quy trình phối hợp giữa việc nhân bản cụm mạng lưới đối xứng (bằng phép dời hình) với việc tìm lộ trình kết nối liên cụm tối ưu (bằng thuật toán đồ thị).
+        \item \textit{Năng lực giao tiếp toán học:} Trình bày báo cáo dự án kỹ thuật rõ ràng, mạch lạc; sử dụng chuẩn xác hệ thống ký hiệu toán học chuyên đề: $V, E, d(v), w(e), T_{\vec{v}}, Đ_d, Đ_O, Q_{(O, \alpha)}, V_{(O, k)}$; bảo vệ giải pháp toán học của nhóm tự tin trước phản biện của các nhóm bạn.
+        \item \textit{Năng lực sử dụng công cụ, phương tiện học toán:} Khai thác hiệu quả các phần mềm toán học động và trực quan hóa thuật toán: Graph Online (\texttt{graphonline.ru}), GeoGebra, Google Maps và máy tính cầm tay (MTCT Casio fx-580VN X) để kiểm tra tính toán và mô phỏng mạng lưới.
+    \end{itemize}
+
+    \item \textbf{Năng lực số (Theo Thông tư 02/2025/TT-BGDĐT):}
+    \begin{itemize}[leftmargin=0.6cm]
+        \item \textit{Mã 6.2NC1a (Sử dụng AI để gợi ý ý tưởng thiết kế mô hình toán học tích hợp):} Học sinh thao tác trên phòng máy vi tính 35 máy, sử dụng các công cụ Trí tuệ nhân tạo tạo sinh (Generative AI như Gemini, ChatGPT) để tìm kiếm ý tưởng liên môn, thiết kế kịch bản bài toán mô hình hóa tích hợp cả 3 chuyên đề học tập lớp 11: Biến hình (hoa văn, đối xứng kiến trúc), Đồ thị (mạng lưới giao thông, logistics) và Vẽ kĩ thuật (bản vẽ 2D/3D); biết cách thẩm định, chọn lọc và tinh chỉnh các gợi ý của AI thành đồ án khả thi.
+    \end{itemize}
+
+    \item \textbf{Năng lực AI (Theo Quyết định 2422/QĐ-BGDĐT):}
+    \begin{itemize}[leftmargin=0.6cm]
+        \item \textit{Mã 11.C2.1 (Nhận thức về cách AI tổng hợp và liên kết các mạch kiến thức toán học):} Học sinh nhận biết cách Trí tuệ nhân tạo kết nối biểu diễn tri thức dạng Đồ thị tri thức (Knowledge Graph) với thuật toán học sâu (Graph Neural Networks - GNN) và thị giác máy tính để tự động định tuyến xe tự hành, tối ưu hóa lưới điện thông minh (Smart Grid) và điều phối chuỗi cung ứng logistics toàn cầu.
+        \item \textit{Kỹ thuật Prompting chuyên sâu:} Học sinh thực hành thiết kế câu lệnh prompt nhiều bước (Few-shot prompting / Chain-of-Thought) yêu cầu AI đề xuất phương án tối ưu hóa lộ trình xe bus trường học kết hợp phân bố trạm đón đối xứng theo trục đường quốc lộ.
+    \end{itemize}
+
+    \item \textbf{Năng lực chung:}
+    \begin{itemize}[leftmargin=0.6cm]
+        \item \textit{Tự chủ và tự học:} Chủ động hệ thống hóa lại kiến thức đã học trong Chuyên đề 1 và Chuyên đề 2; tự giác phân công nhiệm vụ và hoàn thành sản phẩm dự án đúng thời hạn.
+        \item \textit{Giao tiếp và hợp tác:} Tổ chức làm việc hiệu quả theo 7 nhóm (mỗi nhóm 5 học sinh trong lớp 35 học sinh); phối hợp nhịp nhàng giữa thành viên thiết kế bản đồ, thành viên chạy thuật toán và thành viên tương tác prompt AI.
+    \end{itemize}
+\end{itemize}
+
+\subsection*{2. Phẩm chất}
+
+\begin{itemize}[leftmargin=1.2cm]
+    \item \textbf{Chăm chỉ:} Kiên nhẫn thực hiện từng bước gán nhãn của thuật toán, cẩn thận kiểm tra các giá trị trọng số; tỉ mỉ thiết kế sơ đồ mô phỏng trên máy tính.
+    \item \textbf{Trung thực:} Báo cáo kết quả tính toán chính xác, ghi nhận trung thực đóng góp của các thành viên trong nhóm và các nguồn học liệu tham khảo từ Internet/AI.
+    \item \textbf{Trách nhiệm:} Có ý thức giữ gìn tài sản phòng máy tính 35 máy; tuân thủ quy chế an toàn không gian mạng; có tinh thần trách nhiệm giải quyết bài toán tối ưu hóa nhằm tiết kiệm năng lượng và giảm thiểu ùn tắc giao thông vì cộng đồng.
+\end{itemize}
+
+\section*{II. THIẾT BỊ DẠY HỌC VÀ HỌC LIỆU}
+
+\begin{itemize}[leftmargin=1.2cm]
+    \item \textbf{Giáo viên:}
+    \begin{itemize}[leftmargin=0.6cm]
+        \item Kế hoạch bài dạy chi tiết 2 tiết theo chuẩn Công văn 5512/BGDĐT-GDTrH.
+        \item Bài trình chiếu điện tử tương tác (Slide PowerPoint / Canva) tổng kết toàn diện Chuyên đề 1 và Chuyên đề 2.
+        \item Phòng thực hành tin học của nhà trường (35 máy vi tính kết nối Internet ổn định, cài sẵn trình duyệt web truy cập công cụ Graph Online và các nền tảng AI).
+        \item Bộ đề tài dự án thực hành trải nghiệm dành cho 7 nhóm học sinh (mỗi nhóm 5 em).
+        \item Hệ thống Phiếu học tập phân tầng bậc thang (Phiếu số 1: Hệ thống hóa Chuyên đề 1 \& 2; Phiếu số 2: Kế hoạch triển khai dự án trải nghiệm \& Báo cáo kết quả).
+        \item Bảng Rubric đánh giá dự án thực hành trải nghiệm 4 mức độ.
+    \end{itemize}
+    \item \textbf{Học sinh:}
+    \begin{itemize}[leftmargin=0.6cm]
+        \item Sách Chuyên đề học tập Toán 11 (Tập 1 và Tập 2), vở ghi bài, máy tính cầm tay Casio fx-580VN X.
+        \item Máy tính tại phòng thực hành tin học của trường (35 máy cho 35 học sinh, ngồi theo 7 cụm nhóm).
+        \item Giấy A0 hoặc tệp slide điện tử để báo cáo kết quả dự án nhóm.
+    \end{itemize}
+\end{itemize}
+
+\section*{III. TIẾN TRÌNH DẠY HỌC}
+
+\begin{center}
+    \textbf{\large TIẾT 1 (TIẾT CĐ31 THEO PPCT | TUẦN 31)}\\[4pt]
+    \textit{(Nội dung: Hệ thống hóa kiến thức Chuyên đề 1 \& 2 - Thiết kế mô hình toán học tích hợp bằng AI)}
+\end{center}
+
+\subsection*{1. Hoạt động 1: Mở đầu (Khởi động - 6 phút)}
+
+\paragraph{a) Mục tiêu:} Tạo tâm thế chủ động, kích hoạt kiến thức liên chuyên đề giữa Phép biến hình và Lí thuyết đồ thị thông qua trò chơi ghép cặp tri thức.
+
+\paragraph{b) Nội dung:} Giáo viên tổ chức trò chơi \textbf{``Ghép nối liên chuyên đề''}: Giáo viên chiếu bảng gồm 4 khái niệm/thuật toán của Chuyên đề 1 & 2 và 4 ứng dụng công nghệ thực tế. Học sinh ghép nối chính xác:
+\begin{enumerate}[leftmargin=0.6cm]
+    \item Phép tịnh tiến vectơ $T_{\vec{v}}$ và Phép đối xứng trục $Đ_d$.
+    \item Chu trình Euler (đi qua mỗi cạnh đúng 1 lần).
+    \item Chu trình Hamilton (đi qua mỗi đỉnh đúng 1 lần).
+    \item Thuật toán Dijkstra (gán nhãn đỉnh).
+\end{enumerate}
+\textit{Ứng dụng tương ứng:}
+\begin{itemize}[leftmargin=0.5cm]
+    \item[A.] Ứng dụng Google Maps tìm lộ trình di chuyển có thời gian ngắn nhất giữa hai địa điểm.
+    \item[B.] Bài toán xe quét rác đô thị đi qua toàn bộ các con phố mà không đi lặp lại tuyến đường nào.
+    \item[C.] Thiết kế hoa văn dệt thổ cẩm đối xứng và chuyển động tịnh tiến của cánh cửa lùa trong kiến trúc.
+    \item[D.] Bài toán người du lịch hoặc shipper đi giao hàng qua tất cả các điểm hẹn rồi quay về điểm xuất phát.
+\end{itemize}
+
+\paragraph{c) Sản phẩm:} Kết quả ghép nối chuẩn xác của học sinh: 1 - C; 2 - B; 3 - D; 4 - A kèm lời giải thích ngắn gọn về bản chất của từng thuật toán/phép toán.
+
+\paragraph{d) Tổ chức thực hiện:} Giáo viên phổ biến luật chơi $\implies$ Học sinh trả lời nhanh và giải thích $\implies$ Giáo viên nhận xét, dẫn dắt: Cả hai chuyên đề này tưởng chừng độc lập nhưng khi kết hợp lại sẽ tạo ra giải pháp mô hình hóa mạnh mẽ cho công nghệ đô thị thông minh.
+
+\subsection*{2. Hoạt động 2: Hệ thống hóa kiến thức Chuyên đề 1 \& Chuyên đề 2 (18 phút)}
+
+\paragraph{a) Mục tiêu:} Giúp học sinh khái quát hóa, hệ thống lại toàn bộ các công thức tọa độ của phép biến hình và quy trình thuật toán đồ thị; nhận diện mối liên kết cấu trúc giữa hai chuyên đề.
+
+\paragraph{b) Nội dung:} Học sinh hoạt động cặp đôi hoàn thành Bảng tổng hợp kiến thức trên Phiếu học tập số 1:
+
+\begin{pedabox}{Bảng 1: Hệ thống hóa Phép biến hình (Chuyên đề 1)}
+\begin{center}
+\small
+\begin{tabularx}{\linewidth}{|l|X|X|}
+\hline
+\textbf{Phép biến hình} & \textbf{Biểu thức tọa độ trong mặt phẳng $Oxy$} & \textbf{Tính chất bảo toàn then chốt} \\ \hline
+\textbf{Tịnh tiến $T_{\vec{v}(a;b)}$} & $\begin{cases} x' = x + a \\ y' = y + b \end{cases}$ & Bảo toàn khoảng cách; biến đường thẳng thành đường thẳng song song hoặc trùng. \\ \hline
+\textbf{Đối xứng trục $Đ_{Ox}$} & $\begin{cases} x' = x \\ y' = -y \end{cases}$ & Bảo toàn khoảng cách; biến tam giác thành tam giác bằng nó nhưng ngược hướng quay. \\ \hline
+\textbf{Đối xứng tâm $Đ_O$} & $\begin{cases} x' = -x \\ y' = -y \end{cases}$ & Bảo toàn khoảng cách; là phép quay góc $180^\circ$; biến đường thẳng thành đường thẳng song song/trùng. \\ \hline
+\textbf{Phép quay $Q_{(O, 90^\circ)}$} & $\begin{cases} x' = -y \\ y' = x \end{cases}$ & Bảo toàn khoảng cách; bảo toàn độ lớn góc hình học. \\ \hline
+\end{tabularx}
+\end{center}
+\end{pedabox}
+
+\begin{pedabox}{Bảng 2: Hệ thống hóa Lí thuyết đồ thị \& Thuật toán tối ưu (Chuyên đề 2)}
+\begin{itemize}[leftmargin=0.5cm]
+    \item \textbf{Định lý Euler:} Đồ thị liên thông có chu trình Euler khi và chỉ khi mọi đỉnh đều có \textbf{bậc chẵn}. Có đường đi Euler khi và chỉ khi có đúng \textbf{2 đỉnh bậc lẻ}.
+    \item \textbf{Định lý Dirac (Hamilton):} Đồ thị đơn, vô hướng có $n \geq 3$ đỉnh, nếu mỗi đỉnh có bậc $d(v) \geq \dfrac{n}{2}$ thì đồ thị có chu trình Hamilton.
+    \item \textbf{Thuật toán Dijkstra:} Tìm đường đi ngắn nhất từ đỉnh nguồn $s$ đến mọi đỉnh còn lại trên đồ thị có trọng số không âm bằng kỹ thuật gán nhãn tạm thời và cố định nhãn nhỏ nhất sau mỗi bước lặp.
+    \item \textbf{Bài toán Người du lịch (TSP):} Tìm chu trình Hamilton có tổng trọng số nhỏ nhất; sử dụng thuật toán láng giềng gần nhất (Nearest Neighbour Heuristic) để tìm nghiệm xấp xỉ tối ưu.
+\end{itemize}
+\end{pedabox}
+
+\begin{scaffoldbox}{Giàn giáo sư phạm: Bảng phân bước thuật toán Dijkstra cho học sinh TB-Yếu}
+\textbf{Quy tắc 4 bước gán nhãn Dijkstra không bị nhầm lẫn:}
+\begin{enumerate}[leftmargin=0.6cm]
+    \item \textbf{Bước 0 (Khởi tạo):} Gán nhãn đỉnh xuất phát $d(s) = 0$, cố định đỉnh $s$. Các đỉnh còn lại gán nhãn tạm thời $d(v) = +\infty$.
+    \item \textbf{Bước 1 (Cập nhật nhãn):} Xét các đỉnh kề $u$ với đỉnh vừa được cố định: nếu $d(\text{cố định}) + w(\text{cố định}, u) < d(u)$ thì cập nhật lại $d(u)$ bằng giá trị mới nhỏ hơn và ghi nhận đỉnh trước $p(u)$.
+    \item \textbf{Bước 2 (Cố định nhãn nhỏ nhất):} Trong các đỉnh chưa cố định, chọn đỉnh có nhãn tạm thời nhỏ nhất để cố định vĩnh viễn.
+    \item \textbf{Bước 3 (Dừng \& Truy vết):} Lặp lại cho đến khi đỉnh đích được cố định. Truy vết ngược từ đỉnh đích theo $p(v)$ để tìm đường đi ngắn nhất.
+\end{enumerate}
+\end{scaffoldbox}
+
+\paragraph{c) Sản phẩm:} Bảng hệ thống hóa đầy đủ trong vở ghi của học sinh; sơ đồ liên kết giữa phép biến hình và đồ thị.
+
+\paragraph{d) Tổ chức thực hiện:}
+\begin{itemize}[leftmargin=0.8cm]
+    \item \textbf{Chuyển giao nhiệm vụ:} Giáo viên giao phiếu học tập số 1, yêu cầu các cặp đôi làm việc trong 8 phút để hoàn thiện 2 bảng kiến thức.
+    \item \textbf{Thực hiện nhiệm vụ:} Học sinh đối chiếu SGK chuyên đề, hoàn thành bảng. Giáo viên theo dõi, hướng dẫn học sinh cách truy vết đỉnh trong thuật toán Dijkstra.
+    \item \textbf{Báo cáo, thảo luận:} 2 cặp đôi đại diện trình bày tóm tắt; cả lớp nhận xét, bổ sung các lưu ý về điều kiện trọng số không âm của Dijkstra.
+    \item \textbf{Kết luận, nhận định:} Giáo viên chuẩn hóa kiến thức, chuyển tiếp sang bài tập luyện tập thuật toán.
+\end{itemize}
+
+\subsection*{3. Hoạt động 3: Luyện tập bài toán ứng dụng đồ thị tìm đường (16 phút)}
+
+\paragraph{a) Mục tiêu:} Củng cố kỹ năng chạy thuật toán Dijkstra tìm đường đi ngắn nhất trên đồ thị có 6 đỉnh mô phỏng mạng lưới trạm trung chuyển hàng hóa.
+
+\paragraph{b) Nội dung:} Giáo viên giao bài toán luyện tập trên Phiếu học tập số 1 (Phần 2):
+
+\begin{pedabox}{Bài toán luyện tập: Tối ưu hóa lộ trình vận chuyển hàng hóa}
+Mạng lưới giao thông giữa 6 kho hàng $A, B, C, D, E, F$ được mô tả bằng đồ thị có trọng số như sau:
+\begin{itemize}[leftmargin=0.6cm]
+    \item Tập đỉnh $V = \{A, B, C, D, E, F\}$.
+    \item Trọng số các cạnh (khoảng cách tính bằng km):
+    $w(A, B) = 4$, $w(A, C) = 2$, $w(B, C) = 1$, $w(B, D) = 5$, $w(C, D) = 8$, $w(C, E) = 10$, $w(D, E) = 2$, $w(D, F) = 6$, $w(E, F) = 3$.
+\end{itemize}
+\textbf{Yêu cầu:} Áp dụng thuật toán Dijkstra để tìm đường đi ngắn nhất và chiều dài quãng đường từ kho hàng $A$ đến kho hàng $F$.
+\end{pedabox}
+
+\paragraph{c) Sản phẩm:} Bảng gán nhãn chi tiết từng bước của học sinh:
+\begin{center}
+\small
+\begin{tabular}{|c|c|c|c|c|c|c|c|}
+\hline
+\textbf{Bước} & \textbf{Đỉnh cố định} & $A$ & $B$ & $C$ & $D$ & $E$ & $F$ \\ \hline
+0 & $A$ & \textbf{0 (A)} & $4 (A)$ & $2 (A)$ & $+\infty$ & $+\infty$ & $+\infty$ \\ \hline
+1 & $C$ & -- & $3 (C)$ & \textbf{2 (A)} & $10 (C)$ & $12 (C)$ & $+\infty$ \\ \hline
+2 & $B$ & -- & \textbf{3 (C)} & -- & $8 (B)$ & $12 (C)$ & $+\infty$ \\ \hline
+3 & $D$ & -- & -- & -- & \textbf{8 (B)} & $10 (D)$ & $14 (D)$ \\ \hline
+4 & $E$ & -- & -- & -- & -- & \textbf{10 (D)} & $13 (E)$ \\ \hline
+5 & $F$ & -- & -- & -- & -- & -- & \textbf{13 (E)} \\ \hline
+\end{tabular}
+\end{center}
+\textbf{Kết luận:}
+\begin{itemize}[leftmargin=0.6cm]
+    \item Chiều dài đường đi ngắn nhất từ $A$ đến $F$ là: $L = 13\text{ km}$.
+    \item Truy vết ngược lộ trình: $F \leftarrow E \leftarrow D \leftarrow B \leftarrow C \leftarrow A$.
+    \item Lộ trình tối ưu: $A \to C \to B \to D \to E \to F$ với các chặng: $2 + 1 + 5 + 2 + 3 = 13\text{ km}$.
+\end{itemize}
+
+\paragraph{d) Tổ chức thực hiện:}
+\begin{itemize}[leftmargin=0.8cm]
+    \item \textbf{Chuyển giao nhiệm vụ:} Giáo viên yêu cầu học sinh làm việc cá nhân trong 8 phút lập bảng gán nhãn, sau đó đối chiếu theo cặp đôi.
+    \item \textbf{Thực hiện nhiệm vụ:} Học sinh tính toán, điền bảng. Giáo viên hỗ trợ nhóm học sinh trung bình tại bước 1: nhận thấy đi $A \to C \to B$ có độ dài $2 + 1 = 3 < 4$ nên nhãn của $B$ được cập nhật từ $4$ xuống $3$.
+    \item \textbf{Báo cáo, thảo luận:} 1 học sinh lên bảng hoàn thành bảng gán nhãn và chỉ rõ đường truy vết; cả lớp nhận xét, kiểm tra chéo.
+    \item \textbf{Kết luận, nhận định:} Giáo viên đánh giá bài làm, nhấn mạnh tính khoa học của thuật toán giúp tránh được bẫy tham lam đi theo cạnh trực tiếp.
+\end{itemize}
+
+\subsection*{4. Hoạt động 4: Vận dụng (5 phút)}
+
+\paragraph{a) Mục tiêu:} Đặt vấn đề kết hợp Phép biến hình để nhân bản mạng lưới giao thông, chuẩn bị cho tiết thực hành trải nghiệm dự án nhóm.
+
+\paragraph{b) Nội dung:} Giáo viên chiếu tình huống mở: ``Nếu khu đô thị phía Đông có mạng lưới 6 kho hàng $A, B, C, D, E, F$ như trên, nay thành phố quy hoạch khu đô thị phía Tây đối xứng hoàn toàn qua trục sông lớn (đường thẳng $d$). Ta có cần chạy lại thuật toán Dijkstra cho khu phía Tây không?''.
+
+\paragraph{c) Sản phẩm:} Học sinh phát hiện: Vì phép đối xứng trục $Đ_d$ bảo toàn khoảng cách giữa hai điểm bất kỳ, nên mạng lưới ảnh đối xứng $A', B', C', D', E', F'$ có cùng độ dài các cạnh tương ứng $\implies$ Lộ trình ngắn nhất ở khu phía Tây chính là ảnh đối xứng của lộ trình khu phía Đông ($A' \to C' \to B' \to D' \to E' \to F'$) với tổng chiều dài đúng bằng $13\text{ km}$ mà không cần chạy lại thuật toán!
+
+\paragraph{d) Tổ chức thực hiện:} Giáo viên nêu câu hỏi $\implies$ Học sinh trả lời $\implies$ Giáo viên chốt: Đây chính là sức mạnh của việc kết hợp Phép biến hình với Lí thuyết đồ thị; giao nhiệm vụ các nhóm về nhà phân công vai trò cho Tiết 2.
+
+\newpage
+
+\begin{center}
+    \textbf{\large TIẾT 2 (TIẾT CĐ32 THEO PPCT | TUẦN 31)}\\[4pt]
+    \textit{(Nội dung: Thực hành trải nghiệm dự án nhóm trên phòng máy 35 máy - Báo cáo \& Đánh giá)}
+\end{center}
+
+\subsection*{1. Hoạt động 1: Mở đầu (Khởi động - 5 phút)}
+
+\paragraph{a) Mục tiêu:} Tạo tâm thế hào hứng cho tiết thực hành trải nghiệm; giới thiệu chủ đề dự án tích hợp 3 chuyên đề học tập.
+
+\paragraph{b) Nội dung:} Giáo viên công bố chủ đề dự án STEM trải nghiệm:
+\begin{center}
+    \textbf{\large DỰ ÁN: QUY HOẠCH MẠNG LƯỚI XE BUS THÔNG MINH KẾT HỢP BỐ TRÍ TRẠM SẠC ĐỐI XỨNG}
+\end{center}
+Mỗi nhóm trong 7 nhóm (mỗi nhóm 5 học sinh) đóng vai trò là một đội ngũ kỹ sư quy hoạch đô thị, sử dụng máy tính phòng học để xây dựng mô hình toán học giải quyết bài toán giao thông thực tế.
+
+\paragraph{c) Sản phẩm:} Học sinh ổn định theo 7 cụm máy tính, mở phần mềm Graph Online, GeoGebra và giao diện trợ lý AI sẵn sàng thực hiện nhiệm vụ.
+
+\paragraph{d) Tổ chức thực hiện:} Giáo viên nêu mục tiêu, tiêu chuẩn đánh giá Rubric $\implies$ Nhóm trưởng nhận Phiếu học tập số 2 $\implies$ Bắt đầu phiên làm việc nhóm trên máy tính.
+
+\subsection*{2. Hoạt động 2: Thực hành trải nghiệm dự án nhóm trên phòng máy 35 máy (18 phút)}
+
+\paragraph{a) Mục tiêu:} Thực hiện mục tiêu năng lực số (Mã 6.2NC1a: sử dụng AI gợi ý ý tưởng dự án tích hợp cả 3 chuyên đề Biến hình, Đồ thị, Vẽ kĩ thuật) và năng lực AI (Mã 11.C2.1: nhận biết cách AI liên kết các mạch kiến thức toán học trong giải quyết vấn đề thực tiễn).
+
+\paragraph{b) Nội dung:} 7 nhóm học sinh thực hiện dự án theo 3 giai đoạn:
+
+\begin{pedabox}{Giai đoạn 1: Sử dụng AI gợi ý ý tưởng và thiết lập mô hình (Mã 6.2NC1a)}
+Học sinh truy cập trợ lý AI trên máy tính, thực hành câu lệnh Prompt có cấu trúc (Chain-of-Thought):
+\begin{aibox}{Kỹ thuật Prompting tương tác cùng AI}
+\textbf{Câu lệnh Prompt học sinh gửi cho AI:}
+\begin{quote}
+\textit{``Chúng tôi là nhóm học sinh lớp 11 đang thực hiện dự án toán học thực nghiệm quy hoạch đô thị. Hãy đóng vai trò kỹ sư quy hoạch: Gợi ý cho chúng tôi một kịch bản bài toán thực tế tích hợp cả 3 chuyên đề:
+1. Chuyên đề 1 (Phép biến hình): Bố trí các trạm sạc xe điện đối xứng trục qua tuyến đại lộ trung tâm để phục vụ cân bằng hai bên bờ sông.
+2. Chuyên đề 2 (Lí thuyết đồ thị): Thiết lập đồ thị có trọng số gồm 8 điểm đón trả khách và tìm lộ trình xe bus điện ngắn nhất đi qua các điểm.
+3. Chuyên đề 3 (Vẽ kĩ thuật): Vẽ phác thảo bản vẽ 2D mặt bằng phân bố trạm xe bus.
+Hãy trình bày ma trận khoảng cách mẫu và hướng dẫn cách giải tối ưu.''}
+\end{quote}
+\end{aibox}
+Học sinh thẩm định câu trả lời của AI: Lựa chọn ma trận trọng số 8 đỉnh phù hợp, không sao chép máy móc mà điều chỉnh kích thước thực tế cho phù hợp với địa bàn địa phương (tuyến đường quanh trường THCS\&THPT Hồng Vân).
+\end{pedabox}
+
+\begin{pedabox}{Giai đoạn 2: Thao tác phần mềm toán học và chạy thuật toán}
+\begin{itemize}[leftmargin=0.5cm]
+    \item \textbf{Phần mềm Graph Online (\texttt{graphonline.ru}):} Học sinh nhập 8 đỉnh và các cạnh có trọng số tương ứng; sử dụng tính năng chạy tự động thuật toán Dijkstra để tìm đường đi ngắn nhất từ Bến trung tâm $S$ đến trường học $T$.
+    \item \textbf{Phần mềm GeoGebra:} Sử dụng công cụ phép đối xứng trục $Đ_d$ để lấy đối xứng toàn bộ hệ thống trạm sạc sang bờ đối diện của dòng sông, chứng minh tính bảo toàn cự ly di chuyển.
+    \item \textbf{Đánh giá nhận thức AI (Mã 11.C2.1):} Học sinh thảo luận cách hệ thống xe bus tự hành ứng dụng AI để liên tục cập nhật trọng số cạnh theo thời gian thực (khi có kẹt xe) và tự động đổi hướng theo thuật toán Dijkstra động ($A^*$).
+\end{itemize}
+\end{pedabox}
+
+\paragraph{c) Sản phẩm:}
+\begin{itemize}[leftmargin=0.8cm]
+    \item Tệp sơ đồ đồ thị mạng lưới trên Graph Online của từng nhóm.
+    \item Báo cáo tóm tắt trên file trình chiếu hoặc poster A0 gồm: Sơ đồ đồ thị 8 đỉnh, bảng tính Dijkstra, sơ đồ trạm sạc đối xứng và lời giải thích liên kết kiến thức 3 chuyên đề.
+\end{itemize}
+
+\paragraph{d) Tổ chức thực hiện:}
+\begin{itemize}[leftmargin=0.8cm]
+    \item Học sinh làm việc theo phân công trong nhóm 5 người: 1 bạn nhập prompt AI, 2 bạn vẽ đồ thị trên Graph Online, 1 bạn vẽ hình học đối xứng trên GeoGebra, 1 bạn tổng hợp kết quả vào bài thuyết trình.
+    \item Giáo viên di chuyển quanh 7 cụm máy tính, hướng dẫn kỹ thuật prompt AI và hỗ trợ gỡ lỗi phần mềm khi các nhóm nhập sai trọng số cạnh.
+\end{itemize}
+
+\subsection*{3. Hoạt động 3: Báo cáo dự án nhóm và Triển lãm poster kỹ thuật (15 phút)}
+
+\paragraph{a) Mục tiêu:} Rèn luyện năng lực giao tiếp toán học, kỹ năng thuyết trình, bảo vệ giải pháp tối ưu và năng lực đánh giá chéo giữa các nhóm học sinh.
+
+\paragraph{b) Nội dung:}
+\begin{itemize}[leftmargin=0.6cm]
+    \item Đại diện 3 nhóm (chọn ngẫu nhiên hoặc xung phong) kết nối máy tính lên máy chiếu chính, trình bày báo cáo sản phẩm trong 3 phút mỗi nhóm:
+    \begin{enumerate}[leftmargin=0.5cm]
+        \item Trình bày kịch bản mạng lưới giao thông do AI gợi ý và phần nhóm đã tinh chỉnh.
+        \item Minh họa đường đi ngắn nhất do thuật toán Dijkstra tìm ra trên phần mềm.
+        \item Giải thích việc áp dụng phép biến hình để nhân bản trạm sạc xe điện đối xứng.
+    \end{enumerate}
+    \item Các nhóm còn lại đặt câu hỏi phản biện: ``Nếu một cây cầu nối hai bờ bị tắc thì thuật toán sẽ chuyển hướng như thế nào?''.
+    \item Học sinh sử dụng Bảng Rubric chấm điểm chéo sản phẩm của các nhóm bạn.
+\end{itemize}
+
+\paragraph{c) Sản phẩm:} Bài thuyết trình trực quan, lời phản biện sắc bén của học sinh; phiếu đánh giá chéo của 7 nhóm.
+
+\paragraph{d) Tổ chức thực hiện:}
+\begin{itemize}[leftmargin=0.8cm]
+    \item Giáo viên điều hành phiên báo cáo, khống chế thời gian thuyết trình và phản biện.
+    \item Học sinh các nhóm tích cực tranh luận, bảo vệ phương án của nhóm mình.
+    \item Giáo viên nhận xét chuyên môn, làm rõ tính đúng đắn về mặt toán học của các giải pháp.
+\end{itemize}
+
+\subsection*{4. Hoạt động 4: Vận dụng \& Tổng kết (6 phút)}
+
+\paragraph{a) Mục tiêu:} Tổng kết toàn bộ chuỗi kiến thức Chuyên đề 1 và Chuyên đề 2; định hướng chuẩn bị cho bài kiểm tra đánh giá chuyên đề học tập học kỳ II.
+
+\paragraph{b) Nội dung:}
+\begin{itemize}[leftmargin=0.6cm]
+    \item Giáo viên tổng kết: Qua 2 tiết thực hành trải nghiệm, các em đã thấy rõ Toán học không hề khô khan mà gắn liền với các công nghệ tương lai (xe tự hành, đô thị thông minh, Logistics 4.0).
+    \item Thông báo kế hoạch: Hai tiết tiếp theo (Tiết CĐ33, CĐ34 theo PPCT) sẽ là tiết Ôn tập Chuyên đề 3 (Vẽ kĩ thuật) và làm bài kiểm tra viết 45 phút đánh giá Chuyên đề học tập Toán 11.
+    \item Giao nhiệm vụ tự học: Các nhóm nộp lại toàn bộ file báo cáo điện tử vào thư mục Google Drive của lớp; cá nhân ôn tập toàn bộ 3 chuyên đề học tập.
+\end{itemize}
+
+\paragraph{c) Sản phẩm:} Tệp tổng hợp sản phẩm của 7 nhóm lưu trữ an toàn trên Drive; học sinh nắm vững lịch kiểm tra.
+
+\paragraph{d) Tổ chức thực hiện:} Giáo viên đúc kết $\implies$ Tuyên dương tinh thần sáng tạo của học sinh $\implies$ Hướng dẫn học sinh lưu tệp, tắt máy tính phòng học theo đúng quy định.
+
+\section*{IV. PHỤ LỤC HỌC LIỆU BỔ TRỢ}
+
+\subsection*{1. Phiếu học tập số 1 (Tiết 1): Hệ thống hóa kiến thức Chuyên đề 1 \& 2}
+
+\begin{pedabox}{PHIẾU HỌC TẬP SỐ 1 (TIẾT 1)}
+\textbf{Nhóm:} \dots \quad \textbf{Lớp:} 11A\dots \quad \textbf{Thành viên:} \dotfill
+\begin{enumerate}[leftmargin=0.6cm]
+    \item \textbf{Khái niệm cốt lõi:} Điền vào chỗ trống:
+    \begin{itemize}
+        \item Phép tịnh tiến theo vectơ $\vec{v}(a;b)$ biến điểm $M(x;y)$ thành $M'(x';y')$ có tọa độ là: \dotfill
+        \item Một đồ thị liên thông có chu trình Euler khi và chỉ khi mọi đỉnh của đồ thị đều có: \dotfill
+        \item Thuật toán Dijkstra chỉ áp dụng được trên đồ thị có trọng số thỏa mãn điều kiện: \dotfill
+    \end{itemize}
+    \item \textbf{Thực hành Dijkstra:} Cho đồ thị 6 đỉnh $A, B, C, D, E, F$ với các trọng số đã cho. Hãy điền đầy đủ bảng gán nhãn từng bước và tìm đường đi ngắn nhất từ $A$ đến $F$.
+\end{enumerate}
+\end{pedabox}
+
+\subsection*{2. Phiếu học tập số 2 (Tiết 2): Nhiệm vụ dự án trải nghiệm nhóm}
+
+\begin{pedabox}{PHIẾU HỌC TẬP SỐ 2 (TIẾT 2): DỰ ÁN TRẢI NGHIỆM ĐÔ THỊ THÔNG MINH}
+\textbf{Chủ đề:} Quy hoạch tuyến xe bus thông minh và trạm sạc điện đối xứng
+\begin{itemize}[leftmargin=0.5cm]
+    \item \textbf{Phần 1: Lệnh Prompt AI:} Ghi lại câu lệnh prompt mà nhóm đã sử dụng để nhờ AI gợi ý ý tưởng:
+    \dotfill\\
+    \dotfill
+    \item \textbf{Phần 2: Sơ đồ đồ thị mạng lưới:} Phác thảo đồ thị gồm 8 đỉnh đại diện cho các địa điểm đón trả khách tại địa phương (ghi rõ tên các địa điểm và khoảng cách ước lượng giữa chúng):
+    \dotfill\\
+    \dotfill
+    \item \textbf{Phần 3: Kết quả tối ưu:}
+    \begin{itemize}
+        \item Lộ trình xe bus ngắn nhất từ Bến chính đến các trường học: \dotfill
+        \item Vị trí bố trí trạm sạc đối xứng qua trục đường chính: \dotfill
+        \item Lợi ích kinh tế và môi trường của phương án: \dotfill
+    \end{itemize}
+\end{itemize}
+\end{pedabox}
+
+\subsection*{3. Rubric đánh giá dự án thực hành trải nghiệm chuyên đề (4 mức độ)}
+
+\begin{center}
+\small
+\begin{tabularx}{\linewidth}{|p{3cm}|X|X|X|X|}
+\hline
+\textbf{Tiêu chí đánh giá} & \textbf{Mức 1: Chưa đạt} & \textbf{Mức 2: Đạt} & \textbf{Mức 3: Khá} & \textbf{Mức 4: Tốt} \\ \hline
+\textbf{1. Hệ thống hóa lý thuyết Chuyên đề 1 \& 2} & Chưa nhớ công thức tọa độ biến hình và định lý Euler/Dijkstra. & Nhớ được công thức cơ bản nhưng áp dụng thuật toán Dijkstra còn sai sót. & Hệ thống hóa chính xác lý thuyết, thực hiện đúng các bước thuật toán Dijkstra. & Phân tích sâu sắc bản chất toán học, phát hiện mối liên hệ hữu cơ giữa biến hình và đồ thị. \\ \hline
+\textbf{2. Năng lực số \& Sử dụng AI (6.2NC1a)} & Không biết đặt prompt cho AI, không thao tác được phần mềm. & Đặt được prompt đơn giản cho AI nhưng sao chép hoàn toàn kết quả máy móc. & Thiết kế prompt rõ ràng, biết chọn lọc và điều chỉnh dữ liệu AI cho phù hợp đề tài. & Khai thác sáng tạo AI kết hợp thành thạo Graph Online và GeoGebra mô phỏng dự án hoàn hảo. \\ \hline
+\textbf{3. Nhận thức AI liên kết kiến thức (11.C2.1)} & Không thấy được mối liên hệ giữa AI và toán học chuyên đề. & Nhận biết AI có ứng dụng trong xe tự hành và bản đồ định tuyến. & Phân tích được cách AI biểu diễn mạng lưới đồ thị và cập nhật trọng số động. & Đánh giá thấu đáo vai trò của đồ thị tri thức (Knowledge Graph) và học sâu trong AI tương lai. \\ \hline
+\textbf{4. Báo cáo sản phẩm \& Hợp tác nhóm} & Báo cáo sơ sài, hoạt động nhóm rời rạc, không hoàn thành đúng hạn. & Báo cáo đủ ý nhưng trình bày chưa hấp dẫn, một vài thành viên thụ động. & Thuyết trình mạch lạc, trả lời được câu hỏi phản biện, nhóm phối hợp tốt. & Thuyết trình chuyên nghiệp, phản biện sắc sảo, sản phẩm trực quan sinh động xuất sắc. \\ \hline
+\end{tabularx}
+\end{center}
+
+\end{document}
