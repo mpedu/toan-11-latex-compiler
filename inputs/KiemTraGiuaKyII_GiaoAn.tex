@@ -1,0 +1,558 @@
+\documentclass[12pt, a4paper]{article}
+% --- 1. Cấu hình Tiếng Việt và Font chữ chuẩn ---
+\usepackage[utf8]{inputenc}
+\usepackage[T5]{fontenc}
+\usepackage[vietnamese]{babel}
+\usepackage{mathptmx} % Font Times New Roman đồng bộ cả chữ và công thức toán, không gây xung đột gói
+
+\makeatletter
+\renewcommand{\normalsize}{\@setfontsize\normalsize{13pt}{16pt}}
+\makeatother
+\normalsize
+
+% --- 2. Gói Toán học & Ký hiệu bổ trợ ---
+\usepackage{amsmath, amssymb, amsfonts, mathrsfs, amsthm}
+\usepackage{graphicx}
+\usepackage{fontawesome}
+\usepackage{booktabs, tabularx, array, multirow}
+\usepackage{enumitem}
+
+% --- 3. Đồ họa TikZ, Bảng biến thiên & Hình không gian ---
+\usepackage{tikz}
+\usetikzlibrary{calc, intersections, angles, quotes, patterns, arrows.meta, 3d}
+\usepackage{pgfplots}
+\pgfplotsset{compat=1.18}
+\usepackage{tkz-euclide}
+\usepackage{tkz-tab}
+
+\renewcommand{\vec}[1]{\overrightarrow{#1}}
+
+% --- 4. Hộp sư phạm (Tcolorbox) ---
+\usepackage[many]{tcolorbox}
+\tcbuselibrary{skins, breakable}
+
+% --- 5. Căn lề chuẩn văn bản giáo án ---
+\usepackage{geometry}
+\geometry{
+    a4paper,
+    left=25mm,
+    right=15mm,
+    top=20mm,
+    bottom=20mm
+}
+
+% --- 6. Header / Footer chuẩn hóa ---
+\usepackage{fancyhdr}
+\usepackage{lastpage}
+\pagestyle{fancy}
+\fancyhf{}
+
+\fancyhead[L]{\small \textit{Kế hoạch bài dạy Toán 11}}
+\fancyhead[R]{\textbf{Trang \thepage/\pageref{LastPage}}}
+\fancyfoot[L]{\small \textit{Tổ Toán - Tin}}
+\fancyfoot[R]{\small \textit{Trường THCS\&THPT Hồng Vân}}
+\renewcommand{\headrulewidth}{0.4pt}
+\renewcommand{\footrulewidth}{0.4pt}
+
+% --- 7. Giãn dòng & Giãn đoạn theo chuẩn Nghị định 30/2020/NĐ-CP ---
+\usepackage{setspace}
+\setstretch{1.15}
+\setlength{\parindent}{1.0cm}
+\setlength{\parskip}{5pt}
+
+% Định nghĩa hộp sư phạm chuyên dụng
+\newtcolorbox{pedabox}[2][]{
+    enhanced,
+    breakable,
+    colback=blue!3!white,
+    colframe=blue!65!black,
+    fonttitle=\bfseries\small,
+    title={#2},
+    arc=2mm,
+    boxrule=0.6pt,
+    left=3mm, right=3mm, top=2mm, bottom=2mm,
+    #1
+}
+
+\newtcolorbox{aibox}[2][]{
+    enhanced,
+    breakable,
+    colback=teal!4!white,
+    colframe=teal!70!black,
+    fonttitle=\bfseries\small,
+    title={#2},
+    arc=2mm,
+    boxrule=0.6pt,
+    left=3mm, right=3mm, top=2mm, bottom=2mm,
+    #1
+}
+
+\newtcolorbox{scaffoldbox}[2][]{
+    enhanced,
+    breakable,
+    colback=orange!4!white,
+    colframe=orange!80!black,
+    fonttitle=\bfseries\small,
+    title={#2},
+    arc=2mm,
+    boxrule=0.6pt,
+    left=3mm, right=3mm, top=2mm, bottom=2mm,
+    #1
+}
+
+\newtcolorbox{stembox}[2][]{
+    enhanced,
+    breakable,
+    colback=purple!4!white,
+    colframe=purple!75!black,
+    fonttitle=\bfseries\small,
+    title={#2},
+    arc=2mm,
+    boxrule=0.6pt,
+    left=3mm, right=3mm, top=2mm, bottom=2mm,
+    #1
+}
+
+\begin{document}
+
+\begin{center}
+    {\fontsize{14pt}{17pt}\selectfont \textbf{KẾ HOẠCH BÀI DẠY MÔN TOÁN LỚP 11}}\\[6pt]
+    {\fontsize{16pt}{19pt}\selectfont \textbf{KIỂM TRA GIỮA KỲ II}}\\[4pt]
+    {\fontsize{12pt}{15pt}\selectfont \textbf{Môn học: Toán 11} \ \textbar \ \textbf{Thời lượng: 2 tiết (Tiết 81, 82 theo PPCT | Tuần 29)}}
+\end{center}
+
+\vspace{5pt}
+
+\section*{I. MỤC TIÊU}
+
+\subsection*{1. Kiến thức, Năng lực}
+
+\begin{itemize}[leftmargin=1.2cm]
+    \item \textbf{Yêu cầu cần đạt (Nguyên văn CT GDPT 2018 Toán 11):}
+    \begin{itemize}[leftmargin=0.6cm]
+        \item Đánh giá toàn diện chuẩn kiến thức, kỹ năng toán học của học sinh từ đầu Học kỳ II đến hết Chương VII theo Chương trình Giáo dục phổ thông 2018:
+        \begin{itemize}
+            \item \textit{Chương VI (Hàm số mũ và hàm số lôgarit):} Phép tính lũy thừa với số mũ thực, các tính chất của hàm số mũ và hàm số lôgarit; công thức biến đổi lôgarit; giải phương trình và bất phương trình mũ, lôgarit cơ bản.
+            \item \textit{Chương VII (Quan hệ vuông góc trong không gian):} Hai đường thẳng vuông góc, đường thẳng vuông góc với mặt phẳng, hai mặt phẳng vuông góc; phép chiếu vuông góc; góc trong không gian (góc giữa hai đường thẳng, góc giữa đường thẳng và mặt phẳng, góc nhị diện); khoảng cách (từ điểm đến đường thẳng, điểm đến mặt phẳng, khoảng cách giữa các đối tượng song song, khoảng cách giữa hai đường thẳng chéo nhau); thể tích khối lăng trụ, khối chóp và khối chóp cụt đều.
+        \end{itemize}
+        \item Cung cấp thông tin phản hồi định lượng và định tính chính xác giúp giáo viên điều chỉnh kế hoạch giảng dạy, phân loại học sinh và có biện pháp phụ đạo, bồi dưỡng kịp thời trong nửa sau học kỳ II.
+    \end{itemize}
+
+    \item \textbf{Năng lực Toán học đặc thù:}
+    \begin{itemize}[leftmargin=0.6cm]
+        \item \textit{Năng lực tư duy và lập luận toán học:} Khả năng phân tích câu hỏi trắc nghiệm, nhận diện quy luật toán học, suy luận logic khi biến đổi biểu thức mũ, lôgarit; lập luận hình học chặt chẽ khi chứng minh quan hệ vuông góc và xác định các yếu tố góc, khoảng cách.
+        \item \textit{Năng lực mô hình hóa toán học:} Vận dụng mô hình hàm số mũ, hàm số lôgarit và các công thức thể tích khối đa diện để giải quyết các bài toán thực tiễn (tài chính ngân hàng, tăng trưởng, kiến trúc xây dựng, dung tích thùng chứa).
+        \item \textit{Năng lực giải quyết vấn đề toán học:} Xây dựng chiến thuật làm bài thi 90 phút hiệu quả: phân bổ thời gian hợp lý giữa phần trắc nghiệm khách quan (70\%) và tự luận (30\%); kiểm soát tốt tốc độ làm bài, biết kiểm chứng kết quả bằng phương pháp thử ngược hoặc loại trừ.
+        \item \textit{Năng lực giao tiếp toán học:} Trình bày bài tự luận rõ ràng, mạch lạc, đúng chuẩn mực ký hiệu toán học; diễn đạt chính xác lập luận toán học, vẽ hình không gian đúng quy ước nét đứt, nét liền.
+        \item \textit{Năng lực sử dụng công cụ, phương tiện học toán:} Sử dụng thành thạo và chuẩn xác máy tính cầm tay (MTCT) Casio fx-580VN X để hỗ trợ tính toán, kiểm tra nghiệm phương trình mũ, lôgarit và kiểm tra số học.
+    \end{itemize}
+
+    \item \textbf{Năng lực số (Theo Thông tư 02/2025/TT-BGDĐT):}
+    \begin{itemize}[leftmargin=0.6cm]
+        \item \textit{Mã 2.6NC1a (Quản lý danh tính và bảo vệ thông tin cá nhân trong kỳ khảo thí số):} Học sinh có ý thức và kỹ năng bảo vệ thông tin định danh cá nhân (Số báo danh, Mã học sinh, Mã đề thi) trên phiếu trả lời trắc nghiệm quét tự động bằng máy chấm và hệ thống cơ sở dữ liệu điểm điện tử; tôn trọng quy trình số hóa điểm số học đường.
+    \end{itemize}
+
+    \item \textbf{Năng lực AI (Theo Quyết định 2422/QĐ-BGDĐT):}
+    \begin{itemize}[leftmargin=0.6cm]
+        \item \textit{Mã 11.B2.1 (Đạo đức học thuật và Tính trung thực trong khảo thí thời đại số):} Học sinh nhận thức sâu sắc về sự liêm chính học thuật; nghiêm chỉnh chấp hành quy chế kiểm tra, tuyệt đối không sử dụng thiết bị thông minh, tai nghe thu phát sóng hoặc các ứng dụng trợ lý AI để gian lận; hiểu rõ kiểm tra là thước đo năng lực tự thân của người học.
+    \end{itemize}
+
+    \item \textbf{Năng lực chung:}
+    \begin{itemize}[leftmargin=0.6cm]
+        \item \textit{Tự chủ và tự học:} Tự lực hoàn thành trọn vẹn bài kiểm tra trong 90 phút mà không trông chờ vào sự trợ giúp bên ngoài.
+        \item \textit{Giải quyết vấn đề và sáng tạo:} Linh hoạt lựa chọn hướng giải toán tối ưu cho các câu hỏi phân hóa vận dụng cao.
+    \end{itemize}
+\end{itemize}
+
+\subsection*{2. Phẩm chất}
+
+\begin{itemize}[leftmargin=1.2cm]
+    \item \textbf{Trung thực:} Tự giác làm bài, trung thực tuyệt đối trong quá trình kiểm tra, không quay cóp, không trao đổi bài.
+    \item \textbf{Chăm chỉ:} Tập trung cao độ trong suốt 90 phút, kiên trì giải quyết các bài toán phân hóa đến phút cuối cùng.
+    \item \textbf{Trách nhiệm:} Chấp hành nghiêm chỉnh nội quy phòng thi, có trách nhiệm với kết quả rèn luyện và học tập của bản thân.
+\end{itemize}
+
+\section*{II. HÌNH THỨC, THỜI GIAN VÀ CẤU TRÚC ĐỀ KIỂM TRA}
+
+\begin{itemize}[leftmargin=1.2cm]
+    \item \textbf{Hình thức kiểm tra:} Kiểm tra viết trên giấy, kết hợp giữa Trắc nghiệm khách quan (70\%) và Tự luận (30\%).
+    \begin{itemize}[leftmargin=0.6cm]
+        \item \textbf{Phần I (Trắc nghiệm khách quan):} 28 câu hỏi nhiều lựa chọn (7,0 điểm, mỗi câu 0,25 điểm).
+        \item \textbf{Phần II (Tự luận):} 3 bài toán phân hóa (3,0 điểm): 1 câu Đại số (1,0 điểm), 2 câu Hình học không gian (2,0 điểm).
+    \end{itemize}
+    \item \textbf{Thời gian làm bài:} 90 phút (Tiết 81, 82 theo PPCT | Tuần 29).
+    \item \textbf{Khung ma trận đề kiểm tra Giữa kỳ II theo 4 mức độ nhận thức:}
+\end{itemize}
+
+\begin{center}
+\begin{tabularx}{\textwidth}{|p{4.5cm}|X|X|X|X|X|}
+\hline
+\textbf{Chủ đề / Đơn vị kiến thức} & \textbf{Nhận biết} & \textbf{Thông hiểu} & \textbf{Vận dụng} & \textbf{Vận dụng cao} & \textbf{Tổng điểm} \\ \hline
+1. Lũy thừa, Lôgarit, Hàm số mũ \& Lôgarit & 6 câu TN (1,5 đ) & 4 câu TN (1,0 đ) & 1 câu TN (0,25 đ) & 1 ý TL (0,5 đ) & 3,25 điểm \\ \hline
+2. Phương trình, BPT mũ \& Lôgarit & 3 câu TN (0,75 đ) & 3 câu TN (0,75 đ) & 1 bài TL (1,0 đ) & – & 2,50 điểm \\ \hline
+3. Quan hệ vuông góc trong không gian & 5 câu TN (1,25 đ) & 4 câu TN (1,0 đ) & 1 ý TL (0,5 đ) & – & 2,75 điểm \\ \hline
+4. Khoảng cách \& Thể tích khối đa diện & 2 câu TN (0,5 đ) & 1 câu TN (0,25 đ) & 1 ý TL (0,5 đ) & 1 ý TL (0,25 đ) & 1,50 điểm \\ \hline
+\textbf{Tổng số câu / Điểm} & \textbf{16 câu TN (4,0 đ)} & \textbf{12 câu TN (3,0 đ)} & \textbf{2 bài TL (2,0 đ)} & \textbf{1 ý TL (1,0 đ)} & \textbf{10,0 điểm} \\ \hline
+\textbf{Tỉ lệ phần trăm} & \textbf{40\%} & \textbf{30\%} & \textbf{20\%} & \textbf{10\%} & \textbf{100\%} \\ \hline
+\end{tabularx}
+\end{center}
+
+\section*{III. TIẾN TRÌNH TỔ CHỨC KIỂM TRA ĐÁNH GIÁ (TIẾT 81, 82 | 90 PHÚT)}
+
+\subsection*{1. Hoạt động 1: Ổn định tổ chức, phổ biến quy chế \& Đạo đức khảo thí số (10 phút)}
+
+\begin{itemize}[leftmargin=1.2cm]
+    \item[a)] \textbf{Mục tiêu:} Kiểm tra sĩ số, số báo danh; quán triệt nội quy phòng thi và giáo dục liêm chính học thuật trong thời đại số.
+    \item[b)] \textbf{Nội dung & Tổ chức thực hiện:}
+    \begin{itemize}[leftmargin=0.6cm]
+        \item Giáo viên kiểm diện sĩ số lớp 11 (35 học sinh), sắp xếp học sinh ngồi đúng sơ đồ số báo danh (mỗi bàn 1 em).
+        \item Yêu cầu học sinh tắt nguồn toàn bộ điện thoại thông minh, đồng hồ thông minh và để túi xách ở khu vực quy định đầu phòng thi.
+        \item Phổ biến quy chế thi: Không trao đổi, không quay cóp, không sử dụng tài liệu; giáo dục đạo đức học thuật theo Quyết định 2422/QĐ-BGDĐT: Kiểm tra là cơ hội đánh giá thực chất năng lực tự thân, tuyệt đối nói không với gian lận công nghệ.
+        \item Phát giấy thi tự luận và phiếu trả lời trắc nghiệm; hướng dẫn học sinh tô số báo danh và mã đề thi cẩn thận, chuẩn xác (Mã 2.6NC1a).
+    \end{itemize}
+\end{itemize}
+
+\subsection*{2. Hoạt động 2: Tổ chức học sinh làm bài kiểm tra nghiêm túc (75 phút)}
+
+\begin{itemize}[leftmargin=1.2cm]
+    \item[a)] \textbf{Mục tiêu:} Học sinh vận dụng tổng hợp kiến thức Chương VI và Chương VII hoàn thành bài kiểm tra 90 phút độc lập, tự chủ.
+    \item[b)] \textbf{Nội dung:} Học sinh giải bài theo đề kiểm tra chính thức (gồm 28 câu trắc nghiệm và 3 câu tự luận).
+    \item[c)] \textbf{Tổ chức thực hiện:}
+    \begin{itemize}[leftmargin=0.6cm]
+        \item Đúng giờ quy định, GV bóc túi niêm phong đề thi, phát đề kiểm tra cho từng học sinh.
+        \item Cho học sinh 2 phút kiểm tra đề thi (đảm bảo đủ số trang, rõ chữ, không rách nát).
+        \item Tính giờ làm bài (từ phút thứ 12 đến phút thứ 87).
+        \item Giáo viên coi thi nghiêm túc, bao quát toàn phòng, không giải thích gì thêm về nội dung đề thi; nhắc nhở học sinh mốc thời gian còn 15 phút và 5 phút cuối.
+    \end{itemize}
+\end{itemize}
+
+\subsection*{3. Hoạt động 3: Thu bài, kiểm đếm và nhận xét giờ kiểm tra (5 phút)}
+
+\begin{itemize}[leftmargin=1.2cm]
+    \item[a)] \textbf{Mục tiêu:} Thu hồi đầy đủ giấy thi, phiếu trắc nghiệm; đánh giá ý thức chấp hành kỷ luật của học sinh.
+    \item[b)] \textbf{Tổ chức thực hiện:}
+    \begin{itemize}[leftmargin=0.6cm]
+        \item Hết giờ làm bài, GV yêu cầu toàn thể học sinh dừng bút, ngồi yên tại chỗ.
+        \item GV thu phiếu trả lời trắc nghiệm và bài thi tự luận theo số thứ tự danh sách lớp.
+        \item Kiểm đếm đủ 35 bài thi, đối chiếu chữ ký nộp bài của học sinh.
+        \item Nhận xét ngắn gọn về nền nếp và thái độ làm bài của cả lớp trong 90 phút.
+        \item Dặn dò chuẩn bị cho bài học tuần sau: Chương VIII. Các quy tắc tính xác suất (Bài 28. Biến cố hợp, biến cố giao, biến cố độc lập).
+    \end{itemize}
+\end{itemize}
+
+\section*{IV. ĐỀ KIỂM TRA MINH HỌA GIỮA KỲ II VÀ ĐÁP ÁN CHI TIẾT}
+
+\begin{center}
+    \textbf{\large ĐỀ KIỂM TRA ĐỊNH KỲ GIỮA HỌC KỲ II}\\[2pt]
+    \textbf{Môn: TOÁN 11 -- Thời gian làm bài: 90 phút}\\[4pt]
+    \textit{(Đề thi gồm 28 câu trắc nghiệm và 03 bài toán tự luận)}
+\end{center}
+
+\subsection*{PHẦN I. CÂU HỎI TRẮC NGHIỆM KHÁCH QUAN (7,0 ĐIỂM -- 28 CÂU)}
+
+\begin{enumerate}[leftmargin=0.8cm]
+    \item Cho $a > 0$ và $a \ne 1, x, y > 0$. Khẳng định nào sau đây là \textbf{đúng}?
+    \begin{enumerate}[leftmargin=0.6cm]
+        \item[A.] $\log_a (x + y) = \log_a x + \log_a y$.
+        \item[B.] $\log_a (x y) = \log_a x \cdot \log_a y$.
+        \item[C.] $\log_a (x y) = \log_a x + \log_a y$.
+        \item[D.] $\log_a \left(\dfrac{x}{y}\right) = \dfrac{\log_a x}{\log_a y}$.
+    \end{enumerate}
+
+    \item Rút gọn biểu thức $P = a^{\frac{1}{3}} \cdot \sqrt{a}$ với $a > 0$, ta được:
+    \begin{enumerate}[leftmargin=0.6cm]
+        \item[A.] $P = a^{\frac{1}{6}}$.
+        \item[B.] $P = a^{\frac{5}{6}}$.
+        \item[C.] $P = a^{\frac{2}{3}}$.
+        \item[D.] $P = a^{\frac{4}{3}}$.
+    \end{enumerate}
+
+    \item Tập xác định của hàm số $y = \log_3 (x - 2)$ là:
+    \begin{enumerate}[leftmargin=0.6cm]
+        \item[A.] $(2; +\infty)$.
+        \item[B.] $[2; +\infty)$.
+        \item[C.] $(-\infty; 2)$.
+        \item[D.] $\mathbb{R} \setminus \{2\}$.
+    \end{enumerate}
+
+    \item Nghiệm của phương trình $2^{x-1} = 8$ là:
+    \begin{enumerate}[leftmargin=0.6cm]
+        \item[A.] $x = 3$.
+        \item[B.] $x = 4$.
+        \item[C.] $x = 2$.
+        \item[D.] $x = 5$.
+    \end{enumerate}
+
+    \item Nghiệm của phương trình $\log_2 (2x - 1) = 3$ là:
+    \begin{enumerate}[leftmargin=0.6cm]
+        \item[A.] $x = 4$.
+        \item[B.] $x = \dfrac{7}{2}$.
+        \item[C.] $x = \dfrac{9}{2}$.
+        \item[D.] $x = 5$.
+    \end{enumerate}
+
+    \item Cho hàm số $y = \left(\dfrac{1}{2}\right)^x$. Mệnh đề nào sau đây là \textbf{đúng}?
+    \begin{enumerate}[leftmargin=0.6cm]
+        \item[A.] Hàm số đồng biến trên $\mathbb{R}$.
+        \item[B.] Đồ thị hàm số đi qua điểm $(1; 2)$.
+        \item[C.] Hàm số nghịch biến trên $\mathbb{R}$.
+        \item[D.] Hàm số có tập xác định là $(0; +\infty)$.
+    \end{enumerate}
+
+    \item Khẳng định nào sau đây là \textbf{đúng} về quan hệ vuông góc trong không gian?
+    \begin{enumerate}[leftmargin=0.6cm]
+        \item[A.] Nếu đường thẳng $d$ vuông góc với một đường thẳng thuộc $(P)$ thì $d \perp (P)$.
+        \item[B.] Nếu đường thẳng $d$ vuông góc với hai đường thẳng cắt nhau cùng thuộc $(P)$ thì $d \perp (P)$.
+        \item[C.] Nếu đường thẳng $d$ vuông góc với hai đường thẳng song song cùng thuộc $(P)$ thì $d \perp (P)$.
+        \item[D.] Hai đường thẳng cùng vuông góc với một đường thẳng thứ ba thì song song với nhau.
+    \end{enumerate}
+
+    \item Cho hình chóp $S.ABC$ có $SA \perp (ABC)$. Hình chiếu vuông góc của đường thẳng $SB$ lên mặt phẳng $(ABC)$ là:
+    \begin{enumerate}[leftmargin=0.6cm]
+        \item[A.] Đường thẳng $AB$.
+        \item[B.] Đường thẳng $AC$.
+        \item[C.] Đường thẳng $BC$.
+        \item[D.] Đường thẳng $SA$.
+    \end{enumerate}
+
+    \item Cho hình chóp $S.ABCD$ có đáy $ABCD$ là hình vuông tâm $O$, cạnh bên $SA \perp (ABCD)$. Đường thẳng nào sau đây vuông góc với mặt phẳng $(SAC)$?
+    \begin{enumerate}[leftmargin=0.6cm]
+        \item[A.] $AB$.
+        \item[B.] $CD$.
+        \item[C.] $BD$.
+        \item[D.] $BC$.
+    \end{enumerate}
+
+    \item Góc giữa hai mặt phẳng vuông góc với nhau bằng:
+    \begin{enumerate}[leftmargin=0.6cm]
+        \item[A.] $0^\circ$.
+        \item[B.] $45^\circ$.
+        \item[C.] $90^\circ$.
+        \item[D.] $180^\circ$.
+    \end{enumerate}
+
+    \item Thể tích của khối lăng trụ có diện tích đáy $B = 10\text{ cm}^2$ và chiều cao $h = 6\text{ cm}$ là:
+    \begin{enumerate}[leftmargin=0.6cm]
+        \item[A.] $60\text{ cm}^3$.
+        \item[B.] $20\text{ cm}^3$.
+        \item[C.] $30\text{ cm}^3$.
+        \item[D.] $120\text{ cm}^3$.
+    \end{enumerate}
+
+    \item Thể tích của khối chóp có diện tích đáy $B = 12\text{ cm}^2$ và chiều cao $h = 5\text{ cm}$ là:
+    \begin{enumerate}[leftmargin=0.6cm]
+        \item[A.] $60\text{ cm}^3$.
+        \item[B.] $20\text{ cm}^3$.
+        \item[C.] $30\text{ cm}^3$.
+        \item[D.] $15\text{ cm}^3$.
+    \end{enumerate}
+
+    \item Cho hình hộp chữ nhật có ba kích thước lần lượt là $2\text{ cm}, 3\text{ cm}, 4\text{ cm}$. Thể tích của khối hộp chữ nhật đó bằng:
+    \begin{enumerate}[leftmargin=0.6cm]
+        \item[A.] $9\text{ cm}^3$.
+        \item[B.] $24\text{ cm}^3$.
+        \item[C.] $8\text{ cm}^3$.
+        \item[D.] $12\text{ cm}^3$.
+    \end{enumerate}
+
+    \item Cho $a > 0, a \ne 1$. Giá trị của $\log_a (a^3)$ bằng:
+    \begin{enumerate}[leftmargin=0.6cm]
+        \item[A.] $1$.
+        \item[B.] $2$.
+        \item[C.] $3$.
+        \item[D.] $\dfrac{1}{3}$.
+    \end{enumerate}
+
+    \item Bất phương trình $3^x > 9$ có tập nghiệm là:
+    \begin{enumerate}[leftmargin=0.6cm]
+        \item[A.] $(2; +\infty)$.
+        \item[B.] $(-\infty; 2)$.
+        \item[C.] $[2; +\infty)$.
+        \item[D.] $(3; +\infty)$.
+    \end{enumerate}
+
+    \item Cho hình chóp $S.ABC$ có đáy là tam giác vuông tại $B$, $SA \perp (ABC)$. Khẳng định nào sau đây \textbf{sai}?
+    \begin{enumerate}[leftmargin=0.6cm]
+        \item[A.] $BC \perp (SAB)$.
+        \item[B.] $AB \perp (SBC)$.
+        \item[C.] $(SAB) \perp (ABC)$.
+        \item[D.] $(SBC) \perp (SAB)$.
+    \end{enumerate}
+
+    \item Giá trị của biểu thức $\log_2 8 + \log_3 9$ bằng:
+    \begin{enumerate}[leftmargin=0.6cm]
+        \item[A.] $5$.
+        \item[B.] $6$.
+        \item[C.] $4$.
+        \item[D.] $7$.
+    \end{enumerate}
+
+    \item Cho hình lập phương $ABCD.A'B'C'D'$. Góc giữa hai đường thẳng $A'B'$ và $BC$ bằng:
+    \begin{enumerate}[leftmargin=0.6cm]
+        \item[A.] $45^\circ$.
+        \item[B.] $90^\circ$.
+        \item[C.] $60^\circ$.
+        \item[D.] $30^\circ$.
+    \end{enumerate}
+
+    \item Một khối chóp tam giác đều có cạnh đáy bằng $a$ và chiều cao bằng $a\sqrt{3}$. Thể tích của khối chóp đó bằng:
+    \begin{enumerate}[leftmargin=0.6cm]
+        \item[A.] $\dfrac{a^3}{4}$.
+        \item[B.] $\dfrac{a^3\sqrt{3}}{12}$.
+        \item[C.] $\dfrac{a^3}{12}$.
+        \item[D.] $\dfrac{a^3\sqrt{3}}{4}$.
+    \end{enumerate}
+
+    \item Cho phương trình $\log_3^2 x - 4\log_3 x + 3 = 0$. Tích các nghiệm của phương trình là:
+    \begin{enumerate}[leftmargin=0.6cm]
+        \item[A.] $27$.
+        \item[B.] $81$.
+        \item[C.] $9$.
+        \item[D.] $243$.
+    \end{enumerate}
+
+    \item Cho tứ diện $OABC$ có $OA, OB, OC$ đôi một vuông góc tại $O$. Khoảng cách từ $O$ đến mặt phẳng $(ABC)$ được tính theo công thức:
+    \begin{enumerate}[leftmargin=0.6cm]
+        \item[A.] $\dfrac{1}{h^2} = \dfrac{1}{OA^2} + \dfrac{1}{OB^2} + \dfrac{1}{OC^2}$.
+        \item[B.] $h = OA + OB + OC$.
+        \item[C.] $h^2 = OA^2 + OB^2 + OC^2$.
+        \item[D.] $\dfrac{1}{h} = \dfrac{1}{OA} + \dfrac{1}{OB} + \dfrac{1}{OC}$.
+    \end{enumerate}
+
+    \item Bất phương trình $\log_{\frac{1}{2}} (x - 1) > -1$ có tập nghiệm là:
+    \begin{enumerate}[leftmargin=0.6cm]
+        \item[A.] $(1; 3)$.
+        \item[B.] $(3; +\infty)$.
+        \item[C.] $(-\infty; 3)$.
+        \item[D.] $(1; 2)$.
+    \end{enumerate}
+
+    \item Cho hình chóp $S.ABC$ có $SA \perp (ABC)$, đáy $ABC$ vuông tại $B$. Cạnh $SA = a, AB = a$. Góc giữa đường thẳng $SB$ và mặt phẳng đáy $(ABC)$ bằng:
+    \begin{enumerate}[leftmargin=0.6cm]
+        \item[A.] $30^\circ$.
+        \item[B.] $45^\circ$.
+        \item[C.] $60^\circ$.
+        \item[D.] $90^\circ$.
+    \end{enumerate}
+
+    \item Cho hình chóp cụt tứ giác đều có các cạnh đáy lần lượt là $2\text{ cm}$ và $4\text{ cm}$, chiều cao $h = 3\text{ cm}$. Thể tích của khối chóp cụt đó bằng:
+    \begin{enumerate}[leftmargin=0.6cm]
+        \item[A.] $28\text{ cm}^3$.
+        \item[B.] $84\text{ cm}^3$.
+        \item[C.] $56\text{ cm}^3$.
+        \item[D.] $14\text{ cm}^3$.
+    \end{enumerate}
+
+    \item Số nghiệm nguyên của bất phương trình $2^{x^2 - 4} \le 1$ là:
+    \begin{enumerate}[leftmargin=0.6cm]
+        \item[A.] $3$.
+        \item[B.] $4$.
+        \item[C.] $5$.
+        \item[D.] Vô số.
+    \end{enumerate}
+
+    \item Cho hình chóp $S.ABCD$ có đáy là hình vuông cạnh $a$, $SA \perp (ABCD)$, $SA = a$. Khoảng cách từ điểm $A$ đến mặt phẳng $(SBC)$ bằng:
+    \begin{enumerate}[leftmargin=0.6cm]
+        \item[A.] $a$.
+        \item[B.] $\dfrac{a\sqrt{2}}{2}$.
+        \item[C.] $\dfrac{a\sqrt{3}}{3}$.
+        \item[D.] $\dfrac{a}{2}$.
+    \end{enumerate}
+
+    \item Sự tăng trưởng của một loại vi khuẩn tuân theo công thức $N(t) = N_0 \cdot e^{r t}$, trong đó $N_0$ là số lượng vi khuẩn ban đầu, $r$ là tỉ lệ tăng trưởng, $t$ là thời gian tính bằng giờ. Biết sau 5 giờ số vi khuẩn tăng gấp đôi. Tỉ lệ tăng trưởng $r$ gần nhất với giá trị nào sau đây?
+    \begin{enumerate}[leftmargin=0.6cm]
+        \item[A.] $0{,}1386$.
+        \item[B.] $0{,}1425$.
+        \item[C.] $0{,}2000$.
+        \item[D.] $0{,}0693$.
+    \end{enumerate}
+
+    \item Cho hình lăng trụ đứng $ABC.A'B'C'$ có đáy là tam giác đều cạnh $a$. Gọi $M$ là trung điểm của $BC$. Khoảng cách giữa hai đường thẳng $AA'$ và $BC$ bằng:
+    \begin{enumerate}[leftmargin=0.6cm]
+        \item[A.] $a$.
+        \item[B.] $\dfrac{a\sqrt{3}}{2}$.
+        \item[C.] $\dfrac{a}{2}$.
+        \item[D.] $\dfrac{a\sqrt{3}}{4}$.
+    \end{enumerate}
+\end{enumerate}
+
+\subsection*{PHẦN II. CÂU HỎI TỰ LUẬN (3,0 ĐIỂM -- 03 CÂU)}
+
+\begin{itemize}[leftmargin=0.6cm]
+    \item \textbf{Câu 1 (1,0 điểm):} Giải phương trình sau:
+    $$9^x - 4 \cdot 3^x + 3 = 0$$
+
+    \item \textbf{Câu 2 (1,0 điểm):} Cho hình chóp $S.ABCD$ có đáy $ABCD$ là hình chữ nhật với $AB = a, AD = a\sqrt{3}$. Cạnh bên $SA$ vuông góc với mặt phẳng đáy $(ABCD)$ và $SA = a\sqrt{3}$.
+    \begin{enumerate}[leftmargin=0.6cm]
+        \item[a)] Chứng minh rằng $CD \perp (SAD)$.
+        \item[b)] Xác định và tính góc giữa đường thẳng $SC$ và mặt phẳng đáy $(ABCD)$.
+    \end{enumerate}
+
+    \item \textbf{Câu 3 (1,0 điểm):} 
+    \begin{enumerate}[leftmargin=0.6cm]
+        \item[a)] (0,5 điểm) Tính khoảng cách từ điểm $A$ đến mặt phẳng $(SCD)$ của hình chóp $S.ABCD$ ở Câu 2.
+        \item[b)] (0,5 điểm) Tính thể tích của khối chóp $S.ABCD$.
+    \end{enumerate}
+\end{itemize}
+
+\vspace{10pt}
+\hrule
+\vspace{10pt}
+
+\subsection*{ĐÁP ÁN VÀ THANG ĐIỂM CHI TIẾT (BAREM CHẤM)}
+
+\subsubsection*{1. Đáp án Phần I: Trắc nghiệm khách quan (7,0 điểm)}
+
+\begin{center}
+\begin{tabular}{|c|c|c|c|c|c|c|c|c|c|}
+\hline
+\textbf{Câu} & \textbf{Đ.án} & \textbf{Câu} & \textbf{Đ.án} & \textbf{Câu} & \textbf{Đ.án} & \textbf{Câu} & \textbf{Đ.án} & \textbf{Câu} & \textbf{Đ.án} \\ \hline
+1 & \textbf{C} & 7 & \textbf{B} & 13 & \textbf{B} & 19 & \textbf{A} & 25 & \textbf{C} \\ \hline
+2 & \textbf{B} & 8 & \textbf{A} & 14 & \textbf{C} & 20 & \textbf{B} & 26 & \textbf{B} \\ \hline
+3 & \textbf{A} & 9 & \textbf{C} & 15 & \textbf{A} & 21 & \textbf{A} & 27 & \textbf{A} \\ \hline
+4 & \textbf{B} & 10 & \textbf{C} & 16 & \textbf{B} & 22 & \textbf{A} & 28 & \textbf{B} \\ \hline
+5 & \textbf{C} & 11 & \textbf{A} & 17 & \textbf{A} & 23 & \textbf{B} & & \\ \hline
+6 & \textbf{C} & 12 & \textbf{B} & 18 & \textbf{B} & 24 & \textbf{A} & & \\ \hline
+\end{tabular}
+\end{center}
+
+\textit{Mỗi câu trắc nghiệm trả lời đúng được $0{,}25$ điểm. Tổng cộng 28 câu = 7,0 điểm.}
+
+\subsubsection*{2. Đáp án và Thang điểm Phần II: Tự luận (3,0 điểm)}
+
+\begin{center}
+\begin{tabularx}{\textwidth}{|p{1.5cm}|X|c|}
+\hline
+\textbf{Câu} & \textbf{Nội dung bước giải chi tiết} & \textbf{Điểm} \\ \hline
+\textbf{Câu 1} & \textbf{Giải phương trình: $9^x - 4 \cdot 3^x + 3 = 0$} & \textbf{1,00 đ} \\ \cline{2-3}
+ & Phương trình viết lại thành: $(3^x)^2 - 4 \cdot 3^x + 3 = 0$. & 0,25 đ \\ \cline{2-3}
+ & Đặt $t = 3^x$ ($t > 0$). Phương trình trở thành: $t^2 - 4t + 3 = 0$. & 0,25 đ \\ \cline{2-3}
+ & Giải ra nghiệm: $t_1 = 1$ (thỏa mãn), $t_2 = 3$ (thỏa mãn). & 0,25 đ \\ \cline{2-3}
+ & $\bullet$ Với $t = 1 \implies 3^x = 1 \iff x = 0$.\newline
+ $\bullet$ Với $t = 3 \implies 3^x = 3 \iff x = 1$.\newline
+ Kết luận: Tập nghiệm của phương trình là $S = \{0; 1\}$. & 0,25 đ \\ \hline
+\textbf{Câu 2} & \textbf{Hình học: Chứng minh vuông góc và tính góc} & \textbf{1,00 đ} \\ \cline{2-3}
+\textit{Câu a} & \textbf{Chứng minh $CD \perp (SAD)$:} & \textbf{0,50 đ} \\ \cline{2-3}
+ & Đáy $ABCD$ là hình chữ nhật $\implies CD \perp AD$. & 0,25 đ \\ \cline{2-3}
+ & $SA \perp (ABCD)$ mà $CD \subset (ABCD) \implies SA \perp CD$ (hay $CD \perp SA$).\newline
+ Vì $CD \perp AD$ và $CD \perp SA$, mà $AD, SA \subset (SAD)$ cắt nhau tại $A$, suy ra $CD \perp (SAD)$. & 0,25 đ \\ \cline{2-3}
+\textit{Câu b} & \textbf{Góc giữa $SC$ và $(ABCD)$:} & \textbf{0,50 đ} \\ \cline{2-3}
+ & Hình chiếu vuông góc của $S$ lên $(ABCD)$ là $A$, hình chiếu của $C$ là chính nó $\implies$ Hình chiếu của $SC$ lên $(ABCD)$ là $AC$.\newline
+ Góc giữa $SC$ và $(ABCD)$ là $\varphi = \widehat{SCA}$. & 0,25 đ \\ \cline{2-3}
+ & Đáy $ABCD$ là hình chữ nhật $\implies AC = \sqrt{AB^2 + AD^2} = \sqrt{a^2 + 3a^2} = 2a$.\newline
+ Xét tam giác vuông $SAC$ (vuông tại $A$): $\tan \widehat{SCA} = \dfrac{SA}{AC} = \dfrac{a\sqrt{3}}{2a} = \dfrac{\sqrt{3}}{2}$.\newline
+ Kết luận: $\widehat{SCA} = \arctan \left(\dfrac{\sqrt{3}}{2}\right) \approx 40^\circ 53'$. & 0,25 đ \\ \hline
+\textbf{Câu 3} & \textbf{Khoảng cách và Thể tích khối chóp} & \textbf{1,00 đ} \\ \cline{2-3}
+\textit{Câu a} & \textbf{Tính khoảng cách $d(A, (SCD))$:} & \textbf{0,50 đ} \\ \cline{2-3}
+ & Ta có $CD \perp (SAD)$ (theo Câu 2a). Trong $(SAD)$, từ $A$ kẻ $AH \perp SD$ tại $H$.\newline
+ Do $CD \perp (SAD) \implies CD \perp AH$. Khi đó $AH \perp SD$ và $AH \perp CD \implies AH \perp (SCD)$. Vậy $d(A, (SCD)) = AH$. & 0,25 đ \\ \cline{2-3}
+ & Tam giác $SAD$ vuông tại $A$ có $AH$ là đường cao:\newline
+ $\dfrac{1}{AH^2} = \dfrac{1}{SA^2} + \dfrac{1}{AD^2} = \dfrac{1}{(a\sqrt{3})^2} + \dfrac{1}{(a\sqrt{3})^2} = \dfrac{2}{3a^2} \implies AH = \dfrac{a\sqrt{6}}{2}$. & 0,25 đ \\ \cline{2-3}
+\textit{Câu b} & \textbf{Tính thể tích khối chóp $S.ABCD$:} & \textbf{0,50 đ} \\ \cline{2-3}
+ & Diện tích đáy hình chữ nhật: $S_{ABCD} = AB \cdot AD = a \cdot a\sqrt{3} = a^2\sqrt{3}$. & 0,25 đ \\ \cline{2-3}
+ & Thể tích khối chóp:\newline
+ $V_{S.ABCD} = \dfrac{1}{3} S_{ABCD} \cdot SA = \dfrac{1}{3} \cdot a^2\sqrt{3} \cdot a\sqrt{3} = \dfrac{3a^3}{3} = a^3$. & 0,25 đ \\ \hline
+\end{tabularx}
+\end{center}
+
+\end{document}
