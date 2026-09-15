@@ -1,0 +1,719 @@
+\documentclass[12pt, a4paper]{article}
+% --- 1. Cấu hình Tiếng Việt và Font chữ chuẩn ---
+\usepackage[utf8]{inputenc}
+\usepackage[T5]{fontenc}
+\usepackage[vietnamese]{babel}
+\usepackage{mathptmx} % Font Times New Roman đồng bộ cả chữ và công thức toán, không gây xung đột gói
+
+\makeatletter
+\renewcommand{\normalsize}{\@setfontsize\normalsize{13pt}{16pt}}
+\makeatother
+\normalsize
+
+% --- 2. Gói Toán học & Ký hiệu bổ trợ ---
+\usepackage{amsmath, amssymb, amsfonts, mathrsfs, amsthm}
+\usepackage{graphicx}
+\usepackage{fontawesome}
+\usepackage{booktabs, tabularx, array, multirow}
+\usepackage{enumitem}
+
+% --- 3. Đồ họa TikZ, Bảng biến thiên & Hình không gian ---
+\usepackage{tikz}
+\usetikzlibrary{calc, intersections, angles, quotes, patterns, arrows.meta, 3d}
+\usepackage{pgfplots}
+\pgfplotsset{compat=1.18}
+\usepackage{tkz-euclide}
+\usepackage{tkz-tab}
+
+\renewcommand{\vec}[1]{\overrightarrow{#1}}
+
+% --- 4. Hộp sư phạm (Tcolorbox) ---
+\usepackage[many]{tcolorbox}
+\tcbuselibrary{skins, breakable}
+
+% --- 5. Căn lề chuẩn văn bản giáo án ---
+\usepackage{geometry}
+\geometry{
+    a4paper,
+    left=25mm,
+    right=15mm,
+    top=20mm,
+    bottom=20mm
+}
+
+% --- 6. Header / Footer chuẩn hóa ---
+\usepackage{fancyhdr}
+\usepackage{lastpage}
+\pagestyle{fancy}
+\fancyhf{}
+
+\fancyhead[L]{\small \textit{Kế hoạch bài dạy Toán 11}}
+\fancyhead[R]{\textbf{Trang \thepage/\pageref{LastPage}}}
+\fancyfoot[L]{\small \textit{Tổ Toán - Tin}}
+\fancyfoot[R]{\small \textit{Trường THCS\&THPT Hồng Vân}}
+\renewcommand{\headrulewidth}{0.4pt}
+\renewcommand{\footrulewidth}{0.4pt}
+
+% --- 7. Giãn dòng & Giãn đoạn theo chuẩn Nghị định 30/2020/NĐ-CP ---
+\usepackage{setspace}
+\setstretch{1.15}
+\setlength{\parindent}{1.0cm}
+\setlength{\parskip}{5pt}
+
+% Định nghĩa hộp sư phạm chuyên dụng
+\newtcolorbox{pedabox}[2][]{
+    enhanced,
+    breakable,
+    colback=blue!3!white,
+    colframe=blue!65!black,
+    fonttitle=\bfseries\small,
+    title={#2},
+    arc=2mm,
+    boxrule=0.6pt,
+    left=3mm, right=3mm, top=2mm, bottom=2mm,
+    #1
+}
+
+\newtcolorbox{aibox}[2][]{
+    enhanced,
+    breakable,
+    colback=teal!4!white,
+    colframe=teal!70!black,
+    fonttitle=\bfseries\small,
+    title={#2},
+    arc=2mm,
+    boxrule=0.6pt,
+    left=3mm, right=3mm, top=2mm, bottom=2mm,
+    #1
+}
+
+\newtcolorbox{scaffoldbox}[2][]{
+    enhanced,
+    breakable,
+    colback=orange!4!white,
+    colframe=orange!80!black,
+    fonttitle=\bfseries\small,
+    title={#2},
+    arc=2mm,
+    boxrule=0.6pt,
+    left=3mm, right=3mm, top=2mm, bottom=2mm,
+    #1
+}
+
+\newtcolorbox{stembox}[2][]{
+    enhanced,
+    breakable,
+    colback=purple!4!white,
+    colframe=purple!75!black,
+    fonttitle=\bfseries\small,
+    title={#2},
+    arc=2mm,
+    boxrule=0.6pt,
+    left=3mm, right=3mm, top=2mm, bottom=2mm,
+    #1
+}
+
+\begin{document}
+
+\begin{center}
+    {\fontsize{14pt}{17pt}\selectfont \textbf{KẾ HOẠCH BÀI DẠY MÔN TOÁN LỚP 11}}\\[6pt]
+    {\fontsize{16pt}{19pt}\selectfont \textbf{BÀI 29. CÔNG THỨC CỘNG XÁC SUẤT}}\\[4pt]
+    {\fontsize{12pt}{15pt}\selectfont \textbf{Môn học: Toán 11} \ \textbar \ \textbf{Thời lượng: 3 tiết (Tiết 86, 87, 88 theo PPCT | Tuần 31)}}
+\end{center}
+
+\vspace{5pt}
+
+\section*{I. MỤC TIÊU}
+
+\subsection*{1. Kiến thức, Năng lực}
+
+\begin{itemize}[leftmargin=1.2cm]
+    \item \textbf{Yêu cầu cần đạt (Nguyên văn CT GDPT 2018 Toán 11):}
+    \begin{itemize}[leftmargin=0.6cm]
+        \item Tính được xác suất của biến cố hợp bằng cách sử dụng công thức cộng (cho hai biến cố xung khắc: $P(A \cup B) = P(A) + P(B)$ và biến cố bất kì: $P(A \cup B) = P(A) + P(B) - P(AB)$).
+        \item Vận dụng được công thức tính xác suất của biến cố đối: $P(\overline{A}) = 1 - P(A)$ để giải quyết các bài toán liên quan đến cụm từ ``ít nhất một''.
+        \item Giải quyết được một số vấn đề thực tiễn gắn với xác suất cổ điển thông qua việc mô hình hóa các tình huống ngẫu nhiên trong đời sống và kỹ thuật.
+    \end{itemize}
+
+    \item \textbf{Năng lực Toán học đặc thù:}
+    \begin{itemize}[leftmargin=0.6cm]
+        \item \textit{Năng lực tư duy và lập luận toán học:} So sánh, phân biệt sự khác nhau bản chất giữa hai trường hợp: biến cố xung khắc ($A \cap B = \emptyset \implies P(AB) = 0$) và biến cố bất kỳ ($A \cap B \neq \emptyset \implies P(AB) > 0$); giải thích bản chất hình học của công thức cộng tổng quát thông qua diện tích sơ đồ Ven (phần giao $AB$ được tính hai lần khi cộng $P(A) + P(B)$ nên bắt buộc phải trừ bớt một lần $P(AB)$); suy luận logic từ công thức cộng xác suất xung khắc để dẫn ra công thức xác suất của biến cố đối $P(\overline{A}) = 1 - P(A)$ do $A \cap \overline{A} = \emptyset$ và $A \cup \overline{A} = \Omega$.
+        \item \textit{Năng lực mô hình hóa toán học:} Chuyển đổi các tình huống thực tiễn phong phú (bài toán kiểm tra chất lượng sản phẩm trong dây chuyền sản xuất, bài toán chẩn đoán y khoa, bài toán chọn ngẫu nhiên học sinh có sở thích/năng khiếu, bài toán dự báo thời tiết, bài toán rủi ro đầu tư) thành các bài toán tính xác suất của biến cố hợp $A \cup B$; thiết lập không gian mẫu $\Omega$, xác định chính xác các biến cố thành phần và quan hệ xung khắc hay giao nhau giữa chúng.
+        \item \textit{Năng lực giải quyết vấn đề toán học:} Nhận diện đúng dạng toán và lựa chọn chiến lược giải tối ưu: khi nào áp dụng trực tiếp công thức cộng cho hai biến cố xung khắc, khi nào phải dùng công thức cộng tổng quát, khi nào nên sử dụng phương pháp tính gián tiếp qua biến cố đối $P(A) = 1 - P(\overline{A})$ để đơn giản hóa quá trình phân chia trường hợp.
+        \item \textit{Năng lực giao tiếp toán học:} Sử dụng chính xác và chuẩn mực hệ thống ký hiệu toán học xác suất: $A \cup B, A \cap B, AB, \overline{A}, \emptyset, \Omega, P(A), P(B), P(A \cup B), P(AB)$; trình bày bài giải tự luận rõ ràng, mạch lạc, lập luận chặt chẽ từng bước khẳng định tính xung khắc trước khi áp dụng công thức; giải thích ý nghĩa thực tiễn của con số xác suất thu được.
+        \item \textit{Năng lực sử dụng công cụ, phương tiện học toán:} Khai thác hiệu quả máy tính cầm tay (MTCT Casio fx-580VN X) để tính toán phân số, phần trăm và tổ hợp; ứng dụng phần mềm bảng tính điện tử (Microsoft Excel / Google Sheets) trên phòng máy vi tính 35 máy để thực hiện mô phỏng thực nghiệm ngẫu nhiên kiểm chứng định luật số lớn.
+    \end{itemize}
+
+    \item \textbf{Năng lực số (Theo Thông tư 02/2025/TT-BGDĐT):}
+    \begin{itemize}[leftmargin=0.6cm]
+        \item \textit{Mã 5.3NC1a (Mô phỏng phép chọn mẫu ngẫu nhiên bằng công nghệ số):} Học sinh thao tác trên phòng máy tính 35 máy, sử dụng phần mềm bảng tính Microsoft Excel / Google Sheets để thiết lập mô hình mô phỏng phép thử chọn mẫu ngẫu nhiên lặp lại quy mô lớn ($N = 1000$ đến $N = 5000$ lần thử); sử dụng linh hoạt các hàm số học ngẫu nhiên (\texttt{=RANDBETWEEN(...)}) và hàm đếm có điều kiện (\texttt{=COUNTIF(...)}) để thống kê số lần xuất hiện của biến cố hợp, tính tần suất thực nghiệm và đối chiếu với xác suất lý thuyết tính theo công thức cộng.
+    \end{itemize}
+
+    \item \textbf{Năng lực AI (Theo Quyết định 2422/QĐ-BGDĐT):}
+    \begin{itemize}[leftmargin=0.6cm]
+        \item \textit{Mã 11.B1.1 (Đánh giá mức độ an toàn và rủi ro khi các thuật toán AI dự báo xác suất sự kiện sai lệch):} Học sinh tìm hiểu và đánh giá rủi ro an toàn trong các hệ thống Trí tuệ nhân tạo (AI) ứng dụng xác suất (như hệ thống xe tự hành nhận diện chướng ngại vật, hệ thống cảnh báo sớm y tế, hệ thống chấm điểm tín dụng tài chính): phân tích hậu quả nghiêm trọng khi thuật toán AI ngộ nhận hai biến cố là xung khắc (bỏ qua thành phần giao $P(AB)$) dẫn tới việc ước lượng xác suất rủi ro $P(A \cup B)$ bị thổi phồng vượt quá $1$ hoặc sai lệch nghiêm trọng; hình thành năng lực kiểm chứng phản biện thuật toán của con người.
+        \item \textit{Kỹ thuật Prompting kiểm chứng công thức:} Học sinh biết cách xây dựng câu lệnh prompt tối ưu gửi đến trợ lý AI để yêu cầu giải thích bước giải bài toán xác suất, phát hiện bẫy ngộ nhận biến cố xung khắc trong lời giải do AI sinh ra.
+    \end{itemize}
+
+    \item \textbf{Năng lực chung:}
+    \begin{itemize}[leftmargin=0.6cm]
+        \item \textit{Tự chủ và tự học:} Tự giác tìm hiểu trước bài đọc trong SGK; rèn luyện thói quen tự kiểm tra điều kiện xung khắc $A \cap B = \emptyset$ trước khi cộng xác suất; chủ động hoàn thành các mức độ bài tập trong phiếu học tập.
+        \item \textit{Giao tiếp và hợp tác:} Tích cực thảo luận cặp đôi và làm việc nhóm 5 học sinh (7 nhóm cho lớp 35 học sinh); biết lắng nghe, tôn trọng và phản biện mang tính xây dựng các ý kiến đóng góp của bạn bè khi phân tích mô hình xác suất.
+    \end{itemize}
+\end{itemize}
+
+\subsection*{2. Phẩm chất}
+
+\begin{itemize}[leftmargin=1.2cm]
+    \item \textbf{Chăm chỉ:} Kiên trì liệt kê các biến cố, cẩn thận tính toán từng tỉ số xác suất; tích cực tham gia hoạt động thực hành mô phỏng số trên máy tính.
+    \item \textbf{Trung thực:} Ghi chép trung thực số liệu thực nghiệm mô phỏng từ phần mềm Excel, không tự ý sửa đổi dữ liệu cho khớp với lý thuyết; trung thực trong kiểm tra đánh giá.
+    \item \textbf{Trách nhiệm:} Có ý thức bảo vệ thiết bị trong phòng máy vi tính 35 máy; tuân thủ quy định an toàn điện và an toàn mạng; thể hiện tinh thần trách nhiệm trong hoạt động nhóm, sẵn sàng hỗ trợ các bạn học sinh có học lực trung bình - yếu.
+\end{itemize}
+
+\section*{II. THIẾT BỊ DẠY HỌC VÀ HỌC LIỆU}
+
+\begin{itemize}[leftmargin=1.2cm]
+    \item \textbf{Giáo viên:}
+    \begin{itemize}[leftmargin=0.6cm]
+        \item Kế hoạch bài dạy chi tiết 3 tiết theo chuẩn Công văn 5512/BGDĐT-GDTrH.
+        \item Bài trình chiếu điện tử tương tác (Slide PowerPoint / Canva) sinh động với sơ đồ Ven động minh họa phép cộng xác suất.
+        \item Phòng thực hành tin học của nhà trường (35 máy vi tính kết nối Internet tốc độ cao, cài sẵn Microsoft Excel và trình duyệt web).
+        \item Tệp biểu mẫu bảng tính Excel: \texttt{MoPhong\_ChonMau\_XacSuat.xlsx} cài sẵn công thức ngẫu nhiên.
+        \item Hệ thống Phiếu học tập phân tầng bậc thang (Phiếu số 1: Công thức cộng biến cố xung khắc; Phiếu số 2: Công thức cộng tổng quát; Phiếu số 3: Bài tập tổng hợp, thực hành Excel \& Phân tích rủi ro AI).
+        \item Bảng Rubric đánh giá năng lực học sinh trong 3 tiết học.
+    \end{itemize}
+    \item \textbf{Học sinh:}
+    \begin{itemize}[leftmargin=0.6cm]
+        \item Sách giáo khoa Toán 11, vở ghi bài, vở bài tập.
+        \item Máy tính cầm tay Casio fx-580VN X (hoặc tương đương).
+        \item Thước kẻ, bút màu (xanh, đỏ, vàng) để vẽ và tô màu các vùng giao nhau trên sơ đồ Ven.
+        \item Điện thoại thông minh hoặc máy tính cá nhân để thực hành tra cứu câu lệnh prompt và tương tác học tập.
+    \end{itemize}
+\end{itemize}
+
+\section*{III. TIẾN TRÌNH DẠY HỌC}
+
+\begin{center}
+    \textbf{\large TIẾT 1 (TIẾT 86 THEO PPCT | TUẦN 31)}\\[4pt]
+    \textit{(Nội dung: Công thức cộng xác suất cho hai biến cố xung khắc \& Biến cố đối)}
+\end{center}
+
+\subsection*{1. Hoạt động 1: Mở đầu (Khởi động - 6 phút)}
+
+\paragraph{a) Mục tiêu:} Kích hoạt hứng thú học tập thông qua trò chơi bốc thăm may mắn; tạo nhu cầu tìm kiếm công thức tính nhanh xác suất của biến cố xuất hiện chữ ``hoặc'' khi hai biến cố không bao giờ cùng xảy ra.
+
+\paragraph{b) Nội dung:} Giáo viên tổ chức trò chơi \textbf{``Hộp quà may mắn''}: Trong một chiếc hộp kín có chứa $20$ quả bóng cùng kích thước và khối lượng, được đánh số từ $1$ đến $20$. Lấy ngẫu nhiên ra $1$ quả bóng.
+\begin{itemize}[leftmargin=0.6cm]
+    \item Xét biến cố $A$: ``Số ghi trên quả bóng là số chia hết cho $5$''.
+    \item Xét biến cố $B$: ``Số ghi trên quả bóng là số chia hết cho $7$''.
+\end{itemize}
+\textbf{Câu hỏi gợi mở:}
+\begin{enumerate}[leftmargin=0.6cm]
+    \item Liệt kê các kết quả thuận lợi cho $A$ và tính xác suất $P(A)$.
+    \item Liệt kê các kết quả thuận lợi cho $B$ và tính xác suất $P(B)$.
+    \item Có quả bóng nào đồng thời vừa chia hết cho $5$ vừa chia hết cho $7$ trong hộp không? Hai biến cố $A$ và $B$ có quan hệ gì?
+    \item Tính xác suất để lấy được quả bóng chia hết cho $5$ \textbf{hoặc} chia hết cho $7$. Có mối liên hệ nào giữa $P(A \cup B)$ với $P(A)$ và $P(B)$?
+\end{enumerate}
+
+\paragraph{c) Sản phẩm:} Câu trả lời của học sinh:
+\begin{itemize}[leftmargin=0.8cm]
+    \item Không gian mẫu: $n(\Omega) = 20$.
+    \item $A = \{5, 10, 15, 20\} \implies n(A) = 4 \implies P(A) = \dfrac{4}{20} = \dfrac{1}{5} = 0{,}2$.
+    \item $B = \{7, 14\} \implies n(B) = 2 \implies P(B) = \dfrac{2}{20} = \dfrac{1}{10} = 0{,}1$.
+    \item Do số nhỏ nhất chia hết cho cả $5$ và $7$ là $35 > 20$ nên $A \cap B = \emptyset$. Hai biến cố $A$ và $B$ là \textbf{hai biến cố xung khắc}.
+    \item Biến cố $C = A \cup B$: ``Số quả bóng chia hết cho $5$ hoặc $7$'': $C = \{5, 7, 10, 14, 15, 20\} \implies n(C) = 6$.
+    \item Xác suất: $P(A \cup B) = \dfrac{6}{20} = 0{,}3$. Học sinh phát hiện: $0{,}3 = 0{,}2 + 0{,}1 \implies P(A \cup B) = P(A) + P(B)$.
+\end{itemize}
+
+\paragraph{d) Tổ chức thực hiện:}
+\begin{itemize}[leftmargin=0.8cm]
+    \item \textbf{Chuyển giao nhiệm vụ:} Giáo viên trình chiếu bài toán hộp bóng may mắn lên màn hình, yêu cầu học sinh suy nghĩ trả lời nhanh 4 câu hỏi trong 3 phút.
+    \item \textbf{Thực hiện nhiệm vụ:} Học sinh làm việc cá nhân, sau đó trao đổi nhanh với bạn cùng bàn. Giáo viên quan sát và gợi ý học sinh liệt kê tập hợp.
+    \item \textbf{Báo cáo, thảo luận:} Giáo viên gọi 1 học sinh trả lời kết quả, 1 học sinh nhận xét về đẳng thức $P(A \cup B) = P(A) + P(B)$.
+    \item \textbf{Kết luận, nhận định:} Giáo viên chốt lại: Kết quả này không phải ngẫu nhiên mà là một quy tắc toán học tổng quát mang tên \textbf{Công thức cộng xác suất cho hai biến cố xung khắc}.
+\end{itemize}
+
+\subsection*{2. Hoạt động 2: Hình thành kiến thức - Công thức cộng cho biến cố xung khắc \& Biến cố đối (18 phút)}
+
+\paragraph{a) Mục tiêu:} Học sinh hiểu sâu sắc bản chất toán học của công thức cộng xác suất cho hai biến cố xung khắc và công thức tính xác suất của biến cố đối; ghi nhớ điều kiện tiên quyết $A \cap B = \emptyset$.
+
+\paragraph{b) Nội dung:} Giáo viên hướng dẫn học sinh tiếp cận kiến thức từng bước từ lý thuyết tập hợp:
+
+\begin{pedabox}{1. Công thức cộng xác suất cho hai biến cố xung khắc}
+\textbf{Định lý:} Nếu hai biến cố $A$ và $B$ xung khắc với nhau ($A \cap B = \emptyset$) thì:
+\begin{equation}
+    P(A \cup B) = P(A) + P(B)
+\end{equation}
+\textbf{Chứng minh:}
+\begin{itemize}[leftmargin=0.5cm]
+    \item Gọi không gian mẫu là $\Omega$ gồm $n(\Omega)$ kết quả đồng khả năng.
+    \item Vì $A$ và $B$ là hai tập hợp rời nhau ($A \cap B = \emptyset$), theo quy tắc cộng tập hợp ta có:
+    $$n(A \cup B) = n(A) + n(B)$$
+    \item Chia cả hai vế cho số phần tử của không gian mẫu $n(\Omega)$:
+    $$\dfrac{n(A \cup B)}{n(\Omega)} = \dfrac{n(A)}{n(\Omega)} + \dfrac{n(B)}{n(\Omega)} \iff P(A \cup B) = P(A) + P(B)$$
+\end{itemize}
+\textbf{Mở rộng cho $k$ biến cố đôi một xung khắc ($k \geq 3$):}
+Nếu các biến cố $A_1, A_2, \dots, A_k$ đôi một xung khắc thì:
+\begin{equation}
+    P(A_1 \cup A_2 \cup \dots \cup A_k) = P(A_1) + P(A_2) + \dots + P(A_k)
+\end{equation}
+\end{pedabox}
+
+\begin{pedabox}{2. Công thức tính xác suất của biến cố đối}
+\textbf{Hệ quả:} Với mọi biến cố $A$, ta luôn có:
+\begin{equation}
+    P(\overline{A}) = 1 - P(A) \quad \text{hay} \quad P(A) = 1 - P(\overline{A})
+\end{equation}
+\textbf{Chứng minh:} Ta có $A$ và biến cố đối $\overline{A}$ là hai biến cố xung khắc ($A \cap \overline{A} = \emptyset$) và hợp của chúng là toàn bộ không gian mẫu ($A \cup \overline{A} = \Omega$).
+Áp dụng công thức cộng xác suất:
+$$P(A \cup \overline{A}) = P(A) + P(\overline{A}) \implies P(\Omega) = P(A) + P(\overline{A}) \implies 1 = P(A) + P(\overline{A}) \implies P(\overline{A}) = 1 - P(A)$$
+\end{pedabox}
+
+\begin{scaffoldbox}{Giàn giáo sư phạm: Khắc sâu điều kiện cho học sinh trung bình - yếu}
+\textbf{CẢNH BÁO SAI LẦM PHỔ BIẾN:}
+\begin{itemize}[leftmargin=0.5cm]
+    \item Học sinh rất hay áp dụng công thức $P(A \cup B) = P(A) + P(B)$ một cách máy móc cho \textbf{mọi} biến cố.
+    \item \textbf{Quy tắc ngón tay cái:} Muốn dùng dấu cộng trực tiếp, BẮT BUỘC phải tự hỏi: \textit{``Hai biến cố này có thể đồng thời cùng xảy ra được không?''}.
+    \begin{itemize}[leftmargin=0.4cm]
+        \item Nếu \textbf{KHÔNG THỂ CÙNG XẢY RA} ($A \cap B = \emptyset$) $\implies$ DÙNG $P(A) + P(B)$.
+        \item Nếu \textbf{CÓ THỂ CÙNG XẢY RA} ($A \cap B \neq \emptyset$) $\implies$ TUYỆT ĐỐI KHÔNG ĐƯỢC DÙNG (sẽ học ở Tiết 2).
+    \end{itemize}
+\end{itemize}
+\end{scaffoldbox}
+
+\paragraph{c) Sản phẩm:} Kiến thức được hệ thống hóa trong vở ghi; học sinh diễn đạt lại được định lý và tự chứng minh được công thức biến cố đối.
+
+\paragraph{d) Tổ chức thực hiện:}
+\begin{itemize}[leftmargin=0.8cm]
+    \item \textbf{Chuyển giao nhiệm vụ:} Giáo viên dẫn dắt từ quy tắc cộng số phần tử tập hợp sang xác suất, yêu cầu học sinh thảo luận cặp đôi hoàn thiện chứng minh hệ quả biến cố đối.
+    \item \textbf{Thực hiện nhiệm vụ:} Học sinh thực hiện chứng minh vào vở ghi trong 4 phút. Giáo viên quan sát, hỗ trợ các học sinh yếu về quy tắc $P(\Omega) = 1$.
+    \item \textbf{Báo cáo, thảo luận:} 1 học sinh lên bảng viết lại chứng minh hệ quả; cả lớp nhận xét, bổ sung.
+    \item \textbf{Kết luận, nhận định:} Giáo viên nhấn mạnh ý nghĩa của biến cố đối: Là vũ khí cực mạnh để giải các bài toán có cụm từ ``ít nhất một''.
+\end{itemize}
+
+\subsection*{3. Hoạt động 3: Luyện tập các bài toán cơ bản (16 phút)}
+
+\paragraph{a) Mục tiêu:} Rèn luyện kỹ năng nhận diện hai biến cố xung khắc, áp dụng thuần thục công thức cộng xác suất và công thức biến cố đối vào giải quyết các bài toán cụ thể.
+
+\paragraph{b) Nội dung:} Học sinh làm việc theo nhóm 5 học sinh, giải quyết các bài tập trên Phiếu học tập số 1:
+
+\begin{pedabox}{Bài tập luyện tập Tiết 1}
+\textbf{Bài 1 (Cơ bản):} Một hộp chứa $8$ viên bi đỏ, $7$ viên bi xanh và $5$ viên bi vàng có cùng kích thước. Lấy ngẫu nhiên ra $1$ viên bi. Tính xác suất để lấy được:
+\begin{enumerate}[leftmargin=0.6cm]
+    \item[a)] Viên bi màu đỏ hoặc màu xanh.
+    \item[b)] Viên bi không phải màu vàng.
+\end{enumerate}
+
+\textbf{Bài 2 (Vận dụng biến cố đối):} Chọn ngẫu nhiên đồng thời $3$ sản phẩm từ một lô hàng gồm $30$ sản phẩm, trong đó có $6$ phế phẩm và $24$ chính phẩm. Tính xác suất để trong $3$ sản phẩm lấy ra có \textbf{ít nhất một phế phẩm}.
+\end{pedabox}
+
+\paragraph{c) Sản phẩm:} Lời giải chi tiết của học sinh:
+\begin{itemize}[leftmargin=0.8cm]
+    \item \textbf{Giải Bài 1:}
+    Tổng số viên bi trong hộp: $8 + 7 + 5 = 20$ viên bi. Không gian mẫu: $n(\Omega) = 20$.
+    \begin{itemize}[leftmargin=0.4cm]
+        \item[a)] Gọi $A$: ``Lấy được viên bi đỏ'' $\implies P(A) = \dfrac{8}{20}$. Gọi $B$: ``Lấy được viên bi xanh'' $\implies P(B) = \dfrac{7}{20}$.
+        Vì một viên bi không thể vừa đỏ vừa xanh nên $A$ và $B$ là hai biến cố xung khắc ($A \cap B = \emptyset$).
+        Do đó, xác suất lấy được bi đỏ hoặc bi xanh là:
+        $$P(A \cup B) = P(A) + P(B) = \dfrac{8}{20} + \dfrac{7}{20} = \dfrac{15}{20} = \dfrac{3}{4} = 0{,}75$$
+        \item[b)] Gọi $C$: ``Lấy được viên bi vàng'' $\implies P(C) = \dfrac{5}{20} = \dfrac{1}{4} = 0{,}25$.
+        Biến cố ``Lấy được viên bi không phải màu vàng'' chính là biến cố đối $\overline{C}$.
+        $$P(\overline{C}) = 1 - P(C) = 1 - 0{,}25 = 0{,}75$$
+    \end{itemize}
+    \item \textbf{Giải Bài 2:}
+    Số cách chọn ngẫu nhiên $3$ sản phẩm từ $30$ sản phẩm là: $n(\Omega) = C_{30}^3 = 4060$.
+    Gọi $D$: ``Trong $3$ sản phẩm lấy ra có ít nhất một phế phẩm''.
+    Biến cố đối $\overline{D}$: ``Trong $3$ sản phẩm lấy ra không có phế phẩm nào'' (tức là cả $3$ sản phẩm đều là chính phẩm).
+    Số kết quả thuận lợi cho $\overline{D}$ là: $n(\overline{D}) = C_{24}^3 = 2024$.
+    Xác suất của biến cố đối:
+    $$P(\overline{D}) = \dfrac{n(\overline{D})}{n(\Omega)} = \dfrac{2024}{4060} = \dfrac{253}{5075} \approx 0{,}4985$$
+    Áp dụng công thức biến cố đối, xác suất cần tìm là:
+    $$P(D) = 1 - P(\overline{D}) = 1 - \dfrac{2024}{4060} = \dfrac{2036}{4060} = \dfrac{509}{1015} \approx 0{,}5015$$
+\end{itemize}
+
+\paragraph{d) Tổ chức thực hiện:}
+\begin{itemize}[leftmargin=0.8cm]
+    \item \textbf{Chuyển giao nhiệm vụ:} Giáo viên giao bài tập trên Phiếu học tập số 1, yêu cầu các nhóm hoàn thành trong 10 phút. Nhóm chẵn làm Bài 1, nhóm lẻ làm Bài 2.
+    \item \textbf{Thực hiện nhiệm vụ:} Học sinh thảo luận nhóm, phân công ghi lời giải lên bảng phụ. Giáo viên đến các nhóm có học sinh trung bình để hướng dẫn cách bấm tổ hợp $C_n^k$ trên MTCT Casio fx-580VN X (\texttt{SHIFT} $\div$).
+    \item \textbf{Báo cáo, thảo luận:} Treo 2 bảng phụ đại diện của Nhóm 2 và Nhóm 5. Học sinh nhóm khác đối chiếu kết quả và nhận xét phương pháp giải trực tiếp so với biến cố đối.
+    \item \textbf{Kết luận, nhận định:} Giáo viên chuẩn hóa bài giải, nhấn mạnh: Nếu giải Bài 2 bằng cách chia 3 trường hợp (1 phế phẩm, 2 phế phẩm, 3 phế phẩm) thì tính toán sẽ dài gấp 3 lần và rất dễ nhầm lẫn.
+\end{itemize}
+
+\subsection*{4. Hoạt động 4: Vận dụng (5 phút)}
+
+\paragraph{a) Mục tiêu:} Vận dụng kiến thức biến cố đối vào tình huống an toàn bắn súng thể thao.
+
+\paragraph{b) Nội dung:} Hai xạ thủ độc lập cùng bắn mỗi người 1 viên đạn vào bia. Xác suất bắn trúng của xạ thủ thứ nhất là $0{,}8$, của xạ thủ thứ hai là $0{,}7$. Tính xác suất để có ít nhất một viên đạn trúng bia.
+
+\paragraph{c) Sản phẩm:} Học sinh xác định biến cố đối là ``Cả hai xạ thủ đều bắn trượt''. Xác suất trượt của người 1 là $1 - 0{,}8 = 0{,}2$; người 2 là $1 - 0{,}7 = 0{,}3$. Do hai người bắn độc lập nên xác suất cả hai cùng trượt là $0{,}2 \cdot 0{,}3 = 0{,}06$. Xác suất có ít nhất một viên đạn trúng bia là $1 - 0{,}06 = 0{,}94$.
+
+\paragraph{d) Tổ chức thực hiện:} Giáo viên nêu bài toán $\implies$ Học sinh suy nghĩ và ghi nhanh đáp án vào vở $\implies$ Giáo viên gợi mở câu hỏi cho tiết sau: ``Nếu hai biến cố KHÔNG xung khắc thì công thức tính xác suất sẽ như thế nào?''.
+
+\newpage
+
+\begin{center}
+    \textbf{\large TIẾT 2 (TIẾT 87 THEO PPCT | TUẦN 31)}\\[4pt]
+    \textit{(Nội dung: Công thức cộng xác suất cho hai biến cố bất kì - Công thức tổng quát)}
+\end{center}
+
+\subsection*{1. Hoạt động 1: Mở đầu (Khởi động - 5 phút)}
+
+\paragraph{a) Mục tiêu:} Làm nảy sinh mâu thuẫn nhận thức khi học sinh thử áp dụng công thức cộng $P(A) + P(B)$ cho hai biến cố không xung khắc dẫn tới kết quả sai lệch, từ đó phát hiện sự cần thiết của công thức tổng quát.
+
+\paragraph{b) Nội dung:} Giáo viên chiếu bài toán tình huống thực tế tại lớp học:
+\begin{quote}
+Một lớp học có $35$ học sinh, trong đó có $20$ bạn thích môn Bóng đá (biến cố $A$), $15$ bạn thích môn Bóng rổ (biến cố $B$), và có $8$ bạn thích \textbf{cả hai môn} Bóng đá và Bóng rổ. Chọn ngẫu nhiên $1$ học sinh trong lớp.
+Tính xác suất để học sinh được chọn thích môn Bóng đá \textbf{hoặc} thích môn Bóng rổ.
+\end{quote}
+\textit{Câu hỏi gợi mở:} Nếu áp dụng công thức $P(A \cup B) = P(A) + P(B)$ thì kết quả sẽ là bao nhiêu? Kết quả đó có đúng không? Vì sao?
+
+\paragraph{c) Sản phẩm:}
+\begin{itemize}[leftmargin=0.8cm]
+    \item Nếu áp dụng sai công thức: $P(A) = \dfrac{20}{35}$, $P(B) = \dfrac{15}{35} \implies P(A) + P(B) = \dfrac{20 + 15}{35} = \dfrac{35}{35} = 1$ ($100\%$).
+    \item Học sinh phát hiện điều vô lý: Tổng số học sinh thích bóng đá hoặc bóng rổ không phải là $35$ vì $8$ bạn thích cả hai môn đã bị \textbf{đếm lặp lại hai lần}.
+    \item Số học sinh thực tế thích ít nhất một môn là: $20 + 15 - 8 = 27$ bạn.
+    \item Xác suất đúng phải là: $P(A \cup B) = \dfrac{27}{35} \approx 0{,}7714 \neq 1$.
+\end{itemize}
+
+\paragraph{d) Tổ chức thực hiện:} Giáo viên nêu tình huống $\implies$ Học sinh tính toán nhanh và phát hiện lỗi đếm lặp $\implies$ Giáo viên kết luận: Để khắc phục việc đếm lặp vùng giao nhau, ta phải trừ đi phần xác suất giao nhau.
+
+\subsection*{2. Hoạt động 2: Hình thành kiến thức - Công thức cộng tổng quát (19 phút)}
+
+\paragraph{a) Mục tiêu:} Giúp học sinh nắm vững công thức cộng xác suất cho hai biến cố bất kì; giải thích được cơ sở hình học của công thức thông qua sơ đồ Ven; thấy được công thức xung khắc chỉ là trường hợp riêng của công thức tổng quát.
+
+\paragraph{b) Nội dung:} Giáo viên hướng dẫn học sinh phân tích sơ đồ Ven và rút ra định lý tổng quát:
+
+\begin{pedabox}{Định lý: Công thức cộng xác suất cho hai biến cố bất kì}
+Với hai biến cố bất kì $A$ và $B$ cùng liên quan đến một phép thử, ta luôn có:
+\begin{equation}
+    P(A \cup B) = P(A) + P(B) - P(A \cap B)
+\end{equation}
+hay viết gọn là:
+\begin{equation}
+    P(A \cup B) = P(A) + P(B) - P(AB)
+\end{equation}
+\textbf{Chứng minh qua sơ đồ Ven và lý thuyết tập hợp:}
+\begin{itemize}[leftmargin=0.5cm]
+    \item Giả sử không gian mẫu $\Omega$ gồm $n(\Omega)$ kết quả đồng khả năng.
+    \item Theo công thức tính số phần tử của hợp hai tập hợp hữu hạn bất kì:
+    $$n(A \cup B) = n(A) + n(B) - n(A \cap B)$$
+    \item Chia cả hai vế đẳng thức trên cho $n(\Omega)$:
+    $$\dfrac{n(A \cup B)}{n(\Omega)} = \dfrac{n(A)}{n(\Omega)} + \dfrac{n(B)}{n(\Omega)} - \dfrac{n(A \cap B)}{n(\Omega)}$$
+    \item Theo định nghĩa cổ điển của xác suất, ta suy ra:
+    $$P(A \cup B) = P(A) + P(B) - P(AB)$$
+\end{itemize}
+\end{pedabox}
+
+\begin{pedabox}{Trực quan hóa bằng Sơ đồ Ven (Venn Diagram)}
+\begin{center}
+\begin{tikzpicture}[scale=0.9]
+    % Khung không gian mẫu Omega
+    \draw[thick, fill=gray!8] (-3.5,-2.2) rectangle (3.5,2.2);
+    \node at (-3.1,1.8) {\large $\Omega$};
+
+    % Hai hình tròn biểu diễn A và B
+    \def\firstcircle{(-0.9,0) circle (1.6)}
+    \def\secondcircle{(0.9,0) circle (1.6)}
+
+    % Tô màu
+    \fill[blue!20] \firstcircle;
+    \fill[red!20] \secondcircle;
+    \begin{scope}
+        \clip \firstcircle;
+        \fill[purple!40] \secondcircle;
+    \end{scope}
+
+    \draw[thick, blue!80!black] \firstcircle;
+    \draw[thick, red!80!black] \secondcircle;
+
+    % Ghi chú nhãn
+    \node at (-1.8,0.2) {\textbf{\large $A$}};
+    \node at (1.8,0.2) {\textbf{\large $B$}};
+    \node at (0,0) {\textbf{\small $A \cap B$}};
+    \node at (-1.4,-0.4) {\footnotesize $(A \setminus B)$};
+    \node at (1.4,-0.4) {\footnotesize $(B \setminus A)$};
+\end{tikzpicture}
+\end{center}
+\textit{Giải thích: Vùng màu tím ($A \cap B$) thuộc về cả hình tròn $A$ và hình tròn $B$. Khi ta lấy diện tích hình tròn $A$ cộng với diện tích hình tròn $B$, vùng tím đã được tính hai lần. Do đó, để tính diện tích toàn bộ miền hợp $A \cup B$, ta phải trừ bớt đi đúng một lần diện tích vùng tím!}
+\end{pedabox}
+
+\begin{scaffoldbox}{Giàn giáo sư phạm: Mối liên hệ trường hợp riêng}
+\textbf{Nhận xét then chốt cho học sinh:}
+Khi hai biến cố $A$ và $B$ xung khắc với nhau ($A \cap B = \emptyset$):
+$$P(AB) = P(\emptyset) = 0$$
+Khi đó công thức tổng quát trở thành:
+$$P(A \cup B) = P(A) + P(B) - 0 = P(A) + P(B)$$
+$\implies$ \textbf{Công thức cộng cho hai biến cố xung khắc chính là một trường hợp đặc biệt của công thức cộng tổng quát!}
+\end{scaffoldbox}
+
+\paragraph{c) Sản phẩm:} Học sinh ghi nhớ công thức tổng quát; vẽ được sơ đồ Ven và giải thích được lý do phải có số hạng trừ $P(AB)$.
+
+\paragraph{d) Tổ chức thực hiện:}
+\begin{itemize}[leftmargin=0.8cm]
+    \item \textbf{Chuyển giao nhiệm vụ:} Giáo viên trình chiếu sơ đồ Ven động, hướng dẫn học sinh chứng minh công thức dựa vào số phần tử tập hợp.
+    \item \textbf{Thực hiện nhiệm vụ:} Học sinh quan sát sơ đồ Ven, tự vẽ lại vào vở ghi và dùng bút màu tô phần giao nhau $A \cap B$.
+    \item \textbf{Báo cáo, thảo luận:} Giáo viên chỉ định 1 học sinh giải thích: ``Nếu không trừ $P(AB)$ thì điều gì xảy ra?''. Học sinh trả lời: Xác suất tính ra sẽ lớn hơn giá trị thực tế, thậm chí có thể vượt quá $1$.
+    \item \textbf{Kết luận, nhận định:} Giáo viên chốt lại định lý, đóng khung công thức tổng quát.
+\end{itemize}
+
+\subsection*{3. Hoạt động 3: Luyện tập các bài toán cơ bản (16 phút)}
+
+\paragraph{a) Mục tiêu:} Học sinh vận dụng chính xác công thức cộng tổng quát để tính xác suất trong các bài toán thực tế có phần giao nhau khác rỗng.
+
+\paragraph{b) Nội dung:} Học sinh hoạt động cặp đôi giải quyết các bài toán trên Phiếu học tập số 2:
+
+\begin{pedabox}{Bài tập luyện tập Tiết 2}
+\textbf{Bài 1 (Chọn bài tây):} Rút ngẫu nhiên $1$ quân bài từ bộ bài tây $52$ lá chuẩn đã được xáo đều. Tính xác suất để quân bài rút ra là \textbf{quân Át (A) hoặc quân bài mang chất Bích}.
+
+\textbf{Bài 2 (Y tế cộng đồng):} Khảo sát sức khỏe tại một khu dân cư cho thấy: Tỉ lệ người có kháng thể phòng bệnh Sốt xuất huyết là $60\%$, tỉ lệ người có kháng thể phòng bệnh Cúm A là $50\%$, và có $30\%$ dân số có cả hai loại kháng thể trên. Chọn ngẫu nhiên một người dân trong khu vực. Tính xác suất để người đó:
+\begin{enumerate}[leftmargin=0.6cm]
+    \item[a)] Có ít nhất một loại kháng thể (hoặc sốt xuất huyết hoặc cúm A).
+    \item[b)] Không có loại kháng thể nào trong hai loại trên.
+\end{enumerate}
+\end{pedabox}
+
+\paragraph{c) Sản phẩm:} Lời giải chi tiết của học sinh:
+\begin{itemize}[leftmargin=0.8cm]
+    \item \textbf{Giải Bài 1:}
+    Không gian mẫu: $n(\Omega) = 52$.
+    \begin{itemize}[leftmargin=0.4cm]
+        \item Gọi $A$: ``Rút được quân Át''. Bộ bài có $4$ quân Át $\implies P(A) = \dfrac{4}{52}$.
+        \item Gọi $B$: ``Rút được quân chất Bích''. Bộ bài có $13$ quân Bích $\implies P(B) = \dfrac{13}{52}$.
+        \item Biến cố giao $AB = A \cap B$: ``Rút được quân Át Bích''. Bộ bài chỉ có duy nhất $1$ lá Át Bích $\implies P(AB) = \dfrac{1}{52} \neq 0$.
+        \item Áp dụng công thức cộng xác suất cho hai biến cố bất kì:
+        $$P(A \cup B) = P(A) + P(B) - P(AB) = \dfrac{4}{52} + \dfrac{13}{52} - \dfrac{1}{52} = \dfrac{16}{52} = \dfrac{4}{13} \approx 0{,}3077$$
+    \end{itemize}
+    \item \textbf{Giải Bài 2:}
+    Gọi $A$: ``Người được chọn có kháng thể sốt xuất huyết'' $\implies P(A) = 0{,}6$.
+    Gọi $B$: ``Người được chọn có kháng thể cúm A'' $\implies P(B) = 0{,}5$.
+    Biến cố người có cả hai kháng thể là $AB \implies P(AB) = 0{,}3$.
+    \begin{itemize}[leftmargin=0.4cm]
+        \item[a)] Biến cố người đó có ít nhất một loại kháng thể là $A \cup B$.
+        Áp dụng công thức cộng xác suất:
+        $$P(A \cup B) = P(A) + P(B) - P(AB) = 0{,}6 + 0{,}5 - 0{,}3 = 0{,}8 \quad (80\%)$$
+        \item[b)] Biến cố ``Người đó không có loại kháng thể nào'' chính là biến cố đối của biến cố ``Có ít nhất một loại kháng thể'', ký hiệu là $\overline{A \cup B}$.
+        $$P\left(\overline{A \cup B}\right) = 1 - P(A \cup B) = 1 - 0{,}8 = 0{,}2 \quad (20\%)$$
+    \end{itemize}
+\end{itemize}
+
+\paragraph{d) Tổ chức thực hiện:}
+\begin{itemize}[leftmargin=0.8cm]
+    \item \textbf{Chuyển giao nhiệm vụ:} Giáo viên yêu cầu các cặp đôi thảo luận giải quyết Bài 1 và Bài 2 trong 10 phút.
+    \item \textbf{Thực hiện nhiệm vụ:} Học sinh làm việc cặp đôi, nhận diện biến cố giao $AB$. Giáo viên theo dõi, nhắc nhở các bạn học sinh hay quên trừ $P(AB)$.
+    \item \textbf{Báo cáo, thảo luận:} 2 học sinh đại diện lên bảng trình bày; học sinh lớp thảo luận, nhận xét bước xác định $P(AB)$.
+    \item \textbf{Kết luận, nhận định:} Giáo viên chuẩn hóa bài giải, nhấn mạnh việc chuyển đổi linh hoạt giữa ngôn ngữ lời văn đời thực và ngôn ngữ biến cố xác suất.
+\end{itemize}
+
+\subsection*{4. Hoạt động 4: Vận dụng (5 phút)}
+
+\paragraph{a) Mục tiêu:} Mở rộng công thức cộng từ 2 biến cố sang 3 biến cố trong thực tế quản lý dữ liệu số.
+
+\paragraph{b) Nội dung:} Giáo viên chiếu công thức mở rộng cho 3 biến cố bất kỳ $A, B, C$:
+$$P(A \cup B \cup C) = P(A) + P(B) + P(C) - P(AB) - P(BC) - P(CA) + P(ABC)$$
+Yêu cầu học sinh quan sát sơ đồ Ven 3 hình tròn lồng nhau và giải thích tại sao ở cuối lại phải \textbf{cộng thêm} $P(ABC)$.
+
+\paragraph{c) Sản phẩm:} Học sinh phát hiện: Khi trừ đi các phần giao đôi một $AB, BC, CA$, phần giao chung của cả ba biến cố $ABC$ ở chính giữa đã bị trừ đi tới 3 lần (trong khi ban đầu chỉ được cộng 3 lần), tức là bị trừ sạch! Do đó, phải cộng bù lại một lần $P(ABC)$ để diện tích không bị khuyết.
+
+\paragraph{d) Tổ chức thực hiện:} Giáo viên trình chiếu sơ đồ $\implies$ 1 học sinh giỏi giải thích $\implies$ Giáo viên khen ngợi tư duy trực quan không gian, giao nhiệm vụ chuẩn bị phòng máy cho Tiết 3.
+
+\newpage
+
+\begin{center}
+    \textbf{\large TIẾT 3 (TIẾT 88 THEO PPCT | TUẦN 31)}\\[4pt]
+    \textit{(Nội dung: Luyện tập tổng hợp - Thực hành mô phỏng số trên Excel \& Đánh giá an toàn AI)}
+\end{center}
+
+\subsection*{1. Hoạt động 1: Mở đầu (Khởi động - 5 phút)}
+
+\paragraph{a) Mục tiêu:} Kiểm tra phản xạ nhận diện nhanh: ``Khi nào cộng trực tiếp, khi nào cộng rồi trừ giao, khi nào dùng biến cố đối?''.
+
+\paragraph{b) Nội dung:} Trò chơi ghép thẻ nhanh: Giáo viên đưa ra 3 bài toán ngắn, học sinh giơ thẻ công thức tương ứng:
+\begin{itemize}[leftmargin=0.6cm]
+    \item Thẻ xanh: $P(A \cup B) = P(A) + P(B)$
+    \item Thẻ vàng: $P(A \cup B) = P(A) + P(B) - P(AB)$
+    \item Thẻ đỏ: $P(A) = 1 - P(\overline{A})$
+\end{itemize}
+
+\paragraph{c) Sản phẩm:} Phản xạ chính xác của $100\%$ học sinh tại các câu hỏi tình huống.
+
+\paragraph{d) Tổ chức thực hiện:} Giáo viên hô câu hỏi $\implies$ Học sinh đồng loạt giơ thẻ $\implies$ Giáo viên nhận xét nhanh và ổn định vị trí tại phòng máy vi tính 35 máy.
+
+\subsection*{2. Hoạt động 2: Luyện tập giải bài toán xác suất tổng hợp (16 phút)}
+
+\paragraph{a) Mục tiêu:} Học sinh rèn luyện kỹ năng phối hợp công thức cộng, biến cố đối và phép đếm tổ hợp để xử lý bài toán xác suất thực tế nhiều bước.
+
+\paragraph{b) Nội dung:} Giáo viên giao bài toán tổng hợp trên Phiếu học tập số 3:
+
+\begin{pedabox}{Bài toán luyện tập tổng hợp}
+Trong một kỳ thi thử tốt nghiệp THPT tại trường THCS\&THPT Hồng Vân, một phòng thi có $24$ thí sinh gồm $14$ học sinh ban Khoa học Tự nhiên (KHTN) và $10$ học sinh ban Khoa học Xã hội (KHXH). Cán bộ coi thi chọn ngẫu nhiên $4$ học sinh để kiểm tra thông tin số báo danh trước khi vào phòng.
+Tính xác suất để trong $4$ học sinh được chọn có:
+\begin{enumerate}[leftmargin=0.6cm]
+    \item[a)] Cả $4$ bạn đều thuộc cùng một ban (hoặc cùng KHTN hoặc cùng KHXH).
+    \item[b)] Có ít nhất một bạn thuộc ban Khoa học Xã hội.
+\end{enumerate}
+\end{pedabox}
+
+\paragraph{c) Sản phẩm:} Lời giải bài bản của học sinh:
+\begin{itemize}[leftmargin=0.8cm]
+    \item Số cách chọn ngẫu nhiên $4$ thí sinh từ $24$ thí sinh là:
+    $$n(\Omega) = C_{24}^4 = 10626$$
+    \item \textbf{Câu a:}
+    Gọi $A$: ``Cả $4$ bạn đều thuộc ban KHTN'' $\implies n(A) = C_{14}^4 = 1001 \implies P(A) = \dfrac{1001}{10626}$.
+    Gọi $B$: ``Cả $4$ bạn đều thuộc ban KHXH'' $\implies n(B) = C_{10}^4 = 210 \implies P(B) = \dfrac{210}{10626}$.
+    Vì một học sinh không thể đồng thời thuộc cả hai ban nên $A$ và $B$ là hai biến cố xung khắc ($A \cap B = \emptyset$).
+    Xác suất để cả $4$ bạn cùng một ban là:
+    $$P(A \cup B) = P(A) + P(B) = \dfrac{1001}{10626} + \dfrac{210}{10626} = \dfrac{1211}{10626} = \dfrac{101}{885} \approx 0{,}1141$$
+    \item \textbf{Câu b:}
+    Gọi $C$: ``Trong $4$ bạn được chọn có ít nhất một bạn thuộc ban KHXH''.
+    Biến cố đối $\overline{C}$: ``Trong $4$ bạn được chọn không có bạn nào thuộc ban KHXH'' (tức là cả $4$ bạn đều thuộc ban KHTN).
+    Nhận thấy biến cố $\overline{C}$ chính là biến cố $A$ ở câu a!
+    Do đó: $P(\overline{C}) = P(A) = \dfrac{1001}{10626} = \dfrac{143}{1518} \approx 0{,}0942$.
+    Áp dụng công thức tính xác suất của biến cố đối:
+    $$P(C) = 1 - P(\overline{C}) = 1 - \dfrac{1001}{10626} = \dfrac{9625}{10626} = \dfrac{1375}{1518} \approx 0{,}9058$$
+\end{itemize}
+
+\paragraph{d) Tổ chức thực hiện:} Học sinh giải độc lập vào vở 8 phút $\implies$ Thảo luận cặp đôi so sánh đáp án $\implies$ Giáo viên thu bài của 2 học sinh chiếu lên màn hình để sửa lỗi trình bày ký hiệu $\implies$ Chốt kết quả.
+
+\subsection*{3. Hoạt động 3: Thực hành phòng máy - Mô phỏng số trên Excel \& Đánh giá rủi ro AI (17 phút)}
+
+\paragraph{a) Mục tiêu:} Thực hiện mục tiêu năng lực số (Mã 5.3NC1a: mô phỏng chọn mẫu ngẫu nhiên bằng bảng tính Excel trên 35 máy) và năng lực AI (Mã 11.B1.1: đánh giá an toàn và rủi ro khi các thuật toán AI dự báo xác suất sự kiện sai lệch).
+
+\paragraph{b) Nội dung:}
+\begin{itemize}[leftmargin=0.6cm]
+    \item \textbf{Nhiệm vụ 1 (Năng lực số - 10 phút):} Học sinh ngồi tại 35 máy vi tính, mở tệp Excel \texttt{MoPhong\_ChonMau\_XacSuat.xlsx}.
+    Mô phỏng bài toán gieo xúc xắc lặp lại $N = 1000$ lần:
+    \begin{itemize}[leftmargin=0.4cm]
+        \item Cột A (Lần thử): Từ $1$ đến $1000$.
+        \item Cột B (Kết quả con xúc xắc): Dùng hàm \texttt{=RANDBETWEEN(1, 6)}.
+        \item Biến cố $A$: ``Số chấm xuất hiện chẵn'' ($2, 4, 6$).
+        \item Biến cố $B$: ``Số chấm xuất hiện lớn hơn hoặc bằng 4'' ($4, 5, 6$).
+        \item Biến cố hợp $A \cup B$: ``Số chấm xuất hiện chẵn hoặc $\geq 4$'' ($2, 4, 5, 6$).
+        \item Thiết lập hàm đếm \texttt{=COUNTIF(...)} để tính số lần xuất hiện thực nghiệm và tần suất xuất hiện $f(A \cup B)$.
+        \item So sánh tần suất thực nghiệm $f(A \cup B)$ với xác suất lý thuyết:
+        $$P(A \cup B) = P(A) + P(B) - P(AB) = \dfrac{3}{6} + \dfrac{3}{6} - \dfrac{2}{6} = \dfrac{4}{6} \approx 0{,}6667$$
+    \end{itemize}
+
+    \item \textbf{Nhiệm vụ 2 (Năng lực AI - 7 phút):} Học sinh phân tích tình huống rủi ro của AI trong dự báo xác suất:
+\end{itemize}
+
+\begin{aibox}{Tích hợp Năng lực AI (Mã 11.B1.1): Rủi ro thuật toán AI khi dự báo xác suất sai lệch}
+\textbf{Tình huống rủi ro an toàn thực tế của AI:}
+Trong hệ thống xe tự hành (Autonomous Vehicles), mạng nơ-ron AI được huấn luyện để phát hiện nguy cơ va chạm bằng cách tính xác suất:
+\begin{itemize}[leftmargin=0.5cm]
+    \item Biến cố $A$: ``Phát hiện người đi bộ băng qua đường trong khoảng cách nguy hiểm''.
+    \item Biến cố $B$: ``Phát hiện chướng ngại vật tĩnh (thùng hàng, nón bảo hộ giao thông) trên làn đường''.
+\end{itemize}
+\textbf{Lỗi ngộ nhận của AI:} Thuật toán AI đời cũ giả định hai biến cố $A$ và $B$ là xung khắc độc lập ($A \cap B = \emptyset$) và tính xác suất nguy cơ va chạm tổng thể bằng $P(A) + P(B)$. Tuy nhiên, trong điều kiện mưa bão hoặc tầm nhìn kém, một người đi bộ đẩy xe chở hàng hoặc mặc áo phản quang khiến camera AI phân loại đối tượng này vừa là người đi bộ (biến cố $A$), vừa là vật cản lạ (biến cố $B$), tức là $A \cap B \neq \emptyset$.\\
+$\implies$ \textbf{Hậu quả:} Do không trừ đi phần giao $P(AB)$, xác suất nguy cơ va chạm bị AI tính toán vượt ngưỡng an toàn ($P > 1$ hoặc tính toán sai lệch mức độ rủi ro), khiến bộ điều khiển trung tâm xe tự hành phanh gấp bất ngờ ở tốc độ cao trên đường cao tốc, gây ra tai nạn dây chuyền nguy hiểm!\\
+\textbf{Bài học phản biện cho học sinh:} AI chỉ là mô hình tính toán dựa trên dữ liệu. Con người phải nắm vững bản chất toán học để giám sát và kiểm tra tính hợp lý của các tham số xác suất do AI xuất ra.
+\end{aibox}
+
+\paragraph{c) Sản phẩm:}
+\begin{itemize}[leftmargin=0.8cm]
+    \item Bảng tính Excel hoàn chỉnh của 35 học sinh hiển thị tần suất mô phỏng dao động xấp xỉ giá trị lý thuyết $0{,}667$ ($66{,}7\%$).
+    \item Phiếu trả lời ngắn phân tích nguyên nhân sai sót của thuật toán AI và biện pháp khắc phục.
+\end{itemize}
+
+\paragraph{d) Tổ chức thực hiện:}
+\begin{itemize}[leftmargin=0.8cm]
+    \item Học sinh thao tác thực hành độc lập trên 35 máy vi tính, nhấn phím \texttt{F9} để chạy lại ngẫu nhiên nhiều lần mô phỏng.
+    \item Giáo viên trình chiếu tình huống rủi ro AI trên màn hình máy chủ, đặt câu hỏi thảo luận: ``Làm thế nào để các lập trình viên khắc phục lỗi ngộ nhận xác suất của AI?''.
+    \item Đại diện 2 học sinh phát biểu: Bắt buộc phải đưa điều kiện kiểm tra giao nhau $A \cap B \neq \emptyset$ vào hàm mất mát (Loss function) của mô hình AI.
+    \item Giáo viên tổng kết, tuyên dương năng lực công nghệ của học sinh.
+\end{itemize}
+
+\subsection*{4. Hoạt động 4: Vận dụng \& Tổng kết (7 phút)}
+
+\paragraph{a) Mục tiêu:} Hệ thống hóa toàn bộ các công thức tính xác suất của Bài 29, củng cố ý thức tự học và hướng dẫn chuẩn bị bài mới.
+
+\paragraph{b) Nội dung:}
+\begin{itemize}[leftmargin=0.6cm]
+    \item Giáo viên trình chiếu sơ đồ tư duy nhánh tóm tắt:
+    \begin{itemize}[leftmargin=0.4cm]
+        \item Xung khắc ($A \cap B = \emptyset$): $P(A \cup B) = P(A) + P(B)$.
+        \item Bất kỳ: $P(A \cup B) = P(A) + P(B) - P(AB)$.
+        \item Biến cố đối: $P(A) = 1 - P(\overline{A})$.
+    \end{itemize}
+    \item Giao bài tập về nhà trong SGK và Phiếu học tập bổ trợ.
+    \item Dặn dò chuẩn bị cho tiết học tiếp theo theo KHDH: Tiết CĐ31, CĐ32 (Thực hành trải nghiệm \& Ôn tập chuyên đề).
+\end{itemize}
+
+\paragraph{c) Sản phẩm:} Sơ đồ tư duy tổng kết bài học trong vở ghi của từng học sinh.
+
+\paragraph{d) Tổ chức thực hiện:} Giáo viên đúc kết $\implies$ Học sinh ghi chép nhiệm vụ $\implies$ Giáo viên thu lại phiếu đánh giá của học sinh.
+
+\section*{IV. PHỤ LỤC HỌC LIỆU BỔ TRỢ}
+
+\subsection*{1. Phiếu học tập số 1 (Tiết 1): Công thức cộng cho biến cố xung khắc}
+
+\begin{pedabox}{PHIẾU HỌC TẬP SỐ 1 (TIẾT 1)}
+\textbf{Họ và tên học sinh:} \dotfill \textbf{Lớp:} 11A\dots \quad \textbf{Nhóm:} \dots
+\begin{enumerate}[leftmargin=0.6cm]
+    \item \textbf{Điền vào chỗ trống:} Cho hai biến cố $A$ và $B$.
+    \begin{itemize}
+        \item Hai biến cố $A$ và $B$ được gọi là xung khắc khi và chỉ khi $A \cap B = $ \dots\dots\dots
+        \item Nếu $A$ và $B$ xung khắc thì $P(A \cup B) = $ \dots\dots\dots\dots\dots
+        \item Với mọi biến cố $A$, xác suất của biến cố đối $\overline{A}$ là $P(\overline{A}) = $ \dots\dots\dots\dots\dots
+    \end{itemize}
+    \item \textbf{Bài toán áp dụng:} Một đội văn nghệ trường có $15$ học sinh nam và $20$ học sinh nữ. Chọn ngẫu nhiên $1$ học sinh làm nhóm trưởng.
+    \begin{itemize}
+        \item Tính xác suất chọn được học sinh nam: \dotfill
+        \item Tính xác suất chọn được học sinh nữ: \dotfill
+        \item Hai biến cố trên có xung khắc không? Vì sao? \dotfill
+        \item Tính xác suất chọn được học sinh là nam hoặc nữ: \dotfill
+    \end{itemize}
+\end{enumerate}
+\end{pedabox}
+
+\subsection*{2. Phiếu học tập số 2 (Tiết 2): Công thức cộng xác suất tổng quát}
+
+\begin{pedabox}{PHIẾU HỌC TẬP SỐ 2 (TIẾT 2)}
+\textbf{Bài tập trắc nghiệm đúng/sai và điền khuyết:}
+\begin{enumerate}[leftmargin=0.6cm]
+    \item Cho hai biến cố $A$ và $B$ có $P(A) = 0{,}4$; $P(B) = 0{,}5$; $P(AB) = 0{,}2$. Xác suất của biến cố $A \cup B$ là:
+    \begin{itemize}[leftmargin=0.5cm]
+        \item[A.] $0{,}9$ \quad B. $0{,}7$ \quad C. $0{,}8$ \quad D. $0{,}3$
+    \end{itemize}
+    \item \textbf{Vẽ sơ đồ Ven và giải thích:} Tại sao khi hai biến cố $A$ và $B$ không xung khắc, ta không thể áp dụng công thức $P(A \cup B) = P(A) + P(B)$?\\
+    \textit{Phác thảo sơ đồ Ven và ghi lời giải thích ngắn gọn:}\\
+    \dotfill\\
+    \dotfill
+\end{enumerate}
+\end{pedabox}
+
+\subsection*{3. Phiếu học tập số 3 (Tiết 3): Hướng dẫn thực hành Excel \& Phân tích rủi ro AI}
+
+\begin{pedabox}{PHIẾU HỌC TẬP SỐ 3 (TIẾT 3)}
+\textbf{Phần 1: Cú pháp lệnh thực hành trên phần mềm Excel:}
+\begin{itemize}[leftmargin=0.5cm]
+    \item Lệnh sinh số nguyên ngẫu nhiên từ $1$ đến $6$: \texttt{=RANDBETWEEN(1, 6)}
+    \item Lệnh đếm số lần xuất hiện số chẵn ($2, 4, 6$) trong vùng dữ liệu \texttt{B2:B1001}:\\
+    \texttt{=COUNTIF(B2:B1001, 2) + COUNTIF(B2:B1001, 4) + COUNTIF(B2:B1001, 6)}
+    \item Ghi lại kết quả thực nghiệm sau $1000$ lần mô phỏng trên máy của em:
+    \begin{itemize}
+        \item Số lần xuất hiện biến cố $A \cup B$: \dots\dots\dots\dots
+        \item Tần suất thực nghiệm $f(A \cup B) = $ \dots\dots\dots\dots
+        \item So sánh với xác suất lý thuyết $P(A \cup B) \approx 0{,}6667$: \dotfill
+    \end{itemize}
+\end{itemize}
+
+\textbf{Phần 2: Phản biện câu trả lời của AI (Prompting kiểm tra chéo):}
+\textit{Câu hỏi gửi cho AI:} ``Một hộp có $10$ bi đỏ và $10$ bi xanh. Lấy ra $2$ bi. Gọi $A$ là bi thứ nhất đỏ, $B$ là bi thứ hai đỏ. Tính $P(A \cup B)$. Một học sinh giải: $P(A) = 1/2, P(B) = 1/2 \implies P(A \cup B) = 1/2 + 1/2 = 1$. Hãy chỉ ra lỗi sai của học sinh và giải lại đúng''.\\
+$\implies$ Hãy nhận xét cách AI phân tích lỗi ngộ nhận tính xung khắc của học sinh: \dotfill
+\end{pedabox}
+
+\subsection*{4. Rubric đánh giá năng lực học sinh trong bài học (4 mức độ)}
+
+\begin{center}
+\small
+\begin{tabularx}{\linewidth}{|p{3cm}|X|X|X|X|}
+\hline
+\textbf{Tiêu chí đánh giá} & \textbf{Mức 1: Chưa đạt} & \textbf{Mức 2: Đạt} & \textbf{Mức 3: Khá} & \textbf{Mức 4: Tốt} \\ \hline
+\textbf{1. Nắm vững lý thuyết công thức cộng} & Không phân biệt được biến cố xung khắc và biến cố giao nhau. & Nhớ công thức nhưng hay quên trừ $P(AB)$ khi biến cố không xung khắc. & Phân biệt rõ hai trường hợp, vận dụng đúng công thức vào bài toán cơ bản. & Giải thích sâu sắc bản chất công thức qua sơ đồ Ven và mở rộng cho 3 biến cố. \\ \hline
+\textbf{2. Kỹ năng giải bài tập xác suất} & Chưa tính được xác suất cổ điển cơ bản; nhầm lẫn phép toán. & Giải được bài toán một bước áp dụng trực tiếp công thức cộng. & Giải thành thạo bài toán có kết hợp biến cố đối và phép đếm tổ hợp. & Lựa chọn phương pháp giải tối ưu, lập luận bài giải tự luận chặt chẽ, chính xác. \\ \hline
+\textbf{3. Năng lực số trên Excel (5.3NC1a)} & Chưa biết mở phần mềm hoặc nhập sai cú pháp hàm Excel. & Nhập được công thức mô phỏng nhưng cần sự trợ giúp của giáo viên. & Thao tác độc lập, hoàn thành bảng mô phỏng $1000$ lần chọn mẫu đúng hạn. & Khai thác sáng tạo công cụ biểu đồ, tự động hóa tính toán tần suất và nhận xét quy luật. \\ \hline
+\textbf{4. Năng lực AI và Phản biện (11.B1.1)} & Không quan tâm đến các ứng dụng và rủi ro của AI. & Nhận biết được AI có thể đưa ra kết quả sai lệch khi dự báo xác suất. & Phân tích được nguyên nhân sai sót của thuật toán AI do bỏ qua biến cố giao nhau. & Đề xuất được giải pháp kiểm chứng thuật toán AI, đặt prompt kiểm tra chéo xuất sắc. \\ \hline
+\end{tabularx}
+\end{center}
+
+\end{document}
