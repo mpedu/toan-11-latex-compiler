@@ -1,0 +1,750 @@
+\documentclass[12pt, a4paper]{article}
+% --- 1. Cấu hình Tiếng Việt và Font chữ chuẩn ---
+\usepackage[utf8]{inputenc}
+\usepackage[T5]{fontenc}
+\usepackage[vietnamese]{babel}
+\usepackage{mathptmx} % Font Times New Roman đồng bộ cả chữ và công thức toán, không gây xung đột gói
+
+\makeatletter
+\renewcommand{\normalsize}{\@setfontsize\normalsize{13pt}{16pt}}
+\makeatother
+\normalsize
+
+% --- 2. Gói Toán học & Ký hiệu bổ trợ ---
+\usepackage{amsmath, amssymb, amsfonts, mathrsfs, amsthm}
+\usepackage{graphicx}
+\usepackage{fontawesome}
+\usepackage{booktabs, tabularx, array, multirow}
+\usepackage{enumitem}
+
+% --- 3. Đồ họa TikZ, Bảng biến thiên & Hình không gian ---
+\usepackage{tikz}
+\usetikzlibrary{calc, intersections, angles, quotes, patterns, arrows.meta, 3d}
+\usepackage{pgfplots}
+\pgfplotsset{compat=1.18}
+\usepackage{tkz-euclide}
+\usepackage{tkz-tab}
+
+\renewcommand{\vec}[1]{\overrightarrow{#1}}
+
+% --- 4. Hộp sư phạm (Tcolorbox) ---
+\usepackage[many]{tcolorbox}
+\tcbuselibrary{skins, breakable}
+
+% --- 5. Căn lề chuẩn văn bản giáo án ---
+\usepackage{geometry}
+\geometry{
+    a4paper,
+    left=25mm,
+    right=15mm,
+    top=20mm,
+    bottom=20mm
+}
+
+% --- 6. Header / Footer chuẩn hóa ---
+\usepackage{fancyhdr}
+\usepackage{lastpage}
+\pagestyle{fancy}
+\fancyhf{}
+
+\fancyhead[L]{\small \textit{Kế hoạch bài dạy Toán 11}}
+\fancyhead[R]{\textbf{Trang \thepage/\pageref{LastPage}}}
+\fancyfoot[L]{\small \textit{Tổ Toán - Tin}}
+\fancyfoot[R]{\small \textit{Trường THCS\&THPT Hồng Vân}}
+\renewcommand{\headrulewidth}{0.4pt}
+\renewcommand{\footrulewidth}{0.4pt}
+
+% --- 7. Giãn dòng & Giãn đoạn theo chuẩn Nghị định 30/2020/NĐ-CP ---
+\usepackage{setspace}
+\setstretch{1.15}
+\setlength{\parindent}{1.0cm}
+\setlength{\parskip}{5pt}
+
+% Định nghĩa hộp sư phạm chuyên dụng
+\newtcolorbox{pedabox}[2][]{
+    enhanced,
+    breakable,
+    colback=blue!3!white,
+    colframe=blue!65!black,
+    fonttitle=\bfseries\small,
+    title={#2},
+    arc=2mm,
+    boxrule=0.6pt,
+    left=3mm, right=3mm, top=2mm, bottom=2mm,
+    #1
+}
+
+\newtcolorbox{aibox}[2][]{
+    enhanced,
+    breakable,
+    colback=teal!4!white,
+    colframe=teal!70!black,
+    fonttitle=\bfseries\small,
+    title={#2},
+    arc=2mm,
+    boxrule=0.6pt,
+    left=3mm, right=3mm, top=2mm, bottom=2mm,
+    #1
+}
+
+\newtcolorbox{scaffoldbox}[2][]{
+    enhanced,
+    breakable,
+    colback=orange!4!white,
+    colframe=orange!80!black,
+    fonttitle=\bfseries\small,
+    title={#2},
+    arc=2mm,
+    boxrule=0.6pt,
+    left=3mm, right=3mm, top=2mm, bottom=2mm,
+    #1
+}
+
+\newtcolorbox{stembox}[2][]{
+    enhanced,
+    breakable,
+    colback=purple!4!white,
+    colframe=purple!75!black,
+    fonttitle=\bfseries\small,
+    title={#2},
+    arc=2mm,
+    boxrule=0.6pt,
+    left=3mm, right=3mm, top=2mm, bottom=2mm,
+    #1
+}
+
+\begin{document}
+
+\begin{center}
+    {\fontsize{14pt}{17pt}\selectfont \textbf{KẾ HOẠCH BÀI DẠY MÔN TOÁN LỚP 11}}\\[6pt]
+    {\fontsize{16pt}{19pt}\selectfont \textbf{BÀI 32. CÁC QUY TẮC TÍNH ĐẠO HÀM}}\\[4pt]
+    {\fontsize{12pt}{15pt}\selectfont \textbf{Môn học: Toán 11} \ \textbar \ \textbf{Thời lượng: 3 tiết (Tiết 94 đến 96 theo PPCT | Tuần 33, 34)}}
+\end{center}
+
+\vspace{5pt}
+
+\section*{I. MỤC TIÊU}
+
+\subsection*{1. Kiến thức, Năng lực}
+
+\begin{itemize}[leftmargin=1.2cm]
+    \item \textbf{Yêu cầu cần đạt (Nguyên văn CT GDPT 2018 Toán 11):}
+    \begin{itemize}[leftmargin=0.6cm]
+        \item Tính được đạo hàm của một số hàm số sơ cấp cơ bản (như hàm đa thức, hàm căn thức đơn giản, hàm số lượng giác, hàm số mũ, hàm số lôgarit).
+        \item Sử dụng được các công thức tính đạo hàm của tổng, hiệu, tích, thương của các hàm số.
+        \item Sử dụng được công thức đạo hàm của hàm hợp $y = f(u(x))$.
+        \item Giải quyết được một số vấn đề có liên quan đến môn học khác hoặc thực tiễn gắn với đạo hàm (ví dụ: xác định vận tốc tức thời, gia tốc, cường độ dòng điện, giải quyết bài toán tối ưu hóa trong kỹ thuật và kinh tế).
+    \end{itemize}
+
+    \item \textbf{Năng lực Toán học đặc thù:}
+    \begin{itemize}[leftmargin=0.6cm]
+        \item \textit{Năng lực tư duy và lập luận toán học:} Khái quát hóa quy tắc tính đạo hàm từ định nghĩa sang các công thức giải nhanh; so sánh sự tương đồng và khác biệt giữa đạo hàm của hàm sơ cấp cơ bản biến $x$ và hàm hợp biến $u(x)$; chứng minh các công thức đạo hàm của tích, thương thông qua số gia hàm số; phân tích bản chất logic của việc nhân thêm thừa số $u'(x)$ trong đạo hàm hàm hợp.
+        \item \textit{Năng lực mô hình hóa toán học:} Thiết lập hàm số và giải quyết bài toán tối ưu hóa thực tiễn kinh tế -- kỹ thuật (bài toán thiết kế vỏ lon nước ngọt hình trụ sao cho diện tích toàn phần nhỏ nhất với thể tích cho trước; bài toán tìm vận tốc lớn nhất của hạt mang điện trong từ trường); mô hình hóa tốc độ tăng trưởng vi khuẩn qua hàm số mũ.
+        \item \textit{Năng lực giải quyết vấn đề toán học:} Lựa chọn và kết hợp linh hoạt, chuẩn xác các quy tắc tính đạo hàm (tổng, hiệu, tích, thương, hàm hợp) để tính đạo hàm của các biểu thức toán học phức tạp; vận dụng đạo hàm để viết phương trình tiếp tuyến của đồ thị hàm số tại một điểm hoặc khi biết hệ số góc $k$.
+        \item \textit{Năng lực giao tiếp toán học:} Sử dụng chính xác và nhất quán hệ thống ký hiệu đạo hàm: $y'$, $f'(x)$, $u'(x)$, $\dfrac{\mathrm{d}y}{\mathrm{d}x}$, $y'_x = y'_u \cdot u'_x$; trình bày bài giải tự luận rõ ràng, tách bạch từng bước trung gian khi áp dụng đạo hàm hàm hợp.
+        \item \textit{Năng lực sử dụng công cụ, phương tiện học toán:} Sử dụng thành thạo máy tính cầm tay (MTCT Casio fx-580VN X) với chức năng tính đạo hàm tại điểm $\left. \dfrac{\mathrm{d}}{\mathrm{d}x} (f(x)) \right|_{x = x_0}$ để kiểm tra và đối chiếu kết quả đạo hàm vừa tính; ứng dụng phần mềm GeoGebra để khảo sát sự biến thiên của hàm đạo hàm.
+    \end{itemize}
+
+    \item \textbf{Năng lực số (Theo Thông tư 02/2025/TT-BGDĐT):}
+    \begin{itemize}[leftmargin=0.6cm]
+        \item \textit{Mã 5.2NC1b (Sử dụng công cụ tính toán số kiểm chứng đạo hàm):} Học sinh sử dụng thành thạo tính năng $\dfrac{\mathrm{d}}{\mathrm{d}x}$ trên máy tính cầm tay (MTCT Casio fx-580VN X) để tự động kiểm tra, đối chiếu kết quả đạo hàm của các hàm số phức tạp (đặc biệt là hàm phân thức và hàm lượng giác chứa hàm hợp) tại một điểm $x_0$ ngẫu nhiên bằng cách so sánh giá trị máy tính xuất ra với giá trị $f'(x_0)$ thu được từ công thức tính tay.
+    \end{itemize}
+
+    \item \textbf{Năng lực AI (Theo Quyết định 2422/QĐ-BGDĐT):}
+    \begin{itemize}[leftmargin=0.6cm]
+        \item \textit{Mã 11.C3.1 (Kỹ thuật câu lệnh Prompt lập bảng đối chiếu và phát hiện lỗi sai đạo hàm hàm hợp của AI):} Học sinh thực hành đặt câu lệnh (prompting) có cấu trúc yêu cầu AI (Gemini / ChatGPT) thiết lập bảng ma trận đối chiếu song song giữa công thức đạo hàm cơ bản theo biến $x$ và công thức đạo hàm hàm hợp tương ứng theo biến $u$; đồng thời phân tích, phát hiện và phản biện lỗi sai kinh điển của các mô hình AI tạo sinh khi tính đạo hàm hàm hợp do bỏ quên thừa số $u'(x)$ (như đạo hàm $(\sin 2x)' = 2\cos 2x$ nhưng AI tính nhầm thành $\cos 2x$).
+    \end{itemize}
+
+    \item \textbf{Giáo dục STEM/STEAM:}
+    \begin{itemize}[leftmargin=0.6cm]
+        \item \textit{Chủ đề STEM:} Thiết kế tối ưu hóa bao bì sản phẩm công nghiệp: \textbf{``Thiết kế vỏ lon nước ngọt hình trụ tiết kiệm chi phí vật liệu''}. Cho thể tích lon cố định $V = 330\text{ ml} = 330\text{ cm}^3$. Học sinh thiết lập hàm số diện tích toàn phần $S_{\text{tp}}(R)$ theo bán kính đáy $R$, sử dụng công thức đạo hàm để tìm bán kính $R$ và chiều cao $h$ tối ưu sao cho diện tích nhôm sử dụng là nhỏ nhất.
+    \end{itemize}
+
+    \item \textbf{Năng lực chung:}
+    \begin{itemize}[leftmargin=0.6cm]
+        \item \textit{Tự chủ và tự học:} Tự giác học thuộc và hệ thống hóa bảng đạo hàm cơ bản; chủ động làm bài tập trên Phiếu học tập cá nhân.
+        \item \textit{Giao tiếp và hợp tác:} Hoạt động nhóm hiệu quả trong các tiết luyện tập và thảo luận dự án STEM; biết lắng nghe, nhận xét và hỗ trợ bạn trong học tập.
+    \end{itemize}
+\end{itemize}
+
+\subsection*{2. Phẩm chất}
+
+\begin{itemize}[leftmargin=1.2cm]
+    \item \textbf{Chăm chỉ:} Kiên trì rèn luyện kỹ năng tính đạo hàm, cẩn thận trong từng bước biến đổi đại số để tránh nhầm lẫn dấu.
+    \item \textbf{Trung thực:} Tự giác làm bài tập, trung thực đối chiếu kết quả tính tay với máy tính cầm tay, không sao chép máy móc lời giải từ AI.
+    \item \textbf{Trách nhiệm:} Tích cực phối hợp với các thành viên trong nhóm hoàn thành nhiệm vụ STEM; có ý thức tối ưu hóa, tiết kiệm nguyên vật liệu bảo vệ môi trường.
+\end{itemize}
+
+\section*{II. THIẾT BỊ DẠY HỌC VÀ HỌC LIỆU}
+
+\begin{itemize}[leftmargin=1.2cm]
+    \item \textbf{Giáo viên:}
+    \begin{itemize}[leftmargin=0.6cm]
+        \item Kế hoạch bài dạy chi tiết 3 tiết theo chuẩn Công văn 5512/BGDĐT-GDTrH.
+        \item Bài trình chiếu điện tử tương tác (Slide PowerPoint / Canva) sinh động với bảng tra cứu công thức động và hình ảnh mô phỏng bài toán tối ưu vỏ lon STEM.
+        \item Các mẫu vỏ lon nước ngọt hình trụ thực tế ($330\text{ ml}$), thước kẹp cơ khí, thước dây đo chu vi đáy để học sinh đối chiếu số liệu.
+        \item Phòng học có máy chiếu và máy vi tính; hệ thống Phiếu học tập số 1 (Hàm sơ cấp cơ bản), Phiếu số 2 (Tổng, hiệu, tích, thương) và Phiếu số 3 (Hàm hợp, Phản biện AI \& STEM).
+        \item Bảng Rubric đánh giá năng lực học sinh 4 mức độ.
+    \end{itemize}
+    \item \textbf{Học sinh:}
+    \begin{itemize}[leftmargin=0.6cm]
+        \item SGK Toán 11, vở ghi bài, bút màu gạch chân công thức.
+        \item Máy tính cầm tay Casio fx-580VN X.
+        \item Điện thoại thông minh hoặc máy tính cá nhân để thực hành lệnh prompt AI và tra cứu bảng đạo hàm trực tuyến.
+    \end{itemize}
+\end{itemize}
+
+\section*{III. TIẾN TRÌNH DẠY HỌC}
+
+\begin{center}
+    \textbf{\large TIẾT 1 (TIẾT 94 THEO PPCT | TUẦN 33)}\\[4pt]
+    \textit{(Nội dung: Đạo hàm của các hàm số sơ cấp cơ bản)}
+\end{center}
+
+\subsection*{1. Hoạt động 1: Mở đầu (Khởi động - 6 phút)}
+
+\paragraph{a) Mục tiêu:} Tạo tình huống có vấn đề xuất phát từ sự cồng kềnh, phức tạp khi phải dùng định nghĩa (tính giới hạn) để tính đạo hàm của các hàm số bậc cao hoặc hàm lượng giác, từ đó khơi dậy nhu cầu cấp thiết về việc xây dựng các công thức đạo hàm cơ bản.
+
+\paragraph{b) Nội dung:} Giáo viên yêu cầu học sinh thực hiện thử thách:
+\begin{pedabox}{Thử thách Khởi động: Cuộc đua tính đạo hàm}
+\begin{enumerate}[leftmargin=0.6cm]
+    \item Hãy dùng định nghĩa để tính đạo hàm của hàm số $f(x) = x^3$ tại điểm $x$ tùy ý.
+    \item Nếu bây giờ yêu cầu tính đạo hàm của hàm số $g(x) = x^{2026}$ hoặc $h(x) = \sin x$ bằng định nghĩa thì điều gì sẽ xảy ra? Liệu có công thức tổng quát nào giúp ta ghi ngay kết quả mà không cần tính giới hạn tỉ số số gia $\lim_{\Delta x \to 0} \dfrac{\Delta y}{\Delta x}$ hay không?
+\end{enumerate}
+\end{pedabox}
+
+\paragraph{c) Sản phẩm:} Câu trả lời của học sinh:
+\begin{itemize}[leftmargin=0.8cm]
+    \item Với $f(x) = x^3$: $\Delta y = (x + \Delta x)^3 - x^3 = 3x^2 \Delta x + 3x(\Delta x)^2 + (\Delta x)^3$.
+    $$\dfrac{\Delta y}{\Delta x} = 3x^2 + 3x\Delta x + (\Delta x)^2 \implies f'(x) = \lim_{\Delta x \to 0} \dfrac{\Delta y}{\Delta x} = 3x^2$$
+    \item Với $x^{2026}$, việc khai triển nhị thức Newton gồm 2027 số hạng sẽ vô cùng phức tạp và mất thời gian. Với $\sin x$, cần biến đổi lượng giác phức tạp.
+    \item Dự đoán quy luật lũy thừa: $(x^2)' = 2x$, $(x^3)' = 3x^2 \implies (x^n)' = n x^{n-1}$.
+\end{itemize}
+
+\paragraph{d) Tổ chức thực hiện:}
+\begin{itemize}[leftmargin=0.8cm]
+    \item \textbf{Chuyển giao nhiệm vụ:} Giáo viên giao bài tập khởi động cho 2 học sinh lên bảng làm theo định nghĩa, cả lớp cùng theo dõi.
+    \item \textbf{Thực hiện nhiệm vụ:} Học sinh tính toán $f'(x) = 3x^2$ trong 3 phút và cảm nhận sự phức tạp nếu nâng số mũ lên 2026.
+    \item \textbf{Báo cáo, thảo luận:} 1 học sinh nêu dự đoán công thức tổng quát $(x^n)' = n x^{n-1}$.
+    \item \textbf{Kết luận, nhận định:} Giáo viên chốt lại: Để giải phóng sức lao động tính toán, các nhà toán học đã chứng minh sẵn bảng công thức đạo hàm cho tất cả các hàm số sơ cấp cơ bản. Tiết học này chúng ta sẽ làm chủ toàn bộ bảng công thức đó.
+\end{itemize}
+
+\subsection*{2. Hoạt động 2: Hình thành kiến thức - Bảng đạo hàm các hàm số sơ cấp cơ bản (18 phút)}
+
+\paragraph{a) Mục tiêu:} Giúp học sinh nắm vững các công thức đạo hàm của hàm hằng, hàm lũy thừa, hàm căn bậc hai, các hàm số lượng giác, hàm số mũ và hàm số lôgarit.
+
+\paragraph{b) Nội dung:} Giáo viên trình bày có hệ thống bảng đạo hàm của các hàm số sơ cấp cơ bản:
+
+\begin{pedabox}{1. Đạo hàm của Hàm Hằng, Hàm Lũy thừa \& Căn thức}
+\begin{itemize}[leftmargin=0.5cm]
+    \item \textbf{Hàm hằng:} Đạo hàm của hàm hằng luôn bằng $0$:
+    \begin{equation}
+        (c)' = 0 \quad (\text{với } c \in \mathbb{R})
+    \end{equation}
+    \item \textbf{Hàm bậc nhất:} $(x)' = 1$.
+    \item \textbf{Hàm lũy thừa:} Với mọi số tự nhiên $n \geq 1$:
+    \begin{equation}
+        (x^n)' = n x^{n-1}
+    \end{equation}
+    \textit{Mở rộng:} Công thức trên đúng với mọi số thực $\alpha \neq 0$ trên tập xác định của nó:
+    \begin{equation}
+        (x^\alpha)' = \alpha x^{\alpha - 1} \quad (x > 0)
+    \end{equation}
+    \item \textbf{Hàm căn bậc hai:} Với mọi $x > 0$:
+    \begin{equation}
+        (\sqrt{x})' = \dfrac{1}{2\sqrt{x}}
+    \end{equation}
+    (Công thức này là trường hợp riêng của $(x^{1/2})' = \dfrac{1}{2} x^{-1/2} = \dfrac{1}{2\sqrt{x}}$).
+\end{itemize}
+\end{pedabox}
+
+\begin{pedabox}{2. Đạo hàm của các Hàm số Lượng giác}
+\begin{itemize}[leftmargin=0.5cm]
+    \item Đạo hàm của hàm $\sin x$:
+    \begin{equation}
+        (\sin x)' = \cos x
+    \end{equation}
+    \item Đạo hàm của hàm $\cos x$ (\textbf{lưu ý có dấu trừ}):
+    \begin{equation}
+        (\cos x)' = -\sin x
+    \end{equation}
+    \item Đạo hàm của hàm $\tan x$ (với $x \neq \dfrac{\pi}{2} + k\pi, k \in \mathbb{Z}$):
+    \begin{equation}
+        (\tan x)' = \dfrac{1}{\cos^2 x} = 1 + \tan^2 x
+    \end{equation}
+    \item Đạo hàm của hàm $\cot x$ (với $x \neq k\pi, k \in \mathbb{Z}$):
+    \begin{equation}
+        (\cot x)' = -\dfrac{1}{\sin^2 x} = -(1 + \cot^2 x)
+    \end{equation}
+\end{itemize}
+\end{pedabox}
+
+\begin{pedabox}{3. Đạo hàm của Hàm số Mũ và Hàm số Lôgarit}
+\begin{itemize}[leftmargin=0.5cm]
+    \item \textbf{Hàm số mũ tự nhiên (đặc biệt nhất trong toán học):}
+    \begin{equation}
+        (e^x)' = e^x
+    \end{equation}
+    (Đạo hàm của $e^x$ bằng chính nó!).
+    \item \textbf{Hàm số mũ cơ số $a$ ($a > 0, a \neq 1$):}
+    \begin{equation}
+        (a^x)' = a^x \ln a
+    \end{equation}
+    \item \textbf{Hàm lôgarit tự nhiên ($x > 0$):}
+    \begin{equation}
+        (\ln x)' = \dfrac{1}{x}
+    \end{equation}
+    \item \textbf{Hàm lôgarit cơ số $a$ ($a > 0, a \neq 1, x > 0$):}
+    \begin{equation}
+        (\log_a x)' = \dfrac{1}{x \ln a}
+    \end{equation}
+\end{itemize}
+\end{pedabox}
+
+\begin{scaffoldbox}{Giàn giáo sư phạm: Mẹo nhớ dấu đạo hàm Lượng giác cho HS TB-Yếu}
+\begin{itemize}[leftmargin=0.5cm]
+    \item \textbf{Quy tắc chữ cái đầu ``C - Co''}: Các hàm bắt đầu bằng chữ \textbf{``Co''} (gồm $\cos x$ và $\cot x$) khi lấy đạo hàm \textbf{luôn luôn xuất hiện dấu trừ ($-$) trước kết quả}:
+    $$(\cos x)' = -\sin x \qquad \text{và} \qquad (\cot x)' = -\dfrac{1}{\sin^2 x}$$
+    \item Các hàm còn lại ($\sin x$ và $\tan x$) đạo hàm mang dấu dương ($+$).
+\end{itemize}
+\end{scaffoldbox}
+
+\paragraph{c) Sản phẩm:} Bảng công thức đầy đủ và mẹo ghi nhớ được học sinh ghi chép khoa học vào vở; học sinh phát biểu lại được công thức khi giáo viên hỏi nhanh.
+
+\paragraph{d) Tổ chức thực hiện:}
+\begin{itemize}[leftmargin=0.8cm]
+    \item \textbf{Chuyển giao nhiệm vụ:} Giáo viên trình chiếu từng nhóm công thức, phân tích ý nghĩa đặc biệt của $(e^x)' = e^x$, yêu cầu học sinh thảo luận cặp đôi để ghi nhớ mẹo dấu ``Co - Dấu trừ''.
+    \item \textbf{Thực hiện nhiệm vụ:} Học sinh ghi chép bảng công thức, đọc nhẩm 3 phút. Giáo viên quan sát, kiểm tra nhanh một số học sinh yếu.
+    \item \textbf{Báo cáo, thảo luận:} Giáo viên tổ chức hỏi -- đáp nhanh (Flash-Quiz): Giáo viên đọc tên hàm số, học sinh đồng thanh đọc đạo hàm.
+    \item \textbf{Kết luận, nhận định:} Giáo viên chốt bảng công thức, chuyển sang hoạt động luyện tập tính toán và thực hành bấm máy tính cầm tay.
+\end{itemize}
+
+\subsection*{3. Hoạt động 3: Luyện tập & Làm chủ MTCT Casio fx-580VN X (16 phút)}
+
+\paragraph{a) Mục tiêu:} Học sinh vận dụng chính xác các công thức sơ cấp cơ bản; làm chủ kỹ thuật bấm máy tính cầm tay Casio fx-580VN X để kiểm tra kết quả đạo hàm tại một điểm (Mã 5.2NC1b).
+
+\paragraph{b) Nội dung:} Học sinh hoàn thành các bài tập trên Phiếu học tập số 1:
+
+\begin{pedabox}{Bài tập luyện tập Tiết 1}
+\textbf{Bài 1 (Tính đạo hàm bằng công thức):} Tính đạo hàm của các hàm số sau:
+\begin{enumerate}[leftmargin=0.6cm]
+    \item[a)] $y = x^7$ tại điểm $x = 1$.
+    \item[b)] $y = x^{\sqrt{2}}$ tại điểm $x = 2$ ($x > 0$).
+    \item[c)] $y = \cos x$ tại điểm $x = \dfrac{\pi}{3}$.
+    \item[d)] $y = 3^x$ tại điểm $x = 0$.
+    \item[e)] $y = \ln x$ tại điểm $x = e$.
+\end{enumerate}
+
+\textbf{Bài 2 (Thực hành Năng lực số -- Mã 5.2NC1b):} Sử dụng máy tính cầm tay Casio fx-580VN X để kiểm tra lại toàn bộ kết quả tính tay ở Bài 1 theo quy trình hướng dẫn.
+\end{pedabox}
+
+\begin{scaffoldbox}{Tích hợp Năng lực số (Mã 5.2NC1b): Quy trình kiểm tra đạo hàm trên MTCT Casio}
+Để kiểm tra đạo hàm của hàm số $y = f(x)$ tại điểm $x_0$ trên MTCT Casio fx-580VN X:
+\begin{itemize}[leftmargin=0.5cm]
+    \item \textbf{Bước 1 (Chọn đơn vị đo góc):} Nếu hàm số có chứa lượng giác, bắt buộc chuyển máy tính về chế độ Radian: bấm \texttt{SHIFT} $\to$ \texttt{MENU (SET UP)} $\to$ \texttt{2 (Angle Unit)} $\to$ \texttt{2 (Radian)}.
+    \item \textbf{Bước 2 (Gọi lệnh đạo hàm):} Bấm tổ hợp phím \texttt{SHIFT} + $\int$ (phím có chữ màu vàng $\dfrac{\mathrm{d}}{\mathrm{d}x}$).
+    \item \textbf{Bước 3 (Nhập hàm số và điểm $x_0$):} Nhập biểu thức $f(x)$ vào trong dấu ngoặc đơn, bấm mũi tên sang phải nhập giá trị $x = x_0$.
+    \item \textbf{Bước 4 (Đối chiếu kết quả):} Bấm dấu \texttt{=} và so sánh giá trị trên màn hình với kết quả tính bằng tay.
+\end{itemize}
+\end{scaffoldbox}
+
+\paragraph{c) Sản phẩm:} Lời giải chi tiết của học sinh và kết quả kiểm chứng trên MTCT:
+\begin{itemize}[leftmargin=0.8cm]
+    \item a) $y' = (x^7)' = 7x^6 \implies y'(1) = 7 \cdot 1^6 = 7$. MTCT: $\left. \dfrac{\mathrm{d}}{\mathrm{d}x} (x^7) \right|_{x=1} = 7$.
+    \item b) $y' = (x^{\sqrt{2}})' = \sqrt{2} \cdot x^{\sqrt{2} - 1} \implies y'(2) = \sqrt{2} \cdot 2^{\sqrt{2} - 1} = 2^{\sqrt{2}/2 + \sqrt{2} - 1} = 2^{\sqrt{2} - \frac{1}{2}} \approx 1{,}917$. MTCT cho kết quả trùng khớp.
+    \item c) $y' = (\cos x)' = -\sin x \implies y'\left(\dfrac{\pi}{3}\right) = -\sin\left(\dfrac{\pi}{3}\right) = -\dfrac{\sqrt{3}}{2} \approx -0{,}8660$. MTCT: bấm ra đúng $-0{,}8660254$.
+    \item d) $y' = (3^x)' = 3^x \ln 3 \implies y'(0) = 3^0 \ln 3 = 1 \cdot \ln 3 = \ln 3 \approx 1{,}0986$. MTCT: đúng $1{,}098612$.
+    \item e) $y' = (\ln x)' = \dfrac{1}{x} \implies y'(e) = \dfrac{1}{e} \approx 0{,}367879$. MTCT: đúng $\dfrac{1}{e}$.
+\end{itemize}
+
+\paragraph{d) Tổ chức thực hiện:}
+\begin{itemize}[leftmargin=0.8cm]
+    \item \textbf{Chuyển giao nhiệm vụ:} Giáo viên phát Phiếu học tập số 1, yêu cầu các bàn làm việc cá nhân câu a, c, d trong 5 phút, sau đó dùng MTCT kiểm tra lại.
+    \item \textbf{Thực hiện nhiệm vụ:} Học sinh làm bài, thao tác bấm máy tính. Giáo viên đi uốn nắn các bạn quên chuyển chế độ Radian khi bấm lượng giác.
+    \item \textbf{Báo cáo, thảo luận:} 2 học sinh lên bảng giải; 1 học sinh nêu các lỗi bấm máy tính thường gặp (như quên đóng ngoặc).
+    \item \textbf{Kết luận, nhận định:} Giáo viên tuyên dương các nhóm thực hiện tốt, chốt quy trình bấm MTCT để tự tin áp dụng trong các bài kiểm tra trắc nghiệm.
+\end{itemize}
+
+\subsection*{4. Hoạt động 4: Vận dụng (5 phút)}
+
+\paragraph{a) Mục tiêu:} Vận dụng đạo hàm hàm số mũ giải quyết bài toán tốc độ sinh trưởng của vi khuẩn trong y sinh học.
+
+\paragraph{b) Nội dung:} Số lượng vi khuẩn $E. coli$ trong một mẻ nuôi cấy thí nghiệm sau $t$ giờ được mô phỏng bởi phương trình: $N(t) = 1000 \cdot e^{0{,}5 t}$. Biết rằng tốc độ sinh trưởng tức thời của quần thể vi khuẩn tại thời điểm $t$ chính là đạo hàm $N'(t)$. Hãy tính tốc độ sinh trưởng của mẻ vi khuẩn tại thời điểm ban đầu $t = 0\text{ giờ}$ (biết đạo hàm $(e^{0{,}5t})' = 0{,}5 e^{0{,}5t}$).
+
+\paragraph{c) Sản phẩm:} $N'(t) = 1000 \cdot 0{,}5 \cdot e^{0{,}5 t} = 500 e^{0{,}5 t}$. Tại $t = 0$: $N'(0) = 500 \cdot e^0 = 500$ (cá thể vi khuẩn/giờ).
+
+\paragraph{d) Tổ chức thực hiện:} Giáo viên đặt câu hỏi $\implies$ Học sinh tính nhẩm nhanh $\implies$ Giáo viên chốt ý nghĩa của tốc độ tăng trưởng tức thời, dặn dò chuẩn bị Tiết 2 về Quy tắc Tổng, Hiệu, Tích, Thương.
+
+\newpage
+
+\begin{center}
+    \textbf{\large TIẾT 2 (TIẾT 95 THEO PPCT | TUẦN 33)}\\[4pt]
+    \textit{(Nội dung: Đạo hàm của Tổng, Hiệu, Tích, Thương)}
+\end{center}
+
+\subsection*{1. Hoạt động 1: Mở đầu (Khởi động - 5 phút)}
+
+\paragraph{a) Mục tiêu:} Tạo mâu thuẫn nhận thức bằng câu hỏi dự đoán đạo hàm của một tích có bằng tích các đạo hàm hay không, từ đó kích hoạt nhu cầu học các quy tắc tính đạo hàm cho các phép toán hàm số.
+
+\paragraph{b) Nội dung:} Giáo viên đặt câu hỏi:
+\begin{enumerate}[leftmargin=0.6cm]
+    \item Chúng ta đã biết $(x^2)' = 2x$ và $(x^3)' = 3x^2$. Ta nhận thấy $x^5 = x^2 \cdot x^3$.
+    \item Hãy so sánh: Đạo hàm của tích $(x^2 \cdot x^3)' = (x^5)' = 5x^4$ với tích của hai đạo hàm $(x^2)' \cdot (x^3)' = 2x \cdot 3x^2 = 6x^3$. Hai kết quả này có bằng nhau không?
+    \item Đạo hàm của một tích có bằng tích các đạo hàm không? Quy tắc nào điều khiển đạo hàm của tích và thương?
+\end{enumerate}
+
+\paragraph{c) Sản phẩm:} Học sinh phát hiện: $5x^4 \neq 6x^3$, do đó \textbf{đạo hàm của một tích KHÔNG bằng tích các đạo hàm}! Phải có một quy tắc tính khác.
+
+\paragraph{d) Tổ chức thực hiện:} Giáo viên nêu câu hỏi $\implies$ Cả lớp nhận ra mâu thuẫn $\implies$ Giáo viên dẫn dắt vào bài mới: Các quy tắc đạo hàm của Tổng, Hiệu, Tích, Thương.
+
+\subsection*{2. Hoạt động 2: Hình thành kiến thức - Các quy tắc Tổng, Hiệu, Tích, Thương (18 phút)}
+
+\paragraph{a) Mục tiêu:} Nắm vững định lý về đạo hàm của tổng, hiệu, tích, thương; ghi nhớ chính xác các hệ quả và công thức tính nhanh; nắm vững giàn giáo sư phạm để không bị mắc bẫy sai dấu.
+
+\paragraph{b) Nội dung:} Giáo viên xây dựng hệ thống định lý và công thức:
+
+\begin{pedabox}{1. Định lý Đạo hàm của Tổng, Hiệu, Tích, Thương}
+Giả sử $u = u(x)$ và $v = v(x)$ là các hàm số có đạo hàm tại điểm $x$ thuộc khoảng xác định.
+\begin{enumerate}[leftmargin=0.6cm]
+    \item \textbf{Đạo hàm của tổng và hiệu:}
+    \begin{equation}
+        (u + v)' = u' + v' \qquad \text{và} \qquad (u - v)' = u' - v'
+    \end{equation}
+    (Đạo hàm của tổng/hiệu bằng tổng/hiệu các đạo hàm).
+    \item \textbf{Đạo hàm của tích:}
+    \begin{equation}
+        (u \cdot v)' = u'v + uv'
+    \end{equation}
+    \textbf{Hệ quả 1 (Đưa hằng số ra ngoài dấu đạo hàm):} Với mọi hằng số $k \in \mathbb{R}$:
+    \begin{equation}
+        (k \cdot u)' = k \cdot u'
+    \end{equation}
+    \item \textbf{Đạo hàm của thương (với $v(x) \neq 0$):}
+    \begin{equation}
+        \left( \dfrac{u}{v} \right)' = \dfrac{u'v - uv'}{v^2}
+    \end{equation}
+    \textbf{Hệ quả 2 (Đạo hàm của phân thức nghịch đảo):}
+    \begin{equation}
+        \left( \dfrac{1}{v} \right)' = -\dfrac{v'}{v^2} \quad (v(x) \neq 0)
+    \end{equation}
+\end{enumerate}
+\end{pedabox}
+
+\begin{scaffoldbox}{Giàn giáo sư phạm: Bảng phân tích sai lầm kinh điển cho HS TB-Yếu}
+\begin{center}
+\small
+\begin{tabularx}{\linewidth}{|l|X|X|}
+\hline
+\textbf{Phép toán} & \textbf{Lỗi sai học sinh rất hay mắc} & \textbf{Công thức chuẩn tắc bắt buộc nhớ} \\ \hline
+\textbf{Tích $u \cdot v$} & Tự ý viết $(uv)' = u' \cdot v'$ & $(uv)' = u'v + uv'$ (Đạo hàm chéo rồi cộng lại). \\ \hline
+\textbf{Thương $\dfrac{u}{v}$} & Viết nhầm thành $\dfrac{u'v + uv'}{v^2}$ (sai dấu) hoặc quên bình phương mẫu: $\dfrac{u'v - uv'}{v}$. & $\left(\dfrac{u}{v}\right)' = \dfrac{u'v - uv'}{v^2}$ (\textbf{Dấu TRỪ ở tử, MẪU PHẢI BÌNH PHƯƠNG}). \\ \hline
+\textbf{Phân thức bậc nhất} & Đạo hàm từng thành phần ở tử và mẫu rời rạc. & Dùng công thức tính nhanh định thức: \\ 
+$y = \dfrac{ax + b}{cx + d}$ & & $y' = \dfrac{ad - bc}{(cx + d)^2}$ \\ \hline
+\end{tabularx}
+\end{center}
+\textit{Câu thần chú: ``Tích thì dấu CỘNG, Thương thì dấu TRỪ; Mẫu phải BÌNH PHƯƠNG''.}
+\end{scaffoldbox}
+
+\paragraph{c) Sản phẩm:} Các công thức định lý và công thức tính nhanh phân thức bậc nhất được ghi chép cẩn thận; học sinh thuộc lòng câu thần chú ghi nhớ.
+
+\paragraph{d) Tổ chức thực hiện:}
+\begin{itemize}[leftmargin=0.8cm]
+    \item \textbf{Chuyển giao nhiệm vụ:} Giáo viên giảng giải chứng minh trực quan công thức tích bằng diện tích hình chữ nhật biến thiên $\Delta(uv) = (\Delta u) v + u (\Delta v) + \Delta u \Delta v$, phát Phiếu học tập số 2.
+    \item \textbf{Thực hiện nhiệm vụ:} Học sinh ghi bài, thảo luận cặp đôi hoàn thành bảng giàn giáo.
+    \item \textbf{Báo cáo, thảo luận:} 1 học sinh đọc thuộc lòng công thức đạo hàm thương; 1 học sinh áp dụng công thức tính nhanh cho $y = \dfrac{2x + 1}{x - 3}$.
+    \item \textbf{Kết luận, nhận định:} Giáo viên nhấn mạnh công thức tính nhanh $y' = \dfrac{ad - bc}{(cx+d)^2}$ giúp tiết kiệm tới 80\% thời gian làm bài trắc nghiệm.
+\end{itemize}
+
+\subsection*{3. Hoạt động 3: Luyện tập Đạo hàm Tổng, Tích, Thương & Viết tiếp tuyến (17 phút)}
+
+\paragraph{a) Mục tiêu:} Vận dụng thành thạo các quy tắc tính đạo hàm; kết hợp đạo hàm để viết phương trình tiếp tuyến của đồ thị hàm số tại điểm cho trước.
+
+\paragraph{b) Nội dung:} Học sinh giải quyết các bài tập trên Phiếu học tập số 2:
+
+\begin{pedabox}{Bài tập luyện tập Tiết 2}
+\textbf{Bài 1 (Tính đạo hàm):}
+\begin{enumerate}[leftmargin=0.6cm]
+    \item[a)] $y = 3x^4 - 2x^3 + 5x - 7$.
+    \item[b)] $y = (x^2 + 1) \cdot \sin x$.
+    \item[c)] $y = \dfrac{2x - 3}{x + 1}$.
+    \item[d)] $y = \dfrac{x^2 - 3x + 2}{x - 1}$.
+\end{enumerate}
+
+\textbf{Bài 2 (Ứng dụng viết phương trình tiếp tuyến):}
+Cho hàm số $y = f(x) = \dfrac{2x - 1}{x + 1}$ có đồ thị $(C)$. Viết phương trình tiếp tuyến của đồ thị $(C)$ tại điểm $M_0$ có hoành độ $x_0 = 1$.
+\end{pedabox}
+
+\paragraph{c) Sản phẩm:} Lời giải chi tiết của học sinh:
+\begin{itemize}[leftmargin=0.8cm]
+    \item \textbf{Giải Bài 1:}
+    \begin{itemize}[leftmargin=0.4cm]
+        \item a) $y' = (3x^4)' - (2x^3)' + (5x)' - (7)' = 3(4x^3) - 2(3x^2) + 5(1) - 0 = 12x^3 - 6x^2 + 5$.
+        \item b) Đặt $u = x^2 + 1 \implies u' = 2x$; $v = \sin x \implies v' = \cos x$.
+        $$y' = u'v + uv' = 2x \sin x + (x^2 + 1)\cos x$$
+        \item c) Cách 1 (Quy tắc thương): $u = 2x - 3 \implies u' = 2$; $v = x + 1 \implies v' = 1$.
+        $$y' = \dfrac{u'v - uv'}{v^2} = \dfrac{2(x + 1) - (2x - 3) \cdot 1}{(x + 1)^2} = \dfrac{2x + 2 - 2x + 3}{(x + 1)^2} = \dfrac{5}{(x + 1)^2}$$
+        Cách 2 (Công thức tính nhanh): $a = 2, b = -3, c = 1, d = 1 \implies ad - bc = 2(1) - (-3)(1) = 5 \implies y' = \dfrac{5}{(x + 1)^2}$.
+        \item d) Nhận xét: $x^2 - 3x + 2 = (x - 1)(x - 2)$. Với $x \neq 1$, ta rút gọn: $y = x - 2 \implies y' = 1$.
+        (Nếu dùng quy tắc thương cũng ra kết quả $y' = \dfrac{(2x - 3)(x - 1) - (x^2 - 3x + 2)}{(x - 1)^2} = \dfrac{(x - 1)^2}{(x - 1)^2} = 1$).
+    \end{itemize}
+    \item \textbf{Giải Bài 2:}
+    \begin{itemize}[leftmargin=0.4cm]
+        \item Hoành độ tiếp điểm: $x_0 = 1 \implies y_0 = f(1) = \dfrac{2(1) - 1}{1 + 1} = \dfrac{1}{2}$. Vậy tiếp điểm là $M_0\left(1; \dfrac{1}{2}\right)$.
+        \item Đạo hàm: $f'(x) = \dfrac{5}{(x + 1)^2} \implies$ Hệ số góc tiếp tuyến: $k = f'(1) = \dfrac{5}{(1 + 1)^2} = \dfrac{5}{4}$.
+        \item Phương trình tiếp tuyến:
+        $$y - y_0 = k(x - x_0) \iff y - \dfrac{1}{2} = \dfrac{5}{4}(x - 1) \iff y = \dfrac{5}{4}x - \dfrac{5}{4} + \dfrac{1}{2} \iff y = \dfrac{5}{4}x - \dfrac{3}{4}$$
+    \end{itemize}
+\end{itemize}
+
+\paragraph{d) Tổ chức thực hiện:}
+\begin{itemize}[leftmargin=0.8cm]
+    \item \textbf{Chuyển giao nhiệm vụ:} Chia lớp thành 7 nhóm (mỗi nhóm 5 học sinh), giao Bài 1 cho các nhóm, Bài 2 là thử thách nhóm điểm 10.
+    \item \textbf{Thực hiện nhiệm vụ:} Học sinh làm việc nhóm trong 10 phút. Giáo viên quan sát, hướng dẫn các nhóm trình bày sạch đẹp 3 bước lập phương trình tiếp tuyến.
+    \item \textbf{Báo cáo, thảo luận:} Nhóm 2 lên trình bày Bài 1b, 1c; Nhóm 4 lên bảng giải Bài 2. Cả lớp nhận xét, kiểm tra lại bằng MTCT.
+    \item \textbf{Kết luận, nhận định:} Giáo viên chuẩn hóa lời giải, lưu ý học sinh khi tính đạo hàm của phân thức hãy quan sát xem có rút gọn được không trước khi bấm máy.
+\end{itemize}
+
+\subsection*{4. Hoạt động 4: Vận dụng (5 phút)}
+
+\paragraph{a) Mục tiêu:} Vận dụng đạo hàm của tích và hàm mũ trong bài toán dao động tắt dần của kỹ thuật cơ điện tử.
+
+\paragraph{b) Nội dung:} Một mạch dao động RLC tắt dần có điện tích biến thiên theo thời gian: $q(t) = 0{,}01 \cdot e^{-2t} \cdot \cos(10t)\text{ (C)}$. Cường độ dòng điện tức thời trong mạch là $i(t) = q'(t)$. Học sinh nêu quy tắc tính đạo hàm biểu thức này.
+
+\paragraph{c) Sản phẩm:} Đây là đạo hàm của tích 2 hàm $u(t) = e^{-2t}$ và $v(t) = \cos(10t)$, trong đó cả $u$ và $v$ đều là các hàm hợp. Dẫn dắt sang Tiết 3: Đạo hàm của hàm hợp.
+
+\paragraph{d) Tổ chức thực hiện:} Giáo viên nêu bài toán $\implies$ Học sinh nhận diện cấu trúc hàm hợp $\implies$ Giáo viên kết luận chuyển tiết.
+
+\newpage
+
+\begin{center}
+    \textbf{\large TIẾT 3 (TIẾT 96 THEO PPCT | TUẦN 34)}\\[4pt]
+    \textit{(Nội dung: Đạo hàm của hàm hợp -- Phản biện AI \& Bài toán tối ưu vỏ lon STEM)}
+\end{center}
+
+\subsection*{1. Hoạt động 1: Mở đầu (Khởi động - 5 phút)}
+
+\paragraph{a) Mục tiêu:} Tạo tình huống xuất phát từ việc tính đạo hàm của một biểu thức phức tạp dạng lũy thừa hoặc lượng giác có biểu thức con bên trong, dẫn dắt học sinh đến khái niệm hàm hợp.
+
+\paragraph{b) Nội dung:}
+\begin{enumerate}[leftmargin=0.6cm]
+    \item Tính đạo hàm của hàm số $y = (2x + 1)^2$ bằng cách khai triển hằng đẳng thức $y = 4x^2 + 4x + 1$.
+    \item Nếu tính theo công thức lũy thừa thông thường $(u^2)' = 2u$ thì ta được $2(2x + 1) = 4x + 2$. Nhưng đạo hàm từ khai triển là $(4x^2 + 4x + 1)' = 8x + 4$.
+    \item Nhận xét: $8x + 4 = 2 \cdot (4x + 2) = (2x + 1)' \cdot 2(2x + 1)$. Số $2$ nhân thêm đó từ đâu ra? Làm thế nào để tính $(2x + 1)^{100}$ mà không cần khai triển nhị thức Newton?
+\end{enumerate}
+
+\paragraph{c) Sản phẩm:} Học sinh phát hiện: Biểu thức $(2x + 1)$ có đạo hàm là $2$. Kết quả đúng bắt buộc phải \textbf{nhân thêm đạo hàm của biểu thức bên trong}: $(2x + 1)' = 2$.
+
+\paragraph{d) Tổ chức thực hiện:} Giáo viên trình chiếu ví dụ $\implies$ Học sinh phát hiện quy luật $\implies$ Giáo viên chính thức giới thiệu công thức Đạo hàm hàm hợp.
+
+\subsection*{2. Hoạt động 2: Hình thành kiến thức - Đạo hàm của Hàm hợp (18 phút)}
+
+\paragraph{a) Mục tiêu:} Nắm vững định nghĩa hàm hợp và công thức đạo hàm hàm hợp; thuộc lòng bảng ma trận đối chiếu giữa đạo hàm hàm cơ bản và hàm hợp; tích hợp năng lực AI thiết lập prompt đối chiếu (Mã 11.C3.1).
+
+\paragraph{b) Nội dung:} Giáo viên hướng dẫn lý thuyết và xây dựng bảng đối chiếu:
+
+\begin{pedabox}{1. Khái niệm và Định lý Đạo hàm của Hàm hợp}
+\textbf{Khái niệm:} Nếu hàm số $u = u(x)$ có đạo hàm tại $x$ là $u'_x$ và hàm số $y = f(u)$ có đạo hàm tại $u$ là $y'_u$ thì hàm hợp $y = f(u(x))$ có đạo hàm tại $x$ là:
+\begin{equation}
+    y'_x = y'_u \cdot u'_x \quad \text{hay} \quad \left[ f(u(x)) \right]' = f'(u) \cdot u'(x)
+\end{equation}
+\textit{Quy tắc vàng:} \textbf{``Đạo hàm hàm hợp bằng đạo hàm theo biến trung gian $u$ nhân với đạo hàm của $u$ theo $x$''}.
+\end{pedabox}
+
+\begin{pedabox}{2. Bảng Ma trận Đối chiếu Công thức Đạo hàm (Cơ bản vs Hàm hợp)}
+\begin{center}
+\small
+\begin{tabularx}{\linewidth}{|l|X|X|}
+\hline
+\textbf{Tên hàm số} & \textbf{Hàm số cơ bản theo biến $x$} & \textbf{Hàm số hợp theo biến $u = u(x)$} \\ \hline
+\textbf{Lũy thừa} & $(x^\alpha)' = \alpha x^{\alpha - 1}$ & $(u^\alpha)' = \alpha u^{\alpha - 1} \cdot \mathbf{u'}$ \\ \hline
+\textbf{Căn bậc hai} & $(\sqrt{x})' = \dfrac{1}{2\sqrt{x}}$ & $(\sqrt{u})' = \dfrac{\mathbf{u'}}{2\sqrt{u}}$ \\ \hline
+\textbf{Sin} & $(\sin x)' = \cos x$ & $(\sin u)' = \mathbf{u'} \cdot \cos u$ \\ \hline
+\textbf{Cosin} & $(\cos x)' = -\sin x$ & $(\cos u)' = -\mathbf{u'} \cdot \sin u$ \\ \hline
+\textbf{Tang} & $(\tan x)' = \dfrac{1}{\cos^2 x}$ & $(\tan u)' = \dfrac{\mathbf{u'}}{\cos^2 u}$ \\ \hline
+\textbf{Cotang} & $(\cot x)' = -\dfrac{1}{\sin^2 x}$ & $(\cot u)' = -\dfrac{\mathbf{u'}}{\sin^2 u}$ \\ \hline
+\textbf{Hàm số mũ} & $(e^x)' = e^x$ & $(e^u)' = \mathbf{u'} \cdot e^u$ \\ 
+& $(a^x)' = a^x \ln a$ & $(a^u)' = \mathbf{u'} \cdot a^u \ln a$ \\ \hline
+\textbf{Hàm Lôgarit} & $(\ln x)' = \dfrac{1}{x}$ & $(\ln u)' = \dfrac{\mathbf{u'}}{u}$ \\ 
+& $(\log_a x)' = \dfrac{1}{x \ln a}$ & $(\log_a u)' = \dfrac{\mathbf{u'}}{u \ln a}$ \\ \hline
+\end{tabularx}
+\end{center}
+\end{pedabox}
+
+\begin{scaffoldbox}{Giàn giáo sư phạm: Khắc phục lỗi kinh điển nhất của học sinh THPT}
+\textbf{LỖI SAI SỐ 1 TOÀN QUỐC:} Học sinh rất hay quên nhân thêm thừa số $u'$.
+\begin{itemize}[leftmargin=0.5cm]
+    \item \textit{Ví dụ 1:} $(\sin 3x)' = \cos 3x$ $\implies$ \textbf{SAI NGUY HIỂM!}
+    Lời giải đúng: $(\sin 3x)' = (3x)' \cdot \cos 3x = \mathbf{3\cos 3x}$.
+    \item \textit{Ví dụ 2:} $(e^{-x^2})' = e^{-x^2}$ $\implies$ \textbf{SAI!}
+    Lời giải đúng: $(e^{-x^2})' = (-x^2)' \cdot e^{-x^2} = \mathbf{-2x e^{-x^2}}$.
+    \item \textit{Ví dụ 3:} $(\sqrt{x^2 + 1})' = \dfrac{1}{2\sqrt{x^2 + 1}}$ $\implies$ \textbf{SAI!}
+    Lời giải đúng: $(\sqrt{x^2 + 1})' = \dfrac{(x^2 + 1)'}{2\sqrt{x^2 + 1}} = \dfrac{2x}{2\sqrt{x^2 + 1}} = \mathbf{\dfrac{x}{\sqrt{x^2 + 1}}}$.
+\end{itemize}
+\end{scaffoldbox}
+
+\paragraph{c) Sản phẩm:} Bảng đối chiếu ma trận công thức được học sinh ghi chép đầy đủ; học sinh chỉ ra được các lỗi sai thiếu nhân $u'$.
+
+\paragraph{d) Tổ chức thực hiện:}
+\begin{itemize}[leftmargin=0.8cm]
+    \item \textbf{Chuyển giao nhiệm vụ:} Giáo viên trình chiếu bảng đối chiếu song song, yêu cầu học sinh thảo luận cặp đôi: Chỉ ra sự giống và khác nhau giữa cột biến $x$ và cột biến $u$.
+    \item \textbf{Thực hiện nhiệm vụ:} Học sinh quan sát, rút ra quy luật: Mọi công thức hàm $u$ đều giống hệt hàm $x$, chỉ cần nhân thêm $u'$ ở cuối hoặc ở tử số.
+    \item \textbf{Báo cáo, thảo luận:} 1 học sinh phát biểu lại quy tắc; 1 học sinh lên bảng sửa lại 3 ví dụ sai trong hộp giàn giáo sư phạm.
+    \item \textbf{Kết luận, nhận định:} Giáo viên nhấn mạnh: Luôn xác định hàm ngoài (hàm mẹ $f$) và hàm trong (hàm con $u$) trước khi đặt bút tính đạo hàm.
+\end{itemize}
+
+\subsection*{3. Hoạt động 3: Luyện tập, Vận dụng STEM & Tích hợp Năng lực AI (17 phút)}
+
+\paragraph{a) Mục tiêu:} Vận dụng thành thạo đạo hàm hàm hợp; thực hành kỹ thuật Prompt AI phân tích lỗi đạo hàm (Mã 11.C3.1); giải quyết bài toán STEM tối ưu hóa chi phí sản xuất vỏ lon nước ngọt.
+
+\paragraph{b) Nội dung:}
+
+\begin{aibox}{Tích hợp Năng lực AI (Mã 11.C3.1): Prompt Engineering & Phản biện Lỗi sai AI}
+\textbf{Tình huống học tập:} Học sinh sử dụng điện thoại thông minh đặt câu lệnh sau cho AI:
+\begin{quote}
+    \small
+    \texttt{``Bạn hãy đóng vai trò gia sư Toán 11, tính đạo hàm của hàm số $y = \cos^3(2x)$ và giải thích chi tiết từng bước áp dụng công thức hàm hợp.''}
+\end{quote}
+\textbf{Yêu cầu đối với học sinh:}
+\begin{enumerate}[leftmargin=0.6cm]
+    \item Quan sát lời giải của AI: Nhận diện xem AI có nhận ra đây là một hàm hợp lồng nhau 3 tầng hay không:
+    Tầng 1 (Lũy thừa): $u^3$ $\implies$ Tầng 2 (Lượng giác): $\cos v$ $\implies$ Tầng 3 (Bậc nhất): $v = 2x$.
+    \item Kiểm tra xem AI có nhân đủ các đạo hàm trung gian không:
+    $$y' = 3\cos^2(2x) \cdot (\cos 2x)' = 3\cos^2(2x) \cdot \left[ -(2x)' \sin(2x) \right] = -6\cos^2(2x)\sin(2x)$$
+    \item Nếu AI bỏ sót bước nhân $(2x)' = 2$, hãy viết câu lệnh phản biện (prompting) chuẩn mực để chỉnh sửa AI.
+\end{enumerate}
+\end{aibox}
+
+\begin{stembox}{Chủ đề STEM: Tối ưu hóa vỏ lon nước ngọt hình trụ $330\text{ ml}$}
+\textbf{Bài toán Kỹ thuật -- Kinh tế:} Một công ty sản xuất đồ uống cần thiết kế vỏ lon nhôm hình trụ có dung tích chuẩn $V = 330\text{ ml} = 330\text{ cm}^3$.
+\begin{itemize}[leftmargin=0.5cm]
+    \item Thể tích khối trụ: $V = \pi R^2 h = 330 \implies h = \dfrac{330}{\pi R^2}$ ($R > 0$ là bán kính đáy, $h$ là chiều cao).
+    \item Diện tích toàn phần (lượng nhôm cần sử dụng):
+    $$S_{\text{tp}}(R) = 2\pi R^2 + 2\pi R h = 2\pi R^2 + 2\pi R \cdot \dfrac{330}{\pi R^2} = 2\pi R^2 + \dfrac{660}{R}$$
+\end{itemize}
+\textbf{Nhiệm vụ của học sinh:}
+\begin{enumerate}[leftmargin=0.6cm]
+    \item Tính đạo hàm $S'_{\text{tp}}(R)$ theo biến $R$.
+    \item Giải phương trình $S'_{\text{tp}}(R) = 0$ để tìm bán kính đáy $R$ giúp lượng nhôm tiêu tốn ít nhất.
+    \item Tính chiều cao $h$ tương ứng và so sánh tỉ lệ $h / (2R)$ (chiều cao trên đường kính đáy) với kích thước thực tế của lon nước ngọt trên thị trường.
+\end{enumerate}
+\end{stembox}
+
+\paragraph{c) Sản phẩm:} Lời giải chi tiết của học sinh:
+\begin{itemize}[leftmargin=0.8cm]
+    \item \textbf{Hoạt động AI:} Học sinh giải thích đúng cấu trúc 3 tầng: $(u^3)' = 3u^2 \cdot u'$, $(\cos 2x)' = -2\sin 2x \implies y' = -6\cos^2(2x)\sin 2x$. Phản biện thành công nếu AI bỏ quên số 2.
+    \item \textbf{Dự án STEM:}
+    \begin{itemize}[leftmargin=0.4cm]
+        \item Đạo hàm: $S'_{\text{tp}}(R) = (2\pi R^2)' + \left(\dfrac{660}{R}\right)' = 4\pi R - \dfrac{660}{R^2}$.
+        \item Cho $S'_{\text{tp}}(R) = 0 \iff 4\pi R = \dfrac{660}{R^2} \iff R^3 = \dfrac{660}{4\pi} = \dfrac{165}{\pi} \approx 52{,}52$.
+        \item Bán kính tối ưu: $R = \sqrt[3]{\dfrac{165}{\pi}} \approx 3{,}745\text{ cm} \approx 3{,}75\text{ cm}$.
+        \item Chiều cao tối ưu: $h = \dfrac{330}{\pi R^2} = \dfrac{330}{\pi \cdot (3{,}745)^2} \approx 7{,}49\text{ cm}$.
+        \item Nhận xét quan trọng: Ta có $2R \approx 2 \times 3{,}745 = 7{,}49\text{ cm} \implies h = 2R$!
+        \item \textit{Ý nghĩa kỹ thuật:} Để tiết kiệm vật liệu nhôm nhất, chiều cao của lon phải đúng bằng đường kính đáy ($h = 2R$). Tuy nhiên, trên thực tế lon nước ngọt thường thon dài hơn ($h \approx 11{,}5\text{ cm}, 2R \approx 6\text{ cm}$) để người tiêu dùng dễ cầm nắm trên tay và tối ưu hóa diện tích xếp trên giá hàng siêu thị. Đây là sự dung hòa tuyệt vời giữa Toán học tối ưu và Trải nghiệm người dùng (UX).
+    \end{itemize}
+\end{itemize}
+
+\paragraph{d) Tổ chức thực hiện:}
+\begin{itemize}[leftmargin=0.8cm]
+    \item \textbf{Chuyển giao nhiệm vụ:} Giáo viên chia lớp thành 7 nhóm, phát Phiếu học tập số 3, cho học sinh dùng thước kẹp đo lon nước ngọt mẫu và giải bài toán tối ưu STEM.
+    \item \textbf{Thực hiện nhiệm vụ:} Các nhóm tính đạo hàm $S'(R)$, bấm căn bậc ba trên Casio, trao đổi sôi nổi về kết quả $h = 2R$.
+    \item \textbf{Báo cáo, thảo luận:} Nhóm 5 đại diện báo cáo kết quả bài toán STEM; Nhóm 3 đọc câu prompt phản biện AI.
+    \item \textbf{Kết luận, nhận định:} Giáo viên chốt lại vẻ đẹp của đạo hàm trong việc giải quyết bài toán tối ưu hóa chi phí sản xuất hàng tỷ vỏ lon mỗi năm trên thế giới.
+\end{itemize}
+
+\subsection*{4. Hoạt động 4: Vận dụng & Đánh giá (5 phút)}
+
+\paragraph{a) Mục tiêu:} Hệ thống hóa toàn bộ các quy tắc tính đạo hàm; dặn dò chuẩn bị cho bài học tiếp theo: **Bài 33. Đạo hàm cấp hai**.
+
+\paragraph{b) Nội dung:}
+\begin{itemize}[leftmargin=0.6cm]
+    \item Trình chiếu sơ đồ tư duy tóm tắt Chương đạo hàm (Quy tắc sơ cấp $\implies$ Tổng, hiệu, tích, thương $\implies$ Hàm hợp).
+    \item Giao bài tập về nhà: Hoàn thành các bài tập trong SGK và phiếu bài tập rèn luyện.
+    \item Hướng dẫn chuẩn bị bài mới: Tìm hiểu bài toán xác định gia tốc của chuyển động khi đã biết đồ thị vận tốc $\implies$ Khái niệm Đạo hàm cấp hai.
+\end{itemize}
+
+\paragraph{c) Sản phẩm:} Sơ đồ tư duy toàn bộ quy tắc tính đạo hàm trong vở học sinh.
+
+\paragraph{d) Tổ chức thực hiện:} Giáo viên tổng kết $\implies$ Học sinh ghi nhiệm vụ $\implies$ Thu phiếu học tập số 3.
+
+\section*{IV. PHỤ LỤC HỌC LIỆU BỔ TRỢ}
+
+\subsection*{1. Phiếu học tập số 1 (Tiết 1): Đạo hàm các Hàm số Sơ cấp Cơ bản}
+
+\begin{pedabox}{PHIẾU HỌC TẬP SỐ 1 (TIẾT 1)}
+\textbf{Họ và tên học sinh:} \dotfill \textbf{Lớp:} 11A\dots \quad \textbf{Nhóm:} \dots
+\begin{enumerate}[leftmargin=0.6cm]
+    \item \textbf{Hoàn thành bảng công thức đạo hàm cơ bản:}
+    \begin{itemize}
+        \item $(x^n)' = $ \dotfill \quad $(\sqrt{x})' = $ \dotfill
+        \item $(\sin x)' = $ \dotfill \quad $(\cos x)' = $ \dotfill
+        \item $(\tan x)' = $ \dotfill \quad $(\cot x)' = $ \dotfill
+        \item $(e^x)' = $ \dotfill \quad $(a^x)' = $ \dotfill
+        \item $(\ln x)' = $ \dotfill \quad $(\log_a x)' = $ \dotfill
+    \end{itemize}
+
+    \item \textbf{Bài tập trắc nghiệm nhanh (Kiểm tra lại bằng MTCT Casio):}
+    \begin{itemize}
+        \item Đạo hàm của hàm số $y = \cos x$ tại $x = \dfrac{\pi}{6}$ là: \dotfill
+        \item Đạo hàm của hàm số $y = 2^x$ tại $x = 1$ là: \dotfill
+        \item Đạo hàm của hàm số $y = \ln x$ tại $x = 2$ là: \dotfill
+    \end{itemize}
+\end{enumerate}
+\end{pedabox}
+
+\subsection*{2. Phiếu học tập số 2 (Tiết 2): Đạo hàm Tổng, Hiệu, Tích, Thương}
+
+\begin{pedabox}{PHIẾU HỌC TẬP SỐ 2 (TIẾT 2)}
+\textbf{Bài 1: Tính đạo hàm của các hàm số sau:}
+\begin{enumerate}[leftmargin=0.6cm]
+    \item $y = 4x^5 - \sqrt{x} + \dfrac{3}{x}$ \dotfill
+    \item $y = (2x - 1) \cdot e^x$ \dotfill
+    \item $y = \dfrac{3x - 2}{2x + 1}$ (áp dụng công thức tính nhanh) \dotfill
+    \item $y = \dfrac{\sin x}{x}$ \dotfill
+\end{enumerate}
+
+\textbf{Bài 2: Viết phương trình tiếp tuyến của đồ thị hàm số $y = \dfrac{x + 2}{x - 1}$ tại điểm có hoành độ $x_0 = 2$:}
+\begin{itemize}
+    \item Bước 1: Tiếp điểm $M_0(2; y_0) \implies y_0 = $ \dotfill
+    \item Bước 2: Hệ số góc $k = y'(2) = $ \dotfill
+    \item Bước 3: Phương trình tiếp tuyến là: \dotfill
+\end{itemize}
+\end{pedabox}
+
+\subsection*{3. Phiếu học tập số 3 (Tiết 3): Đạo hàm Hàm hợp, Phân tích AI & Dự án STEM}
+
+\begin{pedabox}{PHIẾU HỌC TẬP SỐ 3 (TIẾT 3)}
+\textbf{Phần 1: Bài tập đạo hàm hàm hợp:}
+\begin{enumerate}[leftmargin=0.6cm]
+    \item $y = (3x^2 - 2x + 1)^5 \implies y' = $ \dotfill
+    \item $y = \sqrt{4x^2 + 1} \implies y' = $ \dotfill
+    \item $y = \sin(3x - 1) \implies y' = $ \dotfill
+    \item $y = e^{-5x} \implies y' = $ \dotfill
+\end{enumerate}
+
+\textbf{Phần 2: Phản biện AI (Mã 11.C3.1):}
+Ghi lại câu lệnh Prompt em đã gửi cho AI và nhận xét về lời giải AI cung cấp: \dotfill
+\dotfill
+
+\textbf{Phần 3: Kết quả Dự án STEM Vỏ lon nước ngọt $330\text{ ml}$:}
+\begin{itemize}
+    \item Đạo hàm hàm diện tích toàn phần: $S'_{\text{tp}}(R) = $ \dotfill
+    \item Bán kính tối ưu: $R = $ \dotfill cm. Chiều cao tối ưu: $h = $ \dotfill cm.
+    \item So sánh với kích thước thực tế của lon nước ngọt trên thị trường: \dotfill
+\end{itemize}
+\end{pedabox}
+
+\subsection*{4. Rubric đánh giá năng lực học sinh trong bài học (4 mức độ)}
+
+\begin{center}
+\small
+\begin{tabularx}{\linewidth}{|p{3.2cm}|X|X|X|X|}
+\hline
+\textbf{Tiêu chí đánh giá} & \textbf{Mức 1: Chưa đạt} & \textbf{Mức 2: Đạt} & \textbf{Mức 3: Khá} & \textbf{Mức 4: Tốt} \\ \hline
+\textbf{1. Đạo hàm hàm sơ cấp cơ bản} & Chưa thuộc bảng công thức; nhầm dấu ở đạo hàm lượng giác. & Thuộc công thức cơ bản nhưng vận dụng còn chậm, đôi khi nhầm số mũ. & Vận dụng chính xác bảng công thức; sử dụng thành thạo MTCT Casio để kiểm tra. & Làm chủ toàn bộ công thức, tính nhẩm nhanh và giải thích được nguồn gốc công thức. \\ \hline
+\textbf{2. Quy tắc Tổng, Hiệu, Tích, Thương} & Áp dụng sai quy tắc tích và thương (nhầm $(uv)' = u'v'$). & Tính đúng tổng, hiệu; áp dụng được tích và thương nhưng tính toán còn sai dấu. & Vận dụng thành thạo quy tắc tích, thương; viết đúng phương trình tiếp tuyến. & Vận dụng nhuần nhuyễn các quy tắc; áp dụng thành thạo công thức tính nhanh phân thức bậc nhất. \\ \hline
+\textbf{3. Đạo hàm của Hàm hợp} & Bỏ quên thừa số $u'$ khi tính đạo hàm hàm hợp. & Nhận biết hàm hợp nhưng xác định sai hàm trung gian $u(x)$. & Tính chính xác đạo hàm hàm hợp 2 tầng; chỉ ra được lỗi sai thiếu $u'$. & Phân tích thành thạo hàm hợp nhiều tầng; thiết lập prompt phản biện sắc sảo lỗi sai của AI (11.C3.1). \\ \hline
+\textbf{4. Dự án STEM Tối ưu hóa vỏ lon} & Không thiết lập được hàm diện tích toàn phần theo bán kính $R$. & Thiết lập được hàm diện tích nhưng chưa tính được đạo hàm $S'(R)$. & Tính đúng đạo hàm $S'(R)$, tìm được bán kính $R$ và chiều cao $h$ tối ưu. & Phân tích sâu sắc ý nghĩa kinh tế -- kỹ thuật của tỉ lệ $h = 2R$; giải thích được sự khác biệt với thực tế. \\ \hline
+\end{tabularx}
+\end{center}
+
+\end{document}
