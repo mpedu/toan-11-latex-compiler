@@ -1,0 +1,467 @@
+\documentclass[12pt, a4paper]{article}
+% --- 1. Cấu hình Tiếng Việt và Font chữ chuẩn ---
+\usepackage[utf8]{inputenc}
+\usepackage[T5]{fontenc}
+\usepackage[vietnamese]{babel}
+\usepackage{mathptmx} % Font Times New Roman đồng bộ cả chữ và công thức toán, không gây xung đột gói
+
+\makeatletter
+\renewcommand{\normalsize}{\@setfontsize\normalsize{13pt}{16pt}}
+\makeatother
+\normalsize
+
+% --- 2. Gói Toán học & Ký hiệu bổ trợ ---
+\usepackage{amsmath, amssymb, amsfonts, mathrsfs, amsthm}
+\usepackage{graphicx}
+\usepackage{fontawesome}
+\usepackage{booktabs, tabularx, array, multirow}
+\usepackage{enumitem}
+
+% --- 3. Đồ họa TikZ, Bảng biến thiên & Hình không gian ---
+\usepackage{tikz}
+\usetikzlibrary{calc, intersections, angles, quotes, patterns, arrows.meta, 3d}
+\usepackage{pgfplots}
+\pgfplotsset{compat=1.18}
+\usepackage{tkz-euclide}
+\usepackage{tkz-tab}
+
+\renewcommand{\vec}[1]{\overrightarrow{#1}}
+
+% --- 4. Hộp sư phạm (Tcolorbox) ---
+\usepackage[many]{tcolorbox}
+\tcbuselibrary{skins, breakable}
+
+% --- 5. Căn lề chuẩn văn bản giáo án ---
+\usepackage{geometry}
+\geometry{
+    a4paper,
+    left=25mm,
+    right=15mm,
+    top=20mm,
+    bottom=20mm
+}
+
+% --- 6. Header / Footer chuẩn hóa ---
+\usepackage{fancyhdr}
+\usepackage{lastpage}
+\pagestyle{fancy}
+\fancyhf{}
+
+\fancyhead[L]{\small \textit{Kế hoạch bài dạy Toán 11}}
+\fancyhead[R]{\textbf{Trang \thepage/\pageref{LastPage}}}
+\fancyfoot[L]{\small \textit{Tổ Toán - Tin}}
+\fancyfoot[R]{\small \textit{Trường THCS\&THPT Hồng Vân}}
+\renewcommand{\headrulewidth}{0.4pt}
+\renewcommand{\footrulewidth}{0.4pt}
+
+% --- 7. Giãn dòng & Giãn đoạn theo chuẩn Nghị định 30/2020/NĐ-CP ---
+\usepackage{setspace}
+\setstretch{1.15}
+\setlength{\parindent}{1.0cm}
+\setlength{\parskip}{5pt}
+
+% Định nghĩa hộp sư phạm chuyên dụng
+\newtcolorbox{pedabox}[2][]{
+    enhanced,
+    breakable,
+    colback=blue!3!white,
+    colframe=blue!65!black,
+    fonttitle=\bfseries\small,
+    title={#2},
+    arc=2mm,
+    boxrule=0.6pt,
+    left=3mm, right=3mm, top=2mm, bottom=2mm,
+    #1
+}
+
+\newtcolorbox{aibox}[2][]{
+    enhanced,
+    breakable,
+    colback=teal!4!white,
+    colframe=teal!70!black,
+    fonttitle=\bfseries\small,
+    title={#2},
+    arc=2mm,
+    boxrule=0.6pt,
+    left=3mm, right=3mm, top=2mm, bottom=2mm,
+    #1
+}
+
+\newtcolorbox{scaffoldbox}[2][]{
+    enhanced,
+    breakable,
+    colback=orange!4!white,
+    colframe=orange!80!black,
+    fonttitle=\bfseries\small,
+    title={#2},
+    arc=2mm,
+    boxrule=0.6pt,
+    left=3mm, right=3mm, top=2mm, bottom=2mm,
+    #1
+}
+
+\newtcolorbox{stembox}[2][]{
+    enhanced,
+    breakable,
+    colback=purple!4!white,
+    colframe=purple!75!black,
+    fonttitle=\bfseries\small,
+    title={#2},
+    arc=2mm,
+    boxrule=0.6pt,
+    left=3mm, right=3mm, top=2mm, bottom=2mm,
+    #1
+}
+
+\begin{document}
+
+\begin{center}
+    {\fontsize{14pt}{17pt}\selectfont \textbf{KẾ HOẠCH BÀI DẠY MÔN TOÁN LỚP 11}}\\[6pt]
+    {\fontsize{16pt}{19pt}\selectfont \textbf{BÀI TẬP CUỐI CHƯƠNG VII. QUAN HỆ VUÔNG GÓC TRONG KHÔNG GIAN}}\\[4pt]
+    {\fontsize{12pt}{15pt}\selectfont \textbf{Môn học: Toán 11} \ \textbar \ \textbf{Thời lượng: 1 tiết (Tiết 79 theo PPCT | Tuần 29)}}
+\end{center}
+
+\vspace{5pt}
+
+\section*{I. MỤC TIÊU}
+
+\subsection*{1. Kiến thức, Năng lực}
+
+\begin{itemize}[leftmargin=1.2cm]
+    \item \textbf{Yêu cầu cần đạt (Nguyên văn CT GDPT 2018 Toán 11):}
+    \begin{itemize}[leftmargin=0.6cm]
+        \item Hệ thống hoá kiến thức cơ bản của Chương VII về Quan hệ vuông góc trong không gian: Hai đường thẳng vuông góc, đường thẳng vuông góc với mặt phẳng, hai mặt phẳng vuông góc, phép chiếu vuông góc.
+        \item Củng cố và vận dụng thành thạo các khái niệm đo lường trong không gian: Góc giữa hai đường thẳng, góc giữa đường thẳng và mặt phẳng, góc nhị diện; Khoảng cách (từ điểm đến đường thẳng, điểm đến mặt phẳng, khoảng cách giữa các đối tượng song song, khoảng cách giữa hai đường thẳng chéo nhau); Thể tích khối lăng trụ, khối chóp và khối chóp cụt đều.
+    \end{itemize}
+
+    \item \textbf{Năng lực Toán học đặc thù:}
+    \begin{itemize}[leftmargin=0.6cm]
+        \item \textit{Năng lực tư duy và lập luận toán học:} Khái quát hóa và xây dựng sơ đồ tư duy logic liên kết 4 mạch kiến thức trụ cột của chương VII: Vuông góc $\to$ Góc $\to$ Khoảng cách $\to$ Thể tích; phân tích được mối quan hệ biện chứng giữa bài toán chứng minh hình học thuần túy với các bài toán định lượng; đánh giá, phản biện tính đúng đắn và chặt chẽ của các bước chứng minh.
+        \item \textit{Năng lực mô hình hóa toán học:} Mô hình hóa cấu trúc kiến trúc thực tế (kết cấu mái nhà dốc, chân tháp, bể chứa nước công nghiệp) thành khối chóp có cạnh bên vuông góc với mặt phẳng đáy; chuyển hóa yêu cầu kỹ thuật thành bài toán tính góc dốc, khoảng cách an toàn và dung tích chứa.
+        \item \textit{Năng lực giải quyết vấn đề toán học:} Nắm vững phương pháp giải các bài toán tổng hợp cốt lõi của Chương VII:
+        \begin{enumerate}
+            \item Chứng minh hai mặt phẳng vuông góc bằng cách chứng minh mặt phẳng này chứa một đường thẳng vuông góc với mặt phẳng kia.
+            \item Xác định góc giữa đường thẳng và mặt phẳng thông qua hình chiếu vuông góc lên mặt phẳng.
+            \item Tính khoảng cách từ chân đường cao đến mặt phẳng bên bằng quy tắc 2 bước ($AK \perp BC, AH \perp SK$).
+            \item Tính thể tích khối chóp có cạnh bên vuông góc với đáy: $V = \dfrac{1}{3} B \cdot h = \dfrac{1}{3} S_{\text{đáy}} \cdot SA$.
+        \end{enumerate}
+        \item \textit{Năng lực giao tiếp toán học:} Trình bày lời giải hình học không gian chặt chẽ, đầy đủ căn cứ định lý; sử dụng thành thạo và chuẩn xác các ký hiệu toán học: $\perp, \parallel, d(A, (P)), \widehat{(d, (P))}, V_{S.ABCD}$; vẽ hình biểu diễn trực quan, phân biệt rõ nét thấy (nét liền) và nét khuất (nét đứt).
+        \item \textit{Năng lực sử dụng công cụ, phương tiện học toán:} Sử dụng hiệu quả phần mềm GeoGebra 3D để mô phỏng hình học không gian, xoay các góc nhìn trực quan; sử dụng máy tính cầm tay giải nhanh các biểu thức căn thức và phân số.
+    \end{itemize}
+
+    \item \textbf{Năng lực số (Theo Thông tư 02/2025/TT-BGDĐT):}
+    \begin{itemize}[leftmargin=0.6cm]
+        \item \textit{Mã 2.6NC1b (Tương tác và nộp bài tập trên nền tảng học tập trực tuyến):} Học sinh chụp ảnh bài làm tổng hợp, chuyển đổi thành tệp số (PDF/ảnh) và tải nộp bài qua nhóm học tập trực tuyến (Google Classroom / LMS môn Toán trường THCS\&THPT Hồng Vân); thực hiện chấm chéo và nhận phản hồi trực tuyến từ giáo viên.
+    \end{itemize}
+
+    \item \textbf{Năng lực AI (Theo Quyết định 2422/QĐ-BGDĐT):}
+    \begin{itemize}[leftmargin=0.6cm]
+        \item \textit{Mã 11.A1.2 (Tư duy phản biện và thẩm định kết quả từ mô hình AI):} Học sinh phân tích lời giải bài toán khoảng cách và thể tích do Trí tuệ nhân tạo (Generative AI) tự động tạo ra; phát hiện các lỗi ngộ nhận phổ biến của AI (như việc AI tự ý thừa nhận hai đường thẳng vuông góc hoặc nhầm lẫn hình chiếu vuông góc khi chưa có bước chứng minh định lý); rèn luyện tư duy phản biện độc lập, không phụ thuộc thụ động vào công nghệ.
+    \end{itemize}
+
+    \item \textbf{Năng lực chung:}
+    \begin{itemize}[leftmargin=0.6cm]
+        \item \textit{Tự chủ và tự học:} Tự hệ thống hóa kiến thức toàn bộ chương VII bằng sơ đồ tư duy cá nhân; chủ động rà soát các phần kiến thức còn yếu để chuẩn bị cho bài kiểm tra giữa kỳ II.
+        \item \textit{Giao tiếp và hợp tác:} Thảo luận sôi nổi trong nhóm học tập, chia sẻ các phương pháp giải tối ưu, hỗ trợ bạn học trung bình - yếu nhận diện chân đường cao của hình chóp.
+    \end{itemize}
+\end{itemize}
+
+\subsection*{2. Phẩm chất}
+
+\begin{itemize}[leftmargin=1.2cm]
+    \item \textbf{Chăm chỉ:} Chăm chỉ ôn tập, hoàn thành đầy đủ hệ thống bài tập tổng hợp trên lớp và phiếu học tập.
+    \item \textbf{Trung thực:} Tự lực làm bài, trung thực chỉ ra điểm mạnh, điểm yếu của bản thân khi đối chiếu với đáp án và lời giải phản biện AI.
+    \item \textbf{Trách nhiệm:} Nghiêm túc tuân thủ thời hạn nộp bài trực tuyến; có tinh thần trách nhiệm xây dựng bài học tập thể.
+\end{itemize}
+
+\section*{II. THIẾT BỊ DẠY HỌC VÀ HỌC LIỆU}
+
+\begin{itemize}[leftmargin=1.2cm]
+    \item \textbf{Giáo viên:}
+    \begin{itemize}[leftmargin=0.6cm]
+        \item Kế hoạch bài dạy chi tiết 1 tiết theo chuẩn Công văn 5512/BGDĐT-GDTrH.
+        \item Slide bài giảng điện tử tổng hợp sơ đồ tư duy toàn bộ Chương VII (Quan hệ vuông góc trong không gian).
+        \item Máy chiếu, mô hình 3D động trên GeoGebra trực quan hóa bài toán hình chóp $S.ABCD$ có $SA \perp (ABCD)$.
+        \item Bài tập phản biện AI được chuẩn bị sẵn trên phiếu học tập (trích xuất một lời giải có lỗi ngụy biện logic của AI).
+        \item Hệ thống Phiếu học tập tổng hợp cuối chương và Bảng Rubric đánh giá.
+    \end{itemize}
+
+    \item \textbf{Học sinh:}
+    \begin{itemize}[leftmargin=0.6cm]
+        \item Sách giáo khoa, vở ghi bài, đồ dùng học tập (thước kẻ, bút chì, compa, ê-ke, máy tính cầm tay).
+        \item Sơ đồ tư duy tóm tắt Chương VII đã chuẩn bị trước ở nhà vào giấy A4.
+    \end{itemize}
+\end{itemize}
+
+\section*{III. TIẾN TRÌNH DẠY HỌC (1 TIẾT - 45 PHÚT)}
+
+\subsection*{1. Hoạt động 1: Mở đầu (Khởi động - 7 phút)}
+
+\begin{itemize}[leftmargin=1.2cm]
+    \item[a)] \textbf{Mục tiêu:}
+    \begin{itemize}[leftmargin=0.6cm]
+        \item Kích hoạt kiến thức tổng thể của Chương VII; tạo không khí học tập hào hứng qua trò chơi ghép nối các khái niệm then chốt.
+    \end{itemize}
+
+    \item[b)] \textbf{Nội dung (Trò chơi Mảnh ghép Hình học không gian):}
+    \begin{itemize}[leftmargin=0.6cm]
+        \item Giáo viên trình chiếu 4 mảnh ghép câu hỏi nối cột:
+        \begin{center}
+        \begin{tabular}{|l|l|}
+        \hline
+        \textbf{Cột A (Khái niệm / Định lý)} & \textbf{Cột B (Công thức / Dấu hiệu)} \\ \hline
+        1. Đường thẳng $d \perp (P)$ & a. $V = \dfrac{1}{3} B \cdot h$ \\ \hline
+        2. Góc giữa đường thẳng $d$ và $(P)$ & b. Kẻ $OH \perp (P) \implies d(O, (P)) = OH$ \\ \hline
+        3. Khoảng cách từ điểm $O$ đến $(P)$ & c. $d \perp a$ và $d \perp b$ ($a, b \subset (P), a \cap b$) \\ \hline
+        4. Thể tích khối chóp & d. Góc giữa $d$ và hình chiếu $d'$ của $d$ lên $(P)$ \\ \hline
+        \end{tabular}
+        \end{center}
+    \end{itemize}
+
+    \item[c)] \textbf{Sản phẩm:} Học sinh ghép nối chính xác: $1 - c, 2 - d, 3 - b, 4 - a$.
+    \item[d)] \textbf{Tổ chức thực hiện:} GV gọi ngẫu nhiên học sinh trả lời nhanh trong 2 phút; tuyên dương và chuyển sang phần tổng kết hệ thống.
+\end{itemize}
+
+\subsection*{2. Hoạt động 2: Ôn tập và củng cố kiến thức (10 phút)}
+
+\begin{itemize}[leftmargin=1.2cm]
+    \item[a)] \textbf{Mục tiêu:}
+    \begin{itemize}[leftmargin=0.6cm]
+        \item Hệ thống hóa 4 trụ cột kiến thức của Chương VII thành một sơ đồ tư duy logic, mạch lạc.
+        \item Khắc sâu phương pháp sư phạm cho học sinh trung bình - yếu về mô hình hình chóp có cạnh bên vuông góc với mặt phẳng đáy.
+    \end{itemize}
+
+    \item[b)] \textbf{Nội dung (Bốn trụ cột kiến thức Chương VII):}
+    \begin{itemize}[leftmargin=0.6cm]
+        \item \textbf{Trụ cột 1: Quan hệ vuông góc}
+        \begin{itemize}
+            \item $d \perp (P) \iff d$ vuông góc với hai đường thẳng cắt nhau nằm trong $(P)$.
+            \item $(P) \perp (Q) \iff (P)$ chứa một đường thẳng vuông góc với $(Q)$.
+            \item Định lý ba đường vuông góc và tính chất hình chiếu.
+        \end{itemize}
+
+        \item \textbf{Trụ cột 2: Góc trong không gian}
+        \begin{itemize}
+            \item Góc giữa hai đường thẳng: $\alpha \in [0^\circ; 90^\circ]$.
+            \item Góc giữa đường thẳng và mặt phẳng: Góc nhọn giữa đường thẳng và hình chiếu vuông góc của nó lên mặt phẳng: $\varphi \in [0^\circ; 90^\circ]$.
+            \item Góc phẳng nhị diện: Góc giữa hai tia lần lượt thuộc hai nửa mặt phẳng và cùng vuông góc với cạnh nhị diện tại một điểm: $\beta \in [0^\circ; 180^\circ]$.
+        \end{itemize}
+
+        \item \textbf{Trụ cột 3: Khoảng cách trong không gian}
+        \begin{itemize}
+            \item Khoảng cách từ chân đường cao $A$ đến mặt phẳng bên: Quy tắc 2 bước kẻ đường vuông góc ($AK \perp BC, AH \perp SK \implies d(A, (SBC)) = AH$).
+            \item Phương pháp đổi điểm (đổi điểm song song và đổi điểm qua định lý Talet).
+            \item Khoảng cách giữa hai đường thẳng chéo nhau: Đoạn vuông góc chung hoặc chuyển về khoảng cách từ đường đến mặt phẳng song song.
+        \end{itemize}
+
+        \item \textbf{Trụ cột 4: Thể tích khối đa diện}
+        \begin{itemize}
+            \item Khối lăng trụ: $V = B \cdot h$.
+            \item Khối chóp: $V = \dfrac{1}{3} B \cdot h$ (nhớ có hệ số $\dfrac{1}{3}$).
+            \item Khối chóp cụt đều: $V = \dfrac{1}{3} h \left( B_1 + \sqrt{B_1 B_2} + B_2 \right)$.
+        \end{itemize}
+    \end{itemize}
+
+    \item[c)] \textbf{Sản phẩm:} Học sinh ghi nhớ sơ đồ tổng hợp và hoàn thiện vào vở ghi.
+    \item[d)] \textbf{Tổ chức thực hiện:} GV trình chiếu sơ đồ tư duy trên màn hình; nhấn mạnh các dạng toán thường xuất hiện trong đề kiểm tra giữa kỳ II.
+\end{itemize}
+
+\begin{scaffoldbox}{Giàn giáo sư phạm cho học sinh trung bình - yếu (Scaffolding)}
+    \textbf{Mô hình kinh điển "Chân đường vuông góc $SA \perp \text{đáy}$":}
+    \begin{itemize}[leftmargin=0.6cm]
+        \item Gặp đề bài cho $SA \perp (ABCD)$:
+        \begin{enumerate}
+            \item Điểm $A$ là gốc tọa độ (chân đường cao), chiều cao khối chóp luôn luôn là $h = SA$.
+            \item Muốn tính thể tích: Chỉ cần tính diện tích đáy $S_{ABCD}$ rồi ráp vào $V = \dfrac{1}{3} S_{ABCD} \cdot SA$.
+            \item Muốn tính góc giữa $SC$ và đáy: Hình chiếu của $S$ là $A$, hình chiếu của $C$ là $C \implies$ Góc là $\widehat{SCA}$.
+            \item Muốn tính khoảng cách từ $A$ đến mặt phẳng bên $(SBC)$ hoặc $(SCD)$: Dùng quy tắc 2 bước kẻ vuông góc!
+        \end{enumerate}
+    \end{itemize}
+\end{scaffoldbox}
+
+\subsection*{3. Hoạt động 3: Luyện tập giải bài toán tổng hợp & Phản biện AI (20 phút)}
+
+\begin{itemize}[leftmargin=1.2cm]
+    \item[a)] \textbf{Mục tiêu:}
+    \begin{itemize}[leftmargin=0.6cm]
+        \item Rèn luyện kĩ năng giải bài toán hình học không gian tổng hợp liên hoàn: Chứng minh mặt phẳng vuông góc $\to$ Xác định góc $\to$ Tính khoảng cách $\to$ Tính thể tích.
+        \item Thực hành phản biện lời giải toán do AI sinh ra (Năng lực AI - Mã 11.A1.2).
+    \end{itemize}
+
+    \item[b)] \textbf{Nội dung:}
+    \begin{quote}
+        \textbf{Bài toán tổng hợp:} Cho hình chóp $S.ABCD$ có đáy $ABCD$ là hình vuông cạnh $a$. Cạnh bên $SA$ vuông góc với mặt phẳng đáy $(ABCD)$ và $SA = a\sqrt{2}$. Gọi $O$ là giao điểm của $AC$ và $BD$.
+        \begin{enumerate}[leftmargin=0.6cm]
+            \item Chứng minh rằng mặt phẳng $(SBD)$ vuông góc với mặt phẳng $(SAC)$.
+            \item Xác định và tính tang của góc giữa đường thẳng $SC$ và mặt phẳng $(ABCD)$.
+            \item Tính khoảng cách từ điểm $A$ đến mặt phẳng $(SBD)$.
+            \item Tính thể tích của khối chóp $S.ABCD$.
+        \end{enumerate}
+    \end{quote}
+
+    \item[c)] \textbf{Sản phẩm (Lời giải chi tiết bài toán tổng hợp):}
+    \begin{itemize}[leftmargin=0.6cm]
+        \item \textit{Câu 1: Chứng minh $(SBD) \perp (SAC)$}
+        \begin{itemize}
+            \item Vì $ABCD$ là hình vuông nên hai đường chéo vuông góc: $BD \perp AC$.
+            \item Mặt khác, do $SA \perp (ABCD)$ và $BD \subset (ABCD)$ nên $BD \perp SA$.
+            \item Từ đó suy ra $BD \perp (SAC)$ (vì $BD$ vuông góc với hai đường thẳng cắt nhau $AC$ và $SA$ trong $(SAC)$).
+            \item Mà $BD \subset (SBD)$, do đó:
+            $$(SBD) \perp (SAC) \quad (\text{đpcm})$$
+        \end{itemize}
+
+        \item \textit{Câu 2: Góc giữa đường thẳng $SC$ và mặt phẳng $(ABCD)$}
+        \begin{itemize}
+            \item Ta có $SA \perp (ABCD)$ tại $A \implies$ Hình chiếu vuông góc của đỉnh $S$ lên $(ABCD)$ là điểm $A$.
+            \item Điểm $C \in (ABCD) \implies$ Hình chiếu của $C$ là chính nó.
+            \item Do đó, đoạn thẳng $AC$ là hình chiếu vuông góc của đường thẳng $SC$ lên mặt phẳng $(ABCD)$.
+            \item Suy ra góc giữa $SC$ và $(ABCD)$ chính là góc giữa $SC$ và $AC$:
+            $$\varphi = \widehat{(SC, (ABCD))} = \widehat{SCA}$$
+            \item Xét tam giác $SAC$ vuông tại $A$:
+            Đáy $ABCD$ là hình vuông cạnh $a \implies AC = \sqrt{AB^2 + BC^2} = a\sqrt{2}$.
+            Cạnh bên $SA = a\sqrt{2}$.
+            $$\tan \varphi = \tan \widehat{SCA} = \dfrac{SA}{AC} = \dfrac{a\sqrt{2}}{a\sqrt{2}} = 1 \implies \varphi = 45^\circ$$
+            Vậy tang của góc giữa $SC$ và đáy bằng $1$ (góc bằng $45^\circ$).
+        \end{itemize}
+
+        \item \textit{Câu 3: Khoảng cách từ điểm $A$ đến mặt phẳng $(SBD)$}
+        \begin{itemize}
+            \item Điểm $A$ là chân đường cao. Giao tuyến của $(SAC)$ và $(SBD)$ là đường thẳng $SO$ (với $O = AC \cap BD$).
+            \item Ở câu 1 ta đã chứng minh $BD \perp (SAC)$. Mà $BD \subset (SBD) \implies (SBD) \perp (SAC)$ theo giao tuyến $SO$.
+            \item Trong mặt phẳng $(SAC)$, từ $A$ kẻ đoạn thẳng $AH \perp SO$ tại $H$ ($H \in SO$).
+            \item Vì $(SAC) \perp (SBD)$ theo giao tuyến $SO$ và $AH \perp SO$ nên suy ra $AH \perp (SBD)$.
+            \item Do đó:
+            $$d(A, (SBD)) = AH$$
+            \item Xét tam giác $SAO$ vuông tại $A$, có đường cao $AH$:
+            Cạnh $SA = a\sqrt{2}$; đoạn $AO = \dfrac{AC}{2} = \dfrac{a\sqrt{2}}{2}$.
+            Áp dụng hệ thức lượng:
+            $$\dfrac{1}{AH^2} = \dfrac{1}{SA^2} + \dfrac{1}{AO^2} = \dfrac{1}{(a\sqrt{2})^2} + \dfrac{1}{\left(\dfrac{a\sqrt{2}}{2}\right)^2} = \dfrac{1}{2a^2} + \dfrac{2}{a^2} = \dfrac{5}{2a^2}$$
+            $$\implies AH^2 = \dfrac{2a^2}{5} \implies AH = \dfrac{a\sqrt{10}}{5}$$
+            Vậy khoảng cách từ $A$ đến $(SBD)$ là $\dfrac{a\sqrt{10}}{5}$.
+        \end{itemize}
+
+        \item \textit{Câu 4: Thể tích khối chóp $S.ABCD$}
+        \begin{itemize}
+            \item Diện tích đáy hình vuông $ABCD$:
+            $$S_{ABCD} = a^2$$
+            \item Chiều cao hình chóp là $h = SA = a\sqrt{2}$.
+            \item Thể tích khối chóp:
+            $$V_{S.ABCD} = \dfrac{1}{3} S_{ABCD} \cdot SA = \dfrac{1}{3} \cdot a^2 \cdot a\sqrt{2} = \dfrac{a^3\sqrt{2}}{3}$$
+        \end{itemize}
+    \end{itemize}
+
+    \item[d)] \textbf{Tổ chức thực hiện:}
+    \begin{itemize}[leftmargin=0.6cm]
+        \item GV cho HS làm việc nhóm trong 10 phút để giải 4 câu.
+        \item Mời đại diện các nhóm lên trình bày từng câu; giáo viên chốt đáp án chuẩn mực.
+    \end{itemize}
+\end{itemize}
+
+\begin{aibox}{Tích hợp Năng lực AI (Theo Quyết định 2422/QĐ-BGDĐT - Mã 11.A1.2)}
+    \textbf{Hoạt động Phản biện lời giải hình học không gian do AI sinh ra (AI Scrutiny):}
+    \begin{itemize}[leftmargin=0.6cm]
+        \item \textbf{Tình huống giả định:} Giáo viên chiếu một đoạn văn bản do một trợ lý AI giải câu 3:
+        \begin{quote}
+            \textit{"Lời giải của AI: Trong mặt phẳng $(SAB)$, từ $A$ kẻ đường thẳng $AK \perp SB$ tại $K$. Do đó khoảng cách từ $A$ đến mặt phẳng $(SBD)$ bằng độ dài đoạn thẳng $AK$. Áp dụng hệ thức lượng tam giác vuông $SAB$..."}
+        \end{quote}
+        \item \textbf{Nhiệm vụ cho học sinh:} Hãy chỉ ra điểm sai lầm nghiêm trọng trong suy luận của AI!
+        \item \textbf{Học sinh phản biện:}
+        \begin{itemize}
+            \item AI đã ngộ nhận rằng đoạn kẻ vuông góc vào cạnh bên $SB$ thì sẽ vuông góc với mặt phẳng $(SBD)$.
+            \item Thực tế, $AK \perp SB$ nhưng $AK$ hoàn toàn không vuông góc với mặt phẳng $(SBD)$ vì $BD$ không vuông góc với mặt phẳng $(SAB)$ (do góc $\widehat{BAD} = 90^\circ$).
+            \item Mặt phẳng đúng cần dựng ở đây phải là mặt phẳng chứa chân đường cao $A$ và vuông góc với giao tuyến đáy $BD$, đó chính là mặt phẳng chéo $(SAC)$ chứ không phải $(SAB)$!
+        \end{itemize}
+        \item \textbf{Kết luận sư phạm:} AI là công cụ hỗ trợ mạnh mẽ nhưng thường xuyên mắc lỗi ngộ nhận hình học (AI Hallucination). Học sinh cần có tư duy phản biện toán học vững vàng để kiểm chứng từng bước lập luận trước khi sử dụng kết quả từ AI.
+    \end{itemize}
+\end{aibox}
+
+\subsection*{4. Hoạt động 4: Vận dụng và Hướng dẫn học tập số (8 phút)}
+
+\begin{itemize}[leftmargin=1.2cm]
+    \item[a)] \textbf{Mục tiêu:}
+    \begin{itemize}[leftmargin=0.6cm]
+        \item Vận dụng kiến thức thể tích và góc dốc vào bài toán thực tiễn thiết kế mái nhà chống bão lũ tại vùng cao A Lưới.
+        \item Thực hiện nộp bài tập tổng hợp qua nền tảng số (Mã 2.6NC1b).
+    \end{itemize}
+
+    \item[b)] \textbf{Nội dung:}
+    \begin{stembox}{Bài toán thực tế: Thiết kế mái nhà hình chóp cụt thoát nước mưa chống bão}
+        Mái của một nhà sinh hoạt cộng đồng tại huyện A Lưới có dạng hình chóp tứ giác đều có đáy là hình vuông cạnh $10\text{ m}$, chiều cao của đỉnh mái so với sàn trần là $2{,}5\text{ m}$.
+        \begin{enumerate}[leftmargin=0.6cm]
+            \item Tính góc dốc của mặt mái nhà so với mặt phẳng ngang của trần nhà.
+            \item Tính thể tích khối không gian chứa bên trong mái nhà để thiết kế hệ thống cách nhiệt và thông gió tự nhiên.
+        \end{enumerate}
+    \end{stembox}
+
+    \item[c)] \textbf{Sản phẩm:}
+    \begin{itemize}[leftmargin=0.6cm]
+        \item Góc dốc của mái: Khoảng cách từ tâm đáy đến cạnh đáy là $d = 5\text{ m}$. Góc dốc $\alpha$ thỏa mãn $\tan \alpha = \dfrac{h}{d} = \dfrac{2{,}5}{5} = 0{,}5 \implies \alpha \approx 26{,}57^\circ$ (đạt tiêu chuẩn thoát nước nhanh trong mùa mưa bão).
+        \item Thể tích khối không gian mái: $V = \dfrac{1}{3} \cdot 10^2 \cdot 2{,}5 = \dfrac{250}{3} \approx 83{,}33\text{ m}^3$.
+    \end{itemize}
+
+    \item[d)] \textbf{Tổ chức thực hiện (Năng lực số - Mã 2.6NC1b):}
+    \begin{itemize}[leftmargin=0.6cm]
+        \item GV giao nhiệm vụ học sinh về nhà chụp ảnh bài giải chi tiết, nộp tệp PDF lên chuyên mục "Bài tập cuối chương VII" trên Google Classroom của lớp trước 20h00 ngày hôm sau.
+        \item Dặn dò: Chuẩn bị nội dung tiết sau: Ôn tập giữa kỳ II (Đại số - Giải tích và Hình học không gian).
+    \end{itemize}
+\end{pedabox}
+
+\section*{IV. PHỤ LỤC HỌC LIỆU BỔ TRỢ}
+
+\subsection*{1. Phiếu học tập số 1: Sơ đồ tư duy và Bài toán tổng hợp Chương VII}
+
+\begin{pedabox}{PHIẾU HỌC TẬP SỐ 1: BÀI TOÁN TỔNG HỢP CHƯƠNG VII}
+    \textbf{Họ và tên học sinh:} \dotfill \textbf{Lớp:} 11\dots \textbf{Nhóm:} \dots
+
+    \textbf{Nhiệm vụ 1: Hoàn thiện sơ đồ 4 nhánh kiến thức}
+    \begin{center}
+    \begin{tabular}{|l|l|}
+    \hline
+    \textbf{Trụ cột kiến thức} & \textbf{Công thức / Định lý then chốt cần nhớ} \\ \hline
+    1. ĐT vuông góc MP & $d \perp (P) \iff d \perp a \text{ và } d \perp b$ ($a, b \subset (P), a \cap b$) \\ \hline
+    2. Hai MP vuông góc & $(P) \perp (Q) \iff (P) \supset d \text{ mà } d \perp (Q)$ \\ \hline
+    3. Khoảng cách chân đường cao & Kẻ 2 bước: $AK \perp BC, AH \perp SK \implies \dfrac{1}{AH^2} = \dfrac{1}{SA^2} + \dfrac{1}{AK^2}$ \\ \hline
+    4. Thể tích khối chóp & $V = \dfrac{1}{3} B \cdot h$ (Luôn nhớ có hệ số $\dfrac{1}{3}$) \\ \hline
+    \end{tabular}
+    \end{center}
+
+    \textbf{Nhiệm vụ 2: Bài tập rèn luyện}
+    Cho hình chóp $S.ABC$ có $SA \perp (ABC)$, đáy $ABC$ là tam giác vuông tại $B$.
+    \begin{enumerate}
+        \item Mặt phẳng $(SAB)$ vuông góc với mặt phẳng nào? Vì sao? \dotfill
+        \item Góc giữa đường thẳng $SB$ và mặt phẳng $(ABC)$ là góc nào? \dotfill
+        \item Đoạn vuông góc hạ từ $A$ đến mặt phẳng $(SBC)$ là đoạn nào? \dotfill
+    \end{enumerate}
+\end{pedabox}
+
+\subsection*{2. Phiếu học tập số 2: Phản biện lời giải toán của Trí tuệ nhân tạo (AI)}
+
+\begin{pedabox}{PHIẾU HỌC TẬP SỐ 2: PHẢN BIỆN LỜI GIẢI AI}
+    \textbf{Họ và tên học sinh:} \dotfill \textbf{Lớp:} 11\dots
+
+    \textbf{Tình huống:} Một mô hình AI tạo sinh nhận được yêu cầu: \textit{"Tính khoảng cách từ điểm $A$ đến mặt phẳng $(SBC)$ của hình chóp $S.ABCD$ có đáy hình vuông cạnh $a$, $SA \perp (ABCD)$"}.
+    
+    \textbf{AI đưa ra câu trả lời:} \textit{"Vì $ABCD$ là hình vuông nên $AC \perp BD$. Từ đó ta suy ra $d(A, (SBC)) = \dfrac{a\sqrt{2}}{2}$."}
+
+    \textbf{Câu hỏi phản biện:}
+    \begin{enumerate}
+        \item Lời giải của AI đúng hay sai? \dotfill
+        \item Hãy chỉ rõ lỗi sai ngụy biện của AI: \dotfill
+        \item Trình bày lại lời giải đúng theo quy tắc 2 bước: \dotfill
+    \end{enumerate}
+\end{pedabox}
+
+\subsection*{3. Rubric đánh giá năng lực học sinh trong bài học (4 mức độ)}
+
+\begin{center}
+\begin{tabularx}{\textwidth}{|>{\bfseries}p{3cm}|X|X|X|X|}
+\hline
+\textbf{Tiêu chí} & \textbf{Mức 1: Chưa đạt} & \textbf{Mức 2: Đạt} & \textbf{Mức 3: Khá} & \textbf{Mức 4: Tốt} \\ \hline
+Hệ thống hóa kiến thức Chương VII & Sơ đồ kiến thức rời rạc, nhầm lẫn giữa định lý vuông góc và song song. & Liệt kê được các định lý nhưng chưa thấy được mối liên hệ giữa các trụ cột. & Hệ thống hóa đầy đủ, vẽ sơ đồ tư duy rõ ràng, đúng bản chất toán học. & Khái quát hóa xuất sắc, logic mạch lạc, liên kết sâu sắc giữa hình học và giải tích. \\ \hline
+Giải bài toán hình không gian tổng hợp & Chưa vẽ được hình biểu diễn đúng, không nhận diện được chân đường cao. & Chứng minh được mặt phẳng vuông góc nhưng lúng túng ở câu tính khoảng cách. & Giải đúng cả 4 câu của bài toán tổng hợp, tính đúng góc và thể tích. & Lập luận hoàn hảo, trình bày chặt chẽ, tìm được nhiều cách tiếp cận bài toán. \\ \hline
+Năng lực phản biện AI (Mã 11.A1.2) & Tin tưởng tuyệt đối vào lời giải của AI, không nhận ra lỗi sai. & Phát hiện AI giải sai kết quả nhưng chưa giải thích được lý do sai. & Chỉ rõ vị trí ngộ nhận logic của AI và sửa lại đúng các bước hình học. & Phản biện sâu sắc, phân tích nguyên nhân lỗi mô hình AI và đề xuất prompt chuẩn. \\ \hline
+Nộp bài trực tuyến (Mã 2.6NC1b) & Chưa nộp bài hoặc nộp trễ hạn, file mờ không đọc được. & Nộp bài đúng hạn nhưng tệp ảnh bị xoay ngược hoặc thiếu trang. & Chuyển đổi tệp PDF chuẩn, nộp bài đúng hạn trên Google Classroom. & Thao tác số thành thạo, bài nộp rõ đẹp, tích cực trao đổi chấm chéo bài của bạn. \\ \hline
+\end{tabularx}
+\end{center}
+
+\end{document}
