@@ -1,0 +1,657 @@
+\documentclass[12pt, a4paper]{article}
+% --- 1. Cấu hình Tiếng Việt và Font chữ chuẩn ---
+\usepackage[utf8]{inputenc}
+\usepackage[T5]{fontenc}
+\usepackage[vietnamese]{babel}
+\usepackage{mathptmx} % Font Times New Roman đồng bộ cả chữ và công thức toán, không gây xung đột gói
+
+\makeatletter
+\renewcommand{\normalsize}{\@setfontsize\normalsize{13pt}{16pt}}
+\makeatother
+\normalsize
+
+% --- 2. Gói Toán học & Ký hiệu bổ trợ ---
+\usepackage{amsmath, amssymb, amsfonts, mathrsfs, amsthm}
+\usepackage{graphicx}
+\usepackage{fontawesome}
+\usepackage{booktabs, tabularx, array, multirow}
+\usepackage{enumitem}
+
+% --- 3. Đồ họa TikZ, Bảng biến thiên & Hình không gian ---
+\usepackage{tikz}
+\usetikzlibrary{calc, intersections, angles, quotes, patterns, arrows.meta, 3d}
+\usepackage{pgfplots}
+\pgfplotsset{compat=1.18}
+\usepackage{tkz-euclide}
+\usepackage{tkz-tab}
+
+\renewcommand{\vec}[1]{\overrightarrow{#1}}
+
+% --- 4. Hộp sư phạm (Tcolorbox) ---
+\usepackage[many]{tcolorbox}
+\tcbuselibrary{skins, breakable}
+
+% --- 5. Căn lề chuẩn văn bản giáo án ---
+\usepackage{geometry}
+\geometry{
+    a4paper,
+    left=25mm,
+    right=15mm,
+    top=20mm,
+    bottom=20mm
+}
+
+% --- 6. Header / Footer chuẩn hóa ---
+\usepackage{fancyhdr}
+\usepackage{lastpage}
+\pagestyle{fancy}
+\fancyhf{}
+
+\fancyhead[L]{\small \textit{Kế hoạch bài dạy Toán 11}}
+\fancyhead[R]{\textbf{Trang \thepage/\pageref{LastPage}}}
+\fancyfoot[L]{\small \textit{Tổ Toán - Tin}}
+\fancyfoot[R]{\small \textit{Trường THCS\&THPT Hồng Vân}}
+\renewcommand{\headrulewidth}{0.4pt}
+\renewcommand{\footrulewidth}{0.4pt}
+
+% --- 7. Giãn dòng & Giãn đoạn theo chuẩn Nghị định 30/2020/NĐ-CP ---
+\usepackage{setspace}
+\setstretch{1.15}
+\setlength{\parindent}{1.0cm}
+\setlength{\parskip}{5pt}
+
+% Định nghĩa hộp sư phạm chuyên dụng
+\newtcolorbox{pedabox}[2][]{
+    enhanced,
+    breakable,
+    colback=blue!3!white,
+    colframe=blue!65!black,
+    fonttitle=\bfseries\small,
+    title={#2},
+    arc=2mm,
+    boxrule=0.6pt,
+    left=3mm, right=3mm, top=2mm, bottom=2mm,
+    #1
+}
+
+\newtcolorbox{aibox}[2][]{
+    enhanced,
+    breakable,
+    colback=teal!4!white,
+    colframe=teal!70!black,
+    fonttitle=\bfseries\small,
+    title={#2},
+    arc=2mm,
+    boxrule=0.6pt,
+    left=3mm, right=3mm, top=2mm, bottom=2mm,
+    #1
+}
+
+\newtcolorbox{scaffoldbox}[2][]{
+    enhanced,
+    breakable,
+    colback=orange!4!white,
+    colframe=orange!80!black,
+    fonttitle=\bfseries\small,
+    title={#2},
+    arc=2mm,
+    boxrule=0.6pt,
+    left=3mm, right=3mm, top=2mm, bottom=2mm,
+    #1
+}
+
+\newtcolorbox{stembox}[2][]{
+    enhanced,
+    breakable,
+    colback=purple!4!white,
+    colframe=purple!75!black,
+    fonttitle=\bfseries\small,
+    title={#2},
+    arc=2mm,
+    boxrule=0.6pt,
+    left=3mm, right=3mm, top=2mm, bottom=2mm,
+    #1
+}
+
+\begin{document}
+
+\begin{center}
+    {\fontsize{14pt}{17pt}\selectfont \textbf{KẾ HOẠCH BÀI DẠY MÔN TOÁN LỚP 11}}\\[6pt]
+    {\fontsize{16pt}{19pt}\selectfont \textbf{BÀI 31. ĐỊNH NGHĨA VÀ Ý NGHĨA CỦA ĐẠO HÀM}}\\[4pt]
+    {\fontsize{12pt}{15pt}\selectfont \textbf{Môn học: Toán 11} \ \textbar \ \textbf{Thời lượng: 2 tiết (Tiết 92, 93 theo PPCT | Tuần 33)}}
+\end{center}
+
+\vspace{5pt}
+
+\section*{I. MỤC TIÊU}
+
+\subsection*{1. Kiến thức, Năng lực}
+
+\begin{itemize}[leftmargin=1.2cm]
+    \item \textbf{Yêu cầu cần đạt (Nguyên văn CT GDPT 2018 Toán 11):}
+    \begin{itemize}[leftmargin=0.6cm]
+        \item Nhận biết được một số bài toán dẫn đến khái niệm đạo hàm như: xác định vận tốc tức thời của một vật chuyển động không đều, xác định tốc độ thay đổi của nhiệt độ.
+        \item Nhận biết được định nghĩa đạo hàm. Tính được đạo hàm của một số hàm đơn giản bằng định nghĩa.
+        \item Nhận biết được ý nghĩa hình học của đạo hàm.
+        \item Thiết lập được phương trình tiếp tuyến của đồ thị hàm số tại một điểm thuộc đồ thị.
+        \item Nhận biết được số $e$ thông qua bài toán mô hình hoá lãi suất ngân hàng.
+    \end{itemize}
+
+    \item \textbf{Năng lực Toán học đặc thù:}
+    \begin{itemize}[leftmargin=0.6cm]
+        \item \textit{Năng lực tư duy và lập luận toán học:} Khái quát hóa quá trình chuyển từ vận tốc trung bình trên khoảng thời gian $[t_0; t]$ sang vận tốc tức thời tại thời điểm $t_0$ bằng giới hạn khi $t \to t_0$; lập luận tính liên tục và sự tồn tại đạo hàm của hàm số; giải thích bản chất hình học của tiếp tuyến như là vị trí giới hạn của cát tuyến khi cát điểm di động tiến dần về tiếp điểm cố định.
+        \item \textit{Năng lực mô hình hóa toán học:} Thiết lập mô hình toán học giải quyết các bài toán biến thiên tức thời trong vật lý (vận tốc tức thời $v(t) = s'(t)$, gia tốc tức thời $a(t) = v'(t)$, cường độ dòng điện tức thời $I(t) = Q'(t)$), trong kinh tế (bài toán mô hình hóa lãi kép liên tục dẫn đến số vô tỉ $e$, chi phí biên) và trong kỹ thuật.
+        \item \textit{Năng lực giải quyết vấn đề toán học:} Thực hiện thành thạo quy trình 3 bước tính đạo hàm tại một điểm bằng định nghĩa; vận dụng công thức ý nghĩa hình học để thiết lập phương trình tiếp tuyến của đồ thị hàm số tại điểm cho trước $M(x_0; y_0)$ hoặc khi biết hệ số góc $k$.
+        \item \textit{Năng lực giao tiếp toán học:} Sử dụng chính xác và chuẩn mực các ký hiệu: $f'(x_0)$, $y'$, $\Delta x$, $\Delta y$, $\lim_{\Delta x \to 0} \dfrac{\Delta y}{\Delta x}$, hệ số góc $k = f'(x_0)$; diễn đạt lưu loát bản chất tốc độ thay đổi tức thời của đại lượng vật lý hoặc kinh tế.
+        \item \textit{Năng lực sử dụng công cụ, phương tiện học toán:} Khai thác máy tính cầm tay (MTCT Casio fx-580VN X) với lệnh tính đạo hàm tại điểm $\left. \dfrac{\mathrm{d}}{\mathrm{d}x} \left( f(x) \right) \right|_{x = x_0}$ để kiểm tra kết quả tính tay; sử dụng phần mềm hình học động GeoGebra để quan sát trực quan sự chuyển dịch của cát tuyến thành tiếp tuyến.
+    \end{itemize}
+
+    \item \textbf{Năng lực số (Theo Thông tư 02/2025/TT-BGDĐT):}
+    \begin{itemize}[leftmargin=0.6cm]
+        \item \textit{Mã 3.1NC1a (Xây dựng nội dung số và mô phỏng hình học động trên phần mềm GeoGebra):} Học sinh thao tác trên thiết bị cá nhân hoặc phòng máy tính 35 máy, dựng đồ thị hàm số $y = f(x)$, lấy điểm $M_0$ cố định và điểm $M$ di động trên đồ thị; tạo thanh trượt (slider) cho tọa độ điểm $M$ và quan sát trực tiếp đường cát tuyến $M_0M$ xoay dần về trùng với đường tiếp tuyến $M_0T$ khi $M \to M_0$, từ đó khắc sâu bản chất hình học của đạo hàm.
+    \end{itemize}
+
+    \item \textbf{Năng lực AI (Theo Quyết định 2422/QĐ-BGDĐT):}
+    \begin{itemize}[leftmargin=0.6cm]
+        \item \textit{Mã 11.C5.1 (Hiểu cách thuật toán AI sử dụng đạo hàm để tìm điểm cực trị trong tối ưu hóa mạng nơ-ron -- Gradient Descent):} Học sinh tìm hiểu và trình bày được vai trò cốt lõi của đạo hàm trong Trí tuệ nhân tạo: thuật toán Lan truyền ngược (Backpropagation) và Tối ưu hóa hạ độ dốc (Gradient Descent). Đạo hàm cho biết hướng dốc của hàm mất mát (Loss Function), giúp mô hình AI tự điều chỉnh trọng số (weights) sau mỗi bước huấn luyện để giảm thiểu sai số, tiến dần về điểm tối ưu toàn cục.
+    \end{itemize}
+
+    \item \textbf{Giáo dục STEM/STEAM:}
+    \begin{itemize}[leftmargin=0.6cm]
+        \item \textit{Chủ đề STEM:} Thiết kế thí nghiệm đo vận tốc tức thời của viên bi kim loại trượt trên máng nghiêng tại thời điểm chạm đáy. Học sinh dùng điện thoại quay video tốc độ cao (Slow-Motion 120/240 fps) hoặc cảm biến cổng quang điện tử (Photogate sensor), lập bảng số liệu quãng đường theo thời gian $s(t) = a t^2$, tính vận tốc tức thời bằng đạo hàm lý thuyết $v(t_0) = s'(t_0)$ và so sánh với giá trị thực nghiệm để xác định sai số.
+    \end{itemize}
+
+    \item \textbf{Năng lực chung:}
+    \begin{itemize}[leftmargin=0.6cm]
+        \item \textit{Tự chủ và tự học:} Chủ động đọc trước SGK về bài toán chuyển động rơi tự do; tự thực hiện các bước tính toán số gia $\Delta x, \Delta y$.
+        \item \textit{Giao tiếp và hợp tác:} Làm việc nhóm 5 học sinh hiệu quả, biết lắng nghe và phân công rõ ràng giữa nhóm thực hành mô phỏng GeoGebra và nhóm tính toán toán học.
+    \end{itemize}
+\end{itemize}
+
+\subsection*{2. Phẩm chất}
+
+\begin{itemize}[leftmargin=1.2cm]
+    \item \textbf{Chăm chỉ:} Kiên nhẫn thực hiện các bước tính giới hạn hữu hạn của tỉ số số gia; tỉ mỉ trong việc dựng hình và đo đạc thực nghiệm STEM.
+    \item \textbf{Trung thực:} Ghi chép trung thực số liệu đo đạc thực nghiệm từ cảm biến hoặc video quay chậm, không tùy tiện làm tròn sai số.
+    \item \textbf{Trách nhiệm:} Có trách nhiệm trong hoạt động cộng tác nhóm; cẩn trọng bảo vệ thiết bị thí nghiệm phòng học; vận dụng tư duy tối ưu hóa vào việc quản lý thời gian học tập.
+\end{itemize}
+
+\section*{II. THIẾT BỊ DẠY HỌC VÀ HỌC LIỆU}
+
+\begin{itemize}[leftmargin=1.2cm]
+    \item \textbf{Giáo viên:}
+    \begin{itemize}[leftmargin=0.6cm]
+        \item Kế hoạch bài dạy chi tiết 2 tiết theo chuẩn Công văn 5512/BGDĐT-GDTrH.
+        \item Bài trình chiếu điện tử tương tác (Slide PowerPoint / Canva) sinh động với mô phỏng động cát tuyến tiến về tiếp tuyến và video minh họa thuật toán Gradient Descent trong học máy AI.
+        \item Tệp thực hành GeoGebra động: \texttt{TiepTuyenDong.ggb} để chia sẻ cho học sinh.
+        \item Dụng cụ thí nghiệm STEM: 02 máng nghiêng nhôm định hình dài $1{,}2\text{ m}$, bi thép đường kính $20\text{ mm}$, cảm biến cổng quang điện tử nối đồng hồ hiện số hoặc giá kẹp điện thoại quay video slow-motion.
+        \item Hệ thống Phiếu học tập số 1 (Định nghĩa & Ý nghĩa vật lý) và Phiếu học tập số 2 (Ý nghĩa hình học, Tiếp tuyến, Số $e$ & Thuật toán AI Gradient Descent).
+        \item Bảng Rubric đánh giá năng lực học sinh 4 mức độ.
+    \end{itemize}
+    \item \textbf{Học sinh:}
+    \begin{itemize}[leftmargin=0.6cm]
+        \item SGK Toán 11, vở ghi bài, thước kẻ, bút chì, compa.
+        \item Máy tính cầm tay Casio fx-580VN X.
+        \item Điện thoại thông minh cài ứng dụng GeoGebra Geometry/Graphing hoặc laptop cá nhân tại phòng máy vi tính.
+    \end{itemize}
+\end{itemize}
+
+\section*{III. TIẾN TRÌNH DẠY HỌC}
+
+\begin{center}
+    \textbf{\large TIẾT 1 (TIẾT 92 THEO PPCT | TUẦN 33)}\\[4pt]
+    \textit{(Nội dung: Khái niệm đạo hàm tại một điểm -- Ý nghĩa vật lí \& Cách tính bằng định nghĩa)}
+\end{center}
+
+\subsection*{1. Hoạt động 1: Mở đầu (Khởi động - 6 phút)}
+
+\paragraph{a) Mục tiêu:} Xuất phát từ bài toán chuyển động rơi tự do quen thuộc trong Vật lý, tạo nhu cầu nhận thức về việc xác định vận tốc tức thời tại một thời điểm chính xác, dẫn dắt học sinh đến giới hạn tỉ số số gia.
+
+\paragraph{b) Nội dung:} Giáo viên đặt vấn đề thông qua tình huống chuyển động rơi tự do:
+\begin{pedabox}{Tình huống Khởi động: Vận tốc tức thời của quả táo rơi}
+Một quả táo rơi tự do từ trên cành cây cao xuống đất. Quãng đường rơi $s$ (tính bằng mét) theo thời gian $t$ (tính bằng giây) được cho bởi công thức:
+$$s(t) = \dfrac{1}{2} g t^2 \approx 4{,}9 t^2$$
+\begin{enumerate}[leftmargin=0.6cm]
+    \item Tính vận tốc trung bình của quả táo trong khoảng thời gian từ $t_0 = 1\text{ s}$ đến $t_1 = 2\text{ s}$; từ $t_0 = 1\text{ s}$ đến $t_2 = 1{,}1\text{ s}$; từ $t_0 = 1\text{ s}$ đến $t_3 = 1{,}01\text{ s}$.
+    \item Đồng hồ tốc độ (tốc kế) trên xe máy hay ô tô chỉ vận tốc trung bình hay vận tốc tại đúng thời điểm ta nhìn? Làm thế nào tính được vận tốc của quả táo tại đúng thời điểm $t_0 = 1\text{ s}$?
+\end{enumerate}
+\end{pedabox}
+
+\paragraph{c) Sản phẩm:} Câu trả lời và tính toán của học sinh:
+\begin{itemize}[leftmargin=0.8cm]
+    \item Vận tốc trung bình trong khoảng $[t_0; t]$ là tỉ số: $v_{\text{tb}} = \dfrac{s(t) - s(t_0)}{t - t_0}$.
+    \begin{itemize}[leftmargin=0.4cm]
+        \item Trên $[1; 2]$: $v_{\text{tb}} = \dfrac{4{,}9(2^2 - 1^2)}{2 - 1} = 4{,}9 \times 3 = 14{,}7\text{ m/s}$.
+        \item Trên $[1; 1{,}1]$: $v_{\text{tb}} = \dfrac{4{,}9(1{,}1^2 - 1^2)}{1{,}1 - 1} = \dfrac{4{,}9 \times 0{,}21}{0{,}1} = 10{,}29\text{ m/s}$.
+        \item Trên $[1; 1{,}01]$: $v_{\text{tb}} = \dfrac{4{,}9(1{,}01^2 - 1^2)}{1{,}01 - 1} = \dfrac{4{,}9 \times 0{,}0201}{0{,}01} = 9{,}849\text{ m/s}$.
+    \end{itemize}
+    \item Nhận xét: Khi khoảng thời gian $t - t_0$ càng nhỏ (tiến dần về $0$), vận tốc trung bình tiến dần về giá trị $9{,}8\text{ m/s}$.
+    \item Vận tốc tại thời điểm $t_0 = 1\text{ s}$ (vận tốc tức thời) chính là giới hạn:
+    $$v(1) = \lim_{t \to 1} \dfrac{s(t) - s(1)}{t - 1} = \lim_{t \to 1} \dfrac{4{,}9(t^2 - 1)}{t - 1} = \lim_{t \to 1} 4{,}9(t + 1) = 4{,}9 \times 2 = 9{,}8\text{ m/s}$$
+\end{itemize}
+
+\paragraph{d) Tổ chức thực hiện:}
+\begin{itemize}[leftmargin=0.8cm]
+    \item \textbf{Chuyển giao nhiệm vụ:} Giáo viên trình chiếu bài toán, yêu cầu học sinh dùng MTCT bấm nhanh 3 giá trị $v_{\text{tb}}$.
+    \item \textbf{Thực hiện nhiệm vụ:} Học sinh thực hiện tính toán trong 3 phút, phát hiện quy luật dãy số tiến dần về $9{,}8$.
+    \item \textbf{Báo cáo, thảo luận:} 1 học sinh đọc kết quả; giáo viên dẫn dắt giới hạn $\lim_{t \to t_0} \dfrac{s(t) - s(t_0)}{t - t_0}$.
+    \item \textbf{Kết luận, nhận định:} Giáo viên chốt lại: Giới hạn trên xuất hiện ở vô số hiện tượng tự nhiên (vận tốc, cường độ dòng điện, tốc độ truyền nhiệt, tốc độ phản ứng hóa học). Trong toán học, giới hạn đó được gọi là \textbf{Đạo hàm}.
+\end{itemize}
+
+\subsection*{2. Hoạt động 2: Hình thành kiến thức - Định nghĩa Đạo hàm \& Ý nghĩa vật lí (18 phút)}
+
+\paragraph{a) Mục tiêu:} Nắm vững định nghĩa đạo hàm của hàm số tại một điểm; hiểu rõ các khái niệm số gia đối số $\Delta x$, số gia hàm số $\Delta y$; nắm vững ý nghĩa vật lí của đạo hàm.
+
+\paragraph{b) Nội dung:} Giáo viên dẫn dắt từ bài toán cụ thể sang định nghĩa toán học tổng quát:
+
+\begin{pedabox}{1. Định nghĩa Đạo hàm tại một điểm}
+Cho hàm số $y = f(x)$ xác định trên khoảng $(a; b)$ và điểm $x_0 \in (a; b)$.
+\begin{itemize}[leftmargin=0.5cm]
+    \item Nếu tồn tại giới hạn hữu hạn:
+    \begin{equation}
+        \lim_{x \to x_0} \dfrac{f(x) - f(x_0)}{x - x_0}
+    \end{equation}
+    thì giới hạn đó được gọi là \textbf{đạo hàm của hàm số $y = f(x)$ tại điểm $x_0$}, ký hiệu là $f'(x_0)$ hoặc $y'(x_0)$:
+    \begin{equation}
+        f'(x_0) = \lim_{x \to x_0} \dfrac{f(x) - f(x_0)}{x - x_0}
+    \end{equation}
+\end{itemize}
+\textbf{Ký hiệu số gia:}
+\begin{itemize}[leftmargin=0.5cm]
+    \item Đại lượng $\Delta x = x - x_0$ gọi là \textbf{số gia của đối số tại điểm $x_0$}. Khi $x \to x_0$ thì $\Delta x \to 0$.
+    \item Đại lượng $\Delta y = f(x_0 + \Delta x) - f(x_0)$ gọi là \textbf{số gia tương ứng của hàm số}.
+    \item Khi đó, đạo hàm được viết dưới dạng số gia:
+    \begin{equation}
+        f'(x_0) = \lim_{\Delta x \to 0} \dfrac{\Delta y}{\Delta x}
+    \end{equation}
+\end{itemize}
+\end{pedabox}
+
+\begin{pedabox}{2. Ý nghĩa Vật lí của Đạo hàm}
+\begin{itemize}[leftmargin=0.5cm]
+    \item \textbf{Vận tốc tức thời:} Một chất điểm chuyển động có phương trình quãng đường $s = s(t)$ thì vận tốc tức thời của chất điểm tại thời điểm $t_0$ chính là đạo hàm của quãng đường theo thời gian:
+    \begin{equation}
+        v(t_0) = s'(t_0)
+    \end{equation}
+    \item \textbf{Cường độ dòng điện tức thời:} Điện lượng $Q$ truyền qua tiết diện dây dẫn theo thời gian $t$ là $Q = Q(t)$ thì cường độ dòng điện tức thời tại thời điểm $t_0$ là đạo hàm của điện lượng:
+    \begin{equation}
+        I(t_0) = Q'(t_0)
+    \end{equation}
+\end{itemize}
+\end{pedabox}
+
+\begin{scaffoldbox}{Giàn giáo sư phạm: Quy trình 3 bước tính đạo hàm bằng định nghĩa cho HS TB-Yếu}
+Để tính đạo hàm $f'(x_0)$ của hàm số $y = f(x)$ tại điểm $x_0$ bằng định nghĩa, học sinh thực hiện tuần tự 3 bước mẫu sau:
+\begin{itemize}[leftmargin=0.5cm]
+    \item \textbf{Bước 1 (Tính số gia):} Cho đối số $x_0$ một số gia $\Delta x$. Tính số gia của hàm số:
+    $$\Delta y = f(x_0 + \Delta x) - f(x_0)$$
+    Rút gọn biểu thức $\Delta y$ sao cho xuất hiện nhân tử chung $\Delta x$.
+    \item \textbf{Bước 2 (Lập tỉ số):} Lập tỉ số số gia:
+    $$\dfrac{\Delta y}{\Delta x} = \dfrac{f(x_0 + \Delta x) - f(x_0)}{\Delta x}$$
+    Chia triệt tiêu $\Delta x$ ở mẫu số.
+    \item \textbf{Bước 3 (Tìm giới hạn):} Tính giới hạn khi $\Delta x \to 0$:
+    $$f'(x_0) = \lim_{\Delta x \to 0} \dfrac{\Delta y}{\Delta x}$$
+\end{itemize}
+\end{scaffoldbox}
+
+\paragraph{c) Sản phẩm:} Định nghĩa, ký hiệu và quy trình 3 bước được học sinh ghi chép đầy đủ vào vở; học sinh phát biểu được ý nghĩa vật lí của đạo hàm.
+
+\paragraph{d) Tổ chức thực hiện:}
+\begin{itemize}[leftmargin=0.8cm]
+    \item \textbf{Chuyển giao nhiệm vụ:} Giáo viên trình bày định nghĩa, phân tích ý nghĩa của số gia $\Delta x, \Delta y$, phát Phiếu học tập số 1.
+    \item \textbf{Thực hiện nhiệm vụ:} Học sinh ghi bài, thảo luận cặp đôi để ghi nhớ quy trình 3 bước.
+    \item \textbf{Báo cáo, thảo luận:} 1 học sinh nhắc lại 3 bước tính đạo hàm bằng định nghĩa; 1 học sinh nêu ý nghĩa vật lý của vận tốc tức thời.
+    \item \textbf{Kết luận, nhận định:} Giáo viên chuẩn hóa công thức, nhấn mạnh: Để đạo hàm tồn tại, giới hạn của tỉ số bắt buộc phải là một \textbf{số hữu hạn}.
+\end{itemize}
+
+\subsection*{3. Hoạt động 3: Luyện tập tính đạo hàm bằng định nghĩa (16 phút)}
+
+\paragraph{a) Mục tiêu:} Rèn luyện kỹ năng thực hiện thành thạo quy trình 3 bước tính đạo hàm tại một điểm bằng định nghĩa; sử dụng MTCT để kiểm chứng kết quả.
+
+\paragraph{b) Nội dung:} Học sinh giải quyết hai bài tập trên Phiếu học tập số 1:
+
+\begin{pedabox}{Bài tập luyện tập Tiết 1}
+\textbf{Bài 1 (Tính đạo hàm bằng định nghĩa):}
+\begin{enumerate}[leftmargin=0.6cm]
+    \item[a)] Tính đạo hàm của hàm số $f(x) = x^2 - 3x$ tại điểm $x_0 = 2$ bằng định nghĩa.
+    \item[b)] Tính đạo hàm của hàm số $g(x) = \sqrt{2x + 1}$ tại điểm $x_0 = 4$ bằng định nghĩa.
+\end{enumerate}
+
+\textbf{Bài 2 (Ứng dụng vật lý):} Một con lắc đơn dao động, li độ góc của nó phụ thuộc vào thời gian theo phương trình:
+$$\alpha(t) = 0{,}1 \cdot \cos(2\pi t) \quad (\text{rad})$$
+Vận tốc góc của con lắc tại thời điểm $t$ chính là $\omega(t) = \alpha'(t)$. Hãy dùng định nghĩa đạo hàm tính vận tốc góc của con lắc tại thời điểm ban đầu $t_0 = 0$.
+\end{pedabox}
+
+\paragraph{c) Sản phẩm:} Lời giải chi tiết của học sinh:
+\begin{itemize}[leftmargin=0.8cm]
+    \item \textbf{Giải Bài 1a:}
+    \begin{itemize}[leftmargin=0.4cm]
+        \item \textit{Bước 1:} Cho $x_0 = 2$ số gia $\Delta x$. Ta có: $f(2) = 2^2 - 3 \cdot 2 = -2$.
+        $$\Delta y = f(2 + \Delta x) - f(2) = \left[ (2 + \Delta x)^2 - 3(2 + \Delta x) \right] - (-2)$$
+        $$= (4 + 4\Delta x + (\Delta x)^2 - 6 - 3\Delta x) + 2 = (\Delta x)^2 + \Delta x = \Delta x (\Delta x + 1)$$
+        \item \textit{Bước 2:} Lập tỉ số: $\dfrac{\Delta y}{\Delta x} = \dfrac{\Delta x (\Delta x + 1)}{\Delta x} = \Delta x + 1$ (với $\Delta x \neq 0$).
+        \item \textit{Bước 3:} Giới hạn: $f'(2) = \lim_{\Delta x \to 0} \dfrac{\Delta y}{\Delta x} = \lim_{\Delta x \to 0} (\Delta x + 1) = 0 + 1 = 1$.
+        \item \textit{Kiểm tra bằng MTCT:} Bấm $\left. \dfrac{\mathrm{d}}{\mathrm{d}x} (x^2 - 3x) \right|_{x=2} \implies$ Màn hình hiện đúng $1$.
+    \end{itemize}
+    \item \textbf{Giải Bài 1b:}
+    \begin{itemize}[leftmargin=0.4cm]
+        \item Với $x_0 = 4$, $g(4) = \sqrt{2 \cdot 4 + 1} = \sqrt{9} = 3$.
+        $$\Delta y = g(4 + \Delta x) - g(4) = \sqrt{2(4 + \Delta x) + 1} - 3 = \sqrt{2\Delta x + 9} - 3$$
+        \item Nhân lượng liên hợp:
+        $$\Delta y = \dfrac{(\sqrt{2\Delta x + 9} - 3)(\sqrt{2\Delta x + 9} + 3)}{\sqrt{2\Delta x + 9} + 3} = \dfrac{2\Delta x + 9 - 9}{\sqrt{2\Delta x + 9} + 3} = \dfrac{2\Delta x}{\sqrt{2\Delta x + 9} + 3}$$
+        \item Tỉ số: $\dfrac{\Delta y}{\Delta x} = \dfrac{2}{\sqrt{2\Delta x + 9} + 3}$.
+        \item Giới hạn: $g'(4) = \lim_{\Delta x \to 0} \dfrac{2}{\sqrt{2\Delta x + 9} + 3} = \dfrac{2}{\sqrt{9} + 3} = \dfrac{2}{6} = \dfrac{1}{3}$.
+        \item \textit{Kiểm tra bằng MTCT:} Bấm $\left. \dfrac{\mathrm{d}}{\mathrm{d}x} (\sqrt{2x+1}) \right|_{x=4} \implies$ Màn hình hiện $0{,}3333333333 = \dfrac{1}{3}$.
+    \end{itemize}
+    \item \textbf{Giải Bài 2:}
+    $$\omega(0) = \alpha'(0) = \lim_{\Delta t \to 0} \dfrac{\alpha(\Delta t) - \alpha(0)}{\Delta t} = \lim_{\Delta t \to 0} \dfrac{0{,}1 \cos(2\pi \Delta t) - 0{,}1}{\Delta t}$$
+    $$= \lim_{\Delta t \to 0} 0{,}1 \cdot \dfrac{-2 \sin^2(\pi \Delta t)}{\Delta t} = \lim_{\Delta t \to 0} \left[ -0{,}2\pi \cdot \dfrac{\sin(\pi \Delta t)}{\pi \Delta t} \cdot \sin(\pi \Delta t) \right] = -0{,}2\pi \cdot 1 \cdot 0 = 0\text{ rad/s}$$
+    (Phù hợp với hiện tượng vật lý: Tại vị trí biên, vận tốc của con lắc đổi chiều nên triệt tiêu bằng 0).
+\end{itemize}
+
+\paragraph{d) Tổ chức thực hiện:}
+\begin{itemize}[leftmargin=0.8cm]
+    \item \textbf{Chuyển giao nhiệm vụ:} Giáo viên chia lớp thành 7 nhóm (mỗi nhóm 5 học sinh), giao Bài 1 cho các nhóm; Bài 2 dành cho học sinh khá giỏi.
+    \item \textbf{Thực hiện nhiệm vụ:} Các nhóm thực hiện tính toán. Giáo viên hỗ trợ nhóm yếu kỹ thuật nhân liên hợp ở Bài 1b; hướng dẫn cả lớp bấm máy tính Casio để tự chấm điểm bài làm.
+    \item \textbf{Báo cáo, thảo luận:} Nhóm 1 và Nhóm 3 lên bảng trình bày Bài 1a, 1b; 1 học sinh giỏi giải thích ý nghĩa vận tốc đổi chiều ở Bài 2.
+    \item \textbf{Kết luận, nhận định:} Giáo viên chuẩn hóa bài giải, chốt lại: Kỹ thuật tính đạo hàm bằng định nghĩa thực chất là kỹ năng khử dạng vô định $\left[\dfrac{0}{0}\right]$ của giới hạn hàm số.
+\end{itemize}
+
+\subsection*{4. Hoạt động 4: Vận dụng (5 phút)}
+
+\paragraph{a) Mục tiêu:} Vận dụng đạo hàm giải quyết bài toán tốc độ thay đổi nhiệt độ trong đời sống thực tế.
+
+\paragraph{b) Nội dung:} Giáo viên nêu bài toán: Nhiệt độ $T$ (đo bằng độ C) của một mẻ bánh nướng sau khi lấy ra khỏi lò được làm nguội theo thời gian $t$ (phút) mô phỏng bởi hàm số $T(t) = 25 + \dfrac{150}{t + 1}$. Tính tốc độ nguội của bánh tại thời điểm $t_0 = 4\text{ phút}$. Dấu của đạo hàm cho ta biết điều gì?
+
+\paragraph{c) Sản phẩm:} Học sinh tính: $T'(4) = \lim_{\Delta t \to 0} \dfrac{T(4 + \Delta t) - T(4)}{\Delta t} = -\dfrac{150}{(4 + 1)^2} = -\dfrac{150}{25} = -6^\circ\text{C/phút}$. Dấu âm biểu thị nhiệt độ đang giảm dần theo thời gian.
+
+\paragraph{d) Tổ chức thực hiện:} Học sinh trao đổi nhanh $\implies$ 1 học sinh trả lời $\implies$ Giáo viên chốt lại ý nghĩa của tốc độ biến thiên, dặn dò chuẩn bị Tiết 2 về Ý nghĩa hình học của đạo hàm.
+
+\newpage
+
+\begin{center}
+    \textbf{\large TIẾT 2 (TIẾT 93 THEO PPCT | TUẦN 33)}\\[4pt]
+    \textit{(Nội dung: Ý nghĩa hình học của đạo hàm -- Tiếp tuyến -- Mô hình hóa số $e$ \& Khám phá AI Gradient Descent)}
+\end{center}
+
+\subsection*{1. Hoạt động 1: Mở đầu (Khởi động - 5 phút)}
+
+\paragraph{a) Mục tiêu:} Tạo nhu cầu khám phá vị trí giới hạn của đường cát tuyến khi một điểm di chuyển trên đường cong tiến về một điểm cố định.
+
+\paragraph{b) Nội dung:} Cho đồ thị parabol $(P): y = x^2$ và điểm cố định $M_0(1; 1) \in (P)$. Xét điểm di động $M(x; x^2)$ trên parabol với $x \neq 1$.
+\begin{enumerate}[leftmargin=0.6cm]
+    \item Viết công thức tính hệ số góc $k_{M_0M}$ của đường thẳng nối hai điểm (cát tuyến $M_0M$).
+    \item Khi cho điểm $M$ trượt dọc trên parabol tiến sát dần về điểm $M_0$ (tức là $x \to 1$), hệ số góc của cát tuyến tiến dần về giá trị nào? Đường cát tuyến trở thành đường thẳng nào?
+\end{enumerate}
+
+\paragraph{c) Sản phẩm:}
+\begin{itemize}[leftmargin=0.8cm]
+    \item Hệ số góc của cát tuyến: $k_{M_0M} = \dfrac{y_M - y_{M_0}}{x_M - x_{M_0}} = \dfrac{x^2 - 1}{x - 1} = x + 1$ (với $x \neq 1$).
+    \item Khi $M \to M_0$ ($x \to 1$): $\lim_{x \to 1} k_{M_0M} = \lim_{x \to 1} (x + 1) = 2$.
+    \item Nhận xét: Khi đó, cát tuyến $M_0M$ tiến dần đến vị trí giới hạn là đường tiếp xúc với parabol tại $M_0$ (gọi là \textbf{tiếp tuyến}).
+    \item Phát hiện: Số $2$ chính là đạo hàm của $f(x) = x^2$ tại $x_0 = 1$ ($f'(1) = 2$).
+\end{itemize}
+
+\paragraph{d) Tổ chức thực hiện:} Giáo viên trình chiếu hình ảnh $\implies$ Học sinh tính nhẩm nhanh $\implies$ Giáo viên kết luận chuyển tiếp sang Ý nghĩa hình học của đạo hàm.
+
+\subsection*{2. Hoạt động 2: Hình thành kiến thức - Ý nghĩa hình học & Phương trình tiếp tuyến (18 phút)}
+
+\paragraph{a) Mục tiêu:} Học sinh hiểu sâu sắc ý nghĩa hình học của đạo hàm; thiết lập và vận dụng thành thạo phương trình tiếp tuyến của đồ thị hàm số tại một điểm; thực hành mô phỏng số GeoGebra (Mã 3.1NC1a).
+
+\paragraph{b) Nội dung:} Giáo viên hướng dẫn lý thuyết và mô phỏng hình học:
+
+\begin{pedabox}{1. Ý nghĩa Hình học của Đạo hàm}
+\textbf{Định lý:} Đạo hàm của hàm số $y = f(x)$ tại điểm $x_0$ chính là \textbf{hệ số góc của tiếp tuyến} $M_0T$ của đồ thị $(C)$ tại điểm $M_0(x_0; f(x_0))$:
+\begin{equation}
+    k = f'(x_0)
+\end{equation}
+\end{pedabox}
+
+\begin{pedabox}{2. Minh họa Cát tuyến tiến về Tiếp tuyến bằng TikZ}
+\begin{center}
+\begin{tikzpicture}[scale=1.1]
+    \draw[->, thick, >=stealth] (-0.5, 0) -- (4.2, 0) node[below] {$x$};
+    \draw[->, thick, >=stealth] (0, -0.5) -- (0, 3.8) node[left] {$y$};
+    \node[below left] at (0, 0) {$O$};
+    
+    % Vẽ đường cong hàm số
+    \draw[blue!80!black, very thick, domain=0.4:3.6, samples=100] plot (\x, {0.3*\x*\x - 0.2*\x + 0.5}) node[right] {$(C): y = f(x)$};
+    
+    % Điểm cố định M0
+    \coordinate (M0) at (1.2, {0.3*1.2*1.2 - 0.2*1.2 + 0.5});
+    \fill[red] (M0) circle (2.2pt) node[above left] {$M_0(x_0; y_0)$};
+    
+    % Điểm cát tuyến M
+    \coordinate (M) at (3.0, {0.3*3.0*3.0 - 0.2*3.0 + 0.5});
+    \fill[blue] (M) circle (2.2pt) node[above right] {$M(x; y)$};
+    
+    % Đường cát tuyến M0M
+    \draw[dashed, thick, orange!80!black] ($(M0)!-0.3!(M)$) -- ($(M0)!1.3!(M)$) node[right] {Cát tuyến $M_0M$};
+    
+    % Đường tiếp tuyến M0T
+    % Đạo hàm tại x0 = 1.2 là f'(1.2) = 0.6*1.2 - 0.2 = 0.52
+    \draw[red!80!black, thick] ($(M0) + (-1.2, -1.2*0.52)$) -- ($(M0) + (2.4, 2.4*0.52)$) node[above] {Tiếp tuyến $M_0T$};
+    
+    % Mũi tên chỉ hướng M tiến dần về M0
+    \draw[->, thick, blue, >=Latex] (2.8, 2.3) to[bend right=20] (1.6, 1.0);
+    \node[blue, font=\footnotesize] at (2.4, 1.4) {$M \to M_0$};
+    
+    % Hình chiếu tọa độ x0, x
+    \draw[dotted] (1.2, 0) node[below] {$x_0$} -- (M0);
+    \draw[dotted] (3.0, 0) node[below] {$x$} -- (M);
+\end{tikzpicture}
+\end{center}
+\end{pedabox}
+
+\begin{pedabox}{3. Phương trình Tiếp tuyến của Đồ thị hàm số}
+Phương trình tiếp tuyến của đồ thị hàm số $y = f(x)$ tại điểm $M_0(x_0; y_0) \in (C)$ (với $y_0 = f(x_0)$) có dạng:
+\begin{equation}
+    y - y_0 = f'(x_0)(x - x_0) \quad \iff \quad y = f'(x_0)(x - x_0) + y_0
+\end{equation}
+\end{pedabox}
+
+\begin{scaffoldbox}{Giàn giáo sư phạm: Quy trình 3 bước lập Phương trình tiếp tuyến cho HS TB-Yếu}
+\begin{itemize}[leftmargin=0.5cm]
+    \item \textbf{Bước 1 (Xác định tọa độ tiếp điểm):} Tìm hoành độ $x_0$ và tung độ $y_0 = f(x_0)$ để có tiếp điểm $M_0(x_0; y_0)$.
+    \item \textbf{Bước 2 (Tính hệ số góc):} Tính đạo hàm của hàm số tại $x_0$: $k = f'(x_0)$.
+    \item \textbf{Bước 3 (Thiết lập phương trình):} Thay các đại lượng vào công thức $y = k(x - x_0) + y_0$ và rút gọn về dạng $y = ax + b$.
+\end{itemize}
+\end{scaffoldbox}
+
+\begin{scaffoldbox}{Tích hợp Năng lực số (Mã 3.1NC1a): Khám phá trực quan Tiếp tuyến trên GeoGebra}
+\begin{itemize}[leftmargin=0.5cm]
+    \item Học sinh mở GeoGebra trên máy tính phòng học hoặc điện thoại thông minh:
+    \item Bước 1: Nhập hàm số \texttt{f(x) = x\textasciicircum 2 - 2x + 2}.
+    \item Bước 2: Tạo điểm cố định \texttt{M\_0 = (1, f(1))}.
+    \item Bước 3: Tạo thanh trượt $a$ từ $-2$ đến $4$. Tạo điểm di động \texttt{M = (a, f(a))}.
+    \item Bước 4: Vẽ đường thẳng \texttt{Line(M\_0, M)}. Kéo thanh trượt $a \to 1$, học sinh tận mắt chứng kiến đường cát tuyến chuyển dần thành tiếp tuyến của parabol.
+\end{itemize}
+\end{scaffoldbox}
+
+\paragraph{c) Sản phẩm:} Phương trình tiếp tuyến và đồ thị minh họa trong vở ghi; bài thực hành trực quan hoàn thành trên màn hình GeoGebra.
+
+\paragraph{d) Tổ chức thực hiện:}
+\begin{itemize}[leftmargin=0.8cm]
+    \item \textbf{Chuyển giao nhiệm vụ:} Giáo viên trình chiếu hình vẽ TikZ, hướng dẫn công thức tiếp tuyến; yêu cầu học sinh mở GeoGebra thao tác theo hướng dẫn.
+    \item \textbf{Thực hiện nhiệm vụ:} Học sinh thực hành GeoGebra trong 5 phút. Giáo viên quan sát, hỗ trợ các máy tính gặp khó khăn khi nhập lệnh.
+    \item \textbf{Báo cáo, thảo luận:} 1 học sinh chiếu màn hình GeoGebra lên tivi lớp học, kéo thanh trượt cho cả lớp cùng quan sát hiện tượng cát tuyến tiệm cận tiếp tuyến.
+    \item \textbf{Kết luận, nhận định:} Giáo viên khẳng định: Khái niệm tiếp tuyến trong giải tích tổng quát hơn nhiều so với hình học Euclid (tiếp tuyến không chỉ chạm một điểm mà là đường thẳng xấp xỉ tuyến tính tốt nhất của đường cong tại lân cận điểm đó).
+\end{itemize}
+
+\subsection*{3. Hoạt động 3: Vận dụng STEM, Số $e$ \& Tích hợp Năng lực AI (16 phút)}
+
+\paragraph{a) Mục tiêu:} Nhận biết số vô tỉ $e$ thông qua bài toán lãi kép liên tục; tích hợp năng lực AI (Mã 11.C5.1: hiểu thuật toán Gradient Descent tối ưu hóa mạng nơ-ron bằng đạo hàm); thực hành bài toán STEM đo vận tốc tức thời.
+
+\paragraph{b) Nội dung:}
+
+\begin{pedabox}{1. Bài toán Lãi kép liên tục \& Nguồn gốc của Số $e$}
+\textbf{Tình huống Kinh tế -- Tài chính:} Một người gửi ngân hàng $1$ triệu đồng với lãi suất $r = 100\%/\text{năm}$.
+\begin{itemize}[leftmargin=0.5cm]
+    \item Nếu tính lãi 1 năm 1 lần ($n = 1$): Số tiền nhận được sau 1 năm là $(1 + 1)^1 = 2$ triệu.
+    \item Nếu tính lãi nửa năm 1 lần ($n = 2$): Số tiền là $\left(1 + \dfrac{1}{2}\right)^2 = 2{,}25$ triệu.
+    \item Nếu tính lãi hàng tháng ($n = 12$): Số tiền là $\left(1 + \dfrac{1}{12}\right)^{12} \approx 2{,}613$ triệu.
+    \item Nếu tính lãi hàng ngày ($n = 365$): $\left(1 + \dfrac{1}{365}\right)^{365} \approx 2{,}714567$ triệu.
+    \item Nếu chia nhỏ thời gian đến vô tận ($n \to +\infty$):
+    \begin{equation}
+        \lim_{n \to +\infty} \left(1 + \dfrac{1}{n}\right)^n = e \approx 2{,}718281828459\dots
+    \end{equation}
+    \item \textbf{Mô hình tổng quát Lãi kép liên tục:} Gửi số vốn ban đầu $P$, lãi suất $r/\text{năm}$, tính lãi liên tục trong $t$ năm thì tổng số tiền thu được là:
+    \begin{equation}
+        A(t) = P \cdot e^{rt}
+    \end{equation}
+\end{itemize}
+\end{pedabox}
+
+\begin{aibox}{Tích hợp Năng lực AI (Mã 11.C5.1): Thuật toán Gradient Descent trong Huấn luyện AI}
+\textbf{Bản chất toán học của việc AI học tập:}
+\begin{itemize}[leftmargin=0.5cm]
+    \item Một mô hình Trí tuệ nhân tạo (như nhận diện khuôn mặt hay sinh văn bản) có hàm mất mát $J(\theta)$ đo lường độ sai lệch giữa dự đoán của AI và đáp án thực tế.
+    \item \textbf{Mục tiêu tối thượng của AI:} Tìm bộ tham số $\theta$ sao cho hàm mất mát $J(\theta)$ đạt giá trị nhỏ nhất (cực tiểu toàn cục).
+    \item \textbf{Cách AI làm được điều đó nhờ Đạo hàm:}
+    \begin{itemize}[leftmargin=0.4cm]
+        \item Đạo hàm $J'(\theta)$ cho biết độ dốc của địa hình sai số tại vị trí hiện tại.
+        \item Nếu $J'(\theta) > 0$ (đang dốc lên về bên phải), AI phải lùi bước sang trái.
+        \item Nếu $J'(\theta) < 0$ (đang dốc xuống về bên phải), AI phải tiến bước sang phải.
+        \item Công thức cập nhật trọng số trong thuật toán Gradient Descent:
+        \begin{equation}
+            \theta_{\text{mới}} = \theta_{\text{cũ}} - \eta \cdot J'(\theta_{\text{cũ}})
+        \end{equation}
+        (với $\eta > 0$ là tốc độ học -- Learning Rate).
+    \end{itemize}
+    \item Nhờ đạo hàm tính toán liên tục hàng triệu lần mỗi giây, AI tự động dò dẫm từng bước xuống đáy thung lũng sai số thấp nhất, hoàn tất quá trình tự học (Deep Learning)!
+\end{itemize}
+\begin{center}
+\begin{tikzpicture}[scale=0.9]
+    \draw[->, thick] (-3.2, 0) -- (3.5, 0) node[below] {Tham số trọng số $\theta$};
+    \draw[->, thick] (0, -0.2) -- (0, 3.6) node[left] {Hàm mất mát $J(\theta)$};
+    
+    % Đường cong parabol hàm mất mát
+    \draw[thick, blue!80!black, domain=-2.4:2.4, samples=80] plot (\x, {0.5*\x*\x + 0.3}) node[above right] {Hàm mất mát $J(\theta)$};
+    
+    % Điểm xuất phát của AI
+    \coordinate (P0) at (2.0, {0.5*4 + 0.3});
+    \fill[red] (P0) circle (2.5pt) node[above right] {Vị trí ban đầu (Sai số lớn)};
+    
+    % Tiếp tuyến thể hiện độ dốc (đạo hàm)
+    \draw[dashed, red, thick] ($(P0) + (-1.0, -2.0)$) -- ($(P0) + (0.8, 1.6)$) node[right, font=\footnotesize] {Đạo hàm $J'(\theta) > 0$};
+    
+    % Các bước nhảy Gradient Descent
+    \coordinate (P1) at (1.2, {0.5*1.2*1.2 + 0.3});
+    \coordinate (P2) at (0.5, {0.5*0.25 + 0.3});
+    \coordinate (Pmin) at (0, 0.3);
+    
+    \draw[->, very thick, purple, >=Latex] (P0) to[bend left=15] (P1);
+    \draw[->, very thick, purple, >=Latex] (P1) to[bend left=15] (P2);
+    \draw[->, very thick, purple, >=Latex] (P2) to[bend left=10] (Pmin);
+    
+    \fill[green!60!black] (Pmin) circle (3pt) node[below=4pt] {Đáy cực tiểu $J'(\theta) = 0$ (AI tối ưu)};
+\end{tikzpicture}
+\end{center}
+\end{aibox}
+
+\begin{stembox}{Chủ đề STEM: Đo vận tốc tức thời của viên bi trượt trên máng nghiêng}
+\textbf{Thực nghiệm khoa học:} Học sinh thả viên bi thép lăn không vận tốc đầu trên máng nghiêng góc $\beta = 15^\circ$.
+\begin{itemize}[leftmargin=0.5cm]
+    \item Phương trình chuyển động lý thuyết: $s(t) = 1{,}27 t^2\text{ (m)}$.
+    \item Sử dụng cảm biến quang điện tử đặt tại vị trí cách đỉnh máng $s = 0{,}8\text{ m}$. Đồng hồ đo được thời gian bi lăn đến cảm biến là $t_0 \approx 0{,}79\text{ s}$.
+    \item Tính vận tốc tức thời bằng lý thuyết đạo hàm: $v(t_0) = s'(t_0) = 2 \times 1{,}27 \times 0{,}79 \approx 2{,}01\text{ m/s}$.
+    \item So sánh với số liệu thực nghiệm đo qua độ rộng xung chắn sáng của bi qua cảm biến $\Delta s / \Delta t$ để rút ra nhận xét về sự chính xác của đạo hàm trong kỹ thuật.
+\end{itemize}
+\end{stembox}
+
+\paragraph{c) Sản phẩm:}
+\begin{itemize}[leftmargin=0.8cm]
+    \item Học sinh hiểu rõ công thức tiếp tuyến, tính được phương trình tiếp tuyến của đồ thị hàm số tại điểm cho trước.
+    \item Học sinh nắm được ý nghĩa kinh tế của số $e$ qua công thức $A = P \cdot e^{rt}$.
+    \item Bản thu hoạch nhận thức về vai trò của đạo hàm trong thuật toán Gradient Descent của AI.
+    \item Số liệu đo đạc thực nghiệm STEM của các nhóm.
+\end{itemize}
+
+\paragraph{d) Tổ chức thực hiện:}
+\begin{itemize}[leftmargin=0.8cm]
+    \item Giáo viên trình chiếu bài toán số $e$ và đồ thị Gradient Descent của AI.
+    \item Học sinh thảo luận theo nhóm: Nhóm 1, 2, 3 giải bài toán viết phương trình tiếp tuyến; Nhóm 4, 5 phân tích mô hình AI Gradient Descent; Nhóm 6, 7 thực hành đọc số liệu thí nghiệm máng nghiêng STEM.
+    \item Đại diện các nhóm báo cáo kết quả. Giáo viên liên hệ tính ứng dụng sâu rộng của đạo hàm trong công nghệ hiện đại.
+\end{itemize}
+
+\subsection*{4. Hoạt động 4: Vận dụng & Đánh giá (5 phút)}
+
+\paragraph{a) Mục tiêu:} Củng cố toàn bộ kiến thức bài học; hệ thống hóa mối liên hệ giữa Ý nghĩa hình học, Ý nghĩa vật lí và Ý nghĩa công nghệ của đạo hàm.
+
+\paragraph{b) Nội dung:}
+\begin{itemize}[leftmargin=0.6cm]
+    \item Tổng kết 3 ý nghĩa trụ cột của đạo hàm $f'(x_0)$:
+    \begin{enumerate}[leftmargin=0.5cm]
+        \item \textit{Toán học & Hình học:} Hệ số góc của tiếp tuyến $k = f'(x_0)$, phương trình tiếp tuyến $y = f'(x_0)(x - x_0) + y_0$.
+        \item \textit{Vật lý & Khoa học:} Vận tốc tức thời $v(t) = s'(t)$, tốc độ biến thiên tức thời của mọi đại lượng.
+        \item \textit{Trí tuệ nhân tạo & Kỹ thuật:} Hướng dốc để tối ưu hóa sai số trong thuật toán Gradient Descent.
+    \end{enumerate}
+    \item Dặn dò chuẩn bị bài học tiếp theo: **Bài 32. Các quy tắc tính đạo hàm** (khám phá các công thức tính đạo hàm nhanh mà không cần dùng định nghĩa).
+\end{itemize}
+
+\paragraph{c) Sản phẩm:} Sơ đồ tóm tắt 3 trụ cột của đạo hàm trong vở ghi học sinh.
+
+\paragraph{d) Tổ chức thực hiện:} Giáo viên trình chiếu sơ đồ tổng kết $\implies$ Học sinh ghi bài tập về nhà $\implies$ Giáo viên thu phiếu học tập.
+
+\section*{IV. PHỤ LỤC HỌC LIỆU BỔ TRỢ}
+
+\subsection*{1. Phiếu học tập số 1 (Tiết 1): Định nghĩa & Cách tính Đạo hàm bằng Định nghĩa}
+
+\begin{pedabox}{PHIẾU HỌC TẬP SỐ 1 (TIẾT 1)}
+\textbf{Họ và tên học sinh:} \dotfill \textbf{Lớp:} 11A\dots \quad \textbf{Nhóm:} \dots
+\begin{enumerate}[leftmargin=0.6cm]
+    \item \textbf{Lý thuyết:}
+    \begin{itemize}
+        \item Đạo hàm của hàm số $y = f(x)$ tại điểm $x_0$ là: $f'(x_0) = \lim_{\dots \to \dots} \dfrac{\dots\dots\dots}{\dots\dots\dots}$
+        \item Nếu vật chuyển động có phương trình $s = s(t)$ thì vận tốc tức thời tại thời điểm $t_0$ là: $v(t_0) = $ \dotfill
+    \end{itemize}
+
+    \item \textbf{Bài tập tự luận:}
+    Tính đạo hàm của hàm số $f(x) = 2x^2 - x + 1$ tại điểm $x_0 = 1$ bằng định nghĩa theo 3 bước:
+    \begin{itemize}
+        \item Bước 1: Tính số gia $\Delta y = f(1 + \Delta x) - f(1) = $ \dotfill
+        \item Bước 2: Lập tỉ số $\dfrac{\Delta y}{\Delta x} = $ \dotfill
+        \item Bước 3: Tính giới hạn $f'(1) = \lim_{\Delta x \to 0} \dfrac{\Delta y}{\Delta x} = $ \dotfill
+        \item Kiểm tra lại bằng MTCT: Bấm $\left. \dfrac{\mathrm{d}}{\mathrm{d}x} (2x^2 - x + 1) \right|_{x = 1} = $ \dotfill
+    \end{itemize}
+\end{enumerate}
+\end{pedabox}
+
+\subsection*{2. Phiếu học tập số 2 (Tiết 2): Ý nghĩa Hình học, Phương trình Tiếp tuyến & Khám phá AI}
+
+\begin{pedabox}{PHIẾU HỌC TẬP SỐ 2 (TIẾT 2)}
+\textbf{Phần 1: Lập phương trình tiếp tuyến:}
+Cho hàm số $y = f(x) = x^3 - 3x + 2$ có đồ thị $(C)$.
+\begin{enumerate}[leftmargin=0.6cm]
+    \item Viết phương trình tiếp tuyến của đồ thị $(C)$ tại điểm có hoành độ $x_0 = 2$.
+    \begin{itemize}
+        \item Tọa độ tiếp điểm: $x_0 = 2 \implies y_0 = f(2) = $ \dotfill
+        \item Hệ số góc tiếp tuyến (biết $f'(x) = 3x^2 - 3$): $k = f'(2) = $ \dotfill
+        \item Phương trình tiếp tuyến là: \dotfill
+    \end{itemize}
+    \item Viết phương trình tiếp tuyến của đồ thị $(C)$ biết tiếp tuyến có hệ số góc $k = 9$.
+\end{enumerate}
+
+\textbf{Phần 2: Phiếu thu hoạch Khám phá AI Gradient Descent (Mã 11.C5.1):}
+\begin{itemize}[leftmargin=0.5cm]
+    \item Thuật toán Gradient Descent giúp AI làm nhiệm vụ gì? \dotfill
+    \item Tại sao AI cần tính đạo hàm của hàm mất mát $J(\theta)$? \dotfill
+    \item Nếu đạo hàm $J'(\theta) > 0$, giá trị trọng số $\theta$ ở bước tiếp theo cần tăng hay giảm? Tại sao? \dotfill
+\end{itemize}
+\end{pedabox}
+
+\subsection*{3. Rubric đánh giá năng lực học sinh trong bài học (4 mức độ)}
+
+\begin{center}
+\small
+\begin{tabularx}{\linewidth}{|p{3.2cm}|X|X|X|X|}
+\hline
+\textbf{Tiêu chí đánh giá} & \textbf{Mức 1: Chưa đạt} & \textbf{Mức 2: Đạt} & \textbf{Mức 3: Khá} & \textbf{Mức 4: Tốt} \\ \hline
+\textbf{1. Tính đạo hàm bằng định nghĩa} & Chưa nắm được quy trình 3 bước; không tính được số gia $\Delta y$. & Thực hiện được Bước 1 và Bước 2 nhưng tính giới hạn ở Bước 3 còn sai sót. & Tính thành thạo đạo hàm bằng định nghĩa cho hàm đa thức và căn thức đơn giản. & Vận dụng linh hoạt, kết hợp kiểm tra thành thạo bằng MTCT Casio; giải thích sâu sắc ý nghĩa của $\Delta x \to 0$. \\ \hline
+\textbf{2. Lập phương trình tiếp tuyến} & Không nhớ công thức phương trình tiếp tuyến; nhầm lẫn giữa $x_0$ và $y_0$. & Lập được phương trình tiếp tuyến khi đã cho sẵn đầy đủ tiếp điểm $M_0(x_0; y_0)$. & Lập thành thạo phương trình tiếp tuyến khi biết hoành độ, tung độ hoặc hệ số góc $k$. & Dựng hình mô phỏng thành thạo trên GeoGebra; biện luận được số tiếp tuyến thỏa mãn điều kiện hình học phức tạp. \\ \hline
+\textbf{3. Nhận thức công nghệ AI (11.C5.1)} & Không hiểu khái niệm hàm mất mát và vai trò của đạo hàm trong AI. & Nhận biết AI dùng đạo hàm để tìm điểm sai số nhỏ nhất. & Trình bày được nguyên lý thuật toán Gradient Descent và giải thích được công thức cập nhật trọng số. & Phân tích sâu sắc sự tương quan giữa đạo hàm toán học và cơ chế tự tối ưu hóa thông minh của mô hình học sâu. \\ \hline
+\textbf{4. Vận dụng thực tiễn STEM \& Năng lực số} & Không tham gia thí nghiệm STEM; không thao tác được phần mềm GeoGebra. & Dựng được đồ thị trên GeoGebra nhưng chưa tạo được thanh trượt cát tuyến động. & Hoàn thành mô phỏng GeoGebra; đo đạc và tính được vận tốc tức thời bài toán máng nghiêng STEM. & Phân tích chính xác sai số giữa thực nghiệm và lý thuyết; đề xuất giải pháp tối ưu hóa góc nghiêng để giảm ma sát. \\ \hline
+\end{tabularx}
+\end{center}
+
+\end{document}
