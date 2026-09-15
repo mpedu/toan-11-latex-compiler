@@ -1,0 +1,552 @@
+\documentclass[12pt, a4paper]{article}
+% --- 1. Cấu hình Tiếng Việt và Font chữ chuẩn ---
+\usepackage[utf8]{inputenc}
+\usepackage[T5]{fontenc}
+\usepackage[vietnamese]{babel}
+\usepackage{mathptmx} % Font Times New Roman đồng bộ cả chữ và công thức toán, không gây xung đột gói
+
+\makeatletter
+\renewcommand{\normalsize}{\@setfontsize\normalsize{13pt}{16pt}}
+\makeatother
+\normalsize
+
+% --- 2. Gói Toán học & Ký hiệu bổ trợ ---
+\usepackage{amsmath, amssymb, amsfonts, mathrsfs, amsthm}
+\usepackage{graphicx}
+\usepackage{fontawesome}
+\usepackage{booktabs, tabularx, array, multirow}
+\usepackage{enumitem}
+
+% --- 3. Đồ họa TikZ, Bảng biến thiên & Hình không gian ---
+\usepackage{tikz}
+\usetikzlibrary{calc, intersections, angles, quotes, patterns, arrows.meta, 3d}
+\usepackage{pgfplots}
+\pgfplotsset{compat=1.18}
+\usepackage{tkz-euclide}
+\usepackage{tkz-tab}
+
+\renewcommand{\vec}[1]{\overrightarrow{#1}}
+
+% --- 4. Hộp sư phạm (Tcolorbox) ---
+\usepackage[many]{tcolorbox}
+\tcbuselibrary{skins, breakable}
+
+% --- 5. Căn lề chuẩn văn bản giáo án ---
+\usepackage{geometry}
+\geometry{
+    a4paper,
+    left=25mm,
+    right=15mm,
+    top=20mm,
+    bottom=20mm
+}
+
+% --- 6. Header / Footer chuẩn hóa ---
+\usepackage{fancyhdr}
+\usepackage{lastpage}
+\pagestyle{fancy}
+\fancyhf{}
+
+\fancyhead[L]{\small \textit{Kế hoạch bài dạy Toán 11}}
+\fancyhead[R]{\textbf{Trang \thepage/\pageref{LastPage}}}
+\fancyfoot[L]{\small \textit{Tổ Toán - Tin}}
+\fancyfoot[R]{\small \textit{Trường THCS\&THPT Hồng Vân}}
+\renewcommand{\headrulewidth}{0.4pt}
+\renewcommand{\footrulewidth}{0.4pt}
+
+% --- 7. Giãn dòng & Giãn đoạn theo chuẩn Nghị định 30/2020/NĐ-CP ---
+\usepackage{setspace}
+\setstretch{1.15}
+\setlength{\parindent}{1.0cm}
+\setlength{\parskip}{5pt}
+
+% Định nghĩa hộp sư phạm chuyên dụng
+\newtcolorbox{pedabox}[2][]{
+    enhanced,
+    breakable,
+    colback=blue!3!white,
+    colframe=blue!65!black,
+    fonttitle=\bfseries\small,
+    title={#2},
+    arc=2mm,
+    boxrule=0.6pt,
+    left=3mm, right=3mm, top=2mm, bottom=2mm,
+    #1
+}
+
+\newtcolorbox{aibox}[2][]{
+    enhanced,
+    breakable,
+    colback=teal!4!white,
+    colframe=teal!70!black,
+    fonttitle=\bfseries\small,
+    title={#2},
+    arc=2mm,
+    boxrule=0.6pt,
+    left=3mm, right=3mm, top=2mm, bottom=2mm,
+    #1
+}
+
+\newtcolorbox{scaffoldbox}[2][]{
+    enhanced,
+    breakable,
+    colback=orange!4!white,
+    colframe=orange!80!black,
+    fonttitle=\bfseries\small,
+    title={#2},
+    arc=2mm,
+    boxrule=0.6pt,
+    left=3mm, right=3mm, top=2mm, bottom=2mm,
+    #1
+}
+
+\newtcolorbox{stembox}[2][]{
+    enhanced,
+    breakable,
+    colback=purple!4!white,
+    colframe=purple!75!black,
+    fonttitle=\bfseries\small,
+    title={#2},
+    arc=2mm,
+    boxrule=0.6pt,
+    left=3mm, right=3mm, top=2mm, bottom=2mm,
+    #1
+}
+
+\begin{document}
+
+\begin{center}
+    {\fontsize{14pt}{17pt}\selectfont \textbf{KẾ HOẠCH BÀI DẠY MÔN TOÁN LỚP 11}}\\[6pt]
+    {\fontsize{16pt}{19pt}\selectfont \textbf{MỘT VÀI MÔ HÌNH TOÁN HỌC SỬ DỤNG HÀM SỐ MŨ VÀ HÀM SỐ LÔGARIT}}\\[4pt]
+    {\fontsize{12pt}{15pt}\selectfont \textbf{Môn học: Toán 11} \ \textbar \ \textbf{Thời lượng: 1 tiết (Tiết 99 theo PPCT | Tuần 34)}}
+\end{center}
+
+\vspace{5pt}
+
+\section*{I. MỤC TIÊU}
+
+\subsection*{1. Kiến thức, Năng lực}
+
+\begin{itemize}[leftmargin=1.2cm]
+    \item \textbf{Yêu cầu cần đạt (Nguyên văn CT GDPT 2018 Toán 11):}
+    \begin{itemize}[leftmargin=0.6cm]
+        \item Vận dụng hàm số mũ, hàm số lôgarit để giải thích các quy luật thực tiễn: sự tăng trưởng dân số, sự phân rã phóng xạ của các chất, mức độ cường độ âm thanh (decibel).
+        \item Thiết lập và giải thích được ý nghĩa toán học và thực tiễn của các tham số trong mô hình tăng trưởng dân số liên tục $N(t) = N_0 e^{rt}$, mô hình phân rã phóng xạ $m(t) = m_0 \left(\dfrac{1}{2}\right)^{\frac{t}{T}} = m_0 e^{-\lambda t}$, và mô hình mức cường độ âm $L = 10 \log\left(\dfrac{I}{I_0}\right)$ (dB).
+        \item Vận dụng thành thạo các tính chất của lũy thừa, hàm số mũ, phép tính lôgarit và lôgarit tự nhiên ($\ln$) để giải phương trình xác định thời gian $t$ hoặc các đại lượng chưa biết trong mô hình.
+    \end{itemize}
+
+    \item \textbf{Năng lực Toán học đặc thù:}
+    \begin{itemize}[leftmargin=0.6cm]
+        \item \textit{Năng lực mô hình hóa toán học:} Nhận diện các hiện tượng tăng trưởng hoặc suy giảm tỉ lệ thuận với kích thước hiện tại trong thực tế (dân số, vi khuẩn, chất phóng xạ) để chuyển hóa về phương trình vi phân và mô hình hàm số mũ; chuyển hóa thang đo độ to của âm thanh biến thiên trên dải đo cực rộng về thang đo lôgarit gọn gàng.
+        \item \textit{Năng lực tư duy và lập luận toán học:} Phân tích tính chất tăng trưởng nhanh theo cấp số nhân của hàm số mũ cơ số $a > 1$ và suy giảm nhanh của hàm số mũ cơ số $0 < a < 1$; lập luận giải thích tại sao sử dụng phép lấy lôgarit tự nhiên hai vế là công cụ then chốt để ``hạ số mũ'' khi tìm thời gian biến đổi $t$.
+        \item \textit{Năng lực giải quyết vấn đề toán học:} Xây dựng quy trình 4 bước chuẩn để giải một bài toán mô hình thực tiễn: (1) Nhận dạng mô hình và các đại lượng đã cho; (2) Thiết lập phương trình toán học; (3) Biến đổi đại số bằng hàm mũ/lôgarit kết hợp bấm MTCT; (4) Kết luận và đối chiếu ý nghĩa thực tiễn của số liệu.
+        \item \textit{Năng lực giao tiếp toán học:} Trình bày chính xác ý nghĩa các đại lượng vật lí, sinh học gắn với thứ nguyên chuẩn mực: thời gian ($t$ tính bằng năm, ngày, giây), khối lượng ($m_0, m(t)$ tính bằng gam, kilôgam), cường độ âm ($I$ tính bằng $\text{W/m}^2$), mức cường độ âm ($L$ tính bằng $\text{dB}$).
+        \item \textit{Năng lực sử dụng công cụ, phương tiện học toán:} Sử dụng thành thạo máy tính cầm tay (MTCT Casio fx-580VN X) với các phím tính toán số mũ, phím $\ln$, phím $\log$, lệnh $\text{SOLVE}$ để tìm nghiệm chính xác hoặc gần đúng; sử dụng bảng tính số (Excel) để vẽ đường biểu diễn xu hướng tăng trưởng (Trendline).
+    \end{itemize}
+
+    \item \textbf{Năng lực số (Theo Thông tư 02/2025/TT-BGDĐT):}
+    \begin{itemize}[leftmargin=0.6cm]
+        \item \textit{Mã 5.2NC1c (Mô hình hóa và trực quan hóa dữ liệu số):} Học sinh nhập bảng số liệu dân số thực tế vào bảng tính điện tử (Excel/Google Sheets), thiết lập đồ thị phân tán (Scatter plot) và kích hoạt tính năng thêm đường xu hướng hàm mũ (\textit{Exponential Trendline}) để trực quan hóa quy luật tăng trưởng.
+        \item \textit{Mã 3.1NC1a (Tạo lập nội dung số trên GeoGebra):} Học sinh sử dụng phần mềm GeoGebra nhập hàm số mũ $y = N_0 e^{rt}$ với các thanh trượt (\textit{slider}) cho tham số $N_0$ và $r$, quan sát trực quan độ dốc đồ thị thay đổi khi tốc độ tăng trưởng $r$ thay đổi.
+        \item \textit{Mã 5.2NC1b (Làm chủ công cụ tính toán số):} Học sinh thao tác thuần thục MTCT Casio fx-580VN X để tính toán các biểu thức lũy thừa phức tạp và phương trình lôgarit, tránh lỗi làm tròn số quá sớm gây sai số lớn.
+    \end{itemize}
+
+    \item \textbf{Năng lực AI (Theo Quyết định 2422/QĐ-BGDĐT):}
+    \begin{itemize}[leftmargin=0.6cm]
+        \item \textit{Mã 11.D1.1 (Ứng dụng AI trong dự báo dữ liệu chuỗi thời gian):} Học sinh nêu được ý tưởng về cách các hệ thống Trí tuệ nhân tạo (AI Machine Learning) sử dụng các mô hình hồi quy phi tuyến tính (trong đó có hàm mũ và hàm sigmoid/logistic) để dự báo ngắn hạn quy mô dân số hoặc dịch bệnh truyền nhiễm.
+        \item \textit{Kỹ thuật Prompting và Phân tích giới hạn của AI:} Học sinh thiết kế câu lệnh prompt yêu cầu trợ lý AI so sánh sự khác biệt giữa mô hình tăng trưởng hàm mũ không giới hạn (Malthus) và mô hình tăng trưởng logistic có tính đến sức chứa của môi trường; nhận diện giới hạn của mô hình toán học thuần túy khi không xét đến thiên tai, dịch bệnh hay biến đổi khí hậu.
+    \end{itemize}
+
+    \item \textbf{Năng lực chung:}
+    \begin{itemize}[leftmargin=0.6cm]
+        \item \textit{Tự chủ và tự học:} Chủ động tra cứu các số liệu thực tế về dân số, chu kì bán rã phóng xạ của các nguyên tố hóa học và các ngưỡng cường độ âm thanh trong đời sống.
+        \item \textit{Giao tiếp và hợp tác:} Làm việc nhóm tích cực, phân công nhiệm vụ cụ thể giữa thành viên tính toán, thành viên nhập liệu Excel và thành viên tổng hợp báo cáo.
+    \end{itemize}
+\end{itemize}
+
+\subsection*{2. Phẩm chất}
+
+\begin{itemize}[leftmargin=1.2cm]
+    \item \textbf{Chăm chỉ:} Kiên nhẫn thực hiện các phép tính số mũ và lôgarit có độ phức tạp cao, tỉ mỉ ghi chép đơn vị và xử lý số liệu.
+    \item \textbf{Trung thực:} Báo cáo số liệu thực nghiệm trung thực, khách quan, không tự ý chỉnh sửa kết quả tính toán để khớp với giả định.
+    \item \textbf{Trách nhiệm:} Ý thức được vấn đề già hóa dân số, mối nguy hiểm của ô nhiễm tiếng ồn tại trường học và khu dân cư, từ đó xây dựng lối sống văn minh, giữ gìn trật tự công cộng và bảo vệ thính giác.
+\end{itemize}
+
+\section*{II. THIẾT BỊ DẠY HỌC VÀ HỌC LIỆU}
+
+\begin{itemize}[leftmargin=1.2cm]
+    \item \textbf{Giáo viên:}
+    \begin{itemize}[leftmargin=0.6cm]
+        \item Kế hoạch bài dạy chi tiết 1 tiết theo khung Công văn 5512/BGDĐT-GDTrH.
+        \item File trình chiếu PowerPoint/Canva tích hợp video ngắn về sự phân rã của Carbon-14 trong khảo cổ học và biểu đồ tiếng ồn decibel.
+        \item Bảng số liệu thống kê dân số Việt Nam giai đoạn 2010--2025; file mẫu Excel mô phỏng đường xu hướng hàm mũ (Trendline).
+        \item Phiếu học tập số 1 (Worksheet phân tầng 3 bậc thang) và Rubric đánh giá năng lực học sinh.
+    \end{itemize}
+    \item \textbf{Học sinh:}
+    \begin{itemize}[leftmargin=0.6cm]
+        \item Vở ghi chép, SGK Toán 11, bút kẻ, thước.
+        \item Máy tính cầm tay Casio fx-580VN X.
+        \item Điện thoại thông minh hoặc máy tính bảng/laptop (theo nhóm) có kết nối Internet để tra cứu số liệu và thao tác bảng tính.
+    \end{itemize}
+\end{itemize}
+
+\section*{III. TIẾN TRÌNH DẠY HỌC (TIẾT 99 THEO PPCT | TUẦN 34)}
+
+\subsection*{1. Hoạt động 1: Khởi động (Mở đầu) -- 7 phút}
+
+\noindent \textbf{a) Mục tiêu:}
+\begin{itemize}[leftmargin=0.6cm]
+    \item Tạo sự tò mò và hứng thú học tập thông qua nghịch lý về sự tăng trưởng cực nhanh của hàm số mũ và sự thu gọn của thang đo lôgarit trong thực tiễn.
+    \item Giúp học sinh nhận thức được: Nhiều quy luật tự nhiên và xã hội không biến đổi tuyến tính (đều đặn) mà tuân theo quy luật hàm mũ hoặc hàm lôgarit.
+\end{itemize}
+
+\noindent \textbf{b) Nội dung:}
+Giáo viên đặt ra hai câu hỏi tình huống thực tế:
+\begin{itemize}[leftmargin=0.6cm]
+    \item \textbf{Tình huống 1 (Bài toán vi khuẩn E.coli):} Trong điều kiện dinh dưỡng lý tưởng, một quần thể vi khuẩn E.coli cứ sau mỗi 20 phút lại nhân đôi một lần. Nếu ban đầu chỉ có 100 vi khuẩn, sau 24 giờ liên tục (72 chu kỳ nhân đôi), số lượng vi khuẩn sẽ là bao nhiêu? Số lượng đó lớn đến mức nào?
+    \item \textbf{Tình huống 2 (Bài toán ô nhiễm tiếng ồn):} Tai người có thể nghe được âm thanh có cường độ cực nhỏ từ $10^{-12}\text{ W/m}^2$ (ngưỡng nghe) đến âm thanh cực lớn của động cơ máy bay phản lực ở cự ly gần là $100\text{ W/m}^2$. Dải đo cường độ âm trải dài qua $14$ bậc độ lớn ($10^{14}$ lần). Làm thế nào các nhà khoa học có thể dùng một thang đo đơn giản, dễ nhớ từ $0$ đến $140$ để mô tả âm thanh?
+\end{itemize}
+
+\noindent \textbf{c) Sản phẩm:}
+Câu trả lời và tính toán sơ bộ của học sinh:
+\begin{itemize}[leftmargin=0.6cm]
+    \item \textbf{Tình huống 1:} Sau 72 chu kỳ nhân đôi, số lượng vi khuẩn là:
+    $$N = 100 \cdot 2^{72} \approx 100 \cdot 4{,}72 \times 10^{21} = 4{,}72 \times 10^{23} \text{ (con vi khuẩn)}$$
+    Học sinh nhận thấy đây là một con số khổng lồ (tương đương khối lượng hàng ngàn tấn), cho thấy sức mạnh khủng khiếp của sự tăng trưởng hàm mũ.
+    \item \textbf{Tình huống 2:} Các nhà khoa học sử dụng phép tính lôgarit cơ số 10 để biến đổi dải số từ $10^{-12}$ đến $10^2$ thành thang đo mức cường độ âm decibel: $L = 10 \log\left(\dfrac{I}{10^{-12}}\right)$, cho dải giá trị gọn gàng từ $0\text{ dB}$ đến $140\text{ dB}$.
+\end{itemize}
+
+\noindent \textbf{d) Tổ chức thực hiện:}
+\begin{itemize}[leftmargin=0.6cm]
+    \item \textbf{Chuyển giao nhiệm vụ:} Giáo viên trình chiếu video clip 1 phút về sự nhân đôi của tế bào và hiển thị 2 tình huống trên màn hình. Yêu cầu học sinh bấm máy tính cá nhân trong 2 phút.
+    \item \textbf{Thực hiện nhiệm vụ:} Học sinh quan sát, sử dụng MTCT Casio fx-580VN X bấm $100 \times 2^{72}$, ngạc nhiên trước kết quả vượt giới hạn hiển thị thông thường (dạng ký hiệu khoa học $\times 10^{23}$).
+    \item \textbf{Báo cáo, thảo luận:} Giáo viên mời đại diện 2 học sinh phát biểu cảm nhận về kết quả tính toán.
+    \item \textbf{Kết luận, nhận định:} Giáo viên dẫn dắt: Trong tự nhiên, sự tăng trưởng (sinh học, dân số), sự suy giảm (phóng xạ) và cảm nhận giác quan của con người (thính giác, thị giác, cảm nhận chấn động động đất) đều vận hành theo hàm số mũ và hàm số lôgarit. Tiết học này sẽ giúp các em giải mã 3 mô hình toán học kinh điển nhất.
+\end{itemize}
+
+\vspace{5pt}
+
+\subsection*{2. Hoạt động 2: Khám phá các mô hình toán học thực tiễn (15 phút)}
+
+\noindent \textbf{a) Mục tiêu:}
+\begin{itemize}[leftmargin=0.6cm]
+    \item Nắm vững công thức, ý nghĩa các đại lượng và phạm vi áp dụng của 3 mô hình toán học cốt lõi:
+    \begin{enumerate}
+        \item Mô hình tăng trưởng dân số / sinh học liên tục: $N(t) = N_0 e^{rt}$.
+        \item Mô hình phân rã phóng xạ của các chất: $m(t) = m_0 \left(\dfrac{1}{2}\right)^{\frac{t}{T}} = m_0 e^{-\lambda t}$.
+        \item Mô hình mức cường độ âm trong Vật lí: $L = 10 \log\left(\dfrac{I}{I_0}\right)$ (dB).
+    \end{enumerate}
+    \item Nắm vững kỹ thuật giải phương trình mũ bằng phép lấy lôgarit tự nhiên ($\ln$) hai vế để tìm biến thời gian $t$.
+\end{itemize}
+
+\noindent \textbf{b) Nội dung:}
+Giáo viên chia lớp thành 3 khối chuyên đề tương ứng với 3 mô hình để học sinh tự hoàn thiện bảng đặc tả mô hình trong Phiếu học tập:
+
+\textbf{1. Mô hình 1: Tăng trưởng dân số liên tục (Mô hình Malthus)}
+\begin{itemize}[leftmargin=0.6cm]
+    \item Công thức: $N(t) = N_0 e^{rt}$.
+    \item Giải thích các đại lượng:
+    \begin{itemize}
+        \item $N_0$: Dân số (hoặc số lượng cá thể) tại mốc thời gian ban đầu ($t = 0$).
+        \item $r$: Tỉ lệ tăng trưởng liên tục hàng năm (dưới dạng số thập phân, ví dụ $1{,}2\% = 0{,}012$).
+        \item $t$: Thời gian tăng trưởng (tính bằng năm kể từ mốc $t = 0$).
+        \item $N(t)$: Dân số dự báo sau $t$ năm.
+        \item $e \approx 2{,}71828$: Cơ số của lôgarit tự nhiên (số Euler).
+    \end{itemize}
+    \item \textbf{Bài toán xác định thời gian tăng gấp đôi ($t_2$):}
+    $$N(t_2) = 2N_0 \iff N_0 e^{rt_2} = 2N_0 \iff e^{rt_2} = 2 \iff r t_2 = \ln 2 \implies t_2 = \dfrac{\ln 2}{r} \approx \dfrac{0{,}6931}{r}$$
+    (Trong kinh tế thường áp dụng xấp xỉ Quy tắc 70: $t_2 \approx \dfrac{70}{r\%}$).
+\end{itemize}
+
+\textbf{2. Mô hình 2: Phân rã phóng xạ (Vật lí hạt nhân \& Khảo cổ học)}
+\begin{itemize}[leftmargin=0.6cm]
+    \item Hiện tượng: Một chất phóng xạ không bền sẽ tự động phát ra các bức xạ hạt nhân và phân rã thành nguyên tố khác. Tốc độ phân rã tỉ lệ thuận với số hạt nhân chưa bị phân rã.
+    \item Công thức theo chu kì bán rã:
+    $$m(t) = m_0 \cdot \left(\dfrac{1}{2}\right)^{\frac{t}{T}}$$
+    trong đó: $m_0$ là khối lượng ban đầu; $T$ là chu kì bán rã (thời gian để một nửa khối lượng chất phóng xạ bị phân rã); $t$ là thời gian phân rã (cùng đơn vị với $T$).
+    \item Dạng tương đương theo hàm số mũ tự nhiên: $m(t) = m_0 e^{-\lambda t}$ với hằng số phóng xạ $\lambda = \dfrac{\ln 2}{T}$.
+    \item Phương pháp tìm thời gian phân rã $t$ khi biết khối lượng còn lại $m$:
+    $$\left(\dfrac{1}{2}\right)^{\frac{t}{T}} = \dfrac{m}{m_0} \iff \dfrac{t}{T} \ln\left(\dfrac{1}{2}\right) = \ln\left(\dfrac{m}{m_0}\right) \iff -\dfrac{t}{T} \ln 2 = \ln\left(\dfrac{m}{m_0}\right) \implies t = -T \cdot \dfrac{\ln(m / m_0)}{\ln 2} = T \cdot \dfrac{\ln(m_0 / m)}{\ln 2}$$
+\end{itemize}
+
+\textbf{3. Mô hình 3: Mức cường độ âm (Thang đo Decibel -- dB)}
+\begin{itemize}[leftmargin=0.6cm]
+    \item Đại lượng: Cường độ âm $I$ đo bằng $\text{W/m}^2$. Cường độ âm chuẩn của âm thanh nhỏ nhất tai người nghe được (tại tần số $1000\text{ Hz}$) là:
+    $$I_0 = 10^{-12} \text{ W/m}^2$$
+    \item Mức cường độ âm $L$ (đo bằng decibel, ký hiệu $\text{dB}$):
+    $$L = 10 \log\left(\dfrac{I}{I_0}\right) = 10 \log\left(\dfrac{I}{10^{-12}}\right)$$
+    \item Nhận xét quan trọng:
+    \begin{itemize}
+        \item Khi cường độ âm tăng lên gấp 10 lần ($I_2 = 10 I_1$) thì mức cường độ âm tăng thêm:
+        $$\Delta L = 10 \log(10) = 10 \text{ dB}$$
+        \item Khi cường độ âm tăng lên gấp 2 lần ($I_2 = 2 I_1$) thì mức cường độ âm tăng thêm:
+        $$\Delta L = 10 \log(2) \approx 3 \text{ dB}$$
+    \end{itemize}
+\end{itemize}
+
+\noindent \textbf{c) Sản phẩm:}
+Bảng tổng hợp kiến thức trong vở ghi của học sinh với đầy đủ 3 mô hình, công thức gốc, công thức giải biến $t$ và thứ nguyên tương ứng.
+
+\noindent \textbf{d) Tổ chức thực hiện:}
+\begin{itemize}[leftmargin=0.6cm]
+    \item \textbf{Chuyển giao nhiệm vụ:} Giáo viên phát Phiếu học tập số 1, yêu cầu các nhóm đọc mục Khám phá kiến thức, phân tích công thức và giải thích vai trò của cơ số $e$ và cơ số 10.
+    \item \textbf{Thực hiện nhiệm vụ có giàn giáo:} Giáo viên hướng dẫn học sinh cách biến đổi phương trình mũ $a^x = b \iff x = \log_a b$ hoặc $e^{rt} = K \iff rt = \ln K$.
+    \item \textbf{Báo cáo, thảo luận:} Gọi đại diện 3 nhóm lần lượt trình bày về: (1) Mô hình dân số; (2) Mô hình phóng xạ; (3) Mô hình mức cường độ âm.
+    \item \textbf{Kết luận, nhận định:} Giáo viên nhấn mạnh: Cả 3 mô hình đều dựa trên nền tảng của hàm số mũ $y = a^x$ và hàm số lôgarit $y = \log_a x$. Để giải các bài toán này, MTCT Casio fx-580VN X là công cụ tính toán đắc lực, nhưng việc hiểu bản chất biến đổi đại số là bắt buộc để không bị nhầm lẫn công thức.
+\end{itemize}
+
+\begin{scaffoldbox}{GIÀN GIÁO HỖ TRỢ HỌC SINH TRUNG BÌNH -- YẾU: QUY TẮC ``HẠ SỐ MŨ''}
+Khi gặp phương trình dạng $e^{rt} = A$ ($A > 0$), học sinh yếu thường lúng túng không biết tìm $t$ như thế nào. Giáo viên hướng dẫn khẩu quyết 2 bước:\\
+\textbf{Bước 1:} Lấy lôgarit tự nhiên ($\ln$) hai vế: $\ln(e^{rt}) = \ln(A)$.\\
+\textbf{Bước 2:} Dùng tính chất $\ln(e^u) = u$, ta được ngay: $rt = \ln A \implies t = \dfrac{\ln A}{r}$. Bấm MTCT: nhấn phím [ln], nhập giá trị $A$, chia cho $r$.
+\end{scaffoldbox}
+
+\vspace{5pt}
+
+\subsection*{3. Hoạt động 3: Luyện tập giải toán mô hình thực tiễn (13 phút)}
+
+\noindent \textbf{a) Mục tiêu:}
+\begin{itemize}[leftmargin=0.6cm]
+    \item Vận dụng trực tiếp 3 mô hình vào các bài toán cụ thể gắn liền với đời sống: dự báo dân số quốc gia, định tuổi khảo cổ học bằng Carbon-14, đánh giá tiếng ồn môi trường học đường.
+    \item Rèn luyện kỹ năng bấm MTCT Casio fx-580VN X chính xác, làm tròn số theo quy chuẩn thực tiễn.
+\end{itemize}
+
+\noindent \textbf{b) Nội dung:}
+Học sinh giải quyết 3 bài toán luyện tập trong Phiếu học tập số 1:
+
+\textbf{Bài toán 1 (Dự báo dân số):}
+Theo Tổng cục Thống kê, dân số Việt Nam vào ngày 01/01/2024 ước tính là $N_0 = 100{,}3$ triệu người. Giả sử tỉ lệ gia tăng dân số liên tục hàng năm không đổi là $r = 0{,}84\%/\text{năm} = 0{,}0084$.
+\begin{enumerate}[label=\alph*)]
+    \item Dự báo dân số nước ta vào ngày 01/01/2030 (sau 6 năm).
+    \item Hỏi đến khoảng năm nào thì dân số nước ta sẽ chạm mốc $110$ triệu người?
+\end{enumerate}
+
+\textbf{Bài toán 2 (Xác định niên đại bằng Carbon-14):}
+Đồng vị phóng xạ Carbon-14 ($^{14}\text{C}$) có chu kì bán rã là $T \approx 5730\text{ năm}$. Khi một sinh vật còn sống, tỉ lệ $^{14}\text{C}$ trong cơ thể được duy trì không đổi. Khi sinh vật chết đi, lượng $^{14}\text{C}$ phân rã dần theo thời gian. Một mẫu gỗ cổ khai quật trong một lăng mộ cổ có lượng $^{14}\text{C}$ còn lại bằng $35\%$ so với lượng $^{14}\text{C}$ ban đầu khi cây còn sống. Hãy ước tính niên đại của mẫu gỗ cổ đó.
+
+\textbf{Bài toán 3 (Độ to của âm thanh sân trường):}
+Trong giờ ra chơi tại sân trường THCS\&THPT Hồng Vân, đo được cường độ âm là $I_1 = 10^{-4}\text{ W/m}^2$.
+\begin{enumerate}[label=\alph*)]
+    \item Tính mức cường độ âm $L_1$ tương ứng theo đơn vị decibel ($\text{dB}$).
+    \item Trong giờ học, để đảm bảo không gian yên tĩnh, mức cường độ âm trong lớp học chỉ nên ở mức $L_2 = 50\text{ dB}$. Hỏi cường độ âm $I_1$ trong giờ ra chơi gấp bao nhiêu lần cường độ âm $I_2$ trong giờ học?
+\end{enumerate}
+
+\noindent \textbf{c) Sản phẩm:}
+Bài giải chi tiết của học sinh:
+
+\textbf{Lời giải Bài toán 1:}
+\begin{enumerate}[label=\alph*)]
+    \item Dân số vào ngày 01/01/2030 (sau $t = 2030 - 2024 = 6\text{ năm}$) được dự báo là:
+    $$N(6) = N_0 e^{rt} = 100{,}3 \cdot e^{0{,}0084 \cdot 6} = 100{,}3 \cdot e^{0{,}0504}$$
+    Sử dụng MTCT Casio fx-580VN X bấm: $100{,}3 \times e^{0{,}0504} \approx 105{,}487 \approx 105{,}5 \text{ (triệu người)}$.\\
+    Vậy vào năm 2030, dân số Việt Nam ước tính đạt khoảng $105{,}5$ triệu người.
+
+    \item Để dân số chạm mốc $N(t) = 110$ triệu người:
+    $$100{,}3 \cdot e^{0{,}0084 t} = 110 \iff e^{0{,}0084 t} = \dfrac{110}{100{,}3} \approx 1{,}09671$$
+    Lấy lôgarit tự nhiên hai vế:
+    $$0{,}0084 t = \ln\left(\dfrac{110}{100{,}3}\right) \implies t = \dfrac{\ln\left(\dfrac{110}{100{,}3}\right)}{0{,}0084}$$
+    Bấm MTCT: $t \approx \dfrac{0{,}09231}{0{,}0084} \approx 10{,}99 \approx 11 \text{ (năm)}$.\\
+    Kể từ năm 2024, sau khoảng 11 năm, tức là vào khoảng năm $2024 + 11 = 2035$, dân số nước ta sẽ chạm mốc $110$ triệu người.
+\end{enumerate}
+
+\textbf{Lời giải Bài toán 2:}
+Gọi $m_0$ là lượng $^{14}\text{C}$ ban đầu khi cây gỗ còn sống.
+Lượng $^{14}\text{C}$ còn lại tại thời điểm khai quật là:
+$$m(t) = 35\% \cdot m_0 = 0{,}35 m_0$$
+Theo mô hình phân rã phóng xạ với $T = 5730\text{ năm}$:
+$$m_0 \left(\dfrac{1}{2}\right)^{\frac{t}{5730}} = 0{,}35 m_0 \iff \left(\dfrac{1}{2}\right)^{\frac{t}{5730}} = 0{,}35$$
+Lấy lôgarit tự nhiên ($\ln$) hai vế:
+$$\ln\left[\left(\dfrac{1}{2}\right)^{\frac{t}{5730}}\right] = \ln(0{,}35) \iff \dfrac{t}{5730} \cdot \ln(0{,}5) = \ln(0{,}35)$$
+Do đó:
+$$t = 5730 \cdot \dfrac{\ln(0{,}35)}{\ln(0{,}5)}$$
+Bấm máy tính cầm tay:
+$$t \approx 5730 \cdot \dfrac{-1{,}04982}{-0{,}69315} \approx 5730 \cdot 1{,}51456 \approx 8678{,}4 \text{ (năm)}$$
+Vậy mẫu gỗ cổ có niên đại khoảng $8678$ năm (khoảng hơn 8600 năm trước hiện tại).
+
+\textbf{Lời giải Bài toán 3:}
+\begin{enumerate}[label=\alph*)]
+    \item Mức cường độ âm trong giờ ra chơi tại sân trường:
+    $$L_1 = 10 \log\left(\dfrac{I_1}{I_0}\right) = 10 \log\left(\dfrac{10^{-4}}{10^{-12}}\right) = 10 \log(10^8) = 10 \cdot 8 = 80 \text{ dB}$$
+    Mức âm thanh $80\text{ dB}$ tương đương với tiếng ồn của đường phố đông đúc xe cộ.
+
+    \item Trong phòng học yên tĩnh với $L_2 = 50\text{ dB}$:
+    $$10 \log\left(\dfrac{I_2}{I_0}\right) = 50 \iff \log\left(\dfrac{I_2}{I_0}\right) = 5 \iff \dfrac{I_2}{I_0} = 10^5 \implies I_2 = 10^5 \cdot 10^{-12} = 10^{-7} \text{ W/m}^2$$
+    Tỉ số cường độ âm:
+    $$\dfrac{I_1}{I_2} = \dfrac{10^{-4}}{10^{-7}} = 10^3 = 1000 \text{ (lần)}$$
+    (Hoặc tính nhanh qua chênh lệch decibel: $\Delta L = L_1 - L_2 = 80 - 50 = 30\text{ dB} \implies \dfrac{I_1}{I_2} = 10^{\frac{30}{10}} = 10^3 = 1000$ lần).\\
+    Vậy cường độ âm trong giờ ra chơi lớn gấp $1000$ lần cường độ âm trong lớp học yên tĩnh!
+\end{enumerate}
+
+\noindent \textbf{d) Tổ chức thực hiện:}
+\begin{itemize}[leftmargin=0.6cm]
+    \item \textbf{Chuyển giao nhiệm vụ:} Giao Bài toán 1 cho nhóm 1 và 2; Bài toán 2 cho nhóm 3 và 4; Bài toán 3 cho nhóm 5 và 6. Thời gian thảo luận: 5 phút.
+    \item \textbf{Thực hiện nhiệm vụ:} Học sinh phân công tính toán và kiểm tra chéo kết quả trên máy tính Casio. Giáo viên theo dõi, hướng dẫn cách bấm phân số có chứa $\ln$ và số mũ.
+    \item \textbf{Báo cáo, thảo luận:} Đại diện 3 nhóm lên bảng trình bày. Giáo viên nhận xét, nhấn mạnh bài toán tính tỉ số cường độ âm ở Bài 3: Chênh lệch chỉ $30\text{ dB}$ nhưng năng lượng sóng âm thực tế đã gấp tới $1000$ lần.
+    \item \textbf{Kết luận, nhận định:} Giáo viên chốt lại kỹ năng: Khi giải toán thực tế, luôn luôn kiểm tra lại thứ nguyên của đại lượng và tính hợp lý của kết quả số học.
+\end{itemize}
+
+\vspace{5pt}
+
+\subsection*{4. Hoạt động 4: Vận dụng \& Mở rộng STEM (10 phút)}
+
+\noindent \textbf{a) Mục tiêu:}
+\begin{itemize}[leftmargin=0.6cm]
+    \item Tích hợp Năng lực số: Tạo lập đường xu hướng tăng trưởng (Trendline) trên Excel từ dữ liệu số.
+    \item Tích hợp Năng lực AI: Hiểu được vai trò và hạn chế của mô hình toán học trong các thuật toán AI dự báo.
+    \item Giáo dục STEM: Khảo sát thực tế cường độ âm thanh trong trường học bằng ứng dụng điện thoại thông minh (Sound Meter).
+\end{itemize}
+
+\noindent \textbf{b) Nội dung:}
+Giáo viên triển khai 2 nhiệm vụ dự án thực hành:
+
+\begin{stembox}{DỰ ÁN STEM: KHẢO SÁT Ô NHIỄM TIẾNG ỒN TẠI KHU VỰC TRƯỜNG HỌC}
+\textbf{1. Nhiệm vụ thực nghiệm:} Mỗi nhóm sử dụng một điện thoại thông minh cài ứng dụng đo tiếng ồn miễn phí (\textit{Sound Meter / Decibel X}):
+\begin{itemize}
+    \item Đo mức cường độ âm tại 3 vị trí: (1) Trong lớp học khi đang nghe giảng; (2) Sân trường trong giờ ra chơi; (3) Cổng trường vào giờ tan học khi phụ huynh đón con.
+    \item Ghi chép giá trị decibel trung bình và cường độ âm $I$ tương ứng.
+\end{itemize}
+\textbf{2. Kiến nghị giải pháp:} Dựa trên tiêu chuẩn âm học học đường (mức cho phép dưới $55\text{ dB}$ trong lớp học), đề xuất giải pháp giảm thiểu ô nhiễm tiếng ồn (trồng thêm dải cây xanh cách âm, tuyên truyền không bấm còi xe trước cổng trường).
+\end{stembox}
+
+\begin{aibox}{TÍCH HỢP NĂNG LỰC AI: GIỚI HẠN CỦA MÔ HÌNH TOÁN HỌC DỰ BÁO}
+\textbf{Tình huống học tập số:} Giáo viên hướng dẫn học sinh đặt prompt hỏi AI:\\
+\textit{``Prompt: Hãy so sánh mô hình tăng trưởng hàm mũ Malthus $N(t) = N_0 e^{rt}$ và mô hình tăng trưởng Logistic $N(t) = \dfrac{K}{1 + A e^{-rt}}$ trong dự báo dân số. Vì sao mô hình hàm mũ thuần túy sẽ thất bại trong dài hạn?''}\\
+\textbf{Phân tích của học sinh dưới sự định hướng của giáo viên:}
+\begin{itemize}
+    \item Mô hình hàm mũ giả định tài nguyên là vô hạn, dân số sẽ tăng tới vô cực (điều bất khả thi trong thực tế).
+    \item Mô hình Logistic bổ sung tham số $K$ -- \textit{Sức chứa tối đa của môi trường (Carrying capacity)}. Khi dân số tiến gần đến $K$, tốc độ tăng trưởng sẽ chậm lại và tiệm cận ngang.
+    \item \textbf{Bài học AI:} Thuật toán AI chỉ đưa ra kết quả dựa trên mô hình toán học và dữ liệu huấn luyện được cung cấp. Con người phải có tư duy phản biện để nhận diện các giới hạn giả định của mô hình.
+\end{itemize}
+\end{aibox}
+
+\noindent \textbf{c) Sản phẩm:}
+Báo cáo dự án STEM thu nhỏ của các nhóm: bảng số liệu đo decibel thực tế tại trường, biểu đồ trực quan hóa đường xu hướng tăng trưởng dân số trên Excel và nhận xét so sánh giữa mô hình hàm mũ và mô hình Logistic.
+
+\noindent \textbf{d) Tổ chức thực hiện:}
+\begin{itemize}[leftmargin=0.6cm]
+    \item \textbf{Chuyển giao nhiệm vụ:} Giáo viên trình chiếu hướng dẫn thực hành đo tiếng ồn và thao tác vẽ Trendline trên Excel. Giao nhiệm vụ thực hành đo đạc theo nhóm và nộp báo cáo vào tuần sau.
+    \item \textbf{Thực hiện nhiệm vụ:} Học sinh mở ứng dụng điện thoại thử nghiệm đo tiếng ồn trong phòng học ngay tại thời điểm hiện tại (khoảng $45\text{ dB}$ khi im lặng, tăng lên $65\text{ dB}$ khi cả lớp cùng thảo luận).
+    \item \textbf{Báo cáo, thảo luận:} Đại diện 1 nhóm chia sẻ màn hình bảng tính Excel vẽ đồ thị hàm số mũ dự báo dân số với đường xu hướng $R^2 \approx 0{,}98$.
+    \item \textbf{Kết luận, nhận định và Dặn dò về nhà:}
+    \begin{itemize}
+        \item Giáo viên tổng kết: Toán học không hề khô khan mà chính là ngôn ngữ mô tả chính xác nhất các quy luật vận động của tự nhiên, từ tế bào vi khuẩn đến dân số cả một quốc gia hay các di chỉ khảo cổ học hàng vạn năm.
+        \item \textbf{Nhiệm vụ về nhà:}
+        \begin{enumerate}
+            \item Hoàn thành các bài tập còn lại trong Phiếu học tập số 1.
+            \item Thực hiện đo đạc số liệu decibel tại cổng trường và nộp bảng số liệu vào thư mục Google Drive của lớp.
+            \item Chuẩn bị cho bài học tiếp theo: \textbf{Hoạt động thực hành trải nghiệm Hình học} (2 tiết, Tiết 100, 101 theo PPCT | Tuần 35).
+        \end{enumerate}
+    \end{itemize}
+\end{itemize}
+
+\vspace{10pt}
+
+\section*{IV. PHỤ LỤC HỌC LIỆU BỔ TRỢ (BẮT BUỘC)}
+
+\subsection*{1. Phiếu học tập số 1 (Worksheet phân tầng bậc thang)}
+
+\begin{tcolorbox}[enhanced, colback=white, colframe=blue!70!black, arc=1.5mm, title=\textbf{PHIẾU HỌC TẬP: MỘT VÀI MÔ HÌNH TOÁN HỌC SỬ DỤNG HÀM SỐ MŨ VÀ LÔGARIT}]
+\textbf{Họ và tên học sinh:} \dots\dots\dots\dots\dots\dots\dots\dots\dots\dots\dots\dots\dots\dots \textbf{Lớp:} 11A\dots \quad \textbf{Nhóm:} \dots\dots
+
+\vspace{3pt}
+\hrule
+\vspace{5pt}
+
+\textbf{\large BẬC 1: NHẬN BIẾT -- THÔNG HIỂU (Dành cho toàn thể học sinh, đặc biệt HS TB-Yếu)}
+\begin{enumerate}[label=\textbf{Bài 1.\arabic*.}]
+    \item Nối mỗi mô hình toán học ở cột A với công thức tương ứng ở cột B:
+    \begin{center}
+    \begin{tabular}{|p{7cm}|p{7cm}|}
+    \hline
+    \textbf{Cột A (Hiện tượng thực tiễn)} & \textbf{Cột B (Mô hình toán học)} \\
+    \hline
+    1. Tăng trưởng dân số liên tục & a) $L = 10 \log\left(\dfrac{I}{I_0}\right)$ (dB) \\
+    \hline
+    2. Phân rã chất phóng xạ theo chu kì bán rã & b) $N(t) = N_0 e^{rt}$ \\
+    \hline
+    3. Thang đo mức cường độ âm thanh & c) $m(t) = m_0 \left(\dfrac{1}{2}\right)^{\frac{t}{T}}$ \\
+    \hline
+    \end{tabular}
+    \end{center}
+    \item Một chất phóng xạ có khối lượng ban đầu $m_0 = 100\text{ g}$, chu kì bán rã $T = 30\text{ ngày}$.
+    \begin{itemize}[leftmargin=0.6cm]
+        \item a) Viết công thức tính khối lượng chất phóng xạ còn lại sau $t$ ngày.
+        \item b) Tính khối lượng còn lại sau $60\text{ ngày}$ (tương ứng 2 chu kì bán rã).
+    \end{itemize}
+    \item Tính mức cường độ âm $L$ (dB) của một tiếng thì thầm có cường độ $I = 10^{-10}\text{ W/m}^2$, biết $I_0 = 10^{-12}\text{ W/m}^2$.
+\end{enumerate}
+
+\vspace{5pt}
+\hrule
+\vspace{5pt}
+
+\textbf{\large BẬC 2: THÔNG HIỂU -- VẬN DỤNG (Rèn luyện kỹ năng biến đổi và giải toán)}
+\begin{enumerate}[label=\textbf{Bài 2.\arabic*.}]
+    \item Dân số của một thành phố hiện nay là $2$ triệu người. Dự kiến tốc độ gia tăng dân số liên tục là $1{,}5\%/\text{năm}$.
+    \begin{itemize}[leftmargin=0.6cm]
+        \item a) Sau bao nhiêu năm thì dân số thành phố đạt $3$ triệu người?
+        \item b) Tính thời gian để dân số thành phố tăng gấp đôi.
+    \end{itemize}
+    \item Đồng vị phóng xạ Poloni $^{210}\text{Po}$ có chu kì bán rã là $138\text{ ngày}$. Nếu ban đầu có $20\text{ mg}$ Poloni, hỏi sau bao lâu thì khối lượng còn lại chỉ còn $2\text{ mg}$?
+    \item Tại một buổi hòa nhạc, mức cường độ âm đo được là $L_1 = 100\text{ dB}$. Tại một thư viện yên tĩnh, mức cường độ âm là $L_2 = 40\text{ dB}$. Hỏi cường độ âm tại buổi hòa nhạc gấp bao nhiêu lần cường độ âm tại thư viện?
+\end{enumerate}
+
+\vspace{5pt}
+\hrule
+\vspace{5pt}
+
+\textbf{\large BẬC 3: VẬN DỤNG CAO -- MỞ RỘNG (Phát triển tư duy phân tích mô hình)}
+\begin{enumerate}[label=\textbf{Bài 3.\arabic*.}]
+    \item (Định luật làm nguội của Newton) Nhiệt độ $T(t)$ của một tách cà phê nóng sau khi để trong phòng có nhiệt độ không đổi $T_m = 25^\circ\text{C}$ được mô hình hóa bởi công thức:
+    $$T(t) = T_m + (T_0 - T_m) e^{-kt}$$
+    trong đó $T_0$ là nhiệt độ ban đầu của tách cà phê, $k$ là hệ số làm nguội ($k > 0$), $t$ tính bằng phút. Biết ban đầu cà phê ở nhiệt độ $95^\circ\text{C}$ và sau 5 phút nhiệt độ giảm còn $80^\circ\text{C}$.
+    \begin{itemize}[leftmargin=0.6cm]
+        \item a) Xác định hệ số làm nguội $k$ (làm tròn đến 4 chữ số thập phân).
+        \item b) Sau bao lâu kể từ lúc bắt đầu thì tách cà phê có thể uống được ở nhiệt độ $50^\circ\text{C}$?
+    \end{itemize}
+\end{enumerate}
+\end{tcolorbox}
+
+\vspace{5pt}
+
+\subsection*{2. Bảng đối chiếu các mô hình mũ và lôgarit trong khoa học}
+
+\begin{center}
+\begin{tabularx}{\textwidth}{|>{\centering\arraybackslash}p{2.5cm}|>{\centering\arraybackslash}p{4cm}|>{\centering\arraybackslash}X|>{\centering\arraybackslash}X|}
+\hline
+\textbf{Lĩnh vực} & \textbf{Tên mô hình} & \textbf{Công thức toán học} & \textbf{Ý nghĩa tham số cốt lõi} \\
+\hline
+Xã hội học \& Sinh học & Tăng trưởng liên tục (Dân số, vi khuẩn) & $N(t) = N_0 e^{rt}$ & $N_0$: số lượng gốc \newline $r$: tỉ lệ tăng trưởng \newline Thời gian gấp đôi: $t = \dfrac{\ln 2}{r}$ \\
+\hline
+Vật lí hạt nhân \& Khảo cổ & Phân rã phóng xạ (Định tuổi Carbon-14) & $m(t) = m_0 \left(\dfrac{1}{2}\right)^{\frac{t}{T}} = m_0 e^{-\lambda t}$ & $m_0$: khối lượng ban đầu \newline $T$: chu kì bán rã \newline $\lambda = \dfrac{\ln 2}{T}$: hằng số phân rã \\
+\hline
+Âm học \& Môi trường & Mức cường độ âm (Decibel) & $L = 10 \log\left(\dfrac{I}{I_0}\right)$ (dB) & $I$: cường độ âm ($\text{W/m}^2$) \newline $I_0 = 10^{-12}\text{ W/m}^2$: ngưỡng nghe \newline Tăng $10\text{ dB} \iff I$ tăng 10 lần \\
+\hline
+Nhiệt động học & Định luật làm nguội của Newton & $T(t) = T_m + (T_0 - T_m)e^{-kt}$ & $T_m$: nhiệt độ môi trường \newline $T_0$: nhiệt độ ban đầu \newline $k$: hệ số trao đổi nhiệt \\
+\hline
+Địa chấn học & Thang đo động đất Richter & $M = \log\left(\dfrac{A}{A_0}\right)$ & $A$: biên độ sóng địa chấn \newline Tăng 1 độ Richter $\iff$ biên độ tăng 10 lần \\
+\hline
+\end{tabularx}
+\end{center}
+
+\vspace{5pt}
+
+\subsection*{3. Rubric đánh giá năng lực học sinh trong tiết học}
+
+\begin{center}
+\begin{tabularx}{\textwidth}{|p{3cm}|X|X|X|X|}
+\hline
+\textbf{Tiêu chí} & \textbf{Chưa đạt (Dưới 5)} & \textbf{Đạt (5.0 -- 6.5)} & \textbf{Khá (7.0 -- 8.5)} & \textbf{Tốt (9.0 -- 10)} \\
+\hline
+\textbf{1. Hiểu và áp dụng mô hình toán học} & Nhầm lẫn các đại lượng trong công thức, không viết được mô hình. & Thay số đúng vào công thức cơ bản; tính được giá trị khi cho trước thời gian $t$. & Vận dụng thành thạo phép lấy $\ln$ hai vế để giải phương trình tìm thời gian $t$. & Thiết lập và biến đổi linh hoạt giữa các mô hình, phân tích được ý nghĩa giới hạn của mô hình. \\
+\hline
+\textbf{2. Kỹ năng tính toán \& MTCT} & Bấm máy tính sai cú pháp, không biết dùng phím $\ln, \log, e^x$. & Bấm được máy tính tính giá trị lũy thừa đơn giản, còn sai sót làm tròn. & Sử dụng thành thạo MTCT giải phương trình mũ và logarit, làm tròn số chuẩn xác. & Tính toán cực nhanh, kiểm tra chéo độc lập nhiều phương pháp, xử lý tốt sai số. \\
+\hline
+\textbf{3. Năng lực số \& Dự án STEM} & Chưa biết đo decibel, không tham gia hoạt động số. & Sử dụng được app đo decibel trên điện thoại theo hướng dẫn. & Thu thập số liệu decibel đầy đủ; tạo được biểu đồ Trendline trên Excel. & Phân tích sâu sắc số liệu âm thanh trường học; đề xuất giải pháp giảm ồn khả thi; hiểu rõ AI. \\
+\hline
+\textbf{4. Hợp tác nhóm \& Phẩm chất} & Thụ động, không ghi chép, không tương tác với nhóm. & Có ý thức làm bài tập trong nhóm, ghi chép bài đầy đủ. & Tích cực thảo luận, chia sẻ cách bấm máy cho bạn, có tinh thần trách nhiệm. & Đóng vai trò nòng cốt điều phối nhóm; trình bày tự tin, trung thực và trách nhiệm cao. \\
+\hline
+\end{tabularx}
+\end{center}
+
+\end{document}
