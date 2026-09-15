@@ -1,0 +1,573 @@
+\documentclass[12pt, a4paper]{article}
+% --- 1. Cấu hình Tiếng Việt và Font chữ chuẩn ---
+\usepackage[utf8]{inputenc}
+\usepackage[T5]{fontenc}
+\usepackage[vietnamese]{babel}
+\usepackage{mathptmx} % Font Times New Roman đồng bộ cả chữ và công thức toán, không gây xung đột gói
+
+\makeatletter
+\renewcommand{\normalsize}{\@setfontsize\normalsize{13pt}{16pt}}
+\makeatother
+\normalsize
+
+% --- 2. Gói Toán học & Ký hiệu bổ trợ ---
+\usepackage{amsmath, amssymb, amsfonts, mathrsfs, amsthm}
+\usepackage{graphicx}
+\usepackage{fontawesome}
+\usepackage{booktabs, tabularx, array, multirow}
+\usepackage{enumitem}
+
+% --- 3. Đồ họa TikZ, Bảng biến thiên & Hình không gian ---
+\usepackage{tikz}
+\usetikzlibrary{calc, intersections, angles, quotes, patterns, arrows.meta, 3d}
+\usepackage{pgfplots}
+\pgfplotsset{compat=1.18}
+\usepackage{tkz-euclide}
+\usepackage{tkz-tab}
+
+\renewcommand{\vec}[1]{\overrightarrow{#1}}
+
+% --- 4. Hộp sư phạm (Tcolorbox) ---
+\usepackage[many]{tcolorbox}
+\tcbuselibrary{skins, breakable}
+
+% --- 5. Căn lề chuẩn văn bản giáo án ---
+\usepackage{geometry}
+\geometry{
+    a4paper,
+    left=25mm,
+    right=15mm,
+    top=20mm,
+    bottom=20mm
+}
+
+% --- 6. Header / Footer chuẩn hóa ---
+\usepackage{fancyhdr}
+\usepackage{lastpage}
+\pagestyle{fancy}
+\fancyhf{}
+
+\fancyhead[L]{\small \textit{Kế hoạch bài dạy Toán 11}}
+\fancyhead[R]{\textbf{Trang \thepage/\pageref{LastPage}}}
+\fancyfoot[L]{\small \textit{Tổ Toán - Tin}}
+\fancyfoot[R]{\small \textit{Trường THCS\&THPT Hồng Vân}}
+\renewcommand{\headrulewidth}{0.4pt}
+\renewcommand{\footrulewidth}{0.4pt}
+
+% --- 7. Giãn dòng & Giãn đoạn theo chuẩn Nghị định 30/2020/NĐ-CP ---
+\usepackage{setspace}
+\setstretch{1.15}
+\setlength{\parindent}{1.0cm}
+\setlength{\parskip}{5pt}
+
+% Định nghĩa hộp sư phạm chuyên dụng
+\newtcolorbox{pedabox}[2][]{
+    enhanced,
+    breakable,
+    colback=blue!3!white,
+    colframe=blue!65!black,
+    fonttitle=\bfseries\small,
+    title={#2},
+    arc=2mm,
+    boxrule=0.6pt,
+    left=3mm, right=3mm, top=2mm, bottom=2mm,
+    #1
+}
+
+\newtcolorbox{aibox}[2][]{
+    enhanced,
+    breakable,
+    colback=teal!4!white,
+    colframe=teal!70!black,
+    fonttitle=\bfseries\small,
+    title={#2},
+    arc=2mm,
+    boxrule=0.6pt,
+    left=3mm, right=3mm, top=2mm, bottom=2mm,
+    #1
+}
+
+\newtcolorbox{scaffoldbox}[2][]{
+    enhanced,
+    breakable,
+    colback=orange!4!white,
+    colframe=orange!80!black,
+    fonttitle=\bfseries\small,
+    title={#2},
+    arc=2mm,
+    boxrule=0.6pt,
+    left=3mm, right=3mm, top=2mm, bottom=2mm,
+    #1
+}
+
+\newtcolorbox{stembox}[2][]{
+    enhanced,
+    breakable,
+    colback=purple!4!white,
+    colframe=purple!75!black,
+    fonttitle=\bfseries\small,
+    title={#2},
+    arc=2mm,
+    boxrule=0.6pt,
+    left=3mm, right=3mm, top=2mm, bottom=2mm,
+    #1
+}
+
+\begin{document}
+
+\begin{center}
+    {\fontsize{14pt}{17pt}\selectfont \textbf{KẾ HOẠCH BÀI DẠY MÔN TOÁN LỚP 11}}\\[6pt]
+    {\fontsize{16pt}{19pt}\selectfont \textbf{ÔN TẬP CUỐI NĂM}}\\[4pt]
+    {\fontsize{12pt}{15pt}\selectfont \textbf{Môn học: Toán 11} \ \textbar \ \textbf{Thời lượng: 2 tiết (Tiết 102, 103 theo PPCT | Tuần 35)}}
+\end{center}
+
+\vspace{5pt}
+
+\section*{I. MỤC TIÊU}
+
+\subsection*{1. Kiến thức, Năng lực}
+
+\begin{itemize}[leftmargin=1.2cm]
+    \item \textbf{Yêu cầu cần đạt (Nguyên văn CT GDPT 2018 Toán 11):}
+    \begin{itemize}[leftmargin=0.6cm]
+        \item Hệ thống hoá toàn bộ kiến thức môn Toán lớp 11 cả năm học, bao gồm các mạch kiến thức cốt lõi:
+        \begin{itemize}
+            \item \textit{Đại số và Một số yếu tố Giải tích:} Hàm số lượng giác và phương trình lượng giác; Dãy số, cấp số cộng và cấp số nhân; Giới hạn của dãy số, giới hạn hàm số và hàm số liên tục; Hàm số mũ, hàm số lôgarit và phương trình -- bất phương trình cơ bản; Đạo hàm (định nghĩa, các quy tắc tính, tiếp tuyến và đạo hàm cấp hai).
+            \item \textit{Hình học và Đo lường:} Quan hệ song song trong không gian; Quan hệ vuông góc trong không gian (đường thẳng vuông góc với mặt phẳng, hai mặt phẳng vuông góc, góc giữa đường thẳng và mặt phẳng, góc nhị diện, khoảng cách, hình lăng trụ, hình chóp, hình hộp, thể tích khối đa diện).
+            \item \textit{Thống kê và Xác suất:} Các số đặc trưng đo xu thế trung tâm của mẫu số liệu ghép nhóm (số trung bình, trung vị, tứ phân vị, mốt); Các quy tắc tính xác suất (biến cố hợp, biến cố giao, biến cố độc lập, công thức cộng và công thức nhân xác suất).
+        \end{itemize}
+        \item Rèn luyện kỹ năng tổng hợp, nhận diện ma trận đề kiểm tra cuối năm, xử lý thành thạo các câu hỏi trắc nghiệm nhiều lựa chọn, trắc nghiệm đúng -- sai, trắc nghiệm trả lời ngắn và bài toán tự luận đa bước.
+        \item Đánh giá toàn diện mức độ hoàn thành chuẩn kiến thức, kỹ năng của học sinh sau cả năm học 11, tạo tiền đề vững chắc cho việc tiếp cận chương trình Toán 12.
+    \end{itemize}
+
+    \item \textbf{Năng lực Toán học đặc thù:}
+    \begin{itemize}[leftmargin=0.6cm]
+        \item \textit{Năng lực tư duy và lập luận toán học:} Khái quát hóa, xâu chuỗi mối quan hệ tương hỗ giữa các mạch kiến thức: liên hệ giữa đạo hàm với vận tốc và gia tốc; phân tích bản chất quan hệ vuông góc để quy đổi khoảng cách từ điểm bất kì về chân đường vuông góc; lập luận lựa chọn số đặc trưng thống kê và quy tắc xác suất phù hợp.
+        \item \textit{Năng lực giải quyết vấn đề toán học:} Thiết lập chiến lược làm bài thi tối ưu: ưu tiên xử lý nhanh các câu hỏi Nhận biết -- Thông hiểu trong 30--40 phút đầu; phân loại và giải quyết chính xác các bài toán Vận dụng (viết phương trình tiếp tuyến, tính khoảng cách, tính thể tích khối đa diện, bài toán xác suất thực tiễn).
+        \item \textit{Năng lực mô hình hóa toán học:} Vận dụng mô hình cấp số nhân, cấp số cộng vào bài toán tài chính; mô hình hóa bài toán thực tế bằng hàm số mũ/lôgarit và các công thức thể tích hình học không gian.
+        \item \textit{Năng lực giao tiếp toán học:} Trình bày bài giải tự luận chặt chẽ, mạch lạc, chuẩn xác về mặt ký hiệu toán học; diễn đạt chính xác điều kiện xác định, lập luận hình học có căn cứ định lí rõ ràng.
+        \item \textit{Năng lực sử dụng công cụ, phương tiện học toán:} Sử dụng thành thạo máy tính cầm tay (MTCT Casio fx-580VN X) với toàn bộ các tính năng chủ lực: tính đạo hàm tại một điểm ($\left.\frac{d}{dx}\right|_{x=x_0}$), tính giới hạn bằng lệnh $\text{CALC}$, thống kê một biến mẫu ghép nhóm ($\text{MENU } 6 \to 1$), giải phương trình và bất phương trình ($\text{MENU } 9$, $\text{MENU } A$).
+    \end{itemize}
+
+    \item \textbf{Năng lực số (Theo Thông tư 02/2025/TT-BGDĐT):}
+    \begin{itemize}[leftmargin=0.6cm]
+        \item \textit{Mã 5.4NC1a (Tự đánh giá năng lực số cá nhân):} Học sinh truy cập hệ thống quản trị học tập trực tuyến (LMS/Azota/Google Classroom) làm bài thi thử số hóa chuẩn ma trận đề cuối năm; khai thác báo cáo phân tích tự động của hệ thống số để nhận diện rõ phổ điểm, thời gian làm bài từng câu và các chuyên đề còn hổng kiến thức.
+        \item \textit{Mã 1.3NC1b (Hệ thống hóa và lưu trữ học liệu số):} Học sinh khai thác sơ đồ tư duy số (Mindmap/Canva) tổng kết toàn bộ 9 chương sách trên thiết bị thông minh, lưu trữ và đồng bộ trên Google Drive cá nhân để phục vụ ôn tập hè.
+    \end{itemize}
+
+    \item \textbf{Năng lực AI (Theo Quyết định 2422/QĐ-BGDĐT):}
+    \begin{itemize}[leftmargin=0.6cm]
+        \item \textit{Mã 11.B3.1 (Sử dụng AI có trách nhiệm và liêm chính học thuật):} Học sinh xây dựng thái độ trung thực, tuyệt đối không sử dụng AI để giải hộ bài kiểm tra hoặc gian lận trong thi cử; hiểu rõ giá trị của việc tự thân tư duy giải quyết vấn đề toán học.
+        \item \textit{Kỹ thuật Prompting chẩn đoán lỗ hổng kiến thức:} Học sinh thực hành thiết kế câu lệnh prompt yêu cầu AI đóng vai trò người cố vấn học tập: phân tích các lỗi sai cụ thể trong bài làm thử của học sinh và sinh ra 3 bài toán tương tự mức độ vận dụng để rèn luyện khắc phục điểm yếu.
+    \end{itemize}
+
+    \item \textbf{Năng lực chung:}
+    \begin{itemize}[leftmargin=0.6cm]
+        \item \textit{Tự chủ và tự học:} Chủ động hoàn thiện đề cương ôn tập, lập kế hoạch ôn thi cá nhân hóa, tự giác kiểm tra chéo đáp án.
+        \item \textit{Giao tiếp và hợp tác:} Tích cực phối hợp nhóm, trao đổi phương pháp giải ngắn gọn và kỹ thuật bấm máy tính cầm tay tối ưu.
+    \end{itemize}
+\end{itemize}
+
+\subsection*{2. Phẩm chất}
+
+\begin{itemize}[leftmargin=1.2cm]
+    \item \textbf{Chăm chỉ:} Kiên trì giải trọn vẹn đề cương ôn tập, không bỏ dở bài khó, tỉ mỉ trong từng bước tính toán.
+    \item \textbf{Trung thực:} Nghiêm túc tự kiểm tra năng lực bản thân, không quay cóp tài liệu, kiên quyết nói không với gian lận thi cử.
+    \item \textbf{Trách nhiệm:} Có trách nhiệm cao với kết quả học tập của bản thân và uy tín của tập thể lớp; giữ gìn trật tự và thực hiện nghiêm túc quy chế phòng thi.
+\end{itemize}
+
+\section*{II. THIẾT BỊ DẠY HỌC VÀ HỌC LIỆU}
+
+\begin{itemize}[leftmargin=1.2cm]
+    \item \textbf{Giáo viên:}
+    \begin{itemize}[leftmargin=0.6cm]
+        \item Kế hoạch bài dạy chi tiết 2 tiết theo chuẩn Công văn 5512/BGDĐT-GDTrH.
+        \item Ma trận, bản đặc tả đề kiểm tra cuối năm môn Toán 11 (tỉ lệ: 70\% trắc nghiệm -- 30\% tự luận; 40\% Nhận biết, 30\% Thông hiểu, 20\% Vận dụng, 10\% Vận dụng cao).
+        \item Slide bài giảng PowerPoint/Canva tổng kết toàn bộ các công thức then chốt của chương trình lớp 11.
+        \item Phiếu học tập số 1 (Đại số, Giải tích, Thống kê, Xác suất) và Phiếu học tập số 2 (Hình học không gian).
+        \item Đề thi thử số hóa chuẩn định dạng mới được nạp trên hệ thống LMS/Azota.
+    \end{itemize}
+    \item \textbf{Học sinh:}
+    \begin{itemize}[leftmargin=0.6cm]
+        \item Đề cương ôn tập cuối năm, SGK Toán 11, vở ghi chép.
+        \item Máy tính cầm tay Casio fx-580VN X.
+        \item Điện thoại thông minh/máy tính có kết nối mạng để truy cập bài kiểm tra tự luyện trực tuyến.
+    \end{itemize}
+\end{itemize}
+
+\section*{III. TIẾN TRÌNH DẠY HỌC}
+
+\subsection*{TIẾT 1 (TIẾT 102 THEO PPCT | TUẦN 35): ÔN TẬP ĐẠI SỐ, GIẢI TÍCH, THỐNG KÊ VÀ XÁC SUẤT}
+
+\subsubsection*{1. Hoạt động 1: Khởi động -- Đấu trường kiến thức số (7 phút)}
+
+\noindent \textbf{a) Mục tiêu:}
+\begin{itemize}[leftmargin=0.6cm]
+    \item Tái hiện và củng cố tức thì các công thức cốt lõi về Đạo hàm, Mũ -- Lôgarit, Cấp số cộng, Cấp số nhân và Xác suất.
+    \item Rèn luyện phản xạ nhanh đối với các câu hỏi trắc nghiệm nhận biết trong đề thi cuối năm.
+\end{itemize}
+
+\noindent \textbf{b) Nội dung:}
+Giáo viên tổ chức trò chơi trắc nghiệm tương tác trên nền tảng số (Kahoot/Quizizz/Bảng con) gồm 5 câu hỏi nhanh:
+\begin{itemize}[leftmargin=0.6cm]
+    \item \textbf{Câu 1:} Đạo hàm của hàm số $y = 3^x$ là biểu thức nào?
+    \item \textbf{Câu 2:} Cho cấp số nhân $(u_n)$ có $u_1 = 2$ và công bội $q = 3$. Số hạng $u_4$ bằng bao nhiêu?
+    \item \textbf{Câu 3:} Tập nghiệm của bất phương trình $\log_2(x - 1) \le 3$ là nửa khoảng nào?
+    \item \textbf{Câu 4:} Cho hai biến cố độc lập $A$ và $B$ với $P(A) = 0{,}6$ và $P(B) = 0{,}5$. Xác suất của biến cố giao $P(AB)$ bằng bao nhiêu?
+    \item \textbf{Câu 5:} Giới hạn $\lim_{x \to 2} \dfrac{x^2 - 4}{x - 2}$ bằng bao nhiêu?
+\end{itemize}
+
+\noindent \textbf{c) Sản phẩm:}
+Kết quả lựa chọn đáp án của học sinh:
+\begin{itemize}[leftmargin=0.6cm]
+    \item \textbf{Câu 1:} $y' = 3^x \ln 3$. (Nhắc nhở: tránh nhầm với hàm lũy thừa $x \cdot 3^{x-1}$).
+    \item \textbf{Câu 2:} $u_4 = u_1 \cdot q^3 = 2 \cdot 3^3 = 2 \cdot 27 = 54$.
+    \item \textbf{Câu 3:} Điều kiện $x > 1$. BPT $\iff x - 1 \le 2^3 = 8 \iff x \le 9$. Tập nghiệm: $(1; 9]$.
+    \item \textbf{Câu 4:} Do $A, B$ độc lập nên $P(AB) = P(A) \cdot P(B) = 0{,}6 \cdot 0{,}5 = 0{,}3$.
+    \item \textbf{Câu 5:} Khử dạng vô định $\dfrac{0}{0}$: $\lim_{x \to 2} \dfrac{(x-2)(x+2)}{x-2} = \lim_{x \to 2} (x+2) = 4$.
+\end{itemize}
+
+\noindent \textbf{d) Tổ chức thực hiện:}
+\begin{itemize}[leftmargin=0.6cm]
+    \item \textbf{Chuyển giao nhiệm vụ:} Giáo viên trình chiếu câu hỏi trên màn hình, mỗi câu có 25 giây suy nghĩ. Học sinh chọn đáp án trên điện thoại hoặc bảng cá nhân.
+    \item \textbf{Thực hiện nhiệm vụ:} Học sinh tập trung quan sát, tính nhẩm nhanh hoặc bấm máy tính.
+    \item \textbf{Báo cáo, thảo luận:} Giáo viên công bố đáp án, chỉ ra bẫy quên điều kiện ở Câu 3 ($\log_2(x-1)$ phải có $x > 1$).
+    \item \textbf{Kết luận, nhận định:} Giáo viên biểu dương các em học sinh có phản xạ tốt, chốt lại tầm quan trọng của việc nắm chắc lý thuyết để không mất điểm oan ở phần Nhận biết.
+\end{itemize}
+
+\subsubsection*{2. Hoạt động 2: Luyện tập chuyên sâu Đại số, Giải tích và Xác suất (30 phút)}
+
+\noindent \textbf{a) Mục tiêu:}
+\begin{itemize}[leftmargin=0.6cm]
+    \item Rèn luyện kỹ năng giải các bài toán trọng tâm: tính đạo hàm và viết phương trình tiếp tuyến; giải phương trình, bất phương trình mũ -- lôgarit; bài toán xác suất thực tế.
+    \item Rèn luyện kỹ thuật sử dụng MTCT Casio fx-580VN X để kiểm tra kết quả độc lập.
+\end{itemize}
+
+\noindent \textbf{b) Nội dung:}
+Học sinh thực hiện 3 bài toán trọng điểm trong Phiếu học tập số 1:
+
+\textbf{Bài toán 1 (Đạo hàm và Phương trình tiếp tuyến):}
+Cho hàm số $y = f(x) = \dfrac{2x + 1}{x - 1}$ có đồ thị $(C)$.
+\begin{enumerate}[label=\alph*)]
+    \item Tính đạo hàm $f'(x)$ và viết phương trình tiếp tuyến của $(C)$ tại điểm có hoành độ $x_0 = 2$.
+    \item Viết phương trình tiếp tuyến của $(C)$, biết tiếp tuyến song song với đường thẳng $d: y = -3x + 2026$.
+\end{enumerate}
+
+\textbf{Bài toán 2 (Mũ -- Lôgarit và Phương trình):}
+\begin{enumerate}[label=\alph*)]
+    \item Giải phương trình: $4^x - 5 \cdot 2^x + 4 = 0$.
+    \item Giải bất phương trình: $\log_2(x - 2) + \log_2(x - 4) \le 3$.
+\end{enumerate}
+
+\textbf{Bài toán 3 (Xác suất thực tiễn):}
+Một xạ thủ bắn độc lập 2 phát đạn vào bia. Xác suất bắn trúng bia ở phát thứ nhất là $0{,}8$, xác suất bắn trúng bia ở phát thứ hai là $0{,}7$.
+\begin{enumerate}[label=\alph*)]
+    \item Tính xác suất để cả 2 phát đều trúng bia.
+    \item Tính xác suất để có ít nhất 1 phát bắn trúng bia.
+\end{enumerate}
+
+\noindent \textbf{c) Sản phẩm:}
+Bài giải chi tiết của học sinh:
+
+\textbf{Lời giải Bài toán 1:}
+Tập xác định: $D = \mathbb{R} \setminus \{1\}$.
+Đạo hàm nhanh: $f'(x) = \dfrac{2 \cdot (-1) - 1 \cdot 1}{(x - 1)^2} = \dfrac{-3}{(x - 1)^2}$.
+\begin{enumerate}[label=\alph*)]
+    \item Tại $x_0 = 2$:
+    Tung độ: $y_0 = f(2) = \dfrac{2 \cdot 2 + 1}{2 - 1} = 5 \implies M(2; 5)$.
+    Hệ số góc: $k = f'(2) = \dfrac{-3}{(2 - 1)^2} = -3$.
+    Phương trình tiếp tuyến:
+    $$y - 5 = -3(x - 2) \iff y = -3x + 11$$
+
+    \item Tiếp tuyến song song với $d: y = -3x + 2026 \implies$ hệ số góc tiếp tuyến là $k = -3$.
+    Phương trình tìm hoành độ tiếp điểm:
+    $$\dfrac{-3}{(x_0 - 1)^2} = -3 \iff (x_0 - 1)^2 = 1 \iff \left[\begin{array}{l} x_0 - 1 = 1 \\ x_0 - 1 = -1 \end{array}\right. \iff \left[\begin{array}{l} x_0 = 2 \\ x_0 = 0 \end{array}\right.$$
+    \begin{itemize}
+        \item Với $x_0 = 2 \implies y_0 = 5 \implies$ PTTT: $y = -3x + 11$ (thỏa mãn khác $d$).
+        \item Với $x_0 = 0 \implies y_0 = \dfrac{2 \cdot 0 + 1}{0 - 1} = -1 \implies$ PTTT:
+        $$y - (-1) = -3(x - 0) \iff y + 1 = -3x \iff y = -3x - 1 \quad (\text{thỏa mãn khác } d)$$
+    \end{itemize}
+    Vậy có 2 tiếp tuyến thỏa mãn là: $y = -3x + 11$ và $y = -3x - 1$.
+\end{enumerate}
+
+\textbf{Lời giải Bài toán 2:}
+\begin{enumerate}[label=\alph*)]
+    \item Phương trình $4^x - 5 \cdot 2^x + 4 = 0 \iff (2^x)^2 - 5 \cdot 2^x + 4 = 0$.
+    Đặt $t = 2^x$ ($t > 0$), phương trình trở thành:
+    $$t^2 - 5t + 4 = 0 \iff \left[\begin{array}{l} t = 1 \\ t = 4 \end{array}\right. \text{ (thỏa mãn } t > 0)$$
+    \begin{itemize}
+        \item Với $t = 1 \iff 2^x = 1 \iff x = 0$.
+        \item Với $t = 4 \iff 2^x = 4 \iff x = 2$.
+    \end{itemize}
+    Vậy tập nghiệm của phương trình là $S = \{0; 2\}$.
+
+    \item Bất phương trình: $\log_2(x - 2) + \log_2(x - 4) \le 3$.
+    Điều kiện: $\begin{cases} x - 2 > 0 \\ x - 4 > 0 \end{cases} \iff x > 4$.
+    BPT tương đương:
+    $$\log_2\left[(x - 2)(x - 4)\right] \le 3 \iff (x - 2)(x - 4) \le 2^3 \iff x^2 - 6x + 8 \le 8 \iff x^2 - 6x \le 0 \iff 0 \le x \le 6$$
+    Kết hợp điều kiện $x > 4$, ta được tập nghiệm của bất phương trình là: $S = (4; 6]$.
+\end{enumerate}
+
+\textbf{Lời giải Bài toán 3:}
+Gọi $A$ là biến cố: ``Phát thứ nhất bắn trúng bia'' $\implies P(A) = 0{,}8; \ P(\overline{A}) = 0{,}2$.\\
+Gọi $B$ là biến cố: ``Phát thứ hai bắn trúng bia'' $\implies P(B) = 0{,}7; \ P(\overline{B}) = 0{,}3$.\\
+Do hai lần bắn độc lập nên $A$ và $B$ là hai biến cố độc lập.
+\begin{enumerate}[label=\alph*)]
+    \item Biến cố cả hai phát đều trúng bia là $A \cap B$:
+    $$P(AB) = P(A) \cdot P(B) = 0{,}8 \cdot 0{,}7 = 0{,}56$$
+
+    \item Cách 1: Sử dụng biến cố đối.
+    Gọi $C$ là biến cố: ``Có ít nhất một phát bắn trúng bia''.
+    Biến cố đối $\overline{C}$ là: ``Cả hai phát đều không trúng bia'' $\implies \overline{C} = \overline{A} \cap \overline{B}$.
+    $$P(\overline{C}) = P(\overline{A}) \cdot P(\overline{B}) = 0{,}2 \cdot 0{,}3 = 0{,}06$$
+    Xác suất cần tìm:
+    $$P(C) = 1 - P(\overline{C}) = 1 - 0{,}06 = 0{,}94$$
+    Cách 2: Áp dụng công thức cộng xác suất cho biến cố hợp $C = A \cup B$:
+    $$P(A \cup B) = P(A) + P(B) - P(AB) = 0{,}8 + 0{,}7 - 0{,}56 = 0{,}94$$
+\end{enumerate}
+
+\noindent \textbf{d) Tổ chức thực hiện:}
+\begin{itemize}[leftmargin=0.6cm]
+    \item \textbf{Chuyển giao nhiệm vụ:} Chia lớp làm 3 nhóm lớn: Nhóm 1 làm Bài 1, Nhóm 2 làm Bài 2, Nhóm 3 làm Bài 3 trong 10 phút.
+    \item \textbf{Thực hiện nhiệm vụ có giàn giáo:} Giáo viên hỗ trợ học sinh yếu ghi nhớ điều kiện xác định của lôgarit và công thức biến cố đối.
+    \item \textbf{Báo cáo, thảo luận:} Gọi 3 học sinh lên bảng giải; học sinh dưới lớp bấm máy tính đối chiếu.
+    \item \textbf{Kết luận, nhận định:} Giáo viên chuẩn hóa bài giải, lưu ý học sinh cách kiểm tra nghiệm phương trình bằng lệnh $\text{SOLVE}$ trên MTCT.
+\end{itemize}
+
+\begin{scaffoldbox}{GIÀN GIÁO HỖ TRỢ HỌC SINH TRUNG BÌNH -- YẾU: BÀI TOÁN TIẾP TUYẾN SONG SONG}
+\textbf{Khẩu quyết 3 bước:}\\
+\textbf{Bước 1:} Đọc hệ số góc của đường thẳng song song: $d: y = kx + b \implies$ Hệ số góc tiếp tuyến là $k$.\\
+\textbf{Bước 2:} Giải phương trình $f'(x_0) = k$ để tìm hoành độ tiếp điểm $x_0$. Tìm được bao nhiêu $x_0$ sẽ có bấy nhiêu tiếp điểm tiềm năng.\\
+\textbf{Bước 3:} Tính $y_0 = f(x_0)$ và viết PTTT theo mẫu $y - y_0 = k(x - x_0)$. \textbf{Đặc biệt chú ý:} So sánh phương trình tìm được với $d$, nếu trùng nhau hoàn toàn thì phải \textbf{loại}!
+\end{scaffoldbox}
+
+\subsubsection*{3. Hoạt động 3: Tổng kết Tiết 1 và định hướng Tiết 2 (8 phút)}
+Giáo viên nhấn mạnh: Đại số và Giải tích chiếm khoảng 60\% tổng số điểm bài thi. Học sinh cần thành thạo quy tắc đạo hàm và công thức xác suất.
+
+\vspace{10pt}
+
+\subsection*{TIẾT 2 (TIẾT 103 THEO PPCT | TUẦN 35): ÔN TẬP HÌNH HỌC KHÔNG GIAN (VUÔNG GÓC, KHOẢNG CÁCH, THỂ TÍCH)}
+
+\subsubsection*{1. Hoạt động 4: Hệ thống hóa quan hệ vuông góc và thể tích khối đa diện (10 phút)}
+
+\noindent \textbf{a) Mục tiêu:}
+\begin{itemize}[leftmargin=0.6cm]
+    \item Hệ thống hóa các định lý then chốt về quan hệ vuông góc trong không gian: đường thẳng vuông góc mặt phẳng, hai mặt phẳng vuông góc.
+    \item Khắc sâu phương pháp xác định góc giữa đường thẳng và mặt phẳng, góc nhị diện.
+    \item Ôn tập công thức thể tích: Khối chóp $V = \dfrac{1}{3}Bh$, Khối lăng trụ $V = Bh$.
+\end{itemize}
+
+\noindent \textbf{b) Nội dung:}
+Giáo viên trình chiếu bảng tóm tắt phương pháp và yêu cầu học sinh điền từ khuyết:
+\begin{itemize}[leftmargin=0.6cm]
+    \item \textbf{Phương pháp chứng minh $d \perp (P)$:} Chứng minh $d$ vuông góc với hai đường thẳng cắt nhau cùng nằm trong $(P)$.
+    \item \textbf{Góc giữa đường thẳng $d$ và mặt phẳng $(P)$:} Là góc giữa $d$ và hình chiếu vuông góc $d'$ của nó trên $(P)$.
+    \item \textbf{Góc phẳng nhị diện $[P, d, Q]$:} Dựng hai tia $Ox \subset (P), Oy \subset (Q)$ cùng vuông góc với cạnh nhị diện $d$ tại điểm $O \in d$. Khi đó góc nhị diện là $\widehat{xOy}$.
+    \item \textbf{Khoảng cách từ điểm $M$ đến mặt phẳng $(P)$:} Là độ dài đoạn thẳng vuông góc $MH$ kẻ từ $M$ đến $(P)$ ($H \in (P)$).
+\end{itemize}
+
+\noindent \textbf{c) Sản phẩm:}
+Học sinh hoàn thành bảng điền khuyết và ghi nhớ sơ đồ tư duy hình học không gian vào vở.
+
+\noindent \textbf{d) Tổ chức thực hiện:} Giáo viên vấn đáp tương tác, trình chiếu mô hình 3D xoay trên GeoGebra để học sinh trực quan hóa góc và khoảng cách.
+
+\subsubsection*{2. Hoạt động 5: Luyện tập chuyên sâu Khoảng cách và Thể tích khối đa diện (25 phút)}
+
+\noindent \textbf{a) Mục tiêu:}
+\begin{itemize}[leftmargin=0.6cm]
+    \item Rèn luyện kỹ năng giải bài toán hình học không gian tổng hợp: xác định góc, tính khoảng cách từ điểm đến mặt phẳng, tính thể tích khối chóp.
+    \item Nắm vững kỹ thuật dời điểm về chân đường cao trong bài toán khoảng cách.
+\end{itemize}
+
+\noindent \textbf{b) Nội dung:}
+Học sinh giải quyết \textbf{Bài toán hình học tổng hợp} trong Phiếu học tập số 2:
+
+\begin{pedabox}{BÀI TOÁN HÌNH HỌC KHÔNG GIAN TỔNG HỢP}
+Cho hình chóp $S.ABCD$ có đáy $ABCD$ là hình vuông cạnh $a$. Cạnh bên $SA$ vuông góc với mặt phẳng đáy $(ABCD)$ và $SA = a\sqrt{3}$.
+\begin{enumerate}[label=\alph*)]
+    \item Chứng minh rằng $BC \perp (SAB)$ và $CD \perp (SAD)$.
+    \item Tính góc giữa đường thẳng $SC$ và mặt phẳng đáy $(ABCD)$.
+    \item Tính côsin của góc nhị diện $[B, SA, D]$ và tính góc nhị diện $[S, CD, A]$.
+    \item Tính thể tích của khối chóp $S.ABCD$.
+    \item Tính khoảng cách từ điểm $A$ đến mặt phẳng $(SCD)$.
+    \item Tính khoảng cách từ trọng tâm $G$ của tam giác $SAB$ đến mặt phẳng $(SCD)$.
+\end{enumerate}
+\end{pedabox}
+
+\noindent \textbf{c) Sản phẩm:}
+Bài giải chi tiết của học sinh:
+\begin{enumerate}[label=\alph*)]
+    \item \textbf{Chứng minh vuông góc:}
+    \begin{itemize}
+        \item Ta có: $BC \perp AB$ (do đáy $ABCD$ là hình vuông) và $BC \perp SA$ (do $SA \perp (ABCD)$ mà $BC \subset (ABCD)$).
+        Vì $AB$ và $SA$ cắt nhau tại $A$ trong mặt phẳng $(SAB)$ nên $BC \perp (SAB)$.
+        \item Tương tự: $CD \perp AD$ và $CD \perp SA \implies CD \perp (SAD)$.
+    \end{itemize}
+
+    \item \textbf{Góc giữa $SC$ và $(ABCD)$:}
+    Vì $SA \perp (ABCD)$ nên $A$ là hình chiếu vuông góc của $S$ trên $(ABCD)$.
+    Do đó, hình chiếu vuông góc của $SC$ trên $(ABCD)$ chính là đoạn thẳng $AC$.
+    Góc giữa $SC$ và $(ABCD)$ là góc $\widehat{SCA}$.
+    Xét tam giác vuông $SAC$ tại $A$:
+    Đáy $ABCD$ là hình vuông cạnh $a \implies AC = a\sqrt{2}$.
+    $$\tan\widehat{SCA} = \dfrac{SA}{AC} = \dfrac{a\sqrt{3}}{a\sqrt{2}} = \dfrac{\sqrt{3}}{\sqrt{2}} = \dfrac{\sqrt{6}}{2} \implies \widehat{SCA} = \arctan\left(\dfrac{\sqrt{6}}{2}\right) \approx 50^\circ 46'$$
+
+    \item \textbf{Góc nhị diện:}
+    \begin{itemize}
+        \item Góc nhị diện $[B, SA, D]$ có cạnh nhị diện là $SA$:
+        Vì $SA \perp (ABCD)$ nên $SA \perp AB$ và $SA \perp AD$.
+        Do đó góc phẳng nhị diện chính là góc $\widehat{BAD} = 90^\circ$. Côsin góc nhị diện: $\cos(90^\circ) = 0$.
+        \item Góc nhị diện $[S, CD, A]$ có cạnh nhị diện là $CD$:
+        Ta có $CD \perp AD$ và $CD \perp SD$ (do $CD \perp (SAD)$).
+        Do đó góc phẳng nhị diện chính là góc $\widehat{SDA}$.
+        Trong tam giác vuông $SAD$ tại $A$:
+        $$\tan\widehat{SDA} = \dfrac{SA}{AD} = \dfrac{a\sqrt{3}}{a} = \sqrt{3} \implies \widehat{SDA} = 60^\circ$$
+        Vậy góc nhị diện $[S, CD, A]$ bằng $60^\circ$.
+    \end{itemize}
+
+    \item \textbf{Thể tích khối chóp $S.ABCD$:}
+    Diện tích đáy: $S_{ABCD} = a^2$. Chiều cao: $h = SA = a\sqrt{3}$.
+    $$V_{S.ABCD} = \dfrac{1}{3} S_{ABCD} \cdot SA = \dfrac{1}{3} \cdot a^2 \cdot a\sqrt{3} = \dfrac{a^3\sqrt{3}}{3}$$
+
+    \item \textbf{Khoảng cách từ $A$ đến $(SCD)$:}
+    Vì $CD \perp (SAD)$ nên $(SCD) \perp (SAD)$. Giao tuyến của hai mặt phẳng là $(SCD) \cap (SAD) = SD$.
+    Trong mặt phẳng $(SAD)$, từ chân đường cao $A$ kẻ $AH \perp SD$ tại $H$.
+    Khi đó $AH \perp (SCD)$, do đó:
+    $$d(A, (SCD)) = AH$$
+    Xét tam giác $SAD$ vuông tại $A$, có đường cao $AH$:
+    $$\dfrac{1}{AH^2} = \dfrac{1}{SA^2} + \dfrac{1}{AD^2} = \dfrac{1}{(a\sqrt{3})^2} + \dfrac{1}{a^2} = \dfrac{1}{3a^2} + \dfrac{1}{a^2} = \dfrac{4}{3a^2} \implies AH^2 = \dfrac{3a^2}{4} \implies AH = \dfrac{a\sqrt{3}}{2}$$
+    Vậy $d(A, (SCD)) = \dfrac{a\sqrt{3}}{2}$.
+
+    \item \textbf{Khoảng cách từ trọng tâm $G$ đến $(SCD)$:}
+    Gọi $M$ là trung điểm của $AB$. Đoạn thẳng $SG$ cắt $AB$ tại $M$, với $G$ là trọng tâm $\triangle SAB \implies \dfrac{SG}{SM} = \dfrac{2}{3}$.
+    Do $AB \parallel CD$ mà $CD \subset (SCD)$ nên $AB \parallel (SCD)$.
+    Vì $M \in AB$ nên:
+    $$d(M, (SCD)) = d(A, (SCD)) = \dfrac{a\sqrt{3}}{2}$$
+    Lại có đường thẳng $SM$ cắt mặt phẳng $(SCD)$ tại $S$. Áp dụng tỉ số khoảng cách:
+    $$\dfrac{d(G, (SCD))}{d(M, (SCD))} = \dfrac{SG}{SM} = \dfrac{2}{3}$$
+    Suy ra:
+    $$d(G, (SCD)) = \dfrac{2}{3} \cdot d(M, (SCD)) = \dfrac{2}{3} \cdot \dfrac{a\sqrt{3}}{2} = \dfrac{a\sqrt{3}}{3}$$
+\end{enumerate}
+
+\noindent \textbf{d) Tổ chức thực hiện:}
+\begin{itemize}[leftmargin=0.6cm]
+    \item \textbf{Chuyển giao nhiệm vụ:} Giáo viên giao câu a, b, d cho học sinh tự lực giải trong 7 phút. Câu c, e, f thảo luận nhóm bàn trong 8 phút.
+    \item \textbf{Thực hiện nhiệm vụ có giàn giáo:}
+    \begin{itemize}
+        \item Giáo viên nhắc lại mô hình kẻ đường cao từ chân vuông góc: kẻ $AH \perp SD$ nhờ tính chất $(SCD) \perp (SAD)$.
+        \item Hướng dẫn học sinh yếu cách đổi điểm qua quan hệ song song $AB \parallel (SCD)$.
+    \end{itemize}
+    \item \textbf{Báo cáo, thảo luận:} 2 học sinh khá lên bảng trình bày câu e và câu f. Các nhóm nhận xét, hoàn thiện lời giải chuẩn xác.
+    \item \textbf{Kết luận, nhận định:} Giáo viên nhấn mạnh: Bài toán khoảng cách và thể tích khối đa diện là dạng toán phân hóa quan trọng nhất trong đề thi cuối năm. Quy tắc vàng là luôn quy về chân đường cao $A$.
+\end{itemize}
+
+\begin{aibox}{TÍCH HỢP NĂNG LỰC AI: ĐẠO ĐỨC HỌC THUẬT VÀ XÂY DỰNG LỘ TRÌNH ÔN TẬP CÁ NHÂN HÓA}
+\textbf{1. Đạo đức và liêm chính học thuật (Mã 11.B3.1):} Giáo viên nhắc nhở học sinh: Trong kỳ thi cuối năm sắp tới, việc sử dụng các công cụ giải toán AI qua camera (PhotoMath, QANDA, ChatGPT) là vi phạm nghiêm trọng quy chế thi cử. Sự rèn luyện tư duy thực chất mới giúp các em vững vàng bước vào lớp 12.\\
+\textbf{2. Ứng dụng AI làm trợ lý học tập cá nhân hóa:}\\
+Sau buổi ôn tập, học sinh chụp ảnh bài làm đề cương của mình và gửi cho AI với câu lệnh prompt chuẩn mực:\\
+\textit{``Prompt: Đây là bài giải hình học không gian của tôi. Hãy chỉ ra các lỗi sai lập luận hình học hoặc lỗi trình bày ký hiệu (nếu có). Dựa vào các lỗi đó, hãy đề xuất cho tôi kế hoạch ôn tập 3 ngày trước kỳ thi tập trung vào phần Khoảng cách và Thể tích.''}\\
+$\implies$ Tận dụng sức mạnh của AI để bổ trợ cá nhân hóa, biến AI thành người đồng hành học tập tích cực.
+\end{aibox}
+
+\subsubsection*{3. Hoạt động 6: Tổng kết, đánh giá và giao nhiệm vụ chuẩn bị thi (10 phút)}
+\begin{itemize}[leftmargin=0.6cm]
+    \item \textbf{Tổng kết kiến thức:} Giáo viên chiếu bảng ma trận tổng kết 9 chương Toán 11.
+    \item \textbf{Năng lực số (Mã 5.4NC1a):} Học sinh được giao nhiệm vụ truy cập vào đường link hệ thống LMS/Azota của trường hoàn thành bài thi thử trực tuyến 50 câu trắc nghiệm (thời gian 90 phút) trước 22h00 tối nay.
+    \item \textbf{Dặn dò chuẩn bị cho Tiết 104, 105 (Kiểm tra cuối năm):}
+    \begin{enumerate}
+        \item Chuẩn bị đầy đủ dụng cụ học tập: bút chì 2B, tẩy, thước kẻ, compa, MTCT Casio fx-580VN X đã thay pin mới.
+        \item Giữ gìn sức khỏe, ngủ đủ giấc, chuẩn bị tâm lý tự tin, trung thực bước vào kỳ thi kiểm tra định kì cuối năm.
+    \end{enumerate}
+\end{itemize}
+
+\vspace{10pt}
+
+\section*{IV. PHỤ LỤC HỌC LIỆU BỔ TRỢ (BẮT BUỘC)}
+
+\subsection*{1. Phiếu học tập ôn tập cuối năm (Worksheet phân tầng 3 bậc thang)}
+
+\begin{tcolorbox}[enhanced, colback=white, colframe=blue!70!black, arc=1.5mm, title=\textbf{PHIẾU HỌC TẬP TỔNG HỢP: ÔN TẬP CUỐI NĂM TOÁN 11}]
+\textbf{Họ và tên học sinh:} \dots\dots\dots\dots\dots\dots\dots\dots\dots\dots\dots\dots\dots\dots \textbf{Lớp:} 11A\dots \quad \textbf{Nhóm:} \dots\dots
+
+\vspace{3pt}
+\hrule
+\vspace{5pt}
+
+\textbf{\large BẬC 1: NHẬN BIẾT -- THÔNG HIỂU (Mục tiêu 5.0 -- 6.5 điểm)}
+\begin{enumerate}[label=\textbf{Bài 1.\arabic*.}]
+    \item Tính đạo hàm của các hàm số:
+    $a) \ y = x^4 - 2x^2 + 3; \quad b) \ y = \dfrac{x - 3}{x + 1}; \quad c) \ y = \sin 2x + \cos 3x; \quad d) \ y = e^{2x} - \ln x$.
+    \item Giải các phương trình và bất phương trình sau:
+    $a) \ 2^{x+1} = 16; \quad b) \ \log_3(2x - 1) = 2; \quad c) \ 3^{2x - 1} > 27$.
+    \item Cho hình chóp $S.ABC$ có $SA \perp (ABC)$ và đáy $ABC$ là tam giác vuông tại $B$. Chứng minh $BC \perp (SAB)$.
+\end{enumerate}
+
+\vspace{5pt}
+\hrule
+\vspace{5pt}
+
+\textbf{\large BẬC 2: THÔNG HIỂU -- VẬN DỤNG (Mục tiêu 7.0 -- 8.5 điểm)}
+\begin{enumerate}[label=\textbf{Bài 2.\arabic*.}]
+    \item Viết phương trình tiếp tuyến của đồ thị hàm số $y = x^3 - 3x + 1$ tại điểm có hoành độ $x_0 = -1$ và tại điểm có hệ số góc tiếp tuyến $k = 9$.
+    \item Một tổ học sinh gồm 6 nam và 4 nữ. Chọn ngẫu nhiên 3 học sinh đi trực ban. Tính xác suất để trong 3 học sinh được chọn có ít nhất 1 nữ.
+    \item Cho hình chóp tứ giác đều $S.ABCD$ có đáy $ABCD$ là hình vuông cạnh $a$, cạnh bên bằng $a\sqrt{2}$. Tính góc giữa cạnh bên $SA$ và mặt đáy $(ABCD)$, tính thể tích khối chóp $S.ABCD$.
+\end{enumerate}
+
+\vspace{5pt}
+\hrule
+\vspace{5pt}
+
+\textbf{\large BẬC 3: VẬN DỤNG CAO (Mục tiêu 9.0 -- 10.0 điểm)}
+\begin{enumerate}[label=\textbf{Bài 3.\arabic*.}]
+    \item Cho hình chóp $S.ABCD$ có đáy là hình vuông cạnh $a$, $SA \perp (ABCD)$ và $SA = a$. Gọi $M$ là trung điểm của cạnh $CD$. Tính khoảng cách giữa hai đường thẳng chéo nhau $SM$ và $BD$.
+    \item Tìm tất cả các giá trị của tham số $m$ để bất phương trình $9^x - 2(m + 1) \cdot 3^x + 3m + 5 \ge 0$ nghiệm đúng với mọi $x \in \mathbb{R}$.
+\end{enumerate}
+\end{tcolorbox}
+
+\vspace{5pt}
+
+\subsection*{2. Bảng sơ đồ tư duy ma trận kiến thức cốt lõi Toán 11}
+
+\begin{center}
+\begin{tabularx}{\textwidth}{|>{\centering\arraybackslash}p{2.8cm}|>{\centering\arraybackslash}p{4cm}|>{\centering\arraybackslash}X|>{\centering\arraybackslash}X|}
+\hline
+\textbf{Chủ đề} & \textbf{Kiến thức cốt lõi} & \textbf{Công thức trọng tâm} & \textbf{Kỹ năng MTCT Casio} \\
+\hline
+Hàm số lượng giác \& Phương trình & Công thức lượng giác; PT lượng giác cơ bản & $\sin x = m; \ \cos x = m$ \newline Nghiệm: $x = \alpha + k2\pi$ & SHIFT SIN, SHIFT COS \newline Chuyển đơn vị Radian \\
+\hline
+Dãy số \& Cấp số & Cấp số cộng (CSC) \newline Cấp số nhân (CSN) & $u_n = u_1 + (n-1)d; \ S_n = \dfrac{n(u_1+u_n)}{2}$ \newline $u_n = u_1 \cdot q^{n-1}; \ S_n = \dfrac{u_1(1-q^n)}{1-q}$ & Chức năng TABLE \newline Tính tổng $\sum$ \\
+\hline
+Giới hạn \& Liên tục & Giới hạn dãy số, hàm số; Dạng $\dfrac{0}{0}, \dfrac{\infty}{\infty}$ & Chia bậc cao nhất, nhân liên hợp; $f(x)$ liên tục tại $x_0 \iff \lim_{x \to x_0} f(x) = f(x_0)$ & Lệnh CALC $x = x_0 \pm 10^{-6}$ hoặc $x = 10^9$ \\
+\hline
+Mũ \& Lôgarit & Lũy thừa, lôgarit; Đạo hàm mũ, logarit & $\log_a(xy) = \log_a x + \log_a y$ \newline $(e^x)' = e^x; \ (\ln x)' = \dfrac{1}{x}$ & Phím $\log, \ln, e^x$ \newline Lệnh SOLVE \\
+\hline
+Đạo hàm \& Tiếp tuyến & Quy tắc đạo hàm; Tiếp tuyến đồ thị & $y - y_0 = f'(x_0)(x - x_0)$ \newline $(u \cdot v)' = u'v + uv'; \ \left(\dfrac{u}{v}\right)' = \dfrac{u'v - uv'}{v^2}$ & Phím $\left.\dfrac{d}{dx}\right|_{x=x_0}$ \\
+\hline
+Thống kê \& Xác suất & Mẫu số liệu ghép nhóm; Biến cố độc lập & $\bar{x} = \dfrac{\sum m_i c_i}{n}; \ P(AB) = P(A)P(B)$ \newline $P(A \cup B) = P(A) + P(B) - P(AB)$ & MENU $6 \to 1$ (1-Variable) \newline Phím nCr, nPr \\
+\hline
+Hình học không gian & Quan hệ vuông góc, Khoảng cách, Thể tích & $d \perp (P) \iff d \perp a, b \subset (P)$ \newline $V_{\text{chóp}} = \dfrac{1}{3}Bh; \ V_{\text{lăng trụ}} = Bh$ & Tính căn thức lượng giác \\
+\hline
+\end{tabularx}
+\end{center}
+
+\vspace{5pt}
+
+\subsection*{3. Rubric đánh giá năng lực học sinh trong đợt ôn tập cuối năm}
+
+\begin{center}
+\begin{tabularx}{\textwidth}{|p{3cm}|X|X|X|X|}
+\hline
+\textbf{Tiêu chí} & \textbf{Chưa đạt (Dưới 5)} & \textbf{Đạt (5.0 -- 6.5)} & \textbf{Khá (7.0 -- 8.5)} & \textbf{Tốt (9.0 -- 10)} \\
+\hline
+\textbf{1. Kiến thức Đại số \& Giải tích} & Nhầm lẫn công thức đạo hàm, mũ -- logarit cơ bản. & Giải đúng các bài toán nhận biết, phương trình mũ/logarit cơ bản. & Viết thành thạo PTTT, giải tốt bài toán thực tiễn và biến cố xác suất. & Xử lý xuất sắc các bài toán vận dụng cao chứa tham số $m$. \\
+\hline
+\textbf{2. Kỹ năng Hình học không gian} & Không vẽ được hình không gian, không chứng minh được vuông góc. & Chứng minh được quan hệ vuông góc cơ bản, tính được thể tích đơn giản. & Tính đúng góc, khoảng cách từ chân đường vuông góc và thể tích chóp. & Thành thạo kỹ thuật dời điểm khoảng cách, giải quyết tốt bài toán khoảng cách chéo nhau. \\
+\hline
+\textbf{3. Sử dụng MTCT Casio fx-580VN X} & Bấm máy tính lúng túng, sai cú pháp cơ bản. & Bấm được máy tính tính đạo hàm tại điểm và nghiệm phương trình. & Khai thác linh hoạt lệnh TABLE, CALC giới hạn, thống kê một biến. & Phối hợp MTCT kiểm tra chéo cực nhanh, xử lý bài thi trắc nghiệm tối ưu thời gian. \\
+\hline
+\textbf{4. Tự chủ \& Năng lực số/AI} & Không làm đề cương ôn tập, thụ động. & Hoàn thành đề cương cơ bản, làm bài test LMS đúng hạn. & Tự phân tích điểm yếu qua bài test số; sử dụng AI hỗ trợ học tập đúng mực. & Tự giác xây dựng kế hoạch ôn thi khoa học; có năng lực tự học và tư duy phản biện cao. \\
+\hline
+\end{tabularx}
+\end{center}
+
+\end{document}
