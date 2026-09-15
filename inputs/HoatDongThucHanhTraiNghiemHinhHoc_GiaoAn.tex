@@ -1,0 +1,518 @@
+\documentclass[12pt, a4paper]{article}
+% --- 1. Cấu hình Tiếng Việt và Font chữ chuẩn ---
+\usepackage[utf8]{inputenc}
+\usepackage[T5]{fontenc}
+\usepackage[vietnamese]{babel}
+\usepackage{mathptmx} % Font Times New Roman đồng bộ cả chữ và công thức toán, không gây xung đột gói
+
+\makeatletter
+\renewcommand{\normalsize}{\@setfontsize\normalsize{13pt}{16pt}}
+\makeatother
+\normalsize
+
+% --- 2. Gói Toán học & Ký hiệu bổ trợ ---
+\usepackage{amsmath, amssymb, amsfonts, mathrsfs, amsthm}
+\usepackage{graphicx}
+\usepackage{fontawesome}
+\usepackage{booktabs, tabularx, array, multirow}
+\usepackage{enumitem}
+
+% --- 3. Đồ họa TikZ, Bảng biến thiên & Hình không gian ---
+\usepackage{tikz}
+\usetikzlibrary{calc, intersections, angles, quotes, patterns, arrows.meta, 3d}
+\usepackage{pgfplots}
+\pgfplotsset{compat=1.18}
+\usepackage{tkz-euclide}
+\usepackage{tkz-tab}
+
+\renewcommand{\vec}[1]{\overrightarrow{#1}}
+
+% --- 4. Hộp sư phạm (Tcolorbox) ---
+\usepackage[many]{tcolorbox}
+\tcbuselibrary{skins, breakable}
+
+% --- 5. Căn lề chuẩn văn bản giáo án ---
+\usepackage{geometry}
+\geometry{
+    a4paper,
+    left=25mm,
+    right=15mm,
+    top=20mm,
+    bottom=20mm
+}
+
+% --- 6. Header / Footer chuẩn hóa ---
+\usepackage{fancyhdr}
+\usepackage{lastpage}
+\pagestyle{fancy}
+\fancyhf{}
+
+\fancyhead[L]{\small \textit{Kế hoạch bài dạy Toán 11}}
+\fancyhead[R]{\textbf{Trang \thepage/\pageref{LastPage}}}
+\fancyfoot[L]{\small \textit{Tổ Toán - Tin}}
+\fancyfoot[R]{\small \textit{Trường THCS\&THPT Hồng Vân}}
+\renewcommand{\headrulewidth}{0.4pt}
+\renewcommand{\footrulewidth}{0.4pt}
+
+% --- 7. Giãn dòng & Giãn đoạn theo chuẩn Nghị định 30/2020/NĐ-CP ---
+\usepackage{setspace}
+\setstretch{1.15}
+\setlength{\parindent}{1.0cm}
+\setlength{\parskip}{5pt}
+
+% Định nghĩa hộp sư phạm chuyên dụng
+\newtcolorbox{pedabox}[2][]{
+    enhanced,
+    breakable,
+    colback=blue!3!white,
+    colframe=blue!65!black,
+    fonttitle=\bfseries\small,
+    title={#2},
+    arc=2mm,
+    boxrule=0.6pt,
+    left=3mm, right=3mm, top=2mm, bottom=2mm,
+    #1
+}
+
+\newtcolorbox{aibox}[2][]{
+    enhanced,
+    breakable,
+    colback=teal!4!white,
+    colframe=teal!70!black,
+    fonttitle=\bfseries\small,
+    title={#2},
+    arc=2mm,
+    boxrule=0.6pt,
+    left=3mm, right=3mm, top=2mm, bottom=2mm,
+    #1
+}
+
+\newtcolorbox{scaffoldbox}[2][]{
+    enhanced,
+    breakable,
+    colback=orange!4!white,
+    colframe=orange!80!black,
+    fonttitle=\bfseries\small,
+    title={#2},
+    arc=2mm,
+    boxrule=0.6pt,
+    left=3mm, right=3mm, top=2mm, bottom=2mm,
+    #1
+}
+
+\newtcolorbox{stembox}[2][]{
+    enhanced,
+    breakable,
+    colback=purple!4!white,
+    colframe=purple!75!black,
+    fonttitle=\bfseries\small,
+    title={#2},
+    arc=2mm,
+    boxrule=0.6pt,
+    left=3mm, right=3mm, top=2mm, bottom=2mm,
+    #1
+}
+
+\begin{document}
+
+\begin{center}
+    {\fontsize{14pt}{17pt}\selectfont \textbf{KẾ HOẠCH BÀI DẠY MÔN TOÁN LỚP 11}}\\[6pt]
+    {\fontsize{16pt}{19pt}\selectfont \textbf{HOẠT ĐỘNG THỰC HÀNH TRẢI NGHIỆM HÌNH HỌC}}\\[4pt]
+    {\fontsize{12pt}{15pt}\selectfont \textbf{Môn học: Toán 11} \ \textbar \ \textbf{Thời lượng: 2 tiết (Tiết 100, 101 theo PPCT | Tuần 35)}}
+\end{center}
+
+\vspace{5pt}
+
+\section*{I. MỤC TIÊU}
+
+\subsection*{1. Kiến thức, Năng lực}
+
+\begin{itemize}[leftmargin=1.2cm]
+    \item \textbf{Yêu cầu cần đạt (Nguyên văn CT GDPT 2018 Toán 11):}
+    \begin{itemize}[leftmargin=0.6cm]
+        \item Vận dụng các kiến thức hình học không gian vào đồ hoạ, vẽ kĩ thuật và thiết kế trong công nghệ: đo đạc, tính toán thể tích và diện tích một số vật thể thực tế trong trường học.
+        \item Củng cố và vận dụng tổng hợp các kiến thức về quan hệ vuông góc trong không gian (đường thẳng vuông góc với mặt phẳng, hai mặt phẳng vuông góc, khoảng cách) và các công thức tính diện tích xung quanh, diện tích toàn phần, thể tích của các khối đa diện (hình chóp, hình lăng trụ, hình hộp chữ nhật, hình chóp cụt) và các khối tròn xoay (hình trụ, hình nón, hình cầu).
+        \item Thực hiện được các thao tác đo đạc gián tiếp ngoài thực địa bằng các dụng cụ đo thông dụng (thước cuộn, thước dây, giác kế đứng) để xác định kích thước, chiều cao và khoảng cách của các công trình trong khuôn viên nhà trường.
+    \end{itemize}
+
+    \item \textbf{Năng lực Toán học đặc thù:}
+    \begin{itemize}[leftmargin=0.6cm]
+        \item \textit{Năng lực mô hình hóa toán học:} Nhận diện các vật thể thực tế trong khuôn viên trường học (bồn hoa, sân khấu chào cờ, cột cờ, bể nước, ghế đá) và trừu tượng hóa chúng thành các mô hình hình học không gian chuẩn tắc; thiết lập công thức toán học tính diện tích bề mặt và thể tích chứa của các vật thể đó.
+        \item \textit{Năng lực giải quyết vấn đề toán học:} Xây dựng phương án đo đạc tối ưu cho các kích thước không thể đo trực tiếp (chiều cao cột cờ, khoảng cách qua vật cản) bằng phương pháp đo góc nghiêng qua giác kế và ứng dụng tỉ số lượng giác trong tam giác vuông; tính toán xử lý sai số thực nghiệm để đưa ra kết quả đo đạc hợp lý.
+        \item \textit{Năng lực tư duy và lập luận toán học:} Phân tích cấu trúc hình học của các vật thể phức tạp thành tổ hợp của các khối hình đơn giản (phân chia và cộng thể tích); giải thích cơ sở toán học của phương pháp đo gián tiếp dựa trên định lý về đường thẳng vuông góc với mặt phẳng.
+        \item \textit{Năng lực giao tiếp toán học:} Trình bày bản vẽ thiết kế 2D và mô hình 3D rõ ràng, đúng chuẩn quy ước nét vẽ kỹ thuật (nét thấy vẽ liền, nét khuất vẽ đứt); thuyết minh báo cáo dự án trước tập thể lớp bằng ngôn ngữ toán học chuẩn mực.
+        \item \textit{Năng lực sử dụng công cụ, phương tiện học toán:} Sử dụng thành thạo giác kế đo góc nghiêng, thước cuộn đo độ dài; sử dụng máy tính cầm tay (MTCT Casio fx-580VN X) để tính toán tỉ số lượng giác và thể tích; sử dụng phần mềm GeoGebra 3D để dựng hình biểu diễn không gian 3 chiều.
+    \end{itemize}
+
+    \item \textbf{Năng lực số (Theo Thông tư 02/2025/TT-BGDĐT):}
+    \begin{itemize}[leftmargin=0.6cm]
+        \item \textit{Mã 3.1NC1a (Tạo lập mô hình hình học 3D trên phần mềm):} Học sinh thực hành trên phòng máy tính 35 máy, sử dụng phần mềm GeoGebra 3D nhập tọa độ các điểm mốc đo đạc thực tế để tự động tái tạo mô hình số 3D của bồn hoa, sân khấu hoặc cột cờ; xoay các góc nhìn 3 chiều để quan sát thiết diện và không gian đa chiều.
+        \item \textit{Mã 1.3NC1a (Thu thập và số hóa dữ liệu thực địa):} Học sinh sử dụng điện thoại thông minh chụp ảnh hiện vật từ nhiều góc độ, ghi chép số liệu đo đạc vào bảng tính điện tử Google Sheets chia sẻ chung giữa các thành viên trong nhóm.
+        \item \textit{Mã 5.2NC1b (Tính toán số liệu và kiểm tra sai số trên MTCT):} Khai thác tối đa chức năng tính toán lượng giác và bộ nhớ biến nhớ ($[STO], [RCL]$) trên MTCT Casio fx-580VN X để tính toán các phép chia tỉ số lượng giác chính xác, giảm thiểu sai số lũy tiến.
+    \end{itemize}
+
+    \item \textbf{Năng lực AI (Theo Quyết định 2422/QĐ-BGDĐT):}
+    \begin{itemize}[leftmargin=0.6cm]
+        \item \textit{Mã 11.C2.2 (Nhận thức về công nghệ AI tái tạo 3D):} Học sinh tìm hiểu nguyên lý các công nghệ Trí tuệ nhân tạo thị giác máy tính hiện đại (Photogrammetry, NeRF -- Neural Radiance Fields, 3D Gaussian Splatting) trong việc tự động chuyển đổi chuỗi ảnh chụp 2D của vật thể thực tế thành mô hình số 3D chính xác dùng trong quy hoạch đô thị, kiến trúc và game 3D.
+        \item \textit{Kỹ thuật Prompting và Kiểm chứng AI:} Học sinh đặt câu lệnh prompt yêu cầu AI gợi ý phương án tối ưu chia nhỏ khối đa diện phức tạp thành các khối chóp và lăng trụ đơn giản; biết cách phản biện khi AI đưa ra công thức tính thể tích chưa chính xác cho các hình chóp cụt không đều.
+    \end{itemize}
+
+    \item \textbf{Năng lực chung:}
+    \begin{itemize}[leftmargin=0.6cm]
+        \item \textit{Tự chủ và tự học:} Tự giác tìm hiểu cấu trúc vật thể được phân công, chuẩn bị trước dụng cụ đo đạc và sơ đồ phân công nhiệm vụ cá nhân.
+        \item \textit{Giao tiếp và hợp tác:} Hoạt động nhóm hiệu quả ngoài trời (7 nhóm, mỗi nhóm 5 học sinh), phối hợp nhịp nhàng giữa khâu ngắm giác kế, kéo thước dây, ghi chép số liệu và kiểm tra chéo kết quả.
+    \end{itemize}
+\end{itemize}
+
+\subsection*{2. Phẩm chất}
+
+\begin{itemize}[leftmargin=1.2cm]
+    \item \textbf{Chăm chỉ:} Tích cực tham gia các hoạt động đo đạc thực địa ngoài trời, không ngại nắng gió, tỉ mỉ trong từng thao tác đo độ dài và ngắm góc.
+    \item \textbf{Trung thực:} Ghi chép số liệu đo đạc thực tế chính xác, tuyệt đối không chỉnh sửa số liệu thô để khớp với suy đoán lý thuyết.
+    \item \textbf{Trách nhiệm:} Bảo quản cẩn thận dụng cụ đo đạc của phòng thực hành (giác kế, thước dây, máy tính); có ý thức giữ gìn vệ sinh và cảnh quan khuôn viên trường học trong quá trình trải nghiệm.
+\end{itemize}
+
+\section*{II. THIẾT BỊ DẠY HỌC VÀ HỌC LIỆU}
+
+\begin{itemize}[leftmargin=1.2cm]
+    \item \textbf{Giáo viên:}
+    \begin{itemize}[leftmargin=0.6cm]
+        \item Kế hoạch bài dạy chi tiết 2 tiết theo chuẩn Công văn 5512/BGDĐT-GDTrH.
+        \item Dụng cụ đo thực địa cho 7 nhóm: 07 giác kế đứng đo góc nghiêng, 07 thước cuộn kim loại ($30\text{ m}$ hoặc $50\text{ m}$), 07 cọc tiêu ngắm thẳng hàng, phấn đánh dấu mốc.
+        \item Phòng thực hành tin học (35 máy vi tính có kết nối Internet và cài đặt sẵn GeoGebra 3D / GeoGebra Classic).
+        \item Phiếu học tập thực địa số 1 và Rubric đánh giá dự án STEM trải nghiệm.
+    \end{itemize}
+    \item \textbf{Học sinh:}
+    \begin{itemize}[leftmargin=0.6cm]
+        \item Vở ghi, bảng kẹp tài liệu, bút chì, thước kẻ chia milimét.
+        \item Máy tính cầm tay Casio fx-580VN X.
+        \item Điện thoại thông minh có camera (mỗi nhóm ít nhất 1 máy) để chụp ảnh hiện vật và tra cứu số liệu.
+    \end{itemize}
+\end{itemize}
+
+\section*{III. TIẾN TRÌNH DẠY HỌC}
+
+\subsection*{TIẾT 1 (TIẾT 100 THEO PPCT | TUẦN 35): CHUẨN BỊ VÀ THỰC HÀNH ĐO ĐẠC THỰC ĐỊA}
+
+\subsubsection*{1. Hoạt động 1: Khởi động (Mở đầu) -- 7 phút}
+
+\noindent \textbf{a) Mục tiêu:}
+\begin{itemize}[leftmargin=0.6cm]
+    \item Đặt ra vấn đề thực tiễn sinh động kích hoạt nhu cầu vận dụng kiến thức hình học không gian vào đời sống.
+    \item Tạo tâm thế hào hứng bước vào buổi thực hành trải nghiệm ngoài trời.
+\end{itemize}
+
+\noindent \textbf{b) Nội dung:}
+Giáo viên trình chiếu hình ảnh khuôn viên trường THCS\&THPT Hồng Vân và nêu bài toán thực tế:
+\begin{itemize}[leftmargin=0.6cm]
+    \item \textbf{Bài toán 1:} Nhà trường chuẩn bị cải tạo hệ thống bồn hoa cây cảnh ở sân trường và lát lại gạch cho sân khấu chào cờ. Ban giám hiệu cần biết chính xác: Cần mua bao nhiêu mét khối đất dinh dưỡng để đổ đầy bồn hoa? Cần bao nhiêu mét vuông gạch lát mặt sàn và xung quanh sân khấu?
+    \item \textbf{Bài toán 2:} Làm thế nào để đo được chiều cao của cột cờ giữa sân trường một cách chính xác mà không cần phải trèo lên đỉnh cột cờ?
+\end{itemize}
+
+\noindent \textbf{c) Sản phẩm:}
+Câu trả lời và giải pháp đề xuất ban đầu của học sinh:
+\begin{itemize}[leftmargin=0.6cm]
+    \item Muốn tính thể tích đất cần đo kích thước đáy và chiều sâu của bồn hoa, áp dụng công thức thể tích khối lăng trụ $V = B \cdot h$ hoặc hình chóp cụt.
+    \item Muốn đo chiều cao cột cờ, áp dụng phương pháp tam giác đồng dạng hoặc sử dụng giác kế đứng đo góc nâng $\alpha$ kết hợp khoảng cách từ giác kế đến chân cột cờ qua công thức lượng giác: $h = d \cdot \tan\alpha + h_0$ (với $h_0$ là chiều cao từ mắt ngắm giác kế đến mặt đất).
+\end{itemize}
+
+\noindent \textbf{d) Tổ chức thực hiện:}
+\begin{itemize}[leftmargin=0.6cm]
+    \item \textbf{Chuyển giao nhiệm vụ:} Giáo viên giới thiệu mục tiêu dự án trải nghiệm, nêu 2 bài toán dẫn nhập và mời học sinh thảo luận nhanh trong 2 phút.
+    \item \textbf{Thực hiện nhiệm vụ:} Học sinh huy động kiến thức lượng giác và hình học không gian để đề xuất phương án đo đạc.
+    \item \textbf{Báo cáo, thảo luận:} Đại diện 2 học sinh trình bày phương án đo trực tiếp và đo gián tiếp.
+    \item \textbf{Kết luận, nhận định:} Giáo viên chốt lại: Để giải quyết trọn vẹn bài toán, chúng ta cần vận dụng kiến thức về thể tích khối đa diện kết hợp kỹ năng đo thực địa. Giáo viên phổ biến quy trình làm việc trong 2 tiết.
+\end{itemize}
+
+\subsubsection*{2. Hoạt động 2: Chuẩn bị công cụ và phân công nhiệm vụ thực địa (13 phút)}
+
+\noindent \textbf{a) Mục tiêu:}
+\begin{itemize}[leftmargin=0.6cm]
+    \item Ôn tập, hệ thống hóa các công thức tính diện tích xung quanh, diện tích đáy, thể tích của các khối lăng trụ, chóp, hộp chữ nhật, chóp cụt.
+    \item Hướng dẫn sử dụng giác kế đứng và thống nhất quy trình đo đạc, kiểm soát sai số.
+    \item Phân công nhiệm vụ cụ thể cho 7 nhóm học sinh (35 học sinh, mỗi nhóm 5 em).
+\end{itemize}
+
+\noindent \textbf{b) Nội dung:}
+\begin{itemize}[leftmargin=0.6cm]
+    \item \textbf{1. Hệ thống hóa công thức tính diện tích và thể tích:}
+    \begin{itemize}
+        \item Khối hộp chữ nhật: $V = a \cdot b \cdot c; \quad S_{xq} = 2(a + b)c$.
+        \item Khối lăng trụ đứng: $V = S_{\text{đáy}} \cdot h; \quad S_{xq} = C_{\text{đáy}} \cdot h$.
+        \item Khối chóp: $V = \dfrac{1}{3} S_{\text{đáy}} \cdot h$.
+        \item Khối chóp cụt đều: $V = \dfrac{1}{3} h \left(S_1 + S_2 + \sqrt{S_1 S_2}\right)$.
+    \end{itemize}
+    \item \textbf{2. Cơ sở toán học của phép đo chiều cao bằng giác kế:}
+    Giả sử cần đo chiều cao cột cờ $AB$ ($A$ là chân cột cờ trên mặt đất, $B$ là đỉnh cột cờ, $AB \perp$ mặt đất):
+    \begin{itemize}
+        \item Đặt giác kế tại điểm $C$ trên mặt đất, khoảng cách $CA = d$ đo bằng thước cuộn.
+        \item Chiều cao của trục quay ống ngắm giác kế là $CD = h_0$.
+        \item Hướng ống ngắm lên đỉnh $B$, đọc góc nâng $\alpha = \widehat{EDB}$ trên đĩa chia độ (với $D E \parallel C A$, $D E \perp A B$ tại $E$).
+        \item Trong tam giác vuông $B E D$:
+        $$B E = D E \cdot \tan\alpha = d \cdot \tan\alpha$$
+        \item Chiều cao toàn phần của cột cờ:
+        $$h = A B = A E + B E = h_0 + d \cdot \tan\alpha$$
+    \end{itemize}
+    \item \textbf{3. Phân công địa bàn thực địa cho 7 nhóm (Lớp 35 HS):}
+    \begin{itemize}
+        \item \textbf{Nhóm 1 \& 2:} Đo đạc bồn hoa cây cảnh hình lục giác đều trước dãy nhà hiệu bộ (đo cạnh đáy, chiều cao, chiều dày thành bồn hoa để tính thể tích đất và diện tích sơn thành bồn).
+        \item \textbf{Nhóm 3 \& 4:} Đo đạc sân khấu chào cờ chính của trường (dạng khối hộp chữ nhật kết hợp các bậc tam cấp để tính diện tích gạch lát mặt trên và các mặt bên, thể tích bê tông đổ khối).
+        \item \textbf{Nhóm 5 \& 6:} Đo chiều cao cột cờ trường học bằng giác kế tại 2 vị trí cự ly khác nhau ($d_1 = 15\text{ m}, d_2 = 20\text{ m}$) để kiểm tra chéo số liệu; đo thể tích hố nhảy xa / bể cát thể dục.
+        \item \textbf{Nhóm 7:} Đo đạc sơ đồ mặt bằng vị trí phân bố các công trình sân trường, đo góc phương vị và dựng bản đồ tọa độ lưới phục vụ nhập liệu GeoGebra.
+    \end{itemize}
+\end{itemize}
+
+\noindent \textbf{c) Sản phẩm:}
+Phiếu phân công nhiệm vụ của từng nhóm được hoàn thiện; bảng công thức tính thể tích được ghi chép đầy đủ vào vở; mỗi nhóm nhận đủ bộ dụng cụ đo đạc (1 giác kế, 1 thước cuộn $30\text{ m}$, 1 bảng kẹp hồ sơ thực địa).
+
+\noindent \textbf{d) Tổ chức thực hiện:}
+\begin{itemize}[leftmargin=0.6cm]
+    \item \textbf{Chuyển giao nhiệm vụ:} Giáo viên thị phạm thao tác cân bằng bọt thủy của giác kế, cách đọc vạch chia độ góc nâng $\alpha$, nhắc nhở an toàn khi di chuyển ra sân trường.
+    \item \textbf{Thực hiện nhiệm vụ:} Nhóm trưởng nhận dụng cụ, phân công các thành viên: 1 người ngắm giác kế, 2 người kéo thước dây, 1 người ghi số liệu, 1 người chụp ảnh lưu vết.
+    \item \textbf{Báo cáo, thảo luận:} Các nhóm kiểm tra lại giác kế và thước đo, xác nhận hiểu rõ nhiệm vụ trước khi di chuyển.
+    \item \textbf{Kết luận, nhận định:} Giáo viên yêu cầu mỗi phép đo phải thực hiện độc lập ít nhất 3 lần để lấy giá trị trung bình, giảm thiểu sai số đo đạc.
+\end{itemize}
+
+\begin{pedabox}{LƯU Ý SƯ PHẠM CHO HỌC SINH TRUNG BÌNH -- YẾU}
+Học sinh yếu thường quên cộng thêm chiều cao trục ngắm $h_0$ của giác kế vào kết quả chiều cao cột cờ (chỉ tính $B E = d \cdot \tan\alpha$). Giáo viên nhấn mạnh mô hình hình học: Điểm đặt mắt ngắm nằm cách mặt đất một khoảng $h_0$ nên công thức bắt buộc phải là $h = h_0 + d \cdot \tan\alpha$.
+\end{pedabox}
+
+\subsubsection*{3. Hoạt động 3: Thực hành đo đạc thực địa ngoài sân trường (25 phút)}
+
+\noindent \textbf{a) Mục tiêu:}
+\begin{itemize}[leftmargin=0.6cm]
+    \item Rèn luyện kỹ năng thực hành ngoài trời, sử dụng thành thạo thước cuộn và giác kế.
+    \item Thu thập đầy đủ số liệu thô (kích thước dài, rộng, cao, góc nghiêng) của các công trình thực tế.
+\end{itemize}
+
+\noindent \textbf{b) Nội dung:}
+Các nhóm di chuyển ra các vị trí phân công trên sân trường, thực hiện đo đạc:
+\begin{itemize}[leftmargin=0.6cm]
+    \item Đo khoảng cách $d$ từ vị trí ngắm đến chân công trình bằng thước cuộn kim loại.
+    \item Đo góc nghiêng $\alpha$ bằng giác kế đứng, đọc góc chính xác đến độ và phút.
+    \item Đo kích thước các cạnh, chiều cao thành bồn hoa, bậc tam cấp sân khấu.
+    \item Ghi chép trung thực số liệu vào Phiếu thực địa số 1.
+\end{itemize}
+
+\noindent \textbf{c) Sản phẩm:}
+Bảng số liệu thô thu thập tại hiện trường của các nhóm (Ví dụ số liệu thực tế đo tại trường THCS\&THPT Hồng Vân):
+\begin{itemize}[leftmargin=0.6cm]
+    \item \textbf{Số liệu Nhóm 5 (Đo chiều cao cột cờ):}
+    \begin{itemize}
+        \item Chiều cao trục giác kế: $h_0 = 1{,}45\text{ m}$.
+        \item Lần đo 1 (cự ly $d_1 = 15{,}0\text{ m}$): Góc nâng $\alpha_1 = 36^\circ 30' \approx 36{,}5^\circ$.
+        \item Lần đo 2 (cự ly $d_2 = 20{,}0\text{ m}$): Góc nâng $\alpha_2 = 29^\circ 15' \approx 29{,}25^\circ$.
+    \end{itemize}
+    \item \textbf{Số liệu Nhóm 1 (Đo bồn hoa lăng trụ lục giác đều):}
+    \begin{itemize}
+        \item Cạnh ngoài lục giác đều: $a_1 = 2{,}4\text{ m}$; Cạnh trong lục giác đều: $a_2 = 2{,}2\text{ m}$.
+        \item Chiều cao bồn hoa: $h = 0{,}65\text{ m}$; Chiều sâu lớp đất cần đổ: $h_{\text{đất}} = 0{,}50\text{ m}$.
+    \end{itemize}
+    \item \textbf{Số liệu Nhóm 3 (Đo sân khấu chào cờ):}
+    \begin{itemize}
+        \item Kích thước mặt sàn chính: Chiều dài $L = 12{,}0\text{ m}$, chiều rộng $W = 6{,}0\text{ m}$, chiều cao sân khấu $H = 0{,}8\text{ m}$.
+        \item Bậc tam cấp 3 bậc: Mỗi bậc rộng $0{,}35\text{ m}$, cao $0{,}2\text{ m}$, chạy dọc theo chiều dài sân khấu.
+    \end{itemize}
+\end{itemize}
+
+\noindent \textbf{d) Tổ chức thực hiện:}
+\begin{itemize}[leftmargin=0.6cm]
+    \item \textbf{Chuyển giao nhiệm vụ:} Giáo viên quan sát tổng thể sân trường, di chuyển đến từng nhóm để hướng dẫn căn chỉnh giác kế thăng bằng.
+    \item \textbf{Thực hiện nhiệm vụ:} Học sinh các nhóm thao tác đo đạc nghiêm túc, chụp ảnh lưu tư liệu.
+    \item \textbf{Báo cáo, thảo luận:} Nhóm trưởng kiểm tra tính đầy đủ của các đại lượng trong phiếu thực địa trước khi tập hợp lớp.
+    \item \textbf{Kết luận, nhận định:} Giáo viên thu hồi dụng cụ đo, nhận xét tinh thần làm việc ngoài trời của các nhóm và hướng dẫn học sinh di chuyển lên phòng máy vi tính chuẩn bị cho Tiết 2.
+\end{itemize}
+
+\vspace{10pt}
+
+\subsection*{TIẾT 2 (TIẾT 101 THEO PPCT | TUẦN 35): XỬ LÝ SỐ LIỆU, DỰNG MÔ HÌNH 3D VÀ BÁO CÁO DỰ ÁN}
+
+\subsubsection*{1. Hoạt động 4: Xử lý số liệu, tính toán và dựng mô hình GeoGebra 3D (20 phút)}
+
+\noindent \textbf{a) Mục tiêu:}
+\begin{itemize}[leftmargin=0.6cm]
+    \item Tính toán chính xác diện tích, thể tích các vật thể từ số liệu thực địa bằng MTCT Casio fx-580VN X.
+    \item Dựng mô hình số 3D của công trình trên phần mềm GeoGebra 3D.
+    \item Tìm hiểu công nghệ AI quét 3D (Photogrammetry, NeRF) trong chuyển đổi ảnh thực tế thành vật thể số.
+\end{itemize}
+
+\noindent \textbf{b) Nội dung:}
+Các nhóm ngồi theo vị trí máy tính trong phòng thực hành 35 máy, thực hiện các nội dung:
+\begin{enumerate}
+    \item \textbf{Tính toán số liệu:}
+    \begin{itemize}
+        \item \textit{Tính chiều cao cột cờ (Nhóm 5 \& 6):}
+        \begin{itemize}
+            \item Lần đo 1: $h_1 = h_0 + d_1 \cdot \tan\alpha_1 = 1{,}45 + 15{,}0 \cdot \tan(36{,}5^\circ) \approx 1{,}45 + 15{,}0 \cdot 0{,}73996 = 1{,}45 + 11{,}10 = 12{,}55\text{ m}$.
+            \item Lần đo 2: $h_2 = h_0 + d_2 \cdot \tan\alpha_2 = 1{,}45 + 20{,}0 \cdot \tan(29{,}25^\circ) \approx 1{,}45 + 20{,}0 \cdot 0{,}56003 = 1{,}45 + 11{,}20 = 12{,}65\text{ m}$.
+            \item Chiều cao trung bình của cột cờ:
+            $$\bar{h} = \dfrac{h_1 + h_2}{2} = \dfrac{12{,}55 + 12{,}65}{2} = 12{,}60\text{ m}$$
+            Sai số tuyệt đối: $\Delta h = |12{,}60 - 12{,}55| = 0{,}05\text{ m}$. Kết quả: $h = 12{,}60 \pm 0{,}05\text{ m}$.
+        \end{itemize}
+        \item \textit{Tính thể tích đất và diện tích bồn hoa (Nhóm 1 \& 2):}
+        Đáy bồn hoa là hình lục giác đều cạnh trong $a_2 = 2{,}2\text{ m}$. Diện tích đáy trong:
+        $$S_{\text{đáy trong}} = 6 \cdot \left(\dfrac{a_2^2 \sqrt{3}}{4}\right) = \dfrac{3\sqrt{3}}{2} \cdot (2{,}2)^2 = \dfrac{3\sqrt{3}}{2} \cdot 4{,}84 \approx 12{,}57\text{ m}^2$$
+        Thể tích đất dinh dưỡng cần mua để đổ sâu $h_{\text{đất}} = 0{,}5\text{ m}$:
+        $$V_{\text{đất}} = S_{\text{đáy trong}} \cdot h_{\text{đất}} \approx 12{,}57 \cdot 0{,}5 \approx 6{,}29\text{ m}^3 \approx 6{,}3\text{ m}^3$$
+        Diện tích xung quanh mặt ngoài bồn hoa cần sơn chống thấm ($a_1 = 2{,}4\text{ m}, h = 0{,}65\text{ m}$):
+        $$S_{xq} = 6 \cdot a_1 \cdot h = 6 \cdot 2{,}4 \cdot 0{,}65 = 9{,}36\text{ m}^2$$
+        \item \textit{Tính diện tích gạch và thể tích sân khấu (Nhóm 3 \& 4):}
+        Diện tích mặt trên sàn chính: $S_1 = L \cdot W = 12{,}0 \cdot 6{,}0 = 72{,}0\text{ m}^2$.
+        Diện tích 3 mặt xung quanh sàn chính: $S_{xq} = (L + 2W) \cdot H = (12{,}0 + 2 \cdot 6{,}0) \cdot 0{,}8 = 24{,}0 \cdot 0{,}8 = 19{,}2\text{ m}^2$.
+        Tổng diện tích gạch lát cơ bản: $S_{\text{gạch}} = 72{,}0 + 19{,}2 = 91{,}2\text{ m}^2$ (chưa tính bậc tam cấp).
+    \end{itemize}
+
+    \item \textbf{Dựng hình 3D trên GeoGebra:}
+    Nhập tọa độ các điểm mốc, sử dụng lệnh `Prism` (Hình lăng trụ), `Cylinder` (Hình trụ), `Segment` (Đoạn thẳng) để dựng mô hình không gian của bồn hoa và cột cờ.
+\end{enumerate}
+
+\noindent \textbf{c) Sản phẩm:}
+Bảng kết quả tính toán chi tiết kèm sai số; file mô hình hình học 3D trên GeoGebra được lưu và chụp màn hình đưa vào Slide báo cáo của nhóm.
+
+\noindent \textbf{d) Tổ chức thực hiện:}
+\begin{itemize}[leftmargin=0.6cm]
+    \item \textbf{Chuyển giao nhiệm vụ:} Giáo viên hướng dẫn các nhóm nhập công thức tính toán và mở phần mềm GeoGebra 3D Graphics.
+    \item \textbf{Thực hiện nhiệm vụ có giàn giáo:} Giáo viên hỗ trợ các nhóm trung bình -- yếu công thức diện tích lục giác đều gồm 6 tam giác đều bằng nhau.
+    \item \textbf{Báo cáo, thảo luận:} Các nhóm đối chiếu số liệu tính toán giữa các lần đo, kiểm tra độ tin cậy của kết quả.
+    \item \textbf{Kết luận, nhận định:} Giáo viên đánh giá cao độ chính xác của số liệu đo đạc thực tế (chiều cao cột cờ khoảng $12{,}6\text{ m}$ là số liệu rất sát với thực tế xây dựng).
+\end{itemize}
+
+\begin{aibox}{TÍCH HỢP NĂNG LỰC AI: TÌM HIỂU CÔNG NGHỆ QUÉT 3D THỰC TẾ (PHOTOGRAMMETRY \& NeRF)}
+\textbf{Giới thiệu công nghệ số hiện đại:} Giáo viên trình chiếu video 2 phút về công nghệ AI quét 3D:\\
+Trong thực tế kỹ thuật hiện đại, các kỹ sư không cần đo thủ công từng mét thước dây. Họ sử dụng thiết bị bay không người lái (Drone) chụp từ 50--100 bức ảnh xung quanh công trình. Các thuật toán AI học sâu (Deep Learning) kết hợp thị giác máy tính (\textit{Photogrammetry / Gaussian Splatting}) sẽ tự động phân tích các điểm tương đồng giữa các bức ảnh, nội suy đám mây điểm (Point Cloud) và dựng nên mô hình 3D chính xác đến từng milimét trong vài phút.\\
+$\implies$ \textbf{Bài học cho học sinh:} Kiến thức toán học về toạ độ không gian và phép chiếu song song/phép chiếu xuyên tâm chính là nền tảng toán học cốt lõi để các nhà khoa học lập trình nên các thuật toán AI 3D hiện đại này.
+\end{aibox}
+
+\subsubsection*{2. Hoạt động 5: Báo cáo dự án STEM, thảo luận và đánh giá (20 phút)}
+
+\noindent \textbf{a) Mục tiêu:}
+\begin{itemize}[leftmargin=0.6cm]
+    \item Báo cáo kết quả dự án thực hành trải nghiệm, rèn luyện kỹ năng thuyết trình và giao tiếp toán học.
+    \item Đánh giá năng lực học sinh một cách khách quan, toàn diện thông qua Rubric 4 mức độ.
+\end{itemize}
+
+\noindent \textbf{b) Nội dung:}
+\begin{itemize}[leftmargin=0.6cm]
+    \item Đại diện 3 nhóm đại diện cho 3 chủ đề (Cột cờ -- Bồn hoa -- Sân khấu) lên trình bày báo cáo (mỗi nhóm 4 phút):
+    \begin{itemize}
+        \item Trình chiếu ảnh chụp thực địa và sơ đồ hình học không gian mô phỏng.
+        \item Trình bày công thức toán học và bảng tính thể tích / diện tích / chiều cao.
+        \item Đưa ra dự toán thực tế: Khối lượng đất cần mua, số hộp sơn/số viên gạch cần đặt hàng.
+    \end{itemize}
+    \item Các nhóm còn lại theo dõi, đặt câu hỏi chất vấn và phản biện (ví dụ: Tại sao kết quả đo giữa 2 cự ly lại chênh lệch $10\text{ cm}$? Làm thế nào để giảm sai số khi đo góc?).
+    \item Đánh giá chéo giữa các nhóm và giáo viên tổng kết đánh giá.
+\end{itemize}
+
+\noindent \textbf{c) Sản phẩm:}
+Bài thuyết trình hoàn chỉnh của các nhóm; Phiếu đánh giá chéo giữa các nhóm; Bảng điểm tổng hợp theo Rubric của giáo viên.
+
+\noindent \textbf{d) Tổ chức thực hiện:}
+\begin{itemize}[leftmargin=0.6cm]
+    \item \textbf{Chuyển giao nhiệm vụ:} Giáo viên điều hành phiên báo cáo dự án STEM, quy định thời gian thuyết trình và phản biện.
+    \item \textbf{Thực hiện nhiệm vụ:} Học sinh các nhóm tự tin trình bày, sử dụng màn hình máy chiếu phòng máy để thị phạm mô hình GeoGebra 3D.
+    \item \textbf{Báo cáo, thảo luận:} Các nhóm trao đổi sôi nổi về cách xử lý sai số thực tế do gió làm lệch dây rọi hoặc góc nghiêng của mặt sân trường.
+    \item \textbf{Kết luận, nhận định và Dặn dò về nhà:}
+    \begin{itemize}
+        \item Giáo viên nhận xét, tuyên dương tinh thần sáng tạo, làm việc nhóm trách nhiệm của toàn thể 35 học sinh.
+        \item Tổng kết ý nghĩa: Hoạt động thực hành trải nghiệm đã biến những công thức toán học trừu tượng thành công cụ hữu ích để giải quyết bài toán cuộc sống.
+        \item \textbf{Dặn dò chuẩn bị bài sau:}
+        \begin{enumerate}
+            \item Hoàn thiện báo cáo dự án hoàn chỉnh của nhóm nộp lên thư mục Google Drive của lớp.
+            \item Ôn tập lại toàn bộ kiến thức môn Toán 11 cả năm (Đại số \& Giải tích và Hình học không gian) để chuẩn bị cho 2 tiết: \textbf{Ôn tập cuối năm} (Tiết 102, 103 theo PPCT | Tuần 35).
+        \end{enumerate}
+    \end{itemize}
+\end{itemize}
+
+\vspace{10pt}
+
+\section*{IV. PHỤ LỤC HỌC LIỆU BỔ TRỢ (BẮT BUỘC)}
+
+\subsection*{1. Phiếu học tập thực địa số 1 (Dành cho các nhóm học sinh)}
+
+\begin{tcolorbox}[enhanced, colback=white, colframe=blue!70!black, arc=1.5mm, title=\textbf{PHIẾU HỌC TẬP THỰC ĐỊA: ĐO ĐẠC VÀ MÔ HÌNH HÓA HÌNH HỌC KHÔNG GIAN}]
+\textbf{Nhóm:} \dots\dots \quad \textbf{Lớp:} 11A\dots \quad \textbf{Địa bàn đo đạc:} \dots\dots\dots\dots\dots\dots\dots\dots\dots\dots\dots\\
+\textbf{Thành viên nhóm:} 1. \dots\dots\dots\dots\dots\dots; 2. \dots\dots\dots\dots\dots\dots; 3. \dots\dots\dots\dots\dots\dots; 4. \dots\dots\dots\dots\dots\dots; 5. \dots\dots\dots\dots\dots\dots
+
+\vspace{3pt}
+\hrule
+\vspace{5pt}
+
+\textbf{\large PHẦN 1: THU THẬP SỐ LIỆU ĐO ĐẠC THỰC TẾ}
+\begin{center}
+\begin{tabular}{|c|l|c|c|c|c|}
+\hline
+\textbf{STT} & \textbf{Đại lượng đo đạc} & \textbf{Lần 1} & \textbf{Lần 2} & \textbf{Lần 3} & \textbf{Giá trị trung bình} \\
+\hline
+1 & Chiều cao trục giác kế ($h_0$) & & & & \\
+\hline
+2 & Khoảng cách cự ly ($d$) & & & & \\
+\hline
+3 & Góc ngắm nâng ($\alpha$) & & & & \\
+\hline
+4 & Kích thước cạnh dài ($a$) & & & & \\
+\hline
+5 & Kích thước cạnh rộng ($b$) & & & & \\
+\hline
+6 & Chiều sâu / chiều cao ($h$) & & & & \\
+\hline
+\end{tabular}
+\end{center}
+
+\vspace{5pt}
+\hrule
+\vspace{5pt}
+
+\textbf{\large PHẦN 2: TÍNH TOÁN KẾT QUẢ VÀ DỰ TOÁN THỰC TẾ}
+\begin{enumerate}
+    \item \textbf{Mô hình hóa hình học:} Vật thể đo đạc tương ứng với khối hình học không gian nào? Vẽ phác họa hình biểu diễn của vật thể.
+    \item \textbf{Thiết lập công thức toán học:} Ghi rõ công thức tính diện tích hoặc thể tích áp dụng.
+    \item \textbf{Thực hiện phép tính (kèm sai số):} \dots\dots\dots\dots\dots\dots\dots\dots\dots\dots\dots\dots\dots\dots\dots\dots
+    \item \textbf{Ý nghĩa thực tế:} Từ kết quả thể tích/diện tích, đề xuất số lượng vật tư cần chuẩn bị (số bao đất, số mét vuông gạch lát,...).
+\end{enumerate}
+\end{tcolorbox}
+
+\vspace{5pt}
+
+\subsection*{2. Bảng tổng hợp công thức diện tích và thể tích khối hình thực tế}
+
+\begin{center}
+\begin{tabularx}{\textwidth}{|>{\centering\arraybackslash}p{3cm}|>{\centering\arraybackslash}p{4cm}|>{\centering\arraybackslash}X|>{\centering\arraybackslash}X|}
+\hline
+\textbf{Tên khối hình} & \textbf{Hình vẽ phác họa} & \textbf{Diện tích xung quanh} & \textbf{Thể tích ($V$)} \\
+\hline
+Khối hộp chữ nhật & Các mặt là hình chữ nhật & $S_{xq} = 2(a + b)h$ & $V = a \cdot b \cdot h$ \\
+\hline
+Khối lăng trụ đứng & Đáy là đa giác, cạnh bên $\perp$ đáy & $S_{xq} = C_{\text{đáy}} \cdot h$ & $V = S_{\text{đáy}} \cdot h$ \\
+\hline
+Khối chóp & Đỉnh $S$, đáy là đa giác & $S_{xq} = \sum S_{\text{mặt bên}}$ & $V = \dfrac{1}{3} S_{\text{đáy}} \cdot h$ \\
+\hline
+Khối chóp cụt đều & Hai đáy song song và đồng dạng & $S_{xq} = \sum S_{\text{hình thang cân}}$ & $V = \dfrac{1}{3} h (S_1 + S_2 + \sqrt{S_1 S_2})$ \\
+\hline
+Khối trụ tròn xoay & Bán kính đáy $R$, chiều cao $h$ & $S_{xq} = 2\pi R h$ & $V = \pi R^2 h$ \\
+\hline
+Khối nón tròn xoay & Bán kính đáy $R$, đường sinh $l$ & $S_{xq} = \pi R l$ & $V = \dfrac{1}{3} \pi R^2 h$ \\
+\hline
+\end{tabularx}
+\end{center}
+
+\vspace{5pt}
+
+\subsection*{3. Rubric đánh giá dự án thực hành trải nghiệm (Thang điểm 10)}
+
+\begin{center}
+\begin{tabularx}{\textwidth}{|p{3cm}|X|X|X|X|}
+\hline
+\textbf{Tiêu chí} & \textbf{Chưa đạt (Dưới 5)} & \textbf{Đạt (5.0 -- 6.5)} & \textbf{Khá (7.0 -- 8.5)} & \textbf{Tốt (9.0 -- 10)} \\
+\hline
+\textbf{1. Kỹ năng đo thực địa ngoài trời} & Thao tác sai dụng cụ, không cân bằng giác kế, số liệu thiếu trung thực. & Biết sử dụng giác kế và thước dây, đo đủ số liệu cơ bản nhưng còn lúng túng. & Thao tác đo đạc chuẩn xác, đo lặp lại nhiều lần, số liệu có độ tin cậy cao. & Thao tác cực kỳ thuần thục, xử lý linh hoạt địa hình khó, kiểm soát sai số xuất sắc. \\
+\hline
+\textbf{2. Mô hình hóa \& Tính toán số} & Không nhận diện được khối hình học, áp dụng sai công thức thể tích. & Nhận diện được khối hình đơn giản; tính đúng thể tích nhưng chưa tính sai số. & Tính chính xác thể tích, diện tích; xử lý tốt số liệu trung bình và sai số đo. & Mô hình hóa sáng tạo các vật thể phức hợp; liên hệ dự toán thực tế rất xác thực. \\
+\hline
+\textbf{3. Năng lực số \& GeoGebra 3D} & Không biết sử dụng phần mềm, không có mô hình số. & Dựng được một số điểm và đoạn thẳng cơ bản trên GeoGebra 3D. & Dựng hoàn chỉnh mô hình 3D trên GeoGebra đúng tỉ lệ kích thước đo. & Mô hình 3D trực quan đẹp mắt, phối màu chuyên nghiệp; hiểu sâu công nghệ AI 3D. \\
+\hline
+\textbf{4. Hợp tác nhóm \& Báo cáo} & Rời rạc, mất trật tự ngoài sân, thuyết trình ấp úng. & Hoàn thành nhiệm vụ được giao; báo cáo đủ nội dung theo yêu cầu. & Phối hợp nhịp nhàng; thuyết trình mạch lạc, trả lời được câu hỏi phản biện. & Tinh thần đồng đội tuyệt vời; thuyết trình hấp dẫn, phản biện sắc sảo, tự tin. \\
+\hline
+\end{tabularx}
+\end{center}
+
+\end{document}
