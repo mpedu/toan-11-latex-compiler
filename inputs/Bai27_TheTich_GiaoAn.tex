@@ -1,0 +1,599 @@
+\documentclass[12pt, a4paper]{article}
+% --- 1. Cấu hình Tiếng Việt và Font chữ chuẩn ---
+\usepackage[utf8]{inputenc}
+\usepackage[T5]{fontenc}
+\usepackage[vietnamese]{babel}
+\usepackage{mathptmx} % Font Times New Roman đồng bộ cả chữ và công thức toán, không gây xung đột gói
+
+\makeatletter
+\renewcommand{\normalsize}{\@setfontsize\normalsize{13pt}{16pt}}
+\makeatother
+\normalsize
+
+% --- 2. Gói Toán học & Ký hiệu bổ trợ ---
+\usepackage{amsmath, amssymb, amsfonts, mathrsfs, amsthm}
+\usepackage{graphicx}
+\usepackage{fontawesome}
+\usepackage{booktabs, tabularx, array, multirow}
+\usepackage{enumitem}
+
+% --- 3. Đồ họa TikZ, Bảng biến thiên & Hình không gian ---
+\usepackage{tikz}
+\usetikzlibrary{calc, intersections, angles, quotes, patterns, arrows.meta, 3d}
+\usepackage{pgfplots}
+\pgfplotsset{compat=1.18}
+\usepackage{tkz-euclide}
+\usepackage{tkz-tab}
+
+\renewcommand{\vec}[1]{\overrightarrow{#1}}
+
+% --- 4. Hộp sư phạm (Tcolorbox) ---
+\usepackage[many]{tcolorbox}
+\tcbuselibrary{skins, breakable}
+
+% --- 5. Căn lề chuẩn văn bản giáo án ---
+\usepackage{geometry}
+\geometry{
+    a4paper,
+    left=25mm,
+    right=15mm,
+    top=20mm,
+    bottom=20mm
+}
+
+% --- 6. Header / Footer chuẩn hóa ---
+\usepackage{fancyhdr}
+\usepackage{lastpage}
+\pagestyle{fancy}
+\fancyhf{}
+
+\fancyhead[L]{\small \textit{Kế hoạch bài dạy Toán 11}}
+\fancyhead[R]{\textbf{Trang \thepage/\pageref{LastPage}}}
+\fancyfoot[L]{\small \textit{Tổ Toán - Tin}}
+\fancyfoot[R]{\small \textit{Trường THCS\&THPT Hồng Vân}}
+\renewcommand{\headrulewidth}{0.4pt}
+\renewcommand{\footrulewidth}{0.4pt}
+
+% --- 7. Giãn dòng & Giãn đoạn theo chuẩn Nghị định 30/2020/NĐ-CP ---
+\usepackage{setspace}
+\setstretch{1.15}
+\setlength{\parindent}{1.0cm}
+\setlength{\parskip}{5pt}
+
+% Định nghĩa hộp sư phạm chuyên dụng
+\newtcolorbox{pedabox}[2][]{
+    enhanced,
+    breakable,
+    colback=blue!3!white,
+    colframe=blue!65!black,
+    fonttitle=\bfseries\small,
+    title={#2},
+    arc=2mm,
+    boxrule=0.6pt,
+    left=3mm, right=3mm, top=2mm, bottom=2mm,
+    #1
+}
+
+\newtcolorbox{aibox}[2][]{
+    enhanced,
+    breakable,
+    colback=teal!4!white,
+    colframe=teal!70!black,
+    fonttitle=\bfseries\small,
+    title={#2},
+    arc=2mm,
+    boxrule=0.6pt,
+    left=3mm, right=3mm, top=2mm, bottom=2mm,
+    #1
+}
+
+\newtcolorbox{scaffoldbox}[2][]{
+    enhanced,
+    breakable,
+    colback=orange!4!white,
+    colframe=orange!80!black,
+    fonttitle=\bfseries\small,
+    title={#2},
+    arc=2mm,
+    boxrule=0.6pt,
+    left=3mm, right=3mm, top=2mm, bottom=2mm,
+    #1
+}
+
+\newtcolorbox{stembox}[2][]{
+    enhanced,
+    breakable,
+    colback=purple!4!white,
+    colframe=purple!75!black,
+    fonttitle=\bfseries\small,
+    title={#2},
+    arc=2mm,
+    boxrule=0.6pt,
+    left=3mm, right=3mm, top=2mm, bottom=2mm,
+    #1
+}
+
+\begin{document}
+
+\begin{center}
+    {\fontsize{14pt}{17pt}\selectfont \textbf{KẾ HOẠCH BÀI DẠY MÔN TOÁN LỚP 11}}\\[6pt]
+    {\fontsize{16pt}{19pt}\selectfont \textbf{BÀI 27. THỂ TÍCH}}\\[4pt]
+    {\fontsize{12pt}{15pt}\selectfont \textbf{Môn học: Toán 11} \ \textbar \ \textbf{Thời lượng: 2 tiết (Tiết 77, 78 theo PPCT | Tuần 28)}}
+\end{center}
+
+\vspace{5pt}
+
+\section*{I. MỤC TIÊU}
+
+\subsection*{1. Kiến thức, Năng lực}
+
+\begin{itemize}[leftmargin=1.2cm]
+    \item \textbf{Yêu cầu cần đạt (Nguyên văn CT GDPT 2018 Toán 11):}
+    \begin{itemize}[leftmargin=0.6cm]
+        \item Nhận biết được công thức tính thể tích của hình chóp, hình lăng trụ, hình hộp.
+        \item Tính được thể tích của hình chóp, hình lăng trụ, hình hộp trong những trường hợp đơn giản (ví dụ: nhận biết được đường cao và diện tích mặt đáy của hình chóp).
+        \item Nhận biết được hình chóp cụt đều. Tính được thể tích khối chóp cụt đều.
+        \item Vận dụng được kiến thức về hình chóp cụt đều để mô tả một số hình ảnh trong thực tiễn.
+    \end{itemize}
+
+    \item \textbf{Năng lực Toán học đặc thù:}
+    \begin{itemize}[leftmargin=0.6cm]
+        \item \textit{Năng lực tư duy và lập luận toán học:} Phát triển năng lực trực giác không gian và tư duy phân tích định lượng; so sánh bản chất hình học giữa khối lăng trụ (hai đáy bằng nhau song song, không thót ngọn) và khối chóp (thu hẹp dần về một đỉnh nhọn), từ đó giải thích sự xuất hiện của hệ số $\dfrac{1}{3}$ trong công thức thể tích khối chóp; suy luận công thức tính thể tích khối chóp cụt đều thông qua hiệu thể tích của hai khối chóp đồng dạng.
+        \item \textit{Năng lực mô hình hóa toán học:} Nhận diện các vật thể thực tế trong đời sống (hộp sữa, bể chứa nước, kim tự tháp, thùng đựng nông sản, chậu hoa, bao bì bánh kẹo hình chóp cụt đều) và trừu tượng hóa thành các khối đa diện chuẩn mực; thiết lập các kích thước hình học tương ứng (chiều cao $h$, diện tích đáy $B, B_1, B_2$) để tính toán chính xác thể tích và dung tích thực tế.
+        \item \textit{Năng lực giải quyết vấn đề toán học:} Tính toán thành thạo thể tích các khối chóp (chóp có cạnh bên vuông góc với đáy, chóp đều), khối lăng trụ đứng và khối chóp cụt đều; biết kết hợp kiến thức tính khoảng cách và định lý Pythagore để tìm chiều cao của khối đa diện khi chưa cho trực tiếp.
+        \item \textit{Năng lực giao tiếp toán học:} Sử dụng chính xác các thuật ngữ toán học: thể tích, diện tích đáy, chiều cao, khối lăng trụ, khối chóp, khối hộp, chóp cụt đều; trình bày lời giải rõ ràng, mạch lạc, ghi đúng thứ nguyên đơn vị đo ($\text{cm}^3, \text{dm}^3, \text{m}^3$, lít).
+        \item \textit{Năng lực sử dụng công cụ, phương tiện học toán:} Sử dụng bảng tính điện tử (Excel / Google Sheets) để lập công thức tính thể tích tự động; khai thác thước kẻ, compa và kéo dán để tạo lập mô hình thực tế.
+    \end{itemize}
+
+    \item \textbf{Năng lực số (Theo Thông tư 02/2025/TT-BGDĐT):}
+    \begin{itemize}[leftmargin=0.6cm]
+        \item \textit{Mã 5.1NC1a (Ứng dụng bảng tính số giải quyết bài toán định lượng):} Học sinh thiết kế bảng tính điện tử (Microsoft Excel hoặc Google Sheets) để tự động hóa việc tính toán diện tích đáy và thể tích của khối chóp ($V = \dfrac{1}{3}Bh$), khối lăng trụ ($V = Bh$) và khối chóp cụt đều với tham số đầu vào thay đổi linh hoạt; rèn luyện tư duy thuật toán và kỹ năng xử lý dữ liệu số.
+    \end{itemize}
+
+    \item \textbf{Năng lực AI (Theo Quyết định 2422/QĐ-BGDĐT):}
+    \begin{itemize}[leftmargin=0.6cm]
+        \item \textit{Mã 11.C2.1 (Khám phá công nghệ thị giác máy tính AI trong logistics):} Học sinh tìm hiểu cách thức Trí tuệ nhân tạo (AI Computer Vision kết hợp cảm biến quét 3D) trong các kho vận thông minh (Amazon, bưu chính viễn thông) tự động nhận diện hình dạng kiện hàng, ước lượng nhanh thể tích bao gói để tối ưu hóa không gian xếp dỡ trên container và xe tải hàng.
+        \item \textit{Kỹ thuật Prompting kiểm tra và đối chiếu bài toán thể tích:} Học sinh biết cách xây dựng câu lệnh prompt yêu cầu trợ lý AI kiểm tra lại các bước tính thể tích khối chóp cụt đều và so sánh các phương án thiết kế hộp quà tiết kiệm nguyên vật liệu.
+    \end{itemize}
+
+    \item \textbf{Năng lực chung:}
+    \begin{itemize}[leftmargin=0.6cm]
+        \item \textit{Tự chủ và tự học:} Tự giác nghiên cứu các công thức tính diện tích đa giác đáy (tam giác đều, tam giác vuông, hình vuông, hình chữ nhật) để phục vụ bài toán tính thể tích.
+        \item \textit{Giao tiếp và hợp tác:} Hoạt động nhóm tích cực trong dự án STEM, cùng nhau đo đạc, tính toán và cắt dán mô hình bao bì nông sản.
+    \end{itemize}
+\end{itemize}
+
+\subsection*{2. Phẩm chất}
+
+\begin{itemize}[leftmargin=1.2cm]
+    \item \textbf{Chăm chỉ:} Cẩn thận, tỉ mỉ trong từng phép tính bình phương, khai căn và quy đồng mẫu số; kiên trì kiểm tra lại kết quả.
+    \item \textbf{Trung thực:} Tự lực thực hiện các phép toán, tôn trọng số liệu đo đạc thực tế của mô hình STEM, không gian lận số liệu.
+    \item \textbf{Trách nhiệm:} Ý thức cao trong việc bảo vệ môi trường, sử dụng giấy bìa tái chế để làm bao bì; có tinh thần làm việc nhóm nghiêm túc.
+\end{itemize}
+
+\section*{II. THIẾT BỊ DẠY HỌC VÀ HỌC LIỆU}
+
+\begin{itemize}[leftmargin=1.2cm]
+    \item \textbf{Giáo viên:}
+    \begin{itemize}[leftmargin=0.6cm]
+        \item Kế hoạch bài dạy chi tiết 2 tiết theo chuẩn Công văn 5512/BGDĐT-GDTrH.
+        \item Bộ mô hình trực quan trong suốt: Mô hình khối lăng trụ tam giác và khối chóp tam giác có cùng diện tích đáy và cùng chiều cao, kèm cát màu hoặc hạt xốp để thực hiện thí nghiệm đong rót thể tích (tỉ lệ $1:3$).
+        \item Mô hình khối chóp cụt tứ giác đều (thùng chứa, chậu hoa).
+        \item Video clip ngắn (1 - 2 phút) minh họa robot AI quét camera 3D ước lượng thể tích kiện hàng trong kho thông minh.
+        \item Phòng thực hành máy tính có bảng tính Excel kết nối Internet hoặc màn hình tương tác.
+        \item Hệ thống Phiếu học tập phân tầng bậc thang (PHT số 1: Thể tích lăng trụ và khối chóp; PHT số 2: Khối chóp cụt đều và Dự án STEM).
+        \item Bảng Rubric đánh giá năng lực học sinh.
+    \end{itemize}
+
+    \item \textbf{Học sinh:}
+    \begin{itemize}[leftmargin=0.6cm]
+        \item Sách giáo khoa, vở ghi bài, máy tính cầm tay Casio/Vinacal.
+        \item Bìa các-tông hoặc giấy bìa màu khổ A4, kéo, keo dán, thước kẻ phục vụ hoạt động STEM chế tạo hộp quà nông sản.
+    \end{itemize}
+\end{itemize}
+
+\section*{III. TIẾN TRÌNH DẠY HỌC}
+
+\begin{center}
+    \textbf{\large TIẾT 1 (TIẾT 77 THEO PPCT | TUẦN 28)}\\[4pt]
+    \textbf{\large THỂ TÍCH CỦA KHỐI LĂNG TRỤ, KHỐI HỘP VÀ KHỐI CHÓP}
+\end{center}
+
+\subsection*{1. Hoạt động 1: Mở đầu (Khởi động - 6 phút)}
+
+\begin{itemize}[leftmargin=1.2cm]
+    \item[a)] \textbf{Mục tiêu:}
+    \begin{itemize}[leftmargin=0.6cm]
+        \item Khơi gợi lại khái niệm thể tích của khối hộp chữ nhật đã học ở cấp THCS; tạo tình huống kích thích tìm hiểu thể tích của khối lăng trụ tổng quát và khối chóp.
+    \end{itemize}
+
+    \item[b)] \textbf{Nội dung:}
+    \begin{itemize}[leftmargin=0.6cm]
+        \item Giáo viên trình chiếu hai hình ảnh:
+        \begin{itemize}
+            \item Hình 1: Một thùng đựng nước hình hộp chữ nhật có kích thước dài $a$, rộng $b$, cao $c$.
+            \item Hình 2: Một mái nhà hình chóp tứ giác đều có đáy hình vuông cạnh $a$ và chiều cao $c$.
+        \end{itemize}
+        \item Đặt câu hỏi:
+        \begin{enumerate}
+            \item Thể tích của thùng nước hình hộp chữ nhật được tính theo công thức nào?
+            \item Liệu thể tích của khối chóp có bằng thể tích của khối hộp có cùng đáy và cùng chiều cao hay không? Dự đoán xem thể tích khối chóp lớn hơn hay nhỏ hơn?
+        \end{enumerate}
+    \end{itemize}
+
+    \item[c)] \textbf{Sản phẩm:}
+    \begin{itemize}[leftmargin=0.6cm]
+        \item Học sinh trả lời: Thể tích khối hộp chữ nhật là $V = a \cdot b \cdot c = B \cdot h$ (với $B = a \cdot b$ là diện tích đáy, $h = c$ là chiều cao).
+        \item Học sinh dự đoán: Thể tích khối chóp chắc chắn nhỏ hơn nhiều vì phần đỉnh của khối chóp bị vát nhọn, không chiếm trọn vẹn không gian như khối hộp.
+    \end{itemize}
+
+    \item[d)] \textbf{Tổ chức thực hiện:} GV nhận xét câu trả lời, làm thí nghiệm đong rót cát trực quan giữa lăng trụ và hình chóp để dẫn dắt vào bài học mới.
+\end{itemize}
+
+\subsection*{2. Hoạt động 2: Hình thành kiến thức mới (20 phút)}
+
+\begin{itemize}[leftmargin=1.2cm]
+    \item[a)] \textbf{Mục tiêu:}
+    \begin{itemize}[leftmargin=0.6cm]
+        \item Nắm vững công thức tính thể tích của khối hộp chữ nhật, khối lăng trụ và khối chóp.
+        \item Phân biệt được sự khác biệt cốt lõi: Khối chóp luôn có hệ số $\dfrac{1}{3}$, trong khi khối lăng trụ không có hệ số $\dfrac{1}{3}$.
+        \item Rèn luyện năng lực số thông qua việc lập bảng tính Excel tính thể tích tự động.
+    \end{itemize}
+
+    \item[b)] \textbf{Nội dung:}
+    \begin{itemize}[leftmargin=0.6cm]
+        \item \textbf{1. Thể tích của khối lăng trụ và khối hộp:}
+        \begin{itemize}
+            \item \textbf{Khối hộp chữ nhật:} Có ba kích thước $a, b, c$:
+            $$V = a \cdot b \cdot c = B \cdot h \quad (\text{với } B = a \cdot b \text{ là diện tích đáy}, h = c \text{ là chiều cao})$$
+            \item \textbf{Khối lập phương:} Cạnh $a$:
+            $$V = a^3$$
+            \item \textbf{Khối lăng trụ tổng quát:} Thể tích của khối lăng trụ có diện tích đáy $B$ và chiều cao $h$ bằng tích của diện tích đáy với chiều cao:
+            $$V = B \cdot h$$
+        \end{itemize}
+
+        \item \textbf{2. Thể tích của khối chóp:}
+        \begin{itemize}
+            \item \textbf{Công thức tổng quát:} Thể tích của khối chóp có diện tích đáy $B$ và chiều cao $h$ bằng một phần ba tích của diện tích đáy với chiều cao:
+            $$V = \dfrac{1}{3} B \cdot h$$
+            \item \textit{Thí nghiệm đong rót thực tế:} Lấy đầy nước/cát vào một khối chóp rồi rót sang một khối lăng trụ có cùng đáy và cùng chiều cao, cần đúng $3$ lần rót như vậy thì khối lăng trụ mới đầy tràn. Điều này chứng minh trực quan tỉ số thể tích $\dfrac{V_{\text{chóp}}}{V_{\text{lăng trụ}}} = \dfrac{1}{3}$.
+        \end{itemize}
+    \end{itemize}
+
+    \item[c)] \textbf{Sản phẩm:} Học sinh ghi nhớ chính xác công thức và ghi chép vào vở tóm tắt bảng so sánh thể tích.
+    \item[d)] \textbf{Tổ chức thực hiện:}
+\end{itemize}
+
+\begin{pedabox}{Tiến trình tổ chức Hoạt động 2 (Kiến thức mới - Tiết 1)}
+    \textbf{Bước 1: Chuyển giao nhiệm vụ}
+    \begin{itemize}[leftmargin=0.6cm]
+        \item GV làm thí nghiệm đong rót cát trước lớp: Cho 1 khối chóp tứ giác và 1 khối hộp có cùng đáy và chiều cao. Mời 1 HS lên làm thao tác đong cát.
+        \item Yêu cầu lớp nhận xét số lần đong và rút ra công thức thể tích khối chóp.
+    \end{itemize}
+
+    \textbf{Bước 2: Thực hiện nhiệm vụ có giàn giáo sư phạm}
+    \begin{itemize}[leftmargin=0.6cm]
+        \item Cả lớp quan sát: Đúng 3 lần đong khối chóp thì đầy khối hộp.
+        \item GV phân tích: Thể tích khối lăng trụ không đổi theo phương thẳng đứng (tiết diện đáy giữ nguyên từ đáy dưới lên đáy trên) nên $V = B \cdot h$. Khối chóp thu nhỏ dần về 1 đỉnh nhọn nên thể tích giảm đi 3 lần, do đó $V = \dfrac{1}{3}Bh$.
+    \end{itemize}
+
+    \textbf{Bước 3: Báo cáo, thảo luận}
+    \begin{itemize}[leftmargin=0.6cm]
+        \item HS phát biểu công thức và ghi nhớ các đơn vị đo thể tích.
+    \end{itemize}
+
+    \textbf{Bước 4: Kết luận, chuẩn hóa}
+    \begin{itemize}[leftmargin=0.6cm]
+        \item GV chốt công thức và nhấn mạnh lưu ý cho học sinh trung bình - yếu để không bao giờ quên hệ số $\dfrac{1}{3}$.
+    \end{itemize}
+\end{pedabox}
+
+\begin{scaffoldbox}{Giàn giáo sư phạm cho học sinh trung bình - yếu (Scaffolding)}
+    \textbf{Mẹo ghi nhớ tuyệt đối không bao giờ nhầm lẫn công thức thể tích:}
+    \begin{itemize}[leftmargin=0.6cm]
+        \item \textbf{Cứ có "CHÓP NHỌN" (Hình chóp, Hình nón):} Đỉnh nhọn hoắt $\implies$ BẮT BUỘC PHẢI CÓ HỆ SỐ $\dfrac{1}{3}$:
+        $$V = \dfrac{1}{3} B \cdot h$$
+        \item \textbf{KHÔNG CÓ ĐỈNH NHỌN (Lăng trụ, Hộp, Hình trụ):} Hai đáy bằng nhau, thành thẳng đứng $\implies$ TUYỆT ĐỐI KHÔNG CÓ HỆ SỐ $\dfrac{1}{3}$:
+        $$V = B \cdot h$$
+    \end{itemize}
+\end{scaffoldbox}
+
+\begin{aibox}{Tích hợp Năng lực số (Theo Thông tư 02/2025/TT-BGDĐT - Mã 5.1NC1a)}
+    \textbf{Xây dựng bảng tính Excel tính tự động thể tích hình chóp và hình lăng trụ:}
+    \begin{itemize}[leftmargin=0.6cm]
+        \item GV hướng dẫn học sinh mở bảng tính Excel trên máy tính phòng học hoặc điện thoại thông minh:
+        \begin{itemize}
+            \item Cột A: Tên khối đa diện (Chóp tam giác đều, Chóp đáy chữ nhật, Lăng trụ tam giác).
+            \item Cột B: Kích thước đáy (Cạnh đáy $a$, Cạnh bên $b$).
+            \item Cột C: Chiều cao khối $h$.
+            \item Cột D: Công thức tính diện tích đáy $B$ (Ví dụ tam giác đều: \texttt{=SQRT(3)/4*B2\textasciicircum 2}).
+            \item Cột E: Công thức thể tích khối chóp \texttt{=(1/3)*D2*C2}, khối lăng trụ \texttt{=D2*C2}.
+        \end{itemize}
+        \item Học sinh thử nghiệm thay đổi kích thước $a, h$ và quan sát sự thay đổi tức thời của thể tích $V$.
+    \end{itemize}
+\end{aibox}
+
+\subsection*{3. Hoạt động 3: Luyện tập (14 phút)}
+
+\begin{itemize}[leftmargin=1.2cm]
+    \item[a)] \textbf{Mục tiêu:} Rèn luyện kĩ năng xác định chiều cao, tính diện tích đáy và áp dụng công thức tính thể tích khối chóp và khối lăng trụ đứng trong các trường hợp quen thuộc.
+    \item[b)] \textbf{Nội dung:} Thực hiện bài tập trên Phiếu học tập số 1:
+    \begin{quote}
+        \textbf{Bài toán 1:} Cho hình chóp $S.ABC$ có đáy $ABC$ là tam giác vuông cân tại $B$, cạnh $AB = a$. Cạnh bên $SA$ vuông góc với mặt phẳng đáy và $SA = a\sqrt{3}$.
+        \begin{enumerate}
+            \item Tính diện tích đáy $ABC$ và chiều cao của hình chóp.
+            \item Tính thể tích của khối chóp $S.ABC$.
+        \end{enumerate}
+        \textbf{Bài toán 2:} Cho hình lăng trụ đứng tam giác $ABC.A'B'C'$ có đáy $ABC$ là tam giác đều cạnh $2a$, chiều cao $AA' = 3a$. Tính thể tích khối lăng trụ $ABC.A'B'C'$.
+    \end{quote}
+
+    \item[c)] \textbf{Sản phẩm (Lời giải chi tiết):}
+    \begin{itemize}[leftmargin=0.6cm]
+        \item \textit{Bài toán 1:}
+        \begin{itemize}
+            \item Đáy $ABC$ là tam giác vuông cân tại $B$ nên $BA = BC = a$.
+            Diện tích đáy:
+            $$S_{ABC} = \dfrac{1}{2} BA \cdot BC = \dfrac{1}{2} a \cdot a = \dfrac{a^2}{2}$$
+            \item Vì $SA \perp (ABC)$ nên chiều cao của khối chóp là $h = SA = a\sqrt{3}$.
+            \item Thể tích của khối chóp $S.ABC$:
+            $$V_{S.ABC} = \dfrac{1}{3} S_{ABC} \cdot SA = \dfrac{1}{3} \cdot \dfrac{a^2}{2} \cdot a\sqrt{3} = \dfrac{a^3\sqrt{3}}{6}$$
+        \end{itemize}
+
+        \item \textit{Bài toán 2:}
+        \begin{itemize}
+            \item Đáy $ABC$ là tam giác đều cạnh $2a$.
+            Diện tích đáy:
+            $$S_{ABC} = (2a)^2 \cdot \dfrac{\sqrt{3}}{4} = 4a^2 \cdot \dfrac{\sqrt{3}}{4} = a^2\sqrt{3}$$
+            \item Chiều cao của khối lăng trụ đứng là $h = AA' = 3a$.
+            \item Thể tích của khối lăng trụ $ABC.A'B'C'$:
+            $$V = S_{ABC} \cdot h = a^2\sqrt{3} \cdot 3a = 3a^3\sqrt{3}$$
+        \end{itemize}
+    \end{itemize}
+
+    \item[d)] \textbf{Tổ chức thực hiện:}
+    \begin{itemize}[leftmargin=0.6cm]
+        \item Học sinh làm việc cá nhân trong 7 phút, sau đó đổi chéo bài tập kiểm tra cặp đôi.
+        \item GV gọi 2 HS lên bảng trình bày, nhận xét và chốt phương pháp tính toán.
+    \end{itemize}
+\end{itemize}
+
+\subsection*{4. Hoạt động 4: Vận dụng (5 phút)}
+
+\begin{itemize}[leftmargin=1.2cm]
+    \item[a)] \textbf{Mục tiêu:} Vận dụng bài toán thể tích vào thực tế sản xuất và xây dựng tại địa phương.
+    \item[b)] \textbf{Nội dung & Hướng dẫn về nhà:}
+    \begin{itemize}[leftmargin=0.6cm]
+        \item Một cột trụ bê tông hình lăng trụ tứ giác đều ở cổng trường THCS\&THPT Hồng Vân có cạnh đáy $0{,}4\text{ m}$ và chiều cao $3{,}5\text{ m}$. Hỏi cần bao nhiêu mét khối bê tông tươi để đúc chiếc cột này?
+        \item Lời giải: $V = B \cdot h = (0{,}4)^2 \cdot 3{,}5 = 0{,}16 \cdot 3{,}5 = 0{,}56\text{ m}^3$.
+        \item Chuẩn bị cho Tiết 2: Tìm hiểu hình chóp cụt đều và chuẩn bị bìa kéo cho dự án STEM.
+    \end{itemize}
+\end{itemize}
+
+\vspace{10pt}
+\hrule
+\vspace{10pt}
+
+\begin{center}
+    \textbf{\large TIẾT 2 (TIẾT 78 THEO PPCT | TUẦN 28)}\\[4pt]
+    \textbf{\large THỂ TÍCH KHỐI CHÓP CỤT ĐỀU, CÔNG NGHỆ AI VÀ DỰ ÁN STEM}
+\end{center}
+
+\subsection*{1. Hoạt động 1: Mở đầu (Khởi động - 6 phút)}
+
+\begin{itemize}[leftmargin=1.2cm]
+    \item[a)] \textbf{Mục tiêu:} Tiếp cận hình ảnh khối chóp cụt đều từ các vật dụng quen thuộc trong đời sống; khơi gợi nhu cầu tính toán thể tích chứa của các vật dụng có dạng chóp cụt.
+    \item[b)] \textbf{Nội dung:}
+    \begin{itemize}[leftmargin=0.6cm]
+        \item GV trình chiếu hình ảnh cái xô đựng nước bằng nhựa, chậu trồng cây cảnh bằng sứ và chiếc đèn lồng hình chóp cụt tứ giác đều.
+        \item Đặt câu hỏi: \textit{"Những đồ vật này có phải là hình chóp không? Có phải hình lăng trụ không? Chúng được tạo thành từ hình chóp như thế nào?"}
+    \end{itemize}
+
+    \item[c)] \textbf{Sản phẩm:} Học sinh trả lời: Chúng không phải là hình chóp nhọn, cũng không phải hình lăng trụ vì đáy trên và đáy dưới có kích thước khác nhau. Chúng được tạo thành bằng cách dùng một mặt phẳng nằm ngang cắt đứt phần đỉnh nhọn của một hình chóp đều.
+    \item[d)] \textbf{Tổ chức thực hiện:} GV khẳng định đây chính là "Khối chóp cụt đều" và dẫn dắt vào bài học.
+\end{itemize}
+
+\subsection*{2. Hoạt động 2: Hình thành kiến thức mới (18 phút)}
+
+\begin{itemize}[leftmargin=1.2cm]
+    \item[a)] \textbf{Mục tiêu:}
+    \begin{itemize}[leftmargin=0.6cm]
+        \item Nắm vững khái niệm khối chóp cụt đều và các yếu tố cấu thành (hai đáy là đa giác đều song song, các mặt bên là hình thang cân).
+        \item Thuộc và hiểu công thức tính thể tích khối chóp cụt đều: $V = \dfrac{1}{3} h \left( B_1 + \sqrt{B_1 B_2} + B_2 \right)$.
+        \item Khám phá ứng dụng AI thị giác máy tính quét 3D đo thể tích kiện hàng thông minh.
+    \end{itemize}
+
+    \item[b)] \textbf{Nội dung:}
+    \begin{itemize}[leftmargin=0.6cm]
+        \item \textbf{1. Khái niệm khối chóp cụt đều:}
+        \begin{itemize}
+            \item Cho hình chóp đều $S.A_1 A_2 \dots A_n$. Mặt phẳng $(P)$ song song với mặt phẳng đáy cắt các cạnh bên lần lượt tại $A'_1, A'_2, \dots, A'_n$.
+            \item Phần hình chóp nằm giữa mặt phẳng đáy và mặt phẳng $(P)$ được gọi là \textit{hình chóp cụt đều}.
+            \item Khối chóp cụt đều có:
+            \begin{itemize}
+                \item Đáy lớn và đáy nhỏ là hai đa giác đều đồng dạng nằm trên hai mặt phẳng song song.
+                \item Các mặt bên là những hình thang cân bằng nhau.
+                \item Đoạn thẳng nối tâm của hai đáy là đường cao của chóp cụt đều, độ dài của nó là chiều cao $h$.
+            \end{itemize}
+        \end{itemize}
+
+        \item \textbf{2. Công thức tính thể tích khối chóp cụt đều:}
+        \begin{itemize}
+            \item Thể tích của khối chóp cụt đều có chiều cao $h$, diện tích đáy lớn $B_1$ và diện tích đáy nhỏ $B_2$ được tính theo công thức:
+            $$V = \dfrac{1}{3} h \left( B_1 + \sqrt{B_1 B_2} + B_2 \right)$$
+            \item \textit{Giải thích bản chất toán học:} Gọi khối chóp lớn ban đầu có chiều cao $H_1$, diện tích đáy $B_1$; khối chóp nhỏ bị cắt bỏ có chiều cao $H_2$, diện tích đáy $B_2$.
+            Chiều cao chóp cụt là $h = H_1 - H_2$. Do tính đồng dạng: $\dfrac{H_2}{H_1} = \sqrt{\dfrac{B_2}{B_1}}$.
+            Khi đó thể tích chóp cụt là:
+            $$V = V_1 - V_2 = \dfrac{1}{3} B_1 H_1 - \dfrac{1}{3} B_2 H_2 = \dfrac{1}{3} h \left( B_1 + \sqrt{B_1 B_2} + B_2 \right)$$
+        \end{itemize}
+    \end{itemize}
+
+    \item[c)] \textbf{Sản phẩm:} Học sinh ghi nhớ công thức, vẽ hình chóp cụt tứ giác đều và phân biệt rõ $B_1, B_2, h$.
+    \item[d)] \textbf{Tổ chức thực hiện:}
+\end{itemize}
+
+\begin{pedabox}{Tiến trình tổ chức Hoạt động 2 (Kiến thức mới - Tiết 2)}
+    \textbf{Bước 1: Chuyển giao nhiệm vụ}
+    \begin{itemize}[leftmargin=0.6cm]
+        \item GV chiếu mô hình 3D cắt khối chóp đều thành chóp cụt.
+        \item Yêu cầu học sinh quan sát: Hai mặt đáy có hình gì? Các mặt bên là hình gì?
+    \end{itemize}
+
+    \textbf{Bước 2: Thực hiện nhiệm vụ}
+    \begin{itemize}[leftmargin=0.6cm]
+        \item Học sinh thảo luận nhận ra hai đáy là hai hình vuông (hoặc tam giác đều) đồng dạng, các mặt bên là hình thang cân.
+        \item GV hướng dẫn chứng minh công thức thể tích bằng phương pháp trừ hai khối chóp $V = V_1 - V_2$.
+    \end{itemize}
+
+    \textbf{Bước 3: Báo cáo, thảo luận}
+    \begin{itemize}[leftmargin=0.6cm]
+        \item Học sinh phát biểu công thức và giải thích ý nghĩa số hạng $\sqrt{B_1 B_2}$ (trung bình nhân của hai đáy).
+    \end{itemize}
+
+    \textbf{Bước 4: Kết luận, nhận định}
+    \begin{itemize}[leftmargin=0.6cm]
+        \item GV tổng kết công thức và hướng dẫn học sinh kỹ thuật bấm máy tính cầm tay nhanh đại lượng $\left( B_1 + \sqrt{B_1 B_2} + B_2 \right)$.
+    \end{itemize}
+\end{pedabox}
+
+\begin{aibox}{Tích hợp Năng lực AI (Theo QĐ 2422/QĐ-BGDĐT - Mã 11.C2.1)}
+    \textbf{Khám phá AI Vision quét camera 3D ước lượng thể tích kiện hàng trong Logistics:}
+    \begin{itemize}[leftmargin=0.6cm]
+        \item GV trình chiếu đoạn clip 90 giây: Công nghệ quét kiện hàng tự động của các tập đoàn bưu chính logistics thông minh (Smart Warehouse).
+        \item \textit{Nguyên lý hoạt động:} Camera AI 3D (sử dụng cảm biến chiều sâu RGB-D kết hợp mạng nơ-ron tích chập AI) tự động ghi nhận hình ảnh kiện hàng chạy qua băng chuyền. AI lập tức nhận dạng kiện hàng thuộc dạng hình học nào (khối hộp chữ nhật, hình chóp cụt hay hình trụ tròn), đo tức thời các kích thước dài, rộng, cao với độ chính xác đến từng milimet, áp dụng công thức $V = \dfrac{1}{3}h(B_1 + \sqrt{B_1 B_2} + B_2)$ để tính toán thể tích kiện hàng trong vòng chưa đầy $0{,}1$ giây.
+        \item \textit{Ý nghĩa:} Tự động tính cước vận chuyển, tối ưu hóa thuật toán xếp hàng lên xe tải sao cho không gian trống là nhỏ nhất.
+    \end{itemize}
+\end{aibox}
+
+\subsection*{3. Hoạt động 3: Luyện tập (10 phút)}
+
+\begin{itemize}[leftmargin=1.2cm]
+    \item[a)] \textbf{Mục tiêu:} Vận dụng chính xác công thức tính thể tích khối chóp cụt đều vào bài toán số liệu cụ thể.
+    \item[b)] \textbf{Nội dung:} Thực hiện bài toán trên Phiếu học tập số 2:
+    \begin{quote}
+        \textbf{Bài toán 3:} Một chiếc xô đựng cát có dạng hình chóp cụt tứ giác đều với cạnh đáy lớn bằng $40\text{ cm}$, cạnh đáy nhỏ bằng $20\text{ cm}$, chiều cao của xô là $30\text{ cm}$.
+        \begin{enumerate}
+            \item Tính diện tích đáy lớn $B_1$ và diện tích đáy nhỏ $B_2$.
+            \item Tính thể tích (dung tích) của chiếc xô đó theo đơn vị lít (biết $1\text{ lít} = 1\text{ dm}^3 = 1000\text{ cm}^3$).
+        \end{enumerate}
+    \end{quote}
+
+    \item[c)] \textbf{Sản phẩm (Lời giải chi tiết):}
+    \begin{itemize}[leftmargin=0.6cm]
+        \item \textit{Câu 1:}
+        \begin{itemize}
+            \item Hai đáy là hình vuông, do đó:
+            $$B_1 = 40^2 = 1600\text{ cm}^2$$
+            $$B_2 = 20^2 = 400\text{ cm}^2$$
+        \end{itemize}
+        \item \textit{Câu 2:}
+        \begin{itemize}
+            \item Chiều cao của xô là $h = 30\text{ cm}$.
+            \item Ta có: $\sqrt{B_1 B_2} = \sqrt{1600 \cdot 400} = 40 \cdot 20 = 800\text{ cm}^2$.
+            \item Áp dụng công thức tính thể tích khối chóp cụt đều:
+            $$V = \dfrac{1}{3} h \left( B_1 + \sqrt{B_1 B_2} + B_2 \right)$$
+            $$V = \dfrac{1}{3} \cdot 30 \cdot (1600 + 800 + 400) = 10 \cdot 2800 = 28000\text{ cm}^3$$
+            \item Đổi đơn vị sang lít:
+            $$V = \dfrac{28000}{1000} = 28\text{ dm}^3 = 28\text{ lít}$$
+            Vậy dung tích của chiếc xô là $28$ lít.
+        \end{itemize}
+    \end{itemize}
+
+    \item[d)] \textbf{Tổ chức thực hiện:}
+    \begin{itemize}[leftmargin=0.6cm]
+        \item HS làm bài cá nhân trong 5 phút. GV gọi 1 HS lên bảng làm bài.
+        \item Cả lớp đối chiếu kết quả bấm máy tính; GV chốt đáp án.
+    \end{itemize}
+\end{itemize}
+
+\subsection*{4. Hoạt động 4: Vận dụng (Dự án STEM - 11 phút)}
+
+\begin{itemize}[leftmargin=1.2cm]
+    \item[a)] \textbf{Mục tiêu:} Vận dụng kiến thức thể tích hình khối đa diện để thiết kế và chế tạo hộp quà hình chóp cụt đều đựng nông sản sấy khô của địa phương A Lưới.
+    \item[b)] \textbf{Nội dung:}
+    \begin{stembox}{Dự án STEM: Thiết kế hộp quà nông sản hình chóp cụt tứ giác đều}
+        \textbf{Bối cảnh:} Đoàn thanh niên trường THCS\&THPT Hồng Vân phát động dự án quảng bá nông sản đặc sản vùng cao A Lưới (chuối sấy dẻo, trà sâm cau). Mỗi nhóm học sinh đóng vai trò một đội thiết kế bao bì:
+        \begin{enumerate}[leftmargin=0.6cm]
+            \item \textbf{Yêu cầu thiết kế:} Chế tạo một hộp quà hình chóp cụt tứ giác đều bằng bìa các-tông có kích thước: cạnh đáy dưới $10\text{ cm}$, cạnh đáy trên $6\text{ cm}$, chiều cao hộp $12\text{ cm}$.
+            \item \textbf{Tính toán thể tích:} Tính thể tích chứa của hộp quà để xác định khối lượng chuối sấy có thể đóng gói.
+            \item \textbf{Thực hành lắp ghép:} Vẽ hình trải (khai triển bề mặt gồm 1 đáy lớn, 1 đáy nhỏ và 4 mặt bên hình thang cân) lên bìa các-tông, cắt và dán lắp ghép thành hộp quà hoàn chỉnh.
+        \end{enumerate}
+    \end{stembox}
+    \item[c)] \textbf{Sản phẩm:}
+    \begin{itemize}[leftmargin=0.6cm]
+        \item Kết quả tính toán:
+        $B_1 = 10^2 = 100\text{ cm}^2$; $B_2 = 6^2 = 36\text{ cm}^2$; $\sqrt{B_1 B_2} = 10 \cdot 6 = 60\text{ cm}^2$.
+        $$V = \dfrac{1}{3} \cdot 12 \cdot (100 + 60 + 36) = 4 \cdot 196 = 784\text{ cm}^3 \approx 0{,}784\text{ lít}$$
+        \item 5 mô hình hộp quà hình chóp cụt đều bằng bìa của 5 nhóm được lắp ghép ngay ngắn, trang trí logo nông sản A Lưới bắt mắt.
+    \end{itemize}
+    \item[d)] \textbf{Tổ chức thực hiện:}
+    \begin{itemize}[leftmargin=0.6cm]
+        \item Các nhóm thực hành lắp ghép trong 7 phút.
+        \item 4 phút cuối: Đại diện các nhóm trưng bày sản phẩm trên bàn giáo viên và thuyết minh ngắn gọn về dung tích hộp quà của nhóm mình.
+        \item GV nhận xét, biểu dương tinh thần sáng tạo và tổng kết bài học.
+    \end{itemize}
+\end{stembox}
+
+\section*{IV. PHỤ LỤC HỌC LIỆU BỔ TRỢ}
+
+\subsection*{1. Phiếu học tập số 1 (Tiết 1): Thể tích khối lăng trụ và khối chóp}
+
+\begin{pedabox}{PHIẾU HỌC TẬP SỐ 1: BẢNG TỔNG HỢP CÔNG THỨC THỂ TÍCH KHỐI ĐA DIỆN}
+    \textbf{Họ và tên học sinh:} \dotfill \textbf{Lớp:} 11\dots \textbf{Nhóm:} \dots
+    
+    \textbf{Nhiệm vụ 1: Hoàn thiện bảng công thức}
+    \begin{center}
+    \begin{tabular}{|l|c|c|c|}
+    \hline
+    \textbf{Loại khối đa diện} & \textbf{Diện tích đáy ($B$)} & \textbf{Chiều cao ($h$)} & \textbf{Công thức thể tích ($V$)} \\ \hline
+    1. Khối hộp chữ nhật ($a, b, c$) & $B = \dots\dots$ & $h = \dots\dots$ & $V = \dots\dots\dots\dots$ \\ \hline
+    2. Khối lăng trụ tổng quát & $B$ & $h$ & $V = \dots\dots\dots\dots$ \\ \hline
+    3. Khối chóp tổng quát & $B$ & $h$ & $V = \dots\dots\dots\dots$ \\ \hline
+    \end{tabular}
+    \end{center}
+
+    \textbf{Nhiệm vụ 2: Bài tập rèn luyện}
+    Cho khối chóp tứ giác đều $S.ABCD$ có đáy là hình vuông cạnh $a$, chiều cao $SO = a\sqrt{2}$.
+    \begin{enumerate}
+        \item Tính diện tích đáy $ABCD$: \dotfill
+        \item Tính thể tích khối chóp $S.ABCD$: \dotfill
+    \end{enumerate}
+\end{pedabox}
+
+\subsection*{2. Phiếu học tập số 2 (Tiết 2): Thể tích chóp cụt đều và Dự án STEM}
+
+\begin{pedabox}{PHIẾU HỌC TẬP SỐ 2: TÍNH TOÁN THIẾT KẾ HỘP QUÀ CHÓP CỤT ĐỀU}
+    \textbf{Họ và tên học sinh:} \dotfill \textbf{Lớp:} 11\dots \textbf{Nhóm:} \dots
+
+    \textbf{Nhiệm vụ 1: Công thức thể tích khối chóp cụt đều}
+    \begin{itemize}[leftmargin=0.6cm]
+        \item Ghi lại công thức tổng quát: $V = $ \dotfill
+        \item Đại lượng $\sqrt{B_1 B_2}$ có ý nghĩa là: \dotfill
+    \end{itemize}
+
+    \textbf{Nhiệm vụ 2: Nhật ký phân công dự án STEM}
+    \begin{center}
+    \begin{tabular}{|c|l|l|}
+    \hline
+    \textbf{STT} & \textbf{Họ và tên thành viên} & \textbf{Công việc đảm nhiệm trong nhóm} \\ \hline
+    1 & \dots\dots\dots\dots\dots\dots\dots\dots & Tính toán thể tích và đo kích thước dưỡng \\ \hline
+    2 & \dots\dots\dots\dots\dots\dots\dots\dots & Vẽ hình khai triển lên bìa các-tông \\ \hline
+    3 & \dots\dots\dots\dots\dots\dots\dots\dots & Cắt các mặt bên hình thang cân và 2 đáy \\ \hline
+    4 & \dots\dots\dots\dots\dots\dots\dots\dots & Dán ghép hoàn thiện và trang trí hộp quà \\ \hline
+    \end{tabular}
+    \end{center}
+\end{pedabox}
+
+\subsection*{3. Rubric đánh giá năng lực học sinh trong bài học (4 mức độ)}
+
+\begin{center}
+\begin{tabularx}{\textwidth}{|>{\bfseries}p{3cm}|X|X|X|X|}
+\hline
+\textbf{Tiêu chí} & \textbf{Mức 1: Chưa đạt} & \textbf{Mức 2: Đạt} & \textbf{Mức 3: Khá} & \textbf{Mức 4: Tốt} \\ \hline
+Kỹ năng tính thể tích lăng trụ và khối chóp & Nhầm lẫn công thức, quên hệ số $\dfrac{1}{3}$ ở khối chóp. & Áp dụng đúng công thức nhưng còn tính sai diện tích tam giác đáy. & Tính chuẩn xác diện tích đáy, chiều cao và thể tích khối chóp, lăng trụ. & Tính nhanh, linh hoạt trong các bài toán biến dạng đáy hoặc đường cao gián tiếp. \\ \hline
+Kỹ năng tính thể tích khối chóp cụt đều & Chưa thuộc công thức, nhầm lẫn giữa $\sqrt{B_1 B_2}$ và $\dfrac{B_1+B_2}{2}$. & Thuộc công thức nhưng thao tác bấm máy tính còn lúng túng, sai số. & Tính đúng thể tích chóp cụt đều, đổi đúng đơn vị sang lít. & Hiểu sâu sắc bản chất trừ thể tích, giải quyết trọn vẹn các bài toán thực tiễn phức tạp. \\ \hline
+Năng lực số và nhận thức AI & Chưa lập được bảng tính Excel tính thể tích. & Lập được bảng tính Excel cơ bản theo mẫu hướng dẫn của giáo viên. & Tự thiết lập công thức tính tự động linh hoạt trên Excel; hiểu ứng dụng AI. & Làm chủ công cụ số, đề xuất phương án ứng dụng thị giác máy tính AI trong đời sống. \\ \hline
+Sản phẩm mô hình hóa STEM & Hộp quà bị méo mó, các góc dán hở, kích thước không đúng tỉ lệ. & Hộp quà hoàn thiện nhưng đường cắt chưa sắc sảo, dán ghép còn lỏng. & Hộp quà chắc chắn, đúng kích thước thiết kế, hình thức đẹp mắt. & Hộp quà xuất sắc, chuẩn xác tuyệt đối, trang trí sáng tạo đậm bản sắc vùng cao. \\ \hline
+\end{tabularx}
+\end{center}
+
+\end{document}
