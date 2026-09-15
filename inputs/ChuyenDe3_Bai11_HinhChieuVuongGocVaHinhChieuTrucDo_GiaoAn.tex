@@ -1,0 +1,624 @@
+\documentclass[12pt, a4paper]{article}
+% --- 1. Cấu hình Tiếng Việt và Font chữ chuẩn ---
+\usepackage[utf8]{inputenc}
+\usepackage[T5]{fontenc}
+\usepackage[vietnamese]{babel}
+\usepackage{mathptmx} % Font Times New Roman đồng bộ cả chữ và công thức toán, không gây xung đột gói
+
+\makeatletter
+\renewcommand{\normalsize}{\@setfontsize\normalsize{13pt}{16pt}}
+\makeatother
+\normalsize
+
+% --- 2. Gói Toán học & Ký hiệu bổ trợ ---
+\usepackage{amsmath, amssymb, amsfonts, mathrsfs, amsthm}
+\usepackage{graphicx}
+\usepackage{fontawesome}
+\usepackage{booktabs, tabularx, array, multirow}
+\usepackage{enumitem}
+
+% --- 3. Đồ họa TikZ, Bảng biến thiên & Hình không gian ---
+\usepackage{tikz}
+\usetikzlibrary{calc, intersections, angles, quotes, patterns, arrows.meta, 3d}
+\usepackage{pgfplots}
+\pgfplotsset{compat=1.18}
+\usepackage{tkz-euclide}
+\usepackage{tkz-tab}
+
+\renewcommand{\vec}[1]{\overrightarrow{#1}}
+
+% --- 4. Hộp sư phạm (Tcolorbox) ---
+\usepackage[many]{tcolorbox}
+\tcbuselibrary{skins, breakable}
+
+% --- 5. Căn lề chuẩn văn bản giáo án ---
+\usepackage{geometry}
+\geometry{
+    a4paper,
+    left=25mm,
+    right=15mm,
+    top=20mm,
+    bottom=20mm
+}
+
+% --- 6. Header / Footer chuẩn hóa ---
+\usepackage{fancyhdr}
+\usepackage{lastpage}
+\pagestyle{fancy}
+\fancyhf{}
+
+\fancyhead[L]{\small \textit{Kế hoạch bài dạy Toán 11}}
+\fancyhead[R]{\textbf{Trang \thepage/\pageref{LastPage}}}
+\fancyfoot[L]{\small \textit{Tổ Toán - Tin}}
+\fancyfoot[R]{\small \textit{Trường THCS\&THPT Hồng Vân}}
+\renewcommand{\headrulewidth}{0.4pt}
+\renewcommand{\footrulewidth}{0.4pt}
+
+% --- 7. Giãn dòng & Giãn đoạn theo chuẩn Nghị định 30/2020/NĐ-CP ---
+\usepackage{setspace}
+\setstretch{1.15}
+\setlength{\parindent}{1.0cm}
+\setlength{\parskip}{5pt}
+
+% Định nghĩa hộp sư phạm chuyên dụng
+\newtcolorbox{pedabox}[2][]{
+    enhanced,
+    breakable,
+    colback=blue!3!white,
+    colframe=blue!65!black,
+    fonttitle=\bfseries\small,
+    title={#2},
+    arc=2mm,
+    boxrule=0.6pt,
+    left=3mm, right=3mm, top=2mm, bottom=2mm,
+    #1
+}
+
+\newtcolorbox{aibox}[2][]{
+    enhanced,
+    breakable,
+    colback=teal!4!white,
+    colframe=teal!70!black,
+    fonttitle=\bfseries\small,
+    title={#2},
+    arc=2mm,
+    boxrule=0.6pt,
+    left=3mm, right=3mm, top=2mm, bottom=2mm,
+    #1
+}
+
+\newtcolorbox{scaffoldbox}[2][]{
+    enhanced,
+    breakable,
+    colback=orange!4!white,
+    colframe=orange!80!black,
+    fonttitle=\bfseries\small,
+    title={#2},
+    arc=2mm,
+    boxrule=0.6pt,
+    left=3mm, right=3mm, top=2mm, bottom=2mm,
+    #1
+}
+
+\newtcolorbox{stembox}[2][]{
+    enhanced,
+    breakable,
+    colback=purple!4!white,
+    colframe=purple!75!black,
+    fonttitle=\bfseries\small,
+    title={#2},
+    arc=2mm,
+    boxrule=0.6pt,
+    left=3mm, right=3mm, top=2mm, bottom=2mm,
+    #1
+}
+
+\begin{document}
+
+\begin{center}
+    {\fontsize{14pt}{17pt}\selectfont \textbf{KẾ HOẠCH BÀI DẠY MÔN TOÁN LỚP 11}}\\[6pt]
+    {\fontsize{16pt}{19pt}\selectfont \textbf{CHUYÊN ĐỀ 3 - BÀI 11. HÌNH CHIẾU VUÔNG GÓC VÀ HÌNH CHIẾU TRỤC ĐO}}\\[4pt]
+    {\fontsize{12pt}{15pt}\selectfont \textbf{Môn học: Toán 11} \ \textbar \ \textbf{Thời lượng: 2 tiết (Tiết CĐ25, CĐ26 theo PPCT | Tuần 26)}}
+\end{center}
+
+\vspace{5pt}
+
+\section*{I. MỤC TIÊU}
+
+\subsection*{1. Kiến thức, Năng lực}
+
+\begin{itemize}[leftmargin=1.2cm]
+    \item \textbf{Yêu cầu cần đạt (Nguyên văn CT GDPT 2018 Toán 11):}
+    \begin{itemize}[leftmargin=0.6cm]
+        \item Nhận biết được hình biểu diễn của một hình, khối.
+        \item Nhận biết được một số nguyên tắc cơ bản của vẽ kĩ thuật (hình chiếu đứng, hình chiếu bằng, hình chiếu cạnh).
+    \end{itemize}
+
+    \item \textbf{Năng lực Toán học đặc thù:}
+    \begin{itemize}[leftmargin=0.6cm]
+        \item \textit{Năng lực tư duy và lập luận toán học:} Phát triển tư duy không gian ba chiều và khả năng trừu tượng hóa hình học; phân tích cơ sở toán học của phép chiếu vuông góc và phép chiếu song song; giải thích quy tắc trải 3 mặt phẳng hình chiếu ($P_1, P_2, P_3$) về cùng một mặt phẳng bản vẽ 2D; so sánh sự bảo toàn và biến dạng về góc, tỉ số độ dài trong hình chiếu trục đo vuông góc đều và xiên góc cân.
+        \item \textit{Năng lực mô hình hóa toán học:} Chuyển đổi các vật thể thực tế trong đời sống và kĩ thuật (viên gạch, khối phấn bảng, bu-lông, hộp gỗ, chi tiết máy dạng khối chữ L, chữ U) thành các mô hình đa diện hình học không gian; biểu diễn chính xác các kích thước dài, rộng, cao của vật thể lên hệ thống 3 hình chiếu vuông góc và hình chiếu trục đo.
+        \item \textit{Năng lực giải quyết vấn đề toán học:} Đọc hiểu và vẽ đúng 3 hình chiếu vuông góc (hình chiếu đứng, hình chiếu bằng, hình chiếu cạnh) theo tiêu chuẩn vẽ kĩ thuật Việt Nam (TCVN); nhận biết và phân biệt các nét vẽ kĩ thuật (nét liền đậm cho cạnh thấy, nét đứt mảnh cho cạnh khuất); dựng được hình chiếu trục đo vuông góc đều ($p=q=r=1, \text{ góc } 120^\circ$) và xiên góc cân ($p=r=1, q=0{,}5, \text{ góc } 135^\circ$) của các khối hình học đơn giản.
+        \item \textit{Năng lực giao tiếp toán học:} Sử dụng chính xác và chuẩn mực hệ thống ngôn ngữ, thuật ngữ vẽ kĩ thuật: mặt phẳng hình chiếu đứng, hình chiếu bằng, hình chiếu cạnh, hướng chiếu, đường dóng, hình chiếu trục đo, hệ số biến dạng, góc trục đo, nét thấy, nét khuất; trình bày bản vẽ kĩ thuật sạch đẹp, đúng tỉ lệ và đúng quy chuẩn bố trí.
+        \item \textit{Năng lực sử dụng công cụ, phương tiện học toán:} Sử dụng thành thạo thước kẻ, ê-ke, compa, thước đo góc trong quá trình dựng bản vẽ trên giấy; thao tác làm quen với phần mềm mô hình hóa 3D CAD trên máy tính để quan sát vật thể từ nhiều góc nhìn không gian.
+    \end{itemize}
+
+    \item \textbf{Năng lực số (Theo Thông tư 02/2025/TT-BGDĐT):}
+    \begin{itemize}[leftmargin=0.6cm]
+        \item \textit{Mã 3.1NC1a (Tạo và mô hình hóa nội dung số 3D):} Học sinh làm quen với phần mềm CAD 3D đơn giản (như Tinkercad, Onshape hoặc SketchUp) trên phòng máy 35 máy để tự tay thiết kế khối hình học 3D, thao tác xoay vật thể theo các hướng chiếu chính và sử dụng tính năng xuất tự động hệ thống các hình chiếu 2D vuông góc (Drawing views).
+    \end{itemize}
+
+    \item \textbf{Năng lực AI (Theo Quyết định 2422/QĐ-BGDĐT):}
+    \begin{itemize}[leftmargin=0.6cm]
+        \item \textit{Mã 11.C2.2 (Khám phá công nghệ thị giác máy tính và AI tái tạo 3D):} Học sinh tìm hiểu cách Trí tuệ nhân tạo (AI Computer Vision, NeRF, 3D Gaussian Splatting, CAD AI) nhận diện các đường nét 2D từ các bản vẽ kĩ thuật hoặc ảnh chụp đa góc để tự động tái tạo lại mô hình 3D số hóa hoàn chỉnh phục vụ cho công nghệ in 3D và tự động hóa trong sản xuất công nghiệp thông minh (Smart Manufacturing).
+        \item \textit{Kỹ thuật Prompting tương tác:} Học sinh biết cách xây dựng câu lệnh prompt yêu cầu trợ lý AI mô tả chi tiết các bước dựng hình chiếu cạnh từ hình chiếu đứng và hình chiếu bằng cho trước của một khối chữ L.
+    \end{itemize}
+
+    \item \textbf{Năng lực chung:}
+    \begin{itemize}[leftmargin=0.6cm]
+        \item \textit{Tự chủ và tự học:} Chủ động quan sát các vật thể xung quanh từ các hướng chiếu khác nhau (nhìn từ trước, nhìn từ trên, nhìn từ cạnh); rèn luyện thói quen tự kiểm tra tính thẳng hàng giữa các hình chiếu.
+        \item \textit{Giao tiếp và hợp tác:} Tích cực thảo luận cặp đôi, kiểm tra chéo bản vẽ kỹ thuật của bạn cùng bàn, phát hiện và góp ý sửa lỗi nét khuất, nét thấy.
+    \end{itemize}
+\end{itemize}
+
+\subsection*{2. Phẩm chất}
+
+\begin{itemize}[leftmargin=1.2cm]
+    \item \textbf{Chăm chỉ:} Cẩn thận, tỉ mỉ trong từng đường kẻ, nét vẽ; kiên nhẫn đo đạc kích thước và dóng thẳng các đường chiếu kĩ thuật.
+    \item \textbf{Trung thực:} Tự tay dựng bản vẽ, tôn trọng tính chính xác tuyệt đối của kích thước hình học, không tự ý tẩy xóa sai lệch số liệu đo.
+    \item \textbf{Trách nhiệm:} Giữ gìn bản vẽ sạch sẽ, cẩn thận; hình thành tác phong làm việc chuẩn mực, khoa học và kỷ luật của người làm kĩ thuật.
+\end{itemize}
+
+\section*{II. THIẾT BỊ DẠY HỌC VÀ HỌC LIỆU}
+
+\begin{itemize}[leftmargin=1.2cm]
+    \item \textbf{Giáo viên:}
+    \begin{itemize}[leftmargin=0.6cm]
+        \item Kế hoạch bài dạy chi tiết 2 tiết theo chuẩn Công văn 5512/BGDĐT-GDTrH.
+        \item Bộ mô hình trực quan các khối hình học không gian (khối hộp chữ nhật, hình lăng trụ tam giác, khối chữ L, khối chữ U khoét rãnh) bằng xốp hoặc nhựa.
+        \item Mô hình khung 3 mặt phẳng hình chiếu vuông góc gập mở được (gồm $P_1, P_2, P_3$).
+        \item Phòng thực hành tin học (35 máy tính kết nối Internet, truy cập phần mềm CAD 3D trực tuyến Tinkercad).
+        \item Hệ thống Phiếu học tập phân tầng bậc thang (PHT số 1: Dựng 3 hình chiếu vuông góc; PHT số 2: Dựng hình chiếu trục đo).
+        \item Bảng Rubric đánh giá kỹ năng vẽ kỹ thuật và năng lực số của học sinh.
+    \end{itemize}
+
+    \item \textbf{Học sinh:}
+    \begin{itemize}[leftmargin=0.6cm]
+        \item Sách Chuyên đề học tập Toán 11, vở bài tập vẽ kĩ thuật (giấy kẻ ô li hoặc giấy trắng khổ A4).
+        \item Dụng cụ vẽ kĩ thuật cá nhân: thước thẳng có vạch chia milimet, ê-ke $45^\circ - 90^\circ$ và $30^\circ - 60^\circ$, compa, bút chì gỗ loại 2B (để vẽ nét đậm) và HB (để vẽ nét mảnh), tẩy chì.
+    \end{itemize}
+\end{itemize}
+
+\section*{III. TIẾN TRÌNH DẠY HỌC}
+
+\begin{center}
+    \textbf{\large TIẾT 1 (TIẾT CĐ25 THEO PPCT | TUẦN 26)}\\[4pt]
+    \textbf{\large HÌNH CHIẾU VUÔNG GÓC}
+\end{center}
+
+\subsection*{1. Hoạt động 1: Mở đầu (Khởi động - 8 phút)}
+
+\begin{itemize}[leftmargin=1.2cm]
+    \item[a)] \textbf{Mục tiêu:}
+    \begin{itemize}[leftmargin=0.6cm]
+        \item Tạo tình huống có vấn đề xuất phát từ thực tế sản xuất và xây dựng: Tại sao một người thợ mộc hay thợ cơ khí không thể thi công chính xác một chi tiết máy chỉ từ một bức ảnh chụp 3D thông thường?
+        \item Kích thích nhu cầu biểu diễn vật thể 3D lên các mặt phẳng 2D một cách đầy đủ, chính xác về kích thước và hình dạng.
+    \end{itemize}
+
+    \item[b)] \textbf{Nội dung:}
+    \begin{itemize}[leftmargin=0.6cm]
+        \item Giáo viên cầm trên tay một khối gỗ hình chữ L có kích thước: dài $60\text{ mm}$, cao $40\text{ mm}$, rộng $30\text{ mm}$, có khoét bậc.
+        \item Chiếu ảnh chụp khối gỗ từ một góc nghiêng và hỏi: \textit{"Từ bức ảnh này, các em có biết chính xác độ dày của bậc chữ L là bao nhiêu không? Cạnh bị khuất ở phía sau có hình dạng thế nào?"}
+        \item GV hướng dẫn học sinh nhìn khối gỗ theo 3 hướng vuông góc:
+        \begin{enumerate}[leftmargin=0.6cm]
+            \item Hướng 1: Nhìn thẳng từ trước vào mặt chữ L.
+            \item Hướng 2: Nhìn thẳng từ trên đỉnh xuống.
+            \item Hướng 3: Nhìn thẳng từ phía bên trái sang.
+        \end{enumerate}
+    \end{itemize}
+
+    \item[c)] \textbf{Sản phẩm:}
+    \begin{itemize}[leftmargin=0.6cm]
+        \item Học sinh nhận xét: Nhìn từ trước thấy hình chữ L; nhìn từ trên xuống thấy 2 hình chữ nhật liền nhau; nhìn từ bên trái thấy một hình chữ nhật.
+        \item Nhận ra rằng nếu kết hợp cả 3 góc nhìn vuông góc này thì mọi chi tiết và kích thước của vật thể đều được xác định rõ ràng, không bị che khuất hay méo mó.
+    \end{itemize}
+
+    \item[d)] \textbf{Tổ chức thực hiện:}
+\end{itemize}
+
+\begin{pedabox}{Tiến trình tổ chức Hoạt động 1 (Khởi động)}
+    \textbf{Bước 1: Chuyển giao nhiệm vụ}
+    \begin{itemize}[leftmargin=0.6cm]
+        \item GV đặt vật thể mẫu ở bục giảng, yêu cầu các nhóm quan sát nhanh và phác họa hình ảnh nhìn thấy khi đứng ở 3 vị trí (trước mặt, nhìn từ trên xuống, nhìn từ bên cạnh).
+    \end{itemize}
+
+    \textbf{Bước 2: Thực hiện nhiệm vụ}
+    \begin{itemize}[leftmargin=0.6cm]
+        \item HS trao đổi nhanh theo cặp đôi, vẽ nhanh bằng bút chì lên nháp.
+    \end{itemize}
+
+    \textbf{Bước 3: Báo cáo, thảo luận}
+    \begin{itemize}[leftmargin=0.6cm]
+        \item 2 học sinh giơ hình phác thảo lên trước lớp; cả lớp nhận thấy sự khác nhau ở mỗi hướng nhìn.
+    \end{itemize}
+
+    \textbf{Bước 4: Kết luận, nhận định}
+    \begin{itemize}[leftmargin=0.6cm]
+        \item GV giới thiệu: Phương pháp biểu diễn vật thể bằng cách chiếu vuông góc lên 3 mặt phẳng chính là phương pháp cốt lõi của môn Vẽ kĩ thuật trên toàn thế giới.
+        \item Dẫn dắt vào bài học mới: Khái niệm và quy tắc xây dựng Hình chiếu vuông góc.
+    \end{itemize}
+\end{pedabox}
+
+\subsection*{2. Hoạt động 2: Hình thành kiến thức mới (22 phút)}
+
+\begin{itemize}[leftmargin=1.2cm]
+    \item[a)] \textbf{Mục tiêu:}
+    \begin{itemize}[leftmargin=0.6cm]
+        \item Nắm vững khái niệm 3 mặt phẳng hình chiếu ($P_1, P_2, P_3$), 3 hướng chiếu và tên gọi của 3 hình chiếu vuông góc tương ứng (Hình chiếu đứng, Hình chiếu bằng, Hình chiếu cạnh).
+        \item Nắm vững quy tắc trải mặt phẳng và vị trí bố trí chuẩn của các hình chiếu trên bản vẽ kĩ thuật theo tiêu chuẩn TCVN.
+        \item Nhận biết và vẽ đúng các loại nét vẽ kĩ thuật: nét liền đậm (cạnh thấy), nét đứt mảnh (cạnh khuất), nét gạch chấm mảnh (trục đối xứng).
+    \end{itemize}
+
+    \item[b)] \textbf{Nội dung:}
+    \begin{itemize}[leftmargin=0.6cm]
+        \item \textbf{1. Hệ thống ba mặt phẳng hình chiếu vuông góc:}
+        \begin{itemize}
+            \item \textbf{Mặt phẳng hình chiếu đứng ($P_1$):} Đặt thẳng đứng ở phía sau vật thể. Hướng chiếu từ trước tới $\implies$ thu được \textbf{Hình chiếu đứng} (biểu diễn chiều dài và chiều cao).
+            \item \textbf{Mặt phẳng hình chiếu bằng ($P_2$):} Đặt nằm ngang ở phía dưới vật thể ($P_2 \perp P_1$). Hướng chiếu từ trên xuống $\implies$ thu được \textbf{Hình chiếu bằng} (biểu diễn chiều dài và chiều rộng).
+            \item \textbf{Mặt phẳng hình chiếu cạnh ($P_3$):} Đặt thẳng đứng ở bên phải vật thể ($P_3 \perp P_1$ và $P_3 \perp P_2$). Hướng chiếu từ trái sang $\implies$ thu được \textbf{Hình chiếu cạnh} (biểu diễn chiều rộng và chiều cao).
+        \end{itemize}
+
+        \item \textbf{2. Quy tắc trải mặt phẳng hình chiếu lên bản vẽ kĩ thuật:}
+        \begin{itemize}
+            \item Sau khi chiếu vuông góc vật thể lên 3 mặt phẳng:
+            \begin{itemize}
+                \item Giữ nguyên mặt phẳng hình chiếu đứng $P_1$ trên mặt phẳng bản vẽ.
+                \item Xoay mặt phẳng hình chiếu bằng $P_2$ quanh giao tuyến với $P_1$ xuống dưới một góc $90^\circ$ để trùng với mặt phẳng $P_1$.
+                \item Xoay mặt phẳng hình chiếu cạnh $P_3$ quanh giao tuyến với $P_1$ sang bên phải một góc $90^\circ$ để trùng với mặt phẳng $P_1$.
+            \end{itemize}
+            \item \textbf{Vị trí bố trí chuẩn mực trên bản vẽ kĩ thuật Việt Nam (TCVN):}
+            \begin{center}
+            \begin{tabular}{|c|c|}
+            \hline
+            \textbf{Hình chiếu đứng} & \textbf{Hình chiếu cạnh} \\ 
+            (Ở góc trên bên trái) & (Ở bên phải hình chiếu đứng, cùng độ cao) \\ \hline
+            \textbf{Hình chiếu bằng} & \multirow{2}{*}{\textit{Góc dóng $45^\circ$ đối chiếu chiều rộng}} \\ 
+            (Ở ngay dưới hình chiếu đứng, cùng độ dài) & \\ \hline
+            \end{tabular}
+            \end{center}
+            \item \textit{Quy tắc dóng thẳng hàng (Bắt buộc):}
+            \begin{itemize}
+                \item Hình chiếu bằng nằm ngay phía dưới hình chiếu đứng: thẳng hàng theo phương dọc (cùng chiều dài $L$).
+                \item Hình chiếu cạnh nằm ngay bên phải hình chiếu đứng: thẳng hàng theo phương ngang (cùng chiều cao $H$).
+                \item Chiều rộng $W$ của hình chiếu bằng và hình chiếu cạnh liên hệ chặt chẽ qua đường dóng góc $45^\circ$.
+            \end{itemize}
+        \end{itemize}
+
+        \item \textbf{3. Quy ước các nét vẽ cơ bản:}
+        \begin{itemize}
+            \item \textbf{Nét liền đậm (khoảng $0{,}5 - 0{,}7\text{ mm}$):} Dùng để vẽ các đường bao thấy, cạnh thấy của vật thể.
+            \item \textbf{Nét đứt mảnh (khoảng $0{,}25\text{ mm}$):} Gồm các gạch ngắn đều nhau ($3 - 4\text{ mm}$), khoảng hở ($1\text{ mm}$), dùng để vẽ các đường bao khuất, cạnh khuất bên trong vật thể.
+            \item \textbf{Nét gạch chấm mảnh:} Dùng vẽ trục đối xứng, đường tâm đường tròn.
+        \end{itemize}
+    \end{itemize}
+
+    \item[c)] \textbf{Sản phẩm:}
+    \begin{itemize}[leftmargin=0.6cm]
+        \item Ghi chép định nghĩa, quy tắc trải mặt phẳng và quy ước nét vẽ vào vở.
+        \item Bản vẽ hoàn chỉnh 3 hình chiếu vuông góc của khối chữ L có kích thước: dài $60\text{ mm}$, cao $40\text{ mm}$, rộng $30\text{ mm}$; bậc khuyết có kích thước $30\text{ mm} \times 20\text{ mm}$.
+    \end{itemize}
+
+    \item[d)] \textbf{Tổ chức thực hiện:}
+\end{itemize}
+
+\begin{pedabox}{Tiến trình tổ chức Hoạt động 2 (Hình thành kiến thức)}
+    \textbf{Bước 1: Chuyển giao nhiệm vụ}
+    \begin{itemize}[leftmargin=0.6cm]
+        \item GV dùng mô hình khung 3 mặt phẳng $P_1, P_2, P_3$ gập vuông góc, đặt khối chữ L vào giữa không gian ba chiều.
+        \item GV thao tác gập phẳng $P_2$ xuống dưới và mở $P_3$ sang phải để học sinh quan sát trực quan quy tắc trải mặt phẳng.
+        \item Yêu cầu HS đọc mục I trong SGK và phát biểu quy tắc bố trí 3 hình chiếu.
+    \end{itemize}
+
+    \textbf{Bước 2: Thực hiện nhiệm vụ có giàn giáo sư phạm}
+    \begin{itemize}[leftmargin=0.6cm]
+        \item HS quan sát, ghi nhớ vị trí: Đứng ở trên bên trái, Bằng ở dưới, Cạnh ở bên phải.
+        \item GV làm mẫu trên bảng từng bước dóng đường kẻ mờ (Construction lines) giữa các hình chiếu để đảm bảo tính thẳng hàng.
+    \end{itemize}
+
+    \textbf{Bước 3: Báo cáo, thảo luận}
+    \begin{itemize}[leftmargin=0.6cm]
+        \item HS trả lời câu hỏi: \textit{"Nếu một cạnh bị bề mặt trước che khuất khi nhìn từ bên trái sang, ta phải dùng nét vẽ gì để biểu diễn?"} $\implies$ Dùng nét đứt mảnh!
+    \end{itemize}
+
+    \textbf{Bước 4: Kết luận, nhận định}
+    \begin{itemize}[leftmargin=0.6cm]
+        \item GV chốt quy tắc bố trí và tiêu chuẩn nét vẽ theo TCVN.
+    \end{itemize}
+\end{pedabox}
+
+\begin{scaffoldbox}{Giàn giáo sư phạm cho học sinh trung bình - yếu (Scaffolding)}
+    \textbf{Thần chú nhớ vị trí và liên kết kích thước giữa 3 hình chiếu:}
+    \begin{enumerate}[leftmargin=0.6cm]
+        \item \textbf{Vị trí:} \textit{"Đứng trên trái - Bằng dưới Đứng - Cạnh bên phải Đứng"}.
+        \item \textbf{Khóa kích thước thẳng hàng:}
+        \begin{itemize}
+            \item \textbf{Đứng và Bằng:} Có chung \textbf{chiều dài} $\implies$ Đặt thước thẳng dóng dọc từ Đứng xuống Bằng phải khớp khít nhau!
+            \item \textbf{Đứng và Cạnh:} Có chung \textbf{chiều cao} $\implies$ Đặt thước ngang dóng từ Đứng sang Cạnh phải cùng độ cao!
+            \item \textbf{Bằng và Cạnh:} Có chung \textbf{chiều rộng} $\implies$ Bằng xoay ngang thành chiều ngang của Cạnh.
+        \end{itemize}
+        \item \textbf{Nét vẽ:} Mắt nhìn thấy $\to$ vẽ nét liền đậm; Bị che khuất $\to$ vẽ nét đứt đứt đứt!
+    \end{enumerate}
+\end{scaffoldbox}
+
+\subsection*{3. Hoạt động 3: Luyện tập (10 phút)}
+
+\begin{itemize}[leftmargin=1.2cm]
+    \item[a)] \textbf{Mục tiêu:} Rèn luyện kĩ năng vẽ 3 hình chiếu vuông góc của khối hộp chữ nhật có khoét một rãnh thông suốt ở giữa mặt trên.
+    \item[b)] \textbf{Nội dung:} Thực hiện bài toán trên Phiếu học tập số 1.
+    \begin{itemize}[leftmargin=0.6cm]
+        \item \textbf{Bài tập:} Cho khối hộp chữ nhật có kích thước dài $50\text{ mm}$, rộng $30\text{ mm}$, cao $30\text{ mm}$. Ở chính giữa mặt trên, người ta khoét một rãnh hình chữ nhật có chiều rộng $10\text{ mm}$, chiều sâu $15\text{ mm}$ chạy suốt từ trước ra sau (khối chữ U).
+        \begin{itemize}
+            \item Hãy vẽ hình chiếu đứng (hướng nhìn từ trước).
+            \item Hãy vẽ hình chiếu bằng (hướng nhìn từ trên xuống).
+            \item Hãy vẽ hình chiếu cạnh (hướng nhìn từ trái sang).
+        \end{itemize}
+    \end{itemize}
+
+    \item[c)] \textbf{Sản phẩm (Bản vẽ chuẩn mực):}
+    \begin{itemize}[leftmargin=0.6cm]
+        \item \textbf{Hình chiếu đứng:} Là hình chữ U có kích thước ngoài $50\text{ mm} \times 30\text{ mm}$, rãnh khoét ở giữa rộng $10\text{ mm}$, sâu $15\text{ mm}$ (toàn bộ các cạnh đều nhìn thấy $\implies$ vẽ bằng nét liền đậm).
+        \item \textbf{Hình chiếu bằng:} Là hình chữ nhật kích thước $50\text{ mm} \times 30\text{ mm}$. Có hai đoạn thẳng nét liền đậm song song cách mép hai bên $20\text{ mm}$ biểu diễn hai mép rãnh thấy từ trên xuống.
+        \item \textbf{Hình chiếu cạnh:} Là hình chữ nhật kích thước $30\text{ mm} \times 30\text{ mm}$. Do rãnh chạy xuyên suốt từ trước ra sau bị thành bên che khuất, đáy rãnh được biểu diễn bằng \textbf{nét đứt mảnh} nằm ngang cách đỉnh trên $15\text{ mm}$.
+    \end{itemize}
+
+    \item[d)] \textbf{Tổ chức thực hiện:}
+    \begin{itemize}[leftmargin=0.6cm]
+        \item Học sinh sử dụng ê-ke, thước kẻ thực hành vẽ vào giấy kẻ ô của Phiếu học tập số 1 trong 6 phút.
+        \item GV mời 1 học sinh lên bảng vẽ phấn hình chiếu đứng và hình chiếu bằng; 1 học sinh khác vẽ hình chiếu cạnh.
+        \item GV phân tích lỗi sai điển hình: quên vẽ nét đứt đáy rãnh ở hình chiếu cạnh hoặc dóng không thẳng hàng giữa hình chiếu đứng và hình chiếu bằng.
+    \end{itemize}
+\end{itemize}
+
+\subsection*{4. Hoạt động 4: Vận dụng (Chủ đề STEM - 5 phút)}
+
+\begin{itemize}[leftmargin=1.2cm]
+    \item[a)] \textbf{Mục tiêu:} Vận dụng quy tắc vẽ hình chiếu vuông góc vào thực tế: lập bản vẽ chế tạo cho một chi tiết hộp phấn hoặc đồ dùng học tập bằng gỗ.
+    \item[b)] \textbf{Nội dung:}
+    \begin{stembox}{Chủ đề STEM: Dựng bản vẽ 3 mặt hình chiếu của hộp phấn bảng}
+        Mỗi nhóm học sinh sử dụng thước kẹp hoặc thước chia milimet đo các kích thước thực tế của hộp phấn viết bảng của lớp học (chiều dài, chiều rộng, chiều cao). Dựng bản vẽ 3 hình chiếu vuông góc đúng tỉ lệ $1:1$ hoặc $1:2$ trên giấy A4 để gửi cho xưởng mộc gia công chế tạo hộp đựng phấn bằng gỗ tái chế.
+    \end{stembox}
+    \item[c)] \textbf{Sản phẩm:} Bản vẽ phác thảo có ghi kích thước của hộp phấn trên giấy A4 của các nhóm.
+    \item[d)] \textbf{Tổ chức thực hiện:} GV giao bài tập hoàn thiện bản vẽ ở nhà và chuẩn bị cho Tiết 2 về Hình chiếu trục đo.
+\end{itemize}
+
+\vspace{10pt}
+\hrule
+\vspace{10pt}
+
+\begin{center}
+    \textbf{\large TIẾT 2 (TIẾT CĐ26 THEO PPCT | TUẦN 26)}\\[4pt]
+    \textbf{\large HÌNH CHIẾU TRỤC ĐO}
+\end{center}
+
+\subsection*{1. Hoạt động 1: Mở đầu (Khởi động - 7 phút)}
+
+\begin{itemize}[leftmargin=1.2cm]
+    \item[a)] \textbf{Mục tiêu:}
+    \begin{itemize}[leftmargin=0.6cm]
+        \item Nhận ra hạn chế của hình chiếu vuông góc: dù rất chính xác về kích thước nhưng lại rời rạc trên 3 mặt phẳng 2D, đòi hỏi người đọc bản vẽ phải có trí tưởng tượng không gian tốt.
+        \item Nảy sinh nhu cầu cần một hình biểu diễn duy nhất trên một mặt phẳng nhưng thể hiện được cả 3 chiều không gian (nổi khối 3D trực quan).
+    \end{itemize}
+
+    \item[b)] \textbf{Nội dung:}
+    \begin{itemize}[leftmargin=0.6cm]
+        \item GV chiếu 3 hình chiếu vuông góc của một chi tiết cơ khí phức tạp, yêu cầu học sinh hình dung vật thể đó trông như thế nào.
+        \item Sau đó, GV chiếu bên cạnh một bức vẽ 3D nổi khối của chính chi tiết đó.
+        \item Đặt câu hỏi: \textit{"Hình vẽ 3D này được xây dựng trên cơ sở phép chiếu hình học nào mà ta đã học ở lớp 11? Tại sao các góc vuông trong không gian khi lên hình vẽ 3D lại không còn là góc vuông $90^\circ$ nữa?"}
+    \end{itemize}
+
+    \item[c)] \textbf{Sản phẩm:} Học sinh liên hệ với phép chiếu song song đã học ở học kì I và nhận biết rằng hình biểu diễn 3D này chính là kết quả của phép chiếu song song vật thể kèm hệ trục tọa độ lên mặt phẳng bản vẽ.
+    \item[d)] \textbf{Tổ chức thực hiện:} GV nhận xét câu trả lời, giới thiệu thuật ngữ \textbf{Hình chiếu trục đo} và dẫn dắt vào bài học.
+\end{itemize}
+
+\subsection*{2. Hoạt động 2: Hình thành kiến thức mới (18 phút)}
+
+\begin{itemize}[leftmargin=1.2cm]
+    \item[a)] \textbf{Mục tiêu:}
+    \begin{itemize}[leftmargin=0.6cm]
+        \item Nắm vững định nghĩa hình chiếu trục đo, hệ trục tọa độ trục đo $O'x'y'z'$, các góc trục đo và hệ số biến dạng ($p, q, r$).
+        \item Phân biệt rõ hai loại hình chiếu trục đo thông dụng: Hình chiếu trục đo vuông góc đều và Hình chiếu trục đo xiên góc cân.
+        \item Nắm vững các bước dựng hình chiếu trục đo của một vật thể đơn giản từ 3 hình chiếu vuông góc.
+    \end{itemize}
+
+    \item[b)] \textbf{Nội dung:}
+    \begin{itemize}[leftmargin=0.6cm]
+        \item \textbf{1. Khái niệm hình chiếu trục đo:}
+        \begin{itemize}
+            \item Gắn vào vật thể một hệ trục tọa độ vuông góc $Oxyz$ với các trục: $Ox$ (chiều dài), $Oy$ (chiều rộng), $Oz$ (chiều cao).
+            \item Chiếu song song vật thể cùng hệ trục $Oxyz$ theo phương chiếu $s$ lên mặt phẳng chiếu $(P)$ (phương chiếu $s$ không song song với bất kì trục nào).
+            \item Kết quả: Hình chiếu của vật thể trên $(P)$ được gọi là \textbf{hình chiếu trục đo}.
+            \item Hình chiếu của các trục $Ox, Oy, Oz$ là các \textbf{trục đo} $O'x', O'y', O'z'$.
+            \item Các góc $\widehat{x'O'y'}, \widehat{y'O'z'}, \widehat{x'O'z'}$ gọi là các \textbf{góc trục đo}.
+            \item Tỉ số giữa độ dài hình chiếu của đoạn thẳng nằm trên trục đo và độ dài thật của đoạn thẳng đó gọi là \textbf{hệ số biến dạng}:
+            $$p = \frac{O'A'}{OA} \text{ (trên trục } O'x'); \quad q = \frac{O'B'}{OB} \text{ (trên trục } O'y'); \quad r = \frac{O'C'}{OC} \text{ (trên trục } O'z')$$
+        \end{itemize}
+
+        \item \textbf{2. Hai loại hình chiếu trục đo tiêu chuẩn thường dùng:}
+    \end{itemize}
+
+    \begin{center}
+    \begin{tabularx}{\textwidth}{|>{\bfseries}p{3.2cm}|X|X|}
+    \hline
+    \textbf{Đặc điểm} & \textbf{Hình chiếu trục đo vuông góc đều} & \textbf{Hình chiếu trục đo xiên góc cân} \\ \hline
+    Phương chiếu & Vuông góc với mặt phẳng chiếu ($s \perp (P)$). & Xiên góc với mặt phẳng chiếu ($s \not\perp (P)$). \\ \hline
+    Góc trục đo & Ba góc bằng nhau và bằng $120^\circ$:
+    $$\widehat{x'O'y'} = \widehat{y'O'z'} = \widehat{x'O'z'} = 120^\circ$$ & Trục $O'z'$ thẳng đứng, $O'x'$ nằm ngang: $\widehat{x'O'z'} = 90^\circ$;
+    $\widehat{x'O'y'} = \widehat{y'O'z'} = 135^\circ$. \\ \hline
+    Hệ số biến dạng quy ước & Quy ước không biến dạng:
+    $$p = q = r = 1$$ (kích thước thật theo cả 3 chiều). & Chiều sâu giảm một nửa để hình không bị méo:
+    $$p = r = 1; \quad q = 0{,}5$$ \\ \hline
+    Ưu điểm & Hình ảnh đối xứng, tự nhiên, thường dùng cho chi tiết máy tròn, hình nón, hình cầu. & Mặt chính diện ($x'O'z'$) giữ nguyên hình dạng thật (góc vuông giữ nguyên $90^\circ$). Rất dễ vẽ! \\ \hline
+    \end{tabularx}
+    \end{center}
+
+    \item[c)] \textbf{Sản phẩm:}
+    \begin{itemize}[leftmargin=0.6cm]
+        \item Bảng đối sánh và các thông số góc, hệ số biến dạng được ghi chép chuẩn xác vào vở.
+        \item Dựng đúng hệ trục đo vuông góc đều ($120^\circ - 120^\circ - 120^\circ$) và hệ trục đo xiên góc cân ($90^\circ - 135^\circ - 135^\circ$) bằng compa và ê-ke.
+    \end{itemize}
+
+    \item[d)] \textbf{Tổ chức thực hiện:}
+\end{itemize}
+
+\begin{pedabox}{Tiến trình tổ chức Hoạt động 2 (Kiến thức mới - Tiết 2)}
+    \textbf{Bước 1: Chuyển giao nhiệm vụ}
+    \begin{itemize}[leftmargin=0.6cm]
+        \item GV chiếu hình ảnh động minh họa phép chiếu trục đo vuông góc đều và xiên góc cân.
+        \item Hướng dẫn học sinh cách dùng ê-ke $30^\circ - 60^\circ$ dựng góc $120^\circ$ cho trục đo vuông góc đều (kẻ trục $O'z'$ thẳng đứng, hai trục $O'x'$ và $O'y'$ nghiêng $30^\circ$ so với phương nằm ngang).
+        \item Hướng dẫn dùng ê-ke $45^\circ$ dựng góc $135^\circ$ cho trục đo xiên góc cân.
+    \end{itemize}
+
+    \textbf{Bước 2: Thực hiện nhiệm vụ có giàn giáo sư phạm}
+    \begin{itemize}[leftmargin=0.6cm]
+        \item HS dùng dụng cụ vẽ thực hành dựng 2 hệ trục tọa độ trục đo vào vở.
+        \item GV kiểm tra và nhắc nhở: Trong trục đo xiên góc cân, mọi kích thước dọc theo trục $O'y'$ (chiều rộng/chiều sâu) BẮT BUỘC phải nhân với hệ số $q = 0{,}5$ (chia đôi kích thước thật).
+    \end{itemize}
+
+    \textbf{Bước 3: Báo cáo, thảo luận}
+    \begin{itemize}[leftmargin=0.6cm]
+        \item Một học sinh nêu lí do tại sao trục đo xiên góc cân lại lấy $q = 0{,}5$: Nếu lấy $q = 1$, hình vẽ nhìn từ trước sẽ bị kéo dài về phía sau quá mức, gây cảm giác vật thể bị méo và mất cân đối thị giác.
+    \end{itemize}
+
+    \textbf{Bước 4: Kết luận, nhận định}
+    \begin{itemize}[leftmargin=0.6cm]
+        \item GV chốt lại quy trình 4 bước dựng hình chiếu trục đo từ khối hộp bao ngoài.
+    \end{itemize}
+\end{pedabox}
+
+\begin{aibox}{Tích hợp Năng lực số \& Năng lực AI (Theo TT 02/2025 \& QĐ 2422)}
+    \textbf{1. Thực hành trải nghiệm phần mềm 3D CAD trên phòng máy (Mã 3.1NC1a):}
+    \begin{itemize}[leftmargin=0.6cm]
+        \item Học sinh mở trình duyệt web trên máy tính phòng máy, truy cập \texttt{https://www.tinkercad.com/}.
+        \item Thao tác: Kéo thả một khối hộp (Box), đổi kích thước thành $60 \times 40 \times 30\text{ mm}$, kéo một khối rỗng (Hole) cắt bỏ một phần tạo thành khối chữ L.
+        \item Nhấp vào khối xoay góc nhìn (ViewCube) để chuyển đổi qua lại tức thì giữa góc nhìn 3D trục đo (Isometric view) và các hình chiếu 2D phẳng (Top, Front, Right).
+    \end{itemize}
+    \textbf{2. Trí tuệ nhân tạo (AI) tái tạo mô hình 3D từ bản vẽ 2D (Mã 11.C2.2):}
+    \begin{itemize}[leftmargin=0.6cm]
+        \item GV giới thiệu ứng dụng AI hiện đại: Các kỹ sư chỉ cần quét (scan) 3 bản vẽ hình chiếu 2D dạng nét, các mô hình học sâu (Deep Learning CAD AI) có khả năng tự động giải bài toán ngược: suy luận không gian và tái tạo ra tệp mô hình 3D (.STEP, .STL) chính xác trong vài giây để đưa vào máy in 3D hoặc máy cắt CNC tự động.
+    \end{itemize}
+\end{aibox}
+
+\subsection*{3. Hoạt động 3: Luyện tập (12 phút)}
+
+\begin{itemize}[leftmargin=1.2cm]
+    \item[a)] \textbf{Mục tiêu:} Rèn luyện kĩ năng dựng hình chiếu trục đo xiên góc cân của khối chữ L có kích thước cụ thể.
+    \item[b)] \textbf{Nội dung:} Thực hiện bài toán trên Phiếu học tập số 2.
+    \begin{itemize}[leftmargin=0.6cm]
+        \item \textbf{Bài tập:} Cho vật thể hình chữ L có các kích thước: chiều dài $L = 50\text{ mm}$, chiều cao $H = 40\text{ mm}$, chiều rộng $W = 30\text{ mm}$. Phần bậc khuyết có chiều dài $25\text{ mm}$ và chiều cao $20\text{ mm}$.
+        \item Hãy dựng hình chiếu trục đo xiên góc cân của vật thể với hệ số biến dạng $p = r = 1; q = 0{,}5$.
+    \end{itemize}
+
+    \item[c)] \textbf{Sản phẩm (Quy trình dựng hình chi tiết):}
+    \begin{enumerate}[leftmargin=0.6cm]
+        \item \textit{Bước 1 (Dựng hệ trục):} Vẽ hệ trục tọa độ $O'x'y'z'$ với $O'z'$ thẳng đứng, $O'x'$ nằm ngang ($\widehat{x'O'z'} = 90^\circ$), trục $O'y'$ nghiêng $135^\circ$ so với $O'x'$ và $O'z'$.
+        \item \textit{Bước 2 (Dựng khối hộp bao ngoài):}
+        \begin{itemize}
+            \item Đặt trên $O'x'$ đoạn $50\text{ mm}$ (vì $p = 1$).
+            \item Đặt trên $O'z'$ đoạn $40\text{ mm}$ (vì $r = 1$).
+            \item Đặt trên $O'y'$ đoạn $30 \times 0{,}5 = 15\text{ mm}$ (vì $q = 0{,}5$).
+            \item Dựng khối hộp chữ nhật bao ngoài bằng các đường nét chì mờ.
+        \end{itemize}
+        \item \textit{Bước 3 (Khoét bậc chữ L):}
+        \begin{itemize}
+            \item Trên mặt trước ($x'O'z'$), vẽ đúng hình dạng mặt chữ L với kích thước thật: dài $50\text{ mm}$, cao $40\text{ mm}$, bậc cao $20\text{ mm}$, dài $25\text{ mm}$.
+            \item Từ các đỉnh của hình chữ L mặt trước, kẻ các đường song song với trục $O'y'$ có độ dài đúng bằng $15\text{ mm}$.
+            \item Nối các điểm mút phía sau lại để tạo thành mặt chữ L phía sau.
+        \end{itemize}
+        \item \textit{Bước 4 (Tô đậm nét thấy và tẩy nét phụ):}
+        \begin{itemize}
+            \item Dùng bút chì 2B tô đậm các cạnh thấy của khối chữ L bằng nét liền đậm.
+            \item Tẩy sạch các đường dựng hình hộp bao mờ không cần thiết.
+        \end{itemize}
+    \end{enumerate}
+
+    \item[d)] \textbf{Tổ chức thực hiện:}
+    \begin{itemize}[leftmargin=0.6cm]
+        \item Học sinh thao tác thực hành vẽ trên Phiếu học tập số 2.
+        \item GV làm mẫu trên bảng từng bước dựng khối bao mờ rồi gọt vát chi tiết.
+        \item GV đi kiểm tra từng bàn, sửa lỗi sai học sinh hay quên nhân hệ số $0{,}5$ trên trục $O'y'$.
+    \end{itemize}
+\end{pedabox}
+
+\subsection*{4. Hoạt động 4: Vận dụng (Dự án STEM - 8 phút)}
+
+\begin{itemize}[leftmargin=1.2cm]
+    \item[a)] \textbf{Mục tiêu:} Tích hợp kiến thức hình chiếu vuông góc và hình chiếu trục đo vào thực tế chế tạo mô hình mộc dân dụng tại huyện A Lưới.
+    \item[b)] \textbf{Nội dung:}
+    \begin{stembox}{Dự án STEM: Thiết kế bản vẽ khớp nối mộng gỗ truyền thống}
+        Trong nghề mộc truyền thống của người dân vùng cao A Lưới, các thanh xà nhà và khung bàn ghế thường được liên kết với nhau bằng các "khớp mộng" (khớp ghép chữ T hoặc ghép góc) mà không cần dùng đinh sắt.
+        \begin{itemize}[leftmargin=0.6cm]
+            \item Em hãy chọn một chi tiết mộng gỗ đơn giản (chi tiết mộng mang cá hoặc mộng chốt).
+            \item Dựng bản vẽ kết hợp gồm: 3 hình chiếu vuông góc (có ghi kích thước) đặt ở nửa bên trái tờ giấy A4 và 1 hình chiếu trục đo xiên góc cân đặt ở góc trên bên phải tờ giấy A4 để minh họa trực quan cho bác thợ mộc.
+        \end{itemize}
+    \end{stembox}
+    \item[c)] \textbf{Sản phẩm:} Bản vẽ kĩ thuật hoàn chỉnh khổ A4 thể hiện đúng quy chuẩn cả 3 hình chiếu vuông góc và 1 hình chiếu trục đo 3D.
+    \item[d)] \textbf{Tổ chức thực hiện:} GV nhận xét sản phẩm các nhóm, hướng dẫn học sinh lưu trữ bản vẽ vào hồ sơ học tập và chuẩn bị bài học tiếp theo: "Bài 12. Bản vẽ kĩ thuật".
+\end{itemize}
+
+\section*{IV. PHỤ LỤC HỌC LIỆU BỔ TRỢ}
+
+\subsection*{1. Phiếu học tập số 1 (Tiết 1): Dựng 3 hình chiếu vuông góc}
+
+\begin{pedabox}{PHIẾU HỌC TẬP SỐ 1: QUY TẮC DỰNG BA HÌNH CHIẾU VUÔNG GÓC}
+    \textbf{Họ và tên học sinh:} \dotfill \textbf{Lớp:} 11\dots \textbf{Nhóm:} \dots
+    
+    \textbf{Nhiệm vụ 1: Điền khuyết quy tắc chuẩn bố trí bản vẽ}
+    \begin{itemize}[leftmargin=0.6cm]
+        \item Hình chiếu đứng nhìn từ \dots\dots\dots\dots, đặt ở vị trí \dots\dots\dots\dots trên bản vẽ.
+        \item Hình chiếu bằng nhìn từ \dots\dots\dots\dots, đặt ở ngay phía \dots\dots\dots\dots hình chiếu đứng.
+        \item Hình chiếu cạnh nhìn từ \dots\dots\dots\dots, đặt ở ngay phía \dots\dots\dots\dots hình chiếu đứng.
+        \item Nét liền đậm dùng để vẽ đường bao \dots\dots\dots\dots; Nét đứt mảnh dùng để vẽ đường bao \dots\dots\dots\dots
+    \end{itemize}
+
+    \textbf{Nhiệm vụ 2: Thực hành vẽ 3 hình chiếu vuông góc của khối chữ U}
+    Cho khối chữ U kích thước $50 \times 30 \times 30\text{ mm}$, rãnh khoét $10 \times 15\text{ mm}$ chạy suốt:
+    \begin{center}
+    \textit{(Học sinh sử dụng thước kẻ dóng thẳng hàng để vẽ 3 hình chiếu vào khung kẻ ô li dưới đây)}
+    \end{center}
+    \vspace{4cm}
+\end{pedabox}
+
+\subsection*{2. Phiếu học tập số 2 (Tiết 2): Dựng hình chiếu trục đo}
+
+\begin{pedabox}{PHIẾU HỌC TẬP SỐ 2: BẢNG THÔNG SỐ VÀ DỰNG HÌNH CHIẾU TRỤC ĐO}
+    \textbf{Họ và tên học sinh:} \dotfill \textbf{Lớp:} 11\dots \textbf{Nhóm:} \dots
+
+    \textbf{Nhiệm vụ 1: So sánh thông số hai loại hình chiếu trục đo}
+    \begin{center}
+    \begin{tabular}{|l|c|c|}
+    \hline
+    \textbf{Thông số} & \textbf{Vuông góc đều} & \textbf{Xiên góc cân} \\ \hline
+    Các góc trục đo & $\widehat{x'O'y'} = \widehat{y'O'z'} = \widehat{x'O'z'} =$ \dots\dots & $\widehat{x'O'z'} =$ \dots\dots; $\widehat{x'O'y'} = \widehat{y'O'z'} =$ \dots\dots \\ \hline
+    Hệ số biến dạng & $p = $ \dots\dots; $q = $ \dots\dots; $r = $ \dots\dots & $p = $ \dots\dots; $q = $ \dots\dots; $r = $ \dots\dots \\ \hline
+    \end{tabular}
+    \end{center}
+
+    \textbf{Nhiệm vụ 2: Dựng hình chiếu trục đo xiên góc cân của khối chữ L}
+    Kích thước: $L=50\text{ mm}, H=40\text{ mm}, W=30\text{ mm}$; bậc khuyết $25 \times 20\text{ mm}$.
+    \vspace{4.5cm}
+\end{pedabox}
+
+\subsection*{3. Rubric đánh giá năng lực học sinh trong bài học (4 mức độ)}
+
+\begin{center}
+\begin{tabularx}{\textwidth}{|>{\bfseries}p{3cm}|X|X|X|X|}
+\hline
+\textbf{Tiêu chí} & \textbf{Mức 1: Chưa đạt} & \textbf{Mức 2: Đạt} & \textbf{Mức 3: Khá} & \textbf{Mức 4: Tốt} \\ \hline
+Nhận biết 3 hình chiếu vuông góc & Nhầm lẫn vị trí giữa hình chiếu bằng và hình chiếu cạnh. & Xác định đúng vị trí nhưng dóng các hình chiếu chưa thẳng hàng. & Bố trí đúng vị trí, dóng thẳng hàng chuẩn xác theo phương dọc và ngang. & Vẽ chuẩn mực, sạch đẹp, phân biệt sắc nét giữa nét liền đậm và nét đứt mảnh. \\ \hline
+Dựng hình chiếu trục đo & Chưa dựng đúng các góc trục đo, quên nhân hệ số biến dạng $q=0{,}5$. & Dựng đúng góc trục đo nhưng nét vẽ còn run, tẩy xóa nhiều. & Dựng chuẩn xác khối bao ngoài và gọt vát đúng chi tiết chữ L. & Dựng hình nổi khối sống động, kích thước tuyệt đối chính xác, hoàn thiện nhanh. \\ \hline
+Năng lực số và công nghệ CAD & Chưa thao tác được việc xoay vật thể 3D trên máy tính. & Thao tác xoay vật thể được nhưng chưa biết xuất hình chiếu 2D. & Sử dụng thành thạo phần mềm CAD 3D để kiểm chứng 3 góc nhìn hình chiếu. & Khai thác sáng tạo CAD 3D, hiểu rõ nguyên lý AI tái tạo 3D từ bản vẽ 2D. \\ \hline
+Vận dụng thực tế và STEM & Chưa liên hệ được bản vẽ kĩ thuật với vật thể thực tế. & Đọc được bản vẽ đơn giản nhưng chưa phác thảo được chi tiết thực tế. & Phác thảo được bản vẽ 3 mặt của hộp phấn hoặc đồ vật quen thuộc. & Hoàn thiện xuất sắc bản vẽ mộng gỗ truyền thống A Lưới, đạt chuẩn kỹ thuật thi công. \\ \hline
+\end{tabularx}
+\end{center}
+
+\end{document}
