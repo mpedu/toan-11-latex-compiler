@@ -1,0 +1,436 @@
+\documentclass[12pt, a4paper]{article}
+% --- 1. Cấu hình Tiếng Việt và Font chữ chuẩn ---
+\usepackage[utf8]{inputenc}
+\usepackage[T5]{fontenc}
+\usepackage[vietnamese]{babel}
+\usepackage{mathptmx} % Font Times New Roman đồng bộ cả chữ và công thức toán, không gây xung đột gói
+
+\makeatletter
+\renewcommand{\normalsize}{\@setfontsize\normalsize{13pt}{16pt}}
+\makeatother
+\normalsize
+
+% --- 2. Gói Toán học & Ký hiệu bổ trợ ---
+\usepackage{amsmath, amssymb, amsfonts, mathrsfs, amsthm}
+\usepackage{graphicx}
+\usepackage{fontawesome}
+\usepackage{booktabs, tabularx, array, multirow}
+\usepackage{enumitem}
+
+% --- 3. Đồ họa TikZ, Bảng biến thiên & Hình không gian ---
+\usepackage{tikz}
+\usetikzlibrary{calc, intersections, angles, quotes, patterns, arrows.meta, 3d}
+\usepackage{pgfplots}
+\pgfplotsset{compat=1.18}
+\usepackage{tkz-euclide}
+\usepackage{tkz-tab}
+
+\renewcommand{\vec}[1]{\overrightarrow{#1}}
+
+% --- 4. Hộp sư phạm (Tcolorbox) ---
+\usepackage[many]{tcolorbox}
+\tcbuselibrary{skins, breakable}
+
+% --- 5. Căn lề chuẩn văn bản giáo án ---
+\usepackage{geometry}
+\geometry{
+    a4paper,
+    left=25mm,
+    right=15mm,
+    top=20mm,
+    bottom=20mm
+}
+
+% --- 6. Header / Footer chuẩn hóa ---
+\usepackage{fancyhdr}
+\usepackage{lastpage}
+\pagestyle{fancy}
+\fancyhf{}
+
+\fancyhead[L]{\small \textit{Kế hoạch bài dạy Toán 11}}
+\fancyhead[R]{\textbf{Trang \thepage/\pageref{LastPage}}}
+\fancyfoot[L]{\small \textit{Tổ Toán - Tin}}
+\fancyfoot[R]{\small \textit{Trường THCS\&THPT Hồng Vân}}
+\renewcommand{\headrulewidth}{0.4pt}
+\renewcommand{\footrulewidth}{0.4pt}
+
+% --- 7. Giãn dòng & Giãn đoạn theo chuẩn Nghị định 30/2020/NĐ-CP ---
+\usepackage{setspace}
+\setstretch{1.15}
+\setlength{\parindent}{1.0cm}
+\setlength{\parskip}{5pt}
+
+% Định nghĩa hộp sư phạm chuyên dụng
+\newtcolorbox{pedabox}[2][]{
+    enhanced,
+    breakable,
+    colback=blue!3!white,
+    colframe=blue!65!black,
+    fonttitle=\bfseries\small,
+    title={#2},
+    arc=2mm,
+    boxrule=0.6pt,
+    left=3mm, right=3mm, top=2mm, bottom=2mm,
+    #1
+}
+
+\newtcolorbox{aibox}[2][]{
+    enhanced,
+    breakable,
+    colback=teal!4!white,
+    colframe=teal!70!black,
+    fonttitle=\bfseries\small,
+    title={#2},
+    arc=2mm,
+    boxrule=0.6pt,
+    left=3mm, right=3mm, top=2mm, bottom=2mm,
+    #1
+}
+
+\newtcolorbox{scaffoldbox}[2][]{
+    enhanced,
+    breakable,
+    colback=orange!4!white,
+    colframe=orange!80!black,
+    fonttitle=\bfseries\small,
+    title={#2},
+    arc=2mm,
+    boxrule=0.6pt,
+    left=3mm, right=3mm, top=2mm, bottom=2mm,
+    #1
+}
+
+\newtcolorbox{stembox}[2][]{
+    enhanced,
+    breakable,
+    colback=purple!4!white,
+    colframe=purple!75!black,
+    fonttitle=\bfseries\small,
+    title={#2},
+    arc=2mm,
+    boxrule=0.6pt,
+    left=3mm, right=3mm, top=2mm, bottom=2mm,
+    #1
+}
+
+\begin{document}
+
+\begin{center}
+    {\fontsize{14pt}{17pt}\selectfont \textbf{KẾ HOẠCH BÀI DẠY MÔN TOÁN LỚP 11}}\\[6pt]
+    {\fontsize{16pt}{19pt}\selectfont \textbf{ÔN TẬP GIỮA KỲ II}}\\[4pt]
+    {\fontsize{12pt}{15pt}\selectfont \textbf{Môn học: Toán 11} \ \textbar \ \textbf{Thời lượng: 1 tiết (Tiết 80 theo PPCT | Tuần 29)}}
+\end{center}
+
+\vspace{5pt}
+
+\section*{I. MỤC TIÊU}
+
+\subsection*{1. Kiến thức, Năng lực}
+
+\begin{itemize}[leftmargin=1.2cm]
+    \item \textbf{Yêu cầu cần đạt (Nguyên văn CT GDPT 2018 Toán 11):}
+    \begin{itemize}[leftmargin=0.6cm]
+        \item Hệ thống hóa toàn diện kiến thức cốt lõi nửa đầu Học kỳ II thuộc Chương VI (Hàm số mũ và hàm số lôgarit) và Chương VII (Quan hệ vuông góc trong không gian).
+        \item \textit{Chương VI (Hàm số mũ và hàm số lôgarit):} Nắm vững phép tính lũy thừa với số mũ thực, các tính chất của hàm số mũ $y = a^x$ và hàm số lôgarit $y = \log_a x$; thành thạo công thức biến đổi lôgarit; giải phương trình và bất phương trình mũ, lôgarit cơ bản.
+        \item \textit{Chương VII (Quan hệ vuông góc trong không gian):} Nắm chắc điều kiện đường thẳng vuông góc mặt phẳng, hai mặt phẳng vuông góc; xác định và tính góc giữa đường thẳng và mặt phẳng; tính khoảng cách từ điểm đến mặt phẳng (trọng tâm là chân đường vuông góc); tính thể tích khối lăng trụ và khối chóp.
+        \item Rèn luyện kỹ năng làm bài kiểm tra định kỳ 90 phút (kết hợp trắc nghiệm khách quan 70\% và tự luận 30\%).
+    \end{itemize}
+
+    \item \textbf{Năng lực Toán học đặc thù:}
+    \begin{itemize}[leftmargin=0.6cm]
+        \item \textit{Năng lực tư duy và lập luận toán học:} Khả năng so sánh, phân loại các dạng toán Đại số và Hình học; phát hiện mối liên hệ logic giữa hàm số mũ và hàm số lôgarit (hàm số ngược nhau qua đường phân giác $y = x$); lập luận hình học không gian chặt chẽ khi chứng minh quan hệ vuông góc và xác định góc giữa đường thẳng với mặt phẳng.
+        \item \textit{Năng lực mô hình hóa toán học:} Vận dụng mô hình hàm số mũ và lôgarit vào các bài toán thực tiễn về tăng trưởng dân số, lãi kép ngân hàng, độ pH hóa học, độ Richter của động đất; mô hình hóa kết cấu công trình xây dựng thành hình chóp có cạnh bên vuông góc với đáy để tính toán góc dốc và dung tích.
+        \item \textit{Năng lực giải quyết vấn đề toán học:} Xây dựng chiến lược phân bổ thời gian hợp lý khi làm bài kiểm tra; thành thạo phương pháp biến đổi đại số đưa về cùng cơ số hoặc đặt ẩn phụ; thành thạo quy tắc 2 bước tính khoảng cách từ chân đường cao; biết sử dụng máy tính cầm tay để kiểm tra nhanh kết quả nghiệm và giá trị số học.
+        \item \textit{Năng lực giao tiếp toán học:} Trình bày bài giải tự luận rõ ràng, mạch lạc, đúng chuẩn mực ký hiệu toán học; diễn đạt chính xác điều kiện xác định của phương trình lôgarit, họ nghiệm phương trình mũ, kết luận hình học.
+        \item \textit{Năng lực sử dụng công cụ, phương tiện học toán:} Khai thác hiệu quả máy tính cầm tay Casio fx-580VN X trong việc tính toán lôgarit, giải phương trình mũ (lệnh \texttt{SOLVE}), tính giá trị hàm số (lệnh \texttt{CALC}), bảng giá trị (lệnh \texttt{TABLE}); sử dụng phần mềm GeoGebra 3D kiểm tra trực quan góc và khoảng cách.
+    \end{itemize}
+
+    \item \textbf{Năng lực số (Theo Thông tư 02/2025/TT-BGDĐT):}
+    \begin{itemize}[leftmargin=0.6cm]
+        \item \textit{Mã 2.6NC1a (Tham gia làm bài ôn tập trắc nghiệm trên môi trường số):} Học sinh sử dụng thiết bị số (điện thoại thông minh, máy tính phòng thực hành) đăng nhập vào hệ thống học tập trực tuyến (LMS / Azota / Google Classroom của trường THCS\&THPT Hồng Vân) để hoàn thành bài thi thử trắc nghiệm trực tuyến chuẩn bị cho kỳ kiểm tra giữa kỳ II; làm quen với giao diện bấm giờ tự động và xem ngay phản hồi điểm số số hóa.
+    \end{itemize}
+
+    \item \textbf{Năng lực AI (Theo Quyết định 2422/QĐ-BGDĐT):}
+    \begin{itemize}[leftmargin=0.6cm]
+        \item \textit{Mã 11.B2.1 (Liêm chính học thuật và sử dụng AI có trách nhiệm):} Học sinh xây dựng ý thức đạo đức học thuật số vững vàng; hiểu rõ ranh giới giữa việc sử dụng trợ lý AI để hỗ trợ giải thích phương pháp giải, gợi mở tư duy khi tự học ở nhà với việc gian lận nhờ AI làm bài hộ; cam kết chấp hành nghiêm túc quy chế phòng thi, không sử dụng thiết bị công nghệ thu phát sóng hay phần mềm AI trong suốt 90 phút kiểm tra viết trên giấy.
+    \end{itemize}
+
+    \item \textbf{Năng lực chung:}
+    \begin{itemize}[leftmargin=0.6cm]
+        \item \textit{Tự chủ và tự học:} Tự giác rà soát lại toàn bộ đề cương ôn tập giữa kỳ II; tự đánh giá các dạng bài mình còn hay mắc sai lầm để bổ cứu kịp thời.
+        \item \textit{Giao tiếp và hợp tác:} Tích cực thảo luận cặp đôi, chia sẻ mẹo bấm máy tính cầm tay và kỹ năng kẻ đường phụ trong hình học không gian.
+    \end{itemize}
+\end{itemize}
+
+\subsection*{2. Phẩm chất}
+
+\begin{itemize}[leftmargin=1.2cm]
+    \item \textbf{Chăm chỉ:} Chăm chỉ giải quyết trọn vẹn các bài toán trong phiếu học tập ôn luyện; kiên trì rèn luyện kỹ năng tính toán không phụ thuộc máy móc.
+    \item \textbf{Trung thực:} Tự lực làm bài thi thử trực tuyến, trung thực đánh giá kết quả, kiên quyết bài trừ mọi hành vi gian lận trong kiểm tra thi cử.
+    \item \textbf{Trách nhiệm:} Có trách nhiệm với thành tích học tập của bản thân; chuẩn bị chu đáo đồ dùng học tập (thước kẻ, compa, bút viết, máy tính cầm tay) trước ngày kiểm tra chính thức.
+\end{itemize}
+
+\section*{II. THIẾT BỊ DẠY HỌC VÀ HỌC LIỆU}
+
+\begin{itemize}[leftmargin=1.2cm]
+    \item \textbf{Giáo viên:}
+    \begin{itemize}[leftmargin=0.6cm]
+        \item Kế hoạch bài dạy chi tiết 1 tiết theo chuẩn Công văn 5512/BGDĐT-GDTrH.
+        \item Slide bài giảng điện tử tổng hợp ma trận đề kiểm tra Giữa kỳ II (70\% trắc nghiệm - 30\% tự luận; 40\% Nhận biết, 30\% Thông hiểu, 20\% Vận dụng, 10\% Vận dụng cao).
+        \item Phiếu học tập ôn tập tổng hợp (kèm bảng công thức cốt lõi 1 trang cho HS trung bình - yếu).
+        \item Bộ đề thi thử trực tuyến gồm 20 câu trắc nghiệm được cấu hình trên nền tảng số.
+        \item Bảng Rubric đánh giá năng lực học sinh.
+    \end{itemize}
+
+    \item \textbf{Học sinh:}
+    \begin{itemize}[leftmargin=0.6cm]
+        \item Sách giáo khoa Toán 11, vở ghi, đề cương ôn tập giữa kỳ II.
+        \item Máy tính cầm tay Casio fx-580VN X, thước kẻ, ê-ke, compa, bút chì.
+    \end{itemize}
+\end{itemize}
+
+\section*{III. TIẾN TRÌNH DẠY HỌC (1 TIẾT - 45 PHÚT)}
+
+\subsection*{1. Hoạt động 1: Mở đầu (Khởi động - 6 phút)}
+
+\begin{itemize}[leftmargin=1.2cm]
+    \item[a)] \textbf{Mục tiêu:}
+    \begin{itemize}[leftmargin=0.6cm]
+        \item Kích hoạt trí nhớ dài hạn, củng cố nhanh các công thức biến đổi Lôgarit và công thức Thể tích trước khi vào bài ôn luyện tổng hợp.
+    \end{itemize}
+
+    \item[b)] \textbf{Nội dung (Trắc nghiệm nhanh "Chọn câu ĐÚNG - SAI"):}
+    \begin{itemize}[leftmargin=0.6cm]
+        \item Giáo viên trình chiếu 4 mệnh đề ngắn:
+        \begin{enumerate}[leftmargin=0.6cm]
+            \item Với $0 < a \ne 1$ và $x, y > 0$, ta có: $\log_a (x + y) = \log_a x + \log_a y$.
+            \item Với $0 < a \ne 1$ và $b > 0$, phương trình $a^x = b \iff x = \log_a b$.
+            \item Góc giữa đường thẳng $d$ vuông góc với mặt phẳng $(P)$ bằng $90^\circ$.
+            \item Thể tích của khối chóp có diện tích đáy $B$ và chiều cao $h$ là $V = B \cdot h$.
+        \end{enumerate}
+    \end{itemize}
+
+    \item[c)] \textbf{Sản phẩm:} Học sinh xác định nhanh:
+    \begin{itemize}[leftmargin=0.6cm]
+        \item Câu 1: \textbf{SAI} (Công thức đúng là $\log_a (x \cdot y) = \log_a x + \log_a y$).
+        \item Câu 2: \textbf{ĐÚNG}.
+        \item Câu 3: \textbf{ĐÚNG}.
+        \item Câu 4: \textbf{SAI} (Công thức đúng phải có hệ số $\dfrac{1}{3}$: $V = \dfrac{1}{3} B \cdot h$).
+    \end{itemize}
+
+    \item[d)] \textbf{Tổ chức thực hiện:} GV gọi ngẫu nhiên học sinh trả lời miệng; uốn nắn ngay những ngộ nhận kinh điển về logarit và thể tích.
+\end{itemize}
+
+\subsection*{2. Hoạt động 2: Ôn tập hệ thống lý thuyết trọng tâm (12 phút)}
+
+\begin{itemize}[leftmargin=1.2cm]
+    \item[a)] \textbf{Mục tiêu:}
+    \begin{itemize}[leftmargin=0.6cm]
+        \item Hệ thống hóa và sơ đồ hóa các kiến thức trọng tâm của 2 Chương VI và VII.
+        \item Cung cấp điểm tựa sư phạm cho học sinh trung bình - yếu giúp tự tin giải quyết phần nhận biết và thông hiểu (chiếm 70\% điểm số).
+    \end{itemize}
+
+    \item[b)] \textbf{Nội dung:}
+    \begin{itemize}[leftmargin=0.6cm]
+        \item \textbf{1. Mạch Đại số \& Giải tích (Chương VI: Hàm số mũ và Lôgarit):}
+        \begin{itemize}
+            \item \textit{Điều kiện xác định:} Lôgarit $\log_a b$ chỉ có nghĩa khi $0 < a \ne 1$ và $b > 0$.
+            \item \textit{Công thức biến đổi cơ bản:}
+            $$\log_a (x y) = \log_a x + \log_a y; \quad \log_a \left(\dfrac{x}{y}\right) = \log_a x - \log_a y; \quad \log_a (x^\alpha) = \alpha \log_a x$$
+            $$\log_a b = \dfrac{\log_c b}{\log_c a}; \quad \log_{a^\beta} b = \dfrac{1}{\beta} \log_a b$$
+            \item \textit{Phương trình cơ bản:}
+            $$a^x = b \iff x = \log_a b \quad (b > 0); \quad \log_a x = b \iff x = a^b \quad (x > 0)$$
+        \end{itemize}
+
+        \item \textbf{2. Mạch Hình học không gian (Chương VII: Quan hệ vuông góc):}
+        \begin{itemize}
+            \item \textit{Đường thẳng vuông góc với mặt phẳng:} $d \perp (P) \iff d \perp a$ và $d \perp b$ ($a, b \subset (P), a \cap b$).
+            \item \textit{Góc giữa đường thẳng và mặt phẳng:} Là góc nhọn giữa đường thẳng và hình chiếu vuông góc của nó lên mặt phẳng: $\varphi = \widehat{(d, d')} \in [0^\circ; 90^\circ]$.
+            \item \textit{Khoảng cách từ chân đường cao $A$ đến mặt bên:} Quy tắc 2 bước:
+            $$AK \perp BC \text{ (cạnh đáy)}, \quad AH \perp SK \implies d(A, (SBC)) = AH = \dfrac{SA \cdot AK}{\sqrt{SA^2 + AK^2}}$$
+            \item \textit{Thể tích khối chóp:} $V = \dfrac{1}{3} S_{\text{đáy}} \cdot h$.
+        \end{itemize}
+    \end{itemize}
+
+    \item[c)] \textbf{Sản phẩm:} Học sinh ghi nhớ bảng tóm tắt công thức 1 trang vào vở học tập.
+    \item[d)] \textbf{Tổ chức thực hiện:} GV trình chiếu slide tổng hợp; phát Phiếu học tập số 1 có in sẵn bảng công thức tóm tắt cho học sinh.
+\end{itemize}
+
+\begin{scaffoldbox}{Giàn giáo sư phạm cho học sinh trung bình - yếu (Scaffolding)}
+    \textbf{Chiến thuật "Lấy trọn 7,0 điểm" bài kiểm tra Giữa kỳ II:}
+    \begin{enumerate}[leftmargin=0.6cm]
+        \item \textbf{Với câu hỏi Lôgarit:} Luôn nhớ đặt điều kiện biểu thức trong $\log > 0$. Dùng MTCT: Nhập vế trái trừ vế phải rồi dùng lệnh \texttt{CALC} thử 4 phương án $A, B, C, D$.
+        \item \textbf{Với câu hỏi Hình học:}
+        \begin{itemize}
+            \item Chiều cao hình chóp $SA \perp (ABC)$ luôn là $SA$.
+            \item Góc giữa $SC$ và đáy luôn là $\widehat{SCA}$ (nối từ đỉnh $S \to$ giao điểm $C \to$ chân đường cao $A$).
+            \item Tính thể tích chóp: Tuyệt đối không được quên chia $3$!
+        \end{itemize}
+    \end{enumerate}
+\end{scaffoldbox}
+
+\subsection*{3. Hoạt động 3: Luyện tập giải đề minh họa giữa kỳ II (20 phút)}
+
+\begin{itemize}[leftmargin=1.2cm]
+    \item[a)] \textbf{Mục tiêu:}
+    \begin{itemize}[leftmargin=0.6cm]
+        \item Luyện tập giải bài toán tự luận kết hợp Đại số và Hình học không gian chuẩn mực theo ma trận đề kiểm tra.
+        \item Rèn luyện tư duy độc lập và ý thức liêm chính học thuật (Năng lực AI - Mã 11.B2.1).
+    \end{itemize}
+
+    \item[b)] \textbf{Nội dung:} Giải 2 bài toán tự luận then chốt trên Phiếu học tập số 1:
+    \begin{quote}
+        \textbf{Bài 1 (Đại số - 1,0 điểm):} Giải phương trình sau:
+        $$4^x - 3 \cdot 2^{x+1} + 8 = 0$$
+        \textbf{Bài 2 (Hình học - 2,0 điểm):} Cho hình chóp $S.ABC$ có đáy $ABC$ là tam giác vuông tại $B$, $AB = a, BC = a\sqrt{3}$. Cạnh bên $SA$ vuông góc với mặt phẳng đáy $(ABC)$ và $SA = 2a$.
+        \begin{enumerate}[leftmargin=0.6cm]
+            \item Chứng minh rằng $BC \perp (SAB)$.
+            \item Xác định và tính số đo của góc giữa đường thẳng $SC$ và mặt phẳng đáy $(ABC)$.
+            \item Tính khoảng cách từ điểm $A$ đến mặt phẳng $(SBC)$ và thể tích khối chóp $S.ABC$.
+        \end{enumerate}
+    \end{quote}
+
+    \item[c)] \textbf{Sản phẩm (Lời giải chi tiết bài toán tự luận):}
+    \begin{itemize}[leftmargin=0.6cm]
+        \item \textit{Bài 1: Giải phương trình $4^x - 3 \cdot 2^{x+1} + 8 = 0$}
+        \begin{itemize}
+            \item Ta có: $4^x = (2^x)^2$ và $2^{x+1} = 2 \cdot 2^x$.
+            \item Phương trình tương đương với:
+            $$(2^x)^2 - 6 \cdot 2^x + 8 = 0$$
+            \item Đặt $t = 2^x$ ($t > 0$). Phương trình trở thành:
+            $$t^2 - 6t + 8 = 0 \iff \left[\begin{array}{l} t = 2 \text{ (nhận)} \\ t = 4 \text{ (nhận)} \end{array}\right.$$
+            \item Với $t = 2 \implies 2^x = 2 \iff x = 1$.
+            \item Với $t = 4 \implies 2^x = 4 = 2^2 \iff x = 2$.
+            \item Vậy tập nghiệm của phương trình là $S = \{1; 2\}$.
+        \end{itemize}
+
+        \item \textit{Bài 2: Hình học không gian tổng hợp}
+        \begin{itemize}
+            \item \textbf{Câu a (0,5 điểm): Chứng minh $BC \perp (SAB)$}
+            Ta có: Đáy $ABC$ vuông tại $B \implies BC \perp AB$.
+            Mặt khác, $SA \perp (ABC)$ mà $BC \subset (ABC) \implies SA \perp BC$ (hay $BC \perp SA$).
+            Vì $BC \perp AB$ và $BC \perp SA$, mà $AB, SA \subset (SAB)$ cắt nhau tại $A$, suy ra:
+            $$BC \perp (SAB) \quad (\text{đpcm})$$
+
+            \item \textbf{Câu b (0,5 điểm): Góc giữa đường thẳng $SC$ và $(ABC)$}
+            Vì $SA \perp (ABC)$ tại $A$ nên hình chiếu vuông góc của $S$ lên $(ABC)$ là $A$.
+            Điểm $C \in (ABC)$ nên hình chiếu của $C$ lên $(ABC)$ là chính nó.
+            Do đó, hình chiếu vuông góc của $SC$ lên $(ABC)$ là đoạn thẳng $AC$.
+            Suy ra góc giữa $SC$ và $(ABC)$ là góc giữa $SC$ và $AC$:
+            $$\varphi = \widehat{(SC, (ABC))} = \widehat{SCA}$$
+            Xét tam giác vuông $ABC$ (vuông tại $B$):
+            $$AC = \sqrt{AB^2 + BC^2} = \sqrt{a^2 + (a\sqrt{3})^2} = \sqrt{4a^2} = 2a$$
+            Xét tam giác $SAC$ vuông tại $A$:
+            Ta có $SA = 2a$ và $AC = 2a \implies \tan \widehat{SCA} = \dfrac{SA}{AC} = \dfrac{2a}{2a} = 1$.
+            Suy ra $\widehat{SCA} = 45^\circ$.
+            Vậy góc giữa $SC$ và mặt phẳng đáy bằng $45^\circ$.
+
+            \item \textbf{Câu c (1,0 điểm): Khoảng cách và Thể tích}
+            \begin{itemize}
+                \item *Tính khoảng cách $d(A, (SBC))$:*
+                Ở câu a đã có $BC \perp (SAB)$. Trong $(SAB)$, từ $A$ kẻ đường cao $AH \perp SB$ tại $H$.
+                Do $BC \perp (SAB)$ và $AH \subset (SAB) \implies BC \perp AH$.
+                Vì $AH \perp SB$ và $AH \perp BC \implies AH \perp (SBC)$ tại $H$.
+                Do đó $d(A, (SBC)) = AH$.
+                Tam giác $SAB$ vuông tại $A$ có:
+                $$\dfrac{1}{AH^2} = \dfrac{1}{SA^2} + \dfrac{1}{AB^2} = \dfrac{1}{(2a)^2} + \dfrac{1}{a^2} = \dfrac{1}{4a^2} + \dfrac{1}{a^2} = \dfrac{5}{4a^2}$$
+                $$\implies AH = \dfrac{2a}{\sqrt{5}} = \dfrac{2a\sqrt{5}}{5}$$
+                Vậy $d(A, (SBC)) = \dfrac{2a\sqrt{5}}{5}$.
+                \item *Tính thể tích khối chóp $S.ABC$:*
+                Diện tích đáy tam giác vuông $ABC$:
+                $$S_{ABC} = \dfrac{1}{2} AB \cdot BC = \dfrac{1}{2} \cdot a \cdot a\sqrt{3} = \dfrac{a^2\sqrt{3}}{2}$$
+                Thể tích khối chóp $S.ABC$:
+                $$V_{S.ABC} = \dfrac{1}{3} S_{ABC} \cdot SA = \dfrac{1}{3} \cdot \dfrac{a^2\sqrt{3}}{2} \cdot 2a = \dfrac{a^3\sqrt{3}}{3}$$
+            \end{itemize}
+        \end{itemize}
+    \end{itemize}
+
+    \item[d)] \textbf{Tổ chức thực hiện:}
+    \begin{itemize}[leftmargin=0.6cm]
+        \item HS làm việc cá nhân trong 8 phút. GV quan sát, giúp đỡ học sinh vẽ hình chuẩn xác.
+        \item Mời 2 học sinh lên bảng trình bày (1 HS câu Đại số, 1 HS câu Hình học).
+        \item Cả lớp đối chiếu, sửa chữa và chuẩn hóa thang điểm chấm thi.
+    \end{itemize}
+\end{itemize}
+
+\begin{aibox}{Tích hợp Năng lực AI (Theo Quyết định 2422/QĐ-BGDĐT - Mã 11.B2.1)}
+    \textbf{Giáo dục Liêm chính học thuật trong khảo thí thời đại số (Academic Integrity):}
+    \begin{itemize}[leftmargin=0.6cm]
+        \item \textbf{Đối thoại sư phạm:} Giáo viên dành 2 phút thảo luận với học sinh về việc sử dụng AI trong học tập và kiểm tra:
+        \begin{quote}
+            \textit{"Hiện nay các ứng dụng AI như ChatGPT, PhotoMath có thể giải bài toán đặt ẩn phụ hay tính thể tích trong vài giây. Tuy nhiên, khi bước vào phòng thi kiểm tra giữa kỳ viết trên giấy 90 phút, các em hoàn toàn không có sự trợ giúp của bất kỳ thiết bị thông minh nào. Năng lực thực sự đến từ sự rèn luyện tư duy tự thân của chính các em. Sử dụng AI để hiểu sâu phương pháp là thông minh; lạm dụng AI để gian lận là tự đánh mất năng lực tư duy của mình!"}
+        \end{quote}
+        \item Toàn thể học sinh cam kết: Tự giác ôn tập, chấp hành nghiêm quy chế thi, không sử dụng điện thoại hoặc tai nghe gian lận trong giờ kiểm tra chính thức.
+    \end{itemize}
+\end{aibox}
+
+\subsection*{4. Hoạt động 4: Vận dụng & Hướng dẫn thi thử trực tuyến (7 phút)}
+
+\begin{itemize}[leftmargin=1.2cm]
+    \item[a)] \textbf{Mục tiêu:}
+    \begin{itemize}[leftmargin=0.6cm]
+        \item Hướng dẫn học sinh tham gia phòng thi thử trắc nghiệm trực tuyến (Mã 2.6NC1a).
+        \item Chuẩn bị tâm lý vững vàng và đầy đủ điều kiện cho 2 tiết Kiểm tra giữa kỳ II sắp tới.
+    \end{itemize}
+
+    \item[b)] \textbf{Nội dung & Tổ chức thực hiện (Năng lực số - Mã 2.6NC1a):}
+    \begin{itemize}[leftmargin=0.6cm]
+        \item Giáo viên cung cấp mã QR và đường dẫn liên kết bài thi thử trắc nghiệm online (gồm 20 câu hỏi trắc nghiệm khách quan làm trong 30 phút trên hệ thống LMS/Azota của trường).
+        \item Yêu cầu mỗi học sinh tự đăng nhập và hoàn thành bài thi thử trước 21h00 ngày hôm nay để xem bảng xếp hạng và đối chiếu lời giải chi tiết.
+        \item Dặn dò chuẩn bị cho tiết sau: 2 tiết Kiểm tra giữa kỳ II (Tiết 81, 82 theo PPCT). Mang đầy đủ máy tính cầm tay, bút mực, thước kẻ, compa; có mặt trước giờ thi 10 phút.
+    \end{itemize}
+\end{pedabox}
+
+\section*{IV. PHỤ LỤC HỌC LIỆU BỔ TRỢ}
+
+\subsection*{1. Phiếu học tập số 1: Đề cương ôn tập trọng tâm Giữa kỳ II}
+
+\begin{pedabox}{PHIẾU HỌC TẬP SỐ 1: BẢNG CÔNG THỨC VÀ BÀI TOÁN TRỌNG TÂM}
+    \textbf{Họ và tên học sinh:} \dotfill \textbf{Lớp:} 11\dots \textbf{Nhóm:} \dots
+
+    \textbf{1. Bảng tóm tắt công thức cốt lõi}
+    \begin{center}
+    \begin{tabular}{|l|l|}
+    \hline
+    \textbf{Mạch kiến thức} & \textbf{Công thức then chốt} \\ \hline
+    Lôgarit tích và thương & $\log_a (xy) = \log_a x + \log_a y; \quad \log_a \left(\dfrac{x}{y}\right) = \log_a x - \log_a y$ \\ \hline
+    Đổi cơ số & $\log_a b = \dfrac{\log_c b}{\log_c a}; \quad \log_{a^\alpha} b = \dfrac{1}{\alpha} \log_a b$ \\ \hline
+    Phương trình mũ cơ bản & $a^x = b \iff x = \log_a b \quad (b > 0)$ \\ \hline
+    Góc giữa đường thẳng và đáy & $\varphi = \widehat{(SC, (ABC))} = \widehat{SCA}$ (với $SA \perp (ABC)$) \\ \hline
+    Thể tích khối chóp & $V = \dfrac{1}{3} S_{\text{đáy}} \cdot h = \dfrac{1}{3} B \cdot h$ \\ \hline
+    \end{tabular}
+    \end{center}
+
+    \textbf{2. Bài tập tự luyện thêm tại nhà:}
+    Giải phương trình: $\log_2 (x - 1) + \log_2 (x + 1) = 3$. \dotfill
+\end{pedabox}
+
+\subsection*{2. Khung ma trận đề kiểm tra Giữa kỳ II môn Toán 11}
+
+\begin{center}
+\begin{tabularx}{\textwidth}{|p{4.5cm}|X|X|X|X|X|}
+\hline
+\textbf{Chủ đề / Đơn vị kiến thức} & \textbf{Nhận biết} & \textbf{Thông hiểu} & \textbf{Vận dụng} & \textbf{Vận dụng cao} & \textbf{Tổng điểm} \\ \hline
+1. Lũy thừa, Lôgarit, Hàm số mũ \& Lôgarit & 6 câu TN (1,5 đ) & 4 câu TN (1,0 đ) & 1 câu TN (0,25 đ) & 1 ý TL (0,5 đ) & 3,25 điểm \\ \hline
+2. Phương trình, BPT mũ \& Lôgarit & 3 câu TN (0,75 đ) & 3 câu TN (0,75 đ) & 1 bài TL (1,0 đ) & – & 2,50 điểm \\ \hline
+3. Quan hệ vuông góc trong không gian & 5 câu TN (1,25 đ) & 4 câu TN (1,0 đ) & 1 ý TL (0,5 đ) & – & 2,75 điểm \\ \hline
+4. Khoảng cách \& Thể tích khối đa diện & 2 câu TN (0,5 đ) & 1 câu TN (0,25 đ) & 1 ý TL (0,5 đ) & 1 ý TL (0,25 đ) & 1,50 điểm \\ \hline
+\textbf{Tổng số câu / Điểm} & \textbf{16 câu TN (4,0 đ)} & \textbf{12 câu TN (3,0 đ)} & \textbf{2 bài TL (2,0 đ)} & \textbf{1 ý TL (1,0 đ)} & \textbf{10,0 điểm} \\ \hline
+\textbf{Tỉ lệ phần trăm} & \textbf{40\%} & \textbf{30\%} & \textbf{20\%} & \textbf{10\%} & \textbf{100\%} \\ \hline
+\end{tabularx}
+\end{center}
+
+\subsection*{3. Rubric đánh giá năng lực học sinh trong bài học (4 mức độ)}
+
+\begin{center}
+\begin{tabularx}{\textwidth}{|>{\bfseries}p{3cm}|X|X|X|X|}
+\hline
+\textbf{Tiêu chí} & \textbf{Mức 1: Chưa đạt} & \textbf{Mức 2: Đạt} & \textbf{Mức 3: Khá} & \textbf{Mức 4: Tốt} \\ \hline
+Kỹ năng giải phương trình Mũ - Lôgarit & Chưa biến đổi được lũy thừa cơ bản, quên điều kiện của biểu thức lôgarit. & Đưa được về cùng cơ số nhưng giải phương trình bậc hai còn nhầm nghiệm. & Giải đúng và đầy đủ phương trình mũ đặt ẩn phụ, đối chiếu điều kiện chuẩn. & Biến đổi linh hoạt, giải nhanh, áp dụng thành thạo phương pháp đánh giá nâng cao. \\ \hline
+Kỹ năng giải toán Hình học không gian & Không vẽ được hình chiếu của đỉnh, không xác định được góc với mặt đáy. & Xác định đúng góc nhưng tính toán lượng giác còn sai số; lúng túng ở khoảng cách. & Chứng minh vuông góc chuẩn, tính đúng góc $45^\circ$, khoảng cách và thể tích chóp. & Trình bày hoàn hảo, lập luận logic, vận dụng nhiều cách tiếp cận giải bài toán. \\ \hline
+Ý thức liêm chính học thuật (Mã 11.B2.1) & Vẫn còn tư tưởng ỷ lại vào thiết bị số hoặc nhờ AI giải hộ đối phó. & Nhận thức được quy chế phòng thi nhưng chưa thật tự tin vào năng lực tự thân. & Tự giác làm bài, trung thực tuyệt đối, sử dụng AI đúng mực như công cụ tham khảo. & Nêu gương liêm chính học thuật, hỗ trợ bạn bè cùng tiến bộ, tự chủ trong ôn luyện. \\ \hline
+Kỹ năng làm bài thi trực tuyến (Mã 2.6NC1a) & Chưa đăng nhập được hệ thống, nộp bài trễ giờ hoặc để sót câu hỏi. & Đăng nhập và nộp bài đúng giờ nhưng chưa biết kiểm tra lại câu trả lời. & Hoàn thành trọn vẹn bài thi thử online đúng thời gian quy định, đạt điểm khá. & Thao tác số thuần thục, đạt điểm xuất sắc bài thi thử trực tuyến, tối ưu thời gian. \\ \hline
+\end{tabularx}
+\end{center}
+
+\end{document}
