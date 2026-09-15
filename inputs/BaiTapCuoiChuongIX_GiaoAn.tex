@@ -1,0 +1,579 @@
+\documentclass[12pt, a4paper]{article}
+% --- 1. Cấu hình Tiếng Việt và Font chữ chuẩn ---
+\usepackage[utf8]{inputenc}
+\usepackage[T5]{fontenc}
+\usepackage[vietnamese]{babel}
+\usepackage{mathptmx} % Font Times New Roman đồng bộ cả chữ và công thức toán, không gây xung đột gói
+
+\makeatletter
+\renewcommand{\normalsize}{\@setfontsize\normalsize{13pt}{16pt}}
+\makeatother
+\normalsize
+
+% --- 2. Gói Toán học & Ký hiệu bổ trợ ---
+\usepackage{amsmath, amssymb, amsfonts, mathrsfs, amsthm}
+\usepackage{graphicx}
+\usepackage{fontawesome}
+\usepackage{booktabs, tabularx, array, multirow}
+\usepackage{enumitem}
+
+% --- 3. Đồ họa TikZ, Bảng biến thiên & Hình không gian ---
+\usepackage{tikz}
+\usetikzlibrary{calc, intersections, angles, quotes, patterns, arrows.meta, 3d}
+\usepackage{pgfplots}
+\pgfplotsset{compat=1.18}
+\usepackage{tkz-euclide}
+\usepackage{tkz-tab}
+
+\renewcommand{\vec}[1]{\overrightarrow{#1}}
+
+% --- 4. Hộp sư phạm (Tcolorbox) ---
+\usepackage[many]{tcolorbox}
+\tcbuselibrary{skins, breakable}
+
+% --- 5. Căn lề chuẩn văn bản giáo án ---
+\usepackage{geometry}
+\geometry{
+    a4paper,
+    left=25mm,
+    right=15mm,
+    top=20mm,
+    bottom=20mm
+}
+
+% --- 6. Header / Footer chuẩn hóa ---
+\usepackage{fancyhdr}
+\usepackage{lastpage}
+\pagestyle{fancy}
+\fancyhf{}
+
+\fancyhead[L]{\small \textit{Kế hoạch bài dạy Toán 11}}
+\fancyhead[R]{\textbf{Trang \thepage/\pageref{LastPage}}}
+\fancyfoot[L]{\small \textit{Tổ Toán - Tin}}
+\fancyfoot[R]{\small \textit{Trường THCS\&THPT Hồng Vân}}
+\renewcommand{\headrulewidth}{0.4pt}
+\renewcommand{\footrulewidth}{0.4pt}
+
+% --- 7. Giãn dòng & Giãn đoạn theo chuẩn Nghị định 30/2020/NĐ-CP ---
+\usepackage{setspace}
+\setstretch{1.15}
+\setlength{\parindent}{1.0cm}
+\setlength{\parskip}{5pt}
+
+% Định nghĩa hộp sư phạm chuyên dụng
+\newtcolorbox{pedabox}[2][]{
+    enhanced,
+    breakable,
+    colback=blue!3!white,
+    colframe=blue!65!black,
+    fonttitle=\bfseries\small,
+    title={#2},
+    arc=2mm,
+    boxrule=0.6pt,
+    left=3mm, right=3mm, top=2mm, bottom=2mm,
+    #1
+}
+
+\newtcolorbox{aibox}[2][]{
+    enhanced,
+    breakable,
+    colback=teal!4!white,
+    colframe=teal!70!black,
+    fonttitle=\bfseries\small,
+    title={#2},
+    arc=2mm,
+    boxrule=0.6pt,
+    left=3mm, right=3mm, top=2mm, bottom=2mm,
+    #1
+}
+
+\newtcolorbox{scaffoldbox}[2][]{
+    enhanced,
+    breakable,
+    colback=orange!4!white,
+    colframe=orange!80!black,
+    fonttitle=\bfseries\small,
+    title={#2},
+    arc=2mm,
+    boxrule=0.6pt,
+    left=3mm, right=3mm, top=2mm, bottom=2mm,
+    #1
+}
+
+\newtcolorbox{stembox}[2][]{
+    enhanced,
+    breakable,
+    colback=purple!4!white,
+    colframe=purple!75!black,
+    fonttitle=\bfseries\small,
+    title={#2},
+    arc=2mm,
+    boxrule=0.6pt,
+    left=3mm, right=3mm, top=2mm, bottom=2mm,
+    #1
+}
+
+\begin{document}
+
+\begin{center}
+    {\fontsize{14pt}{17pt}\selectfont \textbf{KẾ HOẠCH BÀI DẠY MÔN TOÁN LỚP 11}}\\[6pt]
+    {\fontsize{16pt}{19pt}\selectfont \textbf{BÀI TẬP CUỐI CHƯƠNG IX}}\\[4pt]
+    {\fontsize{12pt}{15pt}\selectfont \textbf{Môn học: Toán 11} \ \textbar \ \textbf{Thời lượng: 1 tiết (Tiết 98 theo PPCT | Tuần 34)}}
+\end{center}
+
+\vspace{5pt}
+
+\section*{I. MỤC TIÊU}
+
+\subsection*{1. Kiến thức, Năng lực}
+
+\begin{itemize}[leftmargin=1.2cm]
+    \item \textbf{Yêu cầu cần đạt (Nguyên văn CT GDPT 2018 Toán 11):}
+    \begin{itemize}[leftmargin=0.6cm]
+        \item Hệ thống hoá các khái niệm, quy tắc tính đạo hàm và phương trình tiếp tuyến của đồ thị hàm số.
+        \item Vận dụng thành thạo định nghĩa đạo hàm bằng giới hạn để tính đạo hàm của hàm số tại một điểm trong các bài toán cơ bản.
+        \item Vận dụng thành thạo bảng đạo hàm của các hàm số cơ bản ($x^n, \sqrt{x}, \sin x, \cos x, \tan x, \cot x, e^x, a^x, \ln x, \log_a x$) và các quy tắc tính đạo hàm của tổng, hiệu, tích, thương, hàm hợp.
+        \item Vận dụng thành thạo công thức tính đạo hàm cấp hai của các hàm số đa thức, phân thức, lượng giác và hàm mũ.
+        \item Thiết lập thành thạo phương trình tiếp tuyến của đồ thị hàm số tại tiếp điểm cho trước và phương trình tiếp tuyến khi biết hệ số góc $k$ (hoặc song song, vuông góc với đường thẳng cho trước).
+        \item Giải quyết được một số bài toán thực tiễn có liên quan đến đạo hàm: ý nghĩa vật lí của đạo hàm cấp một (vận tốc tức thời $v(t) = s'(t)$), đạo hàm cấp hai (gia tốc tức thời $a(t) = v'(t) = s''(t)$), và bài toán tốc độ thay đổi tức thời của các đại lượng trong khoa học tự nhiên.
+    \end{itemize}
+
+    \item \textbf{Năng lực Toán học đặc thù:}
+    \begin{itemize}[leftmargin=0.6cm]
+        \item \textit{Năng lực tư duy và lập luận toán học:} Khái quát hóa, phân loại chính xác các dạng hàm số để lựa chọn quy tắc đạo hàm thích hợp; phân biệt rõ ràng giữa đạo hàm tại một điểm $f'(x_0)$ (một giá trị số cụ thể) và hàm số đạo hàm $f'(x)$; lập luận chặt chẽ mối liên hệ giữa hệ số góc tiếp tuyến với tính chất hình học và phương trình đường thẳng.
+        \item \textit{Năng lực mô hình hóa toán học:} Chuyển đổi các bài toán chuyển động cơ học trong Vật lí (phương trình quãng đường $s(t)$) thành mô hình hàm số toán học, từ đó vận dụng đạo hàm cấp một để xác định vận tốc tức thời và đạo hàm cấp hai để xác định gia tốc tức thời tại thời điểm bất kì.
+        \item \textit{Năng lực giải quyết vấn đề toán học:} Xây dựng quy trình 3 bước giải quyết bài toán viết phương trình tiếp tuyến; phân tích và xử lý tình huống khi tiếp tuyến song song với đường thẳng khác (chú ý điều kiện loại nghiệm trùng nhau); tự phát hiện và sửa các lỗi sai thường gặp khi tính đạo hàm của hàm hợp hoặc hàm phân thức.
+        \item \textit{Năng lực giao tiếp toán học:} Trình bày lời giải bài toán tự luận logic, mạch lạc, sử dụng chuẩn xác hệ thống ký hiệu toán học: $y', f'(x), f''(x), x_0, y_0, k, \Delta x, \Delta y$; lắng nghe, phản biện và trao đổi hiệu quả trong các hoạt động thảo luận nhóm.
+        \item \textit{Năng lực sử dụng công cụ, phương tiện học toán:} Sử dụng thành thạo máy tính cầm tay (MTCT Casio fx-580VN X) với chức năng $\left.\dfrac{d}{dx}\left(f(x)\right)\right|_{x=x_0}$ để kiểm tra kết quả đạo hàm tại một điểm; khai thác phần mềm toán học GeoGebra/Desmos để trực quan hóa đồ thị hàm số và tiếp tuyến tại tiếp điểm.
+    \end{itemize}
+
+    \item \textbf{Năng lực số (Theo Thông tư 02/2025/TT-BGDĐT):}
+    \begin{itemize}[leftmargin=0.6cm]
+        \item \textit{Mã 1.3NC1b (Lưu trữ và quản lý tài liệu số):} Học sinh biết cách tổ chức, lưu trữ bảng công thức đạo hàm và sơ đồ tư duy hệ thống hóa Chương IX trên không gian lưu trữ số của lớp (Google Drive, OneDrive), hỗ trợ tra cứu ôn tập hiệu quả.
+        \item \textit{Mã 3.1NC1a (Tạo lập và khai thác mô hình số trực quan):} Học sinh sử dụng phần mềm hình học động GeoGebra để mô phỏng tiếp tuyến di chuyển trên đồ thị hàm số, nhận biết sự biến thiên của hệ số góc $k = f'(x_0)$ tương ứng với độ dốc của tiếp tuyến.
+        \item \textit{Mã 5.2NC1b (Làm chủ công cụ tính toán số):} Học sinh thực hiện thành thạo thao tác bấm phím $\left[\text{SHIFT}\right] \left[\int \dots \right]$ trên MTCT Casio fx-580VN X để tính nhanh giá trị đạo hàm tại điểm $x_0$, đối chiếu nghiệm của phương trình tiếp tuyến trong các câu hỏi trắc nghiệm khách quan.
+    \end{itemize}
+
+    \item \textbf{Năng lực AI (Theo Quyết định 2422/QĐ-BGDĐT):}
+    \begin{itemize}[leftmargin=0.6cm]
+        \item \textit{Mã 11.A1.1 (Kiểm soát và thẩm định kết quả từ AI):} Học sinh chủ động đối chiếu kết quả đạo hàm hàm hợp phức tạp và lời giải phương trình tiếp tuyến của bản thân với lời giải do trợ lý AI sinh ra; nhận diện được các lỗi sai phổ biến của AI (như nhầm lẫn tiếp tuyến ``tại điểm'' và ``đi qua điểm'', hoặc bỏ quên điều kiện loại tiếp tuyến trùng nhau).
+        \item \textit{Mã 11.C3.1 (Kỹ thuật Prompting giải toán từng bước):} Học sinh thực hành thiết kế câu lệnh prompt sư phạm yêu cầu AI đóng vai trò gia sư hướng dẫn phương pháp từng bước (Chain-of-Thought) thay vì đưa ra đáp án trực tiếp, giúp củng cố tư duy tự học.
+    \end{itemize}
+
+    \item \textbf{Năng lực chung:}
+    \begin{itemize}[leftmargin=0.6cm]
+        \item \textit{Tự chủ và tự học:} Chủ động hoàn thành các bài tập tự luyện, tự giác đối chiếu đáp án và khắc phục các sai lầm tính toán cá nhân.
+        \item \textit{Giao tiếp và hợp tác:} Tích cực phối hợp trong nhóm 4--5 học sinh, phân công công việc cụ thể khi xử lý các bài toán tổng hợp.
+    \end{itemize}
+\end{itemize}
+
+\subsection*{2. Phẩm chất}
+
+\begin{itemize}[leftmargin=1.2cm]
+    \item \textbf{Chăm chỉ:} Cẩn thận, kiên trì trong từng bước biến đổi đại số, tính toán chính xác đạo hàm và phương trình tiếp tuyến.
+    \item \textbf{Trung thực:} Tự lực làm bài tập, thẳng thắn nhìn nhận sai sót trong quá trình tính toán, không sao chép đáp án từ AI đối phó.
+    \item \textbf{Trách nhiệm:} Có ý thức hoàn thành nhiệm vụ được giao trong nhóm; hỗ trợ nhiệt tình các bạn học sinh trung bình -- yếu củng cố lại các công thức căn bản.
+\end{itemize}
+
+\section*{II. THIẾT BỊ DẠY HỌC VÀ HỌC LIỆU}
+
+\begin{itemize}[leftmargin=1.2cm]
+    \item \textbf{Giáo viên:}
+    \begin{itemize}[leftmargin=0.6cm]
+        \item Kế hoạch bài dạy chi tiết 1 tiết theo khung Công văn 5512/BGDĐT-GDTrH.
+        \item Hệ thống bài tập ôn tập cuối chương IX gồm trắc nghiệm và tự luận phân hóa 3 mức độ.
+        \item Bài trình chiếu PowerPoint/Canva tích hợp trò chơi củng cố kiến thức và đồ thị GeoGebra trực quan hóa tiếp tuyến.
+        \item Phiếu học tập số 1 (Worksheet phân tầng) và Rubric đánh giá năng lực học sinh.
+    \end{itemize}
+    \item \textbf{Học sinh:}
+    \begin{itemize}[leftmargin=0.6cm]
+        \item Vở ghi, SGK Toán 11, dụng cụ học tập (thước kẻ, bút màu).
+        \item Bảng tóm tắt công thức đạo hàm Chương IX đã chuẩn bị từ nhà.
+        \item Máy tính cầm tay Casio fx-580VN X.
+    \end{itemize}
+\end{itemize}
+
+\section*{III. TIẾN TRÌNH DẠY HỌC (TIẾT 98 THEO PPCT | TUẦN 34)}
+
+\subsection*{1. Hoạt động 1: Khởi động (Mở đầu) -- 7 phút}
+
+\noindent \textbf{a) Mục tiêu:}
+\begin{itemize}[leftmargin=0.6cm]
+    \item Kích hoạt trí nhớ dài hạn, tạo tâm thế hứng khởi và hệ thống hóa nhanh các công thức đạo hàm cơ bản, đạo hàm hàm hợp và ý nghĩa hình học của đạo hàm.
+    \item Rèn luyện phản xạ tính nhanh đạo hàm và xác định hệ số góc tiếp tuyến.
+\end{itemize}
+
+\noindent \textbf{b) Nội dung:}
+Giáo viên tổ chức trò chơi trắc nghiệm tương tác nhanh mang tên \textbf{``Đấu trường Đạo hàm''} gồm 4 câu hỏi trắc nghiệm khách quan:
+\begin{itemize}[leftmargin=0.6cm]
+    \item \textbf{Câu 1:} Cho hàm số $y = x^3 - 3x + 2$. Hệ số góc của tiếp tuyến của đồ thị hàm số tại điểm có hoành độ $x_0 = 2$ bằng bao nhiêu?
+    \item \textbf{Câu 2:} Đạo hàm của hàm số $y = \cos(2x + 1)$ là biểu thức nào?
+    \item \textbf{Câu 3:} Cho hàm số $y = \dfrac{2x - 1}{x + 1}$. Đạo hàm $y'$ bằng biểu thức nào?
+    \item \textbf{Câu 4:} Cho chuyển động có phương trình $s(t) = 2t^3 - 3t^2 + 1$ ($s$ tính bằng mét, $t$ tính bằng giây). Vận tốc tức thời tại thời điểm $t = 2\text{ s}$ là bao nhiêu?
+\end{itemize}
+
+\noindent \textbf{c) Sản phẩm:}
+Học sinh giơ thẻ chọn đáp án hoặc ghi bảng con. Đáp án và lời giải ngắn gọn:
+\begin{itemize}[leftmargin=0.6cm]
+    \item \textbf{Câu 1:} $y' = 3x^2 - 3 \implies k = y'(2) = 3 \cdot 2^2 - 3 = 9$.
+    \item \textbf{Câu 2:} $y' = (2x + 1)' \cdot (-\sin(2x + 1)) = -2\sin(2x + 1)$.
+    \item \textbf{Câu 3:} Dùng công thức tính nhanh $\left(\dfrac{ax + b}{cx + d}\right)' = \dfrac{ad - bc}{(cx + d)^2} \implies y' = \dfrac{2 \cdot 1 - (-1) \cdot 1}{(x + 1)^2} = \dfrac{3}{(x + 1)^2}$.
+    \item \textbf{Câu 4:} $v(t) = s'(t) = 6t^2 - 6t \implies v(2) = 6 \cdot 2^2 - 6 \cdot 2 = 12\text{ m/s}$.
+\end{itemize}
+
+\noindent \textbf{d) Tổ chức thực hiện:}
+\begin{itemize}[leftmargin=0.6cm]
+    \item \textbf{Chuyển giao nhiệm vụ:} Giáo viên trình chiếu lần lượt 4 câu hỏi trắc nghiệm trên màn hình, quy định thời gian suy nghĩ 30 giây mỗi câu. Học sinh ghi kết quả vào bảng cá nhân và đồng loạt giơ bảng khi có hiệu lệnh.
+    \item \textbf{Thực hiện nhiệm vụ:} Học sinh huy động kiến thức đã học, tính nhẩm nhanh hoặc sử dụng MTCT Casio fx-580VN X để tìm đáp án.
+    \item \textbf{Báo cáo, thảo luận:} Giáo viên chỉ định ngẫu nhiên học sinh có đáp án nhanh nhất giải thích vắn tắt công thức áp dụng. Đối với các bạn có câu trả lời sai, giáo viên khích lệ và yêu cầu chỉ ra bước nhầm lẫn (ví dụ: quên nhân $(2x+1)'$ ở hàm hợp hoặc sai dấu ở đạo hàm phân thức).
+    \item \textbf{Kết luận, nhận định:} Giáo viên chốt lại bảng quy tắc then chốt: đạo hàm hàm hợp bắt buộc nhân thêm $u'$, đạo hàm phân thức bậc nhất trên bậc nhất có công thức tính nhanh $\dfrac{ad - bc}{(cx + d)^2}$, và ý nghĩa vật lí $v(t) = s'(t)$. Dẫn dắt vào tiết luyện tập cuối chương.
+\end{itemize}
+
+\begin{pedabox}{LƯU Ý SƯ PHẠM CHO HỌC SINH TRUNG BÌNH -- YẾU}
+Học sinh yếu thường mắc sai lầm kinh điển: coi $\cos(2x+1)' = -\sin(2x+1)$ mà quên mất nhân đạo hàm của hàm hợp $u' = (2x+1)' = 2$. Giáo viên nhấn mạnh quy tắc: ``Hễ là hàm $u$ chứa biểu thức của $x$ thì luôn luôn phải nhân thêm $u'$ ở phía trước''.
+\end{pedabox}
+
+\vspace{5pt}
+
+\subsection*{2. Hoạt động 2: Luyện tập 1 -- Kỹ năng tính đạo hàm và đạo hàm cấp hai (15 phút)}
+
+\noindent \textbf{a) Mục tiêu:}
+\begin{itemize}[leftmargin=0.6cm]
+    \item Củng cố và rèn luyện thành thạo kỹ năng áp dụng các quy tắc đạo hàm: tổng, hiệu, tích, thương, đạo hàm hàm hợp, đạo hàm hàm số lượng giác, hàm mũ và lôgarit.
+    \item Tính thành thạo đạo hàm cấp hai $y'' = (y')'$ của các hàm số thông dụng.
+    \item Sử dụng MTCT Casio fx-580VN X để kiểm tra tính chính xác của đạo hàm tại một điểm.
+\end{itemize}
+
+\noindent \textbf{b) Nội dung:}
+Học sinh thực hiện \textbf{Bài toán 1} và \textbf{Bài toán 2} trong Phiếu học tập:
+
+\textbf{Bài toán 1 (Tính đạo hàm cấp một):} Tính đạo hàm của các hàm số sau:
+\begin{enumerate}[label=\alph*)]
+    \item $y = (x^2 - 3x + 1) \cdot e^x$.
+    \item $y = \dfrac{\sin x + \cos x}{\sin x - \cos x}$.
+    \item $y = \ln(x + \sqrt{x^2 + 1})$.
+\end{enumerate}
+
+\textbf{Bài toán 2 (Tính đạo hàm cấp hai):}
+\begin{enumerate}[label=\alph*)]
+    \item Cho hàm số $y = \dfrac{1}{2x - 1}$. Tính $y''$ và tính giá trị $y''(1)$.
+    \item Cho hàm số $y = \sin^2 x$. Chứng minh rằng hệ thức sau luôn đúng: $y'' + 4y = 2$.
+\end{enumerate}
+
+\noindent \textbf{c) Sản phẩm:}
+Bài giải chi tiết của học sinh:
+
+\textbf{Lời giải Bài toán 1:}
+\begin{enumerate}[label=\alph*)]
+    \item Áp dụng quy tắc đạo hàm của tích $(u \cdot v)' = u'v + uv'$:
+    $$u = x^2 - 3x + 1 \implies u' = 2x - 3; \quad v = e^x \implies v' = e^x$$
+    $$y' = (2x - 3)e^x + (x^2 - 3x + 1)e^x = \left[(x^2 - 3x + 1) + (2x - 3)\right]e^x = (x^2 - x - 2)e^x$$
+
+    \item Áp dụng quy tắc đạo hàm của thương $\left(\dfrac{u}{v}\right)' = \dfrac{u'v - uv'}{v^2}$:
+    $$u = \sin x + \cos x \implies u' = \cos x - \sin x = -(\sin x - \cos x)$$
+    $$v = \sin x - \cos x \implies v' = \cos x - (-\sin x) = \sin x + \cos x$$
+    $$y' = \dfrac{-(\sin x - \cos x)(\sin x - \cos x) - (\sin x + \cos x)(\sin x + \cos x)}{(\sin x - \cos x)^2}$$
+    $$y' = \dfrac{-(\sin x - \cos x)^2 - (\sin x + \cos x)^2}{(\sin x - \cos x)^2}$$
+    Khai triển tử số:
+    $$-(\sin^2 x - 2\sin x\cos x + \cos^2 x) - (\sin^2 x + 2\sin x\cos x + \cos^2 x) = -(1 - \sin 2x) - (1 + \sin 2x) = -2$$
+    Vậy: $y' = \dfrac{-2}{(\sin x - \cos x)^2}$.
+
+    \item Hàm hợp dạng $y = \ln u$ với $u = x + \sqrt{x^2 + 1}$:
+    $$u' = 1 + \dfrac{(x^2 + 1)'}{2\sqrt{x^2 + 1}} = 1 + \dfrac{2x}{2\sqrt{x^2 + 1}} = 1 + \dfrac{x}{\sqrt{x^2 + 1}} = \dfrac{\sqrt{x^2 + 1} + x}{\sqrt{x^2 + 1}}$$
+    $$y' = \dfrac{u'}{u} = \dfrac{\dfrac{\sqrt{x^2 + 1} + x}{\sqrt{x^2 + 1}}}{x + \sqrt{x^2 + 1}} = \dfrac{1}{\sqrt{x^2 + 1}}$$
+\end{enumerate}
+
+\textbf{Lời giải Bài toán 2:}
+\begin{enumerate}[label=\alph*)]
+    \item Viết lại $y = (2x - 1)^{-1}$:
+    $$y' = -1 \cdot (2x - 1)^{-2} \cdot (2x - 1)' = \dfrac{-2}{(2x - 1)^2} = -2(2x - 1)^{-2}$$
+    Lấy đạo hàm lần 2:
+    $$y'' = (y')' = -2 \cdot (-2) \cdot (2x - 1)^{-3} \cdot (2x - 1)' = 4 \cdot (2x - 1)^{-3} \cdot 2 = \dfrac{8}{(2x - 1)^3}$$
+    Tại $x = 1$: $y''(1) = \dfrac{8}{(2 \cdot 1 - 1)^3} = \dfrac{8}{1^3} = 8$.
+
+    \item Ta có: $y = \sin^2 x$.
+    Cách 1: Hạ bậc $y = \dfrac{1 - \cos 2x}{2} = \dfrac{1}{2} - \dfrac{1}{2}\cos 2x$.
+    $$y' = -\dfrac{1}{2} \cdot (-2\sin 2x) = \sin 2x$$
+    $$y'' = (y')' = (\sin 2x)' = 2\cos 2x$$
+    Thay vào vế trái của đẳng thức:
+    $$VT = y'' + 4y = 2\cos 2x + 4\sin^2 x = 2(1 - 2\sin^2 x) + 4\sin^2 x = 2 - 4\sin^2 x + 4\sin^2 x = 2 = VP$$
+    Vậy đẳng thức được chứng minh.
+\end{enumerate}
+
+\noindent \textbf{d) Tổ chức thực hiện:}
+\begin{itemize}[leftmargin=0.6cm]
+    \item \textbf{Chuyển giao nhiệm vụ:} Giáo viên chia lớp thành các nhóm 4 học sinh theo bàn. Nhóm thực hiện Bài toán 1a, 1b và Bài toán 2a. Các học sinh khá giỏi hoàn thành thêm Bài toán 1c và 2b.
+    \item \textbf{Thực hiện nhiệm vụ có giàn giáo:}
+    \begin{itemize}
+        \item Giáo viên quan sát, hỗ trợ các nhóm học sinh trung bình -- yếu nhận diện đúng công thức $u \cdot v$ và $\dfrac{u}{v}$.
+        \item Hướng dẫn học sinh yếu cách hạ bậc lượng giác trước khi lấy đạo hàm ở Bài toán 2b để tránh phải tính đạo hàm hàm hợp bậc cao.
+    \end{itemize}
+    \item \textbf{Báo cáo, thảo luận:} Đại diện 2 nhóm lên bảng trình bày Bài 1b và Bài 2a. Học sinh dưới lớp theo dõi, kiểm tra chéo và nhận xét.
+    \item \textbf{Kết luận, nhận định:} Giáo viên chuẩn hóa bài giải, hướng dẫn học sinh thao tác bấm MTCT kiểm tra: bấm phím $\left[\text{SHIFT}\right] \left[\int \dots \right]$, nhập hàm số $y$, chọn $x = 2$, so sánh kết quả số học với biểu thức $y'(2)$ đã tính tay.
+\end{itemize}
+
+\begin{scaffoldbox}{GIÀN GIÁO HỖ TRỢ HỌC SINH TRUNG BÌNH -- YẾU (BÀI TOÁN 2a)}
+\textbf{Bước 1:} Nhận dạng hàm số $y = \dfrac{1}{u}$ với $u = 2x - 1$. Nhắc lại: $\left(\dfrac{1}{u}\right)' = -\dfrac{u'}{u^2}$.\\
+\textbf{Bước 2:} Tính $y' = -\dfrac{(2x - 1)'}{(2x - 1)^2} = -\dfrac{2}{(2x - 1)^2}$. Viết dưới dạng lũy thừa âm: $y' = -2(2x - 1)^{-2}$ để lấy đạo hàm lần 2 dễ dàng hơn.\\
+\textbf{Bước 3:} Áp dụng $(u^n)' = n \cdot u^{n-1} \cdot u'$ với $n = -2$, ta có $y'' = -2 \cdot (-2)(2x - 1)^{-3} \cdot 2 = \dfrac{8}{(2x - 1)^3}$.
+\end{scaffoldbox}
+
+\vspace{5pt}
+
+\subsection*{3. Hoạt động 3: Luyện tập 2 -- Phương trình tiếp tuyến của đồ thị hàm số (15 phút)}
+
+\noindent \textbf{a) Mục tiêu:}
+\begin{itemize}[leftmargin=0.6cm]
+    \item Nắm vững và thực hiện chuẩn xác quy trình 3 bước viết phương trình tiếp tuyến của đồ thị hàm số $y = f(x)$ tại tiếp điểm $M_0(x_0; y_0)$.
+    \item Thành thạo phương pháp viết phương trình tiếp tuyến khi biết hệ số góc $k$ (hoặc cho dưới dạng song song với một đường thẳng).
+    \item Rèn luyện năng lực thẩm định lời giải AI, nhận diện bẫy tiếp tuyến trùng nhau.
+\end{itemize}
+
+\noindent \textbf{b) Nội dung:}
+Học sinh thực hiện \textbf{Bài toán 3} và \textbf{Bài toán 4}:
+
+\textbf{Bài toán 3 (Tiếp tuyến tại một điểm):}
+Cho hàm số $y = f(x) = \dfrac{x + 2}{x - 1}$ có đồ thị $(C)$.
+\begin{enumerate}[label=\alph*)]
+    \item Viết phương trình tiếp tuyến của $(C)$ tại điểm có hoành độ $x_0 = 2$.
+    \item Viết phương trình tiếp tuyến của $(C)$ tại giao điểm của $(C)$ với trục hoành $Ox$.
+\end{enumerate}
+
+\textbf{Bài toán 4 (Tiếp tuyến biết hệ số góc / song song):}
+Cho hàm số $y = f(x) = x^3 - 3x^2 + 2$ có đồ thị $(C)$. Viết phương trình tiếp tuyến của $(C)$, biết tiếp tuyến song song với đường thẳng $d: y = 9x - 5$.
+
+\noindent \textbf{c) Sản phẩm:}
+Bài giải chi tiết của học sinh:
+
+\textbf{Lời giải Bài toán 3:}
+Tập xác định: $D = \mathbb{R} \setminus \{1\}$.
+Đạo hàm: $f'(x) = \dfrac{1 \cdot (-1) - 2 \cdot 1}{(x - 1)^2} = \dfrac{-3}{(x - 1)^2}$.
+\begin{enumerate}[label=\alph*)]
+    \item Với hoành độ tiếp điểm $x_0 = 2$:
+    \begin{itemize}
+        \item Tung độ tiếp điểm: $y_0 = f(2) = \dfrac{2 + 2}{2 - 1} = 4$. Vậy tiếp điểm là $M(2; 4)$.
+        \item Hệ số góc tiếp tuyến: $k = f'(2) = \dfrac{-3}{(2 - 1)^2} = -3$.
+        \item Phương trình tiếp tuyến:
+        $$y - y_0 = f'(x_0)(x - x_0) \iff y - 4 = -3(x - 2) \iff y = -3x + 10$$
+    \end{itemize}
+
+    \item Giao điểm của đồ thị $(C)$ với trục hoành $Ox$:
+    $$y_0 = 0 \iff \dfrac{x_0 + 2}{x_0 - 1} = 0 \iff x_0 + 2 = 0 \iff x_0 = -2$$
+    Vậy tiếp điểm là $N(-2; 0)$.
+    \begin{itemize}
+        \item Hệ số góc tiếp tuyến: $k = f'(-2) = \dfrac{-3}{(-2 - 1)^2} = \dfrac{-3}{(-3)^2} = \dfrac{-3}{9} = -\dfrac{1}{3}$.
+        \item Phương trình tiếp tuyến:
+        $$y - 0 = -\dfrac{1}{3}(x - (-2)) \iff y = -\dfrac{1}{3}x - \dfrac{2}{3}$$
+    \end{itemize}
+\end{enumerate}
+
+\textbf{Lời giải Bài toán 4:}
+Hàm số: $y = x^3 - 3x^2 + 2$. Tập xác định: $D = \mathbb{R}$.
+Đạo hàm: $y' = 3x^2 - 6x$.
+\begin{itemize}
+    \item Đường thẳng $d: y = 9x - 5$ có hệ số góc $k_d = 9$.
+    \item Vì tiếp tuyến $\Delta$ song song với $d$ nên hệ số góc của tiếp tuyến là: $k = f'(x_0) = 9$.
+    \item Ta có phương trình tìm hoành độ tiếp điểm:
+    $$3x_0^2 - 6x_0 = 9 \iff 3x_0^2 - 6x_0 - 9 = 0 \iff x_0^2 - 2x_0 - 3 = 0 \iff \left[\begin{array}{l} x_0 = -1 \\ x_0 = 3 \end{array}\right.$$
+    \item \textbf{Trường hợp 1:} Với $x_0 = -1$:
+    $$y_0 = f(-1) = (-1)^3 - 3(-1)^2 + 2 = -1 - 3 + 2 = -2$$
+    Phương trình tiếp tuyến $\Delta_1$:
+    $$y - (-2) = 9(x - (-1)) \iff y + 2 = 9x + 9 \iff y = 9x + 7 \quad (\text{thỏa mãn vì khác đường thẳng } d: y = 9x - 5)$$
+    \item \textbf{Trường hợp 2:} Với $x_0 = 3$:
+    $$y_0 = f(3) = 3^3 - 3 \cdot 3^2 + 2 = 27 - 27 + 2 = 2$$
+    Phương trình tiếp tuyến $\Delta_2$:
+    $$y - 2 = 9(x - 3) \iff y - 2 = 9x - 27 \iff y = 9x - 25 \quad (\text{thỏa mãn vì khác đường thẳng } d)$$
+\end{itemize}
+Vậy có 2 tiếp tuyến thỏa mãn yêu cầu bài toán là: $y = 9x + 7$ và $y = 9x - 25$.
+
+\noindent \textbf{d) Tổ chức thực hiện:}
+\begin{itemize}[leftmargin=0.6cm]
+    \item \textbf{Chuyển giao nhiệm vụ:} Giáo viên giao Bài toán 3 cho học sinh làm việc cá nhân (5 phút). Sau đó giao Bài toán 4 thảo luận theo cặp đôi (5 phút).
+    \item \textbf{Thực hiện nhiệm vụ có giàn giáo:}
+    \begin{itemize}
+        \item Đối với học sinh yếu: Nhắc lại công thức phương trình tiếp tuyến $y = f'(x_0)(x - x_0) + y_0$. Yêu cầu học sinh viết rõ ràng 3 thành phần: $x_0 = \dots, y_0 = \dots, f'(x_0) = \dots$ trước khi ráp vào phương trình.
+        \item Lưu ý quan trọng ở Bài toán 4: Tiếp tuyến song song với đường thẳng $d$ thì phải có cùng hệ số góc và \textbf{phải khác tung độ gốc} (tránh trường hợp tiếp tuyến trùng với $d$).
+    \end{itemize}
+    \item \textbf{Báo cáo, thảo luận:} 2 học sinh lên bảng trình bày. Giáo viên mở ứng dụng GeoGebra minh họa đồ thị $y = x^3 - 3x^2 + 2$, vẽ đường thẳng $y = 9x - 5$ và 2 tiếp tuyến vừa tìm được để học sinh quan sát trực quan sự song song và tiếp xúc tại 2 điểm $M_1(-1; -2)$ và $M_2(3; 2)$.
+    \item \textbf{Kết luận, nhận định:} Giáo viên nhấn mạnh: Phương trình tiếp tuyến là bài toán trọng tâm, luôn xuất hiện trong các đề kiểm tra định kì và đề thi tốt nghiệp THPT. Học sinh cần thành thạo quy trình 3 bước chuẩn mực.
+\end{itemize}
+
+\begin{aibox}{TÍCH HỢP NĂNG LỰC AI: PHÁT HIỆN LỖI SAI CỦA TRỢ LÝ ẢO}
+\textbf{Tình huống sư phạm:} Giáo viên trình chiếu một đoạn hội thoại prompt thực tế giữa học sinh và ChatGPT/Gemini:\\
+\textit{``Prompt: Viết phương trình tiếp tuyến của đồ thị $y = x^3 - 3x^2 + 2$ biết tiếp tuyến đi qua điểm $A(0; 2)$.''}\\
+\textbf{Lỗi sai tiềm ẩn của AI:} AI thường mặc định điểm $A(0; 2)$ chính là tiếp điểm và tính ngay $k = y'(0) = 0 \implies y = 2$, bỏ sót nghiệm tiếp tuyến thứ hai do không giải phương trình tiếp tuyến đi qua một điểm tổng quát $y - 2 = (3x_0^2 - 6x_0)(0 - x_0)$.\\
+$\implies$ \textbf{Bài học cho học sinh:} AI rất thông minh nhưng dễ mắc bẫy ngôn ngữ. Cần phân biệt rõ ràng: tiếp tuyến \textbf{``tại điểm''} $M_0$ ($M_0$ bắt buộc là tiếp điểm) khác hoàn toàn tiếp tuyến \textbf{``đi qua điểm''} $A$ ($A$ có thể không phải là tiếp điểm).
+\end{aibox}
+
+\vspace{5pt}
+
+\subsection*{4. Hoạt động 4: Vận dụng -- Ý nghĩa thực tiễn và liên môn của đạo hàm (8 phút)}
+
+\noindent \textbf{a) Mục tiêu:}
+\begin{itemize}[leftmargin=0.6cm]
+    \item Vận dụng ý nghĩa vật lí của đạo hàm cấp một và đạo hàm cấp hai để giải quyết bài toán chuyển động thực tiễn.
+    \item Rèn luyện tư duy liên môn Toán học -- Vật lí, củng cố ý nghĩa gia tốc và vận tốc tức thời.
+\end{itemize}
+
+\noindent \textbf{b) Nội dung:}
+Học sinh giải quyết \textbf{Bài toán thực tế} sau:
+
+\begin{stembox}{BÀI TOÁN CHUYỂN ĐỘNG CƠ HỌC LIÊN MÔN VẬT LÍ}
+Một vật chuyển động thẳng có phương trình quãng đường xác định bởi:
+$$s(t) = -\dfrac{1}{3}t^3 + 3t^2 + 9t$$
+trong đó $t$ là thời gian tính bằng giây ($\text{s}$, $t \ge 0$), $s(t)$ là quãng đường vật đi được tính bằng mét ($\text{m}$).
+\begin{enumerate}[label=\alph*)]
+    \item Tìm công thức tính vận tốc tức thời $v(t)$ và gia tốc tức thời $a(t)$ của chuyển động tại thời điểm $t$.
+    \item Tại thời điểm nào thì vận tốc tức thời của vật đạt giá trị lớn nhất? Tính giá trị lớn nhất đó.
+    \item Tính vận tốc của vật tại thời điểm gia tốc của vật bị triệt tiêu ($a(t) = 0$).
+\end{enumerate}
+\end{stembox}
+
+\noindent \textbf{c) Sản phẩm:}
+Lời giải chi tiết của học sinh:
+\begin{enumerate}[label=\alph*)]
+    \item Ý nghĩa vật lí của đạo hàm:
+    \begin{itemize}
+        \item Vận tốc tức thời là đạo hàm cấp một của quãng đường theo thời gian:
+        $$v(t) = s'(t) = \left(-\dfrac{1}{3}t^3 + 3t^2 + 9t\right)' = -t^2 + 6t + 9 \quad (\text{m/s})$$
+        \item Gia tốc tức thời là đạo hàm cấp hai của quãng đường (hay đạo hàm cấp một của vận tốc):
+        $$a(t) = v'(t) = s''(t) = (-t^2 + 6t + 9)' = -2t + 6 \quad (\text{m/s}^2)$$
+    \end{itemize}
+
+    \item Vận tốc tức thời $v(t) = -t^2 + 6t + 9$:
+    Biến đổi thành hằng đẳng thức:
+    $$v(t) = -(t^2 - 6t + 9) + 18 = -(t - 3)^2 + 18$$
+    Vì $-(t - 3)^2 \le 0$ với mọi $t \ge 0$ nên $v(t) \le 18$.
+    Dấu ``='' xảy ra khi và chỉ khi $t - 3 = 0 \iff t = 3\text{ s}$.\\
+    Vậy tại thời điểm $t = 3\text{ s}$, vận tốc của vật đạt giá trị lớn nhất là $v_{\max} = 18\text{ m/s}$.
+
+    \item Gia tốc của vật bị triệt tiêu khi:
+    $$a(t) = 0 \iff -2t + 6 = 0 \iff 2t = 6 \iff t = 3\text{ s}$$
+    Tại thời điểm này, vận tốc của vật chính là:
+    $$v(3) = 18\text{ m/s}$$
+    (Đây cũng chính là thời điểm vận tốc đạt cực đại, phù hợp với định lý Fermat và tính chất chuyển động trong Vật lí: khi vận tốc cực đại thì gia tốc tức thời bằng 0).
+\end{enumerate}
+
+\noindent \textbf{d) Tổ chức thực hiện:}
+\begin{itemize}[leftmargin=0.6cm]
+    \item \textbf{Chuyển giao nhiệm vụ:} Giáo viên giao bài toán cho các nhóm thảo luận nhanh trong 4 phút.
+    \item \textbf{Thực hiện nhiệm vụ:} Các nhóm phân công: 1 bạn tính $v(t)$ và $a(t)$, 1 bạn biến đổi tìm giá trị lớn nhất, 1 bạn giải phương trình $a(t) = 0$.
+    \item \textbf{Báo cáo, thảo luận:} Gọi đại diện 1 nhóm học sinh khá lên bảng hoàn thành bài giải. Các nhóm khác đối chiếu kết quả.
+    \item \textbf{Kết luận, nhận định và Dặn dò về nhà:}
+    \begin{itemize}
+        \item Giáo viên tổng kết lại toàn bộ kiến thức trọng tâm của Chương IX: (1) Định nghĩa đạo hàm bằng giới hạn; (2) Các quy tắc đạo hàm và đạo hàm hàm hợp; (3) Đạo hàm cấp hai; (4) Phương trình tiếp tuyến; (5) Ý nghĩa vật lí của đạo hàm ($s \xrightarrow{'} v \xrightarrow{'} a$).
+        \item \textbf{Nhiệm vụ về nhà:}
+        \begin{enumerate}
+            \item Hoàn thành các bài tập còn lại trong Phiếu học tập số 1 vào vở bài tập.
+            \item Truy cập thư mục học tập số của lớp tải file tóm tắt công thức đạo hàm và bộ đề trắc nghiệm tự luyện 20 câu.
+            \item Chuẩn bị trước bài học tiếp theo: \textbf{Một vài mô hình toán học sử dụng hàm số mũ và hàm số lôgarit} (Tiết 99 theo PPCT | Tuần 34).
+        \end{enumerate}
+    \end{itemize}
+\end{itemize}
+
+\vspace{10pt}
+
+\section*{IV. PHỤ LỤC HỌC LIỆU BỔ TRỢ (BẮT BUỘC)}
+
+\subsection*{1. Phiếu học tập số 1 (Worksheet phân tầng bậc thang)}
+
+\begin{tcolorbox}[enhanced, colback=white, colframe=blue!70!black, arc=1.5mm, title=\textbf{PHIẾU HỌC TẬP: ÔN TẬP BÀI TẬP CUỐI CHƯƠNG IX}]
+\textbf{Họ và tên học sinh:} \dots\dots\dots\dots\dots\dots\dots\dots\dots\dots\dots\dots\dots\dots \textbf{Lớp:} 11A\dots \quad \textbf{Nhóm:} \dots\dots
+
+\vspace{3pt}
+\hrule
+\vspace{5pt}
+
+\textbf{\large BẬC 1: NHẬN BIẾT -- THÔNG HIỂU (Dành cho toàn thể học sinh, đặc biệt HS TB-Yếu)}
+\begin{enumerate}[label=\textbf{Bài 1.\arabic*.}]
+    \item Điền vào chỗ trống $(\dots)$ để hoàn thành các công thức đạo hàm:
+    \begin{itemize}[leftmargin=0.6cm]
+        \item $(x^n)' = \dots$
+        \item $(\sqrt{x})' = \dots$
+        \item $(\sin x)' = \dots$
+        \item $(\cos x)' = \dots$
+        \item $(e^x)' = \dots$
+        \item $(\ln x)' = \dots$
+    \end{itemize}
+    \item Tính đạo hàm của các hàm số sau:
+    \begin{itemize}[leftmargin=0.6cm]
+        \item $a) \ y = 2x^4 - 3x^2 + 5x - 1$
+        \item $b) \ y = \dfrac{3x - 1}{x + 2}$
+        \item $c) \ y = \sin(3x - \pi)$
+    \end{itemize}
+    \item Viết phương trình tiếp tuyến của đồ thị hàm số $y = x^2 - 4x + 3$ tại điểm $M_0(1; 0)$.
+\end{enumerate}
+
+\vspace{5pt}
+\hrule
+\vspace{5pt}
+
+\textbf{\large BẬC 2: THÔNG HIỂU -- VẬN DỤNG (Rèn luyện kỹ năng biến đổi và giải toán)}
+\begin{enumerate}[label=\textbf{Bài 2.\arabic*.}]
+    \item Tính đạo hàm cấp hai của hàm số $y = \dfrac{x}{x - 2}$ tại điểm $x_0 = 3$.
+    \item Viết phương trình tiếp tuyến của đồ thị hàm số $y = \dfrac{2x + 1}{x - 1}$, biết tiếp tuyến có hệ số góc $k = -3$.
+    \item Một vật rơi tự do với phương trình $s(t) = \dfrac{1}{2}gt^2$ ($g \approx 9{,}8\text{ m/s}^2$). Tính vận tốc và gia tốc tức thời của vật sau khi rơi được $4\text{ giây}$.
+\end{enumerate}
+
+\vspace{5pt}
+\hrule
+\vspace{5pt}
+
+\textbf{\large BẬC 3: VẬN DỤNG CAO -- MỞ RỘNG (Phát triển năng lực học sinh khá -- giỏi)}
+\begin{enumerate}[label=\textbf{Bài 3.\arabic*.}]
+    \item Cho hàm số $y = f(x) = \dfrac{1}{3}x^3 - mx^2 + (m^2 - 1)x + 1$ ($m$ là tham số). Tìm tất cả các giá trị của $m$ để tiếp tuyến của đồ thị hàm số tại điểm có hoành độ $x_0 = 1$ song song với đường thẳng $d: y = -x + 2026$.
+    \item Chứng minh rằng với hàm số $y = e^{-x} \cdot \cos x$, ta luôn có đẳng thức: $y'' + 2y' + 2y = 0$.
+\end{enumerate}
+\end{tcolorbox}
+
+\vspace{5pt}
+
+\subsection*{2. Bảng tổng hợp quy tắc tính đạo hàm then chốt}
+
+\begin{center}
+\begin{tabularx}{\textwidth}{|>{\centering\arraybackslash}p{3.5cm}|>{\centering\arraybackslash}X|>{\centering\arraybackslash}X|}
+\hline
+\textbf{Tên quy tắc / Hàm} & \textbf{Hàm số cơ bản $f(x)$} & \textbf{Hàm số hợp $f(u)$ ($u = u(x)$)} \\
+\hline
+Lũy thừa & $(x^\alpha)' = \alpha \cdot x^{\alpha - 1}$ & $(u^\alpha)' = \alpha \cdot u^{\alpha - 1} \cdot u'$ \\
+\hline
+Căn bậc hai & $(\sqrt{x})' = \dfrac{1}{2\sqrt{x}}$ & $(\sqrt{u})' = \dfrac{u'}{2\sqrt{u}}$ \\
+\hline
+Hàm Lượng giác & $(\sin x)' = \cos x$ \newline $(\cos x)' = -\sin x$ & $(\sin u)' = u' \cdot \cos u$ \newline $(\cos u)' = -u' \cdot \sin u$ \\
+\hline
+Hàm Lượng giác & $(\tan x)' = \dfrac{1}{\cos^2 x} = 1 + \tan^2 x$ & $(\tan u)' = \dfrac{u'}{\cos^2 u} = u'(1 + \tan^2 u)$ \\
+\hline
+Hàm Mũ & $(e^x)' = e^x; \ (a^x)' = a^x \ln a$ & $(e^u)' = u' \cdot e^u; \ (a^u)' = u' \cdot a^u \ln a$ \\
+\hline
+Hàm Lôgarit & $(\ln x)' = \dfrac{1}{x}; \ (\log_a x)' = \dfrac{1}{x \ln a}$ & $(\ln u)' = \dfrac{u'}{u}; \ (\log_a u)' = \dfrac{u'}{u \ln a}$ \\
+\hline
+Phân thức hữu tỉ & $\left(\dfrac{ax + b}{cx + d}\right)' = \dfrac{ad - bc}{(cx + d)^2}$ & $\left(\dfrac{1}{v}\right)' = -\dfrac{v'}{v^2}$ \\
+\hline
+Đạo hàm cấp hai & $y'' = (y')'$ & Gia tốc: $a(t) = v'(t) = s''(t)$ \\
+\hline
+Phương trình tiếp tuyến & \multicolumn{2}{c|}{$y - y_0 = f'(x_0)(x - x_0) \iff y = f'(x_0)(x - x_0) + y_0$} \\
+\hline
+\end{tabularx}
+\end{center}
+
+\vspace{5pt}
+
+\subsection*{3. Rubric đánh giá năng lực học sinh trong tiết học}
+
+\begin{center}
+\begin{tabularx}{\textwidth}{|p{3cm}|X|X|X|X|}
+\hline
+\textbf{Tiêu chí} & \textbf{Chưa đạt (Dưới 5)} & \textbf{Đạt (5.0 -- 6.5)} & \textbf{Khá (7.0 -- 8.5)} & \textbf{Tốt (9.0 -- 10)} \\
+\hline
+\textbf{1. Tính đạo hàm cấp 1 và cấp 2} & Nhầm lẫn công thức cơ bản, chưa phân biệt được hàm hợp. & Áp dụng đúng công thức cơ bản; tính được đạo hàm hàm hợp đơn giản nhưng còn sót $u'$. & Tính chính xác đạo hàm hàm hợp, phân thức và đạo hàm cấp hai. & Tính nhanh, biến đổi tối ưu, sử dụng MTCT kiểm tra độc lập thành thạo. \\
+\hline
+\textbf{2. Lập phương trình tiếp tuyến} & Chưa nhớ công thức tiếp tuyến, không xác định được tiếp điểm. & Viết được tiếp tuyến khi biết tiếp điểm $M_0(x_0; y_0)$. & Viết được tiếp tuyến khi biết hệ số góc $k$ hoặc song song đường thẳng. & Xử lý thành thạo điều kiện tiếp tuyến loại nghiệm trùng, giải thích trực quan trên phần mềm. \\
+\hline
+\textbf{3. Vận dụng thực tiễn \& liên môn} & Chưa hiểu mối liên hệ giữa đạo hàm với vận tốc, gia tốc. & Tính được vận tốc $v(t) = s'(t)$ khi cho trước thời điểm $t$. & Tính được gia tốc $a(t) = s''(t)$, giải được thời điểm $a(t) = 0$. & Giải quyết trọn vẹn bài toán cực trị vận tốc, liên hệ thực tiễn chặt chẽ. \\
+\hline
+\textbf{4. Năng lực số \& Hợp tác nhóm} & Thụ động, chưa biết dùng MTCT tính đạo hàm. & Bấm được máy tính tính đạo hàm tại điểm theo hướng dẫn. & Sử dụng thành thạo MTCT; chủ động lưu trữ tài liệu trên Drive của lớp. & Khai thác tốt GeoGebra; thẩm định được lời giải AI; hỗ trợ tích cực bạn yếu. \\
+\hline
+\end{tabularx}
+\end{center}
+
+\end{document}
